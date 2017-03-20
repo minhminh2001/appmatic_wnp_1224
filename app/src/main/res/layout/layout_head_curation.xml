@@ -1,0 +1,16 @@
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:layout_width="match_parent">
+
+<com.whitelabel.app.widget.CustomRecyclerView
+    android:id="@+id/rvCategory"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    imaginato:isDisallowParentTouch="true"
+    imaginato:isStopHorizontalScroll="false"
+    android:visibility="invisible"
+    android:scrollbars="none" />
+</RelativeLayout>

@@ -1,0 +1,503 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+                android:paddingBottom="50dp"
+    android:id="@+id/rl_root">
+    <LinearLayout
+        android:id="@+id/ll_checkout_payment_method"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/checkout_line_height1"
+        android:layout_marginBottom="@dimen/checkout_line_space"
+        android:orientation="vertical">
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctv_payment_method_lab"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/checkout_vertical_line_height_rest"
+            android:gravity="center_vertical"
+            android:text="@string/Payment_Method_Edit_Label"
+            android:textColor="@color/label_saved"
+            style="@style/checkout_textview_size_hint" />
+
+        <RelativeLayout
+            android:id="@+id/rl_checkout_payment_method"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_checkout_payment_method"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                style="@style/checkout_textview_size_content"
+                android:text="" />
+
+            <ImageView
+                android:id="@+id/tv_checkout_payment_method_arrow"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/arrow_down_fill"
+                android:layout_marginRight="10dp"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:id="@+id/view_paymentmethod_line"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/ll_checkout_payment_method"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/edittext_line"></View>
+    <!--when change payment method,switch this view-->
+    <LinearLayout
+        android:id="@+id/ll_checkout_payment_onlinebanking"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_below="@+id/view_paymentmethod_line"
+        android:layout_marginBottom="@dimen/checkout_line_space"
+
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_onlinebank_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/checkout_vertical_line_height_rest"
+            android:gravity="center_vertical"
+            android:text="@string/I_would_like_to_pay_with"
+            style="@style/checkout_textview_size_hint"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_checkout_payment_onlinebanking_paywith"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                style="@style/checkout_textview_size_content" />
+            <ImageView
+                android:id="@+id/arrow_checkout_payment_onlinebanking_paywith"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/arrow_down_fill" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view_payment_online_line"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/ll_checkout_payment_method"
+            android:layout_height="@dimen/line_height"
+            android:background="@color/edittext_line"></View>
+    </LinearLayout>
+
+    <!--when change payment method,switch this view-->
+
+    <LinearLayout
+            android:layout_below="@+id/view_paymentmethod_line"
+            android:id="@+id/ll_checkout_payment_creditcard_body"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:focusable="true"
+            android:layout_marginBottom="40dp"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                android:id="@+id/ll_payment_cardnumber"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/checkout_line_height1">
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_checkout_payment_creditcardnumber_anim"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingTop="@dimen/checkout_hint_anim_text_paddingtop"
+                    style="@style/checkout_textview_size_hint" />
+
+                <com.whitelabel.app.widget.CustomEditText
+                    android:id="@+id/et_checkout_payment_creditcardnumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/Credit_Card_Number"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="19"
+                    android:layout_below="@+id/tv_checkout_payment_creditcardnumber_anim"
+                    style="@style/checkout_textview_size_content"/>
+                <ImageView
+                    android:id="@+id/clear_card_number"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:src="@mipmap/text_elimination"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="6dp"
+                    android:visibility="gone"
+                    />
+            </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/rl_checkout_payment_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:id="@+id/ll_cv_date_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/checkout_hint_anim_text_paddingtop"
+                        android:orientation="horizontal">
+
+                        <com.whitelabel.app.widget.CustomTextView
+                            android:id="@+id/tv_checkout_payment_CVC_anim"
+                            style="@style/checkout_textview_size_hint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingRight="5dp"
+                            android:textColor="@color/label_saved" />
+
+                        <com.whitelabel.app.widget.CustomTextView
+                            android:paddingLeft="5dp"
+                            android:id="@+id/tv_checkout_payment_expiration_date_hint"
+                            style="@style/checkout_textview_size_hint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/Expiration_Date"
+                            android:textColor="@color/label_saved" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/checkout_vertical_line_height_rest"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingRight="5dp">
+
+                            <com.whitelabel.app.widget.CustomEditText
+                                android:id="@+id/et_checkout_payment_CVC"
+                                style="@style/checkout_textview_size_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:gravity="center_vertical"
+                                android:hint="@string/CVC_CVV2"
+                                android:imeOptions="actionNext"
+                                android:inputType="numberPassword"
+                                android:maxLength="4"
+                                android:paddingBottom="@dimen/checkout_common_padding"
+                                android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                                android:singleLine="true"
+                                android:textColorHint="@color/hint"/>
+
+                            <ImageView
+                                android:id="@+id/clear_card_cvc"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginBottom="5dp"
+                                android:layout_toLeftOf="@+id/iv_checkout_payment_select_i"
+                                android:src="@mipmap/text_elimination"
+                                android:visibility="gone" />
+
+                            <ImageView
+                                android:id="@+id/iv_checkout_payment_select_i"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginRight="5dp"
+                                android:background="@drawable/draw_checkout_i"
+                                android:paddingBottom="4dp"
+                                android:paddingTop="0dp" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/ll_checkout_payment_expire_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="5dp">
+
+                            <com.whitelabel.app.widget.CustomTextView
+                                android:id="@+id/tv_checkout_payment_expiration_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/MM_YY"
+                                style="@style/checkout_textview_size_content" />
+                            <ImageView
+                                android:id="@+id/arrow_checkout_payment_select_expiration_date"
+                                android:layout_width="@dimen/checkout_line_arrow_width"
+                                android:layout_height="@dimen/checkout_line_arrow_width"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="10dp"
+                                android:src="@mipmap/arrow_down_fill" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="@dimen/line_height"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignTop="@+id/rl_checkout_payment_cv"
+                    android:layout_alignBottom="@+id/rl_checkout_payment_cv"
+                    android:background="@color/edittext_line"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/rl_checkout_payment_cv"
+                    android:layout_height="wrap_content">
+                    <View
+                        android:id="@+id/view_avc_line"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/line_height"
+                        android:layout_marginTop="0dp"
+                        android:background="@color/edittext_line" />
+                    <View
+                        android:id="@+id/view_expiration_date_line"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/line_height"
+                        android:layout_marginTop="0dp"
+                        android:background="@color/edittext_line" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                android:id="@+id/rl_card_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/checkout_line_height1"
+                >
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_checkout_payment_nameoncard_anim"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingTop="@dimen/checkout_hint_anim_text_paddingtop"
+                    style="@style/checkout_textview_size_hint"
+                    android:visibility="visible" />
+
+                <com.whitelabel.app.widget.CustomEditText
+                    android:id="@+id/et_checkout_payment_nameoncard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/Name_On_Card"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapWords"
+                    android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                    android:paddingBottom="@dimen/checkout_common_padding"
+                    android:paddingTop="@dimen/checkout_vertical_line_height_rest"
+                    style="@style/checkout_textview_size_content"
+                    android:visibility="visible"/>
+                <ImageView
+                    android:id="@+id/clear_card_name"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:src="@mipmap/text_elimination"
+                    android:layout_alignParentRight="true"
+                    android:visibility="gone"
+                    />
+            </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_checkout_payment_cardtype"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/checkout_line_height1"
+                android:orientation="vertical">
+
+                <!--<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/checkout_vertical_line_height_rest">-->
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_checkout_payment_cardtype_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/Card_Type"
+                    android:gravity="center_vertical"
+                    style="@style/checkout_textview_size_hint"
+                    android:visibility="invisible" />
+
+                <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                    android:id="@+id/rl_card_type"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/tv_checkout_payment_cardtype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/Card_Type"
+                        style="@style/checkout_textview_size_content"/>
+                    <ImageView
+                        android:id="@+id/arrow_checkout_payment_select_cardtype"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/arrow_down_fill" />
+                </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_checkout_payment_issuerbank"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/checkout_line_height1"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_checkout_payment_issuerbank_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:gravity="center_vertical"
+                    android:text="@string/Issuer_Bank"
+                    style="@style/checkout_textview_size_hint" />
+
+                <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                    android:id="@+id/rl_issuer_bank"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/tv_checkout_payment_issuerbank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/Issuer_Bank"
+                        style="@style/checkout_textview_size_content"/>
+                    <ImageView
+                        android:id="@+id/arrow_checkout_payment_select_issuerbank"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/arrow_down_fill" />
+                </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/paymentlist_image"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/img_secure_payment"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_checkout_errormsg_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:textColor="@color/red_common"
+                android:textSize="16sp"
+                android:visibility="invisible"
+                style="@style/font_family_robot_regular" />
+        </LinearLayout>
+        </LinearLayout>
+
+    <WebView
+            android:id="@+id/tv_html"
+            android:layout_below="@+id/view_paymentmethod_line"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+
+            android:background="@color/blue4d9cf2"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+    <WebView
+        android:id="@+id/wv_html"
+        android:layout_below="@+id/view_paymentmethod_line"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+
+        android:background="@color/black"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.whitelabel.app.widget.CustomTextView  style="@style/font_family_robot_regular"
+        android:id="@+id/tv_checkout_payment_onlinebanking_blankbottom"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/ll_checkout_payment_onlinebanking"
+        android:layout_marginTop="@dimen/line_height"
+        android:background="@color/whiteFFFFFF"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/ll_paymen_abc"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/ll_checkout_payment_creditcard_body"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="192dp"
+        android:layout_marginStart="192dp"
+       />
+    <View
+    android:layout_below="@+id/tv_html"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"/>
+    <View
+        android:layout_below="@+id/wv_html"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"/>
+</RelativeLayout>

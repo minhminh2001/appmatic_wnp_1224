@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="6dp"
+        android:background="@mipmap/pop_checkout_shipping_change"
+        android:orientation="vertical">
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:id="@+id/tv_checkout_shipping_address_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/whiteFFFFFF"
+            android:text="@string/edit"/>
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:id="@+id/tv_checkout_shipping_address_change"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/whiteFFFFFF"
+            android:text="@string/change"/>
+    </LinearLayout>
+
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
+        android:layout_width="@dimen/activity_horizontal_margin"
+        android:layout_height="match_parent"
+        android:background="@color/whiteFFFFFF"/>
+
+</LinearLayout>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto">
+
+<RelativeLayout
+    android:id="@+id/mparent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="7dp"
+    android:paddingTop="5dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+    <ImageView
+        android:id="@+id/AddAddress_select_button"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        android:background="@drawable/radio_button_on"/>
+    <ImageView
+        android:id="@+id/image_address_select_top"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="gone"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:src="@mipmap/dot_checkout_address_unselected" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_toLeftOf="@+id/AddAddress_select_button"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@id/image_address_select_top"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/address_select_text_space"
+            android:orientation="horizontal">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_address_select_firstname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black000000"
+                android:textSize="15sp"
+                style="@style/font_family_roboto_medium" />
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_address_select_lastname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:visibility="gone"
+                android:textColor="@color/black000000"
+                android:textSize="15sp"
+                style="@style/font_family_roboto_medium" />
+        </LinearLayout>
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_address_select_address1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="2dp"
+            android:text="@string/address1"
+            android:textColor="@color/black000000"
+            android:textSize="14sp"
+            style="@style/font_family_robot_regular" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_address_select_address2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/black000000"
+            android:textSize="14sp"
+            style="@style/font_family_robot_regular" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_address_select_citystatepostcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/black000000"
+            android:textSize="14sp"
+            style="@style/font_family_robot_regular" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:id="@+id/tv_address_select_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@string/Malaysia"
+            android:textColor="@color/black000000"
+            android:textSize="14sp" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_address_select_telephone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/black000000"
+            android:textSize="14sp"
+            style="@style/font_family_robot_regular" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/image_address_select_end"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="2dp"
+        android:background="@color/whiteFFFFFF"
+        android:paddingRight="5dp"
+        android:src="@mipmap/checkout_shipping_address_select_bottom"
+        android:visibility="gone" />
+</RelativeLayout>
+
+</LinearLayout>

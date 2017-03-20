@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#b5555555">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dip"
+        android:orientation="vertical"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_message_bg"
+            android:orientation="vertical">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/photograph"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/selector_bank_transfer_confermation_choose_picture_takepicture"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/take_picture"
+                />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/greyC2C2C2"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/album"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/selector_bank_transfer_confermation_choose_picture_choosephoto"
+                android:gravity="center"
+
+                android:padding="10dp"
+                android:text="@string/choose_photo"
+                />
+        </LinearLayout>
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/cancleButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/selector_bank_transfer_confermation_choose_picture_cnacel"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/cancel"/>
+    </LinearLayout>
+
+</RelativeLayout>

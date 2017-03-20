@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteFFFFFF"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/my_text1"
+        android:textColor="@color/black111111"
+        android:visibility="gone"
+       >
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            style="@style/font_family_robot_regular"
+            android:text="@string/prices_shown"
+            android:id="@+id/show_discount"
+            android:background="@color/greyD0D0D0"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+
+            />
+    </RelativeLayout>
+    <GridView
+            android:id="@+id/gv_campaign"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:horizontalSpacing="5dp"
+            android:numColumns="2">
+        </GridView>
+
+</LinearLayout>

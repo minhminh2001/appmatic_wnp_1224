@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_brank_store_font"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/ll_toolbar"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/common_toolbar"/>
+    </LinearLayout>
+    <com.whitelabel.app.widget.RefreshLoadMoreRecyclerViewV2
+        android:layout_below="@+id/ll_toolbar"
+        android:id="@+id/rlm_recycler"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        />
+    <RelativeLayout
+        android:id="@+id/top_switch_and_filter_bar"
+        android:layout_marginRight="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_below="@id/ll_toolbar"
+        android:background="@color/greyEEEEEE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/switch_view_and_filter_bar_height"
+            layout="@layout/layout_top_switch_and_filter_bar"
+            />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/iv_bottom_slideto_top"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/slideto_top_bty_margin"
+        android:layout_marginRight="@dimen/slideto_top_bty_margin"
+        android:background="@drawable/draw_slideto_top"/>
+    <FrameLayout
+        android:id="@+id/flFilterSortContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"/>
+
+    <include
+        layout="@layout/connection_breaks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_toolbar"
+        />
+    <include
+        layout="@layout/view_product_list_not_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_toolbar"
+        />
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rl_bottom_bar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <include layout="@layout/view_product_list_bottom_bar"/>
+    </RelativeLayout>
+</RelativeLayout>

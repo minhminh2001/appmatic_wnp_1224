@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:background="#b5555555" >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="12dip"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip"
+    android:orientation="vertical" >
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteFFFFFF"
+        android:text="@string/take_picture"
+        android:layout_gravity="center"
+        android:id="@+id/photograph"
+        />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/greyC2C2C2" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/album"
+        android:background="@color/whiteFFFFFF"
+        android:text="@string/choose_photo"
+        android:layout_gravity="center"
+        />
+    <Button
+        android:id="@+id/cancleButton"
+        android:layout_marginTop="12dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/whiteFFFFFF"
+        android:text="@string/cancel" />
+</LinearLayout>
+
+</RelativeLayout>

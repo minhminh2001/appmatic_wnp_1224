@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/whiteFFFFFF"
+              android:orientation="vertical"
+              android:paddingBottom="50dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_bar_height"
+        android:background="@color/black000000"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/rlHeaderBarMenu"
+            style="@style/HeaderBarLeftImageTouchTargetStyle">
+
+            <ImageView
+                android:id="@+id/vHeaderBarMenu"
+                style="@style/HeaderBarLeftImageStyle"
+                android:src="@drawable/action_menu"/>
+        </RelativeLayout>
+
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/HeaderBarTitleTextStyle"
+            android:text="@string/PAYMENT_STATUS"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_checkout_paymentstatus_goto_shoppingcart"
+            style="@style/HeaderBarRightImageTouchTargetStyle">
+
+            <ImageView
+                android:id="@+id/iv_checkout_paymentstatus_goto_shoppingcart"
+                style="@style/HeaderBarRightImageStyle"
+                android:src="@drawable/action_cart"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/greyE1E1E1"
+        style="@style/font_family_robot_regular"/>
+
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/test_checkout_payment_status_wrong"/>
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/Oops."
+        android:textColor="@color/black000000"
+        android:textSize="16sp"
+        style="@style/font_family_robot_regular"/>
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/tv_payment_status_wrong_errorMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/payment_status_wrong"
+        android:textColor="@color/black000000"
+        android:textSize="12sp"
+        style="@style/font_family_robot_regular"/>
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/tv_checkout_payment_status_wrong_retry"
+        android:layout_width="180dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/btn_purple_border"
+        android:gravity="center"
+        android:text="@string/RETRY"
+        android:textColor="@color/purple"
+        android:textSize="@dimen/button_font_size"
+        style="@style/font_family_robot_regular"/>
+
+</LinearLayout>

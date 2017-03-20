@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+<RelativeLayout
+    android:id="@+id/rl_wish_item_context"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/whistlist_imageView1"
+        android:layout_marginTop="@dimen/wishitem_margin_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="119.5dp"
+            android:id="@+id/whistlist_imageView"
+            />
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_wish_imageblack"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/wishitem_margin_top"
+            android:layout_below="@+id/whistlist_imageView"/>
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/waitlist_unavailable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@color/transparentgray9A"
+            android:text="UNAVAILABLE"
+            style="@style/font_family_roboto_medium"
+            android:textColor="@color/whiteffffff"
+            android:textSize="12sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/wishitem_margin_top"
+        android:layout_toRightOf="@+id/whistlist_imageView1">
+
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/wishlist_textView2"
+        android:textSize="12sp"
+        android:textColor="@color/purple92018d"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:text="test"
+        style="@style/font_family_robot_regular"
+        android:layout_marginRight="10dp"
+        android:singleLine="true"/>
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="text2"
+        android:lineSpacingExtra="0.5dp"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:id="@+id/wishlist_textView1"
+        android:layout_below="@+id/wishlist_textView2"
+        android:layout_alignLeft="@+id/wishlist_textView2"
+        android:layout_alignStart="@+id/wishlist_textView2"
+        style="@style/font_family_robot_regular"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:maxLines="2"
+        android:ellipsize="end"/>
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:text="@string/price"
+        android:id="@+id/wishlist_textView3"
+        android:layout_below="@+id/wishlist_textView1"
+        android:layout_alignLeft="@+id/wishlist_textView1"
+        android:layout_alignStart="@+id/wishlist_textView1"
+        android:layout_marginTop="5dp"
+        style="@style/font_family_robot_regular"/>
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginTop="-2.7dp"
+        android:text="@string/price"
+        android:lineSpacingExtra="0.1dp"
+        android:textColor="@color/black"
+        android:id="@+id/wishlist_textView4"
+        android:layout_below="@+id/wishlist_textView3"
+        android:layout_alignLeft="@+id/wishlist_textView3"
+        android:layout_alignStart="@+id/wishlist_textView3"
+        style="@style/font_family_roboto_medium"/>
+
+
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="text"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/purple92018d"
+        android:id="@+id/ctv_wish_merchant"
+        android:singleLine="true"
+        android:layout_below="@+id/wishlist_textView4"
+        android:layout_alignLeft="@+id/wishlist_textView3"
+        android:layout_alignStart="@+id/wishlist_textView3"
+        style="@style/font_family_robot_regular"
+        android:layout_marginTop="5dp" />
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/wishitem_margin_top"
+            android:id="@+id/ctv_wish_bottomblack"
+            android:layout_below="@+id/ctv_wish_merchant" />
+
+    </RelativeLayout>
+</RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rl_wish_item_context"
+        android:layout_alignBottom="@+id/rl_wish_item_context"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/waitlist_trans"
+        android:background="@color/tranwhite"
+        android:visibility="gone"/>
+
+</RelativeLayout>

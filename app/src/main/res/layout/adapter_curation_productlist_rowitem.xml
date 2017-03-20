@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <!--<LinearLayout
+        android:id="@+id/llProductListTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@color/greyEBEBEB" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:text="@string/curation_productlist_title"
+            android:textColor="@color/black000000"
+            android:textSize="14sp"
+            imaginato:textFont="arvoRegular" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@color/greyEBEBEB" />
+    </LinearLayout>-->
+
+    <!--<View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/whiteFFFFFF" />-->
+    <View
+        android:id="@+id/vHorDivider"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/v2_line" />
+
+    <LinearLayout
+        android:id="@+id/llProductList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <include
+            android:id="@+id/llLeftProduct"
+            layout="@layout/adapter_curation_productlist_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8.9dp"
+            android:layout_weight="1" />
+
+        <View
+            android:id="@+id/vProductListDivider"
+            android:layout_width="9.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/whiteFFFFFF" />
+
+        <include
+            android:id="@+id/llRightProduct"
+            layout="@layout/adapter_curation_productlist_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8.9dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

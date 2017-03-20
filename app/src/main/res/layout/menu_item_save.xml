@@ -1,0 +1,17 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:paddingRight="15dp"
+    android:layout_height="50dp"
+    >
+    <com.whitelabel.app.widget.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_menu_item_save"
+        android:text="@string/save"
+        android:textColor="@color/whiteffffff"
+        style="@style/font_family_robot_regular"
+        android:textSize="14sp"/>
+</RelativeLayout>

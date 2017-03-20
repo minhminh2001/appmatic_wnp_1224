@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.whitelabel.app.widget.CustomButton
+        style="@style/font_family_roboto_medium"
+        android:id="@+id/btn_checkout_shipping_add_new_address"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_touch_height"
+        android:layout_below="@+id/swipe_container"
+        android:background="@mipmap/add_adress"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/ADD_NEW_ADDRESS"
+        android:textColor="@color/greyC2C2C2"
+        android:textSize="18sp"
+        />
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
+        android:id="@+id/tv_checkout_errormsg_defaultOrSelectAddress"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/btn_checkout_shipping_add_new_address"
+        android:gravity="center_horizontal"
+        android:background="@color/whiteFFFFFF"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/red_common"
+        android:visibility="gone"/>
+</RelativeLayout>

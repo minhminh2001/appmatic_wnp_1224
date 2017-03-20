@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:paddingTop="20dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.whitelabel.app.widget.CustomTextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black000000"
+        android:text="@string/product_shipping_info"
+        android:textSize="16sp"
+        style="@style/font_family_roboto_medium" />
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/ctv_westdelivers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ctvDetailTitle"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black000000"
+        android:textSize="13.5sp"
+        style="@style/font_family_robot_regular"
+        />
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/ctv_eastDeliversDays"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ctvDetailTitle"
+        android:textColor="@color/black000000"
+        android:textSize="13.5sp"
+        style="@style/font_family_robot_regular"
+        />
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/ctv_locationdelivered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ctvDetailTitle"
+        android:textColor="@color/black000000"
+        android:textSize="13.5sp"
+        style="@style/font_family_robot_regular"
+        />
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/ctv_detailDelivery1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ctvDetailTitle"
+        android:textColor="@color/black000000"
+        android:textSize="13.5sp"
+        style="@style/font_family_robot_regular"
+        />
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/ctv_detailDetailDelivery2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ctvDetailTitle"
+        android:textColor="@color/black000000"
+        android:textSize="13.5sp"
+        style="@style/font_family_robot_regular"
+        />
+
+</LinearLayout>

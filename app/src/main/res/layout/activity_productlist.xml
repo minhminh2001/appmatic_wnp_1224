@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/flFilterSortContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/rlBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:visibility="gone"
+        android:background="@color/transparent00"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <!--if layout height has changed, update rlBottomBar layout_height on ProductListActivity-->
+        <ImageView
+            android:id="@+id/iv_bottom_slideto_top"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/slideto_top_bty_margin"
+            android:layout_marginRight="@dimen/slideto_top_bty_margin"
+            android:background="@drawable/draw_slideto_top"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/whiteFFFFFF">
+
+            <View
+                android:id="@+id/vBottomBarDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/greye1e1e1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/vBottomBarDivider"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/rlBottomBarFilter"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/ctvBottomBarFilter"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:paddingLeft="37dp"
+                        android:paddingRight="37dp"
+                        android:maxLines="1"
+                        android:text="@string/productlist_filter"
+                        android:textSize="17sp"
+
+                        style="@style/font_family_robot_regular" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_filter_plus"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="18dp"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5dp"
+                            android:background="@color/black"
+                            android:layout_centerVertical="true"/>
+                        <TextView
+                            android:id="@+id/tv_filter_plus_animate"
+                            android:layout_width="1.5dp"
+                            android:background="@color/black"
+                            android:layout_height="match_parent"
+                            android:layout_centerHorizontal="true"/>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/greye1e1e1" />
+
+                <RelativeLayout
+                    android:id="@+id/rlBottomBarSort"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/ctvBottomBarSort"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:paddingLeft="37dp"
+                        android:paddingRight="37dp"
+                        android:maxLines="1"
+                        android:text="@string/productlist_sort"
+                        android:textSize="17sp"
+
+                        style="@style/font_family_robot_regular" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_sort_plus"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="18dp"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5dp"
+                            android:background="@color/black"
+                            android:layout_centerVertical="true"/>
+                        <TextView
+                            android:id="@+id/tv_sort_plus_animate"
+                            android:layout_width="1.5dp"
+                            android:background="@color/black"
+                            android:layout_height="match_parent"
+                            android:layout_centerHorizontal="true"/>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteFFFFFF">
+
+    <ScrollView
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linear1">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/greyEEEEEE"
+            android:layout_marginTop="0dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="22dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="1"
+                    android:layout_height="48dp"
+                    android:background="@drawable/btn_facebook_normal"
+                    android:id="@+id/ivFacebookLogin"
+                    >
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/facebook_s"
+                        android:layout_centerVertical="true"
+                        />
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_roboto_medium"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/connect_with_Facebook"
+                        android:textColor="@color/whiteFFFFFF"
+                        android:textSize="16sp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="30dp"
+                        />
+                </RelativeLayout>
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/ll_googleLogin"
+                    android:layout_marginLeft="12dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_height="48dp"
+                    android:background="@drawable/btn_google_normal"
+                    android:layout_width="0dp">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:src="@mipmap/icon_google"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="20dp" />
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="22dp"
+                        android:textSize="16sp"
+                        android:text="@string/login_google"
+                        android:textColor="@color/grey6f6f6f"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--<RelativeLayout-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:background="@color/facebook"-->
+                <!--android:id="@+id/ivGoogleLogin"-->
+                <!-->-->
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@mipmap/facebook_s"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--/>-->
+                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--style="@style/font_family_roboto_regular"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="@string/connect_with_Facebook"-->
+                    <!--android:textColor="@color/whiteFFFFFF"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="20dp"-->
+                    <!--/>-->
+            <!--</RelativeLayout>-->
+
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="70dp">
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:id="@+id/text_or"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/or"
+                    android:textSize="25sp" />
+
+                <View
+                    android:layout_width="300dp"
+                    android:layout_height="@dimen/line_height"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@id/text_or"
+                    android:background="@color/edittext_line" />
+
+                <View
+                    android:layout_width="300dp"
+                    android:layout_height="@dimen/line_height"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@id/text_or"
+                    android:background="@color/edittext_line" />
+            </RelativeLayout>
+
+            <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                android:id="@+id/rl_login_email"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:background="@color/edittext_line" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:id="@+id/email_text2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view1"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/label_saved"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:text="@string/user_mail_com"
+                    android:visibility="invisible" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:id="@+id/email_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/email_text2"
+                    android:text="@string/user_mail_com"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:textColor="@color/label_active"
+                    android:visibility="invisible" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/email_text2"
+                    android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                    android:layout_marginTop="@dimen/table_lable_margain_top">
+
+                    <com.whitelabel.app.widget.CustomEditText
+                        android:id="@+id/email"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/clear_mail"
+                        android:background="@null"
+                        android:hint="@string/user_mail_com"
+                        android:paddingRight="5dp"
+                        android:singleLine="true"
+                        android:textSize="@dimen/editTextFontSize"
+                        android:textColor="@color/editColor"
+                        android:textColorHint="@color/hint"
+                        android:textCursorDrawable="@null"
+                        style="@style/font_family_robot_regular" />
+
+                    <ImageView
+                        android:id="@+id/clear_mail"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/text_elimination"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+        <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+            android:id="@+id/rl_login_pwd"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:id="@+id/password_text2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/table_lable_margain_top"
+                    android:text="@string/enter_password"
+                    android:textColor="@color/label_saved"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:visibility="invisible" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:id="@+id/password_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/password_text2"
+                    android:text="@string/enter_password"
+                    android:textColor="@color/label_active"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:visibility="invisible" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/password_text2"
+                    android:layout_marginTop="@dimen/table_lable_margain_top"
+                    android:layout_marginBottom="@dimen/table_lable_margain_bottom">
+
+                    <com.whitelabel.app.widget.CustomEditText
+                        android:id="@+id/password"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/clear_password"
+                        android:background="@null"
+                        android:hint="@string/enter_password"
+                        android:paddingRight="5dp"
+                        android:password="true"
+                        android:singleLine="true"
+                        android:textSize="@dimen/editTextFontSize"
+                        android:textColor="@color/editColor"
+                        android:textColorHint="@color/hint"
+                        android:textCursorDrawable="@null"
+                        style="@style/font_family_robot_regular" />
+
+                    <ImageView
+                        android:id="@+id/clear_password"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/text_elimination"
+                        android:visibility="gone" />
+                </RelativeLayout>
+        </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:id="@+id/error"
+                    android:text="@string/name_password_error"
+                    android:textColor="@color/redC2060A"/>
+                <RelativeLayout
+                    android:layout_below="@+id/error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/clickEmailInfo"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="invisible">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/clickEmail1"
+                        android:text="@string/account_not_confirm"
+                        android:textColor="@color/redC2060A"
+                        android:layout_centerHorizontal="true"/>
+
+                    <RelativeLayout
+                        android:layout_below="@+id/clickEmail1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ClickEmail"
+                            android:textColor="@color/redC2060A"
+                            android:id="@+id/clickEmail2"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <com.whitelabel.app.widget.CustomButton
+                style="@style/font_family_roboto_medium"
+                android:id="@+id/sign_in"
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_style_purple"
+                android:text="@string/sign_in"
+                android:textColor="@color/whiteFFFFFF"
+                android:textSize="16sp" />
+
+            <com.whitelabel.app.widget.CustomTextView
+                style="@style/font_family_robot_regular"
+                android:id="@+id/forgot_password"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:gravity="center"
+                android:text="@string/forgot_your_password"
+                android:textColor="@color/purple92018d" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/bottomText"
+        android:layout_below="@+id/linear1"
+        android:layout_marginTop="90dp">
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/not_a_member_yet" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:text="@string/RegisterNow"
+            android:textColor="@color/purple92018d" />
+    </LinearLayout>
+    </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>

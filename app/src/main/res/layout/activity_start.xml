@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+    <ImageView
+        android:id="@+id/start_logo_imageview"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/newlogo"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"/>
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
+        android:id="@+id/start_textview"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="@string/startText"
+        android:gravity="center"
+        android:textColor="@color/whiteffffff"
+        android:textSize="16sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/start_logo_imageview"
+        android:layout_marginTop="84dp"/>
+
+    <!--<TextView-->
+    <!--android:id="@+id/getstart_TextView"-->
+    <!--android:layout_width="280dp"-->
+    <!--android:layout_height="80dp"-->
+    <!--android:text="Get Started"-->
+    <!--android:gravity="center"-->
+    <!--android:textSize="20sp"-->
+    <!--android:textColor="@color/whiteffffff"-->
+    <!--android:layout_below="@+id/start_textview"-->
+    <!--android:layout_marginTop="35dp"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:background="@mipmap/getstart"-->
+    <!--/>-->
+
+
+
+
+</RelativeLayout>

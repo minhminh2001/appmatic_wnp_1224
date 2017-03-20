@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/whiteFFFFFF"
+             android:minHeight="200dp"
+             android:orientation="vertical"
+             android:paddingBottom="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rlProductPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/old_price"
+                style="@style/font_family_robot_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="11sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlProductFinalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlProductPrice"
+            >
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/price_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                imaginato:textFont="LatoBold"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/ctvProductInStock"
+                style="@style/font_family_robot_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignTop="@+id/price_textview"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/price_textview"
+                android:background="@color/black000000"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/product_detail_instock"
+                android:textColor="@color/whiteffffff"
+                android:textSize="10sp"
+                android:visibility="gone"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/ctvProductOutOfStock"
+                style="@style/font_family_robot_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignTop="@+id/price_textview"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/price_textview"
+                android:background="@color/grey999999"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/product_detail_outofstock"
+                android:textColor="@color/whiteffffff"
+                android:textSize="10sp"
+                android:visibility="gone"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_product_saverm"
+                style="@style/font_family_robot_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/price_textview"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/product_merchant"
+                style="@style/font_family_robot_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_product_saverm"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text=" "
+                android:textColor="@color/purple92018d"
+                android:textSize="14sp"/>
+
+            <LinearLayout
+                android:id="@+id/ll_cash"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/product_merchant"
+                android:layout_marginTop="10dp"
+                android:background="@color/greyF0F0F1"
+                android:orientation="horizontal"
+                android:padding="13dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_cod"/>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/product_cash"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/icon_i"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_attribute"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlProductFinalPrice"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlProductQuantity"
+            android:layout_width="165dp"
+            android:layout_height="25dp"
+            android:layout_below="@+id/ll_attribute"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_productdetail_colorsize_bg"
+            android:visibility="invisible"
+            >
+
+            <ImageView
+                android:id="@+id/ivPriceMinus"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:paddingBottom="14dp"
+                android:paddingLeft="7.5dp"
+                android:paddingRight="7.5dp"
+                android:paddingTop="14dp"
+                android:src="@drawable/draw_minus"
+                android:textSize="16sp"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/detail_quantity_textview2"
+                style="@style/font_family_robot_regular"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@color/whiteFFFFFF"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="13sp"/>
+
+            <ImageView
+                android:id="@+id/ivPricePlus"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:paddingBottom="10dp"
+                android:paddingLeft="7.5dp"
+                android:paddingRight="7.5dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/draw_plus"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/detail_descriptions_RelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlProductQuantity"
+            android:layout_marginBottom="-20dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            >
+            <!--BLOCK_DESCENDANTS是当一个view获取焦点时 viewgroup会覆盖子类控件而直接获得焦点,防止webview过大,导致scrollView滚动-->
+            <LinearLayout
+                android:id="@+id/ll_webView"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical">
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/llProductDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detail_descriptions_RelativeLayout"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:orientation="vertical"/>
+    </RelativeLayout>
+
+</FrameLayout>

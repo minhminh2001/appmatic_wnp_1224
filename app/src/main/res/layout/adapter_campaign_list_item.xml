@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    >
+
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
+        android:id="@+id/campaign_cell_top_space"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/llCampaignBody"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/campaign_cell_top_space"
+        android:background="@color/whiteFFFFFF"
+        android:orientation="vertical"
+        android:paddingLeft="5dp">
+
+        <ImageView
+            android:id="@+id/ivCampaignImage"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:scaleType="fitXY"
+            />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvCampaignProductBy"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/black000000"
+            android:textSize="12sp"
+            style="@style/font_family_robot_regular" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvCampaignProductName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:lines="2"
+            android:textColor="@color/black000000"
+            android:textSize="14sp"
+            style="@style/font_family_robot_regular" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvCampaignProductOldPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:gravity="left|center_vertical"
+            android:text="@string/rm0"
+            android:textColor="@color/black000000"
+            android:layout_marginBottom="5dp"
+            android:textSize="12sp"
+            style="@style/font_family_robot_regular" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvCampaignProductFinalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/black000000"
+            android:textSize="14sp"
+            style="@style/font_family_roboto_medium" />
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text=""
+            android:textColor="@color/gray888888"
+            android:id="@+id/ctv_product_merchant"
+            android:singleLine="true"
+            style="@style/font_family_robot_regular"
+            android:layout_marginTop="5dp" />
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvCampaignProductAddToCart"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_touch_height"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/big_button_style_purple"
+            android:gravity="center"
+            android:text="@string/product_detail_addtocart"
+            android:textColor="@color/whiteFFFFFF"
+            android:textSize="16sp"
+            style="@style/font_family_roboto_medium" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/iv_campaign_item_selected_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/llCampaignBody"
+        android:layout_alignTop="@+id/llCampaignBody"
+        android:background="@color/transparentgray9A"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_campaign_item_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/campaign_selected" />
+    </LinearLayout>
+
+</RelativeLayout>

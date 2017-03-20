@@ -1,21 +1,300 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.whitelabel.app">
+
+    <uses-permission android:name="com.sonyericsson.home.permission.BROADCAST_BADGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+    <!-- <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> -->
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Optional permission for reliable local dispatching on non-Google Play devices -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- App receives GCM messages. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!-- GCM requires a Google account. -->
+    <!-- <uses-permission android:name="android.permission.GET_ACCOUNTS" /> -->
     <application
-        android:name=".App"
+        android:name="com.whitelabel.app.application.GemfiveApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/gemfive_launcher02"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.whitelabel.app.module.main.MainActivity">
+
+        <!-- tools:replace="android:name" -->
+        <meta-data
+            android:name="com.google.android.gms.analytics.globalConfigResource"
+            android:resource="@xml/global_tracker" />
+        <!-- FACEBOOK -->
+        <meta-data
+            android:name="com.whitelabel.app.network.GlideConfiguration"
+            android:value="GlideModule" />
+        <!-- <meta-data -->
+        <!-- android:name="com.facebook.sdk.ApplicationId" -->
+        <!-- android:value="@string/facebook_app_id" /> -->
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
+            android:exported="true"
+            android:permission="android.permission.INSTALL_PACKAGES">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
+        <!-- FACEBOOK -->
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            tools:replace="android:theme" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider604176613049064"
+            android:exported="true" />
+
+        <activity
+            android:name="com.whitelabel.app.activity.StartActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/startStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.whitelabel.app.activity.LoginRegisterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name="com.whitelabel.app.activity.MyAccountActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name="com.whitelabel.app.activity.HomeActivity"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:taskAffinity="com.whitelabel.app"
+            android:theme="@style/BlackgroundBalckTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="landingpage"
+                    android:scheme="gemfive" />
+                <data
+                    android:host="product"
+                    android:scheme="gemfive" />
+                <!-- gemfive://landingpage/1111 -->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.whitelabel.app.activity.ProductActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackgroundWhiteTheme" />
+        <activity
+            android:name="com.whitelabel.app.activity.ShoppingCartActivity1"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.whitelabel.app.activity.BankTransaferActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.whitelabel.app.activity.PaymentHelpActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.whitelabel.app.activity.AddAddressActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.whitelabel.app.activity.EditAddressActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name="com.whitelabel.app.activity.HelpCenterDetialActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.whitelabel.app.activity.CurationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackgroundWhiteTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.whitelabel.app.activity.MerchantStoreFrontActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackgroundWhiteTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.whitelabel.app.activity.TrackingInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackgroundWhiteTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.whitelabel.app.activity.CheckoutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackgroundWhiteTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <!-- MOLPayActivity -->
+        <!-- <activity -->
+        <!-- android:name="com.molpay.molpayxdk.MOLPayActivity" -->
+        <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
+        <!-- android:screenOrientation="portrait" /> -->
+        <activity
+            android:name="com.whitelabel.app.activity.CheckoutPaymentStatusActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BlackgroundBalckTheme" />
+        <activity
+            android:name="com.whitelabel.app.activity.MyAccountChangePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.whitelabel.app.activity.MyAccountOrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.whitelabel.app.activity.ProductListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackgroundWhiteTheme" />
+        <activity
+            android:name="com.whitelabel.app.activity.CheckoutPaymentRedirectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.whitelabel.app.activity.FavoriteActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- android:theme="@style/ImageScale" -->
+        <activity
+            android:name="com.whitelabel.app.activity.ProductDetailPictureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.whitelabel.app.activity.ShoppingCartCampaignActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.whitelabel.app.activity.CreditInstructionActivity"
+            android:screenOrientation="portrait" />
+        <!--
+        <activity
+            android:name="com.whitelabel.app.activity.MainActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+        -->
+        <activity
+            android:name="com.whitelabel.app.activity.BankTransaferSuccessActivity"
+            android:label="@string/title_activity_bank_transafer_success"
+            android:screenOrientation="portrait" />
+
+        <!-- GcmReceiver -->
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.whitelabel.app" />
+            </intent-filter>
+        </receiver>
+        <!-- [START gcm_listener] -->
+        <service
+            android:name="com.whitelabel.app.notification.MyGcmListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <!-- [END gcm_listener] -->
+        <!-- [START instanceId_listener] -->
+        <service
+            android:name="com.whitelabel.app.notification.MyInstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+        <!-- [END instanceId_listener] -->
+        <service
+            android:name="com.whitelabel.app.notification.RegistrationIntentService"
+            android:exported="false" />
+
+        <activity
+            android:name="com.whitelabel.app.activity.NotificationDetailActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.whitelabel.app.activity.NotificationDetailOpenLinkActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.whitelabel.app.activity.HideFunctionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.whitelabel.app.activity.HideFunctionLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.whitelabel.app.activity.RegisterToHelpCenter"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.whitelabel.app.activity.SplashScreenActivity"
+            android:screenOrientation="portrait" />
+
+        <receiver
+            android:name="com.whitelabel.app.activity.NotificationReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="${fabricApiKey}" />
+
+        <activity
+            android:name="com.whitelabel.app.qrscan.QrScanActivity"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            tools:replace="screenOrientation" />
+        <activity
+            android:name="com.whitelabel.app.qrscan.QrScanErrorActivity"
+            android:screenOrientation="portrait" />
+        <!--
+     ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name="com.whitelabel.app.ui.brandstore.BrandStoreFontActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/product_item"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivProductImage"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:layout_alignParentTop="true"
+            android:layout_margin="0dp"
+            android:scaleType="fitCenter"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_product_list_out_of_stock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ivProductImage"
+            android:layout_alignRight="@+id/ivProductImage"
+            android:layout_alignBottom="@id/ivProductImage"
+            android:layout_alignTop="@id/ivProductImage"
+            android:background="@color/sswhite"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@color/black50000000">
+                <com.whitelabel.app.widget.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/out_of_stock2"
+                    android:textColor="@color/whiteFFFFFF"
+                    android:textSize="11sp"
+                    imaginato:textFont="LatoRegular"
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:padding="10dp"
+            android:layout_marginRight="2dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/rl_productlist_wish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_productlist_wish_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitCenter"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/wishlist_purple_normal_v2"
+                android:visibility="visible" />
+            <ImageView
+                android:id="@+id/iv_productlist_wish_icon2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitCenter"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/wishlist_purple_normal_v2"
+                android:visibility="visible" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_marginRight="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ivProductImage"
+            >
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/ctvProductBrand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="left|center_vertical"
+                android:layout_marginTop="4dp"
+                android:paddingLeft="9dp"
+                android:paddingRight="9dp"
+                android:singleLine="true"
+                android:text="@string/string"
+                android:textColor="@color/purple92018d"
+                android:textSize="11sp"
+                imaginato:textFont="LatoRegular"
+                />
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/ctvProductName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ctvProductBrand"
+                android:ellipsize="end"
+                android:gravity="left"
+                android:maxLines="2"
+                android:paddingLeft="9dp"
+                android:paddingRight="9dp"
+                android:text="@string/string"
+                android:textColor="@color/black000000"
+                android:textSize="13.5sp"
+                imaginato:textFont="LatoRegular"
+                />
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/ctvProductPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ctvProductName"
+                android:paddingTop="3dp"
+                android:ellipsize="end"
+                android:gravity="left"
+                android:paddingLeft="9dp"
+                android:paddingRight="9dp"
+                android:singleLine="true"
+                android:text="@string/string"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+                imaginato:textFont="LatoRegular"
+                />
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/ctvProductFinalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ctvProductPrice"
+                android:ellipsize="end"
+                android:gravity="left"
+                android:paddingLeft="9dp"
+                android:paddingRight="9dp"
+                android:singleLine="true"
+                android:text="@string/string"
+                android:textColor="@color/black"
+                android:textSize="13.5sp"
+                imaginato:textFont="LatoBold"
+                />
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/ctv_product_merchant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ctvProductFinalPrice"
+                android:paddingLeft="9dp"
+                android:paddingRight="9dp"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/gray888888"
+                android:textSize="11sp"
+                imaginato:textFont="LatoRegular"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

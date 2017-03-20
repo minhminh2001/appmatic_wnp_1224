@@ -1,0 +1,37 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+    </style>
+    <style name="AppThemeBlack" parent="AppTheme">
+        <item name="android:windowBackground">@color/black000000</item>
+    </style>
+    <style name="BlackgroundBalckTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/black000000</item>
+    </style>
+
+    <style name="BackgroundWhiteTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="startStyle" parent="AppThemeBlack" >
+
+        <item name="android:windowTranslucentStatus">true</item>
+        <!-- Navigation Bar -->
+        <item name="android:windowTranslucentNavigation">true</item>
+
+    </style>
+
+
+
+
+</resources>

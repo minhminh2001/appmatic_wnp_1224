@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+    <RelativeLayout
+        android:id="@+id/rlHeaderBar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/header_bar_height"
+        android:visibility="gone"
+        android:background="@color/black000000"
+        android:clickable="true">
+
+        <RelativeLayout
+            android:id="@+id/rl_vHeaderBarBack"
+            style="@style/HeaderBarLeftImageTouchTargetStyle">
+
+            <ImageView
+                style="@style/HeaderBarLeftImageStyle"
+                android:id="@+id/vHeaderBarBack"
+                android:src="@drawable/action_back"/>
+        </RelativeLayout>
+
+        <!--<ImageView-->
+            <!--android:id="@+id/vHeaderBarBack"-->
+            <!--android:layout_width="@dimen/header_bar_height"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:scaleType="center"-->
+            <!--android:src="@mipmap/s_back" />-->
+
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvHeaderBarTitle"
+            android:text="@string/select_server"
+            style="@style/HeaderBarTitleTextStyle" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_toolbar"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/common_toolbar"/>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyEEEEEE"/>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/exit_app_radius"
+
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:orientation="vertical">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/currentService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                style="@style/font_family_roboto_medium" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.whitelabel.app.widget.CustomEdit
+                    android:id="@+id/userName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    style="@style/font_family_robot_regular"
+                    toolbar:myHint="Username" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyE1E1E1"/>
+                <com.whitelabel.app.widget.CustomEdit
+                    android:id="@+id/password"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:singleLine="true"
+                    android:textColorHint="@color/hint"
+                    android:textCursorDrawable="@null"
+                    style="@style/font_family_robot_regular"
+                    toolbar:isPassword="true"
+                    toolbar:myHint="Password" />
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/greyE1E1E1"/>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="@string/shoppingcart_btn_cancel"
+                    android:textSize="14sp"
+                    android:textColor="@color/purple92018d"
+                    style="@style/font_family_roboto_medium" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/okay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="35dp"
+                    android:text="@string/Okay"
+                    android:textColor="@color/purple92018d"
+                    android:textSize="14sp"
+                    style="@style/font_family_roboto_medium" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"></TableRow>
+</LinearLayout>

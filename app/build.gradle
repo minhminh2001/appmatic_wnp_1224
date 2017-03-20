@@ -1,61 +1,174 @@
+//buildscript {
+//    repositories {
+//        jcenter()
+//        mavenCentral()
+//        maven { url 'https://maven.fabric.io/public' }
+//    }
+//    dependencies {
+//        classpath 'io.fabric.tools:gradle:1.+'
+//    }
+//}
+
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
-apply plugin: 'com.jakewharton.butterknife'
+//apply plugin: 'io.fabric'
+
+//repositories {
+//    maven { url 'https://maven.fabric.io/public' }
+//}
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
-    defaultConfig {
-        applicationId "com.whitelabel.app"
-        minSdkVersion 16
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude '.readme'
     }
+
+    dexOptions {
+        preDexLibraries = false
+    }
+    defaultConfig {
+        applicationId  rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode    rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        multiDexEnabled true
+    }
+
+    productFlavors{
+        appdev{
+            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
+            buildConfigField('String','REQUEST_URL','"https://appdev.gemfive.com/"')
+            buildConfigField('String','HASH_KEY','"123456"')
+            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
+            buildConfigField('String','FACEBOOK_ID','"1586589871584877"')
+        }
+        api{
+            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
+            buildConfigField('String',"REQUEST_URL",'"https://api.gemfive.com/"')
+            buildConfigField('String','HASH_KEY','"123456"')
+            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
+            buildConfigField('String','FACEBOOK_ID','"1586589871584877"')
+        }
+        uat{
+            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
+            buildConfigField('String',"REQUEST_URL",'"https://uat.gemfive.com/my/"')
+            buildConfigField('String','HASH_KEY','"123456"')
+            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
+            buildConfigField('String','FACEBOOK_ID','"1586589871584877"')
+        }
+        staging{
+            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
+            buildConfigField('String',"REQUEST_URL",'"https://staging.gemfive.com/my/"')
+            buildConfigField('String','HASH_KEY','"123456"')
+            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
+            buildConfigField('String','FACEBOOK_ID','"1586589871584877"')
+        }
+        livedebug{
+            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
+            buildConfigField('String',"REQUEST_URL",'"https://www.gemfive.com/my/"')
+            buildConfigField('String','HASH_KEY','"123456"')
+            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
+            buildConfigField('String','FACEBOOK_ID','"1586589871584877"')
+        }
+        liverelease{
+            manifestPlaceholders = [ fabricApiKey: "60c1a182ffa45626fcc599067b045cc2cde1d482" ]
+            buildConfigField('String',"REQUEST_URL",'"https://www.gemfive.com/my/"')
+            buildConfigField('String','HASH_KEY','"5d89We"')
+            buildConfigField('String','GA_TRACK_ID','"UA-62438602-3"')
+            buildConfigField('String','FACEBOOK_ID','"604176613049064"')
+        }
+    }
+
+    signingConfigs {
+        sign
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig  signingConfigs.sign
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-    productFlavors {
-        appdev {
-            manifestPlaceholders = [fabricApiKey: "111111"]
-            buildConfigField('String', 'REQUEST_URL', '"http://192.168.1.89:3000/"')
-            buildConfigField('String', 'GA_TRACK_ID', '"UA-93190712-1"')
-
-        }
-        live1 {
-            manifestPlaceholders = [fabricApiKey: "111"]
-            buildConfigField('String', "REQUEST_URL", '"http://54.169.30.48:80/"')
-            buildConfigField('String', 'GA_TRACK_ID', '"UA-83895512-7"')
-        }
+    sourceSets{
+        main{ jniLibs.srcDirs=['libs']}
     }
-
+    lintOptions {
+        abortOnError false
+    }
 }
-
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:design:25.2.0'
-    compile 'com.android.support:recyclerview-v7:25.2.0'
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.jakewharton:butterknife:8.4.0'
-    compile 'org.apache.httpcomponents:httpcore:4.4.4'
-    compile 'com.android.support:design:25.0.1'
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
-    compile 'io.reactivex:rxjava:1.1.0'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'com.squareup.retrofit2:retrofit:2.0.2'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
-    compile 'com.android.support:support-v4:25.0.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile project(':librarys:baseframework')
-    testCompile 'junit:junit:4.12'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile rootProject.ext.dependencies["httpcore"]
+    compile rootProject.ext.dependencies["recyclerview-v7"]
+    compile rootProject.ext.dependencies["design"]
+//    compile rootProject.ext.dependencies["gson"]
+    compile rootProject.ext.dependencies["okhttp-urlconnection"]
+    compile rootProject.ext.dependencies["okhttp-okio"]
+    compile rootProject.ext.dependencies["glide"]
+    compile rootProject.ext.dependencies["glide-okhttp"]
+    compile rootProject.ext.dependencies["play-service-gcm"]
+    compile rootProject.ext.dependencies["play-service-analytics"]
+    compile rootProject.ext.dependencies["facebook"]
+    compile rootProject.ext.dependencies["play_service_auth"]
+    compile rootProject.ext.dependencies["molpay-xdk"]
+    compile rootProject.ext.dependencies["firebase_code"]
+    compile rootProject.ext.dependencies["rxjava"]
+    compile rootProject.ext.dependencies["rxandroid"]
+    compile rootProject.ext.dependencies["zxing"]
+    compile rootProject.ext.dependencies["butterknife"]
+    compile rootProject.ext.dependencies["butterknife-compiler"]
+    compile rootProject.ext.dependencies["retrofit"]
+    compile rootProject.ext.dependencies["retrofit-gson"]
+    compile rootProject.ext.dependencies["retrofit-rxjava"]
+    compile rootProject.ext.dependencies["retrofit-logging"]
+    compile 'com.android.support:multidex:1.0.0'
+    compile "com.github.hotchemi:permissionsdispatcher:2.3.1"
+    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:2.3.1"
+//    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
+//        transitive = true;
+//    }
+    //    debugCompile rootProject.ext.dependencies["leak_canary_bug"]
+//    releaseCompile  rootProject.ext.dependencies["leak_canary_release"]
+//    testCompile rootProject.ext.dependencies["leak_canary_test"]
 }
+
+afterEvaluate {
+    tasks.matching {
+        it.name.startsWith('dex')
+    }.each { dx ->
+        if (dx.additionalParameters == null) {
+            dx.additionalParameters = []
+        }
+        dx.additionalParameters += '--multi-dex'
+        dx.additionalParameters += "--main-dex-list=$projectDir/multidex.keep".toString()
+        dx.additionalParameters += '--minimal-main-dex'
+    }
+}
+
+def ksFile = rootProject.file('keystore.properties')
+def props = new Properties();
+if (ksFile.canRead()) {
+    props.load(new FileInputStream(ksFile))
+
+    if (props != null) {
+        android.signingConfigs.sign.storeFile file(props['KEYSTORE_FILE'])
+        android.signingConfigs.sign.storePassword props['KEYSTORE_PASSWORD']
+        android.signingConfigs.sign.keyAlias props['KEYSTORE_ALIAS']
+        android.signingConfigs.sign.keyPassword props['KEYSTORE_ALIAS_PASSWORD']
+    } else {
+        println 'some entries in \'keystore.properties\' not found!'
+    }
+} else {
+    println '\'keystore.properties\' not found!'
+}
+

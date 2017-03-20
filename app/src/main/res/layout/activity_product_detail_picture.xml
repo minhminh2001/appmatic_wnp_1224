@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_productdetail_picture"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteffffff"
+    tools:context="com.whitelabel.app.activity.ProductDetailPictureActivity">
+    <ImageView
+        android:id="@+id/iv_productdetail_picture"
+        android:layout_width="match_parent"
+        android:layout_alignBottom="@+id/vp_productdetail_picture"
+        android:layout_alignTop="@+id/vp_productdetail_picture"
+        android:layout_alignLeft="@+id/vp_productdetail_picture"
+        android:layout_alignRight="@+id/vp_productdetail_picture"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteffffff"/>
+    <com.whitelabel.app.widget.ViewPagerFixed
+        android:id="@+id/vp_productdetail_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/whiteffffff" />
+
+    <LinearLayout
+        android:id="@+id/ll_productdetail_picture_grouptips"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal"></LinearLayout>
+</RelativeLayout>

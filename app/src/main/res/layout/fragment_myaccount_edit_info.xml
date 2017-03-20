@@ -1,0 +1,907 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+    <ScrollView
+        android:id="@+id/my_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/relative2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/whiteffffff"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <RelativeLayout
+                android:id="@+id/relative3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="visible">
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/my_photo"
+                    android:textColor="@color/hint"
+                    android:textSize="18sp"
+                    style="@style/font_family_robot_regular" />
+
+                <ImageView
+                    android:id="@+id/photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/profile" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/greyEEEEEE" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative3">
+
+                <LinearLayout
+                    android:id="@+id/ll_name2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/table_lable_margain_bottom"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <com.whitelabel.app.widget.CustomTextView
+                            android:id="@+id/ctv_account_firstName_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/table_margain_left"
+                            android:text="@string/first_name"
+                            android:textColor="@color/label_saved"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:visibility="invisible"
+                            style="@style/font_family_robot_regular" />
+                        <com.whitelabel.app.widget.CustomTextView
+                            android:layout_below="@+id/ctv_account_firstName_label"
+                            style="@style/font_family_robot_regular"
+                            android:id="@+id/ctv_account_firstName_label_ani"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/table_margain_left"
+                            android:text="@string/first_name"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:textColor="@color/label_active"
+                            android:visibility="invisible" />
+                        <RelativeLayout
+                            android:layout_below="@+id/ctv_account_firstName_label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                            android:layout_marginLeft="@dimen/table_margain_left">
+                            <com.whitelabel.app.widget.CustomEditText
+                                style="@style/font_family_robot_regular"
+                                android:id="@+id/et_account_firstName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="@string/first_name"
+                                android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                                android:singleLine="true"
+                                android:textSize="@dimen/editTextFontSize"
+                                android:textColor="@color/editColor"
+                                android:textCursorDrawable="@null"
+                                android:textColorHint="@color/hint"
+                                android:imeOptions="actionNext"
+                                android:nextFocusForward="@+id/lastName"/>
+                            <ImageView
+                                android:id="@+id/clear_first_name"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignTop="@+id/firstName"
+                                android:layout_centerVertical="true"
+                                android:background="@mipmap/text_elimination"
+                                android:layout_marginRight="2dp"
+                                android:visibility="gone"/>
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <com.whitelabel.app.widget.CustomTextView
+                            android:id="@+id/ctv_account_lastName_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="0dp"
+                            android:text="@string/last_name"
+                            android:textColor="@color/label_saved"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:visibility="invisible"
+                            style="@style/font_family_robot_regular" />
+                        <com.whitelabel.app.widget.CustomTextView
+                            android:layout_below="@+id/ctv_account_lastName_label"
+                            style="@style/font_family_robot_regular"
+                            android:id="@+id/ctv_account_lastName_label_ani"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="@string/last_name"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:textColor="@color/label_active"
+                            android:visibility="invisible" />
+                        <RelativeLayout
+                            android:layout_below="@+id/ctv_account_lastName_label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="5dp">
+                            <com.whitelabel.app.widget.CustomEditText
+                                style="@style/font_family_robot_regular"
+                                android:id="@+id/et_account_lastName"
+                                android:textSize="@dimen/editTextFontSize"
+                                android:textColor="@color/editColor"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="@string/last_name"
+                                android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                                android:singleLine="true"
+                                android:textCursorDrawable="@null"
+                                android:textColorHint="@color/hint"
+                                />
+                            <ImageView
+                                android:id="@+id/clear_last_name"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignTop="@+id/lastName"
+                                android:layout_centerVertical="true"
+                                android:background="@mipmap/text_elimination"
+                                android:visibility="gone"/>
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_height="wrap_content">
+                    <View
+                        android:id="@+id/view_firstname_line"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/line_height"
+                        android:layout_marginTop="0dp"
+                        android:background="@color/edittext_line" />
+                    <View
+                        android:id="@+id/view_lastname_line"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/line_height"
+                        android:layout_marginTop="0dp"
+                        android:background="@color/edittext_line" />
+                </LinearLayout>
+
+            </RelativeLayout>
+            <View
+                android:layout_centerHorizontal="true"
+                android:layout_width="@dimen/line_height"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/relative4"
+                android:layout_alignBottom="@+id/relative4"
+                android:background="@color/edittext_line"></View>
+
+            <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                android:id="@+id/rl_editinfo_email"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative4">
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_email_label"
+                    android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="@dimen/table_margain_left">
+
+
+                    <com.whitelabel.app.widget.CustomEditText
+                        android:id="@+id/et_account_email"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/email"
+                        android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                        android:editable="false"
+                        android:singleLine="true"
+                        android:textColorHint="@color/hint"
+                        android:textSize="@dimen/editTextFontSize"
+                        android:textColor="@color/greyCCCCCC"
+                        android:textCursorDrawable="@null"
+                        style="@style/font_family_robot_regular"
+                        android:layout_centerVertical="true"/>
+                    <ImageView
+                        android:id="@+id/clear_mail_name"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/text_elimination"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_email_label_ani"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_email_label"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:text="@string/email"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:textColor="@color/label_active"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_email_label"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:layout_marginTop="@dimen/table_lable_margain_top"
+                    android:text="@string/email"
+                    android:textColor="@color/label_saved"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+            </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+            <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                android:id="@+id/rl_editinfo_country"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_editinfo_email">
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/ctv_account_country_label"
+                    android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                    android:layout_marginLeft="@dimen/table_margain_left">
+
+                    <com.whitelabel.app.widget.CustomEditText
+                        android:id="@+id/et_account_country"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:editable="false"
+                        android:hint="@string/country"
+                        android:singleLine="true"
+                        android:textSize="@dimen/editTextFontSize"
+                        android:textColor="@color/editColor"
+                        android:text="@string/malaysia"
+                        android:layout_centerVertical="true"
+                        android:textColorHint="@color/hint"
+                        android:textCursorDrawable="@null"
+                        style="@style/font_family_robot_regular" />
+                    <ImageView
+                        android:id="@+id/iv_country_arrow"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/arrow_down_fill" />
+                </RelativeLayout>
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_country_label_ani"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_country_label"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:text="@string/country"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:textColor="@color/label_active"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_country_label"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:layout_marginTop="@dimen/table_lable_margain_top"
+                    android:text="@string/country"
+                    android:textColor="@color/label_saved"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+            </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+            <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                android:id="@+id/rl_editinfo_birthday"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_editinfo_country">
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/ctv_account_birthday_label">
+
+
+                    <com.whitelabel.app.widget.CustomEditText
+                        android:id="@+id/et_account_birthday"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:editable="false"
+                        android:hint="@string/birthday"
+                        android:textSize="@dimen/editTextFontSize"
+                        android:textColor="@color/editColor"
+                        android:singleLine="true"
+                        android:textColorHint="@color/hint"
+                        android:layout_centerVertical="true"
+                        android:textCursorDrawable="@null"
+                        style="@style/font_family_robot_regular" />
+                    <ImageView
+                        android:id="@+id/iv_birther_arrow"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/arrow_down_fill" />
+                </RelativeLayout>
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_birthday_label_ani"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_birthday_label"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:text="@string/birthday"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:textColor="@color/label_active"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_birthday_label"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:layout_marginTop="@dimen/table_lable_margain_top"
+                    android:text="@string/birthday"
+                    android:textColor="@color/label_saved"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+            </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+            <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                android:id="@+id/rl_editinfo_gender"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_editinfo_birthday">
+
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_gender_label"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                    android:layout_marginLeft="@dimen/table_margain_left">
+
+                    <com.whitelabel.app.widget.CustomEditText
+                        android:id="@+id/et_account_gender"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:editable="false"
+                        android:hint="@string/gender"
+                        android:textSize="@dimen/editTextFontSize"
+                        android:textColor="@color/editColor"
+                        android:singleLine="true"
+                        android:textColorHint="@color/hint"
+                        android:textCursorDrawable="@null"
+                        style="@style/font_family_robot_regular" />
+
+                    <ImageView
+                        android:id="@+id/iv_gender_arrow"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/arrow_down_fill" />
+                </RelativeLayout>
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_gender_label_ani"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_gender_label"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:text="@string/gender"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:textColor="@color/label_active"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_gender_label"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:layout_marginTop="@dimen/table_lable_margain_top"
+                    android:text="@string/gender"
+                    android:textColor="@color/label_saved"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+            </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+            <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                android:id="@+id/rl_editinfo_monthly"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_editinfo_gender"
+                android:visibility="visible">
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_monthlyIncome_label"
+                    android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="@dimen/table_margain_left">
+                    <com.whitelabel.app.widget.CustomEditText
+                        android:id="@+id/et_account_monthlyIncome"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:editable="false"
+                        android:hint="@string/monthly_income"
+                        android:singleLine="true"
+                        android:textSize="@dimen/editTextFontSize"
+                        android:textColor="@color/editColor"
+                        android:textColorHint="@color/hint"
+                        android:textCursorDrawable="@null"
+                        style="@style/font_family_robot_regular" />
+                    <ImageView
+                        android:id="@+id/iv_monthly_arrow"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/arrow_down_fill" />
+                </RelativeLayout>
+
+
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_monthlyIncome_label_ani"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ctv_account_monthlyIncome_label"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:text="@string/monthly_income"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:textColor="@color/label_active"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_monthlyIncome_label"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:layout_marginTop="@dimen/table_lable_margain_top"
+                    android:text="@string/monthly_income"
+                    android:textColor="@color/label_saved"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+            </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+            <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                android:id="@+id/rl_editinfo_postcode"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_editinfo_monthly">
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_zip_label"
+                    android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    >
+                    <com.whitelabel.app.widget.CustomEditText
+                        android:id="@+id/et_account_zip"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:inputType="number"
+                        android:hint="@string/postal_code"
+                        android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                        android:textSize="@dimen/editTextFontSize"
+                        android:textColor="@color/editColor"
+                        android:singleLine="true"
+                        android:textColorHint="@color/hint"
+                        android:textCursorDrawable="@null"
+                        style="@style/font_family_robot_regular" />
+
+                    <ImageView
+                        android:id="@+id/clear_code_name"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/text_elimination"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_zip_label_ani"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_zip_label"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:text="@string/postal_code"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:textColor="@color/label_active"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_zip_label"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:layout_marginTop="@dimen/table_lable_margain_top"
+                    android:text="@string/postal_code"
+                    android:textColor="@color/label_saved"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+            </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+            <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                android:id="@+id/rl_editinfo_city"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_editinfo_postcode">
+
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_city_label"
+                    android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="@dimen/table_margain_left">
+                    <com.whitelabel.app.widget.CustomEditText
+                        android:imeOptions="actionNext"
+                        android:nextFocusForward="@+id/et_account_eg"
+                        android:id="@+id/et_account_city"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:hint="@string/city"
+                        android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                        android:singleLine="true"
+                        android:textColorHint="@color/hint"
+                        android:textSize="@dimen/editTextFontSize"
+                        android:textColor="@color/editColor"
+                        android:textCursorDrawable="@null"
+                        style="@style/font_family_robot_regular" />
+                    <ImageView
+                        android:id="@+id/clear_city_name"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/text_elimination"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_city_label_ani"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_city_label"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:text="@string/city"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:textColor="@color/label_active"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_city_label"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:layout_marginTop="@dimen/table_lable_margain_top"
+                    android:text="@string/city"
+                    android:textColor="@color/label_saved"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+            </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+            <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                android:id="@+id/rl_editinfo_state"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_editinfo_city">
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_state_label"
+                    android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:layout_marginTop="5dp">
+                    <com.whitelabel.app.widget.CustomEditText
+                        android:id="@+id/et_account_stateProvince"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:editable="false"
+                        android:hint="@string/_state"
+                        android:singleLine="true"
+                        android:textColorHint="@color/hint"
+                        android:textCursorDrawable="@null"
+                        style="@style/font_family_robot_regular" />
+                    <ImageView
+                        android:id="@+id/iv_state_arrow"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/arrow_down_fill" />
+                </RelativeLayout>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_state_label_ani"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ctv_account_state_label"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:text="@string/_state"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:textColor="@color/label_active"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/ctv_account_state_label"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:layout_marginTop="@dimen/table_lable_margain_top"
+                    android:text="@string/_state"
+                    android:textColor="@color/label_saved"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:visibility="invisible"
+                    style="@style/font_family_robot_regular" />
+
+            </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative13"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_editinfo_state">
+
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/phoneNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:text="@string/_phone"
+                    android:textColor="@color/label_saved"
+                    android:textSize="@dimen/labelTextFontSize"
+                    style="@style/font_family_robot_regular" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/Phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/phoneNumber"
+                    android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/add6"
+                    android:textColor="@color/editColor"
+                    android:textSize="@dimen/editTextFontSize"
+                    style="@style/font_family_robot_regular" />
+                <View
+                    android:layout_marginRight="-3dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignLeft="@+id/phoneNumber"
+                    android:layout_alignRight="@+id/phoneNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/line_height"
+                    android:background="@color/edittext_line" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/phoneNumber">
+                    <View
+                        android:layout_width="@dimen/line_height"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/rl_eg_layout"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginBottom="-10dp"
+                        android:background="@color/edittext_line"></View>
+                    <RelativeLayout
+                        android:id="@+id/rl_eg_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ctv_account_eg_label"
+                        android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp">
+                        <com.whitelabel.app.widget.CustomEditText
+                            android:id="@+id/et_account_eg"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="@null"
+                            android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                            android:hint="@string/eg123"
+                            android:maxLength="@integer/phone_number_length"
+                            android:inputType="phone"
+                            android:textSize="@dimen/editTextFontSize"
+                            android:textColor="@color/editColor"
+                            android:singleLine="true"
+                            android:textColorHint="@color/hint"
+                            android:textCursorDrawable="@null"
+                            style="@style/font_family_robot_regular" />
+                        <ImageView
+                            android:id="@+id/clear_phone_name"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/text_elimination"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/ctv_account_eg_label_ani"
+                        android:layout_below="@+id/ctv_account_eg_label"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/eg123"
+                        android:textSize="@dimen/labelTextFontSize"
+                        android:textColor="@color/label_active"
+                        android:visibility="invisible"
+                        style="@style/font_family_robot_regular" />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/ctv_account_eg_label"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/eg123"
+                        android:textColor="@color/label_saved"
+                        android:textSize="@dimen/labelTextFontSize"
+                        android:visibility="invisible"
+                        style="@style/font_family_robot_regular" />
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/phoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/v_editinfo_phone_line"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="@dimen/line_height"
+                        android:background="@color/edittext_line" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative14"
+                android:layout_width="fill_parent"
+                android:layout_height="70dp"
+                android:layout_below="@+id/relative13">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/edittext_line" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/changePassword"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/table_lable_margain_top"
+                    android:text="@string/ChangePassword"
+                    android:textSize="@dimen/editTextFontSize"
+                    android:textColor="@color/label_active"
+                    style="@style/font_family_robot_regular" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relative14"
+                android:layout_centerHorizontal="true">
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/save_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:textColor="@color/red"
+                    style="@style/font_family_robot_regular" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

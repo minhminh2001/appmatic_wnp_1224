@@ -1,0 +1,212 @@
+package com.whitelabel.app.utils;
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.SystemClock;
+import android.text.TextUtils;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.analytics.ecommerce.Product;
+import com.google.android.gms.analytics.ecommerce.ProductAction;
+import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.model.ShoppingCartListEntityCell;
+
+import java.util.ArrayList;
+
+/**
+ * Created by Administrator on 2016/6/22.
+ */
+public class GaTrackHelper {
+    public static GaTrackHelper gaTrackHelper;
+    private  GaTrackHelper(){
+
+    }
+
+    public static GaTrackHelper getInstance(){
+            if(gaTrackHelper==null){
+                synchronized (GaTrackHelper.class){
+                    if(gaTrackHelper==null){
+                        gaTrackHelper=new GaTrackHelper();
+                    }
+                }
+            }
+        return gaTrackHelper;
+    }
+
+
+    public  void googleAnalyticsTransaction(String transactionId,String affiliation,double revenue,double tax,double shipping,String currCode){
+        Tracker mTracker= GemfiveApplication.getInstance().getAnalyticTracherInstance(null);
+        HitBuilders.TransactionBuilder transactionBuilder=new HitBuilders.TransactionBuilder();
+        transactionBuilder.setTransactionId(transactionId)
+                .setAffiliation(affiliation)
+                .setRevenue(revenue)
+                .setTax(tax)
+                .setShipping(shipping)
+                .setCurrencyCode(null);
+        mTracker.send(transactionBuilder.build());
+
+    }
+    public  void googleAnalyticsItem(String transactionId,String name,String sku,String category,double price,Long qty,String currCode){
+        Tracker mTracker=GemfiveApplication.getInstance().getAnalyticTracherInstance(null);
+        HitBuilders.ItemBuilder itemBuilder=new HitBuilders.ItemBuilder();
+        itemBuilder.setTransactionId(transactionId)
+                .setName(name)
+                .setSku(sku)
+                .setCategory(category)
+                .setPrice(price)
+                .setQuantity(qty)
+                .setCurrencyCode(currCode);
+        mTracker.send(itemBuilder.build());
+
+    }
+    public  void googleAnalyticsEvent(String category,String action,String lable,Long value){
+        Tracker mTracker=GemfiveApplication.getInstance().getAnalyticTracherInstance(null);
+        HitBuilders.EventBuilder eventBuilder=new HitBuilders.EventBuilder();
+        eventBuilder.setCategory(category);
+        eventBuilder.setAction(action);
+        if(!TextUtils.isEmpty(lable)){
+            eventBuilder.setLabel(lable);
+        }
+        if(value!=null){
+            eventBuilder.setValue(value);
+        }
+        mTracker.send(eventBuilder.build());
+    }
+    public  void googleAnalytics(String screenName,Context context){
+        Tracker mTracker= GemfiveApplication.getInstance().getAnalyticTracherInstance(null);
+        mTracker.setScreenName(screenName);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+    //ga  add card
+    public void googleAnalyticsAddCart(Context context,String id,String name){
+        Product gaProduct =new Product();
+        gaProduct.setId(id);
+        gaProduct.setName(name);
+        ProductAction productAction=new ProductAction(ProductAction.ACTION_ADD);
+        HitBuilders .ScreenViewBuilder builder=new HitBuilders.ScreenViewBuilder();
+        builder.addProduct(gaProduct).setProductAction(productAction);
+        Tracker tracker=GemfiveApplication.getInstance().getAnalyticTracherInstance(null);
+        tracker.setScreenName("ProductDetail--AddCart");
+        tracker.send(builder.build());
+
+    }
+
+
+
+    public void googleAnalyticsProductDetail(Context context,String id){
+        Product product=new Product();
+        product.setId(id);
+        ProductAction productAction=new ProductAction(ProductAction.ACTION_DETAIL);
+        HitBuilders .ScreenViewBuilder builder=new HitBuilders.ScreenViewBuilder();
+        builder.addProduct(product).setProductAction(productAction);
+        Tracker tracker=GemfiveApplication.getInstance().getAnalyticTracherInstance(null);
+        tracker.setScreenName("Product Detail Screen");
+        tracker.send(builder.build());
+    }
+
+    public void googleAnalyticsDeleteCart(Context context,String id,String name){
+        Product gaProduct =new Product();
+        gaProduct.setId(id);
+        gaProduct.setName(name);
+        ProductAction productAction=new ProductAction(ProductAction.ACTION_REMOVE);
+        HitBuilders .ScreenViewBuilder builder=new HitBuilders.ScreenViewBuilder();
+        builder.addProduct(gaProduct).setProductAction(productAction);
+        Tracker tracker=GemfiveApplication.getInstance().getAnalyticTracherInstance(null);
+        tracker.setScreenName("ShoppingCart--deleteProduct");
+        tracker.send(builder.build());
+    }
+
+
+
+    public void googleAnalyticsStartCheckout(Context context,String ids,String ScreenName,int step){
+        ProductAction productAction=new ProductAction(ProductAction.ACTION_CHECKOUT);
+        productAction.setCheckoutStep(step);
+        HitBuilders .ScreenViewBuilder builder=new HitBuilders.ScreenViewBuilder();
+        builder.setProductAction(productAction);
+        try {
+            if (ids != null && ids.split(",").length > 0) {
+                String [] productId=ids.split(",");
+                for(int i=0;i<productId.length;i++){
+                     Product product=new Product();
+                     product.setId(productId[i]);
+                    builder.addProduct(product);
+                }
+            }
+        }catch(Exception ex){
+            ex.getStackTrace();
+        }
+        Tracker tracker=GemfiveApplication.getInstance().getAnalyticTracherInstance(null);
+        tracker.setScreenName(ScreenName);
+        tracker.send(builder.build());
+    }
+
+
+
+    public void googleAnalyticsCheckoutSuccess(Context context , ArrayList<ShoppingCartListEntityCell> items,String orderId,double grandTotal,double shippingFee){
+        try {
+            HitBuilders.ScreenViewBuilder builder = new HitBuilders.ScreenViewBuilder();
+            ProductAction productAction = new ProductAction(ProductAction.ACTION_PURCHASE);
+            productAction.setTransactionId(orderId);
+            productAction.setTransactionRevenue(grandTotal);
+            productAction.setTransactionAffiliation("In-app Store");
+            productAction.setTransactionTax(0.00);
+            productAction.setTransactionShipping(shippingFee);
+            for (int i = 0; i < items.size(); i++) {
+                ShoppingCartListEntityCell cell = items.get(i);
+                Product product = new Product();
+                product.setId(cell.getProductId());
+                product.setName(cell.getName());
+                String firstCategory = cell.getFirstCategory();
+                if ("".equals(firstCategory) || firstCategory == null) {
+                    firstCategory = cell.getCategory();
+                }
+                product.setCategory(firstCategory);
+                product.setPrice(Double.parseDouble(cell.getPrice().replace(",", "").replace("RM", "").trim()));
+                product.setQuantity(Integer.parseInt(cell.getQty().replace(",", "").replace("RM", "").trim()));
+                builder.addProduct(product);
+            }
+            builder.setProductAction(productAction);
+            Tracker tracker = GemfiveApplication.getInstance().getAnalyticTracherInstance(null);
+            tracker.setScreenName("Checkout Sucess Screen");
+            tracker.send(builder.build());
+        }catch (Exception ex){
+            ex.getStackTrace();
+        }
+    }
+
+    public void googleAnalyticsReportActivity(Activity activity,boolean start){
+        try{
+            if(start){
+                GemfiveApplication.getInstance().getAnalyticInstance().reportActivityStart(activity);
+            }else{
+                GemfiveApplication.getInstance().getAnalyticInstance().reportActivityStop(activity);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public static String GA_TIME_CATEGORY_IMPRESSION="Impression Screens Loading";
+    public static String GA_TIME_CATEGORY_CHECKOUT="Checkout Step";
+    public static String GA_TIME_CATEGORY_PAYMENT="Payment";
+    public Long googleAnalyticsTimeStart(){
+        return SystemClock.elapsedRealtime();
+    }
+    public void googleAnalyticsTimeStop(String category,Long startTime,String name){
+        if(startTime==0){
+            return;
+        }
+        Long endTime=SystemClock.elapsedRealtime();
+        Tracker mTracker= GemfiveApplication.getInstance().getAnalyticTracherInstance(null);
+        // Build and send timing.
+        mTracker.send(new HitBuilders.TimingBuilder()
+                .setCategory(category)
+                .setValue(endTime-startTime)
+                .setVariable(name)
+                .build());
+        JLogUtils.d("GaTrack",name+">>load time:"+(endTime-startTime)+">>endTime:"+endTime+">>startTime"+startTime);
+    }
+}

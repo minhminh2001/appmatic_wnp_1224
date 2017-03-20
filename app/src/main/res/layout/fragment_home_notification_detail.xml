@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rlHeaderBar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/header_bar_height"
+        android:background="@color/black000000"
+        android:clickable="true">
+        <RelativeLayout
+            android:id="@+id/rl_ivHeaderBarMenu"
+            style="@style/HeaderBarLeftImageTouchTargetStyle">
+
+            <ImageView
+                style="@style/HeaderBarLeftImageStyle"
+                android:id="@+id/ivHeaderBarMenu"
+                android:src="@drawable/action_back"/>
+        </RelativeLayout>
+
+        <!--<ImageView-->
+            <!--android:id="@+id/ivHeaderBarMenu"-->
+            <!--android:layout_width="45dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingTop="8dp"-->
+            <!--android:paddingBottom="8dp"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--android:src="@drawable/draw_v2_back" />-->
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvHeaderBarTitle"
+            style="@style/HeaderBarTitleTextStyle"
+            android:text="@string/notification_detail_title" />
+
+
+    </RelativeLayout>
+
+    <com.whitelabel.app.widget.CustomWebView
+        android:id="@+id/webview_Detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whiteFFFFFF" />
+</LinearLayout>

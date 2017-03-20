@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/statusbar_height"
+        android:layout_alignParentTop="true"
+        android:background="@color/black000000" />
+
+    <RelativeLayout
+        android:id="@+id/rl_shopping_cart_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/black000000"
+        android:visibility="visible">
+
+        <include layout="@layout/common_toolbar" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/mParent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_shopping_cart_header">
+
+    </FrameLayout>
+</RelativeLayout>

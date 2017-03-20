@@ -1,3 +1,684 @@
 <resources>
-    <string name="app_name">White-label</string>
+    <string name="app_name">GEMFIVE</string>
+
+    <!-- Global Data-->
+    <string name="service_version">1.0.5</string>
+    <string name="facebook_app_id_test">1586589871584877</string>
+    <string name="facebook_app_id_live">604176613049064</string>
+    <string name="gcm_sender_id">364318508430</string>
+    <string name="auth_name">gemfive</string>
+    <string name="auth_pwd">gogogo</string>
+    <string name="ga_tracking_id_test">UA-72586399-2</string>
+    <string name="ga_tracking_id_live">UA-62438602-3</string>
+    <string name="checkout_hash_key_test">123456</string>
+    <string name="checkout_hash_key_live">5d89We</string>
+    <string name="download_image_path">appservice/image/index</string>
+    <string name="upload_file_path">appservice/order/uploadTransferProof</string>
+    <string name="jump_market_uri">market://details?id=com.whitelabel.app</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="size_array">
+        <item>S</item>
+        <item>M</item>
+        <item>ML</item>
+        <item>XS</item>
+        <item>XL</item>
+    </string-array>
+    <string-array name="color_array">00</string-array>
+    <string name="Sun">Sun</string>
+    <string name="Mon">Mon</string>
+    <string name="Tues">Tues</string>
+    <string name="Wed">Wed</string>
+    <string name="Thur">Thur</string>
+    <string name="Fri">Fri</string>
+    <string name="Sat">Sat</string>
+    <string name="Sunday">Sunday</string>
+    <string name="Monday">Monday</string>
+    <string name="Tuesday">Tuesday</string>
+    <string name="Wednesday">Wednesday</string>
+    <string name="Thursday">Thursday</string>
+    <string name="Friday">Friday</string>
+    <string name="Saturday">Saturday</string>
+
+    <string-array name="WeekAbbr">
+        <item name="Sun">Sun</item>
+        <item name="Mon">Mon</item>
+        <item name="Tues">Tue</item>
+        <item name="Wed">Wed</item>
+        <item name="Thur">Thu</item>
+        <item name="Fri">Fri</item>
+        <item name="Sat">Sat</item>
+    </string-array>
+    <string-array name="Week">
+        <item name="Sunday">Sunday</item>
+        <item name="Monday">Monday</item>
+        <item name="Tuesday">Tuesday</item>
+        <item name="Wednesday">Wednesday</item>
+        <item name="Thursday">Thursday</item>
+        <item name="Friday">Friday</item>
+        <item name="Saturday">Saturday</item>
+    </string-array>
+
+    <string name="Jan">Jan</string>
+    <string name="Feb">Feb</string>
+    <string name="Mar">Mar</string>
+    <string name="Apr">Apr</string>
+    <string name="May">May</string>
+    <string name="June">June</string>
+    <string name="July">July</string>
+    <string name="Aug">Aug</string>
+    <string name="Sept">Sept</string>
+    <string name="Oct">Oct</string>
+    <string name="Nov">Nov</string>
+    <string name="Dec">Dec</string>
+    <string name="January">January</string>
+    <string name="February">February</string>
+    <string name="March">March</string>
+    <string name="April">April</string>
+    <string name="August">August</string>
+    <string name="September">September</string>
+    <string name="October">October</string>
+    <string name="November">November</string>
+    <string name="December">December</string>
+
+    <string-array name="MonthAbbr">
+        <item name="Jan">Jan</item>
+        <item name="Feb">Feb</item>
+        <item name="Mar">Mar</item>
+        <item name="Apr">Apr</item>
+        <item name="May">May</item>
+        <item name="June">June</item>
+        <item name="July">July</item>
+        <item name="Aug">Aug</item>
+        <item name="Sept">Sept</item>
+        <item name="Oct">Oct</item>
+        <item name="Nov">Nov</item>
+        <item name="Dec">Dec</item>
+    </string-array>
+    <string-array name="Month">
+        <item name="January">January</item>
+        <item name="February">February</item>
+        <item name="March">March</item>
+        <item name="April">April</item>
+        <item name="May">May</item>
+        <item name="June">June</item>
+        <item name="July">July</item>
+        <item name="August">August</item>
+        <item name="September">September</item>
+        <item name="October">October</item>
+        <item name="November">November</item>
+        <item name="December">December</item>
+    </string-array>
+
+    <!-- Global Tips -->
+    <string name="Global_Error_Internet">Please check the internet, and try again.</string>
+    <string name="Global_Error_Server">Something went wrong, pls try again later.</string>
+    <!-- Facebook Login -->
+    <string name="FB_Login_tips_error">Please check the internet, and try again.</string>
+
+    <!-- XlistView -->
+    <string name="customxlistview_header_hint_normal">The drop-down refresh</string>
+    <string name="customxlistview_header_hint_ready">load data</string>
+    <string name="customxlistview_header_hint_loading">loading...</string>
+    <string name="customxlistview_header_last_time"></string>
+    <string name="customxlistview_footer_hint_normal">Load more</string>
+
+    <string name="messagedialog_message">Message</string>
+    <string name="messagedialog_ok">OK</string>
+    <string name="messagedialog_cancel">CANCEL</string>
+    <string name="messagedialog_settings">SETTINGS</string>
+    <string name="messagedialog_allow">ALLOW</string>
+    <string name="messagedialog_deny">DENY</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!--SHOPPINGCART MODULE-->
+    <string name="shoppingcart_shippingfeehint">*Shipping fees may apply</string>
+    <string name="SHOPPINGCART">Shopping Cart</string>
+    <string name="hint_GEMCash_voucher">Enter your GEMCash voucher code</string>
+    <string name="APPLY">APPLY</string>
+    <string name="Subtotal">Subtotal</string>
+    <string name="Voucher">Voucher</string>
+    <string name="store_credit">Store Credits</string>
+
+    <string name="description_on_page_end">(6% GST applied where applicable)</string>
+    <string name="CHECKOUT">Checkout</string>
+    <string name="shopping_cart_nothing_text">Your shopping cart is currently empty.</string>
+    <string name="shopping_cart_nothing_bottom_button">LET&#180;S GO SHOPPING</string>
+    <string name="apply_hint_green">Voucher code \&#039;$voucherCode$\&#039; is applied.</string>
+    <string name="apply_hint_red">This is a required field.</string>
+    <string name="checkout_payment_dialog_title">CVC&#160;/&#160;CVV2</string>
+    <string name="checkout_payment_dialog_text2">For American Express holders, CVV is the special 4-digit printed next to the card number on the front of your card.</string>
+
+    <string name="checkout_payment_dialog_text1">For Visa &#038; MasterCard holders, CVV is the special 3-digit printed next to the signature area, on the back of your card.</string>
+    <string name="Qunatity">Quantity:&#160;</string>
+    <!--checkout module-->
+    <string name="shipping">SHIPPING</string>
+    <string name="payment">PAYMENT</string>
+    <string name="review">REVIEW</string>
+    <string name="CONTINUE">CONTINUE</string>
+    <string name="Ship_To">Ship To: </string>
+    <string name="ADD_NEW_ADDRESS">+  ADD ADDRESS</string>
+    <string name="Shipping_Fee">Shipping Fee</string>
+    <string name="I_would_like_to_pay_with">I would like to pay with</string>
+    <string name="Grand_Total">GRAND TOTAL:</string>
+    <string name="Grand_Total_below_description">6% GST applied where applicable &#160;</string>
+    <string name="Payment_Method">Payment Method: </string>
+    <string name="Payment_Method_Edit_Label">Payment Method</string>
+    <string name="PLACE_MY_ORDER">PLACE MY ORDER</string>
+    <string name="payment_method_ONLINE_BANKING">Online Banking</string>
+    <string name="payment_method_CREDIT_DEBITCARD">Credit &amp; Debit Card</string>
+    <string name="dialog_checkout_text">Thank you for your confirmation.\n Please do not close this mobile application while we are processing your payment.</string>
+    <string name="payment_status_wrong">Maybe something went wrong during \n the payment process. \n Please try again.</string>
+
+    <string name="payment_molpay_hint">We are processing your payment, please wait.</string>
+    <string name="This_is_a_required_field">This is a required field.</string>
+    <string name="Credit_Card_Number">Credit Card Number</string>
+    <string name="CVC_CVV2">CVC&#160;/&#160;CVV2</string>
+    <string name="MM_YY">MM&#160;|&#160;YY</string>
+    <string name="Name_On_Card">Name On Card</string>
+    <string name="Expiration_Date">Expiration Date</string>
+    <string name="Card_Type">Card Type</string>
+    <string name="State">State </string>
+    <string name="Issuer_Bank">Issuer Bank</string>
+    <string name="PAYMENT_STATUS">Payment Status</string>
+    <string name="RETRY">RETRY</string>
+    <string name="Oops.">Oops.</string>
+    <string name="Thank_you_for_your_order">Thank you for your order</string>
+    <string name="Your_order_number_is">Your order number is:</string>
+    <string name="A_confirmation_email_has_been_sent_to">A confirmation email has been sent to</string>
+    <string name="yourmail_mail.com">yourmail@mail.com</string>
+    <string name="CHECK_ORDER">CHECK ORDER</string>
+    <string name="CONTINUE_SHOPPING">CONTINUE SHOPPING</string>
+    <string name="Payment_channel_is_incorrect">Payment channel is incorrect</string>
+    <string name="Malaysia">Malaysia</string>
+
+    <!-- email bound -->
+    <string name="loginregister_emailbound_header_title">Welcome To Gemfive</string>
+    <string name="loginregister_emailbound_message">You\'re almost there!\nTo complete your GEMFIVE registration, please enter your email address: (Don\'t worry, we will never share your private information with others)</string>
+    <string name="loginregister_emailbound_email_hint">Email</string>
+    <string name="loginregister_emailbound_createaccount">CREATE ACCOUNT</string>
+    <string name="loginregister_emailbound_tips_error_email_empty">This is a required field.</string>
+    <string name="loginregister_emailbound_tips_error_email_format">Please enter a valid email address. For example johndoe@domain.com.</string>
+
+    <!-- My Account -->
+    <string name="myorder_detail_instruction">*Orders placed after 5pm or at the weekend, including public holidays, will be processed the next working day.</string>
+    <string name="myorder_detail_description_on_page_end">(6% GST applied where applicable)</string>
+    <string name="ChangePassword">Change Password</string>
+    <string name="You_have_no_orders_placed">You have no orders placed.</string>
+    <string name="Order_Number">Order No.</string>
+    <string name="Products">Products</string>
+    <string name="Shipping_Address">Shipping Address: </string>
+    <string name="Quantity__">Quantity:&#160;</string>
+    <string name="RM">RM&#160;</string>
+
+    <!--<string name="order_status_text_Cancel">Canceled</string>
+    <string name="order_status_text_suborder_verified">Suborder Verified</string>
+    <string name="order_status_text_Pending">Pending</string>
+    <string name="order_status_text_Processing">Processing</string>
+    <string name="order_status_text_Shipped">Shipped</string>
+    <string name="order_status_text_Delivered">Delivered</string>
+    <string name="order_status_text_Delivery_Failed">Delivery&#160;Failed</string>
+    <string name="order_status_text_Delivery_Failed">Delivery Failed</string>-->
+
+    <!--login-->
+    <string name="RegisterNow"><u>Register now.</u></string>
+    <string name="ClickEmail"><u>Click here</u></string>
+    <!--register-->
+    <string name="SignInNow"> <u>Sign in now.</u></string>
+
+    <!-- Size Picker -->
+    <string name="global_picker_size_cancel">Cancel</string>
+    <string name="global_picker_size_done">Done</string>
+
+    <!-- Three Picker -->
+    <string name="global_picker_three_cancel">Cancel</string>
+    <string name="global_picker_three_done">Done</string>
+
+    <string-array name="wishlist">
+        <item>remove</item>
+    </string-array>
+    <string-array name="addressbook">
+        <item>edit</item>
+        <item>remove</item>
+    </string-array>
+    <string name="TermsOfUserPrivacyPolicy1"><u>Terms of Use</u> </string>
+    <string name="TermsOfUserPrivacyPolicy2"> <u>Privacy Policy.</u></string>
+
+    <string name="checkBox1"> I agree to receiving direct marketing&#160;materials from gemfive.com/my&#160;</string>
+    <string name="checkBox3"><u>More.</u></string>
+    <string name="rigisterSuccess2">REGISTERED SUCCESSFULLY</string>
+
+    <!-- Product List -->
+    <string name="productlist_filter">FILTER</string>
+    <string name="productlist_sort">SORT</string>
+    <string name="productlist_list_cancel">Cancel</string>
+    <string name="productlist_list_prompt_error_nointernet">Please check the internet, and try again.</string>
+    <string name="productlist_list_prompt_error_nodata">Your search returns no results.</string>
+    <string name="productlist_list_prompt_error_blank">Minimum search query length is 1.</string>
+    <string name="productlist_categorylanding_allcategory">All</string>
+
+    <string name="productlist_productlist_prompt_error_nodata">There are no products matching the selection.</string>
+
+    <!-- Product List Filter -->
+
+
+    <!-- Product List Sort -->
+
+
+    <!-- Product List Filter Sort -->
+    <string name="productlist_filter_title">Filter</string>
+    <string name="productlist_sort_title">Sort</string>
+    <string name="productlist_filtersort_title_cancel">Cancel</string>
+    <string name="productlist_filtersort_filter_pricerange">Price Range(%1$s)</string>
+    <string name="productlist_filtersort_filter_allbrands">All Brands</string>
+    <string name="productlist_filtersort_filter_alltypes">All Types</string>
+
+    <!-- Home -->
+
+
+    <string name="home_home_category_gempicks">GEM PICKS</string>
+
+    <!-- Curation -->
+    <string name="curation_title">Curation</string>
+    <string name="curation_productlist_title">PRODUCTS</string>
+
+
+    <!--address-->
+    <string name="pleaseselect">Please select</string>
+    <string name="select_address">Please select a address</string>
+
+    <!-- Product Detail -->
+    <string name="product_detail_instock">IN STOCK</string>
+    <string name="product_detail_outofstock">SOLD OUT</string>
+    <string name="product_detail_addtocart">ADD TO CART</string>
+    <string name="product_detail_addtowishlist">ADD TO WISHLIST</string>
+    <string name="product_detail_addedtowishlist">ADDED TO WISHLIST</string>
+    <string name="product_detail_prompy_addtocart_success">Added in cart.</string>
+    <string name="product_detail_recommended_title">RECOMMENDED PRODUCTS</string>
+
+
+    <string name="startText">Discover new brands and the latest shopping trends from fashion and beauty to living and wellness.</string>
+
+    <!-- Help center -->
+    <string name="home_helpcenter_title">Help Centre</string>
+    <string name="home_helpcenter_list_information">Information</string>
+    <string name="home_helpcenter_list_aboutus">About Us</string>
+    <string name="home_helpcenter_list_privacypolicy">Privacy Policy</string>
+    <string name="home_helpcenter_list_termsofus">Terms of Use</string>
+    <string name="statement_of_ipr">Statement of IPR</string>
+    <string name="home_helpcenter_list_helpcenter">Help Centre</string>
+    <string name="home_helpcenter_list_howtobuy">How to Buy</string>
+    <string name="home_helpcenter_list_payments">Payments</string>
+    <string name="home_helpcenter_list_shippingdelivery">Shipping &amp; Delivery</string>
+    <string name="home_helpcenter_list_ordertracking">Order Tracking</string>
+    <string name="home_helpcenter_list_cancellationsreturns">Cancellations &amp; Returns</string>
+    <string name="home_helpcenter_list_gemcashvoucher">Promotion Terms</string>
+    <string name="home_helpcenter_list_contactus">Contact Us</string>
+    <string name="home_helpcenter_list_customerservice">Customer Service</string>
+
+    <string name="home_helpcenter_list_aboutus2">About Us</string>
+    <string name="home_helpcenter_list_privacypolicy2">Privacy Policy</string>
+    <string name="home_helpcenter_list_termsofus2">Terms Of Use</string>
+    <string name="home_helpcenter_list_howtobuy2">How To Buy</string>
+    <string name="home_helpcenter_list_payments2">Payments</string>
+    <string name="home_helpcenter_list_shippingdelivery2">Shipping &amp; Delivery</string>
+    <string name="home_helpcenter_list_ordertracking2">Order Tracking</string>
+    <string name="home_helpcenter_list_cancellationsreturns2">Cancellations &amp; Returns</string>
+    <string name="home_helpcenter_list_gemcashvoucher2">Promotion Terms</string>
+    <string name="home_helpcenter_list_customerservice2">Customer Service</string>
+    <string name="statement_of_ipr2">Statement Of IPR</string>
+    <!--notification-->
+    <string name="home_notification_title">Notification</string>
+    <string name="notification_detail_title">Notification Detail</string>
+    <!-- My Account -->
+
+    <string name="shopping_cart_out_stock">Some of the products are currently sold out.</string>
+
+    <string name="soldfulby">Sold &amp; fulfilled by </string>
+    <string name="soldby">Sold by</string>
+    <string name="home_myaccount_header_wishlist">WISHLIST</string>
+    <string name="home_myaccount_header_orders">ORDERS</string>
+    <string name="home_myaccount_header_addressbook">ADDRESS BOOK</string>
+
+
+    <string name="insufficient_stock">Insufficient stock. You reached the maximum available quantity for this product.</string>
+    <string name="over_maxSale_stock">Cannot add the item to shopping cart. The maximum quantity allowed for purchase is </string>
+    <string name="over_maxSale">Only x allowed per checkout.</string>
+
+    <string name="Discount">Discount</string>
+    <string name="check_out_num_product"> CHECKOUT {num} ITEM</string>
+    <string name="check_out_num_products"> CHECKOUT {num} ITEMS</string>
+
+    <!--login -->
+    <string name="name_password_error"> User name or password error</string>
+    <string name="account_not_confirm">This account has not been confirmed yet. </string>
+    <string name="sign_in">Sign In</string>
+    <string name="connect_with_Facebook">Facebook</string>
+    <string name="or">or</string>
+    <string name="user_mail_com">Email</string>
+    <string name="enter_password">Password</string>
+    <string name="password">Password</string>
+    <string name="to_resend">&#160;to resend &#160;confirmation email.</string>
+    <string name="forgot_your_password">Forgot your password?</string>
+    <string name="not_a_member_yet">Not a member yet?</string>
+    <!--register-->
+    <string name="register">Register</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="enter_email_address">Email</string>
+    <string name="retype_password">Re-type Password</string>
+    <string name="by_creating">By creating an account, you agree to GEMFIVE</string>
+    <string name="and">  and  </string>
+    <string name="already_have_an_account">Already have an account? </string>
+    <!--login send email-->
+    <string name="send_confirmation_email">Send Confirmation Link</string>
+    <string name="please_enter_email">Please enter email below and we’ll send you email confirmation link for it.</string>
+    <string name="submit">SUBMIT</string>
+    <!-- login send success-->
+    <string name="retrieve_your_password">Retrieve Your Password</string>
+    <string name="if_there_is_an_account">If there is an account associated with admin@mail.com you, will receive an email with a link to reset your password.</string>
+    <!--reset password -->
+    <string name="retrieve_password">RETRIEVE PASSWORD</string>
+    <!--edit my Account info -->
+    <string name="save">SAVE</string>
+    <string name="my_photo">My Photo</string>
+    <string name="email">Email</string>
+    <string name="malaysia">Malaysia</string>
+    <string name="country">Country</string>
+    <string name="birthday">Birthday</string>
+    <string name="gender">Gender</string>
+    <string name="monthly_income">Monthly Income</string>
+    <string name="zip">Zip</string>
+    <string name="city">City</string>
+    <string name="state_province">State </string>
+    <string name="phone_number">Phone Number</string>
+    <string name="eg123">Phone Number</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="choose_photo">Choose Photo</string>
+    <string name="cancel">Cancel</string>
+    <!--change password-->
+    <string name="change_password">Change Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <!-- settings-->
+    <string name="settings">Settings</string>
+    <string name="menu">MENU</string>
+    <string name="receive_newsletter">Receive newsletters from GEMFIVE</string>
+    <string name="setting_rate">Rate us in Google Play store</string>
+    <string name="setting_version">Version</string>
+    <string name="sign_out">SIGN OUT</string>
+    <string name="Sign_Out">Sign Out</string>
+    <string name="setting_sound">Sound</string>
+    <!-- Product detail -->
+
+
+    <string name="app_crash_friendly_hint">Sorry, there is something wrong. The application is about to exit.</string>
+    <string name="gembrand">FEATUREDBRANDS</string>
+    <string name="findYourFavorite">Select Your Favorite Categories</string>
+    <string name="favorite2">We\'ll make sure to find what you love...</string>
+    <string name="ok">OK</string>
+
+    <string name="blur_postalcode">Minimum 4 characters.</string>
+
+    <!--ShoppingCart Campaign-->
+    <string name="campaign_title_big1">Buy 1 Daily Essential Item @ RM1</string>
+
+    <string name="login_google">Google</string>
+    <string name="campaign_item_soldout">SOLD&#160;OUT</string>
+
+
+    <string name="out_of_stock2">SOLD OUT</string>
+
+    <string name="facebook_error_nointernet">Cannot share message to the Facebook, please check you internet and try again.</string>
+    <string name="facebook_error_notinstalled">Cannot share message to the Facebook, please download or update the latest Facebook app and try again.</string>
+    <string name="facebook_success_ok">You shared this post.</string>
+
+
+    <string name="order_detail_confirm">BANK TRANSFER CONFIRMATION</string>
+    <string name="bank_transafer_confirm">Bank Transfer Confirmation</string>
+    <string name="bank_transafer_thank">Thank you for shopping at GEMFIVE</string>
+    <string name="bank_transafer_world">When you have successfully made your Bank Transfer, please provide your payment confirmation details here so that we can process your order immediately.</string>
+    <string name="bank_from">Bank Transferred From</string>
+    <string name="order_detail_order_number">Order Number</string>
+    <string name="order_detail_customer_name">Customer\'s Name</string>
+    <string name="order_detail_date">Transaction Date</string>
+    <string name="order_detail_transfer_amount">Transfer Amount</string>
+    <string name="email_address">Email</string>
+    <string name="bank_transafer">Required Transaction Slip Upload</string>
+    <string name="bank_transafer_confirm_choose_file">Choose File</string>
+    <string name="file_extensions">Allowed file extensions to upload: "jpg", "jpeg", "gif", "png", "pdf". Max file size: 2MB.</string>
+
+    <string name="title_activity_bank_transafer_success">BankTransaferSuccessActivity</string>
+    <string name="payment_send">Payment Confirmation Sent</string>
+
+    <string name="versionCheckTitle">Your app version is outdated</string>
+    <string name="versionCheckMsg">Please update before you continue.</string>
+    <string name="versionCheck">Your app version is outdated, please update before you continue.</string>
+    <string name="update_now">UPDATE NOW</string>
+    <string name="update">UPDATE</string>
+    <string name="congratulations">CONGRATULATIONS!</string>
+    <string name="select_one_of_the_bixes">Select one of boxes below for surprise gift!</string>
+    <string name="congratulations2">CONGRATULATIONS!</string>
+    <string name="youve_won_gemcash">You are taking home a \n GEMCash Voucher.</string>
+    <string name="an_email_with_prize">The voucher code will be emailed to \n you soon!</string>
+
+    <string name="notification_detail_open">OPEN</string>
+    <string name="notification_empty">You have no notifications yet.</string>
+    <string name="email_error">Please enter a valid email address.</string>
+    <string name="select_img">Please upload the bank transfer image.</string>
+    <string name="select_service">Select Service</string>
+    <string name="Okay">OK</string>
+
+
+    <string name="Oops_Sorry">Oops,Sorry!</string>
+    <string name="This_promotion_has_been_fully_redeemed">This promotion has been \n fully redeemed.</string>
+    <string name="Stay_tuned_for_more_exciting">Stay tuned for more exciting \n offers on GEMFIVE.</string>
+
+    <string name="added_to_wishlist">Added to wishlist.</string>
+    <string name="added_error">Add failure.</string>
+    <string name="are_you_sure_you_want">Are you sure you want to quit this app?</string>
+    <string name="are_you_sure_you_want_signout">Are you sure you want to sign out?</string>
+    <string name="transfer_amount">GEMFIVE Amount</string>
+    <string name="transfer_date">Date Of Transfer</string>
+
+
+    <!-- COD -->
+    <string name="cod_error_max">Your maximum basket size needs to be RM</string>
+    <string name="code_error_min">Your minimum basket size needs to be RM</string>
+    <string name="code_error_state1">This payment option is not available for the selected delivery address. Only following states are allowed:</string>
+    <string name="code_error_state2">list the available states, </string>
+    <string name="code_error_product">The following items are not eligible for Cash on Delivery:</string>
+    <string name="product_cash">Cash on Delivery</string>
+    <string name="dialog_cod_hint">Kindly update your cart</string>
+
+    <!-- <string name="please_check">Please check the network connection</string>-->
+    <string name="cod_error_address">This payment option is not available for the selected delivery address. Kindly refer to the GEMFIVE\'s Payment FAQ for more info. </string>
+    <string name="shipping_returns">Shipping &amp; Delivery</string>
+
+    <string name="app_rate_text1">Love using GEMFIVE?</string>
+    <string name="app_rate_text2">Please rate us in the Google Play.</string>
+    <string name="play_store_url">http://play.google.com/store/apps/details?id=com.whitelabel.app</string>
+
+
+    <string name="prices_shown">* Prices shown are before discount.</string>
+    <string name="product_shipping_info">Shipping Info</string>
+    <string name="checkout_product_error_title">The following items in your order cannot be delivered to your location:</string>
+
+    <string name="shoppingcart_btn_apply">APPLY</string>
+    <string name="shoppingcart_btn_cancel">CANCEL</string>
+
+
+    <!--update-->
+
+    <string name="sort">Start</string>
+    <string name="filter">FILTER</string>
+    <string name="got_it">Got it!</string>
+    <string name="filter_by">FILTER BY</string>
+    <string name="product">product</string>
+    <string name="edit">EDIT</string>
+    <string name="sort_cancel">Cancel</string>
+    <string name="in_stock">IN STOCK</string>
+    <string name="Smith">Smith</string>
+    <string name="select_server">Select Server</string>
+    <string name="edit_address">Edit Address</string>
+    <string name="helpCenter_detail">HelpCenter Detail</string>
+    <string name="brand">BRAND</string>
+    <string name="short_anorak">Short Anorak with furmak</string>
+    <string name="order_detail">Order Detail</string>
+    <string name="add_address">Add Address</string>
+    <string name="try_again">Try Again</string>
+    <string name="try_again_lar">TRY AGAIN</string>
+    <string name="sign_register">Sign In / Register</string>
+
+    <string name="change">CHANGE</string>
+    <string name="fashion">FASHION</string>
+    <string name="shop_now">SHOP NOW</string>
+    <string name="shop_categories">SHOP BY CATEGORIES</string>
+    <string name="pictures_anorak">Pictures Anorak</string>
+    <string name="arrrrr">Arrrrr....seems like your internet \n connection just disappeared!</string>
+    <string name="check_internet">Please check your internet connection and try again.</string>
+    <string name="wait_service">We\&#39;re working on getting this fixed as soon as we can.\n Please try again later.</string>
+    <string name="refresh">REFRESH</string>
+    <string name="connection_lost">Connection Lost</string>
+    <string name="server_lost">Oops, something went wrong.</string>
+    <string name="qr_title">QR Code Scanner</string>
+    <string name="qr_instructions">Align the QR Code within frame to scan</string>
+    <string name="qr_error">Invalid QR code / Product link</string>
+    <string name="qr_error_long">Please scan another code or use the Search \n box to browse for products</string>
+    <string name="scan_again">SCAN AGAIN</string>
+    <string name="scan_qr">Scan QR</string>
+
+    <!-- String in code-->
+    <string name="required_field">This is a required field.</string>
+    <string name="enter_characters">Please enter 4 or more characters. </string>
+    <string name="t">T:&#160;</string>
+    <string name="size">Size</string>
+    <string name="color">Color</string>
+    <string name="address1">Address 1</string>
+    <string name="address2">Address 2 (Optional)</string>
+    <string name="postal_code">Postal Code</string>
+    <string name="success">success</string>
+    <string name="nine">99+</string>
+    <string name="enter_characters_ignored">"Please enter 6 or more characters. Leading or trailing spaces will be ignored."</string>
+    <string name="password_match">Please make sure your passwords match.</string>
+    <string name="account_associated">If there is an account associated with&#160;</string>
+    <string name="reset_password">, you will receive an email with a link to reset your password.</string>
+    <string name="process_email">Thank you for registering on GEMFIVE. To complete your registration process, please check your email&#160;</string>
+    <string name="to_confirm">to confirm.</string>
+    <string name="register_gemfive">Thank you for registering on GEMFIVE.</string>
+    <string name="current_password">Invalid current password.</string>
+    <string name="password_empty">New password field cannot be empty.</string>
+    <string name="confirmation_password">The confirmation is not the new password.</string>
+    <!--
+    <string name="Male">Male</string>
+    <string name="female">Female</string>-->
+    <string name="size_m">Size - M - 0</string>
+    <string name="select_country">Please select a country.</string>
+    <string name="zip_code">Please enter a zip code.</string>
+    <string name="enter_city">Please enter a city.</string>
+    <string name="order_number">Order Number: </string>
+    <string name="rm">RM</string>
+    <string name="r_m">-RM</string>
+
+    <!--Opt hardCoded-->
+    <string name="shoes">Shoes</string>
+    <string name="you_have_no_items_inyour_wishlist">You have no items in your wishlist.</string>
+    <string name="rate_now">RATE NOW</string>
+    <string name="ask_me_later">ASK ME LATER</string>
+    <string name="no_thanks">NO&#160;THANKS</string>
+
+    <string name="save_upp">SAVE</string>
+    <!--filter-->
+    <string name="_default">Default</string>
+    <string name="name_az">NAME A-Z</string>
+    <string name="name_za">NAME Z-A</string>
+    <string name="price_low_hight">Price Low-Hight</string>
+    <string name="price_hight_low">Price Hight-Low</string>
+
+    <string name="yes_upp">YES</string>
+    <string name="no_upp">NO</string>
+    <string name="checkout0_items">CHECKOUT 0 ITEMS</string>
+    <string name="price_range_rm">Price Range(RM)</string>
+    <!--Navigation-->
+    <string name="_home">Home</string>
+    <string name="shopping_cart">Shopping Cart</string>
+    <string name="category">All Categories</string>
+    <string name="notification">Notification</string>
+    <string name="my_wishlist">My Wishlist</string>
+    <string name="my_orders">My Orders</string>
+    <string name="my_address_book">My Address Book</string>
+    <string name="_settings">Settings</string>
+    <string name="customer_service">Customer Service</string>
+    <string name="help_centre">Help Centre</string>
+    <string name="my_upp">MY</string>
+    <string name="address">Address</string>
+    <string name="address2_optional">Address 2 (Optional)</string>
+    <string name="_phone">Phone Code</string>
+    <string name="telephone_number">Phone Number</string>
+    <string name="tel">tel</string>
+    <string name="_state">State</string>
+    <string name="use_the_address_for_sipping">Use this address for shipping</string>
+    <string name="search">Search</string>
+    <string name="i">i</string>
+    <string name="description">Description</string>
+    <string name="less">-</string>
+    <string name="add">+</string>
+    <string name="rm0">RM 00.00</string>
+    <string name="add6">+6</string>
+    <string name="delivery_failed">Delivery Failed</string>
+    <string name="price">price</string>
+    <string name="brand_low">brand</string>
+    <string name="apple_watch">Apple Watch</string>
+    <string name="message">message</string>
+
+    <!--category-->
+    <string name="accessories_upp">ACCESSORIES</string>
+    <string name="clothing_upp">CLOTHING</string>
+    <string name="musim_wear_upp">MUSIM WEAR</string>
+    <string name="accessories2_upp">ACCESSORIES2</string>
+    <string name="accessories3_upp">ACCESSORIES3</string>
+    <string name="accessories4_upp">ACCESSORIES4</string>
+    <string name="detail_no_longer">NO LONGER AVAILABLE</string>
+    <string name="love_air">Love is in the air. Indulge in a new perfume or gift sets for friends and family</string>
+    <string name="valentine_day">VALENTINE\'S DAY FRAGRANCES</string>
+    <string name="day">DAY</string>
+    <string name="days">DAYS</string>
+    <string name="hours">HOUR</string>
+    <string name="min">MIN</string>
+    <string name="sec">SEC</string>
+    <string name="home_account_store_credit">Store Credits</string>
+    <string name="store_credits">My Store Credits</string>
+    <string name="store_credits1">STORE CREDITS</string>
+    <string name="recent_tran">Recent Transactions</string>
+    <string name="redeem">REDEEM</string>
+    <string name="store_credit_success_hint">Redeemed successfully!</string>
+    <string name="store_credits2">Store Credits</string>
+    <string name="store_credit_not_history">You have no transactions yet.</string>
+    <string name="credit_instruction">More On Store Credits </string>
+    <string name="store_caedits_help">Why pay more, when you can pay less with Store Credits? Find out more.</string>
+    <string name="string">string</string>
+    <string name="NOTIFICATION">Notification</string>
+    <!-- credit card -->
+    <string name="sliding_credit_card">My Credit Card</string>
+    <string name="store_credit_not_data_hint">We are currently upgrading our Store Credit services. Kindly try again later.</string>
+    <string name="activity_image_trans">activity_image_transition</string>
+    <string name="Merchant_StoreFront">Merchant StoreFront</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="myorder_tricking_info">Tracking Info</string>
+    <string name="myorder_btn_tricking_info">TRACK</string>
+    <string name="openDrawer">Open Drawer</string>
+    <string name="closeDrawer">Close Drawer</string>
+
+    <!-- permission text -->
+    <string name="permission_error_title">Permission Denied</string>
+    <string name="permission_error_camera_content">Please allow GEMFIVE to access your device\'s camera in SETTINGS</string>
+    <string name="permission_error_storage_content">Please allow GEMFIVE to access your device\'s storage in SETTINGS</string>
+    <string name="banktransfer_permission_camera_rationale">GEMFIVE needs to access your device\'s camera</string>
+    <string name="banktransfer_permission_album_rationale">GEMFIVE needs to access your device\'s storage</string>
+    <string name="switch_view_bar_results">&#160;results</string>
+
 </resources>

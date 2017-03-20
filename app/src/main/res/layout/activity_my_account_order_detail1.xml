@@ -1,0 +1,534 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:id="@+id/ll_toolbar"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/common_toolbar"/>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyEEEEEE"/>
+
+    </LinearLayout>
+
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/orderdetail_line_space"
+        android:background="@color/gray_light" />
+
+    <RelativeLayout
+        android:id="@+id/rl_orderdetail_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/pb_orderdetail_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+        <ScrollView
+            android:id="@+id/scollview_myorder_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:visibility="gone"
+            android:background="@color/greyF8F8F8">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--order number-->
+                <RelativeLayout
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_roboto_medium"
+                        android:id="@+id/tv_myaccount_orderdetail_ordernumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Order No. 100044126"
+                        android:textColor="@color/black000000"
+                        android:textSize="14sp"/>
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="1dp"
+                        android:layout_height="12dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/textView"
+                        android:gravity="center_vertical"
+                        android:background="@color/black666666"
+                        android:layout_toRightOf="@+id/tv_myaccount_orderdetail_ordernumber"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"/>
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:id="@+id/tv_myaccount_orderdetail_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@+id/textView"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black000000"
+                        android:textSize="14sp"
+                        android:text="7 Dec 2015"
+                        android:layout_weight="1" />
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:id="@+id/tv_myaccount_orderdetail_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@+id/tv_myaccount_orderdetail_date"
+                        android:gravity="center_vertical|right"
+                        android:textColor="@color/black000000"
+                        android:textSize="12sp"
+                        android:text="(Delivered Partially)"
+                        android:visibility="gone"/>
+                </RelativeLayout>
+
+                <!--Shipping Address Title-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/greyEEEEEE"
+                android:paddingLeft="10dp">
+                <!--Shipping Address Title-->
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_roboto_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/Shipping_Address"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/black000000"
+                    android:textSize="14sp" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/orderdetail_line_space"
+                    android:background="@color/gray_light"
+                    android:visibility="gone"/>
+
+                <!--Shipping Address Data-->
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_roboto_medium"
+                    android:id="@+id/tv_order_detail_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/checkout_and_order_common_textsize"
+                    android:textColor="@color/black000000" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:id="@+id/tv_order_detail_address1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/checkout_and_order_common_textsize"
+                    android:textColor="@color/black000000" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:id="@+id/tv_order_detail_address2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/checkout_and_order_common_textsize"
+                    android:textColor="@color/black000000"
+                    android:visibility="gone" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:id="@+id/tv_order_detail_citystatepostcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/checkout_and_order_common_textsize"
+                    android:textColor="@color/black000000" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:id="@+id/tv_order_detail_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/malaysia"
+                    android:textSize="@dimen/checkout_and_order_common_textsize"
+                    android:textColor="@color/black000000"
+                    android:gravity="center_vertical" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:id="@+id/tv_order_detail_telephone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/checkout_and_order_common_textsize"
+                    android:textColor="@color/black000000" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="3dp"
+                android:background="@color/greyEEEEEE"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:minHeight="40dp">
+                <!--Payment Method Title-->
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_roboto_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/Payment_Method"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/black000000"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="-8dp" />
+
+
+                <!--Payment Method Data-->
+                <LinearLayout
+                    android:id="@+id/ll_myaccount_orderdetail_paymentmethod_creditcard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    android:minHeight="40dp">
+
+                    <com.whitelabel.app.widget.CustomWebView
+                        style="@style/font_family_robot_regular"
+                        android:layerType="software"
+                        android:scrollbars="none"
+                        android:id="@+id/tv_order_detail_paymentmethod_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_x="7dp"
+                        android:layout_y="5dp"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/checkout_and_order_common_textsize"
+                        android:textColor="@color/black000000"
+                        android:background="#00000000"
+                        android:layout_marginBottom="-4dp"
+                        android:layout_marginTop="-2dp"
+                        android:visibility="visible"
+                        android:minHeight="40dp" />
+<!--CustomTextView
+                    <com.whitelabel.app.widget.
+                        style="@style/font_family_roboto_regular"
+                        android:id="@+id/tv_order_detail_creditcardtype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/orderdetail_line_height"
+                        android:gravity="center_vertical"
+                        android:text="Credit Card Type visa"
+                        android:textSize="@dimen/checkout_and_order_common_textsize"
+                        android:textColor="@color/black000000" />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_roboto_regular"
+                        android:id="@+id/tv_order_detail_creditcardnumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/orderdetail_line_height"
+                        android:gravity="center_vertical"
+                        android:text="Credit Card Number 4111111 xxxxxx 1111111"
+                        android:textSize="@dimen/checkout_and_order_common_textsize"
+                        android:textColor="@color/black000000" />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_roboto_regular"
+                        android:id="@+id/tv_order_detail_issuerbank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:text="Issuer Bank Hong Leony Bank Berhand"
+                        android:textSize="@dimen/checkout_and_order_common_textsize"
+                        android:textColor="@color/black000000" />
+                        -->
+                </LinearLayout>
+                </LinearLayout>
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/orderdetail_line_space"
+                    android:background="@color/gray_light"
+                    android:visibility="gone" />
+
+                <!--Products Title
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_roboto_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Products"
+                    android:textColor="@color/black000000"
+                    android:textSize="16sp" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_roboto_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/orderdetail_line_space"
+                    android:background="@color/gray_light" />-->
+
+                <!--Products Data-->
+                <ListView
+                    android:id="@+id/lv_myaccount_orderdetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:divider="@null"
+                    />
+
+                <!--Bottom four lines-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/Subtotal"
+                        android:textSize="16sp"
+                        android:textColor="@color/black000000" />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:id="@+id/tv_order_detail_subtotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical"
+                        android:text="@string/rm0"
+                        android:textSize="16sp"
+                        android:textColor="@color/black000000" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/Discount"
+                        android:textSize="16sp"
+                        android:textColor="@color/black000000"
+                        />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:id="@+id/tv_order_detail_discount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical"
+                        android:textSize="16sp"
+                        android:textColor="@color/black000000"
+                           />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/Shipping_Fee"
+                        android:textSize="16sp"
+                        android:textColor="@color/black000000" />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:id="@+id/tv_order_detail_shippingfee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical"
+                        android:text="@string/rm0"
+                        android:textSize="16sp"
+                        android:textColor="@color/black000000"
+                         />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_order_detail_voucher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/tv_order_detail_voucher_title"
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:paddingRight="90dp"
+                        android:text="@string/Voucher"
+                        android:textSize="16sp"
+                        android:textColor="@color/black000000" />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:id="@+id/tv_order_detail_voucher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical"
+                        android:text="@string/rm0"
+                        android:textSize="16sp"
+                        android:textColor="@color/black000000"
+                          />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_order_detail_storecredit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:visibility="gone">
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/tv_order_detail_storecredit_title"
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:paddingRight="90dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/black000000" />
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:id="@+id/tv_order_detail_storecredit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical"
+                        android:text="- RM 0.00"
+                        android:textSize="16sp"
+                        android:textColor="@color/black000000"
+                          />
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_roboto_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Grand_Total"
+                        android:textColor="@color/black000000"
+                        android:textSize="18sp" />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_roboto_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/textView2"
+                        android:text="RM"
+                        android:textSize="10sp"
+                        android:layout_gravity="top"
+                        android:gravity="top"
+                        android:textColor="@color/black000000"
+                        android:visibility="gone" />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:id="@+id/tv_order_detail_grandtotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rm0"
+                        android:textColor="@color/black000000"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="5dp" />
+                </LinearLayout>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_order_detail_gst"
+                    style="@style/font_family_robot_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/myorder_detail_description_on_page_end"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray888888"
+                    android:layout_gravity="center_horizontal" />
+                <View
+                    android:id="@+id/bottom_black"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"/>
+            </LinearLayout>
+        </ScrollView>
+        <LinearLayout
+            android:id="@+id/ll_sc_checkout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/button_padding_value"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:background="@color/big_botton_white"
+            android:orientation="horizontal">
+            <com.whitelabel.app.widget.CustomTextView
+                style="@style/font_family_roboto_medium"
+                android:id="@+id/tv_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/big_button_style_purple"
+                android:visibility="gone"
+                android:gravity="center"
+                android:text="@string/order_detail_confirm"
+                android:textColor="@color/whiteFFFFFF"
+                android:textSize="@dimen/button_font_size" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

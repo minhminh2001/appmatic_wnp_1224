@@ -1,20 +1,315 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Base application theme.  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/purple</item>
     </style>
 
+    <style name="AppThemeBlack" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/black000000</item>
+    </style>
+
+    <style name="startStyle" parent="AppThemeBlack"></style>
+
+    <style name="BlackgroundBalckTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/black000000</item>
+    </style>
+
+    <style name="BackgroundWhiteTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="checkout_textview_size_hint" parent="font_family_robot_regular">
+        <item name="android:textColor">@color/label_saved</item>
+        <item name="android:textSize">@dimen/labelTextFontSize</item>
+    </style>
+
+    <style name="checkout_textview_size_content" parent="font_family_robot_regular">
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/editColor</item>
+        <item name="android:textColorHint">@color/hint</item>
+        <item name="android:textSize">@dimen/editTextFontSize</item>
+    </style>
+
+    <style name="curation_time_desc">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">10px</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gray_3fabac</item>
+    </style>
+
+    <style name="tv_curation_time_style">
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="rl_curation_time_num_style">
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="rl_curation_time_style">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+    </style>
+
+
+    <style name="SplashScreen">
+        <item name="android:padding">0dp</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <!-- spinner -->
+    <style name="spinner_style">
+        <item name="android:background">@anim/background_selector</item>
+        <item name="android:paddingLeft">5dip</item>
+    </style>
+    <!--checkout module: popupwindow animation-->
+    <style name="pop_checkout_payment">
+        <item name="android:windowEnterAnimation">@anim/pop_checkout_to_bottom</item>
+        <item name="android:windowExitAnimation">@anim/pop_checkout_dropdown_bottom</item>
+    </style>
+    <!-- self define loading dialog -->
+    <style name="loading_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/exit_app_radius</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+
+    <style name="progress_dialog_shoppingcart" parent="Base.Widget.AppCompat.ProgressBar">
+        <item name="android:background">@color/transparent00</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!-- 上传图片-->
+    <style name="popupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/anim_photo_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_photo_out</item>
+    </style>
+
+    <style name="my_address_add_edit">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="my_address_add_layout">
+        <item name="android:layout_height">65dp</item>
+
+    </style>
+
+    <style name="productdetail_largepicture" parent="android:Theme.NoTitleBar">
+        <item name="android:windowAnimationStyle">@style/productdetail_largepicture_style</item>
+    </style>
+
+    <style name="productdetail_largepicture_style">
+        <item name="android:activityOpenEnterAnimation">@anim/anim_productdetail_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/anim_productdetail_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/anim_productdetail_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/anim_productdetail_exit</item>
+    </style>
+
+    <style name="dialog">
+        <item name="android:windowFrame">@null</item>
+        <!--边框-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--半透明-->
+        <item name="android:windowNoTitle">true</item>
+        <!--无标题-->
+        <item name="android:windowBackground">@color/transparent00</item>
+        <!--背景透明-->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!--模糊-->
+    </style>
+
+    <style name="dialog2" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!--边框-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--半透明-->
+        <item name="android:windowNoTitle">true</item>
+        <!--无标题-->
+        <item name="android:windowBackground">@color/transparent00</item>
+        <!--背景透明-->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!--模糊-->
+    </style>
+
+
+    <style name="text_18_ffffff" parent="font_family_roboto_medium">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">#ffffffff</item>
+    </style>
+
+    <style name="text_16_666666">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ff666666</item>
+    </style>
+
+    <style name="sdw_79351b">
+        <item name="android:shadowColor">#ff79351b</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">1.0</item>
+        <item name="android:shadowRadius">1.0</item>
+    </style>
+
+    <style name="sdw_white">
+        <item name="android:shadowColor">#7fffffff</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">0.65</item>
+        <item name="android:shadowRadius">1.0</item>
+    </style>
+
+    <style name="text_15_ffffff_sdw" parent="@style/sdw_79351b">
+        <item name="android:textSize">15.0sp</item>
+        <item name="android:textColor">#ffffffff</item>
+    </style>
+
+    <style name="text_15_666666_sdw" parent="@style/sdw_white">
+        <item name="android:textSize">15.0sp</item>
+        <item name="android:textColor">#ff666666</item>
+    </style>
+
+    <style name="smallsize_12">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="bigsize_16">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="push_activity">
+        <item name="android:windowEnterAnimation">@anim/activity_scale_in</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="ImageloadingDialogStyle" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <!--无边框-->
+        <item name="android:windowNoTitle">true</item>
+        <!--没有标题-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否浮在activity之上-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--背景是否半透明-->
+        <item name="android:windowContentOverlay">@null</item>
+        <!--对话框是否有遮盖 -->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <!--动画样式-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--背景是否模糊-->
+    </style>
+
+    <style name="ImageScale" parent="android:Theme.Black.NoTitleBar">
+        <item name="android:windowAnimationStyle">@style/AnimHead</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowFullscreen">false</item>
+        <!-- 设置全屏显示 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">false</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 模糊 -->
+    </style>
+
+    <style name="AnimHead" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/head_in_other</item>
+        <item name="android:windowExitAnimation">@anim/head_out_other</item>
+    </style>
+
+    <style name="MultiSwitchButton">
+        <item name="ThumbDrawable">@drawable/selector_sb_oval_thumb</item>
+        <item name="BackColor">@drawable/selector_sb_thumb__back_color</item>
+        <item name="BackMeasureRatio">1.5</item>
+        <item name="ThumbMarginLeft">-16dp</item>
+        <item name="ThumbMarginTop">-14dp</item>
+        <item name="ThumbMarginRight">-16dp</item>
+        <item name="ThumbMarginBottom">-14dp</item>
+        <item name="ThumbWidth">48dp</item>
+        <item name="ThumbHeight">48dp</item>
+    </style>
+
+
+    <!--............................................HeaderBar............................................-->
+    <!--    android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/header_bar_right_margin_right"
+            android:text="@string/save"
+            android:textColor="@color/whiteffffff"
+            android:textSize="@dimen/header_bar_right_text_size" -->
+    <!--右边文字 -->
+    <style name="HeaderBarRightTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">@dimen/header_bar_right_margin_right</item>
+        <item name="android:textColor">@color/whiteffffff</item>
+        <item name="android:textSize">@dimen/header_bar_right_text_size</item>
+    </style>
+
+    <!--    android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/header_bar_title_text_margin_left"
+            android:textColor="@color/whiteffffff"
+             android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="@dimen/header_bar_title_text_size"-->
+    <!-- 中间Title-->
+    <style name="HeaderBarTitleTextStyle" parent="font_family_robot_regular">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/header_bar_title_text_margin_left</item>
+        <item name="android:layout_marginRight">@dimen/header_bar_image_touch_width_and_height
+        </item>
+        <item name="android:textColor">@color/whiteffffff</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingBottom">@dimen/header_bar_title_padding_bottom</item>
+        <item name="android:textSize">@dimen/header_bar_title_text_size</item>
+    </style>
 
     <!-- toolbar style -->
     <style name="ToolBarStyle" parent="ToolBarStyle.Base">
         <item name="titleTextAppearance">@style/HeaderBarTitleTextStyle</item>
-        <item name="android:background">@color/colorPrimary</item>
     </style>
 
     <style name="ToolBarStyle.Base" parent="">
@@ -22,18 +317,91 @@
         <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 
-    <!-- 中间Title-->
-    <style name="HeaderBarTitleTextStyle" >
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+
+    <!--        android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/draw_v2_back"
+                android:scaleType="fitCenter"-->
+    <!-- 左边的图片-->
+    <style name="HeaderBarLeftImageStyle">
+        <item name="android:layout_width">@dimen/header_bar_image_width_and_height</item>
+        <item name="android:layout_height">@dimen/header_bar_image_width_and_height</item>
+        <!--<item name="android:layout_width">wrap_content</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="HeaderBarLeftImageTouchTargetStyle">
+        <item name="android:layout_width">@dimen/header_bar_image_touch_width_and_height</item>
+        <item name="android:layout_height">@dimen/header_bar_image_touch_width_and_height</item>
+
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_marginLeft">@dimen/header_bar_title_text_margin_left</item>
-        <item name="android:layout_marginRight">@dimen/header_bar_image_touch_width_and_height
-        </item>
-        <item name="android:textColor">@color/whiteFFFFFF</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:paddingBottom">@dimen/header_bar_title_padding_bottom</item>
-        <item name="android:textSize">@dimen/header_bar_title_text_size</item>
+        <!--<item name="android:layout_marginLeft">-8dp</item>-->
+        <item name="android:clickable">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+    </style>
+
+    <!-- 右边图片-->
+    <style name="HeaderBarRightImageStyle">
+        <item name="android:layout_width">@dimen/header_bar_image_width_and_height</item>
+        <item name="android:layout_height">@dimen/header_bar_image_width_and_height</item>
+        <!--<item name="android:layout_width">wrap_content</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="HeaderBarRightImageTouchTargetStyle">
+        <item name="android:layout_width">@dimen/header_bar_image_touch_width_and_height</item>
+        <item name="android:layout_height">@dimen/header_bar_image_touch_width_and_height</item>
+        <!--<item name="android:layout_marginRight">-8dp</item>-->
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="MyToolBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:actionMenuTextColor">@color/whiteFFFFFF</item>
+        <item name="android:textSize">@dimen/header_bar_right_text_size</item>
+    </style>
+
+    <style name="font_family_robot_regular">
+        <!--Regular (default):-->
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <!--italic-->
+        <!--<item name="android:fontFamily">sans-serif</item>-->
+        <!--<item name="android:textStyle">italic</item>-->
+        <!--Bold:-->
+
+        <!--<item name="android:fontFamily">sans-serif</item>-->
+        <!--<item name="android:textStyle">bold</item>-->
+
+        <!--Light:-->
+
+        <!--<item name="android:fontFamily">sans-serif-light</item>-->
+        <!--<item name="android:textStyle">normal</item>-->
+
+        <!--Thin :-->
+
+        <!--<item name="android:fontFamily">sans-serif-thin</item>-->
+        <!--<item name="android:textStyle">normal</item>-->
+
+        <!--Condensed regular:-->
+
+        <!--<item name="android:fontFamily">sans-serif-condensed</item>-->
+        <!--<item name="android:textStyle">normal</item>-->
+
+        <!--Condensed bold:-->
+
+        <!--<item name="android:fontFamily">sans-serif-condensed</item>-->
+        <!--<item name="android:textStyle">bold</item>-->
+
+    </style>
+
+    <style name="font_family_roboto_medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
     </style>
 </resources>

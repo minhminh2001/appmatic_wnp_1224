@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/black000000"
+        android:clickable="true">
+
+        <include layout="@layout/common_toolbar"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/rl_toolbar"
+        android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:padding="20dp"
+        android:orientation="vertical"
+        android:layout_height="fill_parent">
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_nitititle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_notification_empty"
+            android:textSize="17sp"
+            android:textColor="@color/black000000"
+            style="@style/font_family_roboto_medium"  />
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_notification_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_notification_empty"
+            android:textSize="13sp"
+            android:textColor="@color/grey999999"
+            style="@style/font_family_robot_regular"  />
+        <ImageView
+            android:id="@+id/iv_notification_img"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="15dp"
+            android:visibility="gone"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/webview_Detail"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/rlHeaderBar"
+            android:textSize="15sp"
+            android:textColor="@color/black000000"
+            android:layout_width="match_parent"
+            style="@style/font_family_robot_regular"
+            android:layout_height="wrap_content"
+            android:background="@color/whiteFFFFFF" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+    </LinearLayout>
+
+</ScrollView>
+
+    <LinearLayout
+        android:id="@+id/llBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/button_padding_value"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:background="@color/big_botton_white"
+        android:orientation="horizontal">
+        <com.whitelabel.app.widget.CustomButton
+            android:id="@+id/notification_detail_open"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_touch_height"
+            android:background="@drawable/big_button_style_purple"
+            android:text="@string/shop_now"
+            android:textSize="@dimen/button_font_size"
+            style="@style/font_family_roboto_medium"
+            android:textColor="@color/whiteFFFFFF"/>
+        </LinearLayout>
+    <include
+        layout="@layout/connection_breaks"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/rl_toolbar"
+        />
+</RelativeLayout>

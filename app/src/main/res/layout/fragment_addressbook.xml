@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/whiteFFFFFF"
+    android:layout_height="match_parent"
+  >
+    <com.whitelabel.app.widget.CustomSwipefreshLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/addressbook_add_RelativeLayout"
+        android:layout_height="match_parent" >
+        <com.whitelabel.app.widget.swipemenulistview.SwipeMenuListView
+            android:id="@+id/mListView"
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+            android:divider="@color/v2_line"
+            android:dividerHeight="@dimen/myAccount_lineHeight"
+            android:layout_height="match_parent" />
+    </com.whitelabel.app.widget.CustomSwipefreshLayout>
+    <RelativeLayout
+        android:id="@+id/addressbook_add_RelativeLayout"
+         android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true">
+        <com.whitelabel.app.widget.CustomTextView
+             style="@style/font_family_robot_regular"
+            android:id="@+id/addressbook_add_textview"
+            android:layout_width="match_parent"
+             android:layout_centerInParent="true"
+            android:layout_height="50dp"
+            android:text="@string/ADD_NEW_ADDRESS"
+            android:gravity="center"
+             android:visibility="gone"
+             android:layout_marginLeft="15dp"
+             android:layout_marginRight="15dp"
+            android:textColor="@color/greye1e1e1"
+             android:background="@mipmap/add_adress"
+             />
+    </RelativeLayout>
+    <include
+        layout="@layout/connection_breaks"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+</RelativeLayout>

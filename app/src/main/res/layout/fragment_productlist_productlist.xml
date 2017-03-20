@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.whitelabel.app.widget.CustomXListView
+        android:id="@+id/cxlvProductList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none" />
+
+    <RelativeLayout
+        android:id="@+id/rlNodata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@id/cxlvProductList">
+
+        <View
+            android:id="@+id/vNodataCenterDivider"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/vNodataCenterDivider"
+            android:layout_marginTop="17dp"
+            android:gravity="top|center_horizontal"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:text="@string/productlist_productlist_prompt_error_nodata"
+            android:textColor="@color/gray888888"
+            android:textSize="15sp"
+            style="@style/font_family_robot_regular" />
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_above="@id/vNodataCenterDivider"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="17dp"
+            android:src="@mipmap/productlist_nosearch" />
+    </RelativeLayout>
+    <include
+        layout="@layout/connection_breaks"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+</RelativeLayout>

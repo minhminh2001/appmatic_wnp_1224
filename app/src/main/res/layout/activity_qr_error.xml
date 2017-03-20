@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteFFFFFF"
+    android:clickable="true"
+    android:fitsSystemWindows="true">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/ll_error_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteFFFFFF"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:layout_below="@id/toolbar"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:padding="15dp"
+            android:src="@mipmap/close_advertisement"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/iv_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:src="@drawable/qr_error"/>
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctv_error_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="@string/qr_error"
+            android:textColor="@color/black38"
+            android:textSize="18sp" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctv_error_subheader"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/qr_error_long"
+            android:textColor="@color/black38"
+            android:textSize="16sp"
+            style="@style/font_family_roboto_medium" />
+
+        <LinearLayout
+            android:id="@+id/try_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_try_again"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/connection_break_loading" />
+
+            <com.whitelabel.app.widget.CustomButton
+                android:id="@+id/btn_try_again"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                style="@style/font_family_roboto_medium"
+                android:clickable="false"
+                android:text="@string/RETRY"
+                android:textAllCaps="false"
+                android:textColor="@color/purple92018d"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

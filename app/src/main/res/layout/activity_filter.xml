@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rlHeaderBar"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp">
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/filter_by"
+            android:textSize="25sp"
+            style="@style/font_family_robot_regular" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvHeaderbarCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:text="@string/cancel"
+            android:textSize="20sp"
+            style="@style/font_family_robot_regular" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/vHeaderBarContentDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/rlHeaderBar"
+        android:background="@color/greye1e1e1"></View>
+
+    <RelativeLayout
+        android:id="@+id/slider_RelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_below="@+id/vHeaderBarContentDivider">
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/pricewrange_textvie"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/price_range_rm"
+            android:textColor="@color/black000000"
+            android:textSize="17sp"
+            style="@style/font_family_robot_regular" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/min_textvie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pricewrange_textvie"
+            android:layout_marginTop="15dp"
+            android:layout_toLeftOf="@+id/llPriceBar"
+            android:gravity="center"
+            android:textColor="@color/black000000"
+            android:textSize="16sp"
+            style="@style/font_family_robot_regular" />
+
+        <LinearLayout
+            android:id="@+id/llPriceBar"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pricewrange_textvie"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" />
+
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/max_textvie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pricewrange_textvie"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/llPriceBar"
+            android:gravity="center"
+            android:textColor="@color/black000000"
+            android:textSize="16sp"
+            style="@style/font_family_robot_regular" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/filter_View1"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/slider_RelativeLayout"
+        android:background="@color/greye1e1e1" />
+
+    <RelativeLayout
+        android:id="@+id/brands_RelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/filter_View1">
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="All Brands(740)"
+            android:textColor="@color/purple66006E"
+            android:textSize="17sp"
+            style="@style/font_family_robot_regular" />
+
+        <Button
+            android:id="@+id/filter_subtract_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@color/whiteFFFFFF"
+            android:onClick="onClick"
+            android:text="@string/less"
+            android:textColor="@color/purple66006E"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/filter_View2"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/brands_RelativeLayout"
+        android:background="@color/greye1e1e1" />
+
+    <ScrollView
+        android:id="@+id/radiogroup_ScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/filter_View2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/grayf8f8f8"
+        android:scrollbarThumbVertical="@color/gray888888"
+        android:scrollbars="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:id="@+id/filter_radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/filrer_RadioButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:button="@anim/radiogroup_background"
+                    android:paddingLeft="10dp"
+                    android:text="57th Street(3)"
+                    android:textColor="@color/black000000"
+                    android:textSize="15sp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="15dp"
+                    android:button="@anim/radiogroup_background"
+                    android:paddingLeft="10dp"
+                    android:text="AIRWAYS(1)"
+                    android:textColor="@color/black000000"
+                    android:textSize="15sp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="15dp"
+                    android:button="@anim/radiogroup_background"
+                    android:paddingLeft="10dp"
+                    android:text="Almatrichi(100)"
+                    android:textColor="@color/black000000"
+                    android:textSize="15sp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="15dp"
+                    android:button="@anim/radiogroup_background"
+                    android:paddingLeft="10dp"
+                    android:text="ANGRY BIRD(3)" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="15dp"
+                    android:button="@anim/radiogroup_background"
+                    android:paddingLeft="10dp"
+                    android:text="Autumnz(46)"
+                    android:textColor="@color/black000000"
+                    android:textSize="15sp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:button="@anim/radiogroup_background"
+                    android:paddingLeft="10dp"
+                    android:text="Belkin(2)"
+                    android:textColor="@color/black000000"
+                    android:textSize="15sp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="15dp"
+                    android:button="@anim/radiogroup_background"
+                    android:paddingLeft="10dp"
+                    android:text="Bose(2)"
+                    android:textColor="@color/black000000"
+                    android:textSize="15sp" />
+            </RadioGroup>
+        </RelativeLayout>
+    </ScrollView>
+
+    <View
+        android:id="@+id/filter_View3"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/radiogroup_ScrollView"
+        android:background="@color/greye1e1e1" />
+
+    <RelativeLayout
+        android:id="@+id/Types_RelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/filter_View3">
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="All Types(706)"
+            android:textColor="@color/purple66006E"
+            android:textSize="17sp"
+            style="@style/font_family_robot_regular" />
+
+        <Button
+            android:id="@+id/filter_add_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@color/whiteFFFFFF"
+            android:onClick="onClick"
+            android:text="@string/add"
+            android:textColor="@color/black000000"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/filter_View4"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/Types_RelativeLayout"
+        android:background="@color/greye1e1e1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:id="@+id/filterline_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/greye1e1e1"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/filterline_view"
+            android:background="@color/whiteFFFFFF"
+            android:orientation="horizontal">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/filter_button"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@color/whiteFFFFFF"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="@string/filter"
+                android:textColor="@color/purple3A0047"
+                android:textSize="17sp"
+
+                style="@style/font_family_robot_regular" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/greye1e1e1" />
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/sort_button"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@color/whiteFFFFFF"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="@string/productlist_sort_title"
+                android:textSize="17sp"
+
+                style="@style/font_family_robot_regular" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar"
+        android:layout_alignBottom="@+id/vHeaderBarContentDivider"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="249dp"
+        android:layout_marginStart="249dp" />
+</RelativeLayout>

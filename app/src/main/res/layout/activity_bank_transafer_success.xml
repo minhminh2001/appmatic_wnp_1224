@@ -1,0 +1,92 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteFFFFFF"
+    android:orientation="vertical"
+    >
+
+    <View
+        android:id="@+id/status_bar"
+        android:layout_alignParentTop="true"
+        android:background="@color/black000000"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/statusbar_height"/>
+    <!--layout_top_bar-->
+    <RelativeLayout
+        android:id="@+id/rl_shoppingcart_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black000000">
+        <include layout="@layout/common_toolbar"/>
+    </RelativeLayout>
+
+    <com.whitelabel.app.widget.CustomTextView  style="@style/font_family_robot_regular"
+        android:id="@+id/line"
+        android:layout_below="@+id/rl_shoppingcart_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/orderdetail_line_space"
+        android:background="@color/gray_light" />
+
+    <LinearLayout
+        android:layout_below="@+id/line"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/success" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="@string/payment_send"
+            android:textColor="@color/black000000"
+            android:textSize="16sp"/>
+
+        <com.whitelabel.app.widget.CustomWebView
+            android:id="@+id/tv_desc"
+            style="@style/font_family_robot_regular"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black000000"
+            android:textSize="12sp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="80dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_sc_checkout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/button_padding_value"
+        android:background="@color/big_botton_white"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_roboto_medium"
+            android:id="@+id/tv_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_touch_height"
+            android:background="@drawable/big_button_style_purple"
+            android:gravity="center"
+            android:text="@string/CONTINUE_SHOPPING"
+            android:textColor="@color/whiteFFFFFF"
+            android:textSize="@dimen/button_font_size"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/connectionBreaks"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteFFFFFF"
+    android:clickable="true"
+    android:visibility="gone">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_error_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteFFFFFF"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageButton
+            android:id="@+id/iv_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:background="@null"
+            android:src="@drawable/s_wifi"
+            />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctv_error_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="@string/connection_lost"
+            android:textColor="@color/black38"
+            android:textSize="18sp"
+            imaginato:textFont="LatoMedium" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctv_error_subheader"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:text="@string/check_internet"
+            android:textColor="@color/black38"
+            android:textSize="16sp"
+            style="@style/font_family_roboto_medium" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteFFFFFF"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/imageButtonServer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:background="@null"
+            android:src="@drawable/s_server" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/customTextViewServer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="@string/server_lost"
+            android:textColor="@color/black38"
+            android:textSize="18sp"
+            style="@style/font_family_robot_regular"/>
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:text="@string/wait_service"
+            android:textColor="@color/black38"
+            android:textSize="16sp"
+            style="@style/font_family_robot_regular" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/try_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_try_again"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/connection_break_loading" />
+
+        <com.whitelabel.app.widget.CustomButton
+            android:id="@+id/btn_try_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            style="@style/font_family_roboto_medium"
+            android:clickable="false"
+            android:text="@string/refresh"
+            android:textAllCaps="false"
+            android:textColor="@color/purple92018d"
+            android:textSize="16sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp" />
+</LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:padding="15dp"
+        android:src="@mipmap/close_advertisement"
+        android:visibility="gone"/>
+    </RelativeLayout>

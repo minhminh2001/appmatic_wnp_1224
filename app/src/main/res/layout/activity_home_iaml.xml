@@ -1,0 +1,61 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_marketing_layers"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteFFFFFF"
+    android:visibility="gone">
+
+    <LinearLayout
+        android:id="@+id/ll_marketing_layers_text"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_marketing_layers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:maxLines="2"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/black000000"
+            android:textSize="24sp"
+            style="@style/font_family_robot_regular"/>
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_marketing_layers_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="4"
+            android:layout_marginTop="15sp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/gray888888"
+            android:textSize="16sp"
+            style="@style/font_family_robot_regular"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_marketing_layers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ll_marketing_layers_text"
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:id="@+id/iv_marketing_layers_close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:padding="15dp"
+        android:src="@mipmap/close_advertisement"/>
+</RelativeLayout>

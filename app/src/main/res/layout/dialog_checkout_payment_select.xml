@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:background="@color/whiteFFFFFF"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/ll_card1"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/checkout_payment_dialog_card1" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_desc_visa"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="3dp"-->
+                <!--android:text="@string/VISAMASTER"-->
+                <!--android:textSize="@dimen/payment_CV_desc_undertext_size"/>-->
+
+        </LinearLayout>
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_toRightOf="@id/ll_card1"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/black999999"
+            android:textSize="16dp"
+            style="@style/font_family_robot_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkout_payment_dialog_text1"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/ll_card2"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/checkout_payment_dialog_card2" />
+            <!--<TextView-->
+                <!--android:textColor="@color/black"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="3dp"-->
+                <!--android:text="@string/AMEX"-->
+                <!--android:textSize="@dimen/payment_CV_desc_undertext_size"/>-->
+
+        </LinearLayout>
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_toRightOf="@id/ll_card2"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/black999999"
+            android:textSize="16dp"
+            android:layout_width="wrap_content"
+            style="@style/font_family_robot_regular"
+            android:layout_height="wrap_content"
+            android:text="@string/checkout_payment_dialog_text2"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

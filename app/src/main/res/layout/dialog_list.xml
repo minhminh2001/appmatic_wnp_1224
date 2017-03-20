@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <com.whitelabel.app.widget.CustomListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/listview"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/transparent00"
+        android:dividerHeight="0dp"
+        android:cacheColorHint="@color/transparent00">
+    </com.whitelabel.app.widget.CustomListView>

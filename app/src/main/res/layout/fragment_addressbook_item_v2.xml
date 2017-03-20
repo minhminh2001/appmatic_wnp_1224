@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.whitelabel.app.widget.swipe.SwipeLayout
+        android:id="@+id/recyclerview_swipe"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_address_edit"
+                android:src="@drawable/action_edit"/>
+            <ImageView
+                android:layout_toRightOf="@+id/iv_address_edit"
+                android:layout_width="50dp"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_address_delete"
+                android:src="@mipmap/icon_delete"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_address_item">
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/iv_address_default"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="20dp">
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/AddAddress_name_textview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/Smith"
+                    android:textColor="@color/black111111"
+                    android:textSize="15sp"
+                    style="@style/font_family_roboto_medium" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/AddAddress_lastname_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/AddAddress_name_textview"
+                    android:textColor="@color/black111111"
+                    android:textSize="15sp"
+
+                    android:visibility="gone"
+                    style="@style/font_family_roboto_medium" />
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/AddAddress_second_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/AddAddress_name_textview"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black111111"
+                    android:textSize="14sp"
+                    style="@style/font_family_robot_regular" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/AddAddress_third_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black111111"
+                    android:textSize="14sp"
+                    style="@style/font_family_robot_regular" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/AddAddress_address_textview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_below="@+id/AddAddress_third_textview"
+                    android:text="@string/address1"
+                    android:textColor="@color/black111111"
+                    android:textSize="14sp"
+                    style="@style/font_family_robot_regular"
+                    />
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/AddAddress_malaysia_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/AddAddress_address_textview"
+                    android:gravity="center_vertical"
+                    android:text="@string/malaysia"
+                    android:textColor="@color/black111111"
+                    android:textSize="14sp"
+                    style="@style/font_family_robot_regular" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/AddAddress_tel_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/AddAddress_malaysia_textview"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black111111"
+                    android:textSize="14sp"
+                    style="@style/font_family_robot_regular" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_address_default"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@mipmap/right"
+               />
+        </RelativeLayout>
+    </com.whitelabel.app.widget.swipe.SwipeLayout>
+    <TextView
+        android:id="@+id/tv_address_line"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:background="@color/v2_line"/>
+</RelativeLayout>

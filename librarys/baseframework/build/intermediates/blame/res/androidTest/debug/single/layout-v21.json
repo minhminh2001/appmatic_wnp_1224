@@ -1,18 +1,18 @@
 [
     {
-        "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_action.xml",
-        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.2.0/res/layout-v21/notification_action.xml"
+        "merged": "D:\\android\\whitelabel1\\librarys\\baseframework\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "D:\\android\\whitelabel1\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.2.0\\res\\layout-v21\\notification_action_tombstone.xml"
     },
     {
-        "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_template_custom_big.xml",
-        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.2.0/res/layout-v21/notification_template_custom_big.xml"
+        "merged": "D:\\android\\whitelabel1\\librarys\\baseframework\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_action.xml",
+        "source": "D:\\android\\whitelabel1\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.2.0\\res\\layout-v21\\notification_action.xml"
     },
     {
-        "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_template_icon_group.xml",
-        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.2.0/res/layout-v21/notification_template_icon_group.xml"
+        "merged": "D:\\android\\whitelabel1\\librarys\\baseframework\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "D:\\android\\whitelabel1\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.2.0\\res\\layout-v21\\notification_template_icon_group.xml"
     },
     {
-        "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_action_tombstone.xml",
-        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.2.0/res/layout-v21/notification_action_tombstone.xml"
+        "merged": "D:\\android\\whitelabel1\\librarys\\baseframework\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "D:\\android\\whitelabel1\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.2.0\\res\\layout-v21\\notification_template_custom_big.xml"
     }
 ]

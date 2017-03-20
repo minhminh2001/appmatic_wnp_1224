@@ -1,0 +1,108 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    tools:context="com.whitelabel.app.fragment.HomeStoreCreditFragment"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/whiteFFFFFF"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:layout_height="wrap_content">
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="28sp"
+                android:textColor="@color/black"
+                style="@style/font_family_roboto_medium"
+                />
+            <com.whitelabel.app.widget.CustomTextView
+                android:layout_width="wrap_content"
+                style="@style/font_family_roboto_medium"
+                android:text="@string/store_credits2"
+                android:layout_alignBottom="@+id/title"
+                android:layout_toRightOf="@+id/title"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="3dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" >
+            </com.whitelabel.app.widget.CustomTextView>
+        </RelativeLayout>
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            style="@style/font_family_roboto_medium" />
+        <RelativeLayout
+            android:id="@+id/rl_help"
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/selector_helpcenterlist_and_notificationlist2"
+            android:layout_height="wrap_content">
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/ctvcms"
+                android:layout_toLeftOf="@+id/iv_right"
+                android:lineSpacingExtra="3dp"
+                android:layout_width="match_parent"
+                android:textColorLink="@color/purple"
+                android:padding="15dp"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                style="@style/font_family_robot_regular"
+                />
+            <ImageView
+                android:id="@+id/iv_right"
+                android:layout_marginRight="17dp"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arrow_right" />
+        </RelativeLayout>
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/recentTransaction"
+            android:layout_marginTop="15dp"
+            android:textSize="17sp"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="@string/recent_tran"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            style="@style/font_family_roboto_medium"
+            />
+
+        <View
+            android:id="@+id/v_bottom_line"
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:background="@color/v2_line"
+            android:layout_height="@dimen/myAccount_lineHeight"/>
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_not_credit_hint"
+            android:layout_width="match_parent"
+            android:text="@string/store_credit_not_history"
+            android:gravity="center"
+            android:textColor="@color/grey6A6A6A"
+            android:layout_marginTop="80dp"
+            style="@style/font_family_robot_regular"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+</RelativeLayout>

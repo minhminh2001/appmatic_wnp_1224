@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:fillViewport="true">
+    <!--
+        <com.whitelabel.app.widget.CustomHomeViewPager
+            android:id="@+id/vpCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="14dp"
+            imaginato:isDisallowParentTouch="true"
+            android:layout_below="@id/vpCategory"
+            imaginato:isStopHorizontalScroll="false" />
+            -->
+<!--
+        <com.whitelabel.app.widget.CustomRecyclerView
+            android:id="@+id/rvCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:visibility="gone"
+            imaginato:isDisallowParentTouch="true"
+            imaginato:isStopHorizontalScroll="false"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:background="#FFFFFFFF"
+            android:scrollbars="none" />
+            -->
+<!--
+        <ImageView
+            android:layout_below="@+id/rvCategory"
+            android:id="@+id/ivCategoryCuration"
+            android:layout_width="match_parent"
+            android:layout_height="151dp"
+            android:layout_marginTop="14dp"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/iv_discount"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/ivCategoryCuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_desc"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:visibility="gone"
+            android:textSize="14sp"
+            android:layout_alignBottom="@+id/ivCategoryCuration"
+            android:layout_above="@+id/empty"
+            style="@style/font_family_roboto_regular"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:background="#EAFFFFFF" />
+
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvShopNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/ivCategoryCuration"
+            android:layout_alignRight="@id/ivCategoryCuration"
+            android:layout_marginBottom="18dp"
+            android:layout_marginRight="23dp"
+            android:background="@drawable/shape_home_home_category_shopnow_bg"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/home_home_category_shopnow"
+            android:textColor="@color/purple63086F"
+            android:textSize="6sp"
+            android:visibility="gone"
+            style="@style/font_family_roboto_medium" />
+
+        <LinearLayout
+            android:id="@+id/llGemPicks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivCategoryCuration"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="2">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@color/greyEBEBEB" />
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:text="@string/home_home_category_gempicks"
+                android:textColor="@color/black000000"
+                android:textSize="14sp"
+                style="@style/font_family_roboto_regular" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@color/greyEBEBEB" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/llGemPicks"
+            android:layout_marginTop="14dp"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
+    -->
+    <com.whitelabel.app.widget.CustomSwipefreshLayout
+       android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+         android:layout_height="match_parent" >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView1"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+        <View
+            android:id="@+id/v_view"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.whitelabel.app.widget.CustomSwipefreshLayout>
+    <include
+        layout="@layout/connection_breaks"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+</RelativeLayout>

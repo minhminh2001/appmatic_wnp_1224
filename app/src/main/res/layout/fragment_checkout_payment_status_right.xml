@@ -1,0 +1,437 @@
+<RelativeLayout android:id="@+id/rl_root"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/whiteFFFFFF"
+                android:orientation="vertical"
+                android:paddingBottom="50dp">
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_bar_height"
+        android:background="@color/black000000"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/rlHeaderBarMenu"
+            style="@style/HeaderBarLeftImageTouchTargetStyle">
+
+            <ImageView
+                android:id="@+id/vHeaderBarMenu"
+                style="@style/HeaderBarLeftImageStyle"
+                android:src="@drawable/action_menu"/>
+        </RelativeLayout>
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/HeaderBarTitleTextStyle"
+            android:text="@string/PAYMENT_STATUS"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_checkout_paymentstatus_goto_shoppingcart"
+            style="@style/HeaderBarRightImageTouchTargetStyle">
+
+            <ImageView
+                android:id="@+id/iv_checkout_paymentstatus_goto_shoppingcart"
+                style="@style/HeaderBarRightImageStyle"
+                android:src="@drawable/action_cart"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/sv_content"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/title">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:id="@+id/body"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyE1E1E1"
+                    style="@style/font_family_robot_regular"/>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:src="@mipmap/success2"/>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/Thank_you_for_your_order"
+                    android:textColor="@color/black000000"
+                    android:textSize="18sp"
+                    style="@style/font_family_robot_regular"/>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/Your_order_number_is"
+                    android:textColor="@color/black000000"
+                    android:textSize="18sp"
+                    style="@style/font_family_robot_regular"/>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_checkout_payment_status_ordernumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/black000000"
+                    android:textSize="16sp"
+                    style="@style/font_family_roboto_medium"/>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/A_confirmation_email_has_been_sent_to"
+                    android:textColor="@color/black000000"
+                    android:textSize="12sp"
+                    style="@style/font_family_robot_regular"/>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_checkout_payment_status_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/yourmail_mail.com"
+                    android:textColor="@color/purple"
+                    android:textSize="12sp"
+                    style="@style/font_family_robot_regular"/>
+
+                <com.whitelabel.app.widget.CustomWebView
+                    android:id="@+id/wv_html"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black333333"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    style="@style/font_family_robot_regular">
+
+
+                </com.whitelabel.app.widget.CustomWebView>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_checkout_payment_status_right_checkorder"
+                    android:layout_width="220dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/btn_purple_border"
+                    android:gravity="center"
+                    android:text="@string/CHECK_ORDER"
+                    android:textColor="@drawable/btn_text_purple"
+                    android:textSize="@dimen/button_font_size"
+                    android:visibility="gone"
+                    style="@style/font_family_robot_regular"/>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_checkout_payment_status_right_continueshopping"
+                    android:layout_width="220dp"
+                    android:layout_height="@dimen/button_touch_height"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_style_purple"
+                    android:gravity="center"
+                    android:text="@string/CONTINUE_SHOPPING"
+                    android:textColor="@color/whiteFFFFFF"
+                    android:textSize="@dimen/button_font_size"
+                    android:visibility="gone"
+                    style="@style/font_family_roboto_medium"
+                    />
+
+                <!--android:layout_width="200dp"
+                android:layout_height="40dp"-->
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_share"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:background="@mipmap/checkout_success_facebook_share"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    style="@style/font_family_robot_regular"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/myBoxGroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        >
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/t1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="@string/congratulations"
+            android:textColor="@color/black111111"
+            android:textSize="22sp"
+
+            style="@style/font_family_robot_regular"/>
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/t2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/t1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="@string/select_one_of_the_bixes"
+            android:textColor="@color/black111111"
+            android:textSize="15sp"
+            style="@style/font_family_robot_regular"/>
+
+        <LinearLayout
+            android:id="@+id/myBoxGroupSon"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/t2"
+            android:layout_marginTop="17dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/box0"/>
+
+            <ImageView
+                android:id="@+id/img2"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="33dp"
+                android:src="@mipmap/box0"/>
+
+            <ImageView
+                android:id="@+id/img3"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="33dp"
+                android:src="@mipmap/box0"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/myBoxGroupSon"
+            android:layout_marginTop="-5dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img4"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/box0"/>
+
+            <ImageView
+                android:id="@+id/img5"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="33dp"
+                android:src="@mipmap/box0"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/showCode"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/black80000000"
+        android:visibility="gone"
+        >
+
+        <RelativeLayout
+            android:id="@+id/rlBackGroud"
+            android:layout_width="280dp"
+            android:layout_height="380dp"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            >
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/my_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="70dp"
+                android:text="@string/congratulations2"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                style="@style/font_family_roboto_medium"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/my_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_text1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/youve_won_gemcash"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+
+                style="@style/font_family_robot_regular"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/my_text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_text2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="28sp"
+                style="@style/font_family_roboto_medium"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/my_text4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_text3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/an_email_with_prize"
+                android:textColor="@color/black"
+                style="@style/font_family_robot_regular"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_checkout_payment_status_right_continueshopping3"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_touch_height"
+                android:layout_below="@id/my_text4"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_purple_border"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/CONTINUE_SHOPPING"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/button_font_size"
+                style="@style/font_family_robot_regular"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/showCode_failure"
+            android:layout_width="280dp"
+            android:layout_height="360dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            >
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/my_text1_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="70dp"
+                android:text="@string/Oops_Sorry"
+                android:textColor="@color/black"
+                android:textSize="23sp"
+                style="@style/font_family_roboto_medium"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/my_text2_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_text1_1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="@string/This_promotion_has_been_fully_redeemed"
+                android:textColor="@color/black"
+                android:textSize="19sp"
+
+                style="@style/font_family_roboto_medium"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/my_text4_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_text2_2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="@string/Stay_tuned_for_more_exciting"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                style="@style/font_family_robot_regular"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_checkout_payment_status_right_continueshopping4"
+                android:layout_width="155dp"
+                android:layout_height="@dimen/button_touch_height"
+                android:layout_below="@id/my_text4_4"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/btn_purple_border"
+                android:gravity="center"
+                android:text="@string/CONTINUE_SHOPPING"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/button_font_size"
+                style="@style/font_family_robot_regular"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/animImgView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/animImg"
+            android:layout_width="70dp"
+            android:layout_height="75dp"
+            android:src="@mipmap/box0"
+            android:visibility="gone"/>
+    </LinearLayout>
+</RelativeLayout>

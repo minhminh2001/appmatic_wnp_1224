@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mParent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteffffff">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--layout_top_bar-->
+        <!--middle ScrollView-->
+        <com.whitelabel.app.widget.CustomSwipefreshLayout
+            android:id="@+id/swipe_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/ll_body"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/hlv_shoppingcart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible" />
+
+
+            </RelativeLayout>
+        </com.whitelabel.app.widget.CustomSwipefreshLayout>
+
+        <!--BOTTOM BUTTON-->
+        <LinearLayout
+            android:id="@+id/ll_sc_checkout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/big_botton_white"
+            android:orientation="horizontal"
+            android:padding="@dimen/button_padding_value"
+            android:visibility="gone">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_sc_checkout"
+                style="@style/font_family_roboto_medium"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_touch_height"
+                android:layout_weight="1"
+                android:background="@drawable/big_button_style_purple"
+                android:gravity="center"
+                android:text="CHECKOUT 0 ITEMS"
+                android:textColor="@color/whiteffffff"
+                android:textSize="@dimen/button_font_size" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/item_shopping_nothing" />
+
+    <include
+        layout="@layout/connection_breaks"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/rl_shoppingcart_top_bar" />
+
+
+</RelativeLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/order_relative"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:id="@+id/tv_myaccount_order_cell_middle_shipped_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:textColor="@color/black000000"/>
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:id="@+id/tv_myaccount_order_cell_middle_shipped_id"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/tv_myaccount_order_cell_middle_shipped_text"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:textColor="@color/black000000"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_myaccount_order_cellmiddle_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"></LinearLayout>
+
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/whiteFFFFFF"/>
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/order_line"
+        style="@style/font_family_robot_regular"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light"/>
+</LinearLayout>

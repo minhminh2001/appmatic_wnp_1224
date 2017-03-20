@@ -1,7 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="background">#c9c9c9</color>
+    <!-- 红色 -->
+    <color name="red">#D82529</color>
+    <color name="redC2060A">#C2060A</color>
+    <color name="red_common">#C1033D</color>
+    <color name="redC1033D">#C1033D</color>
+
+    <!-- 透明 -->
+    <color name="purple66006e">#66006e</color>
+    <color name="transparent96FFFFFF">#96FFFFFF</color>
+    <color name="transparent00">#00000000</color>
+    <color name="transparent7F">#7F000000</color>
+    <color name="transparentgray9A">#9A22262b</color>
+    <color name="transparentgray4D">#A8000000</color>
+    <color name="transparent5000">#50000000</color>
+
+    <color name="black75">#c3000000</color>
+    <color name="purple85">#c366006e</color>
+    <!--70% transparent-->
+    <color name="black2c">#1f000000</color>
+    <color name="blackD0">#7F000000</color>
+    <!-- 白色 -->
     <color name="whiteFFFFFF">#FFFFFFFF</color>
+    <color name="white66FFFFFF">#66FFFFFF</color>
+    <color name="whiteffffff">#ffffff</color>
+    <color name="sswhite">#85ffffff</color>
+
+
+    <!-- 黑色 -->
+    <color name="black000000">#000000</color>
+    <color name="black222222">#222222</color>
+    <color name="black111111">#111111</color>
+    <color name="black333333">#333333</color>
+    <color name="black666666">#666666</color>
+    <color name="black999999">#999999</color>
+    <color name="black99000000">#99000000</color>
+    <color name="black50000000">#65000000</color>
+    <color name="black80000000">#80000000</color>
+    <color name="black1a1a1a">#1a1a1a</color>
+    <color name="blackE3B0B0B0">#E3B0B0B0</color>
+    <!-- #000000 87%-->
+    <color name="black87">#db000000</color>
+    <!-- #000000 54%-->
+    <color name="black54">#93000000</color>
+    <!-- #000000 38%-->
+    <color name="black38">#65000000</color>
+
+    <!-- 灰色 -->
+    <color name="greyDCDCDC">#DCDCDC</color>
+    <color name="edittext_line">#1F000000</color>
+
+    <color name="grey878787">#878787</color>
+    <color name="greyC2C2C2">#e1e1e1</color>
+    <color name="greyD0D0D0">#d0d0d0</color>
+    <color name="greyEEEEEE">#EEEEEE</color>
+    <color name="grey9A9A9A">#9A9A9A</color>
+    <color name="grey999999">#999999</color>
+    <color name="greyDDDDDD">#DDDDDD</color>
+    <color name="greye1e1e1">#e1e1e1</color>
+    <color name="grey6A6A6A">#6A6A6A</color>
+    <color name="grey444444">#444444</color>
+    <color name="greyF0F0F1">#F0F0F1</color>
+    <color name="greyE1E1E1">#E1E1E1</color>
+    <color name="greyCCCCCC">#CCCCCC</color>
+    <color name="blue7D66006E" >#7D66006E</color>
+    <color name="blueD7D7D7" >#D7D7D7</color>
+    <color name="whiteEAFFFFFF" >#EAFFFFFF</color>
+    <color name="grey970508">#970508</color>
+    <color name="greyF7F7F7">#F7F7F7</color>
+    <color name="greyACACAC">#ACACAC</color>
+    <color name="greyB8B8B8">#B8B8B8</color>
+    <color name="gray_3fabac">#3Fabac</color>
+    <color name="gray_weight">#989898</color>
+    <color name="gray_light">#DDDDDD</color>
+    <color name="greyCBC9CC">#CBC9CC</color>
+    <color name="greyC888888">#888888</color>
+    <color name="purple4c0052">#4c0052</color>
+    <color name="grayf8f8f8">#f8f8f8</color>
+    <color name="grayf0f0f0">#fff2f2f2</color>
+    <color name="gray888888">#888888</color>
+    <color name="gray999999">#999999</color>
+    <color name="greyF3F3F3">#F3F3F3</color>
+    <color name="greyF5F5F5">#F5F5F5</color>
+    <color name="greyF2F2F2">#F2F2F2</color>
+    <color name="greyF8F8F8">#F8F8F8</color>
+    <color name="greyF0F0F0">#F0F0F0</color>
+    <color name="greyfdfbfe">#fdfbfe</color>
+
+    <color name="grey6f6f6f">#6f6f6f</color>
+
+    <!-- 绿色 -->
+    <color name="green_common">#009E82</color>
+
+
+    <color name="greyFBFBFB">#FBFBFB</color>
+    <!-- 蓝色 -->
+    <color name="blue4d9cf2">#4d9cf2</color>
+    <color name="blue5097DA">#4f005d</color>
+
+    <!--紫色-->
+    <color name="label_active">#66006E</color>
+    <color name="purple">#66006E</color>
+    <color name="tranPurple">#FF66006E</color>
+
+    <!-- 紫色 -->
+    <color name="purple92018d">#92018d</color>
+    <color name="purple660070">#660070</color>
+    <color name="purple3A0047">#3A0047</color>
+    <color name="purple4f005b">#4f005b</color>
+    <color name="purple4F005D">#4f005d</color>
+    <color name="purple66006E">#66006E</color>
+    <!--facebook -->
+    <color name="facebook">#3A5899</color>
+    <!-- allen -->
+    <color name="grayText">#888888</color>
+    <color name="hint">#61000000</color>
+    <color name="label_saved">#61000000</color>
+    <!--myaccount order list-->
+    <color name="order_status_pending">#FBC801</color>
+    <color name="order_status_proccessing">#FBC801</color>
+    <color name="order_status_verified">#009E82</color>
+    <color name="order_status_shipped">#17B1C8</color>
+    <color name="order_status_delivered">#B0CE27</color>
+    <color name="order_status_delivery_failed">#C1033D</color>
+    <color name="order_status_canceled">#888888</color>
+
+    <color name="order_status_hold">#FBC801</color>
+    <color name="order_status_holded">#FBC801</color>
+
+    <color name="card_shadow">#10000000</color>
+    <color name="black_de">#DE000000</color>
+    <color name="menu_text">#A4A4A4</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="big_botton_white">#E3ffffff</color>
+    <color name="tranwhite">#86FFFFFF</color>
+    <!-- divider line color #000 12%-->
+    <color name="v2_line">#21000000</color>
+
+    
+    <color name="tranblack89">#89000000</color>
+    <color name="tranblackDE">#DE000000</color>
+    <color name="editColor">#DE000000</color>
+
+
+    <!-- MultiSwitchButton-->
+    <!-- 背景-->
+    <!--<color name="multi_switch_button_ripple_normal">#60000000</color>-->
+    <color name="multi_switch_button_ripple_normal">#9f9f9f</color>
+    <color name="multi_switch_button_ripple_checked">#7f66006e</color>
+    <!-- 阴影-->
+    <color name="multi_switch_button_shadow_start">#0f000000</color>
+    <color name="multi_switch_button_shadow_end">#0f000000</color>
+    <!-- 滑块-->
+    <color name="multi_switch_button_solid_normal">#fafafa</color>
+    <color name="multi_switch_button_solid_checked">#66006e</color>
+
+    <!-- checkbox-->
+    <color name="color_checkbox_unchecked">#767676</color>
+    <color name="color_checkbox_checked">#66006e</color>
+
+  <!-- SearchBox-->
+    <!-- #000000 87%-->
+    <color name="search_text_active">#db000000</color>
+    <!-- #000000 38%-->
+    <color name="search_text_normal">#61ffffff</color>
+    <!-- search list-->
+    <color name="search_bar_background">#f8f8f8</color>
+    <color name="search_bar_home_line">#61ffffff</color>
+    <color name="search_bar_list_line">#21000000</color>
+    <color name="my_count_divider_line_color">#20000000</color>
 </resources>

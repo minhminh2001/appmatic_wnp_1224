@@ -1,0 +1,109 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mContent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteFFFFFF">
+
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_roboto_medium"
+        android:paddingLeft="10dp"
+        android:visibility="gone"
+        android:paddingRight="10dp"
+        android:id="@+id/tv_checkout_shipto_text"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/checkout_line_height"
+        android:layout_marginBottom="@dimen/checkout_line_space"
+        android:background="@color/whiteFFFFFF"
+        android:gravity="center_vertical"
+        android:text="@string/Ship_To"
+        android:textSize="18sp"
+        android:textColor="@color/black000000" />
+
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        android:id="@+id/tv_checkout_shipto_selectaddress_placeholder01"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/greye1e1e1"
+        android:layout_below="@id/tv_checkout_shipto_text" />
+
+    <!--top add_new_address button -->
+
+
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
+        android:id="@+id/tv_checkout_shipto_selectaddress_placeholder02"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/checkout_left_right_padidng"
+        android:visibility="gone"
+        android:background="@color/whiteFFFFFF"
+        android:layout_below="@+id/tv_checkout_shipto_selectaddress_placeholder01" />
+
+  <LinearLayout
+        android:id="@+id/ll_checkout_shipping_selectaddress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whiteFFFFFF"
+        android:layout_below="@id/tv_checkout_shipto_text"
+        android:orientation="horizontal"
+        android:visibility="gone"></LinearLayout>
+    <!-- <android.support.v4.widget.SwipeRefreshLayout
+       android:id="@+id/swipe_container"
+       android:layout_width="match_parent"
+       android:layout_below="@id/tv_checkout_shipto_selectaddress_placeholder02"
+       android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">-->
+
+            <com.whitelabel.app.widget.swipemenulistview.SwipeMenuListView
+                android:id="@+id/lv_checkout_shipping_selectaddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                imaginato:inScroll="yes"
+                android:background="@color/white"
+                android:divider="@color/v2_line"
+                android:dividerHeight="@dimen/myAccount_lineHeight">
+            </com.whitelabel.app.widget.swipemenulistview.SwipeMenuListView>
+            <com.whitelabel.app.widget.CustomButton
+                style="@style/font_family_roboto_medium"
+                android:id="@+id/btn_checkout_shipping_add_new_address"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="@dimen/button_touch_height"
+                android:layout_below="@+id/lv_checkout_shipping_selectaddress"
+                android:background="@mipmap/add_adress"
+                android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/ADD_NEW_ADDRESS"
+                android:textColor="@color/greyC2C2C2"
+                android:textSize="18sp"
+                />
+            <com.whitelabel.app.widget.CustomTextView
+                style="@style/font_family_robot_regular"
+                android:id="@+id/tv_checkout_errormsg_defaultOrSelectAddress"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_below="@id/btn_checkout_shipping_add_new_address"
+                android:gravity="center_horizontal"
+                android:background="@color/whiteFFFFFF"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/red_common"
+                android:visibility="gone"/>
+    <View
+        android:layout_below="@+id/tv_checkout_errormsg_defaultOrSelectAddress"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"/>
+
+
+</RelativeLayout>

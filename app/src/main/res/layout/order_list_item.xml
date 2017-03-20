@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/greyF8F8F8"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <LinearLayout
+        android:id="@+id/order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp">
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_roboto_medium"
+            android:id="@+id/tv_myaccount_orderlist_ordernumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Order No. 100044126"
+            android:textColor="@color/black000000"
+            android:textSize="14sp" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:layout_width="1dp"
+            android:layout_height="12dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textView"
+            android:gravity="center_vertical"
+            android:background="@color/black666666"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center_vertical" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:id="@+id/tv_myaccount_orderlist_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/black000000"
+            android:textSize="14sp"
+            android:text="7 Dec 2015"
+            android:layout_weight="1" />
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:id="@+id/tv_myaccount_orderlist_status"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:textColor="@color/black000000"
+            android:textSize="12sp"
+            android:text="(Delivered Partially)"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="9dp"
+        android:layout_height="15dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textView3"
+        android:background="@mipmap/arrow_right"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/order"
+        android:layout_centerVertical="true" />
+
+</RelativeLayout>

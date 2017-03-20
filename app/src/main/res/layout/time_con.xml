@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:imaginato="http://schemas.android.com/tools"
+    android:background="@color/whiteFFFFFF"
+    android:orientation="vertical">
+
+    <Chronometer
+        android:id="@+id/curation_chronometer"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+
+    <RelativeLayout
+        android:background="@drawable/corners_time_fragment_out_side"
+        style="@style/rl_curation_time_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/curation_time_marg"
+        android:layout_toLeftOf="@+id/rl_hh">
+
+        <RelativeLayout
+            android:id="@+id/rl_dd_time"
+            style="@style/rl_curation_time_num_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_dd2"
+                style="@style/tv_curation_time_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_dd"
+                style="@style/tv_curation_time_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_below="@+id/rl_dd_time"
+            android:id="@+id/tv_dd_desc"
+            style="@style/curation_time_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/days"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_hh"
+        android:background="@drawable/corners_time_fragment_out_side"
+        style="@style/rl_curation_time_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/curation_time_marg_ban"
+        android:layout_toLeftOf="@+id/tv_time_center">
+
+        <RelativeLayout
+            android:id="@+id/rl_hh_time"
+            style="@style/rl_curation_time_num_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_hh2"
+                style="@style/tv_curation_time_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_hh"
+                style="@style/tv_curation_time_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_below="@+id/rl_hh_time"
+            style="@style/curation_time_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hours" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_time_center"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true" />
+
+    <RelativeLayout
+        android:background="@drawable/corners_time_fragment_out_side"
+        android:id="@+id/rl_mm"
+        style="@style/rl_curation_time_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/curation_time_marg_ban"
+        android:layout_toRightOf="@id/tv_time_center">
+
+        <RelativeLayout
+            android:id="@+id/rl_mm_time"
+            style="@style/rl_curation_time_num_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_mm2"
+                style="@style/tv_curation_time_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_mm"
+                style="@style/tv_curation_time_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_below="@+id/rl_mm_time"
+            style="@style/curation_time_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/min" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@drawable/corners_time_fragment_out_side"
+        android:id="@+id/rl_ss"
+        style="@style/rl_curation_time_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/curation_time_marg"
+        android:layout_toRightOf="@id/rl_mm">
+
+        <RelativeLayout
+            android:id="@+id/rl_ss_time"
+            style="@style/rl_curation_time_num_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_ss2"
+                style="@style/tv_curation_time_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_ss"
+                style="@style/tv_curation_time_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_below="@+id/rl_ss_time"
+            style="@style/curation_time_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sec" />
+    </RelativeLayout>
+</RelativeLayout>

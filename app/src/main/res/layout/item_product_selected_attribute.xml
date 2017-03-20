@@ -1,0 +1,18 @@
+<com.whitelabel.app.widget.CustomTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ctv_product_attribute"
+    android:layout_width="match_parent"
+    android:layout_weight="1"
+    android:layout_height="25dp"
+    android:layout_alignParentLeft="true"
+    android:layout_marginLeft="9dp"
+    android:layout_toLeftOf="@+id/vProductSizeColorDivider"
+    android:background="@drawable/shape_productdetail_colorsize_bg"
+    android:gravity="center"
+    android:textColor="@color/black"
+    android:textSize="13sp"
+    style="@style/font_family_robot_regular"
+    android:drawableRight="@mipmap/arrow_down_spinner"
+    android:paddingRight="10dp"
+/>

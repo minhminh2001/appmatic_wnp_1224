@@ -1,0 +1,45 @@
+<!--shopping cart nothing-->
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_sc_nothing"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    android:layout_below="@id/rl_shoppingcart_top_bar"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginTop="70dp">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:scaleType="center"
+            android:background="@mipmap/icon_shopping_cart"/>
+    </RelativeLayout>
+
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:text="@string/shopping_cart_nothing_text"
+        android:textColor="@color/gray_weight"/>
+
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_roboto_medium"
+        android:id="@+id/btn_sc_nothing_goshopping"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_touch_height"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/button_style_purple"
+        android:textColor="@color/whiteFFFFFF"
+        android:textSize="16sp"
+        android:text="@string/shopping_cart_nothing_bottom_button"/>
+
+</LinearLayout>

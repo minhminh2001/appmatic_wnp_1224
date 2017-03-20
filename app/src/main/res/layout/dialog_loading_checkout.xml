@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minHeight="60dp"
+    android:minWidth="320dp"
+    android:orientation="vertical"
+    android:background="@drawable/exit_app_radius">
+
+        <!--<ImageView-->
+            <!--android:id="@+id/img_checkout_dialog"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:src="@mipmap/progress" />-->
+
+    <com.whitelabel.app.widget.circularProgressView.CircularProgressView
+        android:layout_width="40dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cpv_animAutostart="true"
+        app:cpv_indeterminate="true"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="40dp" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:id="@+id/tv_checkout_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center_horizontal"
+            android:textSize="14sp"
+            android:textColor="@color/gray888888" />
+
+    <!--<ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp" />-->
+
+</LinearLayout>

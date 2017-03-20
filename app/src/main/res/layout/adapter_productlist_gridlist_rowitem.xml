@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="2">
+    <View
+        android:id="@+id/vHorDivider"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/v2_line" />
+
+    <include
+        android:id="@+id/llLeftProduct"
+        layout="@layout/adapter_productlist_gridlist_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8.9dp"
+        android:layout_weight="1" />
+
+    <View
+        android:id="@+id/vProductListDivider"
+        android:layout_width="8.9dp"
+        android:layout_height="match_parent"
+        android:background="@color/whiteFFFFFF" />
+
+    <include
+        android:id="@+id/llRightProduct"
+        layout="@layout/adapter_productlist_gridlist_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8.9dp"
+        android:layout_weight="1" />
+</LinearLayout>

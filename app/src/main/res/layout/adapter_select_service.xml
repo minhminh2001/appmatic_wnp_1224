@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
+    android:layout_width="fill_parent"
+    android:layout_height="45dp"
+    android:id="@+id/serviceName"
+    android:gravity="center"
+    />
+    <View
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/shape_select_service"
+        android:layout_toRightOf="@+id/serviceName"
+        android:layout_marginLeft="-30dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/select"
+        android:visibility="gone"/>
+</RelativeLayout>

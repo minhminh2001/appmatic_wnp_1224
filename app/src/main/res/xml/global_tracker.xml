@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Data must be dispatched and received by 4 a.m. of the following day, in the local time zone of each profile.-->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="TypographyDashes">
+    <!--The Google Analytics tracking ID to which to send your data. Dashes in the ID must be unencoded. You can disable your tracking by not providing this value.-->
+
+    <!--Live -->
+    <!--<string name="ga_trackingId">UA-62438602-3</string>-->
+  <!-- appdev-->
+    <!-- <string name="ga_trackingId">UA-72586399-2</string>-->
+      <!--API-->
+    <!--<string name="ga_trackingId">UA-67366527-3</string>-->
+
+    <!--The name of your app, used in the app name dimension in your reports.-->
+    <string name="ga_appName">gemfive</string>
+
+    <!--The version of your application, used in the app version dimension within your reports.-->
+    <string name="ga_appVersion">1.1.7</string>
+
+
+    <string name="ga_logLevel">verbose</string>
+    <integer name="ga_dispatchPeriod">30</integer>
+    <bool  name="ga_dryRun">false</bool >
+
+    <!--Enable automatic activity tracking-->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!--Enable automatic exception tracking-->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+
+    <!--Flag to enable or writing of debug information to the log, useful for troubleshooting your implementation.-->
+    <bool name="ga_debug">true</bool>
+
+  <screenName name="com.whitelabel.app.activity.ProductActivity">Product Detail Screen</screenName>
+  <screenName name="com.whitelabel.app.activity.CurationActivity">Curation Landing Screen</screenName>
+</resources>

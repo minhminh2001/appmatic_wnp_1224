@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.whitelabel.app.widget.CustomXListView
+        android:id="@+id/cxlvProductList"
+        android:layout_width="match_parent"
+        android:listSelector="@color/transparent00"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/toolbar"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none" />
+
+    <ImageView
+        android:id="@+id/iv_bottom_slideto_top"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/slideto_top_bty_margin"
+        android:layout_marginRight="@dimen/slideto_top_bty_margin"
+        android:background="@drawable/draw_slideto_top"/>
+
+
+
+    <RelativeLayout
+        android:id="@+id/top_switch_and_filter_bar"
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone"
+        android:background="@color/greyEEEEEE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/switch_view_and_filter_bar_height"
+            layout="@layout/layout_top_switch_and_filter_bar"
+            />
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/flFilterSortContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"/>
+
+    <include
+        layout="@layout/connection_breaks"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/toolbar"
+        />
+    <RelativeLayout
+        android:id="@+id/rlNodata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@id/toolbar">
+
+        <View
+            android:id="@+id/vNodataCenterDivider"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/vNodataCenterDivider"
+            android:layout_marginTop="17dp"
+            android:gravity="top|center_horizontal"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:text="@string/productlist_productlist_prompt_error_nodata"
+            android:textColor="@color/gray888888"
+            android:textSize="15sp"
+            style="@style/font_family_robot_regular" />
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_above="@id/vNodataCenterDivider"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="17dp"
+            android:src="@mipmap/productlist_nosearch" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/ll_toolbar"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/common_toolbar"/>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyEEEEEE"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/status_bar"
+        android:layout_alignParentTop="true"
+        android:background="@color/black000000"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/statusbar_height"/>
+
+    <com.whitelabel.app.widget.CustomTabCustomPageIndicator
+        android:id="@+id/ctpiCategoryList"
+        android:layout_below="@+id/ll_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        imaginato:pstsDividerColor="@color/whiteFFFFFF"
+        imaginato:pstsDividerPadding="0dp"
+        imaginato:pstsIndicatorColor="@color/purple66006E"
+        imaginato:pstsIndicatorHeight="2dp" />
+
+    <View
+        android:id="@+id/vCategoryProductListDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/ctpiCategoryList"
+        android:background="@color/greye1e1e1" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpProductList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/vCategoryProductListDivider" />
+    <RelativeLayout
+        android:id="@+id/top_switch_and_filter_bar"
+        android:layout_below="@id/vCategoryProductListDivider"
+        android:visibility="gone"
+        android:background="@color/greyEEEEEE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/switch_view_and_filter_bar_height"
+            layout="@layout/layout_top_switch_and_filter_bar"
+            />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_bottom_slideto_top"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/slideto_top_bty_margin"
+        android:layout_marginRight="@dimen/slideto_top_bty_margin"
+        android:background="@drawable/draw_slideto_top"/>
+
+    <FrameLayout
+        android:id="@+id/flFilterSortContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/vHeaderCategoryDivider"
+        android:visibility="gone"/>
+</RelativeLayout>

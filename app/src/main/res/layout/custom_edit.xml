@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="5dp"
+    android:layout_height="fill_parent"
+    >
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="2dp">
+        <com.whitelabel.app.widget.CustomEditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/font_family_robot_regular"
+            android:textSize="16sp"
+            android:singleLine="true"
+            android:paddingRight="@dimen/customEditText_paddingRight_v2"
+            android:textColor="@color/black111111"
+            android:textColorHint="@color/hint"
+            android:background="@color/white"
+            android:id="@+id/my_editText"
+            android:layout_alignParentBottom="true"
+            android:inputType="text" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/imageViewClear"
+            android:visibility="gone"
+            android:src="@mipmap/text_elimination" />
+    </RelativeLayout>
+
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/label_active"
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible"
+        android:id="@+id/my_text1"
+        android:textSize="@dimen/labelTextFontSize"/>
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/my_text2"
+        android:visibility="invisible"
+        android:textColor="@color/label_saved"
+        android:textSize="@dimen/labelTextFontSize"/>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/edittext_line"
+        android:id="@+id/my_view"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
+</RelativeLayout>

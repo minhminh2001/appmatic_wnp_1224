@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/ctvBrandTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="left|center_vertical"
+        android:paddingBottom="7dp"
+        android:paddingLeft="57dp"
+        android:paddingRight="20dp"
+        android:paddingTop="7dp"
+        android:singleLine="true"
+        android:textColor="@color/black000000"
+        android:textSize="14.5sp"
+        style="@style/font_family_robot_regular" />
+
+    <ImageView
+        android:id="@+id/ivBrandTitle"
+        android:layout_width="57dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="20dp"
+        android:paddingRight="14dp"
+        android:scaleType="centerInside" />
+</RelativeLayout>

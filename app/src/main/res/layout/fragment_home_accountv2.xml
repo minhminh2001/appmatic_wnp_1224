@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rlHeaderBar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/header_bar_height"
+        android:background="@color/black000000"
+        android:clickable="true">
+        <RelativeLayout
+            android:id="@+id/rlHeaderBarMenu"
+            style="@style/HeaderBarLeftImageTouchTargetStyle">
+            <ImageView
+                style="@style/HeaderBarLeftImageStyle"
+                android:id="@+id/vHeaderBarMenu"
+                android:src="@drawable/action_menu"/>
+        </RelativeLayout>
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvHeaderBarTitle"
+            style="@style/HeaderBarTitleTextStyle"/>
+        <RelativeLayout
+            android:id="@+id/ivHeaderBarEdit2"
+            style="@style/HeaderBarRightImageTouchTargetStyle">
+            <ImageView
+                style="@style/HeaderBarRightImageStyle"
+                android:id="@+id/ivHeaderBarEdit"
+                android:src="@drawable/action_edit"/>
+        </RelativeLayout>
+
+        <!--<ImageView-->
+            <!--android:id="@+id/ivHeaderBarEdit"-->
+            <!--android:layout_width="45dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--android:src="@drawable/draw_my_edit" />-->
+    </RelativeLayout>
+    <com.whitelabel.app.widget.MyAccountTopMenuView
+        android:id="@+id/ctpiCategoryList"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/whiteFFFFFF"
+        android:layout_below="@+id/rlHeaderBar"
+        imaginato:pstsDividerColor="@color/whiteFFFFFF"
+        imaginato:pstsDividerPadding="0dp"
+        imaginato:pstsIndicatorColor="@color/purple66006E"
+        imaginato:pstsIndicatorHeight="2dp" />
+<!--
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/llNavigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/rlHeaderBar"
+        android:orientation="horizontal"
+        android:background="@color/whiteffffff">
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvNaviBarWishlist"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/home_myaccount_header_wishlist"
+            android:textColor="@color/black"
+            android:textSize="13.5sp"
+            style="@style/font_family_roboto_regular" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvNaviBarOrders"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/home_myaccount_header_orders"
+            android:textColor="@color/black"
+            android:textSize="13.5sp"
+            style="@style/font_family_roboto_regular" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvNaviBarAddressBook"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/home_myaccount_header_addressbook"
+            android:textColor="@color/black"
+            android:textSize="13.5sp"
+            style="@style/font_family_roboto_regular" />
+    </LinearLayout>
+-->
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_below="@+id/ctpiCategoryList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/display3"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        android:clickable="true"/>
+</RelativeLayout>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent00"
+                android:paddingBottom="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_merchant_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/curation_header_image_height"
+            android:scaleType="fitXY"/>
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_merchant_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="@dimen/curation_head_padding_left_right"
+            android:paddingRight="@dimen/curation_head_padding_left_right"
+            android:text=""
+            android:textColor="@color/black000000"
+            android:textSize="14sp"
+            imaginato:textFont="LatoBold"/>
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_merchant_desc"
+            style="@style/font_family_robot_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:paddingLeft="@dimen/curation_head_padding_left_right"
+            android:paddingRight="@dimen/curation_head_padding_left_right"
+            android:text=""
+            android:textColor="@color/black000000"
+            android:textSize="12sp"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_merchant_product_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_toEndOf="@+id/banner1"
+            android:layout_toRightOf="@+id/banner1"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:background="@color/greyE1E1E1"></View>
+
+            <com.whitelabel.app.widget.CustomTextView
+                style="@style/font_family_robot_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="15dp"
+                android:background="@color/whiteFFFFFF"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="@string/curation_productlist_title"
+                android:textColor="@color/black000000"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/banner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/banner1"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/banner2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/banner2"
+            />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/banner2_text"
+            style="@style/font_family_robot_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="18dp"
+            android:text=""
+            android:textColor="@color/whiteffffff"
+            android:textSize="30sp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/banner3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/banner3"
+            />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/banner3_text"
+            style="@style/font_family_robot_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textColor="@color/whiteffffff"
+            android:textSize="30sp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/banner4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/banner4"
+            />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/banner4_text"
+            style="@style/font_family_robot_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/whiteffffff"
+            android:textSize="24sp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/banner5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/banner5"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/banner6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/banner6"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/banner7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/banner7"
+            />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/banner7_text"
+            style="@style/font_family_robot_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="28dp"
+            android:text=""
+            android:textColor="@color/whiteffffff"
+            android:textSize="17sp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/banner8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/banner8"
+            />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/banner8_text"
+            style="@style/font_family_robot_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="28dp"
+            android:text=""
+            android:textColor="@color/whiteffffff"
+            android:textSize="17sp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/banner9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@mipmap/banner9"
+            />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/banner9_text"
+            style="@style/font_family_robot_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:text=""
+            android:textColor="@color/whiteffffff"
+            android:textSize="16sp"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteFFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:orientation="vertical">
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvUsername"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/loginregister_emailbound_message"
+            android:textColor="@color/black000000"
+            android:textSize="15sp"
+            style="@style/font_family_robot_regular" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="25dp"
+            android:background="@color/edittext_line" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/emptyAndfileEmail"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/redC2060A"
+            android:focusable="false"
+            android:layout_marginTop="5dp"
+            style="@style/font_family_robot_regular" />
+
+        <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+            android:id="@+id/rl_emailbound_email"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_height="wrap_content">
+
+            <com.whitelabel.app.widget.CustomEditText
+                android:id="@+id/cetEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/loginregister_emailbound_email_hint"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp"
+                android:singleLine="true"
+                android:textSize="@dimen/editTextFontSize"
+                android:textColor="@color/editColor"
+                android:textColorHint="@color/hint"
+                style="@style/font_family_robot_regular" />
+            <ImageView
+                android:id="@+id/clear_submit"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="14dp"
+                android:layout_marginBottom="6dp"
+                android:padding="2dp"
+                android:src="@mipmap/text_elimination"
+                android:visibility="gone"/>
+        </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/hasEmail"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:focusable="false"
+            android:textColor="@color/redC2060A"
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            style="@style/font_family_robot_regular" />
+
+        <com.whitelabel.app.widget.CustomButton
+            android:id="@+id/cbtSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_touch_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="17dp"
+            android:background="@drawable/big_button_style_purple"
+            android:gravity="center"
+            android:paddingBottom="11dp"
+            android:paddingTop="11dp"
+            android:singleLine="true"
+            android:text="@string/loginregister_emailbound_createaccount"
+            android:textColor="@color/whiteFFFFFF"
+            android:textSize="16sp"
+            style="@style/font_family_roboto_medium" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
