@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--CustomNestedScrollView 属性设置-->
+    <declare-styleable name="ParallaxScroll">
+        <attr name="parallax_factor" format="float" />
+        <attr name="alpha_factor" format="float" />
+        <attr name="inner_parallax_factor" format="float" />
+        <attr name="parallax_views_num" format="integer" />
+        <attr name="circular_parallax" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="CustomViewPagerStyle">
+        <attr name="isStopHorizontalScroll" format="boolean" />
+        <attr name="isDisallowParentTouch" format="boolean" />
+    </declare-styleable>
+
+    <!-- CustomCheckBxo-->
+    <declare-styleable name="CustomCheckBox">
+        <!-- 动画持续时间-->
+        <attr name="duration" format="integer"/>
+        <!-- 复选框的边框颜色-->
+        <attr name="stroke_width" format="dimension"/>
+        <!-- 标号颜色-->
+        <attr name="color_tick" format="color"/>
+        <!-- 选中时复选框的颜色-->
+        <attr name="color_checked" format="color"/>
+        <!-- 未选中是复选框的颜色-->
+        <attr name="color_unchecked" format="color"/>
+        <!-- 未选中时复选框边框的颜色-->
+        <attr name="color_unchecked_stroke" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomTextStyle">
+        <attr name="textFont">
+            <enum name="Default" value="-1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+
+
+    <declare-styleable name="CircularProgressView">
+        <attr name="cpv_progress" format="float" />
+        <attr name="cpv_maxProgress" format="float" />
+        <attr name="cpv_animDuration" format="integer" />
+        <attr name="cpv_animSwoopDuration" format="integer" />
+        <attr name="cpv_animSyncDuration" format="integer" />
+        <attr name="cpv_color" format="color"/>
+        <attr name="cpv_thickness" format="dimension"/>
+        <attr name="cpv_indeterminate" format="boolean" />
+        <attr name="cpv_animAutostart" format="boolean" />
+        <attr name="cpv_animSteps" format="integer" />
+        <attr name="cpv_startAngle" format="float" />
+    </declare-styleable>
+</resources>

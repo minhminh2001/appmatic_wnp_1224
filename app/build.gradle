@@ -4,8 +4,8 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.imaginato.myapplication"
-        minSdkVersion 15
+        applicationId "com.whitelabel.app"
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -17,6 +17,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+        appdev {
+            manifestPlaceholders = [fabricApiKey: "111111"]
+            buildConfigField('String', 'REQUEST_URL', '"http://192.168.1.89:3000/"')
+            buildConfigField('String', 'GA_TRACK_ID', '"UA-93190712-1"')
+
+        }
+        live1 {
+            manifestPlaceholders = [fabricApiKey: "111"]
+            buildConfigField('String', "REQUEST_URL", '"http://54.169.30.48:80/"')
+            buildConfigField('String', 'GA_TRACK_ID', '"UA-83895512-7"')
+        }
+    }
+
 }
 
 dependencies {
@@ -25,5 +40,21 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.2.0'
+
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'org.apache.httpcomponents:httpcore:4.4.4'
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile 'com.android.support:support-v4:25.0.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile project(':librarys:baseframework')
     testCompile 'junit:junit:4.12'
 }

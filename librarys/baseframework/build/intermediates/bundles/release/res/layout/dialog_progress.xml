@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent00">
+
+<com.common.widget.circularProgressView.CircularProgressView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/progress_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:cpv_color="@color/orangef2791e"
+        app:cpv_animAutostart="true"
+        app:cpv_indeterminate="true" />
+
+</LinearLayout>
