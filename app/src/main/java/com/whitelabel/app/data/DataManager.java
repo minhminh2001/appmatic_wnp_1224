@@ -20,7 +20,6 @@ public class DataManager {
         }
         return dataManager;
     }
-
     public  TestApi getTestApi(){
         if(mTestApi==null){
             synchronized (DataManager.class){

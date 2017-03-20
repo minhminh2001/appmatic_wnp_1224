@@ -1,14 +1,10 @@
 [
     {
         "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/anim-v21/design_bottom_sheet_slide_out.xml",
-        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/design/25.0.1/res/anim-v21/design_bottom_sheet_slide_out.xml"
-    },
-    {
-        "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/anim-v21/design_appbar_state_list_animator.xml",
-        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/design/25.0.1/res/anim-v21/design_appbar_state_list_animator.xml"
+        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/design/25.2.0/res/anim-v21/design_bottom_sheet_slide_out.xml"
     },
     {
         "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/anim-v21/design_bottom_sheet_slide_in.xml",
-        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/design/25.0.1/res/anim-v21/design_bottom_sheet_slide_in.xml"
+        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/design/25.2.0/res/anim-v21/design_bottom_sheet_slide_in.xml"
     }
 ]
