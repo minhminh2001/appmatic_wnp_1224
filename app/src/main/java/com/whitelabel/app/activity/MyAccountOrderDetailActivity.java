@@ -17,7 +17,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.*;
 import com.whitelabel.app.adapter.MyAccountOrderDetailAdapter;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.dao.MyAccountDao;
@@ -28,7 +27,6 @@ import com.whitelabel.app.model.ShippingAddress;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.FileUtils;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -466,15 +464,15 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
 //                null, // Event label
 //                null) // Event value
 //                .build());
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
-        GaTrackHelper.getInstance().googleAnalytics("Order Detail Screen", this);
-        JLogUtils.i("googleGA_screen", "Order Detail Screen");
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
+//        GaTrackHelper.getInstance().googleAnalytics("Order Detail Screen", this);
+//        JLogUtils.i("googleGA_screen", "Order Detail Screen");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
     }
 
 

@@ -32,7 +32,9 @@
             android:layout_height="match_parent"
             android:background="@color/transparent00"></FrameLayout>
       </com.whitelabel.app.widget.CustomCoordinatorLayout>
-      <include layout="@layout/activity_home_iaml"></include>
+      <include
+          android:visibility="gone"
+          layout="@layout/activity_home_iaml"></include>
     </RelativeLayout>
   <include layout="@layout/drawer_layout" />
 </android.support.v4.widget.DrawerLayout>

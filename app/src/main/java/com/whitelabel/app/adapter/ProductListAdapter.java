@@ -44,7 +44,6 @@ import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntit
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -735,15 +734,15 @@ public class ProductListAdapter extends BaseAdapter {
                         productEntity.setItem_id(addToWishlistEntity.getItemId());
                         //update wishlist number
                         GemfiveApplication.getAppConfiguration().updateWishlist(mAdapter.get().productListActivity, addToWishlistEntity.getWishListItemCount());
-                        try {
-                            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
-                                    "Add To Wishlist",
-                                    productEntity.getName(),
-                                    Long.valueOf(productEntity.getProductId()));
-                            JLogUtils.i("googleGA", "add to wishlist ");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
+//                                    "Add To Wishlist",
+//                                    productEntity.getName(),
+//                                    Long.valueOf(productEntity.getProductId()));
+//                            JLogUtils.i("googleGA", "add to wishlist ");
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
                     } else {
                         ErrorMsgBean bean = (ErrorMsgBean) msg.obj;
                         if (!TextUtils.isEmpty(bean.getErrorMessage())) {

@@ -32,7 +32,6 @@ import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEnti
 import com.whitelabel.app.model.SVRAppserviceLandingPagesListLandingPageItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceLandingPagesListReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -105,12 +104,12 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
                             mFragment.get().adapter.notifyDataSetChanged();
                         }
                     }
-                    if (mFragment.get().mGATrackTimeEnable) {
-                        GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-                                GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, mFragment.get().mGATrackTimeStart, "Main Category Loading"
-                        );
-                        mFragment.get().mGATrackTimeEnable = false;
-                    }
+//                    if (mFragment.get().mGATrackTimeEnable) {
+//                        GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+//                                GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, mFragment.get().mGATrackTimeStart, "Main Category Loading"
+//                        );
+//                        mFragment.get().mGATrackTimeEnable = false;
+//                    }
                     break;
                 case ProductDao.REQUEST_MARKETING:
                     if (msg.arg1 == ProductDao.RESPONSE_SUCCESS) {
@@ -286,7 +285,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
     @Override
     public void onResume() {
         JLogUtils.i("russell", "*****" + mIndex + "**********onResume==" + isinit);
-        mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+//        mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         mMarketShow = true;
         if (isinit) {
             initMaretingLayers();
@@ -506,8 +505,8 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
                         ex.getStackTrace();
                     }
                 }
-                GaTrackHelper.getInstance().googleAnalytics("Curation Landing Screen", homeActivity);
-                JLogUtils.i("googleGA_screen", "Curation Landing Screen");
+//                GaTrackHelper.getInstance().googleAnalytics("Curation Landing Screen", homeActivity);
+//                JLogUtils.i("googleGA_screen", "Curation Landing Screen");
             }
         });
         JLogUtils.d("data5", "5");

@@ -41,13 +41,9 @@ import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.model.FacebookStoryEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.GetAnimCodeEntity;
-import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.model.ShoppingDiscountBean;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.AppUtils;
-import com.whitelabel.app.utils.FacebookEventUtils;
-import com.whitelabel.app.utils.FirebaseEventUtils;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JShareUtils;
@@ -234,14 +230,14 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 
         GemfiveApplication.getAppConfiguration().addToOrder(checkoutPaymentStatusActivity);
 
-        if(checkoutPaymentStatusActivity.mGATrackTimeEnable) {
-            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-                    GaTrackHelper.GA_TIME_CATEGORY_PAYMENT,
-                    checkoutPaymentStatusActivity.mGATrackTimeStart,
-                    "Payment Success"
-            );
-            checkoutPaymentStatusActivity.mGATrackTimeEnable = false;
-        }
+//        if(checkoutPaymentStatusActivity.mGATrackTimeEnable) {
+//            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+//                    GaTrackHelper.GA_TIME_CATEGORY_PAYMENT,
+//                    checkoutPaymentStatusActivity.mGATrackTimeStart,
+//                    "Payment Success"
+//            );
+//            checkoutPaymentStatusActivity.mGATrackTimeEnable = false;
+//        }
     }
 
     private PopupWindow popupWindow;
@@ -333,10 +329,10 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
                 boolean fbed = checkFbInstalled();
                 if ((result != null && result.getPostId() != null) || fbed) {
                     sendTrack();
-                    GaTrackHelper.getInstance().googleAnalyticsEvent("Payment",
-                            "Facebook Share Button Pressed",
-                            "success",
-                            null);
+//                    GaTrackHelper.getInstance().googleAnalyticsEvent("Payment",
+//                            "Facebook Share Button Pressed",
+//                            "success",
+//                            null);
                     if (!fbed) {
                         shareHandler.sendEmptyMessage(JShareUtils.HANDLER_WHAT_FACEBOOK_SUCCESS_OK);
                     }
@@ -795,23 +791,22 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
     public void onStart() {
         super.onStart();
 
-        if (paymentSaveReturnEntity != null) {
-            ArrayList<ShoppingCartListEntityCell> items = paymentSaveReturnEntity.getReviewOrder();
-            GaTrackHelper.getInstance().googleAnalyticsCheckoutSuccess(getActivity(),items,orderNumber,grandTotal,shippingFee);
-            try {
-                int sumNum=0;
-                String ids="";
-                for(int i=0;i<items.size();i++){
-                    sumNum+=Integer.parseInt(items.get(i).getQty());
-                    ids+=items.get(i).getProductId()+",";
-                }
-                ids=ids.substring(0,ids.length()-1);
-                FacebookEventUtils.getInstance().facebookEventCheckoutSuccess(getActivity(), sumNum,ids,grandTotal);
-                FirebaseEventUtils.getInstance().ecommercePurchase(getActivity(),JDataUtils.formatDouble((grandTotal+"")),JDataUtils.formatDouble(shippingFee+""),orderNumber);
-            }catch (Exception ex){
-                ex.getStackTrace();
-            }
-        }
+//        if (paymentSaveReturnEntity != null) {
+//            ArrayList<ShoppingCartListEntityCell> items = paymentSaveReturnEntity.getReviewOrder();
+//            GaTrackHelper.getInstance().googleAnalyticsCheckoutSuccess(getActivity(),items,orderNumber,grandTotal,shippingFee);
+//            try {
+//                int sumNum=0;
+//                String ids="";
+//                for(int i=0;i<items.size();i++){
+//                    sumNum+=Integer.parseInt(items.get(i).getQty());
+//                    ids+=items.get(i).getProductId()+",";
+//                }
+//                ids=ids.substring(0,ids.length()-1);
+//                FirebaseEventUtils.getInstance().ecommercePurchase(getActivity(),JDataUtils.formatDouble((grandTotal+"")),JDataUtils.formatDouble(shippingFee+""),orderNumber);
+//            }catch (Exception ex){
+//                ex.getStackTrace();
+//            }
+//        }
 
     }
 

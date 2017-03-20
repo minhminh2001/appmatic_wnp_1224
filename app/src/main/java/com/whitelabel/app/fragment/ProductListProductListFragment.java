@@ -29,7 +29,6 @@ import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -836,12 +835,12 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
                         activity.filterSortBottomView.hideSwitchAndFilterBar(false);
                     }
                 }
-                if (fragment.productListActivity.mGATrackTimeEnable) {
-                    GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-                            GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, fragment.productListActivity.mGATrackTimeStart, "2/3 Tier Category Loading"
-                    );
-                    fragment.productListActivity.mGATrackTimeEnable = false;
-                }
+//                if (fragment.productListActivity.mGATrackTimeEnable) {
+//                    GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+//                            GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, fragment.productListActivity.mGATrackTimeStart, "2/3 Tier Category Loading"
+//                    );
+//                    fragment.productListActivity.mGATrackTimeEnable = false;
+//                }
             }
         }
     }

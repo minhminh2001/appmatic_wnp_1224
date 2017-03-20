@@ -37,8 +37,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.whitelabel.app.R;
 import com.whitelabel.app.GlobalData;
+import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.adapter.WheelPickerAdapter;
@@ -52,9 +52,6 @@ import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.AnimUtil;
-import com.whitelabel.app.utils.FacebookEventUtils;
-import com.whitelabel.app.utils.FirebaseEventUtils;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -371,14 +368,14 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                         fragment.brainTreeClientToken = fragment.paymentListEntity.getBraintreetoken();
                         JLogUtils.i("CheckoutPaymentFragment", "======" + fragment.paymentListEntity.getBraintreetoken());
                         fragment.initDatasWithWebServiceReturn(fragment.paymentListEntity);
-                        if (fragment.checkoutActivity.mGATrackAddressToPaymentTimeEnable) {
-                            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-                                    GaTrackHelper.GA_TIME_CATEGORY_CHECKOUT,
-                                    fragment.checkoutActivity.mGATrackAddressToPaymentTimeStart,
-                                    "Checkout - Payment"
-                            );
-                            fragment.checkoutActivity.mGATrackAddressToPaymentTimeEnable = false;
-                        }
+//                        if (fragment.checkoutActivity.mGATrackAddressToPaymentTimeEnable) {
+//                            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+//                                    GaTrackHelper.GA_TIME_CATEGORY_CHECKOUT,
+//                                    fragment.checkoutActivity.mGATrackAddressToPaymentTimeStart,
+//                                    "Checkout - Payment"
+//                            );
+//                            fragment.checkoutActivity.mGATrackAddressToPaymentTimeEnable = false;
+//                        }
                     } else {
                         String errorMsg = String.valueOf(msg.obj);
                         if (!JToolUtils.expireHandler(mActivity.get(), errorMsg, fragment.REQUESTCODE_LOGIN)) {
@@ -444,12 +441,11 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
     }
 
     private void savePaymentTrack() {
-        try {
-            FacebookEventUtils.getInstance().facebookEventPaymentInfo(getActivity());
-            FirebaseEventUtils.getInstance().ecommerceAddPaymentInfo(getActivity());
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
+//        try {
+//            FirebaseEventUtils.getInstance().ecommerceAddPaymentInfo(getActivity());
+//        } catch (Exception ex) {
+//            ex.getStackTrace();
+//        }
     }
 
     @Override
@@ -1798,8 +1794,8 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
 
     public void savePayment(String nonce) {
         //开始计时
-        checkoutActivity.mGATrackPaymentToReviewTimeEnable = true;
-        checkoutActivity.mGATrackPaymentToReviewTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+//        checkoutActivity.mGATrackPaymentToReviewTimeEnable = true;
+//        checkoutActivity.mGATrackPaymentToReviewTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         bank = "";
         code = "";
         molpayType = "";
@@ -1948,14 +1944,14 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         } else if (paymentType == OFFLINEPAYMENT) {
             paymentStr = "Bank Transfer Method";
         }
-        try {
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
-                    "Save Payment",
-                    paymentStr,
-                    Long.valueOf(GemfiveApplication.getAppConfiguration().getUser().getId()));
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
+//                    "Save Payment",
+//                    paymentStr,
+//                    Long.valueOf(GemfiveApplication.getAppConfiguration().getUser().getId()));
+//        } catch (Exception ex) {
+//            ex.getStackTrace();
+//        }
 
     }
 

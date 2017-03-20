@@ -19,8 +19,6 @@ import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.model.NotificationCell;
 import com.whitelabel.app.model.NotificationReceivedEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.FirebaseEventUtils;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -194,11 +192,11 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
         String device_token= GemfiveApplication.getPhoneConfiguration().getRegistrationToken();
         if (bundle != null && !JDataUtils.isEmpty(bundle.getString("where"))) {
             entity = (NotificationReceivedEntity) bundle.getSerializable("data");
-            try {
-                FirebaseEventUtils.getInstance().customizedNotificationOpen(NotificationDetailActivity.this, entity.getTitle());
-            } catch (Exception ex) {
-                ex.getStackTrace();
-            }
+//            try {
+//                FirebaseEventUtils.getInstance().customizedNotificationOpen(NotificationDetailActivity.this, entity.getTitle());
+//            } catch (Exception ex) {
+//                ex.getStackTrace();
+//            }
             if (entity != null) {
                 notificationTitle = entity.getTitle();
             }
@@ -210,11 +208,11 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
             mDao.getNotificationDetail(GemfiveApplication.getAppConfiguration().getUser() == null ? null : GemfiveApplication.getAppConfiguration().getUser().getSessionKey(), itemId, "1",device_token);
         } else if (bundle != null) {
             NotificationCell notificationCell = (NotificationCell) bundle.getSerializable("data");
-            try {
-                FirebaseEventUtils.getInstance().customizedInAppNotificationOpen(NotificationDetailActivity.this, notificationCell.getTitle());
-            } catch (Exception ex) {
-                ex.getStackTrace();
-            }
+//            try {
+//                FirebaseEventUtils.getInstance().customizedInAppNotificationOpen(NotificationDetailActivity.this, notificationCell.getTitle());
+//            } catch (Exception ex) {
+//                ex.getStackTrace();
+//            }
             isUnRead = notificationCell.getUnread() == 1 ? true : false;
             if (!TextUtils.isEmpty(notificationCell.getTitle())) {
                 setTitle(notificationCell.getTitle());
@@ -231,24 +229,24 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
             ex.getStackTrace();
         }
 
-        try {
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
-                    "Open Notification Detail",
-                    notificationTitle,
-                    Long.valueOf(itemId));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
+//                    "Open Notification Detail",
+//                    notificationTitle,
+//                    Long.valueOf(itemId));
+//        } catch (NumberFormatException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.notification_detail_open:
-                GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
-                        "Notification CTA",
-                        notificationTitle,
-                        Long.valueOf(itemId));
+//                GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
+//                        "Notification CTA",
+//                        notificationTitle,
+//                        Long.valueOf(itemId));
                 if (mBean != null && mBean.getAttached_link_type() == 1) {
                     if (mBean.getInternal_type() == 1 && mBean.getCategory() != null) {
                         if ("0".equals(mBean.getCategory().getSecondCategory()) && "0".equals(mBean.getCategory().getThirdCategory())) { //1级菜单
@@ -322,14 +320,14 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
     @Override
     protected void onStart() {
         super.onStart();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
-        GaTrackHelper.getInstance().googleAnalytics("Notification detail screen", this);
-        JLogUtils.i("googleGA_screen", "Notification detail screen");
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
+//        GaTrackHelper.getInstance().googleAnalytics("Notification detail screen", this);
+//        JLogUtils.i("googleGA_screen", "Notification detail screen");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
     }
 }

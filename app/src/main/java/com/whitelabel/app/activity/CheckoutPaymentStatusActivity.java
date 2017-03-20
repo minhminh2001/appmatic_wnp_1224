@@ -20,7 +20,6 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.fragment.CheckoutPaymentStatusRightFragment;
 import com.whitelabel.app.fragment.CheckoutPaymentStatusWrongFragment;
-import com.whitelabel.app.utils.GaTrackHelper;
 
 import java.io.Serializable;
 
@@ -277,14 +276,14 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         } else if (type == PAYMENTFAILURE) {
             payment = "Payment Failure";
         }
-        try {
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
-                    "Payment",
-                    payment,
-                    null);
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
+//                    "Payment",
+//                    payment,
+//                    null);
+//        } catch (Exception ex) {
+//            ex.getStackTrace();
+//        }
     }
 
     @Override

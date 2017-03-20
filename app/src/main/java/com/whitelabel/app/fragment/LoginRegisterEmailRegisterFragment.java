@@ -34,8 +34,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.whitelabel.app.R;
 import com.whitelabel.app.GlobalData;
+import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.RegisterToHelpCenter;
@@ -44,9 +44,6 @@ import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
-import com.whitelabel.app.utils.FacebookEventUtils;
-import com.whitelabel.app.utils.FirebaseEventUtils;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -148,12 +145,11 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                 case MyAccountDao.REQUEST_REGISTERCODE:
                     if(mFragment.get().mDialog!=null){ mFragment.get().mDialog.cancel();}
                     if(msg.arg1==MyAccountDao.RESPONSE_SUCCESS){
-                        try{
-                            FacebookEventUtils.getInstance().facebookEventRegSuccess(mActivity.get(),FacebookEventUtils.FACEBOOK_EVENT_REGISTION_TYPE_EMAIL);
-                            FirebaseEventUtils.getInstance().allAppSignUp(mActivity.get(),FirebaseEventUtils.lOGIN_EMAIL);
-                        }catch (Exception ex){
-                            ex.getStackTrace();
-                        }
+//                        try{
+//                            FirebaseEventUtils.getInstance().allAppSignUp(mActivity.get(),FirebaseEventUtils.lOGIN_EMAIL);
+//                        }catch (Exception ex){
+//                            ex.getStackTrace();
+//                        }
 
                         mFragment.get().connectionLoginService();
                     }else{
@@ -809,13 +805,13 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     }
 
     public void trackerRegister(String id){
-                try {
-                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", "Register",
-                            "customerId",
-                            Long.valueOf(id));
-        }catch (Exception ex){
-            ex.getStackTrace();
-        }
+//                try {
+//                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", "Register",
+//                            "customerId",
+//                            Long.valueOf(id));
+//        }catch (Exception ex){
+//            ex.getStackTrace();
+//        }
     }
 
     @Override
@@ -846,9 +842,9 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     @Override
     public void onStart() {
         super.onStart();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, true);
-        GaTrackHelper.getInstance().googleAnalytics("Register screen", loginRegisterActivity);
-        JLogUtils.i("googleGA_screen", "Register screen");
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, true);
+//        GaTrackHelper.getInstance().googleAnalytics("Register screen", loginRegisterActivity);
+//        JLogUtils.i("googleGA_screen", "Register screen");
 //        if(isstop){
 //            firstName.setText(mFirstName);
 //            lastName.setText(mLastName);
@@ -863,6 +859,6 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
         isClickRegister=true;
         super.onStop();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, false);
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, false);
     }
 }

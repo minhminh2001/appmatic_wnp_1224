@@ -45,8 +45,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.whitelabel.app.R;
 import com.google.gson.internal.LinkedTreeMap;
+import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.ProductRecommendedListAdapter;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
@@ -72,8 +72,6 @@ import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
-import com.whitelabel.app.utils.FacebookEventUtils;
-import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -361,11 +359,6 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
                         //update wishlist number
                         GemfiveApplication.getAppConfiguration().updateWishlist(activity, addToWishlistEntity.getWishListItemCount());
 //                        activity.showToast(activity, 2);
-                        try {
-                            FacebookEventUtils.getInstance().facebookEventAddedToWistList(mActivity.get(), activity.mProductDetailBean.getId(), activity.userSelectedProductFinalPriceFloat);
-                        } catch (Exception ex) {
-                            ex.getStackTrace();
-                        }
                         activity.trackAddWistList();
                     } else {
                         String errorMsg = (String) msg.obj;
@@ -391,47 +384,46 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
     }
 
     private void trackAddWistList() {
-        try {
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
-                    "Add To Wishlist",
-                    mProductDetailBean.getName(), Long.valueOf(mProductDetailBean.getId()));
-            FirebaseEventUtils.getInstance().ecommerceAddWishlist(this, this.mProductDetailBean.getCategory(), this.mProductDetailBean.getName(),
-                    this.mProductDetailBean.getId(), JDataUtils.formatDouble(this.userSelectedProductFinalPriceFloat + ""));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
+//                    "Add To Wishlist",
+//                    mProductDetailBean.getName(), Long.valueOf(mProductDetailBean.getId()));
+//            FirebaseEventUtils.getInstance().ecommerceAddWishlist(this, this.mProductDetailBean.getCategory(), this.mProductDetailBean.getName(),
+//                    this.mProductDetailBean.getId(), JDataUtils.formatDouble(this.userSelectedProductFinalPriceFloat + ""));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void trackProductDetail() {
-        try {
-            FacebookEventUtils.getInstance().facebookEventProductDetail(this, this.productId, this.userSelectedProductFinalPriceFloat);
-            try {
-                FirebaseEventUtils.getInstance().ecommerceViewItem(this, productId, mProductDetailBean.getName()
-                        , mProductDetailBean.getCategory(), userSelectedProductQty + "",
-                        JDataUtils.formatDouble(userSelectedProductFinalPriceFloat + ""), JDataUtils.formatDouble((userSelectedProductFinalPriceFloat * userSelectedProductQty) + ""));
-            } catch (Exception ex) {
-                ex.getMessage();
-            }
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
+//        try {
+//            FacebookEventUtils.getInstance().facebookEventProductDetail(this, this.productId, this.userSelectedProductFinalPriceFloat);
+//            try {
+//                FirebaseEventUtils.getInstance().ecommerceViewItem(this, productId, mProductDetailBean.getName()
+//                        , mProductDetailBean.getCategory(), userSelectedProductQty + "",
+//                        JDataUtils.formatDouble(userSelectedProductFinalPriceFloat + ""), JDataUtils.formatDouble((userSelectedProductFinalPriceFloat * userSelectedProductQty) + ""));
+//            } catch (Exception ex) {
+//                ex.getMessage();
+//            }
+//        } catch (Exception ex) {
+//            ex.getStackTrace();
+//        }
     }
 
     public void addToCartTrack() {
-        try {
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
-                    "Add To Cart",
-                    mProductDetailBean.getName(),
-                    Long.valueOf(mProductDetailBean.getId()));
-            GaTrackHelper.getInstance().googleAnalyticsAddCart(this,
-                    productId, mProductDetailBean.getName());
-            FacebookEventUtils.getInstance().facebookEventAddedToCart(this, productId, userSelectedProductFinalPriceFloat * userSelectedProductQty);
-            FirebaseEventUtils.getInstance().ecommerceAddToCart(this, userSelectedProductQty + "", mProductDetailBean.getCategory(),
-                    mProductDetailBean.getName(), mProductDetailBean.getId(),
-                    JDataUtils.formatDouble((userSelectedProductFinalPriceFloat * userSelectedProductQty) + ""), JDataUtils.formatDouble(userSelectedProductFinalPriceFloat + ""));
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
+//                    "Add To Cart",
+//                    mProductDetailBean.getName(),
+//                    Long.valueOf(mProductDetailBean.getId()));
+//            GaTrackHelper.getInstance().googleAnalyticsAddCart(this,
+//                    productId, mProductDetailBean.getName());
+//            FirebaseEventUtils.getInstance().ecommerceAddToCart(this, userSelectedProductQty + "", mProductDetailBean.getCategory(),
+//                    mProductDetailBean.getName(), mProductDetailBean.getId(),
+//                    JDataUtils.formatDouble((userSelectedProductFinalPriceFloat * userSelectedProductQty) + ""), JDataUtils.formatDouble(userSelectedProductFinalPriceFloat + ""));
+//        } catch (Exception ex) {
+//            ex.getStackTrace();
+//        }
 
     }
 
@@ -1407,12 +1399,12 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
     private void initProductDetailUI() {
         initProductDetailUIStaticContent();
         initProductDetailUIDynamicContent();
-        if (mGATrackTimeEnable) {
-            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-                    GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, mGATrackTimeStart, "PDP Loading"
-            );
-            mGATrackTimeEnable = false;
-        }
+//        if (mGATrackTimeEnable) {
+//            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+//                    GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, mGATrackTimeStart, "PDP Loading"
+//            );
+//            mGATrackTimeEnable = false;
+//        }
     }
 
     //dimension需放到table表里显示
@@ -2560,7 +2552,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
         for (int i = 0; i < mAttributeViews.size(); i++) {
             propertyReturnEntities.add((SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag());
         }
-        mGATrackAddCartTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+//        mGATrackAddCartTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         if (GemfiveApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
             mShoppingDao.addProductToShoppingCart(GemfiveApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey(), productId, userSelectedProductQty + "", propertyReturnEntities);
         } else {
@@ -2794,15 +2786,15 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
     protected void onStart() {
         super.onStart();
         JLogUtils.d(TAG, "onStart()");
-        try {
-            GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
-            GaTrackHelper.getInstance().googleAnalyticsProductDetail(this, productId);
-            GaTrackHelper.getInstance().googleAnalyticsProductDetail(getApplicationContext(), productId);
-
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
-        JLogUtils.i("googleGA_screen", "Product Detail Screen");
+//        try {
+//            GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
+//            GaTrackHelper.getInstance().googleAnalyticsProductDetail(this, productId);
+//            GaTrackHelper.getInstance().googleAnalyticsProductDetail(getApplicationContext(), productId);
+//
+//        } catch (Exception ex) {
+//            ex.getStackTrace();
+//        }
+//        JLogUtils.i("googleGA_screen", "Product Detail Screen");
     }
 
     @Override
@@ -2816,7 +2808,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
         mFromProductList = "";
         super.onStop();
         JLogUtils.d(TAG, "onStop()");
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
         if (mAddToCartToast != null) {
             mAddToCartToast.cancel();
         }

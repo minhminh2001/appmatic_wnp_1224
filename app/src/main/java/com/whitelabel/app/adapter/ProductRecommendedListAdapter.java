@@ -42,7 +42,6 @@ import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedResultsItemReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -645,15 +644,15 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
                         GemfiveApplication.getAppConfiguration().updateWishlist(mContext.get(), addToWishlistEntity.getWishListItemCount());
                         Bundle bundle = new Bundle();
                         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_WISHLIST);
-                        try {
-                            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
-                                    "Add To Wishlist",
-                                    productEntity.getName(),
-                                    Long.valueOf(productEntity.getProductId()));
-                            JLogUtils.i("googleGA", "add to wishlist ");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
+//                                    "Add To Wishlist",
+//                                    productEntity.getName(),
+//                                    Long.valueOf(productEntity.getProductId()));
+//                            JLogUtils.i("googleGA", "add to wishlist ");
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
                     } else {
                         ErrorMsgBean bean = (ErrorMsgBean) msg.obj;
                         if (!TextUtils.isEmpty(bean.getErrorMessage())) {

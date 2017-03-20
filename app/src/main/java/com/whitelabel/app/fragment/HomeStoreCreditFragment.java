@@ -23,9 +23,7 @@ import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.dao.OtherDao;
 import com.whitelabel.app.model.StoreCreditBean;
 import com.whitelabel.app.model.StoreCreditItemBean;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomXListView;
@@ -307,21 +305,21 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
     @Override
     public void onStart() {
         super.onStart();
-        try {
-            GaTrackHelper.getInstance().googleAnalyticsReportActivity(getActivity(), true);
-            GaTrackHelper.getInstance().googleAnalytics("My Store Credit Screen", getContext());
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
-        JLogUtils.i("googleGA_screen", "Store Credit Screen");
+//        try {
+//            GaTrackHelper.getInstance().googleAnalyticsReportActivity(getActivity(), true);
+//            GaTrackHelper.getInstance().googleAnalytics("My Store Credit Screen", getContext());
+//        } catch (Exception ex) {
+//            ex.getStackTrace();
+//        }
+//        JLogUtils.i("googleGA_screen", "Store Credit Screen");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (getActivity() != null) {
-            GaTrackHelper.getInstance().googleAnalyticsReportActivity(getActivity(), false);
-        }
+//        if (getActivity() != null) {
+//            GaTrackHelper.getInstance().googleAnalyticsReportActivity(getActivity(), false);
+//        }
     }
 
     @Override

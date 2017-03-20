@@ -18,7 +18,6 @@ import com.whitelabel.app.fragment.ProductListKeywordsSearchFragment;
 import com.whitelabel.app.listener.OnSingleClickListener;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
-import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.CustomTextView;
@@ -196,7 +195,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
 
 
     public void viewListTrack(String name) {
-        FirebaseEventUtils.getInstance().ecommerceViewItemList(ProductListActivity.this, name);
+//        FirebaseEventUtils.getInstance().ecommerceViewItemList(ProductListActivity.this, name);
     }
 
     private void switchBottomBar() {

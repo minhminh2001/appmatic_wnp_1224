@@ -25,7 +25,6 @@ import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.Wishlist;
 import com.whitelabel.app.model.WishlistEntityResult;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -426,14 +425,14 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
     @Override
     public void onStart() {
         super.onStart();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, true);
-        GaTrackHelper.getInstance().googleAnalytics("Sign In screen", homeActivity);
-        JLogUtils.i("googleGA_screen", "My Wishlist Screen");
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, true);
+//        GaTrackHelper.getInstance().googleAnalytics("Sign In screen", homeActivity);
+//        JLogUtils.i("googleGA_screen", "My Wishlist Screen");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, false);
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, false);
     }
 }

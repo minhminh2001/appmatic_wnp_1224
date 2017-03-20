@@ -48,10 +48,7 @@ import com.whitelabel.app.model.SuggestsEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.model.TMPProductListListPageEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.FacebookEventUtils;
 import com.whitelabel.app.utils.FilterSortHelper;
-import com.whitelabel.app.utils.FirebaseEventUtils;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -336,13 +333,13 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         searchResultHandler = new SearchResultHandler((ProductListActivity) getActivity(), this);
         PROMPT_ERROR_NOINTERNET = getString(R.string.productlist_list_prompt_error_nointernet);
 
-        try {
-            GaTrackHelper.getInstance().googleAnalytics("Search List Screen", getActivity());
-            JLogUtils.i("googleAnalytics", "Search List Screen");
-
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalytics("Search List Screen", getActivity());
+//            JLogUtils.i("googleAnalytics", "Search List Screen");
+//
+//        } catch (Exception ex) {
+//            ex.getStackTrace();
+//        }
         Bundle bundle = getArguments();
         if (bundle != null) {
             productListListPageEntity = (TMPProductListListPageEntity) bundle.getSerializable("data");
@@ -667,8 +664,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             flFilterSortContainer.setVisibility(GONE);
             setSearchType(ProductListKeywordsSearchFragment.SEARCH_TYPE_KEYWORDS);
             //track
-            productListActivity.GATrackSearchTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-            productListActivity.GATrackSearchTimeEnable = true;
+//            productListActivity.GATrackSearchTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+//            productListActivity.GATrackSearchTimeEnable = true;
             search();
             productListActivity.resetCurrentFilterSortTabIndex();
         } else {
@@ -797,25 +794,18 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 
 
     public void searchTrack() {
-        try {
-            if (!TextUtils.isEmpty(mKeyWord) && getActivity() != null) {
-                FacebookEventUtils.getInstance().facebookEventSearch(getActivity(), cetKeywords.getText().toString().trim(), FacebookEventUtils.FACEBOOK_EVENT_SEARCH_SUCCESS);
-            }
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
-        String keyWord = mKeyWord;
-        try {
-            //追踪用户搜索过得数据
-            if (!TextUtils.isEmpty(mKeyWord)) {
-                GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action", "Search", keyWord, null);
-                FirebaseEventUtils.getInstance().ecommerceSearchResult(getActivity(), keyWord);
-                FirebaseEventUtils.getInstance().allAppSearch(getActivity(), keyWord);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        String keyWord = mKeyWord;
+//        try {
+//            //追踪用户搜索过得数据
+//            if (!TextUtils.isEmpty(mKeyWord)) {
+//                GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action", "Search", keyWord, null);
+//                FirebaseEventUtils.getInstance().ecommerceSearchResult(getActivity(), keyWord);
+//                FirebaseEventUtils.getInstance().allAppSearch(getActivity(), keyWord);
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -1402,13 +1392,13 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 
                     fragment.filterSortBottomView.hideSwitchAndFilterBar(false);
                 }
-                if (fragment.productListActivity.GATrackSearchTimeEnable) {
-                    GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-                            GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, fragment.productListActivity.GATrackSearchTimeStart, "Search Results Loading"
-                    );
-                    fragment.productListActivity.GATrackSearchTimeEnable = false;
-                    fragment.showViewSwitch(true);
-                }
+//                if (fragment.productListActivity.GATrackSearchTimeEnable) {
+//                    GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+//                            GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, fragment.productListActivity.GATrackSearchTimeStart, "Search Results Loading"
+//                    );
+//                    fragment.productListActivity.GATrackSearchTimeEnable = false;
+//                    fragment.showViewSwitch(true);
+//                }
             } else if (SEARCH_TYPE_REFRESH == fragment.getSearchType()) {
                 if (mFragment.get().mDialog != null && mFragment.get().mDialog.isShowing()) {
                     mFragment.get().mDialog.dismiss();

@@ -21,10 +21,7 @@ import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.dao.ShoppingCarDao;
-import com.whitelabel.app.utils.FacebookEventUtils;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
@@ -63,23 +60,19 @@ public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
             errorMsg = bundle.getString("errorMsg");
             orderNumber = bundle.getString("orderNumber");
         }
-        try{
-            FacebookEventUtils.getInstance().customLog(getActivity(),FacebookEventUtils.FACEBOOK_EVENT_CUSTOM_PURCHASE_EVENT_FAIL);
-        }catch (Exception ex){
-            ex.getStackTrace();
-        }
+
     }
     public void gaTrackerProductToCart(){
-        try{
-            if(getActivity()!=null) {
-                GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
-                        "Tap Try Agaign In Payment Failure Screen",
-                        null,
-                        null);
-            }
-        }catch (Exception ex){
-            ex.getStackTrace();
-        }
+//        try{
+//            if(getActivity()!=null) {
+//                GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
+//                        "Tap Try Agaign In Payment Failure Screen",
+//                        null,
+//                        null);
+//            }
+//        }catch (Exception ex){
+//            ex.getStackTrace();
+//        }
     }
     private static final class DataHandler extends Handler{
         private final WeakReference<CheckoutPaymentStatusActivity> mActivity;
@@ -191,14 +184,14 @@ public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
         TAG=this.getClass().getSimpleName();
         dataHandler=new DataHandler((CheckoutPaymentStatusActivity) getActivity(),this);
         mShoppingCarDao=new ShoppingCarDao(TAG,dataHandler);
-        if(checkoutPaymentStatusActivity.mGATrackTimeEnable) {
-            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-                    GaTrackHelper.GA_TIME_CATEGORY_PAYMENT,
-                    checkoutPaymentStatusActivity.mGATrackTimeStart,
-                    "Payment Failure"
-            );
-            checkoutPaymentStatusActivity.mGATrackTimeEnable = false;
-        }
+//        if(checkoutPaymentStatusActivity.mGATrackTimeEnable) {
+//            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+//                    GaTrackHelper.GA_TIME_CATEGORY_PAYMENT,
+//                    checkoutPaymentStatusActivity.mGATrackTimeStart,
+//                    "Payment Failure"
+//            );
+//            checkoutPaymentStatusActivity.mGATrackTimeEnable = false;
+//        }
     }
 
     @Override
@@ -214,14 +207,14 @@ public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
 //                null, // Event label
 //                null) // Event value
 //                .build());
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(checkoutPaymentStatusActivity,true);
-        GaTrackHelper.getInstance().googleAnalytics("Checkout Failure Screen", checkoutPaymentStatusActivity);
-        JLogUtils.i("googleGA_screen", "Checkout Failure Screen");
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(checkoutPaymentStatusActivity,true);
+//        GaTrackHelper.getInstance().googleAnalytics("Checkout Failure Screen", checkoutPaymentStatusActivity);
+//        JLogUtils.i("googleGA_screen", "Checkout Failure Screen");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(checkoutPaymentStatusActivity, false);
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(checkoutPaymentStatusActivity, false);
     }
 }

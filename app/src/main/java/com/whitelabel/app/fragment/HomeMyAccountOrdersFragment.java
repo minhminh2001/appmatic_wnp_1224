@@ -25,7 +25,6 @@ import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.MyAccountOrderListEntityResult;
 import com.whitelabel.app.model.MyAccountOrderOuter;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
@@ -373,14 +372,14 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
     @Override
     public void onStart() {
         super.onStart();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, true);
-        GaTrackHelper.getInstance().googleAnalytics("My Orders Screen", homeActivity);
-        JLogUtils.i("googleGA_screen", "My Orders Screen ");
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, true);
+//        GaTrackHelper.getInstance().googleAnalytics("My Orders Screen", homeActivity);
+//        JLogUtils.i("googleGA_screen", "My Orders Screen ");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, false);
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, false);
     }
 }

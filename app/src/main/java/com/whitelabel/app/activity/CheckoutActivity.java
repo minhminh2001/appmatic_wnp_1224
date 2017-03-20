@@ -31,8 +31,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.whitelabel.app.R;
+import com.molpay.molpayxdk.MOLPayActivity;
 import com.whitelabel.app.GlobalData;
+import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.DialogProductAdapter;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.dao.CheckoutDao;
@@ -55,8 +56,6 @@ import com.whitelabel.app.model.SVRAppserviceSaveBillingEntity;
 import com.whitelabel.app.model.SVRAppserviceSaveOrderReturnEntity;
 import com.whitelabel.app.model.ShoppingDiscountBean;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.FacebookEventUtils;
-import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JJsonUtils;
@@ -67,7 +66,6 @@ import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CheckoutPaymentDialog;
 import com.whitelabel.app.widget.MaterialDialog;
-import com.molpay.molpayxdk.MOLPayActivity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -501,36 +499,35 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         switch (currentModule) {
             case 1://In shipping Module
                 sendRequestAndGoToNextPaymentModule();
-                GaTrackHelper.getInstance().googleAnalytics("Select Address Screen", this);
-                JLogUtils.i("googleGA_screen", "Select Address Screen");
+//                GaTrackHelper.getInstance().googleAnalytics("Select Address Screen", this);
+//                JLogUtils.i("googleGA_screen", "Select Address Screen");
                 break;
             case 2://In payment Module
                 sendRequestToSavePayment();
-                GaTrackHelper.getInstance().googleAnalytics("Select Payment Screen", this);
-                JLogUtils.i("googleGA_screen", "Select Payment Screen");
+//                GaTrackHelper.getInstance().googleAnalytics("Select Payment Screen", this);
+//                JLogUtils.i("googleGA_screen", "Select Payment Screen");
                 break;
             case 3://place my order
                 mGATrackPlaceOrderToResultTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
                 IsOldVersion();
 
-                try {
-                    FacebookEventUtils.getInstance().customLog(CheckoutActivity.this, FacebookEventUtils.FACEBOOK_EVENT_CUSTOM_PLACE_ORDER);
-                    GaTrackHelper.getInstance().googleAnalytics("Review Order Screen ", this);
-//                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getDiscount());
-//                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getShipping());
-                    String discount = "";
-                    String shippingFee = "";
-                    if (paymentSaveReturnEntity.getDiscount() != null) {
-                        discount = paymentSaveReturnEntity.getDiscount().get("value");
-                    }
-                    if (paymentSaveReturnEntity.getShipping() != null) {
-                        shippingFee = paymentSaveReturnEntity.getShipping().get("value");
-                    }
-                    FirebaseEventUtils.getInstance().customizedBeginCheck(CheckoutActivity.this, discount, JDataUtils.formatDouble(paymentSaveReturnEntity.getGrandtotal()), JDataUtils.formatDouble(shippingFee));
-                } catch (Exception ex) {
-                    ex.getStackTrace();
-                }
-                JLogUtils.i("googleGA_screen", "Review Order Screen ");
+//                try {
+//                    GaTrackHelper.getInstance().googleAnalytics("Review Order Screen ", this);
+////                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getDiscount());
+////                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getShipping());
+//                    String discount = "";
+//                    String shippingFee = "";
+//                    if (paymentSaveReturnEntity.getDiscount() != null) {
+//                        discount = paymentSaveReturnEntity.getDiscount().get("value");
+//                    }
+//                    if (paymentSaveReturnEntity.getShipping() != null) {
+//                        shippingFee = paymentSaveReturnEntity.getShipping().get("value");
+//                    }
+////                    FirebaseEventUtils.getInstance().customizedBeginCheck(CheckoutActivity.this, discount, JDataUtils.formatDouble(paymentSaveReturnEntity.getGrandtotal()), JDataUtils.formatDouble(shippingFee));
+//                } catch (Exception ex) {
+//                    ex.getStackTrace();
+//                }
+//                JLogUtils.i("googleGA_screen", "Review Order Screen ");
                 break;
         }
     }
@@ -598,15 +595,15 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 
 
     public void gaTrackerPlaceOrder() {
-        try {
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
-                    "Place Order",
-                    null,
-                    null);
-
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
+//                    "Place Order",
+//                    null,
+//                    null);
+//
+//        } catch (Exception ex) {
+//            ex.getStackTrace();
+//        }
 
     }
 
@@ -942,16 +939,16 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         }
                         mActivity.get().neverEnterIntoNext = false;
                         mActivity.get().scrollViewBody.scrollTo(0, 0);
-                        try {
-                            String CustomerId = GemfiveApplication.getAppConfiguration().getUser().getId();
-                            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
-                                    "Save Address",
-                                    "Shipping State",
-                                    Long.valueOf(CustomerId));
-//                            JLogUtils.i("googleGA", "checkout shipping  点击 continue");
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            String CustomerId = GemfiveApplication.getAppConfiguration().getUser().getId();
+//                            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
+//                                    "Save Address",
+//                                    "Shipping State",
+//                                    Long.valueOf(CustomerId));
+////                            JLogUtils.i("googleGA", "checkout shipping  点击 continue");
+//                        } catch (NumberFormatException e) {
+//                            e.printStackTrace();
+//                        }
 
                     } else {
                         String faildStr = (String) msg.obj;
@@ -1108,24 +1105,24 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 
 
     public void selectedAddressTrack() {
-        try {
-            FirebaseEventUtils.getInstance().customizedAddAddressInfo(this);
-        } catch (Exception ex) {
-            ex.getMessage();
-        }
+//        try {
+//            FirebaseEventUtils.getInstance().customizedAddAddressInfo(this);
+//        } catch (Exception ex) {
+//            ex.getMessage();
+//        }
     }
 
     public void gaTrackerSaveShipping(String state) {
-        try {
-
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
-                    "Save Address",
-                    state,
-                    Long.valueOf(GemfiveApplication.getAppConfiguration().getUser().getId()));
-
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
+//        try {
+//
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
+//                    "Save Address",
+//                    state,
+//                    Long.valueOf(GemfiveApplication.getAppConfiguration().getUser().getId()));
+//
+//        } catch (Exception ex) {
+//            ex.getStackTrace();
+//        }
 
     }
 
@@ -1902,8 +1899,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
-        GaTrackHelper.getInstance().googleAnalyticsStartCheckout(CheckoutActivity.this, productIds, "checkout", 1);
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
+//        GaTrackHelper.getInstance().googleAnalyticsStartCheckout(CheckoutActivity.this, productIds, "checkout", 1);
 
     }
 
@@ -1926,7 +1923,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
     }
 
 }

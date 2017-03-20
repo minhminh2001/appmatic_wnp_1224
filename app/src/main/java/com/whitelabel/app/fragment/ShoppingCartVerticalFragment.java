@@ -35,8 +35,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.whitelabel.app.R;
 import com.whitelabel.app.BaseActivity;
+import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
@@ -58,8 +58,6 @@ import com.whitelabel.app.model.ShoppingCartListEntityCart;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.FacebookEventUtils;
-import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -225,7 +223,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                     startLoginActivity();
                 } else {
                     showDialog();
-                    mGATrackCheckoutTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+//                    mGATrackCheckoutTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
                     String sessionKey = "";
                     if (GemfiveApplication.getAppConfiguration() != null && GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()) != null) {
                         sessionKey = GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
@@ -279,19 +277,19 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     @Override
     public void onStart() {
         super.onStart();
-        if (getActivity() != null) {
-            GaTrackHelper.getInstance().googleAnalyticsReportActivity(getActivity(), true);
-            GaTrackHelper.getInstance().googleAnalytics("Shopping Cart Screen", getActivity());
-            JLogUtils.i("googleGA_screen", "Shopping Cart Screen");
-        }
+//        if (getActivity() != null) {
+//            GaTrackHelper.getInstance().googleAnalyticsReportActivity(getActivity(), true);
+//            GaTrackHelper.getInstance().googleAnalytics("Shopping Cart Screen", getActivity());
+//            JLogUtils.i("googleGA_screen", "Shopping Cart Screen");
+//        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (getActivity() != null) {
-            GaTrackHelper.getInstance().googleAnalyticsReportActivity(getActivity(), false);
-        }
+//        if (getActivity() != null) {
+//            GaTrackHelper.getInstance().googleAnalyticsReportActivity(getActivity(), false);
+//        }
     }
 
     @Override
@@ -822,19 +820,19 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     }
 
     public void gaTrackerApplyCode(int type) {
-        if (getActivity() != null) {
-            String typeStr = "";
-            if (type == APPLIED) {
-                typeStr = "Applied";
-            } else {
-                typeStr = "Unapplied";
-            }
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
-                    "Apply Voucher Code",
-                    typeStr,
-                    null);
-            JLogUtils.i("googleGA", "Remove Item From Cart");
-        }
+//        if (getActivity() != null) {
+//            String typeStr = "";
+//            if (type == APPLIED) {
+//                typeStr = "Applied";
+//            } else {
+//                typeStr = "Unapplied";
+//            }
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
+//                    "Apply Voucher Code",
+//                    typeStr,
+//                    null);
+//            JLogUtils.i("googleGA", "Remove Item From Cart");
+//        }
     }
 
     private final static int VOUCHER_APPLY_HINT_SUCCESS = 101;
@@ -1015,12 +1013,12 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 llStoreCredit.setVisibility(View.GONE);
             }
         }
-        if (mGATrackTimeEnable) {
-            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-                    GaTrackHelper.GA_TIME_CATEGORY_CHECKOUT, mGATrackTimeStart, "Cart Loading"
-            );
-            mGATrackTimeEnable = false;
-        }
+//        if (mGATrackTimeEnable) {
+//            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+//                    GaTrackHelper.GA_TIME_CATEGORY_CHECKOUT, mGATrackTimeStart, "Cart Loading"
+//            );
+//            mGATrackTimeEnable = false;
+//        }
     }
 
     public void saveShoppingCartCount(int num) {
@@ -1196,28 +1194,21 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     }
 
     public void gaTrackerCheckout() {
-        if (getActivity() != null) {
-            int sumNum = 0;
-            for (int i = 0; i < mCar.getItems().length; i++) {
-                sumNum += Integer.parseInt(mCar.getItems()[i].getQty());
-            }
-            try {
-                FacebookEventUtils.getInstance().customLog(getActivity(), FacebookEventUtils.FACEBOOK_EVENT_CUSTOM_SAVE_SHIPPING_EVENT);
-                FacebookEventUtils.getInstance().facebookEventInitiedCheckout(getActivity(), sumNum, mCar.getItems()[0].getProductId(), Double.parseDouble(mCar.getGrandTotal()));
-
-            } catch (Exception ex) {
-                ex.getStackTrace();
-            }
-            try {
-                FirebaseEventUtils.getInstance().ecommerceBeginCheckout(getActivity(), JDataUtils.formatDouble(mCar.getGrandTotal()));
-                GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
-                        "Tap Checkout Items Button",
-                        null,
-                        0l);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        if (getActivity() != null) {
+//            int sumNum = 0;
+//            for (int i = 0; i < mCar.getItems().length; i++) {
+//                sumNum += Integer.parseInt(mCar.getItems()[i].getQty());
+//            }
+//            try {
+//                FirebaseEventUtils.getInstance().ecommerceBeginCheckout(getActivity(), JDataUtils.formatDouble(mCar.getGrandTotal()));
+//                GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
+//                        "Tap Checkout Items Button",
+//                        null,
+//                        0l);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     private long currTime;

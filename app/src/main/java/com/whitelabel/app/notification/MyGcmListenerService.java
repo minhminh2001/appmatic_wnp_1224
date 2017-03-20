@@ -16,13 +16,11 @@ import android.text.TextUtils;
 
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.whitelabel.app.R;
 import com.google.android.gms.gcm.GcmListenerService;
 import com.google.gson.Gson;
+import com.whitelabel.app.R;
 import com.whitelabel.app.activity.NotificationDetailActivity;
 import com.whitelabel.app.model.NotificationReceivedEntity;
-import com.whitelabel.app.utils.FirebaseEventUtils;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 
@@ -72,12 +70,12 @@ public class MyGcmListenerService extends GcmListenerService {
 
     public void createNotification(String message) {
         final NotificationReceivedEntity entity = new Gson().fromJson(message, NotificationReceivedEntity.class);
-        try {
-            FirebaseEventUtils.getInstance().customizedNotificationReceive(getApplicationContext(), entity.getTitle());
-        } catch (Exception ex) {
-            ex.getMessage();
-            JLogUtils.e(TAG, ex.getMessage());
-        }
+//        try {
+//            FirebaseEventUtils.getInstance().customizedNotificationReceive(getApplicationContext(), entity.getTitle());
+//        } catch (Exception ex) {
+//            ex.getMessage();
+//            JLogUtils.e(TAG, ex.getMessage());
+//        }
 
         final NotificationCompat.Builder nb = new NotificationCompat.Builder(this);
         nb.setSmallIcon(getNotificationIcon())
@@ -160,15 +158,15 @@ public class MyGcmListenerService extends GcmListenerService {
         }
 
         notificationManager.notify(notifyId, nb.build());
-        try {
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
-                    "Notification Received",
-                    title,
-                    (long) notifyId);
-            FirebaseEventUtils.getInstance().customizedNotificationReceive(getApplicationContext(), entity.getTitle());
-        } catch (Exception ex) {
-            ex.getMessage();
-            JLogUtils.e(TAG, ex.getMessage());
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
+//                    "Notification Received",
+//                    title,
+//                    (long) notifyId);
+//            FirebaseEventUtils.getInstance().customizedNotificationReceive(getApplicationContext(), entity.getTitle());
+//        } catch (Exception ex) {
+//            ex.getMessage();
+//            JLogUtils.e(TAG, ex.getMessage());
+//        }
     }
 }

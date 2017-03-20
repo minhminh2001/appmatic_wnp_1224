@@ -37,7 +37,6 @@ import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.FilterSortHelper;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -120,15 +119,15 @@ public class MerchantStoreFrontActivity extends BaseActivitySearchCart implement
     @Override
     protected void onStart() {
         super.onStart();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
-        GaTrackHelper.getInstance().googleAnalytics("MerchantStoreFront Screen", this);
-        JLogUtils.i("googleGA_screen", "MerchantStoreFront Screen");
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
+//        GaTrackHelper.getInstance().googleAnalytics("MerchantStoreFront Screen", this);
+//        JLogUtils.i("googleGA_screen", "MerchantStoreFront Screen");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
 
     }
 

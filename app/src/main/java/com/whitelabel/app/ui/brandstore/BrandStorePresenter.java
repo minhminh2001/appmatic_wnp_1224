@@ -11,7 +11,6 @@ import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.ui.common.RxPresenter;
 import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.ExceptionParse;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 
@@ -74,10 +73,10 @@ public class BrandStorePresenter
                     public void call(AddToWishlistEntity addToWishlistEntity) {
                         bean.setItem_id(addToWishlistEntity.getItemId());
                         GemfiveApplication.getAppConfiguration().updateWishlist(GemfiveApplication.getInstance(), addToWishlistEntity.getWishListItemCount());
-                        GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
-                                "Add To Wishlist",
-                                bean.getName(),
-                                Long.valueOf(bean.getProductId()));
+//                        GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
+//                                "Add To Wishlist",
+//                                bean.getName(),
+//                                Long.valueOf(bean.getProductId()));
                         JLogUtils.i("googleGA", "add to wishlist ");
                     }
                 });

@@ -23,7 +23,6 @@ import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.model.NotificationCell;
 import com.whitelabel.app.model.SVRAppserviceNotificationListReturnEntity;
 import com.whitelabel.app.utils.BadgeUtils;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
@@ -310,16 +309,16 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
 //            newSendRequestToGetList();
 //        }
         super.onStart();
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, true);
-        GaTrackHelper.getInstance().googleAnalytics("Notification list screen", homeActivity);
-        JLogUtils.i("googleGA_screen", "Notification list screen");
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, true);
+//        GaTrackHelper.getInstance().googleAnalytics("Notification list screen", homeActivity);
+//        JLogUtils.i("googleGA_screen", "Notification list screen");
     }
     @Override
     public void onStop() {
         super.onStop();
 //        page=1;
         isStop=true;
-        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, false);
+//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, false);
     }
     @Override
     public void onDestroy() {

@@ -29,7 +29,6 @@ import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductOptionEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -307,29 +306,29 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
 //    }
 
     public void gaTrackerDeleteFromCart(String name, String productId) {
-        try {
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
-                    "Remove Item From Cart",
-                    name,
-                    Long.valueOf(productId));
-            JLogUtils.i("googleGA", "Remove Item From Cart");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
+//                    "Remove Item From Cart",
+//                    name,
+//                    Long.valueOf(productId));
+//            JLogUtils.i("googleGA", "Remove Item From Cart");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void gaTrackerIncresaseQuantity(String name, String productId) {
-        try {
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
-                    "Remove Item From Cart",
-                    name,
-                    Long.valueOf(productId));
-            GaTrackHelper.getInstance().googleAnalyticsAddCart(context, productId, name);
-            GaTrackHelper.getInstance().googleAnalyticsDeleteCart(context, productId, name);
-            JLogUtils.i("googleGA", "Remove Item From Cart");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
+//                    "Remove Item From Cart",
+//                    name,
+//                    Long.valueOf(productId));
+//            GaTrackHelper.getInstance().googleAnalyticsAddCart(context, productId, name);
+//            GaTrackHelper.getInstance().googleAnalyticsDeleteCart(context, productId, name);
+//            JLogUtils.i("googleGA", "Remove Item From Cart");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     public static List<TMPLocalCartRepositoryProductEntity> shoppingCarToTMPLocal(LinkedList<ShoppingCartListEntityCell> list) {
@@ -540,12 +539,12 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
                         int position = Integer.parseInt((String) shoppingCartDeleteCell.getParam());
                         if (shoppingCartDeleteCell != null && (shoppingCartDeleteCell.getStatus() == 1)) {//success
                             ShoppingCartListEntityCell cell = null;
-                            try {
-                                cell = mAdapter.get().list.get(position);
-                                GaTrackHelper.getInstance().googleAnalyticsDeleteCart(mContext.get(), cell.getProductId(), cell.getName());
-                            } catch (Exception ex) {
-                                ex.getStackTrace();
-                            }
+//                            try {
+//                                cell = mAdapter.get().list.get(position);
+//                                GaTrackHelper.getInstance().googleAnalyticsDeleteCart(mContext.get(), cell.getProductId(), cell.getName());
+//                            } catch (Exception ex) {
+//                                ex.getStackTrace();
+//                            }
                             try {
                                 if (cell.getIsCampaignProduct() == 1) {
                                     shoppingCartDeleteCell.setIsCampaignProduct(true);

@@ -44,8 +44,6 @@ import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.FileUtils;
 import com.whitelabel.app.utils.FilterSortHelper;
-import com.whitelabel.app.utils.FirebaseEventUtils;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -187,25 +185,25 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_curation);
-        mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-        mGATrackTimeEnable = true;
+//        mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+//        mGATrackTimeEnable = true;
         initView();
         initListener();
         initData();
     }
 
     public void curationTrack(String heading, String category) {
-        try {
-            FirebaseEventUtils.getInstance().customizedViewCurationDetail(CurationActivity.this, heading, mCurationId);
-        } catch (Exception ex) {
-            ex.getMessage();
-        }
-
-        try {
-            FirebaseEventUtils.getInstance().customizedViewCurationGroup(CurationActivity.this, mCategoryName);
-        } catch (Exception ex) {
-            ex.getMessage();
-        }
+//        try {
+//            FirebaseEventUtils.getInstance().customizedViewCurationDetail(CurationActivity.this, heading, mCurationId);
+//        } catch (Exception ex) {
+//            ex.getMessage();
+//        }
+//
+//        try {
+//            FirebaseEventUtils.getInstance().customizedViewCurationGroup(CurationActivity.this, mCategoryName);
+//        } catch (Exception ex) {
+//            ex.getMessage();
+//        }
 
     }
 
@@ -1040,12 +1038,12 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
                 }
                 mActivity.get().productItemEntityArrayList.addAll(searchResultArray);
                 mActivity.get().curationProductListAdapter.notifyDataSetChanged();
-                if (mActivity.get().mGATrackTimeEnable) {
-                    GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-                            GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, mActivity.get().mGATrackTimeStart, "Curation Loading"
-                    );
-                    mActivity.get().mGATrackTimeEnable = false;
-                }
+//                if (mActivity.get().mGATrackTimeEnable) {
+//                    GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+//                            GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, mActivity.get().mGATrackTimeStart, "Curation Loading"
+//                    );
+//                    mActivity.get().mGATrackTimeEnable = false;
+//                }
                 mActivity.get().filterSortBottomView.hideSwitchAndFilterBar(false);
             } else if (mActivity.get().SEARCH_TYPE_REFRESH == mActivity.get().searchType) {
                 if (mActivity.get().mDialog != null && mActivity.get().mDialog.isShowing()) {

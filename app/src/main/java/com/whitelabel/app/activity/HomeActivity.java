@@ -134,72 +134,72 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     public void showUserGuide(HomeBaseFragment.UserGuideType userGuideType) {
-        if (mUserGuidePopWindow != null && mUserGuidePopWindow.isShowing()) {
-            return;
-        }
-        if (userGuideType == HomeBaseFragment.UserGuideType.LEFTMENU) {
-            getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-            mUserGuidePopWindow = mUserGuideHelper.showLeftMenuUserGuide(mUserGuideAbove);
-            mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    JStorageUtils.notShowGuide3(HomeActivity.this);
-                    showMarketLayers = true;
-                    getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                }
-            });
-        } else if (userGuideType == HomeBaseFragment.UserGuideType.HOMELEFTICON) {
-            if (!getDrawerLayout().isDrawerOpen(Gravity.LEFT)) {
-                getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                mUserGuidePopWindow = mUserGuideHelper.showHomeLeftIconUserGuide(mUserGuideAbove);
-                mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        JStorageUtils.notShowGuide1(HomeActivity.this);
-                        showMarketLayers = true;
-                        getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                    }
-                });
-            }
-        } else if (userGuideType == HomeBaseFragment.UserGuideType.HOMESECONDPAGE) {
-            if (!getDrawerLayout().isDrawerOpen(Gravity.LEFT)) {
-                getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                mUserGuidePopWindow = mUserGuideHelper.showHomeSecondUserGuide(mUserGuideAbove);
-                mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        JStorageUtils.notShowGuide2(HomeActivity.this);
-                        getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                    }
-                });
-            }
-        }
-//        else if (userGuideType == HomeBaseFragment.UserGuideType.MYACCOUNTEDIT) {
+//        if (mUserGuidePopWindow != null && mUserGuidePopWindow.isShowing()) {
+//            return;
+//        }
+//        if (userGuideType == HomeBaseFragment.UserGuideType.LEFTMENU) {
+//            getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+//            mUserGuidePopWindow = mUserGuideHelper.showLeftMenuUserGuide(mUserGuideAbove);
+//            mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//                @Override
+//                public void onDismiss() {
+//                    JStorageUtils.notShowGuide3(HomeActivity.this);
+//                    showMarketLayers = true;
+//                    getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//                }
+//            });
+//        } else if (userGuideType == HomeBaseFragment.UserGuideType.HOMELEFTICON) {
 //            if (!getDrawerLayout().isDrawerOpen(Gravity.LEFT)) {
 //                getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//                mUserGuidePopWindow = mUserGuideHelper.showMyAccountEditUserGuide(mUserGuideAbove);
+//                mUserGuidePopWindow = mUserGuideHelper.showHomeLeftIconUserGuide(mUserGuideAbove);
 //                mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
 //                    @Override
 //                    public void onDismiss() {
-//                        JStorageUtils.notShowGuide4(HomeActivity.this);
+//                        JStorageUtils.notShowGuide1(HomeActivity.this);
+//                        showMarketLayers = true;
+//                        getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//                    }
+//                });
+//            }
+//        } else if (userGuideType == HomeBaseFragment.UserGuideType.HOMESECONDPAGE) {
+//            if (!getDrawerLayout().isDrawerOpen(Gravity.LEFT)) {
+//                getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//                mUserGuidePopWindow = mUserGuideHelper.showHomeSecondUserGuide(mUserGuideAbove);
+//                mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//                    @Override
+//                    public void onDismiss() {
+//                        JStorageUtils.notShowGuide2(HomeActivity.this);
 //                        getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 //                    }
 //                });
 //            }
 //        }
-        else if (userGuideType == HomeBaseFragment.UserGuideType.ADDRESS) {
-            if(!getDrawerLayout().isDrawerOpen(Gravity.LEFT)){
-                mUserGuidePopWindow=mUserGuideHelper.showMyAccountAddressUserGuide(mUserGuideAbove);
-                getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        JStorageUtils.notShowGuide5(HomeActivity.this);
-                        getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                    }
-                });
-            }
-        }
+////        else if (userGuideType == HomeBaseFragment.UserGuideType.MYACCOUNTEDIT) {
+////            if (!getDrawerLayout().isDrawerOpen(Gravity.LEFT)) {
+////                getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+////                mUserGuidePopWindow = mUserGuideHelper.showMyAccountEditUserGuide(mUserGuideAbove);
+////                mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+////                    @Override
+////                    public void onDismiss() {
+////                        JStorageUtils.notShowGuide4(HomeActivity.this);
+////                        getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+////                    }
+////                });
+////            }
+////        }
+//        else if (userGuideType == HomeBaseFragment.UserGuideType.ADDRESS) {
+//            if(!getDrawerLayout().isDrawerOpen(Gravity.LEFT)){
+//                mUserGuidePopWindow=mUserGuideHelper.showMyAccountAddressUserGuide(mUserGuideAbove);
+//                getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//                mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//                    @Override
+//                    public void onDismiss() {
+//                        JStorageUtils.notShowGuide5(HomeActivity.this);
+//                        getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//                    }
+//                });
+//            }
+//        }
     }
 
     @Override
@@ -253,11 +253,11 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpWistListPage() {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
-            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_MYACCOUNT, HomeMyAccountFragmentV2.SWITCH_WISHLISTFRAGMENT);
-        } else {
-            jumpLoginActivity();
-        }
+//        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+//            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_MYACCOUNT, HomeMyAccountFragmentV2.SWITCH_WISHLISTFRAGMENT);
+//        } else {
+//            jumpLoginActivity();
+//        }
 
     }
 
@@ -537,16 +537,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         } else {
             if (EXTRA_REDIRECTTO_TYPE_VALUE_EXITAPP.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
                 this.finish();
-            } else if (EXTRA_REDIRECTTO_TYPE_VALUE_WISHLIST.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
-                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_WISHLIST);
-                if (!(mCurrentFragment instanceof HomeMyAccountFragmentV2)) {
-                    fragmentType = FRAGMENT_TYPE_HOME_MYACCOUNT;
-                    serializable = HomeMyAccountFragmentV2.SWITCH_WISHLISTFRAGMENT;
-                } else {
-                    HomeMyAccountFragmentV2 fragment = (HomeMyAccountFragmentV2) mAttachedFragmentList.get(1);
-                    fragment.startFragmentByType(HomeMyAccountFragmentV2.SWITCH_WISHLISTFRAGMENT, true);
-                    return;
-                }
             } else if (EXTRA_REDIRECTTO_TYPE_VALUE_ORDER.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
                 fragmentType = FRAGMENT_TYPE_HOME_MYACCOUNT;
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_ORDER);

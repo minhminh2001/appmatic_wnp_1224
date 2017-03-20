@@ -30,8 +30,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.application.GemfiveApplication;
@@ -39,9 +37,6 @@ import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
-import com.whitelabel.app.qrscan.IQrScanView;
-import com.whitelabel.app.qrscan.QrScanActivity;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -53,8 +48,6 @@ import com.whitelabel.app.widget.CustomTextView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by imaginato on 2015/7/17.
@@ -99,8 +92,8 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setScrollToolBarEnable(true);
         mContainView = inflater.inflate(R.layout.fragment_home_home, null);
-        mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-        mGATrackTimeEnable = true;
+//        mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+//        mGATrackTimeEnable = true;
         return mContainView;
     }
 
@@ -130,46 +123,11 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
                 startActivity(intent);
             }
         });
-
-        MenuItem qrItem = menu.findItem(R.id.action_qr);
-        qrItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                launchQrActivity();
-                return true;
-            }
-        });
-
         TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
         JViewUtils.updateCartCount(textView, getCartItemCount());
     }
 
-    private void launchQrActivity() {
-        IntentIntegrator.forSupportFragment(this)
-                .setOrientationLocked(true)
-                .setCaptureActivity(QrScanActivity.class)
-                .setBeepEnabled(true)
-                .initiateScan();
-        homeActivity.overridePendingTransition(R.anim.enter_bottom_top,
-                R.anim.exit_bottom_top);
-    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (resultCode == RESULT_OK) {
-                IQrScanView.ErrorType type = (IQrScanView.ErrorType) data.getSerializableExtra("errorType");
-                if (type != null) {
-                    int errorMessage = data.getIntExtra("errorMessage", -1);
-                    showOnlineErrorLayout(errorMessage);
-
-                }
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
 
     public long getCartItemCount() {
         long cartItemCount = 0;
@@ -273,30 +231,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         }
     }
 
-    private void showQRErrorLayout() {
-        if (getActivity() != null) {
-            inflateIfNeeded();
-            ll_error.setVisibility(View.VISIBLE);
-            requestErrorHelper = new RequestErrorHelper(getContext(), ll_error);
-            requestErrorHelper.setHeaderMessage(getString(R.string.qr_error));
-            requestErrorHelper.setErrorImage(R.drawable.s_server);
-            requestErrorHelper.setSubheaderMessage(getString(R.string.qr_error_long));
-            requestErrorHelper.setResponseButtonText(getString(R.string.RETRY));
-            requestErrorHelper.setResponseListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    launchQrActivity();
-                }
-            });
-            requestErrorHelper.showCancelButton(true);
-            requestErrorHelper.setCancelListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    hideErrorLayout();
-                }
-            });
-        }
-    }
+
 
     private void inflateIfNeeded() {
         if (ll_error == null) {
@@ -407,12 +342,12 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             vHeaderBarSearch.setOnClickListener(this);
             updateShoppingCartItemCount();
         }
-        if (mGATrackTimeEnable) {
-            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-                    GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, mGATrackTimeStart, "Home Screen Loading"
-            );
-            mGATrackTimeEnable = false;
-        }
+//        if (mGATrackTimeEnable) {
+//            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+//                    GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, mGATrackTimeStart, "Home Screen Loading"
+//            );
+//            mGATrackTimeEnable = false;
+//        }
     }
 
     public void showAppRate() {
@@ -649,17 +584,17 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
 
 
         public void homeTrack(int position) {
-            try {
-                //追踪点击分类
-                String brandName = GemfiveApplication.getAppConfiguration().getCategoryArrayList().getCategory().get(position).getName();
-                GaTrackHelper.getInstance().googleAnalytics(brandName, homeActivity);
-                JLogUtils.i("googleGA_screen", brandName);
-                //统计总数
-                GaTrackHelper.getInstance().googleAnalytics("Main Category Landing Screen", homeActivity);
-                JLogUtils.i("googleGA_screen", "Category Landing Screen");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            try {
+//                //追踪点击分类
+//                String brandName = GemfiveApplication.getAppConfiguration().getCategoryArrayList().getCategory().get(position).getName();
+//                GaTrackHelper.getInstance().googleAnalytics(brandName, homeActivity);
+//                JLogUtils.i("googleGA_screen", brandName);
+//                //统计总数
+//                GaTrackHelper.getInstance().googleAnalytics("Main Category Landing Screen", homeActivity);
+//                JLogUtils.i("googleGA_screen", "Category Landing Screen");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         }
 
         @Override
