@@ -1,4 +1,4 @@
-package com.whitelabel.app.module;
+package com.whitelabel.app.module.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -80,12 +80,12 @@
         "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/res/drawable-xxhdpi-v4/abc_ic_star_half_black_48dp.png"
     },
     {
-        "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/drawable-xxhdpi-v4/abc_ic_star_black_16dp.png",
-        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/res/drawable-xxhdpi-v4/abc_ic_star_black_16dp.png"
-    },
-    {
         "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/drawable-xxhdpi-v4/abc_cab_background_top_mtrl_alpha.9.png",
         "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/res/drawable-xxhdpi-v4/abc_cab_background_top_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/drawable-xxhdpi-v4/abc_ic_star_black_16dp.png",
+        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/res/drawable-xxhdpi-v4/abc_ic_star_black_16dp.png"
     },
     {
         "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/drawable-xxhdpi-v4/abc_ic_menu_selectall_mtrl_alpha.png",

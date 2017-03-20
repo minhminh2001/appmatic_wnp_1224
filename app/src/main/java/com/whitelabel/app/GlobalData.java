@@ -2,8 +2,6 @@ package com.whitelabel.app;
 
 
 import android.content.Context;
-import com.imaginato.app.BuildConfig;
-import com.imaginato.app.R;
 
 import java.util.HashMap;
 import java.util.Map;

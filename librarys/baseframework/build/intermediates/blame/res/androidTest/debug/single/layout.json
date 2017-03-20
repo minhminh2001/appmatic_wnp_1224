@@ -12,12 +12,12 @@
         "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/res/layout/notification_media_cancel_action.xml"
     },
     {
-        "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/layout/dialog_progress.xml",
-        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/bundles/debug/res/layout/dialog_progress.xml"
-    },
-    {
         "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/layout/abc_search_view.xml",
         "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/res/layout/abc_search_view.xml"
+    },
+    {
+        "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/layout/dialog_progress.xml",
+        "source": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/bundles/debug/res/layout/dialog_progress.xml"
     },
     {
         "merged": "/Users/ray/AndroidStudioProjects/whitelabel/librarys/baseframework/build/intermediates/res/merged/androidTest/debug/layout/notification_template_big_media_narrow_custom.xml",
