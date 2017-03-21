@@ -460,7 +460,6 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
             mDialog.cancel();
         }
     }
-
     private static final class DataHandler extends Handler {
         private final WeakReference<ShoppingCartAdapterV2> mAdapter;
         private final WeakReference<Context> mContext;
@@ -469,8 +468,6 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
             mAdapter = new WeakReference<ShoppingCartAdapterV2>(shoppingCartAdapterCallback);
             mContext = new WeakReference<Context>(context);
         }
-
-
         @Override
         public void handleMessage(Message msg) {
             if (mAdapter.get() == null || mContext.get() == null) {

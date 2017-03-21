@@ -161,11 +161,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
      */
     private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
     private ImageLoader mImageLoader;
-
     static {
         System.loadLibrary("gemfivelocal");
     }
-
     private View.OnClickListener updateListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -191,15 +189,12 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             }
         }
     };
-
     public void IsOldVersion() {
         mCheckoutPaymentDialog = new CheckoutPaymentDialog(CheckoutActivity.this, R.style.loading_dialog, getResources().getString(R.string.dialog_checkout_text)).showDialog();
         btnContinue.setEnabled(false);
         btnContinue.setBackgroundResource(R.drawable.big_button_style_b8);
         new ProductDao(TAG, mHandler).checkVersion("2");
     }
-
-
     public void closeCheckoutPaymentDialog() {
         if (mCheckoutPaymentDialog != null && mCheckoutPaymentDialog.isShowing()) {
             mCheckoutPaymentDialog.dismiss();
