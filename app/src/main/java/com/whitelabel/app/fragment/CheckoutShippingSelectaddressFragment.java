@@ -103,11 +103,9 @@ public class CheckoutShippingSelectaddressFragment extends Fragment implements V
 
     public void initView(View view){
         tvErrorMsg = (TextView) view.findViewById(R.id.tv_checkout_errormsg_defaultOrSelectAddress);
-
         btnAddNewAddress = (Button) view.findViewById(R.id.btn_checkout_shipping_add_new_address);
         btnAddNewAddress.setVisibility(View.VISIBLE);
         btnAddNewAddress.setOnClickListener(this);
-
         mContent=view.findViewById(R.id.mContent);
         mContent.setVisibility(View.GONE);
         lvAddress = (SwipeMenuListView) view.findViewById(R.id.lv_checkout_shipping_selectaddress);

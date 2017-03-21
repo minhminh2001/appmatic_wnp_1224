@@ -334,7 +334,6 @@ public class MyAccountDao extends BaseHttp {
         params.put("default_shipping", default_shipping);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/customer/createCustomerAddress", params, REQUEST_ADDRESS_SAVE);
     }
-
     public void EditSave(String addressId, String sessionKey, String firstname, String lastname,
                          String country_id, String telephone, String street0, String street1,
                          String postcode, String city, String region, String region_id, String default_shipping) {

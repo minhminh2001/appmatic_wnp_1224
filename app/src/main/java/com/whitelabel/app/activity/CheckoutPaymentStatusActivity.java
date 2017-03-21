@@ -24,22 +24,18 @@ import com.whitelabel.app.fragment.CheckoutPaymentStatusWrongFragment;
 import java.io.Serializable;
 
 public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
-
-    private FrameLayout mContiner;
     private Fragment checkoutPaymentStatusFragment;
-
     private static String SESSION_KEY;
     public String html;
     private final int PAYMENTSUCESS = 1;
     private final int PAYMENTFAILURE = 2;
     public boolean isLuckDraw;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_payment_status);
 //        setBehindContentView(R.layout.frame_menu);
-        mContiner = (FrameLayout) findViewById(R.id.flContainer);
+//        mContiner = (FrameLayout) findViewById(R.id.flContainer);
         //init session_key
         //SharedPreferences sharedPreferences = getSharedPreferences("session_key", Activity.MODE_PRIVATE);
         SESSION_KEY = GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey();
@@ -54,8 +50,6 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
 
         initData();
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         setRightTextMenuClickListener(
@@ -71,8 +65,6 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
                 });
         return super.onCreateOptionsMenu(menu);
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -82,7 +74,6 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     protected boolean refreshNotification(int type, String id) {
         return false;
@@ -239,20 +230,15 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
 
     private void initData() {
         Bundle bundle = getIntent().getExtras();
-
         mGATrackTimeStart = bundle.getLong("mGATrackTimeStart", 0);
-
         fromType = bundle.getInt("fromType");
         String paymentStatus = bundle.getString("payment_status");
         String errorMsg = bundle.getString("errorMsg");
         String orderNumber = bundle.getString("orderNumber");
-
         isLuckDraw = bundle.getBoolean("isLuckDraw", false);
         html = bundle.getString("html");
-
         if ("1".equalsIgnoreCase(paymentStatus)) {
             checkoutPaymentStatusFragment = new CheckoutPaymentStatusRightFragment();
-//            bundle1.putInt("fromType", fromType);
             checkoutPaymentStatusFragment.setArguments(bundle);
             gaTrackerPayment(PAYMENTSUCESS);
         } else {
@@ -270,13 +256,13 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
     }
 
     public void gaTrackerPayment(int type) {
-        String payment = "";
-        if (type == PAYMENTSUCESS) {
-            payment = "Payment Sucess";
-        } else if (type == PAYMENTFAILURE) {
-            payment = "Payment Failure";
-        }
-//        try {
+//        String payment = "";
+//        if (type == PAYMENTSUCESS) {
+//            payment = "Payment Sucess";
+//        } else if (type == PAYMENTFAILURE) {
+//            payment = "Payment Failure";
+//        }
+////        try {
 //            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
 //                    "Payment",
 //                    payment,
@@ -290,41 +276,6 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-    private void setLolppoNavPadding() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            boolean hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK);
-            boolean hasHomeKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_HOME);
-            boolean hasBar = hasNavBar(CheckoutPaymentStatusActivity.this);
-            if (hasBar) {
-                int navBarHeight = getNavigationBarHeight();
-                findViewById(R.id.flContainer_paymentstatus).setPadding(0, 0, 0, navBarHeight);
-            }
-        }
-    }
-
-    private int getNavigationBarHeight() {
-        Resources resources = getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            return resources.getDimensionPixelSize(resourceId);
-        }
-        return 0;
-    }
-
-    boolean hasNavBar(Context context) {
-        Resources resources = context.getResources();
-        int id = resources.getIdentifier("config_showNavigationBar", "bool", "android");
-        if (id > 0) {
-            return resources.getBoolean(id);
-        } else {    // Check for keys
-            boolean hasMenuKey = ViewConfiguration.get(context).hasPermanentMenuKey();
-            boolean hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK);
-            return !hasMenuKey && !hasBackKey;
-        }
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
