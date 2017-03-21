@@ -186,7 +186,6 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
 
         filterSortBottomView = new FilterSortBottomView();
         filterSortBottomView.initView(rlBottomBar, iv_bottom_slideto_top, this);
-        switchBottomBar();
         mAttachedFragmentList = new ArrayList<>();
         fragmentSequenceArray = new ArrayList<>();
         initFragment();

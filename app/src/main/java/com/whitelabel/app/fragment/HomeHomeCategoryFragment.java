@@ -33,9 +33,7 @@ import com.whitelabel.app.model.SVRAppserviceLandingPagesListLandingPageItemRetu
 import com.whitelabel.app.model.SVRAppserviceLandingPagesListReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 
 import java.lang.ref.WeakReference;
@@ -93,9 +91,9 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
                 case ProductDao.REQUEST_CURATION:
                     mFragment.get().refreshLayout.setRefreshing(false);
                     if (msg.arg1 == ProductDao.RESPONSE_SUCCESS) {
-                        if (mFragment.get().firstCategory) {
-                            ((HomeHomeFragment) mFragment.get().getParentFragment()).showAppRate();
-                        }
+//                        if (mFragment.get().firstCategory) {
+//                            ((HomeHomeFragment) mFragment.get().getParentFragment()).showAppRate();
+//                        }
                         SVRAppserviceLandingPagesListReturnEntity curationListReturnEntity = (SVRAppserviceLandingPagesListReturnEntity) msg.obj;
                         if ((curationListReturnEntity != null) && (curationListReturnEntity.getLandingList() != null) && (curationListReturnEntity.getLandingList().size() > 0)) {
                             mFragment.get().curationList.clear();
@@ -112,22 +110,22 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
 //                    }
                     break;
                 case ProductDao.REQUEST_MARKETING:
-                    if (msg.arg1 == ProductDao.RESPONSE_SUCCESS) {
-                        mFragment.get().mCurationListReturnEntity = (MarketingLayersEntity) msg.obj;
-
-                        if (mFragment.get().mCurationListReturnEntity != null && !"0".equalsIgnoreCase(mFragment.get().mCurationListReturnEntity.getDuration()) && mFragment.get().mCurationListReturnEntity.getIndex() == mFragment.get().mIdentification) {
-                            int count = mFragment.get().getMarketCount(mFragment.get().categoryEntity.getId());
-                            String image = mFragment.get().getMarketImage(mFragment.get().categoryEntity.getId());
-
-                            if (count == -1 || !image.equals(mFragment.get().mCurationListReturnEntity.getImage())) {
-                                mFragment.get().saveMarketing(mFragment.get().categoryEntity.getId(), mFragment.get().mCurationListReturnEntity.getImage(), mFragment.get().mCurationListReturnEntity.getRepeats());
-                                count = mFragment.get().getMarketCount(mFragment.get().categoryEntity.getId());
-                            }
-                            if (count > 0) {
-                                mFragment.get().showMarketLayers(mFragment.get().mCurationListReturnEntity);
-                            }
-                        }
-                    }
+//                    if (msg.arg1 == ProductDao.RESPONSE_SUCCESS) {
+//                        mFragment.get().mCurationListReturnEntity = (MarketingLayersEntity) msg.obj;
+//
+//                        if (mFragment.get().mCurationListReturnEntity != null && !"0".equalsIgnoreCase(mFragment.get().mCurationListReturnEntity.getDuration()) && mFragment.get().mCurationListReturnEntity.getIndex() == mFragment.get().mIdentification) {
+//                            int count = mFragment.get().getMarketCount(mFragment.get().categoryEntity.getId());
+//                            String image = mFragment.get().getMarketImage(mFragment.get().categoryEntity.getId());
+//
+//                            if (count == -1 || !image.equals(mFragment.get().mCurationListReturnEntity.getImage())) {
+//                                mFragment.get().saveMarketing(mFragment.get().categoryEntity.getId(), mFragment.get().mCurationListReturnEntity.getImage(), mFragment.get().mCurationListReturnEntity.getRepeats());
+//                                count = mFragment.get().getMarketCount(mFragment.get().categoryEntity.getId());
+//                            }
+//                            if (count > 0) {
+//                                mFragment.get().showMarketLayers(mFragment.get().mCurationListReturnEntity);
+//                            }
+//                        }
+//                    }
                     break;
                 case ProductDao.REQUEST_ERROR:
                     mFragment.get().refreshLayout.setRefreshing(false);
@@ -165,16 +163,16 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
     }
 
     public void getCurationList() {
-        boolean showGuide = JStorageUtils.showAppGuide1(homeActivity);//是否显示新手指南
+//        boolean showGuide = JStorageUtils.showAppGuide1(homeActivity);//是否显示新手指南
         //显示loading条件不和新手引导重叠，只显示第一个category的loading，并且刷新时显示loading
-        HomeHomeFragment object = (HomeHomeFragment) getParentFragment();
-        firstCategory = object.isCategory(categoryEntity);//第一个Category
-        if (firstCategory && showGuide) {
-            homeActivity.showMarketLayers = false;//禁止弹出广告层
-            if (mCommonCallback.getRlMarketLayer().getVisibility() == View.VISIBLE) {
-                mCommonCallback.marketLayerClose();//关闭广告弹出层
-            }
-        }
+//        HomeHomeFragment object = (HomeHomeFragment) getParentFragment();
+//        firstCategory = object.isCategory(categoryEntity);//第一个Category
+//        if (firstCategory && showGuide) {
+//            homeActivity.showMarketLayers = false;//禁止弹出广告层
+//            if (mCommonCallback.getRlMarketLayer().getVisibility() == View.VISIBLE) {
+//                mCommonCallback.marketLayerClose();//关闭广告弹出层
+//            }
+//        }
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -196,7 +194,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
         JLogUtils.d("data1", "1");
         beforeInit();
         isinit = true;
-        initMaretingLayers();
+//        initMaretingLayers();
     }
 
     @Override
@@ -286,18 +284,18 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
     public void onResume() {
         JLogUtils.i("russell", "*****" + mIndex + "**********onResume==" + isinit);
 //        mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-        mMarketShow = true;
-        if (isinit) {
-            initMaretingLayers();
-        }
+//        mMarketShow = true;
+//        if (isinit) {
+//            initMaretingLayers();
+//        }
         super.onResume();
     }
 
     public void initMaretingLayers() {
-        if (!mCurrDisplayed) {
-            mIdentification++;
-            getMarketingLayers(mIdentification);
-        }
+//        if (!mCurrDisplayed) {
+//            mIdentification++;
+//            getMarketingLayers(mIdentification);
+//        }
     }
 
     @Override
@@ -309,12 +307,12 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
         super.onPause();
     }
 
-    public void getMarketingLayers(final int identification) {
-        if (categoryEntity == null || JDataUtils.isEmpty(categoryEntity.getId())) {
-            return;
-        }
-        mDao.getMarketingLayers(categoryEntity.getId(), identification);
-    }
+//    public void getMarketingLayers(final int identification) {
+//        if (categoryEntity == null || JDataUtils.isEmpty(categoryEntity.getId())) {
+//            return;
+//        }
+//        mDao.getMarketingLayers(categoryEntity.getId(), identification);
+//    }
 
     public void saveMarketing(String id, String image, int count) {
         SharedPreferences shared = homeActivity.getSharedPreferences("market", 0);
@@ -380,7 +378,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
                 //Add callback listener
                 int marketLayerWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth(homeActivity);
                 int marketLayerHeight = GemfiveApplication.getPhoneConfiguration().getScreenHeigth(homeActivity) - JDataUtils.dp2Px(170);
-                JImageUtils.downloadImageFromServerListener(homeActivity, curationListReturnEntity.getImage(), marketLayerWidth, marketLayerHeight, new CategoryLoadImageListener(this));
+//                JImageUtils.downloadImageFromServerListener(homeActivity, curationListReturnEntity.getImage(), marketLayerWidth, marketLayerHeight, new CategoryLoadImageListener(this));
 //               JImageUtils.getInstance(homeActivity).display(((HomeHomeCallback)(getParentFragment())).getIvMarketLayer(), imageUrl, defaultBitmapLoadCallBack);
             }
         }

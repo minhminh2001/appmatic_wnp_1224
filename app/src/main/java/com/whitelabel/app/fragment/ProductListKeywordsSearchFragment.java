@@ -19,9 +19,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,7 +28,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListAdapter;
 import com.whitelabel.app.adapter.SearchSuggestionAdapter;
@@ -43,7 +40,6 @@ import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
-import com.whitelabel.app.model.SearchSuggestionBean;
 import com.whitelabel.app.model.SuggestsEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.model.TMPProductListListPageEntity;
@@ -60,7 +56,6 @@ import com.whitelabel.app.widget.FilterSortBottomView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -268,20 +263,20 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
                     }
                     break;
                 case ProductDao.REQUEST_SUGGESTIONS:
-                    if (msg.arg1 == ProductDao.RESPONSE_SUCCESS) {
-                        SearchSuggestionBean searchSuggestionBean = (SearchSuggestionBean) msg.obj;
-                        fragment.filterSortBottomView.hideSwitchAndFilterBar(true);
-                        fragment.cxlvProductList.setVisibility(View.INVISIBLE);
-//                        fragment.rlNodata.setVisibility(GONE);
-                        fragment.connectionLayout.setVisibility(View.GONE);
-                        if (searchSuggestionBean != null) {
-                            if (fragment.mSuggestionsArrayList != null) {
-                                fragment.mSuggestionsArrayList.clear();
-                                fragment.mSuggestionsArrayList.addAll(searchSuggestionBean.getList());
-                                fragment.mSearchSuggestionAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    }
+//                    if (msg.arg1 == ProductDao.RESPONSE_SUCCESS) {
+//                        SearchSuggestionBean searchSuggestionBean = (SearchSuggestionBean) msg.obj;
+//                        fragment.filterSortBottomView.hideSwitchAndFilterBar(true);
+//                        fragment.cxlvProductList.setVisibility(View.INVISIBLE);
+////                        fragment.rlNodata.setVisibility(GONE);
+//                        fragment.connectionLayout.setVisibility(View.GONE);
+//                        if (searchSuggestionBean != null) {
+//                            if (fragment.mSuggestionsArrayList != null) {
+//                                fragment.mSuggestionsArrayList.clear();
+//                                fragment.mSuggestionsArrayList.addAll(searchSuggestionBean.getList());
+//                                fragment.mSearchSuggestionAdapter.notifyDataSetChanged();
+//                            }
+//                        }
+//                    }
                     break;
                 case ProductDao.REQUEST_ERROR:
                     if (fragment.TYPE != fragment.NOTDATA) {
@@ -437,7 +432,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         mBackRL.setOnClickListener(this);
         cxlvProductList.setXListViewListener(this);
         mClearRL.setOnClickListener(this);
-        initSuggestionListView();
+//        initSuggestionListView();
         cetKeywords.addTextChangedListener(new TextWatcher() {
             private String beforeText;
 
@@ -450,15 +445,15 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (TextUtils.isEmpty(s.toString().trim())) {
                     mClearRL.setVisibility(GONE);
-                    clearSuggestionList();
+//                    clearSuggestionList();
                 } else {
                     if (beforeText.equals(s.toString().trim())) return;
                     mClearRL.setVisibility(VISIBLE);
-//                    clearSuggestionList();
-                    flFilterSortContainer.setVisibility(GONE);
-//                    mSubject.onNext(s.toString().trim()); //rx-java
-                    queryWithHandler(s.toString().trim());// Handler
-                    showSuggestions();
+////                    clearSuggestionList();
+//                    flFilterSortContainer.setVisibility(GONE);
+////                    mSubject.onNext(s.toString().trim()); //rx-java
+//                    queryWithHandler(s.toString().trim());// Handler
+//                    showSuggestions();
                 }
             }
 
@@ -480,17 +475,17 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
                 return false;
             }
         });
-        cetKeywords.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                        clearSuggestionList();
-                        getSearchSuggestions(cetKeywords.getText().toString().trim());
-                        showSuggestions();
-                        cxlvProductList.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+//        cetKeywords.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                        clearSuggestionList();
+//                        getSearchSuggestions(cetKeywords.getText().toString().trim());
+//                        showSuggestions();
+//                        cxlvProductList.setVisibility(View.INVISIBLE);
+//                }
+//            }
+//        });
 
         if (getSearchType() != ProductListKeywordsSearchFragment.SEARCH_TYPE_KEYWORDS) {
             search();
@@ -534,6 +529,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             mSearchSuggestionAdapter.notifyDataSetChanged();
         }
     }
+
     private void initListViewHeader(){
         View view = LayoutInflater.from(productListActivity).inflate(R.layout.header_product_list_switch_and_filter_bar, null);
         RelativeLayout.LayoutParams params=new RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT,JDataUtils.dp2Px(40));
@@ -565,76 +561,76 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         }
     }
 
-    private void initSuggestionListView() {
-        //Rxjava实现延迟搜索
-//        mSubject.debounce(SUGGESTION_KEYWORD_TIMEOUT, TimeUnit.MILLISECONDS)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnNext(new Action1<String>() {
-//                    @Override
-//                    public void call(String s) {
-//                        getSearchSuggestions(s);
-//                    }
-//                }).subscribe();
-        mSuggestionListView = (ListView) mContentView.findViewById(R.id.lv_suggestions_list);
-        mSuggestionsArrayList = new ArrayList<>();
-        mSearchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), mSuggestionsArrayList);
-        mSuggestionListView.setAdapter(mSearchSuggestionAdapter);
-//        startFilter();
-        mSuggestionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onSuggestionItemClick(((SuggestsEntity) mSearchSuggestionAdapter.getItem(position)), true);
-            }
-        });
-        if (cetKeywords != null) {
-            if (TextUtils.isEmpty(cetKeywords.getText().toString().trim())) {
-                dismissSuggestions();
-            }
-        }
-    }
+//    private void initSuggestionListView() {
+//        //Rxjava实现延迟搜索
+////        mSubject.debounce(SUGGESTION_KEYWORD_TIMEOUT, TimeUnit.MILLISECONDS)
+////                .subscribeOn(Schedulers.io())
+////                .observeOn(AndroidSchedulers.mainThread())
+////                .doOnNext(new Action1<String>() {
+////                    @Override
+////                    public void call(String s) {
+////                        getSearchSuggestions(s);
+////                    }
+////                }).subscribe();
+//        mSuggestionListView = (ListView) mContentView.findViewById(R.id.lv_suggestions_list);
+//        mSuggestionsArrayList = new ArrayList<>();
+//        mSearchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), mSuggestionsArrayList);
+//        mSuggestionListView.setAdapter(mSearchSuggestionAdapter);
+////        startFilter();
+//        mSuggestionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                onSuggestionItemClick(((SuggestsEntity) mSearchSuggestionAdapter.getItem(position)), true);
+//            }
+//        });
+//        if (cetKeywords != null) {
+//            if (TextUtils.isEmpty(cetKeywords.getText().toString().trim())) {
+//                dismissSuggestions();
+//            }
+//        }
+//    }
 
-    public void onSuggestionItemClick(SuggestsEntity suggestionItem, boolean submit) {
-        clearSuggestionSearch();
-        if (submit && suggestionItem != null) {
-            switch (suggestionItem.getRow_type()) {
-                case SUGGESTION_ROW_TYPE_BRAND:
-                    setKeyWord(suggestionItem);
-                    mIsSuggestionSearch = true;
-                    dismissSuggestions();
-                    cancelHandler();
-                    setSearchType(ProductListKeywordsSearchFragment.SEARCH_TYPE_SUGGESTION);
-                    mSuggestionBrand = suggestionItem.getTitle();
-                    search();
-                    break;
-                case SUGGESTION_ROW_TYPE_CATEGORY:
-                    mIsSuggestionSearch = true;
-                    dismissSuggestions();
-                    mSuggestionCategoryID = suggestionItem.getId();
-                    setSearchType(ProductListKeywordsSearchFragment.SEARCH_TYPE_SUGGESTION);
-                    search();
-                    break;
-                case SUGGESTION_ROW_TYPE_MODEL_TYPE:
-                    mIsSuggestionSearch = true;
-                    dismissSuggestions();
-                    cancelHandler();
-                    mSuggestionsModleType = suggestionItem.getTitle();
-                    setSearchType(ProductListKeywordsSearchFragment.SEARCH_TYPE_SUGGESTION);
-                    search();
-                    break;
-                case SUGGESTION_ROW_TYPE_PRODUCT:
-                    setKeyWord(suggestionItem);
-                    onSubmitKeyWord();
-                    break;
-                default:
-                    setKeyWord(suggestionItem);
-                    onSubmitKeyWord();
-                    break;
-
-            }
-        }
-
-    }
+//    public void onSuggestionItemClick(SuggestsEntity suggestionItem, boolean submit) {
+//        clearSuggestionSearch();
+//        if (submit && suggestionItem != null) {
+//            switch (suggestionItem.getRow_type()) {
+//                case SUGGESTION_ROW_TYPE_BRAND:
+//                    setKeyWord(suggestionItem);
+//                    mIsSuggestionSearch = true;
+//                    dismissSuggestions();
+//                    cancelHandler();
+//                    setSearchType(ProductListKeywordsSearchFragment.SEARCH_TYPE_SUGGESTION);
+//                    mSuggestionBrand = suggestionItem.getTitle();
+//                    search();
+//                    break;
+//                case SUGGESTION_ROW_TYPE_CATEGORY:
+//                    mIsSuggestionSearch = true;
+//                    dismissSuggestions();
+//                    mSuggestionCategoryID = suggestionItem.getId();
+//                    setSearchType(ProductListKeywordsSearchFragment.SEARCH_TYPE_SUGGESTION);
+//                    search();
+//                    break;
+//                case SUGGESTION_ROW_TYPE_MODEL_TYPE:
+//                    mIsSuggestionSearch = true;
+//                    dismissSuggestions();
+//                    cancelHandler();
+//                    mSuggestionsModleType = suggestionItem.getTitle();
+//                    setSearchType(ProductListKeywordsSearchFragment.SEARCH_TYPE_SUGGESTION);
+//                    search();
+//                    break;
+//                case SUGGESTION_ROW_TYPE_PRODUCT:
+//                    setKeyWord(suggestionItem);
+//                    onSubmitKeyWord();
+//                    break;
+//                default:
+//                    setKeyWord(suggestionItem);
+//                    onSubmitKeyWord();
+//                    break;
+//
+//            }
+//        }
+//
+//    }
 
     private void setKeyWord(SuggestsEntity suggestionItem) {
         cetKeywords.setText(suggestionItem.getTitle());
@@ -655,10 +651,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     }
 
     private void onSubmitKeyWord() {
-        mIsSuggestionSearch = false;
-        clearSuggestionSearch();
-        dismissSuggestions();
-        cancelHandler();
         if (!"".equals(cetKeywords.getText().toString().trim())) {
             JViewUtils.hideKeyboard(productListActivity);
             flFilterSortContainer.setVisibility(GONE);
@@ -679,98 +671,55 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         }
     }
 
-    private void startFilter() {
-        if (mSearchSuggestionAdapter != null && mSearchSuggestionAdapter instanceof Filterable && cetKeywords != null) {
-            ((Filterable) mSearchSuggestionAdapter).getFilter().filter(cetKeywords.getText().toString().trim(), this);
-        }
-    }
+//    private void getSearchSuggestions(String q) {
+//        if (!JDataUtils.isChinese(q) && !TextUtils.isEmpty(cetKeywords.getText().toString().trim())) {
+//            if (GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
+//                mProductDao.getSuggestions(q, GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey());
+//            } else {
+//                mProductDao.getSuggestions(q, "");
+//            }
+//        }
+//    }
+//    private Handler mDelayHandler = new Handler();
+//    private DelayQueryRunnable mDelayQueryRunnable;
+//    private void queryWithHandler(String newText) {
+//        // 延迟
+//        cancelHandler();
+//        mDelayQueryRunnable = new DelayQueryRunnable(newText);
+//        mDelayHandler.postDelayed(mDelayQueryRunnable, SUGGESTION_KEYWORD_TIMEOUT);
+//    }
+//
+//    private void cancelHandler() {
+//        if (mDelayQueryRunnable != null) {
+//            mDelayQueryRunnable.cancel();
+//            mDelayHandler.removeCallbacksAndMessages(null);
+//        }
+//    }
 
-    private void getSearchSuggestions(String q) {
-        if (!JDataUtils.isChinese(q) && !TextUtils.isEmpty(cetKeywords.getText().toString().trim())) {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
-                mProductDao.getSuggestions(q, GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey());
-            } else {
-                mProductDao.getSuggestions(q, "");
-            }
-        }
-    }
-    private Handler mDelayHandler = new Handler();
-    private DelayQueryRunnable mDelayQueryRunnable;
-    private void queryWithHandler(String newText) {
-        // 延迟
-        cancelHandler();
-        mDelayQueryRunnable = new DelayQueryRunnable(newText);
-        mDelayHandler.postDelayed(mDelayQueryRunnable, SUGGESTION_KEYWORD_TIMEOUT);
-    }
-
-    private void cancelHandler() {
-        if (mDelayQueryRunnable != null) {
-            mDelayQueryRunnable.cancel();
-            mDelayHandler.removeCallbacksAndMessages(null);
-        }
-    }
-
-    private class DelayQueryRunnable implements Runnable {
-        String mText;
-        private boolean mCanceled = false;
-
-        public DelayQueryRunnable(String text) {
-            this.mText = text;
-        }
-
-        @Override
-        public void run() {
-            if (mCanceled) {
-                return;
-            }
-            getSearchSuggestions(mText);
-        }
-
-        public void cancel() {
-            mCanceled = true;
-        }
-    }
+//    private class DelayQueryRunnable implements Runnable {
+//        String mText;
+//        private boolean mCanceled = false;
+//
+//        public DelayQueryRunnable(String text) {
+//            this.mText = text;
+//        }
+//
+//        @Override
+//        public void run() {
+//            if (mCanceled) {
+//                return;
+//            }
+//            getSearchSuggestions(mText);
+//        }
+//
+//        public void cancel() {
+//            mCanceled = true;
+//        }
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //在 ProductListAdapter  onClick wishIcon 里 startActivityForResult 到 pdp;，按后退键后调用以下方法
-        if (requestCode == ProductListActivity.RESULT_WISH && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                //如果 pdp页面登陆了，needRefreshWhenBackPressed=true,刷新当前页面所有product,否则只刷新指定product的isLike字段
-                if (!data.getBooleanExtra("needRefreshWhenBackPressed", false)) {
-                    String productId = data.getStringExtra("productId");
-                    String itemId = data.getStringExtra("itemId");
-                    int isLike = data.getIntExtra("isLike", -1);
-                    if (!TextUtils.isEmpty(productId) && isLike != -1) {
-                        refreWishIconByPDPResult(productId, isLike, itemId);
-                    }
-                } else {
-                    onRefresh();
-                }
-            }
-        }
-        //登陆成功后要刷新所有product的信息
-        if (LoginRegisterActivity.REQUESTCODE_LOGIN == requestCode && resultCode == LoginRegisterEmailLoginFragment.RESULTCODE) {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(productListActivity)) {
-                productListActivity.changeOperateProductIdPrecacheStatus(true);
-                onRefresh();
-            }
-        }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void refreWishIconByPDPResult(String productId, int isLike, String itemId) {
-        //pdp 页面，isLike或itemId有变动，就刷新
-        Iterator<SVRAppserviceProductSearchResultsItemReturnEntity> itemReturnEntityIterator = productItemEntityArrayList.iterator();
-        while (itemReturnEntityIterator.hasNext()) {
-            SVRAppserviceProductSearchResultsItemReturnEntity entity = itemReturnEntityIterator.next();
-            if (entity.getProductId().equals(productId)) {
-                entity.setIs_like(isLike);
-                entity.setItem_id(itemId);
-                productListAdapter.notifyDataSetChanged();
-                continue;
-            }
-        }
     }
 
     @Override
@@ -789,7 +738,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 
     private void search() {
         getProductListFromServer();
-        searchTrack();
+//        searchTrack();
     }
 
 
@@ -901,23 +850,24 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             } else {
                 productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ(keywords);
             }
-        } else if (SEARCH_TYPE_SUGGESTION == getSearchType()) {
-            showViewSwitch(false);
-            filterSortBottomView.hideSwitchAndFilterBar(true);
-            mDialog = JViewUtils.showProgressDialog(productListActivity);
-            productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setP(1);
-            if (productItemEntityArrayList != null) {
-                productItemEntityArrayList.clear();
-            }
-            if (productListAdapter != null) {
-                cxlvProductList.setPullLoadEnable(false);
-                productListAdapter.notifyDataSetChanged();
-            }
-            productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ("");
-            productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setBrand(mSuggestionBrand);
-            productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setCategory_id(mSuggestionCategoryID);
-            productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setModel_type(mSuggestionsModleType);
         }
+//        else if (SEARCH_TYPE_SUGGESTION == getSearchType()) {
+//            showViewSwitch(false);
+//            filterSortBottomView.hideSwitchAndFilterBar(true);
+//            mDialog = JViewUtils.showProgressDialog(productListActivity);
+//            productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setP(1);
+//            if (productItemEntityArrayList != null) {
+//                productItemEntityArrayList.clear();
+//            }
+//            if (productListAdapter != null) {
+//                cxlvProductList.setPullLoadEnable(false);
+//                productListAdapter.notifyDataSetChanged();
+//            }
+//            productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ("");
+//            productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setBrand(mSuggestionBrand);
+//            productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setCategory_id(mSuggestionCategoryID);
+//            productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setModel_type(mSuggestionsModleType);
+//        }
         TYPE = LOADING;
         String storeId = GemfiveApplication.getAppConfiguration().getStoreView().getId();
         final SVRAppserviceProductSearchParameter param = productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1);

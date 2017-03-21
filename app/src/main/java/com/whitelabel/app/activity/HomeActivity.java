@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import com.facebook.appevents.AppEventsLogger;
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
@@ -39,9 +38,7 @@ import com.whitelabel.app.listener.OnNotificationCountListener;
 import com.whitelabel.app.model.MarketingLayersEntity;
 import com.whitelabel.app.model.TMPHelpCenterListToDetailEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.UserGuideHelper;
 import com.whitelabel.app.widget.CustomTextView;
@@ -110,21 +107,21 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     @Override
     protected void onStart() {
         super.onStart();
-        try {
-            AppEventsLogger.activateApp(this);
-        } catch (Exception ex) {
-            ex.getMessage();
-        }
+//        try {
+//            AppEventsLogger.activateApp(this);
+//        } catch (Exception ex) {
+//            ex.getMessage();
+//        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        try {
-            AppEventsLogger.deactivateApp(this);
-        } catch (Exception ex) {
-            ex.getMessage();
-        }
+//        try {
+//            AppEventsLogger.deactivateApp(this);
+//        } catch (Exception ex) {
+//            ex.getMessage();
+//        }
     }
 
     @Override
@@ -216,9 +213,9 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpCategoryTreePage() {
-        if (!(mCurrentFragment instanceof HomeCategoryTreeFragment)) {
-            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_CATEGORY, null);
-        }
+//        if (!(mCurrentFragment instanceof HomeCategoryTreeFragment)) {
+//            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_CATEGORY, null);
+//        }
     }
 
     @Override
@@ -408,48 +405,48 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     }
 
     public void showMarketLayers() {
-        marketLayerClosed = false;
-        rlMarketLayer.clearAnimation();
-        AnimUtil.animateFadeIn(this, rlMarketLayer, new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                rlMarketLayer.setVisibility(View.VISIBLE);
-            }
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-            }
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        ivMarketLayerClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                JLogUtils.i("advertisement-click", "only permit to click advertisement close button.");
-                if (!marketLayerClosed) {
-                    marketLayerClosed = true;
-                    marketLayerClose();
-                }
-            }
-        });
+//        marketLayerClosed = false;
+//        rlMarketLayer.clearAnimation();
+//        AnimUtil.animateFadeIn(this, rlMarketLayer, new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//                rlMarketLayer.setVisibility(View.VISIBLE);
+//            }
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//
+//            }
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
+//        ivMarketLayerClose.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                JLogUtils.i("advertisement-click", "only permit to click advertisement close button.");
+//                if (!marketLayerClosed) {
+//                    marketLayerClosed = true;
+//                    marketLayerClose();
+//                }
+//            }
+//        });
     }
 
     public void closeMarketLayers() {
-        if (rlMarketLayer.getVisibility() == View.VISIBLE) {
-            rlMarketLayer.startAnimation(getFadeOutAnimation());
-        }
+//        if (rlMarketLayer.getVisibility() == View.VISIBLE) {
+//            rlMarketLayer.startAnimation(getFadeOutAnimation());
+//        }
 //        enableSlidingMenu();
     }
 
 
     @Override
     public void initMarketingLayers(MarketingLayersEntity entity) {
-        if (entity != null) {
-            tvMarketingLayers.setText(entity.getTitle());
-            tvMarketingLayersDesc.setText(entity.getDescription());
-        }
+//        if (entity != null) {
+//            tvMarketingLayers.setText(entity.getTitle());
+//            tvMarketingLayersDesc.setText(entity.getDescription());
+//        }
     }
 
 
@@ -460,38 +457,38 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         setContentView(R.layout.activity_home);
         mImageLoader = new ImageLoader(this);
 //        setTitleImage(R.mipmap.homepage_logo_white);
-        mUserGuideHelper = new UserGuideHelper(this, mImageLoader);
-        mUserGuideAbove = findViewById(R.id.v_user_guide);
+//        mUserGuideHelper = new UserGuideHelper(this, mImageLoader);
+//        mUserGuideAbove = findViewById(R.id.v_user_guide);
         //iaml
-        ivMarketLayer = (ImageView) findViewById(R.id.iv_marketing_layers);
-        ivMarketLayerClose = (ImageView) findViewById(R.id.iv_marketing_layers_close);
-        rlMarketLayer = (RelativeLayout) findViewById(R.id.rl_marketing_layers);
-        tvMarketingLayers = (CustomTextView) findViewById(R.id.tv_marketing_layers);
-        tvMarketingLayersDesc = (CustomTextView) findViewById(R.id.tv_marketing_layers_desc);
+//        ivMarketLayer = (ImageView) findViewById(R.id.iv_marketing_layers);
+//        ivMarketLayerClose = (ImageView) findViewById(R.id.iv_marketing_layers_close);
+//        rlMarketLayer = (RelativeLayout) findViewById(R.id.rl_marketing_layers);
+//        tvMarketingLayers = (CustomTextView) findViewById(R.id.tv_marketing_layers);
+//        tvMarketingLayersDesc = (CustomTextView) findViewById(R.id.tv_marketing_layers_desc);
 
         resetMenuAndListenter();
-        getDrawerLayout().addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-            }
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                updateLeftMenuNumber();
-                boolean showGuide = JStorageUtils.showAppGuide3(HomeActivity.this);
-                boolean islogin = GemfiveApplication.getAppConfiguration().isSignIn(HomeActivity.this);
-                if (showGuide && islogin) {
-                    showUserGuide(HomeBaseFragment.UserGuideType.LEFTMENU);
-                }
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-            }
-        });
+//        getDrawerLayout().addDrawerListener(new DrawerLayout.DrawerListener() {
+//            @Override
+//            public void onDrawerSlide(View drawerView, float slideOffset) {
+//            }
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                updateLeftMenuNumber();
+//                boolean showGuide = JStorageUtils.showAppGuide3(HomeActivity.this);
+//                boolean islogin = GemfiveApplication.getAppConfiguration().isSignIn(HomeActivity.this);
+//                if (showGuide && islogin) {
+//                    showUserGuide(HomeBaseFragment.UserGuideType.LEFTMENU);
+//                }
+//            }
+//
+//            @Override
+//            public void onDrawerClosed(View drawerView) {
+//            }
+//
+//            @Override
+//            public void onDrawerStateChanged(int newState) {
+//            }
+//        });
         initFragment(savedInstanceState);
         redirectToFragmentByIntent(getIntent());
         redirectToInterfaceByDeepLink();
@@ -600,19 +597,19 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
 
     public void marketLayerClose() {
-        closeMarketLayers();
+//        closeMarketLayers();
         //notify homehomeFragment to cancel Thread-closeMarketRun of homeCategoryFragment.
-        if (mCurrentFragment instanceof HomeHomeFragment) {
-            ((HomeHomeFragment) mCurrentFragment).notifyToCancelCloseMarketRun();
-        }
+//        if (mCurrentFragment instanceof HomeHomeFragment) {
+//            ((HomeHomeFragment) mCurrentFragment).notifyToCancelCloseMarketRun();
+//        }
     }
     @Override
     protected void onResume() {
         super.onResume();
-        if (rlMarketLayer.getVisibility() == View.VISIBLE) {//返回界面是如果显示动画就关闭
-            // closeMarketLayers();
-            marketLayerClose();
-        }
+//        if (rlMarketLayer.getVisibility() == View.VISIBLE) {//返回界面是如果显示动画就关闭
+//            // closeMarketLayers();
+//            marketLayerClose();
+//        }
         if (mCurrentFragment != null && mCurrentFragment instanceof HomeHomeFragment) {
             ((HomeHomeFragment) mCurrentFragment).updateShoppingCartItemCount();
         }
@@ -728,10 +725,10 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         });
     }
     public boolean refreshNotification(int type, String id) {
-        if (mCurrentFragment instanceof HomeNotificationListFragment) {
-            ((HomeNotificationListFragment) mCurrentFragment).refresh(type, id);
-            return true;
-        }
+//        if (mCurrentFragment instanceof HomeNotificationListFragment) {
+//            ((HomeNotificationListFragment) mCurrentFragment).refresh(type, id);
+//            return true;
+//        }
         return false;
     }
 
@@ -747,10 +744,10 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            if (rlMarketLayer.getVisibility() == View.VISIBLE) {
-                closeMarketLayers();
-                return true;
-            }
+//            if (rlMarketLayer.getVisibility() == View.VISIBLE) {
+//                closeMarketLayers();
+//                return true;
+//            }
             if (mCurrentFragment instanceof HomeHomeFragment) {
                 boolean isShowRateApp = ((HomeHomeFragment) mCurrentFragment).onKeyDown(keyCode, event);
                 if (isShowRateApp) {

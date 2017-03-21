@@ -5,8 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,7 +40,6 @@ import com.facebook.FacebookAuthorizationException;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookRequestError;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
@@ -56,7 +53,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
@@ -83,8 +79,6 @@ import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by imaginato on 2015/6/10.
@@ -398,35 +392,35 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         }
     }
 
-    private View.OnClickListener updateListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            List<PackageInfo> packages = getActivity().getPackageManager().getInstalledPackages(0);
-            for(int i=0;i<packages.size();i++) {
-                PackageInfo packageInfo = packages.get(i);
-                String packgeName="";
-                packgeName=packageInfo.packageName;
-                JLogUtils.i("Allen","packge="+packgeName);
-                if(packgeName.contains("vending")){
-                    //跳转进市场搜索的代码
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(GlobalData.jumpMarketUrl));
-                    startActivity(intent);
-                    existVending=true;
-                }
-            }
-            if(!existVending){
-                Uri uri = Uri.parse("http://play.google.com/store/apps/details?id=com.whitelabel.app");
-                Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(it);
-                existVending=false;
-            }
-        }
-    };
+//    private View.OnClickListener updateListener=new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            List<PackageInfo> packages = getActivity().getPackageManager().getInstalledPackages(0);
+//            for(int i=0;i<packages.size();i++) {
+//                PackageInfo packageInfo = packages.get(i);
+//                String packgeName="";
+//                packgeName=packageInfo.packageName;
+//                JLogUtils.i("Allen","packge="+packgeName);
+//                if(packgeName.contains("vending")){
+//                    //跳转进市场搜索的代码
+//                    Intent intent = new Intent(Intent.ACTION_VIEW);
+//                    intent.setData(Uri.parse(GlobalData.jumpMarketUrl));
+//                    startActivity(intent);
+//                    existVending=true;
+//                }
+//            }
+//            if(!existVending){
+//                Uri uri = Uri.parse("http://play.google.com/store/apps/details?id=com.whitelabel.app");
+//                Intent it = new Intent(Intent.ACTION_VIEW, uri);
+//                startActivity(it);
+//                existVending=false;
+//            }
+//        }
+//    };
 
     //检出service版本号判断是否更新
     public void IsOldVersion(){
-        new ProductDao(TAG,dataHandler).checkVersion("2");
+//        new ProductDao(TAG,dataHandler).checkVersion("2");
     }
     private void cleanEditText(){
         email.setText("");
@@ -438,7 +432,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     public void onResume() {
         super.onResume();
         cleanEditText();
-        IsOldVersion();
+//        IsOldVersion();
     }
 
     @Override
@@ -446,9 +440,9 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         // Facebook
-        FacebookSdk.sdkInitialize(loginRegisterActivity.getApplicationContext());
-        facebookCallbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(facebookCallbackManager, facebookCallback);
+//        FacebookSdk.sdkInitialize(loginRegisterActivity.getApplicationContext());
+//        facebookCallbackManager = CallbackManager.Factory.create();
+//        LoginManager.getInstance().registerCallback(facebookCallbackManager, facebookCallback);
     }
 
     @Override
@@ -637,7 +631,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ivFacebookLogin: {
-                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email", "user_friends"));
+//                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email", "user_friends"));
                 break;
             }
             case R.id.sign_in:
@@ -675,11 +669,11 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                 password.setText("");
                 break;
             case R.id.ll_googleLogin:
-                if(mGoogleApiClient.isConnected()) {
-                    mGoogleApiClient.clearDefaultAccountAndReconnect();
-                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-                    getActivity().startActivityForResult(signInIntent, RC_SIGN_IN);
-                }
+//                if(mGoogleApiClient.isConnected()) {
+//                    mGoogleApiClient.clearDefaultAccountAndReconnect();
+//                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+//                    getActivity().startActivityForResult(signInIntent, RC_SIGN_IN);
+//                }
                 break;
         }
     }
@@ -731,11 +725,11 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
             }
             switch (msg.what){
                 case ProductDao.REQUEST_CHECKVERSION:
-                    if(msg.arg1!= ProductDao.RESPONSE_SUCCESS){
-                        if(mActivity.get()!=null) {
-                            JViewUtils.showMaterialDialog(mActivity.get(),mFragment.get().updateDiaTitle, mFragment.get().updateDiaHintmsg, mFragment.get().updateDiaBtnMsg, mFragment.get().updateListener, false);
-                        }
-                    }
+//                    if(msg.arg1!= ProductDao.RESPONSE_SUCCESS){
+//                        if(mActivity.get()!=null) {
+//                            JViewUtils.showMaterialDialog(mActivity.get(),mFragment.get().updateDiaTitle, mFragment.get().updateDiaHintmsg, mFragment.get().updateDiaBtnMsg, mFragment.get().updateListener, false);
+//                        }
+//                    }
                     break;
                 case MyAccountDao.REQUEST_EMAILLOGIN:
                     if(mFragment.get().mDialog!=null){mFragment.get(). mDialog.cancel();}
@@ -774,7 +768,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                                     }
                                 }.init(loginReturnEntity));
                             } else {
-                                SendBoardUtil.sendNotificationBoard(mActivity.get(),SendBoardUtil.LOGINCODE,null);
+//                                SendBoardUtil.sendNotificationBoard(mActivity.get(),SendBoardUtil.LOGINCODE,null);
                                 Bundle mBundle = new Bundle();
                                 mBundle.putString("sessionKey", loginReturnEntity.getSessionKey());
                                 boolean oldAccount=mFragment.get().email.getText().toString().equals(shared.getString("email",""));
@@ -809,7 +803,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                     }else{
                         String errorMsg= (String) msg.obj;
                         if(errorMsg.contains("app version")){
-                            JViewUtils.showMaterialDialog(mActivity.get(), "", mFragment.get().updateDiaHintmsg, mFragment.get().updateDiaBtnMsg, mFragment.get().updateListener, false);
+//                            JViewUtils.showMaterialDialog(mActivity.get(), "", mFragment.get().updateDiaHintmsg, mFragment.get().updateDiaBtnMsg, mFragment.get().updateListener, false);
 
                         }else{
                             mFragment.get().error.setText(errorMsg);

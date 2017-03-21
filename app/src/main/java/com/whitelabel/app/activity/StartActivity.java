@@ -10,7 +10,6 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 
-import com.facebook.applinks.AppLinkData;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.whitelabel.app.GlobalData;
@@ -19,11 +18,8 @@ import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.handler.INITApp;
-import com.whitelabel.app.notification.RegistrationIntentService;
 import com.whitelabel.app.task.INITExecutor;
 import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JViewUtils;
-import com.whitelabel.app.utils.RequestErrorHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -34,6 +30,7 @@ import java.util.List;
  * Created by imaginato on 2015/6/10.
  */
 public class StartActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener{
+    public static final int DELAY_TIME = 1000;
     private long mStartTimeLong;
     private String mSessionKey;
     private  boolean mSplashScreen;
@@ -50,16 +47,16 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
             startActivity(intent);
             finish();
         }else{
-            if(mSplashScreen){
+//            if(mSplashScreen){
                 Intent intent = new Intent(StartActivity.this, LoginRegisterActivity.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putString("Activity", "start");//压入数据
                 intent.putExtras(mBundle);
                 startActivity(intent);
                 finish();
-            }else{
-                startNextActivity(null, SplashScreenActivity.class, true);
-            }
+//            }else{
+//                startNextActivity(null, SplashScreenActivity.class, true);
+//            }
         }
     }
 
@@ -76,28 +73,28 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
             switch (msg.what){
                 case ProductDao.REQUEST_CHECKVERSION:
                     if(msg.arg1 == ProductDao.RESPONSE_SUCCESS){
-                        long deploy=System.currentTimeMillis()-activity.get().mStartTimeLong;
-                        if(deploy<3000){
-                            activity.get(). postDelayed(deploy);
-                        }else{
-                            activity.get().startNextActivity();
-                        }
-                    }else{
-                        String title=activity.get().getResources().getString(R.string.versionCheckTitle);
-                        String hintmsg=activity.get().getResources().getString(R.string.versionCheckMsg);
-                        String btnMsg=activity.get().getResources().getString(R.string.update);
-                        JViewUtils.showMaterialDialog(activity.get(), title, hintmsg, btnMsg,activity.get().updateListener,false);
+//                        long deploy=System.currentTimeMillis()-activity.get().mStartTimeLong;
+//                        if(deploy<3000){
+//                            activity.get(). postDelayed(deploy);
+//                        }else{
+//                            activity.get().startNextActivity();
+//                        }
+//                    }else{
+//                        String title=activity.get().getResources().getString(R.string.versionCheckTitle);
+//                        String hintmsg=activity.get().getResources().getString(R.string.versionCheckMsg);
+//                        String btnMsg=activity.get().getResources().getString(R.string.update);
+//                        JViewUtils.showMaterialDialog(activity.get(), title, hintmsg, btnMsg,activity.get().updateListener,false);
                     }
                     break;
                 case ProductDao.REQUEST_ERROR:
-                    RequestErrorHelper requestErrorHelper = new RequestErrorHelper(activity.get());
-                    requestErrorHelper.showNetWorkErrorToast(msg);
-                    long deploy=System.currentTimeMillis()-activity.get().mStartTimeLong;
-                    if(deploy<3000) {
-                        activity.get(). postDelayed(deploy);
-                    }else{
-                        activity.get(). startNextActivity();
-                    }
+//                    RequestErrorHelper requestErrorHelper = new RequestErrorHelper(activity.get());
+//                    requestErrorHelper.showNetWorkErrorToast(msg);
+//                    long deploy=System.currentTimeMillis()-activity.get().mStartTimeLong;
+//                    if(deploy<3000) {
+//                        activity.get(). postDelayed(deploy);
+//                    }else{
+//                        activity.get(). startNextActivity();
+//                    }
                     break;
             }
             super.handleMessage(msg);
@@ -119,7 +116,7 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
 
     private void postDelayed(long deploy) {
         StartRunnable  startRunnable=  new StartRunnable(StartActivity.this);
-        mStartHandler.postDelayed(startRunnable, (3000-deploy));
+        mStartHandler.postDelayed(startRunnable, (DELAY_TIME -deploy));
     }
 
     private View.OnClickListener updateListener=new View.OnClickListener() {
@@ -172,34 +169,19 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        gaTrackNotificationSwitch();
+//        gaTrackNotificationSwitch();
         mStartTimeLong = System.currentTimeMillis();
         mNetworkErrorMsg =getResources().getString(R.string.productlist_list_prompt_error_nointernet);
 //        mSplashScreen = JStorageUtils.getToSplashScreenMark(StartActivity.this);
-        mSplashScreen = true;
         mStartHandler=new StartHandler(this);
         if(GemfiveApplication.getAppConfiguration().isSignIn(StartActivity.this)) {
             mSessionKey = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
         }
         mCallback=new INITApp(StartActivity.this, new MeInitCallBack(this));
         INITExecutor.getInstance().execute(mCallback);
-        facebookAppLinkListener();
 
     }
 
-    private void facebookAppLinkListener() {
-        try {
-            AppLinkData.fetchDeferredAppLinkData(getApplicationContext(),new MyFacebookAppLinkData());
-        }catch (Exception ex){
-            ex.getStackTrace();
-        }
-    }
-    static class  MyFacebookAppLinkData  implements   AppLinkData.CompletionHandler{
-        @Override
-        public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
-
-        }
-    }
 
 
     static class MeInitCallBack extends   INITCallback{
@@ -211,14 +193,26 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
         @Override
         public void onSuccess(int resultCode, Object object) {
             if(mStartActivity.get()==null)return;
-            mStartActivity.get().checkAppVersion();
+//            mStartActivity.get().checkAppVersion();
+            delayStart();
         }
+
         @Override
         public void onFailure(int resultCode, Object object) {
             if(mStartActivity.get()==null)return;
-            mStartActivity.get().checkAppVersion();;
+//            mStartActivity.get().checkAppVersion();
+            delayStart();
+        }
+        private void delayStart() {
+            long deploy=System.currentTimeMillis()-mStartActivity.get().mStartTimeLong;
+            if(deploy<DELAY_TIME){
+                mStartActivity.get(). postDelayed(deploy);
+            }else{
+                mStartActivity.get().startNextActivity();
+            }
         }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -234,10 +228,10 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
     protected void onResume() {
         super.onResume();
 
-        if (checkInstallationPlayServices()) {
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-        }
+//        if (checkInstallationPlayServices()) {
+//            Intent intent = new Intent(this, RegistrationIntentService.class);
+//            startService(intent);
+//        }
     }
 
 
@@ -269,9 +263,7 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
     protected void onStop() {
         super.onStop();
     }
-    public void checkAppVersion(){
-        new ProductDao(TAG,mStartHandler).checkVersion("2");
-    }
+
     @Override
     protected void onDestroy() {
         if(mProgressDialog !=null){

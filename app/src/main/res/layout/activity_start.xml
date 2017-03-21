@@ -25,19 +25,6 @@
         android:layout_below="@+id/start_logo_imageview"
         android:layout_marginTop="84dp"/>
 
-    <!--<TextView-->
-    <!--android:id="@+id/getstart_TextView"-->
-    <!--android:layout_width="280dp"-->
-    <!--android:layout_height="80dp"-->
-    <!--android:text="Get Started"-->
-    <!--android:gravity="center"-->
-    <!--android:textSize="20sp"-->
-    <!--android:textColor="@color/whiteffffff"-->
-    <!--android:layout_below="@+id/start_textview"-->
-    <!--android:layout_marginTop="35dp"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:background="@mipmap/getstart"-->
-    <!--/>-->
 
 
 

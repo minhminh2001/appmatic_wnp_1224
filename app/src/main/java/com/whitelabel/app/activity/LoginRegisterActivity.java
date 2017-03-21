@@ -14,7 +14,6 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.fragment.LoginRegisterEmailBoundFragment;
@@ -25,7 +24,6 @@ import com.whitelabel.app.fragment.LoginRegisterEmailSendSuccessFragment;
 import com.whitelabel.app.fragment.LoginRegisterRegisterSuccessFragment;
 import com.whitelabel.app.fragment.LoginRegisterResetPassFragment;
 import com.whitelabel.app.model.FBGraphAPIUserEntity;
-import com.whitelabel.app.utils.BadgeUtils;
 import com.whitelabel.app.widget.CustomMyDialog;
 
 import java.lang.ref.WeakReference;
@@ -154,15 +152,15 @@ public class LoginRegisterActivity extends com.whitelabel.app.BaseActivity imple
             }
             switch (msg.what) {
                 case NotificationDao.REQUEST_NOTIFICATION_COUNT:
-                    if (msg.arg1 == NotificationDao.RESPONSE_SUCCESS) {
-                        Integer integer = (Integer) msg.obj;
-                        if (integer > 0) {
-                            BadgeUtils.setBadge(activity.get().getApplicationContext(), integer);
-                        } else {
-                            BadgeUtils.clearBadge(activity.get().getApplicationContext());
-
-                        }
-                    }
+//                    if (msg.arg1 == NotificationDao.RESPONSE_SUCCESS) {
+//                        Integer integer = (Integer) msg.obj;
+//                        if (integer > 0) {
+//                            BadgeUtils.setBadge(activity.get().getApplicationContext(), integer);
+//                        } else {
+//                            BadgeUtils.clearBadge(activity.get().getApplicationContext());
+//
+//                        }
+//                    }
                     break;
             }
             super.handleMessage(msg);
@@ -178,7 +176,6 @@ public class LoginRegisterActivity extends com.whitelabel.app.BaseActivity imple
         setContentView(R.layout.activity_loginregister);
         initFragmentData();//初始化所有的Fragment
 
-        requestNotificationCount();
         //登录
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -208,16 +205,6 @@ public class LoginRegisterActivity extends com.whitelabel.app.BaseActivity imple
         InitMyDialog();
     }
 
-    private void requestNotificationCount() {
-        dataHandler = new DataHandler(this);
-        mDao = new NotificationDao("NotificationReceiver", dataHandler);
-        String sessionKey = "";
-        if (GemfiveApplication.getAppConfiguration().getUser() != null && GemfiveApplication.getAppConfiguration() != null) {
-            sessionKey = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
-        }
-        mDao.getNotificationDetailCount(sessionKey, GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
-
-    }
 
     private void initFragmentData() {
         if (attachedFragmentArray != null) {

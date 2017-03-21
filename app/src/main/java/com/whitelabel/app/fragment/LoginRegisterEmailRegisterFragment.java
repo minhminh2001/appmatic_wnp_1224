@@ -116,7 +116,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     @Override
     public void onResume() {
         super.onResume();
-        IsOldVersion();
+//        IsOldVersion();
     }
 
     private final static class DataHandler extends Handler{
@@ -134,13 +134,13 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
             }
             switch (msg.what){
                 case ProductDao.REQUEST_CHECKVERSION:
-                    if(msg.arg1== ProductDao.RESPONSE_SUCCESS){
-
-                    }else{
-                        if(mActivity.get()!=null) {
-                            JViewUtils.showMaterialDialog(mActivity.get(),mFragment.get().updateDiaTitle, mFragment.get().updateDiaHintmsg, mFragment.get().updateDiaBtnMsg,mFragment.get().updateListener, false);
-                        }
-                    }
+//                    if(msg.arg1== ProductDao.RESPONSE_SUCCESS){
+//
+//                    }else{
+//                        if(mActivity.get()!=null) {
+//                            JViewUtils.showMaterialDialog(mActivity.get(),mFragment.get().updateDiaTitle, mFragment.get().updateDiaHintmsg, mFragment.get().updateDiaBtnMsg,mFragment.get().updateListener, false);
+//                        }
+//                    }
                     break;
                 case MyAccountDao.REQUEST_REGISTERCODE:
                     if(mFragment.get().mDialog!=null){ mFragment.get().mDialog.cancel();}

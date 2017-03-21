@@ -1,6 +1,5 @@
 package com.whitelabel.app.activity;
 
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,7 +21,6 @@ import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.BadgeUtils;
 import com.whitelabel.app.utils.JStorageUtils;
-import com.whitelabel.app.utils.SendBoardUtil;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
 
 import java.io.Serializable;
@@ -327,31 +325,31 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
-        receiver = new NotificationReceiver(callback);
-        IntentFilter intentFilter = new IntentFilter(NotificationReceiver.ACTION);
-        registerReceiver(receiver, intentFilter);
+//        receiver = new NotificationReceiver(callback);
+//        IntentFilter intentFilter = new IntentFilter(NotificationReceiver.ACTION);
+//        registerReceiver(receiver, intentFilter);
         DataHandler dataHandler = new DataHandler(this);
-        mDao = new NotificationDao("NotificationReceiver", dataHandler);
-        String sessionKey = "";
-        if (GemfiveApplication.getAppConfiguration().getUser() != null && GemfiveApplication.getAppConfiguration() != null) {
-            sessionKey = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
-        }
-        mDao.getNotificationDetailCount(sessionKey, GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
-        SendBoardUtil.sendNotificationBoard(this, SendBoardUtil.READCODE, null);
+//        mDao = new NotificationDao("NotificationReceiver", dataHandler);
+//        String sessionKey = "";
+//        if (GemfiveApplication.getAppConfiguration().getUser() != null && GemfiveApplication.getAppConfiguration() != null) {
+//            sessionKey = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+//        }
+//        mDao.getNotificationDetailCount(sessionKey, GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+//        SendBoardUtil.sendNotificationBoard(this, SendBoardUtil.READCODE, null);
         initLayout();
-        mActionDrawableToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.openDrawer, R.string.closeDrawer) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                String sessionKey = "";
-                if (GemfiveApplication.getAppConfiguration().getUser() != null && GemfiveApplication.getAppConfiguration() != null) {
-                    sessionKey = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
-                }
-                mDao.getNotificationDetailCount(sessionKey, GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
-            }
-        };
-        getDrawerLayout().addDrawerListener(mActionDrawableToggle);
-        mActionDrawableToggle.syncState();
+//        mActionDrawableToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.openDrawer, R.string.closeDrawer) {
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                super.onDrawerOpened(drawerView);
+//                String sessionKey = "";
+//                if (GemfiveApplication.getAppConfiguration().getUser() != null && GemfiveApplication.getAppConfiguration() != null) {
+//                    sessionKey = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+//                }
+//                mDao.getNotificationDetailCount(sessionKey, GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+//            }
+//        };
+//        getDrawerLayout().addDrawerListener(mActionDrawableToggle);
+//        mActionDrawableToggle.syncState();
     }
 
     @Override
