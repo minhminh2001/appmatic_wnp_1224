@@ -76,30 +76,30 @@
         <!--</RelativeLayout>-->
         <!--</RelativeLayout>-->
 
-        <RelativeLayout
-            android:padding="10dp"
-            android:layout_marginRight="2dp"
-            android:layout_alignParentRight="true"
-            android:id="@+id/rl_product_wish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/iv_product_wish_icon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:scaleType="fitCenter"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/wishlist_purple_normal_v2"
-                android:visibility="visible" />
-            <ImageView
-                android:id="@+id/iv_product_wish_icon2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:scaleType="fitCenter"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/wishlist_purple_normal_v2"
-                android:visibility="visible" />
-        </RelativeLayout>
+        <!--<RelativeLayout-->
+            <!--android:padding="10dp"-->
+            <!--android:layout_marginRight="2dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:id="@+id/rl_product_wish"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_product_wish_icon"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:src="@mipmap/wishlist_purple_normal_v2"-->
+                <!--android:visibility="visible" />-->
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_product_wish_icon2"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:src="@mipmap/wishlist_purple_normal_v2"-->
+                <!--android:visibility="visible" />-->
+        <!--</RelativeLayout>-->
 
         <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/ctvProductBrand"

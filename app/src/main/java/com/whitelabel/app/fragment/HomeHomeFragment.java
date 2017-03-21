@@ -351,18 +351,18 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     }
 
     public void showAppRate() {
-        if (JStorageUtils.isShowAppRate(homeActivity) && !GemfiveApplication.delayShowAppRate && !JStorageUtils.showAppGuide1(homeActivity) && JStorageUtils.isClickDelayShow(homeActivity)) {
-            if (!!homeActivity.getDrawerLayout().isDrawerOpen(Gravity.LEFT)) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        JLogUtils.i("Allen", "APPRate");
-                        isShowAppRatePopup = true;
-                        appRate();
-                    }
-                }, 300);
-            }
-        }
+//        if (JStorageUtils.isShowAppRate(homeActivity) && !GemfiveApplication.delayShowAppRate && !JStorageUtils.showAppGuide1(homeActivity) && JStorageUtils.isClickDelayShow(homeActivity)) {
+//            if (!!homeActivity.getDrawerLayout().isDrawerOpen(Gravity.LEFT)) {
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        JLogUtils.i("Allen", "APPRate");
+//                        isShowAppRatePopup = true;
+//                        appRate();
+//                    }
+//                }, 300);
+//            }
+//        }
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -562,24 +562,24 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         @Override
         public void onPageSelected(int position) {
             if (categoryArrayList.size() <= position) return;
-            if (isCategory(categoryArrayList.get(position))) {
-                boolean showGuide = JStorageUtils.showAppGuide2(homeActivity);
-                if (showGuide) {
-                    homeActivity.showMarketLayers = false;//禁止弹出广告层
-                    if (mCommonCallback.getRlMarketLayer().getVisibility() == View.VISIBLE) {
-                        mCommonCallback.marketLayerClose();//关闭广告弹出层
-                    }
-                    if (mCommonCallback != null) {
-                        mCommonCallback.showUserGuide(UserGuideType.HOMESECONDPAGE);
-                    }
-                }
-            }
+//            if (isCategory(categoryArrayList.get(position))) {
+//                boolean showGuide = JStorageUtils.showAppGuide2(homeActivity);
+//                if (showGuide) {
+//                    homeActivity.showMarketLayers = false;//禁止弹出广告层
+//                    if (mCommonCallback.getRlMarketLayer().getVisibility() == View.VISIBLE) {
+//                        mCommonCallback.marketLayerClose();//关闭广告弹出层
+//                    }
+//                    if (mCommonCallback != null) {
+//                        mCommonCallback.showUserGuide(UserGuideType.HOMESECONDPAGE);
+//                    }
+//                }
+//            }
 
             mFragment.get(currentCategoryFragmentIndex).onPause();
             currentCategoryFragmentIndex = position;
             ((HomeHomeCategoryFragment) mFragment.get(position)).setmCurrDisplayedAndData(position, categoryArrayList.get(position));
             mFragment.get(position).onResume();
-            homeTrack(position);
+//            homeTrack(position);
         }
 
 
@@ -601,19 +601,19 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         public void onPageScrollStateChanged(int state) {
 
             //If it is sliding, close advertisement.
-            if (state == 1) {
-                ((HomeHomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).setmMarketShow(false);
-                ((HomeHomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).removeOpenMarketRun();
-            }
+//            if (state == 1) {
+//                ((HomeHomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).setmMarketShow(false);
+//                ((HomeHomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).removeOpenMarketRun();
+//            }
         }
     };
 
     public void notifyToCancelCloseMarketRun() {
-        if (isAdded()) {
-            if (mFragment != null && mFragment.get(currentCategoryFragmentIndex) != null) {
-                ((HomeHomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).removeCloseMarketRun();
-            }
-        }
+//        if (isAdded()) {
+//            if (mFragment != null && mFragment.get(currentCategoryFragmentIndex) != null) {
+//                ((HomeHomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).removeCloseMarketRun();
+//            }
+//        }
     }
 
 }

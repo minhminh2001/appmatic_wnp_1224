@@ -432,17 +432,6 @@ public class BrandStoreFontActivity extends BaseActivitySearchCart<BrandStoreCon
                 }
             }
         });
-        mAdapter.setOnItemWishListCliekListener(new BrandStoreAdapter.OnItemClickLitener() {
-            @Override
-            public void onItemClick(BrandStoreAdapter.ItemViewHolder itemViewHolder, int position) {
-                SVRAppserviceProductSearchResultsItemReturnEntity bean = mProducts.get(position);
-                if (bean.getIs_like() == 1) {
-                    deleteWishlist(bean, itemViewHolder.ivProductWishIcon);
-                } else {
-                    addWishlist(itemViewHolder.ivProductWishIcon, itemViewHolder.ivProductWishIcon2, position);
-                }
-            }
-        });
         mAdapter.setOnFilterSortBarListener(new BrandStoreAdapter.OnFilterSortBarListener() {
             @Override
             public void onSwitchViewClick(View view) {

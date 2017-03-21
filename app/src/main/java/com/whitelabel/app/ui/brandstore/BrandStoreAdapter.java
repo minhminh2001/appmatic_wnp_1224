@@ -242,29 +242,6 @@ public class BrandStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
             itemViewHolder.ctvProductFinalPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
             setMerchantName(leftProductEntity.getVendorDisplayName(), leftProductEntity.getVendor_id(), itemViewHolder.ctvCurationProductMerchant);
-            if (leftProductEntity.getIs_like() == 1) {
-                setWishIconColorToPurpleNoAnim(itemViewHolder.ivProductWishIcon);
-            } else {
-                setWishIconColorToBlankNoAnim(itemViewHolder.ivProductWishIcon);
-            }
-            itemViewHolder.itemView.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (mItemClickListener != null) {
-                                mItemClickListener.onItemClick(itemViewHolder, itemViewHolder.getAdapterPosition() - 1);
-                            }
-                        }
-                    }
-            );
-            itemViewHolder.rlProductWish.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mWishListLisener != null) {
-                        mWishListLisener.onItemClick(itemViewHolder, itemViewHolder.getAdapterPosition() - 1);
-                    }
-                }
-            });
         }
     }
 
@@ -347,17 +324,7 @@ public class BrandStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         void onItemClick(ItemViewHolder itemViewHolder, int position);
     }
 
-    private void setWishIconColorToBlankNoAnim(ImageView ivWishIcon) {
-        ivWishIcon.setVisibility(View.GONE);
-        ivWishIcon.setTag(true);
-        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_normal_v2);
-    }
 
-    private void setWishIconColorToPurpleNoAnim(ImageView ivWishIcon) {
-        ivWishIcon.setVisibility(View.VISIBLE);
-        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
-        ivWishIcon.setTag(false);
-    }
 
     @Override
     public int getItemCount() {
@@ -407,12 +374,6 @@ public class BrandStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ImageView ivProductImage;
         @BindView(R.id.rl_product_list_out_of_stock)
         RelativeLayout rlProductListOutOfStock;
-        @BindView(R.id.iv_product_wish_icon)
-        ImageView ivProductWishIcon;
-        @BindView(R.id.iv_product_wish_icon2)
-        ImageView ivProductWishIcon2;
-        @BindView(R.id.rl_product_wish)
-        RelativeLayout rlProductWish;
         @BindView(R.id.ctvProductBrand)
         CustomTextView ctvProductBrand;
         @BindView(R.id.ctvProductName)

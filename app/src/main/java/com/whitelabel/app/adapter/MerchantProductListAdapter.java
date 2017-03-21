@@ -172,10 +172,6 @@ public class MerchantProductListAdapter extends BaseAdapter {
                     viewHolder.ctvLeftProductPrice = (CustomTextView) viewHolder.llLeftProduct.findViewById(R.id.ctvProductPrice);
                     viewHolder.ctvLeftProductFinalPrice = (CustomTextView) viewHolder.llLeftProduct.findViewById(R.id.ctvProductFinalPrice);
                     viewHolder.rlLeftOutOfStock = (RelativeLayout) viewHolder.llLeftProduct.findViewById(R.id.rl_product_list_out_of_stock);
-                    viewHolder.rlLeftCurationWish = (RelativeLayout) viewHolder.llLeftProduct.findViewById(R.id.rl_product_wish);
-                    viewHolder.ivLeftCurationWishIcon = (ImageView) viewHolder.llLeftProduct.findViewById(R.id.iv_product_wish_icon);
-                    viewHolder.ivLeftCurationWishIcon2 = (ImageView) viewHolder.llLeftProduct.findViewById(R.id.iv_product_wish_icon2);
-
 //           right
                     viewHolder.llRightProduct = (LinearLayout) convertView.findViewById(R.id.llRightProduct);
                     viewHolder.ivRightProductImage = (ImageView) viewHolder.llRightProduct.findViewById(R.id.ivProductImage);
@@ -184,9 +180,6 @@ public class MerchantProductListAdapter extends BaseAdapter {
                     viewHolder.ctvRightProductPrice = (CustomTextView) viewHolder.llRightProduct.findViewById(R.id.ctvProductPrice);
                     viewHolder.ctvRightProductFinalPrice = (CustomTextView) viewHolder.llRightProduct.findViewById(R.id.ctvProductFinalPrice);
                     viewHolder.rlRightOutOfStock = (RelativeLayout) viewHolder.llRightProduct.findViewById(R.id.rl_product_list_out_of_stock);
-                    viewHolder.rlRightCurationWish = (RelativeLayout) viewHolder.llRightProduct.findViewById(R.id.rl_product_wish);
-                    viewHolder.ivRightCurationWishIcon = (ImageView) viewHolder.llRightProduct.findViewById(R.id.iv_product_wish_icon);
-                    viewHolder.ivRightCurationWishIcon2 = (ImageView) viewHolder.llRightProduct.findViewById(R.id.iv_product_wish_icon2);
                     convertView.setTag(viewHolder);
                     convertView.setTag(R.id.llProductList, mMerchantStoreFrontActivity.isDoubleCol);
                 }
@@ -361,28 +354,7 @@ public class MerchantProductListAdapter extends BaseAdapter {
                         }
                     }
                 }.init(mMerchantStoreFrontActivity, leftProductEntity.getProductId()));
-                //wish icon
-                //初始化 wish icon的状态
-                if (leftProductEntity.getIsLike() == 1) {
-                    setWishIconColorToPurpleNoAnim(viewHolder.ivLeftCurationWishIcon);
-                } else {
-                    setWishIconColorToBlankNoAnim(viewHolder.ivLeftCurationWishIcon);
-                }
-                //wishIcon 正在加载中，是否可以点击？
-                viewHolder.rlLeftCurationWish.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //如果 islike，且有itemId，就执行删除 wish item
-                        if (finalLeftProductEntity.getIsLike() == 1) {
-                            sendRequestToDeteleteCell(finalViewHolder.ivLeftCurationWishIcon, finalViewHolder.rlLeftCurationWish, finalLeftProductEntity.getItemId(), tempPosition);
-                        } else {
-                            addtoWishlistsendRequest(finalLeftProductEntity, finalViewHolder.rlLeftCurationWish, finalViewHolder.ivLeftCurationWishIcon, finalViewHolder.ivLeftCurationWishIcon2, tempPosition);
-                        }
-                    }
-                });
-                if (addProductToWishWhenLoginSuccess(leftProductEntity.getProductId())) {
-                    addtoWishlistsendRequest(leftProductEntity, viewHolder.rlLeftCurationWish, viewHolder.ivLeftCurationWishIcon, viewHolder.ivLeftCurationWishIcon2, tempPosition);
-                }
+
 
                 //Right
                 position = position + 1;
@@ -507,27 +479,6 @@ public class MerchantProductListAdapter extends BaseAdapter {
                         }
                     }
                 }.init(mMerchantStoreFrontActivity, rightProductEntity.getProductId()));
-
-                //wish icon
-                if (rightProductEntity.getIsLike() == 1) {
-                    setWishIconColorToPurpleNoAnim(viewHolder.ivRightCurationWishIcon);
-                } else {
-                    setWishIconColorToBlankNoAnim(viewHolder.ivRightCurationWishIcon);
-                }
-                viewHolder.rlRightCurationWish.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (finalRightProductEntity.getIsLike() == 1) {
-                            sendRequestToDeteleteCell(finalViewHolder.ivRightCurationWishIcon, finalViewHolder.rlRightCurationWish, finalRightProductEntity.getItemId(), tempRightPosition);
-                        } else {
-                            addtoWishlistsendRequest(finalRightProductEntity, finalViewHolder.rlRightCurationWish, finalViewHolder.ivRightCurationWishIcon, finalViewHolder.ivRightCurationWishIcon2, tempRightPosition);
-                        }
-                    }
-                });
-                // login 成功后会刷新，判断 是否包含此id，如果operateProductIdPrecache包含此id,执行add to wish请求，
-                if (addProductToWishWhenLoginSuccess(rightProductEntity.getProductId())) {
-                    addtoWishlistsendRequest(rightProductEntity, viewHolder.rlRightCurationWish, viewHolder.ivRightCurationWishIcon, viewHolder.ivRightCurationWishIcon2, tempRightPosition);
-                }
             }
                 break;
         }
@@ -553,11 +504,11 @@ public class MerchantProductListAdapter extends BaseAdapter {
 
     public class ViewHolder {
         public LinearLayout llProductListTitle, llProductList, llLeftProduct, llRightProduct;
-        public ImageView ivCategory, ivLeftProductImage, ivRightProductImage, ivLeftCurationWishIcon, ivRightCurationWishIcon, ivLeftCurationWishIcon2, ivRightCurationWishIcon2;
+        public ImageView ivCategory, ivLeftProductImage, ivRightProductImage;
         public CustomTextView ctvLeftProductName, ctvRightProductName, ctvLeftProductBrand, ctvRightProductBrand,
                 ctvLeftProductPrice, ctvRightProductPrice, ctvLeftProductFinalPrice, ctvRightProductFinalPrice, ctvLeftCurationProductMerchant, ctvRightCurationProductMerchant;
         public View vProductListDivider, vHorDivider;
-        private RelativeLayout rlLeftOutOfStock, rlRightOutOfStock, rlLeftCurationWish, rlRightCurationWish;
+        private RelativeLayout rlLeftOutOfStock, rlRightOutOfStock;
     }
     public class ViewHolderBar {
         ImageView mHeaderViewToggle;
