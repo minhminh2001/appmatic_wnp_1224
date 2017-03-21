@@ -2,8 +2,6 @@ package com.whitelabel.app.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,7 +10,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.callback.INITCallback;
@@ -22,7 +19,6 @@ import com.whitelabel.app.task.INITExecutor;
 import com.whitelabel.app.utils.JLogUtils;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 
 
@@ -119,31 +115,31 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
         mStartHandler.postDelayed(startRunnable, (DELAY_TIME -deploy));
     }
 
-    private View.OnClickListener updateListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            List<PackageInfo> packages = getPackageManager().getInstalledPackages(0);
-            for(int i=0;i<packages.size();i++) {
-                PackageInfo packageInfo = packages.get(i);
-                String packgeName="";
-                packgeName=packageInfo.packageName;
-                JLogUtils.i("Allen","packge="+packgeName);
-                if(packgeName.contains("vending")){
-                    //跳转进市场搜索的代码
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(GlobalData.jumpMarketUrl));
-                    startActivity(intent);
-                    existVending=true;
-                }
-            }
-            if(!existVending){
-                Uri uri = Uri.parse("http://play.google.com/store/apps/details?id=com.whitelabel.app");
-                Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(it);
-                existVending=false;
-            }
-        }
-    };
+//    private View.OnClickListener updateListener=new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            List<PackageInfo> packages = getPackageManager().getInstalledPackages(0);
+//            for(int i=0;i<packages.size();i++) {
+//                PackageInfo packageInfo = packages.get(i);
+//                String packgeName="";
+//                packgeName=packageInfo.packageName;
+//                JLogUtils.i("Allen","packge="+packgeName);
+//                if(packgeName.contains("vending")){
+//                    //跳转进市场搜索的代码
+//                    Intent intent = new Intent(Intent.ACTION_VIEW);
+//                    intent.setData(Uri.parse(GlobalData.jumpMarketUrl));
+//                    startActivity(intent);
+//                    existVending=true;
+//                }
+//            }
+//            if(!existVending){
+//                Uri uri = Uri.parse("http://play.google.com/store/apps/details?id=com.whitelabel.app");
+//                Intent it = new Intent(Intent.ACTION_VIEW, uri);
+//                startActivity(it);
+//                existVending=false;
+//            }
+//        }
+//    };
     private INITApp mCallback;
 
     private void gaTrackNotificationSwitch() {

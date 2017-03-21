@@ -68,16 +68,16 @@
         "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.2.0\\res\\drawable\\abc_btn_borderless_material.xml"
     },
     {
+        "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_top_material.xml",
+        "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.2.0\\res\\drawable\\abc_cab_background_top_material.xml"
+    },
+    {
         "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_ab_back_material.xml",
         "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.2.0\\res\\drawable\\abc_ic_ab_back_material.xml"
     },
     {
         "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\debug\\drawable\\design_bottom_navigation_item_background.xml",
         "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\design\\25.2.0\\res\\drawable\\design_bottom_navigation_item_background.xml"
-    },
-    {
-        "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_top_material.xml",
-        "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.2.0\\res\\drawable\\abc_cab_background_top_material.xml"
     },
     {
         "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_indicator_material.xml",
@@ -140,12 +140,12 @@
         "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.2.0\\res\\drawable\\abc_spinner_textfield_background_material.xml"
     },
     {
-        "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\debug\\drawable\\wheel_bg.xml",
-        "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\src\\main\\res\\drawable\\wheel_bg.xml"
-    },
-    {
         "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\debug\\drawable\\design_snackbar_background.xml",
         "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\design\\25.2.0\\res\\drawable\\design_snackbar_background.xml"
+    },
+    {
+        "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\debug\\drawable\\wheel_bg.xml",
+        "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\src\\main\\res\\drawable\\wheel_bg.xml"
     },
     {
         "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_icon_background.xml",

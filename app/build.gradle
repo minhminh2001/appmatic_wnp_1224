@@ -67,7 +67,7 @@ android {
             buildConfigField('String','FACEBOOK_ID','"1586589871584877"')
         }
         livedebug{
-            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
+            manifestPlaceholders = [ fabricApiKey: "60c1a182ffa45626fcc599067b045cc2cde1d482" ]
             buildConfigField('String',"REQUEST_URL",'"https://www.gemfive.com/my/"')
             buildConfigField('String','HASH_KEY','"123456"')
             buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')

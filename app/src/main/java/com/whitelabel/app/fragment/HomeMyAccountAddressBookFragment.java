@@ -29,7 +29,6 @@ import com.whitelabel.app.model.AddressDeleteCellEntity;
 import com.whitelabel.app.model.AddresslistReslut;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
@@ -323,69 +322,33 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
         mListView.setAdapter(adapter);
         //mListView.scrollToPosition(0);
         //如果在 handler加载完数据前切换了fragment,则不显示AppGuide5
-        if (!myAccountUserGuide.mCurrTag.equals(myAccountUserGuide.TAG_ADDRESSLIST)) {
-            return;
-        }
-        boolean showGuide = JStorageUtils.showAppGuide5(addressBookActivity);
-//            boolean showGuide = true;
-        if (address != null && address.size() > 1 && showGuide && myAccountUserGuide.mCurrTag.equals(myAccountUserGuide.TAG_ADDRESSLIST)) {
-            myAccountUserGuide.setMenuEnable(false);
-            long time = System.currentTimeMillis();
-            if (mCommonCallback != null) {
-                mCommonCallback.showUserGuide(UserGuideType.ADDRESS);
-            }
-            JLogUtils.i(TAG, "TIME:" + (System.currentTimeMillis() - time));
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    myAccountUserGuide.setMenuEnable(true);
-                }
-            }, 1000);
+//        if (!myAccountUserGuide.mCurrTag.equals(myAccountUserGuide.TAG_ADDRESSLIST)) {
+//            return;
+//        }
+//        boolean showGuide = JStorageUtils.showAppGuide5(addressBookActivity);
+////            boolean showGuide = true;
+//        if (address != null && address.size() > 1 && showGuide && myAccountUserGuide.mCurrTag.equals(myAccountUserGuide.TAG_ADDRESSLIST)) {
+//            myAccountUserGuide.setMenuEnable(false);
+//            long time = System.currentTimeMillis();
+//            if (mCommonCallback != null) {
+//                mCommonCallback.showUserGuide(UserGuideType.ADDRESS);
+//            }
+//            JLogUtils.i(TAG, "TIME:" + (System.currentTimeMillis() - time));
+//            mHandler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    myAccountUserGuide.setMenuEnable(true);
+//                }
+//            }, 1000);
 
 //                if(mCommonCallback!=null){
 //                    mCommonCallback.showUserGuide(UserGuideType.ADDRESS);
 //                    myAccountUserGuide.setMenuEnable(true);
 //                }
-        }
+//        }
     }
 
-    //    public void showGuide(List<AddressBook> address){
-//        boolean showGuide= JStorageUtils.showAppGuide5(addressBookActivity);
-//        if (address!=null&&address.size()>1&&showGuide&&!addressBookActivity.isLeftMenuOpen()&&!addressBookActivity.getMenuScrolling()) {
-//            //show Guide
-//            if (!myAccountUserGuide.mCurrTag.equals(myAccountUserGuide.TAG_ADDRESSLIST)) {
-//                return;
-//            }
-//            // 为了防止 在弹 userGuide时快速切换fragment
-//            myAccountUserGuide.setSwitchFramentEnabled(false);
-//            // 加 getSlideMenuEnabled(false) 是为了防止在弹 userGuide时快速点击菜单按钮，使popupWindow出现在slideMenu上
-//            myAccountUserGuide.isShowGuide4 = false;
-//            JStorageUtils.notShowGuide5(addressBookActivity);
-//
-//
-//            myAccountUserGuide.guideDisplay4.setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//                        if (myAccountUserGuide.bitmap != null && !myAccountUserGuide.bitmap.isRecycled()) {
-//                            myAccountUserGuide.bitmap.recycle();
-//                        }
-//                        // 为了防止 在弹 userGuide时快速切换fragment
-//                        myAccountUserGuide.setSwitchFramentEnabled(true);
-//                        myAccountUserGuide.guideDisplay4.setVisibility(View.INVISIBLE);
-//                        myAccountUserGuide.isShowGuide4 = true;
-//                    }
-//                    return false;
-//                }
-//            });
-//            myAccountUserGuide.bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.display5);
-//            myAccountUserGuide.guideDisplay4.setImageBitmap(myAccountUserGuide.bitmap);
-//            myAccountUserGuide.guideDisplay4.setVisibility(View.VISIBLE);
-//        }else if(!addressBookActivity.getSlidingMenuOpen()&&myAccountUserGuide.isShowGuide4&&!addressBookActivity.getMenuScrolling()){
-//            //显示新手指导4
-//            myAccountUserGuide.ShowMyAccountUserGuide(HomeMyAccountFragmentV2.TAG_ADDRESSLIST);
-//        }
-//    }
+
     private void sendRequestToDeteleteCell(String itemId) {
         mDialog = JViewUtils.showProgressDialog(getActivity());
         dao.deleteAddress(GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(), itemId);

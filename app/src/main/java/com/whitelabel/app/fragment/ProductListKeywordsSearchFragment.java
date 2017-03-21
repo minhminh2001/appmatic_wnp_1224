@@ -23,7 +23,6 @@ import android.widget.Filter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -110,7 +109,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     public FilterSortBottomView filterSortBottomView;
     private ArrayList<SuggestsEntity> mSuggestionsArrayList;
     private String mKeyWord;
-    private ListView mSuggestionListView;
     private SearchSuggestionAdapter mSearchSuggestionAdapter;
     private String mSuggestionBrand;
     private String mSuggestionCategoryID;
@@ -201,7 +199,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
                             mFragment.get().mDialog.dismiss();
                         }
                         fragment.connectionLayout.setVisibility(GONE);
-                        fragment.mSuggestionListView.setVisibility(GONE);
                         fragment.TYPE = fragment.NONE;
                         if ((activity != null && !activity.checkIsFinished()) && (fragment.isAdded())
                                 && (activity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1) != null)
@@ -318,9 +315,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             public void onClick(View v) {
                 connectionLayout.setVisibility(GONE);
                 rlNodata.setVisibility(View.INVISIBLE);
-                if (mSuggestionListView != null) {
-                    dismissSuggestions();
-                }
                 getProductListFromServer();
             }
         });
@@ -546,7 +540,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 
     public void showSuggestions() {
         if (mSearchSuggestionAdapter != null) {
-            mSuggestionListView.setVisibility(VISIBLE);
             mIsShowSuggestion = true;
         }
     }
@@ -554,10 +547,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     public void dismissSuggestions() {
         if (cetKeywords != null) {
             cetKeywords.clearFocus();
-        }
-        if (mSuggestionListView.getVisibility() == VISIBLE) {
-            mIsShowSuggestion = false;
-            mSuggestionListView.setVisibility(GONE);
         }
     }
 
@@ -1232,7 +1221,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
                     fragment.productListAdapter.notifyDataSetChanged();
                 }
 //                fragment.cxlvProductList.setVisibility(VISIBLE);
-                fragment.mSuggestionListView.setVisibility(View.GONE);
                 fragment.filterSortBottomView.hideSwitchAndFilterBar(false);
                 fragment.cxlvProductList.stopLoadMore();
             } else if (SEARCH_TYPE_FILTER == fragment.getSearchType()) {
@@ -1330,7 +1318,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 
                     fragment.rlNodata.setVisibility(GONE);
                     fragment.cxlvProductList.setVisibility(VISIBLE);
-                    fragment.mSuggestionListView.setVisibility(View.GONE);
 
                     fragment.cxlvProductList.post(new Runnable() {
                         @Override
@@ -1390,7 +1377,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
                     JLogUtils.e(fragment.TAG, "handleSuccessOK", ex);
                     ex.printStackTrace();
                 }
-                fragment.mSuggestionListView.setVisibility(View.GONE);
                 fragment.cxlvProductList.setVisibility(View.VISIBLE);
                 fragment.productItemEntityArrayList.clear();
                 fragment.productListAdapter.notifyDataSetChanged();
@@ -1428,7 +1414,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
                     ex.printStackTrace();
                 }
                 fragment.cxlvProductList.setVisibility(View.VISIBLE);
-                fragment.mSuggestionListView.setVisibility(View.GONE);
                 fragment.productItemEntityArrayList.clear();
                 fragment.productListAdapter.notifyDataSetChanged();
                 if (searchResultArray == null || searchResultArray.size() <= 0) {

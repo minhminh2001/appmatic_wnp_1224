@@ -4,12 +4,12 @@
         "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\design\\25.2.0\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
     },
     {
-        "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_password_eye.xml",
-        "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\design\\25.2.0\\res\\drawable-v21\\design_password_eye.xml"
-    },
-    {
         "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\avd_hide_password.xml",
         "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\design\\25.2.0\\res\\drawable-v21\\avd_hide_password.xml"
+    },
+    {
+        "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\design_password_eye.xml",
+        "source": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\exploded-aar\\com.android.support\\design\\25.2.0\\res\\drawable-v21\\design_password_eye.xml"
     },
     {
         "merged": "D:\\Android\\Project\\whitelabel\\librarys\\baseframework\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-v21\\notification_action_background.xml",

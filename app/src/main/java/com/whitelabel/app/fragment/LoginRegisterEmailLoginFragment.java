@@ -40,6 +40,7 @@ import com.facebook.FacebookAuthorizationException;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookRequestError;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
@@ -79,6 +80,7 @@ import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.net.URLEncoder;
+import java.util.Arrays;
 
 /**
  * Created by imaginato on 2015/6/10.
@@ -440,9 +442,9 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         // Facebook
-//        FacebookSdk.sdkInitialize(loginRegisterActivity.getApplicationContext());
-//        facebookCallbackManager = CallbackManager.Factory.create();
-//        LoginManager.getInstance().registerCallback(facebookCallbackManager, facebookCallback);
+        FacebookSdk.sdkInitialize(loginRegisterActivity.getApplicationContext());
+        facebookCallbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(facebookCallbackManager, facebookCallback);
     }
 
     @Override
@@ -631,7 +633,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ivFacebookLogin: {
-//                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email", "user_friends"));
+                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email", "user_friends"));
                 break;
             }
             case R.id.sign_in:
@@ -669,11 +671,11 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                 password.setText("");
                 break;
             case R.id.ll_googleLogin:
-//                if(mGoogleApiClient.isConnected()) {
-//                    mGoogleApiClient.clearDefaultAccountAndReconnect();
-//                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-//                    getActivity().startActivityForResult(signInIntent, RC_SIGN_IN);
-//                }
+                if(mGoogleApiClient.isConnected()) {
+                    mGoogleApiClient.clearDefaultAccountAndReconnect();
+                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                    getActivity().startActivityForResult(signInIntent, RC_SIGN_IN);
+                }
                 break;
         }
     }

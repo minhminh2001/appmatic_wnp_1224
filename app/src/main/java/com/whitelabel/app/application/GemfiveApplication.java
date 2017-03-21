@@ -17,8 +17,6 @@ import com.whitelabel.app.model.ApplicationConfigurationEntity;
 import com.whitelabel.app.model.PhoneConfigurationEntity;
 import com.whitelabel.app.network.HttpClientRequest;
 import com.whitelabel.app.utils.JToolUtils;
-import com.whitelabel.app.model.ApplicationConfigurationEntity;
-import com.whitelabel.app.model.PhoneConfigurationEntity;
 
 
 /**
@@ -80,7 +78,7 @@ public class GemfiveApplication extends MultiDexApplication {
             FacebookSdk.setApplicationId(GlobalData.facebookId);
             GemfiveApplication.getAppConfiguration().isSignIn(getApplicationContext());
             GemfiveApplication.getAppConfiguration().init(getApplicationContext());
-            getAnalyticTracherInstance(this);
+//            getAnalyticTracherInstance(this);
             ViewTarget.setTagId(R.id.glide_tag);
         } catch (Exception ex) {
             ex.getStackTrace();
