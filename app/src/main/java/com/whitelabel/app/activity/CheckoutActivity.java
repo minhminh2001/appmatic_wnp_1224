@@ -5,8 +5,6 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,7 +28,6 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.molpay.molpayxdk.MOLPayActivity;
 import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
@@ -66,20 +63,16 @@ import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CheckoutPaymentDialog;
 import com.whitelabel.app.widget.MaterialDialog;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
-
     public Long mGATrackCheckoutTimeStart = 0L;
     public boolean mGATrackCheckoutTimeEnable = false;
     public boolean mGATrackAddressToPaymentTimeEnable = false;
     public Long mGATrackAddressToPaymentTimeStart = 0L;
-    public boolean mGATrackPaymentToReviewTimeEnable = false;
-    public Long mGATrackPaymentToReviewTimeStart = 0L;
     public Long mGATrackPlaceOrderToResultTimeStart = 0L;
     private String errorProductTitle;
     private TextView tvMenuPayment;
@@ -161,45 +154,23 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
      */
     private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
     private ImageLoader mImageLoader;
-
     static {
         System.loadLibrary("gemfivelocal");
     }
 
-    private View.OnClickListener updateListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            List<PackageInfo> packages = getPackageManager().getInstalledPackages(0);
-            for (int i = 0; i < packages.size(); i++) {
-                PackageInfo packageInfo = packages.get(i);
-                String packgeName = "";
-                packgeName = packageInfo.packageName;
-                JLogUtils.i("Allen", "packge=" + packgeName);
-                if (packgeName.contains("vending")) {
-                    //跳转进市场搜索的代码
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(GlobalData.jumpMarketUrl));
-                    startActivity(intent);
-                    existVending = true;
-                }
-            }
-            if (!existVending) {
-                Uri uri = Uri.parse("http://play.google.com/store/apps/details?id=com.whitelabel.app");
-                Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(it);
-                existVending = false;
-            }
-        }
-    };
-
-    public void IsOldVersion() {
+    private void placeOrder() {
         mCheckoutPaymentDialog = new CheckoutPaymentDialog(CheckoutActivity.this, R.style.loading_dialog, getResources().getString(R.string.dialog_checkout_text)).showDialog();
         btnContinue.setEnabled(false);
         btnContinue.setBackgroundResource(R.drawable.big_button_style_b8);
-        new ProductDao(TAG, mHandler).checkVersion("2");
+        mCheckoutDao.savePlaceOrder(GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
     }
-
-
+//
+//    public void IsOldVersion() {
+//        mCheckoutPaymentDialog = new CheckoutPaymentDialog(CheckoutActivity.this, R.style.loading_dialog, getResources().getString(R.string.dialog_checkout_text)).showDialog();
+//        btnContinue.setEnabled(false);
+//        btnContinue.setBackgroundResource(R.drawable.big_button_style_b8);
+//        new ProductDao(TAG, mHandler).checkVersion("2");
+//    }
     public void closeCheckoutPaymentDialog() {
         if (mCheckoutPaymentDialog != null && mCheckoutPaymentDialog.isShowing()) {
             mCheckoutPaymentDialog.dismiss();
@@ -234,9 +205,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             }
         });
     }
-
     private String productIds;
-
     private void initIntent() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -248,7 +217,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             mGATrackCheckoutTimeEnable = true;
         }
     }
-
     public void expireStartLoginActivity() {
         Bundle bundle = new Bundle();
         bundle.putBoolean("expire", true);
@@ -276,7 +244,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         checkoutPaymentFragment = getFragmentManager().findFragmentByTag("paymentFragment");
         checkoutReviewFragment = getFragmentManager().findFragmentByTag("reviewFragment");
     }
-
     public void hiddenAll() {
         if (checkoutShippingSelectaddressFragment != null) {
             fragmentTransaction.hide(checkoutShippingSelectaddressFragment);
@@ -487,9 +454,11 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                 btnContinue.setText(getResources().getString(R.string.CONTINUE));
             }
         }
-
-
     }
+
+
+
+
 
     /**
      * CONTINUE BUTTON
@@ -509,7 +478,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                 break;
             case 3://place my order
                 mGATrackPlaceOrderToResultTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-                IsOldVersion();
+                placeOrder();
 
 //                try {
 //                    GaTrackHelper.getInstance().googleAnalytics("Review Order Screen ", this);
@@ -532,9 +501,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         }
     }
 
-    private void PlaceMyOrder() {
-        mCheckoutDao.savePlaceOrder(GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
-    }
+
 
     @Override
     protected void onResume() {
@@ -553,11 +520,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     private void goToPaymentRedirectPage(String lastrealorderid, String payment_type, String grandTotal, String shippingFee, String payUrl) {
 
         //Go to next payment redirect activity ,then open a webview and send Request Of Payment Redirect
-
         Bundle bundle = new Bundle();
-
         bundle.putLong("mGATrackTimeStart", mGATrackPlaceOrderToResultTimeStart);
-
         bundle.putString("session_key", GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
         bundle.putString("lastrealorderid", lastrealorderid);
         bundle.putString("payment_type", payment_type);
@@ -819,31 +783,29 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 
     private static class DataHandler extends Handler {
         private final WeakReference<CheckoutActivity> mActivity;
-
         public DataHandler(CheckoutActivity activity) {
             mActivity = new WeakReference<CheckoutActivity>(activity);
         }
-
         @Override
         public void handleMessage(Message msg) {
             if (mActivity.get() == null) {
                 return;
             }
             switch (msg.what) {
-                case ProductDao.REQUEST_CHECKVERSION:
-                    if (msg.arg1 == ProductDao.RESPONSE_SUCCESS) {
-                        mActivity.get().PlaceMyOrder();
-                    } else {
-                        if (mActivity.get().mCheckoutPaymentDialog != null) {
-                            mActivity.get().mCheckoutPaymentDialog.dismiss();
-                        }
-                        mActivity.get().setButtonEnable(true);
-                        String title = mActivity.get().getResources().getString(R.string.versionCheckTitle);
-                        String hintmsg = mActivity.get().getResources().getString(R.string.versionCheckMsg);
-                        String btnMsg = mActivity.get().getResources().getString(R.string.update);
-                        JViewUtils.showMaterialDialog(mActivity.get(), title, hintmsg, btnMsg, mActivity.get().updateListener, false);
-                    }
-                    break;
+//                case ProductDao.REQUEST_CHECKVERSION:
+//                    if (msg.arg1 == ProductDao.RESPONSE_SUCCESS) {
+//                        mActivity.get().PlaceMyOrder();
+//                    } else {
+//                        if (mActivity.get().mCheckoutPaymentDialog != null) {
+//                            mActivity.get().mCheckoutPaymentDialog.dismiss();
+//                        }
+//                        mActivity.get().setButtonEnable(true);
+//                        String title = mActivity.get().getResources().getString(R.string.versionCheckTitle);
+//                        String hintmsg = mActivity.get().getResources().getString(R.string.versionCheckMsg);
+//                        String btnMsg = mActivity.get().getResources().getString(R.string.update);
+//                        JViewUtils.showMaterialDialog(mActivity.get(), title, hintmsg, btnMsg, mActivity.get().updateListener, false);
+//                    }
+//                    break;
                 case MyAccountDao.REQUEST_ADDRESS_SAVE:
                     if (msg.arg1 == MyAccountDao.RESPONSE_SUCCESS) {
                         SVRAddAddress address = (SVRAddAddress) msg.obj;
@@ -865,7 +827,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         }
                     }
                     break;
-
                 case CheckoutDao.REQUEST_SAVEBILLING:
                     if (mActivity.get().mDialog != null) {
                         mActivity.get().mDialog.cancel();
@@ -1073,9 +1034,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                 case MyAccountDao.ERROR:
                 case CheckoutDao.REQUEST_ERROR:
                     RequestErrorHelper requestErrorHelper=new RequestErrorHelper(mActivity.get());
-                    if(msg.arg1== ProductDao.REQUEST_CHECKVERSION) {
-                        mActivity.get().PlaceMyOrder();
-                    } else if (msg.arg1 == MyAccountDao.REQUEST_ADDRESS_SAVE || msg.arg1 == CheckoutDao.REQUEST_SAVEBILLING || msg.arg1 == MyAccountDao.REQUEST_EDIT_SAVE || msg.arg1 == CheckoutDao.REQUEST_CHANGEORDERSTATUS) {
+//                    if(msg.arg1== ProductDao.REQUEST_CHECKVERSION) {
+//                        mActivity.get().PlaceMyOrder();
+//                    } else
+                    if (msg.arg1 == MyAccountDao.REQUEST_ADDRESS_SAVE || msg.arg1 == CheckoutDao.REQUEST_SAVEBILLING || msg.arg1 == MyAccountDao.REQUEST_EDIT_SAVE || msg.arg1 == CheckoutDao.REQUEST_CHANGEORDERSTATUS) {
                         if (mActivity.get().mDialog != null) {
                             mActivity.get().mDialog.cancel();
                         }

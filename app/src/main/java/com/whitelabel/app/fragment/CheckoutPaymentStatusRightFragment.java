@@ -64,24 +64,25 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
     private String FB_SHARED_OK;
     private ShoppingDiscountBean mDiscountBean;
     private String orderNumber;
-    private double grandTotal;
-    private double shippingFee;
-    private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
     private TextView tvShare;
-    private View myBoxGroup;
     private TextView tvCheckOrder;
     private TextView tvContinueShopping;
-    private View showCode;
-    private TextView codeNumber,tvContinueShopping3,tvContinueShopping4,myText1,myText2,myText3;
-    private boolean animStop2=true;
-    private int windowWinth,windowHeight;
-    private  int OffsetY;
-    private  int OffsetX;
-    private  int magnifyX,magnifyY;
-    private int magnifyXTO;
-    private int magnifyYTO;
+    private TextView codeNumber,tvContinueShopping3,tvContinueShopping4;
+//    private double grandTotal;
+//    private double shippingFee;
+//    private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
+//    private View myBoxGroup;
+//    private View showCode;
+//        ,myText1,myText2,myText3;
+//    private boolean animStop2=true;
+//    private int windowWinth,windowHeight;
+//    private  int OffsetY;
+//    private  int OffsetX;
+//    private  int magnifyX,magnifyY;
+//    private int magnifyXTO;
+//    private int magnifyYTO;
     private ImageView animImg;
-    private RelativeLayout rlHeaderBarMenu;
+//    private RelativeLayout rlHeaderBarMenu;
     private View animImgView;
     private View showCodeFailure;
     private View rlBackGroud;
@@ -93,14 +94,14 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
     private String mTitle="";
     private String  mDescription="";
     private String  mLink="";
-    private ImageView img1,img2,img3,img4,img5;
-    private ArrayList<ImageView> allImageVeiw;
-    private AnimHandler myHandler;
     private DataHandler dataHandler;
     private CheckoutDao mCheckoutDao;
     private String TAG;
-    private boolean animStop=true;
-    private Animator alphAnim;
+//    private ImageView img1,img2,img3,img4,img5;
+//    private ArrayList<ImageView> allImageVeiw;
+//    private AnimHandler myHandler;
+//    private boolean animStop=true;
+//    private Animator alphAnim;
     private static class ShareHandler extends Handler{
         private final WeakReference<Activity> mActivity;
         private final WeakReference<CheckoutPaymentStatusRightFragment> mFragment;
@@ -217,7 +218,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
             mTitle=mDiscountBean.getShareTitle();
         }
 //        CustomAnimtion();
-        initLuckDraw();
+//        initLuckDraw();
 
         if(JStorageUtils.isShowAppRate(checkoutPaymentStatusActivity)&&!GemfiveApplication.delayShowAppRate) {
             new Handler().postDelayed(new Runnable() {
@@ -288,19 +289,19 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
             }
         });
     }
-    private void initLuckDraw() {
-        if (checkoutPaymentStatusActivity.isLuckDraw) {
-            myBoxGroup.setBackgroundResource(R.mipmap.choujiang);
-            myBoxGroup.setVisibility(View.VISIBLE);
-            MyAnimtion bb=new MyAnimtion();
-            Thread threadAnim=new Thread(bb);
-             threadAnim.start();
-        } else {
-            tvCheckOrder.setVisibility(View.VISIBLE);
-            tvContinueShopping.setVisibility(View.VISIBLE);}
-
-        initFacebook();
-    }
+//    private void initLuckDraw() {
+//        if (checkoutPaymentStatusActivity.isLuckDraw) {
+//            myBoxGroup.setBackgroundResource(R.mipmap.choujiang);
+//            myBoxGroup.setVisibility(View.VISIBLE);
+//            MyAnimtion bb=new MyAnimtion();
+//            Thread threadAnim=new Thread(bb);
+//             threadAnim.start();
+//        } else {
+//            tvCheckOrder.setVisibility(View.VISIBLE);
+//            tvContinueShopping.setVisibility(View.VISIBLE);}
+//
+//        initFacebook();
+//    }
 
     private ShareDialog shareDialog;
     private CallbackManager callbackManager;
@@ -318,37 +319,37 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
     }
 
 
-    private void initFacebook() {
-        FacebookSdk.sdkInitialize(checkoutPaymentStatusActivity);
-        callbackManager = CallbackManager.Factory.create();
-        shareDialog = new ShareDialog(this);
-        // this part is optional
-        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-            @Override
-            public void onSuccess(Sharer.Result result) {
-                boolean fbed = checkFbInstalled();
-                if ((result != null && result.getPostId() != null) || fbed) {
-                    sendTrack();
-//                    GaTrackHelper.getInstance().googleAnalyticsEvent("Payment",
-//                            "Facebook Share Button Pressed",
-//                            "success",
-//                            null);
-                    if (!fbed) {
-                        shareHandler.sendEmptyMessage(JShareUtils.HANDLER_WHAT_FACEBOOK_SUCCESS_OK);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancel() {
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                shareHandler.sendEmptyMessage(JShareUtils.HANDLER_WHAT_FACEBOOK_ERROR_INIT);
-            }
-        });
-    }
+//    private void initFacebook() {
+//        FacebookSdk.sdkInitialize(checkoutPaymentStatusActivity);
+//        callbackManager = CallbackManager.Factory.create();
+//        shareDialog = new ShareDialog(this);
+//        // this part is optional
+//        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+//            @Override
+//            public void onSuccess(Sharer.Result result) {
+//                boolean fbed = checkFbInstalled();
+//                if ((result != null && result.getPostId() != null) || fbed) {
+//                    sendTrack();
+////                    GaTrackHelper.getInstance().googleAnalyticsEvent("Payment",
+////                            "Facebook Share Button Pressed",
+////                            "success",
+////                            null);
+//                    if (!fbed) {
+//                        shareHandler.sendEmptyMessage(JShareUtils.HANDLER_WHAT_FACEBOOK_SUCCESS_OK);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//                shareHandler.sendEmptyMessage(JShareUtils.HANDLER_WHAT_FACEBOOK_ERROR_INIT);
+//            }
+//        });
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -405,11 +406,11 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 
 
 
-    private boolean myClickBox=true;
+//    private boolean myClickBox=true;
     @Override
     public void onClick(View v) {
         rlBackGroud.setBackgroundResource(R.mipmap.sexangle);
-        animStop=false;
+//        animStop=false;
         initAnim init = new initAnim(v);
         new Handler().postDelayed(init, 50);
     }
@@ -466,7 +467,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
         rlRoot=view.findViewById(R.id.sv_content);
         rlBackGroud=view.findViewById(R.id.rlBackGroud);
         tvShare.setOnClickListener(this);
-        myBoxGroup=view.findViewById(R.id.myBoxGroup);
+//        myBoxGroup=view.findViewById(R.id.myBoxGroup);
         ImageView tvGoToShoppingCart = (ImageView) view.findViewById(R.id.iv_checkout_paymentstatus_goto_shoppingcart);
         tvGoToShoppingCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -481,24 +482,24 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 //                checkoutPaymentStatusActivity.finish();
             }
         });
-        rlHeaderBarMenu= (RelativeLayout) view.findViewById(R.id.rlHeaderBarMenu);
-    ;
+//        rlHeaderBarMenu= (RelativeLayout) view.findViewById(R.id.rlHeaderBarMenu);
+//    ;
         /////////////////////set orderNumber////////////////////
         Bundle bundle = getArguments();
         orderNumber = bundle.getString("orderNumber");
-        if (!JDataUtils.isEmpty(bundle.getString("grand_total"))){
-            grandTotal = Double.parseDouble(bundle.getString("grand_total").replace(",", "").replace("RM",""));
-        }
-        if (!JDataUtils.isEmpty(bundle.getString("shipping_fee"))){
-            shippingFee = Double.parseDouble(bundle.getString("shipping_fee").replace(",", "").replace("RM",""));
-        }
+//        if (!JDataUtils.isEmpty(bundle.getString("grand_total"))){
+//            grandTotal = Double.parseDouble(bundle.getString("grand_total").replace(",", "").replace("RM",""));
+//        }
+//        if (!JDataUtils.isEmpty(bundle.getString("shipping_fee"))){
+//            shippingFee = Double.parseDouble(bundle.getString("shipping_fee").replace(",", "").replace("RM",""));
+//        }
         wvHtml= (CustomWebView) view.findViewById(R.id.wv_html);
         if(!TextUtils.isEmpty(checkoutPaymentStatusActivity.html)){
             wvHtml.setVisibility(View.VISIBLE);
         }
         initWebView();
 
-        paymentSaveReturnEntity = (CheckoutPaymentSaveReturnEntity) bundle.getSerializable("paymentSaveReturnEntity");
+//        paymentSaveReturnEntity = (CheckoutPaymentSaveReturnEntity) bundle.getSerializable("paymentSaveReturnEntity");
         /////////////////////set email////////////////////
         GOUserEntity user = GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity);
 
@@ -521,36 +522,36 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 
         animImgView=view.findViewById(R.id.animImgView);
         showCodeFailure=view.findViewById(R.id.showCode_failure);
-        windowWinth= GemfiveApplication.getPhoneConfiguration().getScreenWidth();
-        windowHeight=GemfiveApplication.getPhoneConfiguration().getScreenHeigth()- AppUtils.getStatusBarHeight(checkoutPaymentStatusActivity)-AppUtils.getNavigationBarHeight(checkoutPaymentStatusActivity);
+//        windowWinth= GemfiveApplication.getPhoneConfiguration().getScreenWidth();
+//        windowHeight=GemfiveApplication.getPhoneConfiguration().getScreenHeigth()- AppUtils.getStatusBarHeight(checkoutPaymentStatusActivity)-AppUtils.getNavigationBarHeight(checkoutPaymentStatusActivity);
         animImg= (ImageView) view.findViewById(R.id.animImg);
-        myText1= (TextView) view.findViewById(R.id.my_text1);
-        myText2= (TextView) view.findViewById(R.id.my_text2);
-        myText3= (TextView) view.findViewById(R.id.my_text4);
-        showCode=view.findViewById(R.id.showCode);
+//        myText1= (TextView) view.findViewById(R.id.my_text1);
+//        myText2= (TextView) view.findViewById(R.id.my_text2);
+//        myText3= (TextView) view.findViewById(R.id.my_text4);
+//        showCode=view.findViewById(R.id.showCode);
         codeNumber= (TextView) view.findViewById(R.id.my_text3);
         tvContinueShopping3= (TextView) view.findViewById(R.id.tv_checkout_payment_status_right_continueshopping3);
         tvContinueShopping3.setOnClickListener(this);
         tvContinueShopping4= (TextView) view.findViewById(R.id.tv_checkout_payment_status_right_continueshopping4);
         tvContinueShopping4.setOnClickListener(this);
-        img1= (ImageView) view.findViewById(R.id.img1);
-        img2= (ImageView) view.findViewById(R.id.img2);
-        img3= (ImageView) view.findViewById(R.id.img3);
-        img4= (ImageView) view.findViewById(R.id.img4);
-        img5= (ImageView) view.findViewById(R.id.img5);
-        img1.setOnClickListener(this);
-        img2.setOnClickListener(this);
-        img3.setOnClickListener(this);
-        img4.setOnClickListener(this);
-        img5.setOnClickListener(this);
-        allImageVeiw=new ArrayList<ImageView>();
-        allImageVeiw.add(img1);
-        allImageVeiw.add(img2);
-        allImageVeiw.add(img3);
-        allImageVeiw.add(img4);
-        allImageVeiw.add(img5);
+//        img1= (ImageView) view.findViewById(R.id.img1);
+//        img2= (ImageView) view.findViewById(R.id.img2);
+//        img3= (ImageView) view.findViewById(R.id.img3);
+//        img4= (ImageView) view.findViewById(R.id.img4);
+//        img5= (ImageView) view.findViewById(R.id.img5);
+//        img1.setOnClickListener(this);
+//        img2.setOnClickListener(this);
+//        img3.setOnClickListener(this);
+//        img4.setOnClickListener(this);
+//        img5.setOnClickListener(this);
+//        allImageVeiw=new ArrayList<ImageView>();
+//        allImageVeiw.add(img1);
+//        allImageVeiw.add(img2);
+//        allImageVeiw.add(img3);
+//        allImageVeiw.add(img4);
+//        allImageVeiw.add(img5);
         //实例化Handler一定要在启动线程之前
-        myHandler=new AnimHandler(this);
+//        myHandler=new AnimHandler(this);
 //        myHandler = new Handler(){
 //            @Override
 //            public void handleMessage(Message msg) {
@@ -635,157 +636,157 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
         return view;
     }
 
-    private static class AnimHandler extends Handler {
-
-        private final WeakReference<CheckoutPaymentStatusRightFragment> mFragment;
-
-        public AnimHandler(CheckoutPaymentStatusRightFragment fragment) {
-            mFragment = new WeakReference<CheckoutPaymentStatusRightFragment>(fragment);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            if (mFragment.get() == null ) {
-                return;
-            }
-
-            ImageView img = (ImageView) msg.obj;
-            switch (msg.what) {
-                case 1:
-                    img.setImageResource(R.mipmap.box1);
-                    break;
-                case 2:
-                    img.setImageResource(R.mipmap.box2);
-                    break;
-                case 3:
-                    img.setImageResource(R.mipmap.box3);
-                    break;
-                case 4:
-                    img.setImageResource(R.mipmap.box4);
-                    break;
-                case 5:
-                    img.setImageResource(R.mipmap.box5);
-                    break;
-                case 6:
-                    img.setImageResource(R.mipmap.box6);
-                    break;
-                case 7:
-                    img.setImageResource(R.mipmap.box5);
-                    break;
-                case 8:
-                    img.setImageResource(R.mipmap.box4);
-                    break;
-                case 9:
-                    img.setImageResource(R.mipmap.box3);
-                    break;
-                case 10:
-                    img.setImageResource(R.mipmap.box2);
-                    break;
-                case 11:
-                    img.setImageResource(R.mipmap.box1);
-                    break;
-                case 12:
-                    img.setImageResource(R.mipmap.box1_1);
-                    break;
-                case 13:
-                    img.setImageResource(R.mipmap.box1_2);
-                    break;
-                case 14:
-                    img.setImageResource(R.mipmap.box1_3);
-                    break;
-                case 15:
-                    img.setImageResource(R.mipmap.box1_4);
-                    break;
-                case 16:
-                    img.setImageResource(R.mipmap.box1_5);
-                    break;
-                case 17:
-                    img.setImageResource(R.mipmap.box1_6);
-                    break;
-                case 18:
-                    img.setImageResource(R.mipmap.box1_7);
-                    break;
-                case 19:
-                    img.setImageResource(R.mipmap.box1_8);
-                    break;
-                case 20:
-                    img.setImageResource(R.mipmap.box1_9);
-                    break;
-                case 21:
-                    img.setImageResource(R.mipmap.box1_10);
-                    break;
-                case 22:
-                    img.setImageResource(R.mipmap.box1_11);
-                    break;
-                case 23:
-                    img.setImageResource(R.mipmap.box1_12);
-                    break;
-                case 24:
-                    img.setImageResource(R.mipmap.box1_13);
-                    break;
-                case 25:
-                    img.setImageResource(R.mipmap.box1_14);
-                    break;
-                case 26:
-                    img.setImageResource(R.mipmap.box1_15);
-                    break;
-                case 27:
-                    img.setImageResource(R.mipmap.box0);
-                    break;
-                //第二个动画
-                case 28:
-                    int x = (int) mFragment.get().animImg.getX();
-                    int y = (int) mFragment.get().animImg.getY();
-                    mFragment.get().animImg.setX(x + mFragment.get().OffsetX - mFragment.get().magnifyX / 2);
-                    mFragment.get().animImg.setY(y + mFragment.get().OffsetY - mFragment.get().magnifyY / 2);
-                    LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mFragment.get().animImg.getLayoutParams(); //取控件当前的布局参数
-                    linearParams.height = linearParams.height + mFragment.get().magnifyY;// 控件的高
-                    linearParams.width = linearParams.width + mFragment.get().magnifyX;// 控件的宽
-                    mFragment.get().animImg.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
-                    switch ( mFragment.get().currentFrameImgs2) {
-
-                        case 1:
-                            img.setImageResource(R.mipmap.box1);
-                            break;
-                        case 2:
-                            img.setImageResource(R.mipmap.box2);
-                            break;
-                        case 3:
-                            img.setImageResource(R.mipmap.box3);
-                            break;
-                        case 4:
-                            img.setImageResource(R.mipmap.box4);
-                            break;
-                        case 5:
-                            img.setImageResource(R.mipmap.box5);
-                            break;
-                        case 6:
-                            img.setImageResource(R.mipmap.box6);
-                            break;
-                        case 7:
-                            img.setImageResource(R.mipmap.box5);
-                            break;
-                        case 8:
-                            img.setImageResource(R.mipmap.box4);
-                            break;
-                        case 9:
-                            img.setImageResource(R.mipmap.box3);
-                            break;
-                        case 10:
-                            img.setImageResource(R.mipmap.box2);
-                            break;
-                        case 11:
-                            img.setImageResource(R.mipmap.box1);
-                            break;
-                        case 12:
-                            img.setImageResource(R.mipmap.sexangle);
-                            mFragment.get().showCode.setVisibility(View.VISIBLE);
-                            break;
-                    }
-                    break;
-            }
-        }
-    }
+//    private static class AnimHandler extends Handler {
+//
+//        private final WeakReference<CheckoutPaymentStatusRightFragment> mFragment;
+//
+//        public AnimHandler(CheckoutPaymentStatusRightFragment fragment) {
+//            mFragment = new WeakReference<CheckoutPaymentStatusRightFragment>(fragment);
+//        }
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            if (mFragment.get() == null ) {
+//                return;
+//            }
+//
+//            ImageView img = (ImageView) msg.obj;
+//            switch (msg.what) {
+//                case 1:
+//                    img.setImageResource(R.mipmap.box1);
+//                    break;
+//                case 2:
+//                    img.setImageResource(R.mipmap.box2);
+//                    break;
+//                case 3:
+//                    img.setImageResource(R.mipmap.box3);
+//                    break;
+//                case 4:
+//                    img.setImageResource(R.mipmap.box4);
+//                    break;
+//                case 5:
+//                    img.setImageResource(R.mipmap.box5);
+//                    break;
+//                case 6:
+//                    img.setImageResource(R.mipmap.box6);
+//                    break;
+//                case 7:
+//                    img.setImageResource(R.mipmap.box5);
+//                    break;
+//                case 8:
+//                    img.setImageResource(R.mipmap.box4);
+//                    break;
+//                case 9:
+//                    img.setImageResource(R.mipmap.box3);
+//                    break;
+//                case 10:
+//                    img.setImageResource(R.mipmap.box2);
+//                    break;
+//                case 11:
+//                    img.setImageResource(R.mipmap.box1);
+//                    break;
+//                case 12:
+//                    img.setImageResource(R.mipmap.box1_1);
+//                    break;
+//                case 13:
+//                    img.setImageResource(R.mipmap.box1_2);
+//                    break;
+//                case 14:
+//                    img.setImageResource(R.mipmap.box1_3);
+//                    break;
+//                case 15:
+//                    img.setImageResource(R.mipmap.box1_4);
+//                    break;
+//                case 16:
+//                    img.setImageResource(R.mipmap.box1_5);
+//                    break;
+//                case 17:
+//                    img.setImageResource(R.mipmap.box1_6);
+//                    break;
+//                case 18:
+//                    img.setImageResource(R.mipmap.box1_7);
+//                    break;
+//                case 19:
+//                    img.setImageResource(R.mipmap.box1_8);
+//                    break;
+//                case 20:
+//                    img.setImageResource(R.mipmap.box1_9);
+//                    break;
+//                case 21:
+//                    img.setImageResource(R.mipmap.box1_10);
+//                    break;
+//                case 22:
+//                    img.setImageResource(R.mipmap.box1_11);
+//                    break;
+//                case 23:
+//                    img.setImageResource(R.mipmap.box1_12);
+//                    break;
+//                case 24:
+//                    img.setImageResource(R.mipmap.box1_13);
+//                    break;
+//                case 25:
+//                    img.setImageResource(R.mipmap.box1_14);
+//                    break;
+//                case 26:
+//                    img.setImageResource(R.mipmap.box1_15);
+//                    break;
+//                case 27:
+//                    img.setImageResource(R.mipmap.box0);
+//                    break;
+//                //第二个动画
+//                case 28:
+//                    int x = (int) mFragment.get().animImg.getX();
+//                    int y = (int) mFragment.get().animImg.getY();
+//                    mFragment.get().animImg.setX(x + mFragment.get().OffsetX - mFragment.get().magnifyX / 2);
+//                    mFragment.get().animImg.setY(y + mFragment.get().OffsetY - mFragment.get().magnifyY / 2);
+//                    LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mFragment.get().animImg.getLayoutParams(); //取控件当前的布局参数
+//                    linearParams.height = linearParams.height + mFragment.get().magnifyY;// 控件的高
+//                    linearParams.width = linearParams.width + mFragment.get().magnifyX;// 控件的宽
+//                    mFragment.get().animImg.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
+//                    switch ( mFragment.get().currentFrameImgs2) {
+//
+//                        case 1:
+//                            img.setImageResource(R.mipmap.box1);
+//                            break;
+//                        case 2:
+//                            img.setImageResource(R.mipmap.box2);
+//                            break;
+//                        case 3:
+//                            img.setImageResource(R.mipmap.box3);
+//                            break;
+//                        case 4:
+//                            img.setImageResource(R.mipmap.box4);
+//                            break;
+//                        case 5:
+//                            img.setImageResource(R.mipmap.box5);
+//                            break;
+//                        case 6:
+//                            img.setImageResource(R.mipmap.box6);
+//                            break;
+//                        case 7:
+//                            img.setImageResource(R.mipmap.box5);
+//                            break;
+//                        case 8:
+//                            img.setImageResource(R.mipmap.box4);
+//                            break;
+//                        case 9:
+//                            img.setImageResource(R.mipmap.box3);
+//                            break;
+//                        case 10:
+//                            img.setImageResource(R.mipmap.box2);
+//                            break;
+//                        case 11:
+//                            img.setImageResource(R.mipmap.box1);
+//                            break;
+//                        case 12:
+//                            img.setImageResource(R.mipmap.sexangle);
+//                            mFragment.get().showCode.setVisibility(View.VISIBLE);
+//                            break;
+//                    }
+//                    break;
+//            }
+//        }
+//    }
 
     @Override
     public void onStart() {
@@ -814,74 +815,74 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
     public void onKeyDown(int keyCode, KeyEvent event) {
 
     }
+//
+//    public void getAnmitionCode(){
+//        String session_key= GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getSessionKey();
+//        mCheckoutDao.getWinCode(session_key,orderNumber);
+//    }
+//
+//    private int currentFrameImgs=0,allFrameImgs=27;
+//    private int currentBox=1,allBox=5;
 
-    public void getAnmitionCode(){
-        String session_key= GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getSessionKey();
-        mCheckoutDao.getWinCode(session_key,orderNumber);
-    }
-
-    private int currentFrameImgs=0,allFrameImgs=27;
-    private int currentBox=1,allBox=5;
-
-    private class MyAnimtion implements Runnable {
-        @Override
-        public void run() {
-            while (animStop){
-                try {
-                    Thread.sleep(30);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                currentFrameImgs++;
-                Message msg=new Message();
-                msg.what=currentFrameImgs;
-                msg.obj=allImageVeiw.get(currentBox-1);
-
-                if(currentFrameImgs>allFrameImgs){
-                    currentBox++;
-                    currentFrameImgs=1;
-                    if(currentBox>allBox){
-                        currentBox=1;
-                    }
-                    msg.what=currentFrameImgs;
-                    msg.obj=allImageVeiw.get(currentBox-1);
-                }
-                myHandler.sendMessage(msg);
-            }
-        }
-    }
+//    private class MyAnimtion implements Runnable {
+//        @Override
+//        public void run() {
+//            while (animStop){
+//                try {
+//                    Thread.sleep(30);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                currentFrameImgs++;
+//                Message msg=new Message();
+//                msg.what=currentFrameImgs;
+//                msg.obj=allImageVeiw.get(currentBox-1);
+//
+//                if(currentFrameImgs>allFrameImgs){
+//                    currentBox++;
+//                    currentFrameImgs=1;
+//                    if(currentBox>allBox){
+//                        currentBox=1;
+//                    }
+//                    msg.what=currentFrameImgs;
+//                    msg.obj=allImageVeiw.get(currentBox-1);
+//                }
+//                myHandler.sendMessage(msg);
+//            }
+//        }
+//    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        animStop=false;
-        animStop2=false;
+//        animStop=false;
+//        animStop2=false;
     }
-    private int currentFrameImgs2=0,allFrameImgs2=13;
-    private class MyAnimtion2 implements Runnable {
-        private ImageView img;
-        public MyAnimtion2(ImageView img){
-            this.img=img;
-        }
-        @Override
-        public void run() {
-            for(currentFrameImgs2=0;currentFrameImgs2<allFrameImgs2;currentFrameImgs2++){
-                if(animStop2){
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Message msg=new Message();
-                    msg.what=28;
-                    msg.obj=img;
-                    myHandler.sendMessage(msg);
-
-                }
-            }
-        }
-    }
+//    private int currentFrameImgs2=0,allFrameImgs2=13;
+//    private class MyAnimtion2 implements Runnable {
+//        private ImageView img;
+//        public MyAnimtion2(ImageView img){
+//            this.img=img;
+//        }
+//        @Override
+//        public void run() {
+//            for(currentFrameImgs2=0;currentFrameImgs2<allFrameImgs2;currentFrameImgs2++){
+//                if(animStop2){
+//                    try {
+//                        Thread.sleep(30);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    Message msg=new Message();
+//                    msg.what=28;
+//                    msg.obj=img;
+//                    myHandler.sendMessage(msg);
+//
+//                }
+//            }
+//        }
+//    }
     private class initAnim implements Runnable {
         private View v;
         public initAnim(View v){
@@ -889,72 +890,72 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
         }
         @Override
         public void run() {
-            img1.setImageResource(R.mipmap.box0);
-            img2.setImageResource(R.mipmap.box0);
-            img3.setImageResource(R.mipmap.box0);
-            img4.setImageResource(R.mipmap.box0);
-            img5.setImageResource(R.mipmap.box0);
-            img1.setOnClickListener(null);
-            img2.setOnClickListener(null);
-            img3.setOnClickListener(null);
-            img4.setOnClickListener(null);
-            img5.setOnClickListener(null);
+//            img1.setImageResource(R.mipmap.box0);
+//            img2.setImageResource(R.mipmap.box0);
+//            img3.setImageResource(R.mipmap.box0);
+//            img4.setImageResource(R.mipmap.box0);
+//            img5.setImageResource(R.mipmap.box0);
+//            img1.setOnClickListener(null);
+//            img2.setOnClickListener(null);
+//            img3.setOnClickListener(null);
+//            img4.setOnClickListener(null);
+//            img5.setOnClickListener(null);
             switch (v.getId()){
-                case  R.id.img1:
-                    if(myClickBox) {
-                        myClickBox = false;
-                        getOffsetXAndY(img1);//获得每次平移大小
-                        MyAnimtion2 anim1 = new MyAnimtion2(initView(img1));
-                        Thread thread1 = new Thread(anim1);
-                        thread1.start();//开启平移线程
-                        img1.setImageResource(R.mipmap.box1);
-                        getAnmitionCode();
-                    }
-                    break;
-                case  R.id.img2:
-                    if(myClickBox) {
-                        myClickBox = false;
-                        getOffsetXAndY(img2);
-                        MyAnimtion2 anim2 = new MyAnimtion2(initView(img2));
-                        Thread thread2 = new Thread(anim2);
-                        thread2.start();
-                        img2.setImageResource(R.mipmap.box1);
-                        getAnmitionCode();
-                    }
-                    break;
-                case  R.id.img3:
-                    if(myClickBox) {
-                        myClickBox = false;
-                        getOffsetXAndY(img3);
-                        MyAnimtion2 anim3 = new MyAnimtion2(initView(img3));
-                        Thread thread3 = new Thread(anim3);
-                        thread3.start();
-                        img3.setImageResource(R.mipmap.box1);
-                        getAnmitionCode();
-                    }
-                    break;
-                case  R.id.img4:
-                    if(myClickBox) {
-                        myClickBox = false;
-                        getOffsetXAndY(img4);
-                        MyAnimtion2 anim4 = new MyAnimtion2(initView(img4));
-                        Thread thread4 = new Thread(anim4);
-                        thread4.start();
-                        img4.setImageResource(R.mipmap.box1);
-                        getAnmitionCode();
-                    }
-                    break;
-                case  R.id.img5:
-                    if(myClickBox) {
-                        myClickBox = false;
-                        getOffsetXAndY(img5);
-                        MyAnimtion2 anim5 = new MyAnimtion2(initView(img5));
-                        Thread thread5 = new Thread(anim5);
-                        thread5.start();
-                        img5.setImageResource(R.mipmap.box1);
-                        getAnmitionCode();
-                    }
-                    break;
+//                case  R.id.img1:
+//                    if(myClickBox) {
+//                        myClickBox = false;
+//                        getOffsetXAndY(img1);//获得每次平移大小
+//                        MyAnimtion2 anim1 = new MyAnimtion2(initView(img1));
+//                        Thread thread1 = new Thread(anim1);
+//                        thread1.start();//开启平移线程
+//                        img1.setImageResource(R.mipmap.box1);
+//                        getAnmitionCode();
+//                    }
+//                    break;
+//                case  R.id.img2:
+//                    if(myClickBox) {
+//                        myClickBox = false;
+//                        getOffsetXAndY(img2);
+//                        MyAnimtion2 anim2 = new MyAnimtion2(initView(img2));
+//                        Thread thread2 = new Thread(anim2);
+//                        thread2.start();
+//                        img2.setImageResource(R.mipmap.box1);
+//                        getAnmitionCode();
+//                    }
+//                    break;
+//                case  R.id.img3:
+//                    if(myClickBox) {
+//                        myClickBox = false;
+//                        getOffsetXAndY(img3);
+//                        MyAnimtion2 anim3 = new MyAnimtion2(initView(img3));
+//                        Thread thread3 = new Thread(anim3);
+//                        thread3.start();
+//                        img3.setImageResource(R.mipmap.box1);
+//                        getAnmitionCode();
+//                    }
+//                    break;
+//                case  R.id.img4:
+//                    if(myClickBox) {
+//                        myClickBox = false;
+//                        getOffsetXAndY(img4);
+//                        MyAnimtion2 anim4 = new MyAnimtion2(initView(img4));
+//                        Thread thread4 = new Thread(anim4);
+//                        thread4.start();
+//                        img4.setImageResource(R.mipmap.box1);
+//                        getAnmitionCode();
+//                    }
+//                    break;
+//                case  R.id.img5:
+//                    if(myClickBox) {
+//                        myClickBox = false;
+//                        getOffsetXAndY(img5);
+//                        MyAnimtion2 anim5 = new MyAnimtion2(initView(img5));
+//                        Thread thread5 = new Thread(anim5);
+//                        thread5.start();
+//                        img5.setImageResource(R.mipmap.box1);
+//                        getAnmitionCode();
+//                    }
+//                    break;
                 case R.id.tv_share:
                     shareFacebook();
                     break;
@@ -973,40 +974,40 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
             }
         }
     }
-    private ImageView initView(ImageView img){
-//        animImg.setVisibility(View.VISIBLE);
-        img.setVisibility(View.INVISIBLE);
-        animImg.setX(ImgGetX(img));
-        animImg.setY(ImgGetY(img));
-        return animImg;
-    }
-
-    private void getOffsetXAndY(ImageView img){
-        int x= ImgGetX(img);
-        int y= ImgGetY(img);
-        int imgWinth=img.getWidth();
-        int imgHeight=img.getHeight();
-        int centerY=windowHeight/2;
-        int centerX=windowWinth/2;
-        OffsetY=(centerY-y-imgHeight/2)/allFrameImgs2;
-        OffsetX=(centerX-x-imgWinth/2)/allFrameImgs2;
-        magnifyXTO=JDataUtils.dp2Px(280);
-        magnifyYTO=JDataUtils.dp2Px(240);
-        magnifyX=magnifyXTO/allFrameImgs2;
-        magnifyY=magnifyYTO/allFrameImgs2;
-
-    }
+//    private ImageView initView(ImageView img){
+////        animImg.setVisibility(View.VISIBLE);
+//        img.setVisibility(View.INVISIBLE);
+//        animImg.setX(ImgGetX(img));
+//        animImg.setY(ImgGetY(img));
+//        return animImg;
+//    }
+//
+//    private void getOffsetXAndY(ImageView img){
+//        int x= ImgGetX(img);
+//        int y= ImgGetY(img);
+//        int imgWinth=img.getWidth();
+//        int imgHeight=img.getHeight();
+//        int centerY=windowHeight/2;
+//        int centerX=windowWinth/2;
+//        OffsetY=(centerY-y-imgHeight/2)/allFrameImgs2;
+//        OffsetX=(centerX-x-imgWinth/2)/allFrameImgs2;
+//        magnifyXTO=JDataUtils.dp2Px(280);
+//        magnifyYTO=JDataUtils.dp2Px(240);
+//        magnifyX=magnifyXTO/allFrameImgs2;
+//        magnifyY=magnifyYTO/allFrameImgs2;
+//
+//    }
     //获得组件绝对坐标
-    public int ImgGetX(ImageView img){
-         int[] location = new int[2];
-        img.getLocationOnScreen(location);
-        return  location[0];
-    }
-    //获得组件绝对坐标
-    public int ImgGetY(ImageView img){
-         int[] location = new int[2];
-        img.getLocationOnScreen(location);
-        return  location[1];
-    }
+//    public int ImgGetX(ImageView img){
+//         int[] location = new int[2];
+//        img.getLocationOnScreen(location);
+//        return  location[0];
+//    }
+//    //获得组件绝对坐标
+//    public int ImgGetY(ImageView img){
+//         int[] location = new int[2];
+//        img.getLocationOnScreen(location);
+//        return  location[1];
+//    }
 
 }

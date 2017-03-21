@@ -58,32 +58,40 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
             bundle.putSerializable("discountBean", mDiscountBean);
             bundle.putSerializable("paymentSaveReturnEntity", paymentSaveReturnEntity);
             bundle.putInt("fromType",fromType);
-            switch (msg.what){
-                case CheckoutDao.REQUEST_GETLUCKDRAW:
-
-                        if(msg.arg1==CheckoutDao.RESPONSE_SUCCESS){
-                            CustomAnimEntity entity= (CustomAnimEntity) msg.obj;
-                            if(!"0".equals(entity.getCount())){
-                                bundle.putBoolean("isLuckDraw",true);
-                            }
-                        }
-                    break;
-                case CheckoutDao.REQUEST_ERROR:
-                    break;
-            }
+//            switch (msg.what){
+//                case CheckoutDao.REQUEST_GETLUCKDRAW:
+//
+//                        if(msg.arg1==CheckoutDao.RESPONSE_SUCCESS){
+//                            CustomAnimEntity entity= (CustomAnimEntity) msg.obj;
+//                            if(!"0".equals(entity.getCount())){
+//                                bundle.putBoolean("isLuckDraw",true);
+//                            }
+//                        }
+//                    break;
+//                case CheckoutDao.REQUEST_ERROR:
+//                    break;
+//            }
             startNextActivity(bundle, CheckoutPaymentStatusActivity.class, true);
             super.handleMessage(msg);
         }
     };
-
+    private  void  startPaymentStatusScreen(){
+        Bundle bundle = new Bundle();
+        bundle.putString("payment_status", "1");
+        bundle.putString("orderNumber", lastrealorderid);
+        bundle.putString("grand_total", grandTotal);
+        bundle.putString("shipping_fee", shippingFee);
+        bundle.putSerializable("discountBean", mDiscountBean);
+        bundle.putSerializable("paymentSaveReturnEntity", paymentSaveReturnEntity);
+        bundle.putInt("fromType",fromType);
+        startNextActivity(bundle, CheckoutPaymentStatusActivity.class, true);
+    }
 
     public void closeDialog(){
         if(mDialog!=null) {
             mDialog.cancel();
         }
     }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,8 +104,9 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
         if(paymentMethod==PAYMENT_CARD) {
             initWebVeiw();
         }else{
-            mDialog = JViewUtils.showProgressDialog(CheckoutPaymentRedirectActivity.this);
-            mDao.getLuckdraw(GemfiveApplication.getAppConfiguration().getUser().getSessionKey(), lastrealorderid);
+            startPaymentStatusScreen();
+//            mDialog = JViewUtils.showProgressDialog(CheckoutPaymentRedirectActivity.this);
+//            mDao.getLuckdraw(GemfiveApplication.getAppConfiguration().getUser().getSessionKey(), lastrealorderid);
         }
     }
     private void initToolBar() {
@@ -120,8 +129,6 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
         webView = (WebView) findViewById(R.id.wv_checkout_payment_redirect);
 //        mDialog= JViewUtils.showProgressDialog(CheckoutPaymentRedirectActivity.this);
         String url = REDIRECT_PAYMENT_URL + url_suffix + "?session_key=" + session_key + "&lastrealorderid=" + lastrealorderid + "&appid=1&usehlb=" + GlobalData.useHlb;
-
-
         WebSettings settings=webView.getSettings();
         settings.setJavaScriptEnabled(true);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
@@ -157,7 +164,6 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
                     handler.cancel();
                 }
             }
-
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url != null) {
@@ -166,7 +172,8 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
                         if(!isSuccess) {
                             if (url.indexOf(SUCCESS) != -1) {
                                 isSuccess=true;
-                                mDao.getLuckdraw(GemfiveApplication.getAppConfiguration().getUser().getSessionKey(), lastrealorderid);
+                                startPaymentStatusScreen();
+//                                mDao.getLuckdraw(GemfiveApplication.getAppConfiguration().getUser().getSessionKey(), lastrealorderid);
                                 return false;
                             } else if (url.indexOf(FAILD) != -1) {
                                 Bundle bundle = new Bundle();

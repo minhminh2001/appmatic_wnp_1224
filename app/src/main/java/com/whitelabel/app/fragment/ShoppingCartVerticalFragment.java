@@ -99,7 +99,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     //    private RelativeLayout rlShoppingcartTopGoback;
     private View vVoucher;
     private View infoView;
-    private ImageView ivUpdate;
+//    private ImageView ivUpdate;
     public TextView tvSubtotal;
     public TextView tvVoucher;
     private TextView tvApply;
@@ -124,12 +124,12 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private ShoppingCarDao mCarDao;
     private String TAG = this.getClass().getSimpleName();
     private RequestErrorHelper requestErrorHelper;
-    private View vCampaign;
-    private View vProgress, connectionBreak;
+//    private View vCampaign; vProgress
+    private View  connectionBreak;
     public int fromType;
     private Dialog mDialog;
     private LinearLayout btnTry;
-    private String campaignProductId;
+//    private String campaignProductId;
     private final int VIEW_INIT_SHOW = 3;
     private final int VIEW_INIT_HIDE = 4;
     private final int VIEW_NOTHING_SHOW = 1;
@@ -138,8 +138,8 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private final int VIEW_NOTNETWORK_HIDE = 6;
     private final int VIEW_VOUCHER_SHOW = 7;
     private final int VIEW_VOUCHER_HIDE = 8;
-    private String mCampaignBanner = "";
-    private String mCampaignPopText = "";
+//    private String mCampaignBanner = "";
+//    private String mCampaignPopText = "";
     private final int STATUS_VOUCHERCODE_APPLY = 1;
     private final int STATUS_VOUCHERCODE_CANCEL = 2;
     //    private ShoppingCartCallback shoppingCallback;
@@ -154,7 +154,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private int currStatus;
     private final static int LOADING = 100;
     private final static int LOADSUCCESS = 101;
-    private View llStoreCreditHint;
+//    private View llStoreCreditHint;
     private boolean apply = false;
     private HomeBaseFragment.HomeCommonCallback mHomeCallback;
     private BaseActivity baseActivity;
@@ -174,47 +174,45 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         //暂时没有用到
         mCarDao.getShoppingCartLocalInfo(getActivity());
     }
-
     @Override
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-            case R.id.iv_shoppingcart_campaign:
-                Bundle bundle = new Bundle();
-                bundle.putString("productId", campaignProductId);
-                bundle.putString("popText", mCampaignPopText);
-                Intent intent = new Intent(getActivity(), ShoppingCartCampaignActivity.class);
-                intent.putExtras(bundle);
-                startActivityForResult(intent, 2000);
-                getActivity().overridePendingTransition(R.anim.enter_righttoleft,
-                        R.anim.exit_righttoleft);
-                break;
+//            case R.id.iv_shoppingcart_campaign:
+//                Bundle bundle = new Bundle();
+//                bundle.putString("productId", campaignProductId);
+//                bundle.putString("popText", mCampaignPopText);
+//                Intent intent = new Intent(getActivity(), ShoppingCartCampaignActivity.class);
+//                intent.putExtras(bundle);
+//                startActivityForResult(intent, 2000);
+//                getActivity().overridePendingTransition(R.anim.enter_righttoleft,
+//                        R.anim.exit_righttoleft);
+//                break;
 //            case R.id.rl_shoppingcart_top_goback:
 //                shoppingCallback.leftButtonClick();
 //                break;
             case R.id.tv_shoppingcart_apply:
-
                 checkAndApplyVoucherCode();
                 break;
-            case R.id.ctv_storecredit:
-                if (getSwipeRefreshStatus()) {
-                    return;
-                }
-                if (!GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
-                    startLoginActivity();
-                } else {
-                    mDialog = JViewUtils.showProgressDialog(getActivity());
-                    String sessionKey = "";
-                    if (GemfiveApplication.getAppConfiguration() != null && GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()) != null) {
-                        sessionKey = GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
-                    }
-                    if (mReedemStr.equals(String.valueOf(tvStoreCredit.getText()))) {
-                        mCarDao.redeemStoreCredit(sessionKey, "0");
-                    } else {
-                        mCarDao.redeemStoreCredit(sessionKey, "1");
-                    }
-                }
-                break;
+//            case R.id.ctv_storecredit:
+//                if (getSwipeRefreshStatus()) {
+//                    return;
+//                }
+//                if (!GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
+//                    startLoginActivity();
+//                } else {
+//                    mDialog = JViewUtils.showProgressDialog(getActivity());
+//                    String sessionKey = "";
+//                    if (GemfiveApplication.getAppConfiguration() != null && GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()) != null) {
+//                        sessionKey = GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
+//                    }
+//                    if (mReedemStr.equals(String.valueOf(tvStoreCredit.getText()))) {
+//                        mCarDao.redeemStoreCredit(sessionKey, "0");
+//                    } else {
+//                        mCarDao.redeemStoreCredit(sessionKey, "1");
+//                    }
+//                }
+//                break;
             case R.id.tv_sc_checkout:
                 if (getSwipeRefreshStatus()) {
                     return;
@@ -319,8 +317,8 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         getActivity().overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
     }
 
-    private TextView tvStoreCreditTitle, tvStoreCredit, tvStoreCreditPrice, tvStoreCreditWorld, tvStoreCreditValue;
-    private View llStoreCredit, llBottomStoreCredit;
+//    private TextView tvStoreCreditTitle, tvStoreCredit, tvStoreCreditPrice, tvStoreCreditWorld, tvStoreCreditValue;
+//    private View llStoreCredit, llBottomStoreCredit;
 
     public void initView(View view) {
         mImageLoader = new ImageLoader(getActivity());
@@ -432,7 +430,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     public void initInfoView(View view) {
         tv_shoppingbottominfo_blank = (TextView) view.findViewById(R.id.tv_shoppingbottominfo_blank);
         vVoucher = view.findViewById(R.id.ll_voucher);
-        ivUpdate = (ImageView) view.findViewById(R.id.iv_shoppingcart_campaign);
+//        ivUpdate = (ImageView) view.findViewById(R.id.iv_shoppingcart_campaign);
         tvSubtotal = (TextView) view.findViewById(R.id.tv_shoppingcart_subtotal);
         tvVoucher = (TextView) view.findViewById(R.id.tv_shoppingcart_voucher);
         tvApply = (TextView) view.findViewById(R.id.tv_shoppingcart_apply);
@@ -447,22 +445,21 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         llVoucherPrice = (RelativeLayout) view.findViewById(R.id.ll_shoppingcart_voucher);
         tvShippingFree = (TextView) view.findViewById(R.id.tv_shoppingcart_shippingFree);
         tvVoucherWorld = (TextView) view.findViewById(R.id.tv_voucher_world);
-        tvStoreCreditTitle = (TextView) view.findViewById(R.id.tv_storecredit_title);
-        tvStoreCreditWorld = (TextView) view.findViewById(R.id.tv_storeCredit_world);
-        tvStoreCreditValue = (TextView) view.findViewById(R.id.tv_shoppingcart_storeCredit);
-        llStoreCreditHint = view.findViewById(R.id.ll_storeCredit_hint);
-        tvStoreCredit = (TextView) view.findViewById(R.id.ctv_storecredit);
-        llBottomStoreCredit = view.findViewById(R.id.ll_shoppingcart_storeCredit);
-        tvStoreCreditPrice = (TextView) view.findViewById(R.id.tv_storecredit_price);
-        llStoreCredit = view.findViewById(R.id.ll_storeCredit);
-        vCampaign = view.findViewById(R.id.rl_campaign);
-        vProgress = view.findViewById(R.id.progress_view);
+//        tvStoreCreditTitle = (TextView) view.findViewById(R.id.tv_storecredit_title);
+//        tvStoreCreditWorld = (TextView) view.findViewById(R.id.tv_storeCredit_world);
+//        tvStoreCreditValue = (TextView) view.findViewById(R.id.tv_shoppingcart_storeCredit);
+//        llStoreCreditHint = view.findViewById(R.id.ll_storeCredit_hint);
+//        tvStoreCredit = (TextView) view.findViewById(R.id.ctv_storecredit);
+//        llBottomStoreCredit = view.findViewById(R.id.ll_shoppingcart_storeCredit);
+//        tvStoreCreditPrice = (TextView) view.findViewById(R.id.tv_storecredit_price);
+//        llStoreCredit = view.findViewById(R.id.ll_storeCredit);
+//        vCampaign = view.findViewById(R.id.rl_campaign);
+//        vProgress = view.findViewById(R.id.progress_view);
         clearVoucher = (ImageView) view.findViewById(R.id.clear_voucher);
         etVoucherApply.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() != 0 && etVoucherApply.isFocused()) {
@@ -540,14 +537,14 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 
     private void initListener() {
         btnTry.setOnClickListener(this);
-        ivUpdate.setOnClickListener(this);
+//        ivUpdate.setOnClickListener(this);
 //        rlShoppingcartTopGoback.setOnClickListener(this);
         tvApply.setOnClickListener(this);
         tvCheckout.setOnClickListener(this);
         llCheckout.setOnClickListener(this);
         llBody.setOnTouchListener(touchListener);
         btnGoShopping.setOnClickListener(this);
-        tvStoreCredit.setOnClickListener(this);
+//        tvStoreCredit.setOnClickListener(this);
         clearVoucher.setOnClickListener(this);
 
         etVoucherApply.setOnFocusChangeListener(this);
@@ -613,12 +610,10 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     public final static class DataHandler extends Handler {
         private WeakReference<Activity> mActivity;
         private WeakReference<ShoppingCartVerticalFragment> mFragment;
-
         public DataHandler(Activity activity, ShoppingCartVerticalFragment fragment) {
             mActivity = new WeakReference<Activity>(activity);
             mFragment = new WeakReference<ShoppingCartVerticalFragment>(fragment);
         }
-
         @Override
         public void handleMessage(Message msg) {
             final Activity activity = mActivity.get();
@@ -643,7 +638,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                         }
                         break;
                     case ShoppingCarDao.REQUEST_SHOPPINGINFO:
-
                         fragment.currStatus = LOADSUCCESS;
                         if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS && activity != null) {
                             fragment.mCar = (ShoppingCartListEntityCart) msg.obj;
@@ -740,63 +734,63 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                         }
                         fragment.initData();
                         break;
-                    case ShoppingCarDao.REQUEST_STORECREDIT:
-                        fragment.closeDialog();
-                        if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS && activity != null) {
-                            ShoppingCartDeleteCellEntity shoppingCartDeleteCellEntity = (ShoppingCartDeleteCellEntity) msg.obj;
-                            fragment.mCar.setSummaryQty(shoppingCartDeleteCellEntity.getSummaryQty());
-                            fragment.mCar.setSubTotal(shoppingCartDeleteCellEntity.getSubTotal());
-                            fragment.mCar.setStoreCreditMessage(shoppingCartDeleteCellEntity.getStoreCreditMessage());
-                            fragment.mCar.setGrandTotal(shoppingCartDeleteCellEntity.getGrandTotal());
-                            fragment.mCar.setStoreCredit(shoppingCartDeleteCellEntity.getStoreCredit());
-                            if (fragment.mCar.getStoreCredit() != null) {
-                                fragment.gaTrackerRedeem(fragment.REDEEM);
-                            } else {
-                                fragment.gaTrackerRedeem(fragment.UNREDEEM);
-                            }
-                            fragment.initShoppingCartData(fragment.mCar, false);
-                        } else if (activity != null) {
-                            String errorMsg = String.valueOf(msg.obj);
-                            if (!JToolUtils.expireHandler(activity, errorMsg, 2000)) {
-                                JViewUtils.showErrorToast(activity, errorMsg);
-                            }
-                        }
-                        break;
+//                    case ShoppingCarDao.REQUEST_STORECREDIT:
+//                        fragment.closeDialog();
+//                        if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS && activity != null) {
+//                            ShoppingCartDeleteCellEntity shoppingCartDeleteCellEntity = (ShoppingCartDeleteCellEntity) msg.obj;
+//                            fragment.mCar.setSummaryQty(shoppingCartDeleteCellEntity.getSummaryQty());
+//                            fragment.mCar.setSubTotal(shoppingCartDeleteCellEntity.getSubTotal());
+//                            fragment.mCar.setStoreCreditMessage(shoppingCartDeleteCellEntity.getStoreCreditMessage());
+//                            fragment.mCar.setGrandTotal(shoppingCartDeleteCellEntity.getGrandTotal());
+//                            fragment.mCar.setStoreCredit(shoppingCartDeleteCellEntity.getStoreCredit());
+//                            if (fragment.mCar.getStoreCredit() != null) {
+//                                fragment.gaTrackerRedeem(fragment.REDEEM);
+//                            } else {
+//                                fragment.gaTrackerRedeem(fragment.UNREDEEM);
+//                            }
+//                            fragment.initShoppingCartData(fragment.mCar, false);
+//                        } else if (activity != null) {
+//                            String errorMsg = String.valueOf(msg.obj);
+//                            if (!JToolUtils.expireHandler(activity, errorMsg, 2000)) {
+//                                JViewUtils.showErrorToast(activity, errorMsg);
+//                            }
+//                        }
+//                        break;
                 }
             }
             super.handleMessage(msg);
         }
     }
 
-    public void outofstockHandler(ErrorItemsBean errorItemsBean) {
-        //目前ErrorItemsBean 里所有的list只是暂时 拼合，以判断是否oos
-        List<String> ids = new ArrayList<String>();
-        if (errorItemsBean.getOos_ids() != null) {
-            ids.addAll(errorItemsBean.getOos_ids());
-        }
-        if (errorItemsBean.getDisabled_ids() != null) {
-            ids.addAll(errorItemsBean.getDisabled_ids());
-        }
-        if (errorItemsBean.getInsufficient_ids() != null) {
-            ids.addAll(errorItemsBean.getInsufficient_ids());
-        }
-        if (errorItemsBean.getUnapproved_ids() != null) {
-            ids.addAll(errorItemsBean.getUnapproved_ids());
-        }
-
-        for (int i = 0; i < mProducts.size(); i++) {
-            if (mProducts.get(i) instanceof ShoppingCartListEntityBody) {
-                continue;
-            }
-            ShoppingCartListEntityCell cell = (ShoppingCartListEntityCell) mProducts.get(i);
-            for (int j = 0; j < ids.size(); j++) {
-                if (cell.getId().equals(ids.get(j))) {
-                    cell.setInStock("0");
-                }
-            }
-        }
-        adapter.notifyDataSetChanged();
-    }
+//    public void outofstockHandler(ErrorItemsBean errorItemsBean) {
+//        //目前ErrorItemsBean 里所有的list只是暂时 拼合，以判断是否oos
+//        List<String> ids = new ArrayList<String>();
+//        if (errorItemsBean.getOos_ids() != null) {
+//            ids.addAll(errorItemsBean.getOos_ids());
+//        }
+//        if (errorItemsBean.getDisabled_ids() != null) {
+//            ids.addAll(errorItemsBean.getDisabled_ids());
+//        }
+//        if (errorItemsBean.getInsufficient_ids() != null) {
+//            ids.addAll(errorItemsBean.getInsufficient_ids());
+//        }
+//        if (errorItemsBean.getUnapproved_ids() != null) {
+//            ids.addAll(errorItemsBean.getUnapproved_ids());
+//        }
+//
+//        for (int i = 0; i < mProducts.size(); i++) {
+//            if (mProducts.get(i) instanceof ShoppingCartListEntityBody) {
+//                continue;
+//            }
+//            ShoppingCartListEntityCell cell = (ShoppingCartListEntityCell) mProducts.get(i);
+//            for (int j = 0; j < ids.size(); j++) {
+//                if (cell.getId().equals(ids.get(j))) {
+//                    cell.setInStock("0");
+//                }
+//            }
+//        }
+//        adapter.notifyDataSetChanged();
+//    }
 
     public void closeDialog() {
         if (mDialog != null) {
@@ -947,16 +941,16 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 voucherCodeHintMsg(VOUCHER_APPLY_HINT_HIDE, "");
                 llVoucherPrice.setVisibility(View.GONE);
             }
-            mCampaignPopText = cart.getPopupText();
-            mCampaignBanner = cart.getAndroidCampBanner();
-            if (cart.getCanUseCampaign() == 1) {
-                showCampaignProduct(campaignProductId, cart.getAndroidCampBanner(), cart.getPopupText());
-            } else {
-                campaignProductId = "";
-                mCampaignBanner = "";
-                mCampaignPopText = "";
-                hideCampaignProduct();
-            }
+//            mCampaignPopText = cart.getPopupText();
+//            mCampaignBanner = cart.getAndroidCampBanner();
+//            if (cart.getCanUseCampaign() == 1) {
+//                showCampaignProduct(campaignProductId, cart.getAndroidCampBanner(), cart.getPopupText());
+//            } else {
+//                campaignProductId = "";
+//                mCampaignBanner = "";
+//                mCampaignPopText = "";
+//                hideCampaignProduct();
+//            }
             if (isInit) {
                 if (mProducts != null) {
                     mProducts.clear();
@@ -969,14 +963,14 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                             cell.setCurrStockQty(Integer.parseInt(cell.getQty()) + cell.getStockQty() + "");
                         }
                         mProducts.add(cell);
-                        if (cell.getIsCampaignProduct() == 1) {
-                            isCampaignProduct = true;
-                            campaignProductId = cell.getProductId();
-                        }
+//                        if (cell.getIsCampaignProduct() == 1) {
+////                            isCampaignProduct = true;
+//                            campaignProductId = cell.getProductId();
+//                        }
                     }
-                    if (!isCampaignProduct) {
-                        campaignProductId = "";
-                    }
+//                    if (!isCampaignProduct) {
+//                        campaignProductId = "";
+//                    }
                     if (mProducts.size() > 0) {
                         mProducts.add(new ShoppingCartListEntityBody(ShoppingCartVerticalAdapter.TYPE_BODY));
                     }
@@ -994,24 +988,24 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             }
             //initStoreCredit
 
-            if (cart.getStoreCredit() != null) {
-                switchStoreCredit(STATUS_STORECREDIT_CANCEL);
-                llBottomStoreCredit.setVisibility(View.VISIBLE);
-                tvStoreCreditWorld.setText(cart.getStoreCredit().getTitle());
-                tvStoreCreditValue.setText("-RM " + JDataUtils.formatDouble(cart.getStoreCredit().getValue()));
-            } else {
-                switchStoreCredit(STATUS_STORECREDIT_REEDEM);
-                llBottomStoreCredit.setVisibility(View.GONE);
-            }
-
-
-            if (cart.getStoreCreditMessage() != null && GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
-                llStoreCredit.setVisibility(View.VISIBLE);
-                tvStoreCreditTitle.setText(cart.getStoreCreditMessage().getMessage());
-                tvStoreCreditPrice.setText(cart.getStoreCreditMessage().getValue());
-            } else {
-                llStoreCredit.setVisibility(View.GONE);
-            }
+//            if (cart.getStoreCredit() != null) {
+//                switchStoreCredit(STATUS_STORECREDIT_CANCEL);
+//                llBottomStoreCredit.setVisibility(View.VISIBLE);
+//                tvStoreCreditWorld.setText(cart.getStoreCredit().getTitle());
+//                tvStoreCreditValue.setText("-RM " + JDataUtils.formatDouble(cart.getStoreCredit().getValue()));
+//            } else {
+//                switchStoreCredit(STATUS_STORECREDIT_REEDEM);
+//                llBottomStoreCredit.setVisibility(View.GONE);
+//            }
+//
+//
+//            if (cart.getStoreCreditMessage() != null && GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
+//                llStoreCredit.setVisibility(View.VISIBLE);
+//                tvStoreCreditTitle.setText(cart.getStoreCreditMessage().getMessage());
+//                tvStoreCreditPrice.setText(cart.getStoreCreditMessage().getValue());
+//            } else {
+//                llStoreCredit.setVisibility(View.GONE);
+//            }
         }
 //        if (mGATrackTimeEnable) {
 //            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
@@ -1047,9 +1041,9 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         mCar.setAndroidCampBanner(bean.getAndroidCampBanner());
         mCar.setStoreCreditMessage(bean.getStoreCreditMessage());
         mCar.setStoreCredit(bean.getStoreCredit());
-        if (bean.isCampaignProduct()) {
-            campaignProductId = "";
-        }
+//        if (bean.isCampaignProduct()) {
+//            campaignProductId = "";
+//        }
         initShoppingCartData(mCar, false);
     }
 
@@ -1080,75 +1074,75 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     }
 
 
-    private final int STATUS_STORECREDIT_REEDEM = 22;
-    private final int STATUS_STORECREDIT_CANCEL = 23;
+//    private final int STATUS_STORECREDIT_REEDEM = 22;
+//    private final int STATUS_STORECREDIT_CANCEL = 23;
 
-    public void switchStoreCredit(int fromType) {
-        if (fromType == STATUS_STORECREDIT_REEDEM) {
-            tvStoreCredit.setText(mReedemStr);
-            //tvStoreCredit.setBackgroundResource(R.color.purple);
-            tvStoreCredit.setBackground(getResources().getDrawable(R.drawable.big_button_style_purple));
-            llStoreCreditHint.setVisibility(View.GONE);
-        } else {
-            tvStoreCredit.setText(mCancelStr);
-            //tvStoreCredit.setBackgroundResource(R.color.black000000);
-            tvStoreCredit.setBackground(getResources().getDrawable(R.drawable.big_button_style_black));
-            llStoreCreditHint.setVisibility(View.VISIBLE);
-        }
-    }
+//    public void switchStoreCredit(int fromType) {
+//        if (fromType == STATUS_STORECREDIT_REEDEM) {
+//            tvStoreCredit.setText(mReedemStr);
+//            //tvStoreCredit.setBackgroundResource(R.color.purple);
+//            tvStoreCredit.setBackground(getResources().getDrawable(R.drawable.big_button_style_purple));
+//            llStoreCreditHint.setVisibility(View.GONE);
+//        } else {
+//            tvStoreCredit.setText(mCancelStr);
+//            //tvStoreCredit.setBackgroundResource(R.color.black000000);
+//            tvStoreCredit.setBackground(getResources().getDrawable(R.drawable.big_button_style_black));
+//            llStoreCreditHint.setVisibility(View.VISIBLE);
+//        }
+//    }
 
-    public void initCampaignSize() {
-        int width = GemfiveApplication.getPhoneConfiguration().getScreenWidth(getActivity());
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ivUpdate.getLayoutParams();
-        params.height = (int) (width * (200 / 720.0));
-        params.width = ActionBar.LayoutParams.MATCH_PARENT;
-        ivUpdate.setLayoutParams(params);
-    }
+//    public void initCampaignSize() {
+//        int width = GemfiveApplication.getPhoneConfiguration().getScreenWidth(getActivity());
+//        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ivUpdate.getLayoutParams();
+//        params.height = (int) (width * (200 / 720.0));
+//        params.width = ActionBar.LayoutParams.MATCH_PARENT;
+//        ivUpdate.setLayoutParams(params);
+//    }
 
-    private class ImageLoadingListener implements RequestListener<String, Bitmap> {
-        @Override
-        public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
-            vProgress.setVisibility(View.GONE);
-            return false;
-        }
+//    private class ImageLoadingListener implements RequestListener<String, Bitmap> {
+//        @Override
+//        public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
+//            vProgress.setVisibility(View.GONE);
+//            return false;
+//        }
+//
+//        @Override
+//        public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+//            if (getActivity() != null) {
+//                ivUpdate.setImageBitmap(resource);
+//                vProgress.setVisibility(View.GONE);
+//                return true;
+//            }
+//            return false;
+//        }
+//    }
 
-        @Override
-        public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
-            if (getActivity() != null) {
-                ivUpdate.setImageBitmap(resource);
-                vProgress.setVisibility(View.GONE);
-                return true;
-            }
-            return false;
-        }
-    }
+//    public void showCampaignProduct(final String campaignProductId, String banner, final String popText) {
+//        vCampaign.setVisibility(View.VISIBLE);
+//        ivUpdate.setVisibility(View.VISIBLE);
+//        initCampaignSize();
+//        if (banner != null && !banner.equals(String.valueOf(ivUpdate.getTag()))) {
+//            ivUpdate.setTag(banner);
+//            JImageUtils.downloadImageFromServerListener(getActivity(), mImageLoader, ivUpdate, banner, new ImageLoadingListener());
+//        } else {
+//            vProgress.setVisibility(View.GONE);
+//        }
+//    }
 
-    public void showCampaignProduct(final String campaignProductId, String banner, final String popText) {
-        vCampaign.setVisibility(View.VISIBLE);
-        ivUpdate.setVisibility(View.VISIBLE);
-        initCampaignSize();
-        if (banner != null && !banner.equals(String.valueOf(ivUpdate.getTag()))) {
-            ivUpdate.setTag(banner);
-            JImageUtils.downloadImageFromServerListener(getActivity(), mImageLoader, ivUpdate, banner, new ImageLoadingListener());
-        } else {
-            vProgress.setVisibility(View.GONE);
-        }
-    }
-
-    public void hideCampaignProduct() {
-        vCampaign.setVisibility(View.GONE);
-        ivUpdate.setVisibility(View.GONE);
-        for (int i = 0; i < mProducts.size(); i++) {
-            if (mProducts.get(i) instanceof ShoppingCartListEntityBody) {
-                continue;
-            }
-            if (((ShoppingCartListEntityCell) mProducts.get(i)).getIsCampaignProduct() == 1) {
-                mProducts.remove(i);
-                adapter.notifyDataSetChanged();
-                break;
-            }
-        }
-    }
+//    public void hideCampaignProduct() {
+//        vCampaign.setVisibility(View.GONE);
+//        ivUpdate.setVisibility(View.GONE);
+//        for (int i = 0; i < mProducts.size(); i++) {
+//            if (mProducts.get(i) instanceof ShoppingCartListEntityBody) {
+//                continue;
+//            }
+//            if (((ShoppingCartListEntityCell) mProducts.get(i)).getIsCampaignProduct() == 1) {
+//                mProducts.remove(i);
+//                adapter.notifyDataSetChanged();
+//                break;
+//            }
+//        }
+//    }
 
 
     public void setButtonQty(int sunQty) {
@@ -1246,7 +1240,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 
     private void initAdapter() {
         mProducts = new LinkedList<>();
-
         adapter = new ShoppingCartVerticalAdapter(getActivity(), mProducts, mImageLoader, this);
         adapter.setItemOnClickListener(mItemListener);
         listView.setAdapter(adapter);
