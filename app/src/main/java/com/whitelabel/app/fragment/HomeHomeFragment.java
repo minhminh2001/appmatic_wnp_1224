@@ -23,10 +23,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
@@ -44,7 +42,6 @@ import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomDialog;
 import com.whitelabel.app.widget.CustomHomeViewPager;
 import com.whitelabel.app.widget.CustomTabCustomPageIndicator;
-import com.whitelabel.app.widget.CustomTextView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -57,9 +54,6 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     public boolean mGATrackTimeEnable = false;
     private HomeActivity homeActivity;
     private View mContainView;
-    private ImageView vHeaderBarSearch, vHeaderBarCart;
-    private RelativeLayout rlHeaderBarMenu;
-    private CustomTextView ctvHomeShoppingcartNum;
     private CustomTabCustomPageIndicator ctpiCategoryList;
     private CustomHomeViewPager chvpContainer;
     private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> categoryArrayList;
@@ -77,7 +71,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     private View layout;
     private DataHandler mHandler;
     private ProductDao productDao;
-    private View rlHome, searchHeaderBar;
+    private View rlHome;
     private View ll_error;
     public boolean firstloaded = false;
     private RequestErrorHelper requestErrorHelper;
@@ -169,18 +163,12 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         TAG = this.getClass().getSimpleName();
         mHandler = new DataHandler(getActivity(), this);
         productDao = new ProductDao(TAG, mHandler);
-        searchHeaderBar = mContainView.findViewById(R.id.searchHeaderBar);
-        searchHeaderBar.setOnClickListener(this);
         layout = mContainView.findViewById(R.id.rl_root);
         if (getArguments() != null) {
             categoryId = (String) getArguments().getSerializable("data");
         }
-        rlHeaderBarMenu = (RelativeLayout) mContainView.findViewById(R.id.rlHeaderBarMenu);
-        vHeaderBarSearch = (ImageView) mContainView.findViewById(R.id.ivHeaderSearch);
-        vHeaderBarCart = (ImageView) mContainView.findViewById(R.id.ivHeaderCart);
         ctpiCategoryList = (CustomTabCustomPageIndicator) mContainView.findViewById(R.id.ctpiCategoryList);
         chvpContainer = (CustomHomeViewPager) mContainView.findViewById(R.id.chvpContainer);
-        ctvHomeShoppingcartNum = (CustomTextView) mContainView.findViewById(R.id.ctv_home_shoppingcart_num);
         rlHome = mContainView.findViewById(R.id.rl_home);
         rlHome.setVisibility(View.GONE);
         everythingIndex = 0;
@@ -190,7 +178,6 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             showLoaderDialog();
             productDao.getBaseCategory();
         } else {
-            searchHeaderBar.setVisibility(View.VISIBLE);
             SVRAppserviceCatalogSearchReturnEntity catalogSearchReturnEntity = GemfiveApplication.getAppConfiguration().getCategoryArrayList();
             for (int i = 0; i < catalogSearchReturnEntity.getCategory().size(); i++) {
                 JLogUtils.d("Category", catalogSearchReturnEntity.getCategory().get(i).getName());
@@ -264,11 +251,9 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
                 case ProductDao.REQUEST_CATALOGSEARCH:
                     fragment.hideLoaderDialog();
                     if (msg.arg1 == ProductDao.RESPONSE_SUCCESS) {
-                        fragment.searchHeaderBar.setVisibility(View.VISIBLE);
                         fragment.firstloaded = true;
                         SVRAppserviceCatalogSearchReturnEntity searchCatalog = (SVRAppserviceCatalogSearchReturnEntity) msg.obj;
                         if (searchCatalog != null) {
-                            fragment.searchHeaderBar.setVisibility(View.VISIBLE);
                             fragment.firstloaded = true;
                             GemfiveApplication.getAppConfiguration().setCategoryArrayList(searchCatalog);
                             JStorageUtils.saveCategoryArrayList(mActivity.get(), searchCatalog);
@@ -337,9 +322,6 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
                     chvpContainer.setCurrentItem(everythingIndex);
                 }
             });
-            rlHeaderBarMenu.setOnClickListener(this);
-            vHeaderBarCart.setOnClickListener(this);
-            vHeaderBarSearch.setOnClickListener(this);
             updateShoppingCartItemCount();
         }
 //        if (mGATrackTimeEnable) {
@@ -490,24 +472,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ivHeaderCart: {
-                Intent intent = new Intent(homeActivity, HomeActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                break;
-            }
-            case R.id.ivHeaderSearch:
-            case R.id.searchHeaderBar: {
-                Intent intent = new Intent();
-                intent.setClass(homeActivity, ProductListActivity.class);
-                intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_HOME);
-                intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS);
-                homeActivity.startActivity(intent);
-                homeActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-                break;
-            }
+
         }
     }
 
