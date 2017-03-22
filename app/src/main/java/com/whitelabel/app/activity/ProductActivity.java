@@ -129,13 +129,6 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
     private ArrayList<ImageView> mProductImageView;
     private ArrayList<ImageView> mProductImageViewTips;
     public SVRAppserviceProductDetailResultReturnEntity mProductDetailBean;
-//    private int userSelectedColorPosition;
-//    private String userSelectedColorId;
-//    private String userSelectedColorSuperAttribute;
-//    private String userSelectedColorLabel;
-//    private int userSelectedSizePosition;
-//    private String userSelectedSizeId;
-//    private String userSelectedSizeSuperAttribute;
     private String userSelectedSizeLabel;
     private float userSelectedProductPriceFloat;
     private float userSelectedProductPriceOffsetFloat;
@@ -747,8 +740,6 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
         }
         mProductDao.getProductDetail(productId, sessionKey);
     }
-
-
     @Override
     public void onBackPressed() {
         getToolbar().setVisibility(View.GONE);
