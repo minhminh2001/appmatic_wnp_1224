@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#000000</color>
+    <color name="appColorPrimary">#66006e</color>
+    <color name="colorAccent">#66006e</color>
+    <color name="buttonTextColorPrimary">#ffffff</color>
+
     <color name="background">#c9c9c9</color>
     <!-- 红色 -->
     <color name="red">#D82529</color>
