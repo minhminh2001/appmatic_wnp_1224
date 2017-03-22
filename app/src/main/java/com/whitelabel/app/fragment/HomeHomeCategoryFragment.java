@@ -244,7 +244,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mGATrackTimeEnable = true;
-//        setScrollToolBarEnable(true);
+        setScrollToolBarEnable(true);
         mImageLoader = new ImageLoader(homeActivity);
         View mContentView = inflater.inflate(R.layout.fragment_home_home_category, null);
         connectionLayout = mContentView.findViewById(R.id.connectionBreaks);
