@@ -23,14 +23,10 @@ import android.widget.RelativeLayout;
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
-import com.whitelabel.app.fragment.HomeCategoryTreeFragment;
 import com.whitelabel.app.fragment.HomeHelpCenterDetailFragment;
 import com.whitelabel.app.fragment.HomeHelpCenterListFragment;
 import com.whitelabel.app.fragment.HomeHomeFragment;
 import com.whitelabel.app.fragment.HomeMyAccountFragmentV2;
-import com.whitelabel.app.fragment.HomeNotificationDetailFragment;
-import com.whitelabel.app.fragment.HomeNotificationListFragment;
-import com.whitelabel.app.fragment.HomeSelectCrditCardFragment;
 import com.whitelabel.app.fragment.HomeSettingCotentFragment;
 import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
@@ -236,16 +232,16 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpStoreCreditPage() {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
-            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_MYACCOUNT, HomeMyAccountFragmentV2.SWITCH_STORECREDITFRAGMENT);
-        } else {
-            jumpLoginActivity();
-        }
+//        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+//            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_MYACCOUNT, HomeMyAccountFragmentV2.SWITCH_STORECREDITFRAGMENT);
+//        } else {
+//            jumpLoginActivity();
+//        }
     }
 
     @Override
     protected void jumpNotificationPage() {
-        switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_NOTIFICATIONLIST, null);
+//        switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_NOTIFICATIONLIST, null);
     }
 
     @Override
@@ -281,11 +277,11 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpEditProfilePage() {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
-            jumpEditProfileActivity();
-        } else {
-            jumpLoginActivity();
-        }
+//        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+//            jumpEditProfileActivity();
+//        } else {
+//            jumpLoginActivity();
+//        }
     }
 
     @Override
@@ -316,11 +312,11 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
     }
 
-    private void jumpEditProfileActivity() {
-        Intent intent = new Intent(this, MyAccountActivity.class);
-        startActivityForResult(intent, 1000);
-        overridePendingTransition(R.anim.activity_anim1_enter1, R.anim.activity_anim1_exit1);
-    }
+//    private void jumpEditProfileActivity() {
+//        Intent intent = new Intent(this, MyAccountActivity.class);
+//        startActivityForResult(intent, 1000);
+//        overridePendingTransition(R.anim.activity_anim1_enter1, R.anim.activity_anim1_exit1);
+//    }
 
     private void addFragment(int index, Fragment fragment) {
         if (index < 0) {
@@ -351,12 +347,12 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         addFragment(FRAGMENT_TYPE_HOME_MYACCOUNT, new HomeMyAccountFragmentV2());
         addFragment(FRAGMENT_TYPE_HOME_HELPCENTERLIST, new HomeHelpCenterListFragment());
         addFragment(FRAGMENT_TYPE_HOME_HELPCENTERDETAIL, new HomeHelpCenterDetailFragment());
-        addFragment(FRAGMENT_TYPE_HOME_NOTIFICATIONLIST, new HomeNotificationListFragment());
-        addFragment(FRAGMENT_TYPE_HOME_NOTIFICATIONDETAIL, new HomeNotificationDetailFragment());
+//        addFragment(FRAGMENT_TYPE_HOME_NOTIFICATIONLIST, new HomeNotificationListFragment());
+//        addFragment(FRAGMENT_TYPE_HOME_NOTIFICATIONDETAIL, new HomeNotificationDetailFragment());
         addFragment(FRAGMENT_TYPE_HOME_SETTING, new HomeSettingCotentFragment());
         addFragment(FRAGMENT_TYPE_HOME_SHOPPINGCART, ShoppingCartVerticalFragment.newInstance(ShoppingCartBaseFragment.FROM_HOME, 0L));
-        addFragment(FRAGMENT_TYPE_HOME_CREDITCARD, HomeSelectCrditCardFragment.newInstance());
-        addFragment(FRAGMENT_TYPE_HOME_CATEGORY, new HomeCategoryTreeFragment());
+//        addFragment(FRAGMENT_TYPE_HOME_CREDITCARD, HomeSelectCrditCardFragment.newInstance());
+//        addFragment(FRAGMENT_TYPE_HOME_CATEGORY, new HomeCategoryTreeFragment());
     }
     @Override
     public void resetMenuAndListenter() {
@@ -561,16 +557,20 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                 dataentity.setHelpCenterType(5);
                 redirectToAttachedFragment(HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERDETAIL, TYPE_FRAGMENT_SWITCH_NONE, dataentity);
                 return;
-            } else if (EXTRA_REDIRECTTO_TYPE_VALUE_NOTIFICATION.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
-                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_NOTIFICATION);
-                fragmentType = FRAGMENT_TYPE_HOME_NOTIFICATIONLIST;
-            } else if (EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
+            }
+//            else if (EXTRA_REDIRECTTO_TYPE_VALUE_NOTIFICATION.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
+//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_NOTIFICATION);
+//                fragmentType = FRAGMENT_TYPE_HOME_NOTIFICATIONLIST;
+//            }
+            else if (EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SHOPPINGCART);
                 fragmentType = FRAGMENT_TYPE_HOME_SHOPPINGCART;
-            } else if (EXTRA_REDIRECTTO_TYPE_VALUE_CATEGORYTREE.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
-                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_CATEGORYTREE);
-                fragmentType = FRAGMENT_TYPE_HOME_CATEGORY;
-            } else if (EXTRA_REDIRECTTO_TYPE_VALUE_SETTING.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
+            }
+//            else if (EXTRA_REDIRECTTO_TYPE_VALUE_CATEGORYTREE.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
+//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_CATEGORYTREE);
+//                fragmentType = FRAGMENT_TYPE_HOME_CATEGORY;
+//            }
+            else if (EXTRA_REDIRECTTO_TYPE_VALUE_SETTING.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SETTING);
                 fragmentType = FRAGMENT_TYPE_HOME_SETTING;
             } else if (EXTRA_REDIRECTTO_TYPE_VALUE_START.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
@@ -578,15 +578,18 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                 startActivity(startIntent);
                 finish();
                 return;
-            } else if (EXTRA_REDIRECTTO_TYPE_VALUE_STORECREDIT.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
-                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_STORECREDITS);
-                serializable = HomeMyAccountFragmentV2.SWITCH_STORECREDITFRAGMENT;
-                fragmentType = FRAGMENT_TYPE_HOME_MYACCOUNT;
-            } else if (EXTRA_REDIRECTTO_TYPE_VALUE_EDITPROFILE.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
-                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
-                jumpEditProfileActivity();
-                fragmentType = FRAGMENT_TYPE_HOME_HOME;
-            } else {
+            }
+//            else if (EXTRA_REDIRECTTO_TYPE_VALUE_STORECREDIT.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
+//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_STORECREDITS);
+//                serializable = HomeMyAccountFragmentV2.SWITCH_STORECREDITFRAGMENT;
+//                fragmentType = FRAGMENT_TYPE_HOME_MYACCOUNT;
+//            }
+//            else if (EXTRA_REDIRECTTO_TYPE_VALUE_EDITPROFILE.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
+//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
+//                jumpEditProfileActivity();
+//                fragmentType = FRAGMENT_TYPE_HOME_HOME;
+//            }
+            else {
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
                 serializable = intent.getStringExtra("categoryId");
                 fragmentType = FRAGMENT_TYPE_HOME_HOME;

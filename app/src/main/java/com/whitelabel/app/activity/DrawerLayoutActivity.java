@@ -88,15 +88,15 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 }, DELAY);
                 break;
             case R.id.rl_drawer_categorytree:
-                drawerLayout.closeDrawer(Gravity.LEFT);
-                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_CATEGORYTREE);
-                baseHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-//                        getToolbar().getMenu().clear();
-                        jumpCategoryTreePage();
-                    }
-                }, DELAY);
+//                drawerLayout.closeDrawer(Gravity.LEFT);
+//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_CATEGORYTREE);
+//                baseHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+////                        getToolbar().getMenu().clear();
+//                        jumpCategoryTreePage();
+//                    }
+//                }, DELAY);
                 break;
             case R.id.rl_drawer_shoppingcart:
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SHOPPINGCART);
@@ -111,28 +111,28 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 
                 break;
             case R.id.rl_drawer_notification:
-                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_NOTIFICATION);
-                drawerLayout.closeDrawer(Gravity.LEFT);
-                baseHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-//                        getToolbar().getMenu().clear();
-                        jumpNotificationPage();
-                    }
-                }, DELAY);
+//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_NOTIFICATION);
+//                drawerLayout.closeDrawer(Gravity.LEFT);
+//                baseHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+////                        getToolbar().getMenu().clear();
+//                        jumpNotificationPage();
+//                    }
+//                }, DELAY);
                 break;
             case R.id.rl_drawer_wishlist:
-                if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this)) {
-                    switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_WISHLIST);
-                }
-                drawerLayout.closeDrawer(Gravity.LEFT);
-                baseHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-//                        getToolbar().getMenu().clear();
-                        jumpWistListPage();
-                    }
-                }, DELAY);
+//                if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this)) {
+//                    switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_WISHLIST);
+//                }
+//                drawerLayout.closeDrawer(Gravity.LEFT);
+//                baseHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+////                        getToolbar().getMenu().clear();
+//                        jumpWistListPage();
+//                    }
+//                }, DELAY);
 
                 break;
             case R.id.rl_drawer_order:
@@ -209,27 +209,27 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 break;
             case R.id.rl_drawer_store_credit:
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_STORECREDITS);
-                drawerLayout.closeDrawer(Gravity.LEFT);
-                baseHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
-//                        getToolbar().getMenu().clear();
-                            jumpStoreCreditPage();
-                    }
-                }, DELAY);
+//                drawerLayout.closeDrawer(Gravity.LEFT);
+//                baseHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
+////                        getToolbar().getMenu().clear();
+//                            jumpStoreCreditPage();
+//                    }
+//                }, DELAY);
                 break;
             case R.id.ll_profile:
-                if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
-                    switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
-                drawerLayout.closeDrawer(Gravity.LEFT);
-                baseHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-//                            getToolbar().getMenu().clear();
-                        jumpEditProfilePage();
-                    }
-                }, DELAY);
+//                if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
+//                    switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
+//                drawerLayout.closeDrawer(Gravity.LEFT);
+//                baseHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+////                            getToolbar().getMenu().clear();
+//                        jumpEditProfilePage();
+//                    }
+//                }, DELAY);
                 break;
         }
     }
@@ -450,7 +450,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
             if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
                 rlDrawerOrder.setVisibility(View.VISIBLE);
                 rlDrawerAddress.setVisibility(View.VISIBLE);
-                rlDrawerSotreCredit.setVisibility(View.VISIBLE);
+//                rlDrawerSotreCredit.setVisibility(View.VISIBLE);
                 String username = "";
                 if (!TextUtils.isEmpty(GemfiveApplication.getAppConfiguration().getUser().getFirstName())) {
                     username += GemfiveApplication.getAppConfiguration().getUser().getFirstName() + " ";

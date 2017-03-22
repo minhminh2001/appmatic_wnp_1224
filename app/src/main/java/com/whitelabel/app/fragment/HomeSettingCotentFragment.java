@@ -118,25 +118,25 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
                 }
             }
         });
-        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String newsletterSubscribed;
-                if(GemfiveApplication.getAppConfiguration().isSignIn(homeActivity)) {
-                    String session_key = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
-                    if (isChecked) {
-                        GemfiveApplication.getAppConfiguration().getUser().setNewsletterSubscribed(1);
-                        GemfiveApplication.getAppConfiguration().updateDate(homeActivity, GemfiveApplication.getAppConfiguration().getUser());
-                        newsletterSubscribed = "1";
-                    } else {
-                        GemfiveApplication.getAppConfiguration().getUser().setNewsletterSubscribed(0);
-                        newsletterSubscribed = "0";
-                        GemfiveApplication.getAppConfiguration().updateDate(homeActivity, GemfiveApplication.getAppConfiguration().getUser());
-                    }
-                    mOtherDao.changeSubscribed(session_key,newsletterSubscribed);
-                }
-            }
-        });
+//        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                String newsletterSubscribed;
+//                if(GemfiveApplication.getAppConfiguration().isSignIn(homeActivity)) {
+//                    String session_key = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+//                    if (isChecked) {
+//                        GemfiveApplication.getAppConfiguration().getUser().setNewsletterSubscribed(1);
+//                        GemfiveApplication.getAppConfiguration().updateDate(homeActivity, GemfiveApplication.getAppConfiguration().getUser());
+//                        newsletterSubscribed = "1";
+//                    } else {
+//                        GemfiveApplication.getAppConfiguration().getUser().setNewsletterSubscribed(0);
+//                        newsletterSubscribed = "0";
+//                        GemfiveApplication.getAppConfiguration().updateDate(homeActivity, GemfiveApplication.getAppConfiguration().getUser());
+//                    }
+//                    mOtherDao.changeSubscribed(session_key,newsletterSubscribed);
+//                }
+//            }
+//        });
     //    SharedPreferences share=settingsActivity.getSharedPreferences("session_key",Activity.MODE_PRIVATE);
     }
 
@@ -158,13 +158,13 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
             }
             switch (msg.what){
                 case OtherDao.REQUEST_SUBSCRIBER:
-                    if(msg.arg1==OtherDao.RESPONSE_SUCCESS){
-                    }else{
-                        String errorMsg= (String) msg.obj;
-                        if(!JToolUtils.expireHandler(mActivity.get(),errorMsg,1000)){
-                            Toast.makeText(mActivity.get(),errorMsg+"",Toast.LENGTH_SHORT).show();
-                        }
-                    }
+//                    if(msg.arg1==OtherDao.RESPONSE_SUCCESS){
+//                    }else{
+//                        String errorMsg= (String) msg.obj;
+//                        if(!JToolUtils.expireHandler(mActivity.get(),errorMsg,1000)){
+//                            Toast.makeText(mActivity.get(),errorMsg+"",Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
                     break;
                 case OtherDao.REQUEST_LOGOUT:
                     if (mFragment.get().mDialog != null) {

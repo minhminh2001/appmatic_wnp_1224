@@ -103,10 +103,6 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
             if (addressFragment != null) {
                 getChildFragmentManager().beginTransaction().remove(addressFragment).commitAllowingStateLoss();
             }
-            Fragment creditFragment = getFragmentManager().findFragmentByTag(TAG_STORECREDIT);
-            if (creditFragment != null) {
-                getChildFragmentManager().beginTransaction().remove(creditFragment).commitAllowingStateLoss();
-            }
         } catch (Exception ex) {
             ex.getStackTrace();
         }
@@ -117,9 +113,7 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         //setCurrentPosition 会触发changePageListener，会调用两遍onActivityCreated,需要注意
          if (SWITCH_ADDRESSFRAGMENT.equalsIgnoreCase(type)) {
             ctpiCategoryList.setCurrentPosition(1);
-        } else if (SWITCH_STORECREDITFRAGMENT.equals(type)) {
-            ctpiCategoryList.setCurrentPosition(2);
-        } else {
+        }  else {
             ctpiCategoryList.setCurrentPosition(0);
             //默认为 wish item,所以setCurrentPosition 不会触发changePageListener，这里要手动调用
             switchChildFragment(TAG_ORDERLIST, refresh);
@@ -141,10 +135,6 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
                 mFragmentAddresslist = new HomeMyAccountAddressBookFragment();
                 currFragment = mFragmentAddresslist;
                 transaction.add(R.id.frame, mFragmentAddresslist, tag);
-            } else if (tag.equals(TAG_STORECREDIT)) {
-                mFragmentStorecredit = HomeStoreCreditFragment.newInstance();
-                currFragment = mFragmentStorecredit;
-                transaction.add(R.id.frame, mFragmentStorecredit, tag);
             }
         } else {
             ((MyAccountFragmentRefresh) currFragment).refresh(refresh);
@@ -161,9 +151,6 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         if (mFragmentAddresslist != null) {
             transaction.hide(mFragmentAddresslist);
         }
-        if (mFragmentStorecredit != null) {
-            transaction.hide(mFragmentStorecredit);
-        }
     }
 
 
@@ -179,7 +166,6 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         List<String> myAccountMenuTitle = new ArrayList<>();
         myAccountMenuTitle.add(getResources().getString(R.string.home_myaccount_header_orders));
         myAccountMenuTitle.add(getResources().getString(R.string.home_myaccount_header_addressbook));
-        myAccountMenuTitle.add(getResources().getString(R.string.home_account_store_credit));
         ctpiCategoryList.setTitles(myAccountMenuTitle);
         ctpiCategoryList.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -194,9 +180,6 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
                 } else if (position == 1) {
                     homeActivity.switchMenu(HomeCommonCallback.MENU_ADDRESS);
                     switchChildFragment(TAG_ADDRESSLIST, false);
-                } else if (position == 2) {
-                    homeActivity.switchMenu(HomeCommonCallback.MENU_STORECREDITS);
-                    switchChildFragment(TAG_STORECREDIT, false);
                 }
 
             }
