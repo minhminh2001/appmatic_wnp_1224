@@ -422,7 +422,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                         firstName.setHint("");
                         firstNameText.startAnimation(set);
                     }else{
-                        firstNameText2.setTextColor(getResources().getColor(R.color.blue5097DA));
+                        firstNameText2.setTextColor(getResources().getColor(R.color.colorAccent));
                     }
                     img1.setVisibility(View.INVISIBLE);
                     firstName.addTextChangedListener(new TextWatcher() {
@@ -455,7 +455,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                         lastName.setHint("");
                         lastNameText.startAnimation(set);
                     }else{
-                        lastNameText2.setTextColor(getResources().getColor(R.color.blue5097DA));
+                        lastNameText2.setTextColor(getResources().getColor(R.color.colorAccent));
                     }
                     img2.setVisibility(View.INVISIBLE);
 //                    img2_error.setVisibility(View.INVISIBLE);
@@ -489,7 +489,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                         email.setHint("");
                         emailText.startAnimation(set);
                     }else{
-                        emailText2.setTextColor(getResources().getColor(R.color.blue5097DA));
+                        emailText2.setTextColor(getResources().getColor(R.color.colorAccent));
                     }
                     img3.setVisibility(View.INVISIBLE);
 //                    img3_error.setVisibility(View.INVISIBLE);
@@ -522,7 +522,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                         password.setHint("");
                         passwordText.startAnimation(set);
                     }else{
-                        passwordText2.setTextColor(getResources().getColor(R.color.blue5097DA));
+                        passwordText2.setTextColor(getResources().getColor(R.color.colorAccent));
                     }
                     img4.setVisibility(View.INVISIBLE);
 //                    img4_error.setVisibility(View.INVISIBLE);
@@ -556,7 +556,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                         re_password.setHint("");
                         re_passwordText.startAnimation(set);
                     }else{
-                        re_passwordText2.setTextColor(getResources().getColor(R.color.blue5097DA));
+                        re_passwordText2.setTextColor(getResources().getColor(R.color.colorAccent));
                     }
                     img5.setVisibility(View.INVISIBLE);
 //                    img5_error.setVisibility(View.INVISIBLE);

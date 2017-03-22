@@ -283,7 +283,7 @@ public class LoginRegisterResetPassFragment extends Fragment implements View.OnC
             email.setHint("");
             email_text.startAnimation(set);
         }else {
-            email_text2.setTextColor(getResources().getColor(R.color.blue5097DA));
+            email_text2.setTextColor(getResources().getColor(R.color.colorAccent));
             email_text2.setVisibility(View.VISIBLE);
         }
     }

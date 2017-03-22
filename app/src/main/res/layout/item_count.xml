@@ -23,7 +23,7 @@
         android:text=""
         android:visibility="gone"
         android:gravity="center"
-        android:background="@drawable/shape_oval_homepage_shoppingcart_num"
+        android:background="@drawable/bg_cart_number"
         android:textColor="@color/whiteFFFFFF"
         android:textSize="10sp"/>
 </RelativeLayout>

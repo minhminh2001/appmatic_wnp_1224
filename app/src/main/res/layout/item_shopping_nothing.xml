@@ -37,7 +37,7 @@
         android:gravity="center"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:background="@drawable/button_style_purple"
+        android:background="@drawable/big_button_style_config"
         android:textColor="@color/whiteFFFFFF"
         android:textSize="16sp"
         android:text="@string/shopping_cart_nothing_bottom_button"/>

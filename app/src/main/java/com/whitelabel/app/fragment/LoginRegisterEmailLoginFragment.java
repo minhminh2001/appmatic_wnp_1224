@@ -956,7 +956,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         email.setHint("");
                         email_text.startAnimation(set);
                     } else {
-                        email_text2.setTextColor(getResources().getColor(R.color.blue5097DA));
+                        email_text2.setTextColor(getResources().getColor(R.color.colorAccent));
                     }
 
                     break;
@@ -972,7 +972,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         password.setHint("");
                         password_text.startAnimation(set);
                     } else {
-                        password_text2.setTextColor(getResources().getColor(R.color.blue5097DA));
+                        password_text2.setTextColor(getResources().getColor(R.color.colorAccent));
                     }
 
                     break;

@@ -92,6 +92,7 @@
 
     <ImageView
         android:id="@+id/iv_bottom_slideto_top"
+        android:visibility="gone"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignParentRight="true"

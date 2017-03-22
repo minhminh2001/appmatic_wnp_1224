@@ -29,7 +29,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.molpay.molpayxdk.MOLPayActivity;
-import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.DialogProductAdapter;
 import com.whitelabel.app.application.GemfiveApplication;
@@ -66,7 +65,6 @@ import com.whitelabel.app.widget.MaterialDialog;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
     public Long mGATrackCheckoutTimeStart = 0L;
@@ -609,7 +607,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     public void setButtonEnable(boolean enable) {
         btnContinue.setEnabled(enable);
         if (enable) {
-            btnContinue.setBackgroundResource(R.drawable.big_button_style_purple);
+            btnContinue.setBackgroundResource(R.drawable.big_button_style_config);
         } else {
             btnContinue.setBackgroundResource(R.drawable.big_button_style_b8);
         }

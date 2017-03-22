@@ -244,7 +244,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mGATrackTimeEnable = true;
-        setScrollToolBarEnable(true);
+//        setScrollToolBarEnable(true);
         mImageLoader = new ImageLoader(homeActivity);
         View mContentView = inflater.inflate(R.layout.fragment_home_home_category, null);
         connectionLayout = mContentView.findViewById(R.id.connectionBreaks);
@@ -252,7 +252,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
         tryAgain = (LinearLayout) mContentView.findViewById(R.id.try_again);
         mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.recyclerView1);
         refreshLayout = (SwipeRefreshLayout) mContentView.findViewById(R.id.swipe_container);
-        refreshLayout.setColorSchemeResources(R.color.purple660070);
+        refreshLayout.setColorSchemeResources(R.color.colorAccent);
         refreshLayout.setOnRefreshListener(this);
         tryAgain.setOnClickListener(this);
         isPrepared = true;

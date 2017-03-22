@@ -431,7 +431,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                     }else{
                         clearCheckFirst.setVisibility(View.GONE);
                     }
-                    tvFirstnameAnim.setTextColor(getResources().getColor(R.color.label_active));
+                    tvFirstnameAnim.setTextColor(getResources().getColor(R.color.colorAccent));
                     tvFirstnameAnim.startAnimation(getHintAnimation(tvFirstnameAnim, "First Name"));
                     etFirstname.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -469,7 +469,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                     }else {
                         clearCheckLast.setVisibility(View.GONE);
                     }
-                    tvLastnameAnim.setTextColor(getResources().getColor(R.color.label_active));
+                    tvLastnameAnim.setTextColor(getResources().getColor(R.color.colorAccent));
                     tvLastnameAnim.startAnimation(getHintAnimation(tvLastnameAnim, "Last Name"));
                     etLastname.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -506,7 +506,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                     }else {
                         clearCheckAddress1.setVisibility(View.INVISIBLE);
                     }
-                    tvAddressLine1Anim.setTextColor(getResources().getColor(R.color.label_active));
+                    tvAddressLine1Anim.setTextColor(getResources().getColor(R.color.colorAccent));
                     tvAddressLine1Anim.startAnimation(getHintAnimation(tvAddressLine1Anim, "Address 1"));
                     etAddressLine1.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -545,7 +545,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                         clearCheckAddress2.setVisibility(View.INVISIBLE);
                     }
                     tvAddressLine2Anim.setVisibility(View.VISIBLE);
-                    tvAddressLine2Anim.setTextColor(getResources().getColor(R.color.label_active));
+                    tvAddressLine2Anim.setTextColor(getResources().getColor(R.color.colorAccent));
                     tvAddressLine2Anim.startAnimation(getHintAnimation(tvAddressLine2Anim, "Address 2 (Optional)"));
                     etAddressLine2.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -583,7 +583,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                     }else {
                         clearCheckCode.setVisibility(View.INVISIBLE);
                     }
-                    tvPostCode.setTextColor(getResources().getColor(R.color.label_active));
+                    tvPostCode.setTextColor(getResources().getColor(R.color.colorAccent));
                     tvPostCode.startAnimation(getHintAnimation(tvPostCode, "Postal Code"));
                 } else {
                     rl_checkaddadd_postcode.setBottomLineActive(false);
@@ -611,7 +611,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                     }else {
                         clearCheckCity.setVisibility(View.GONE);
                     }
-                    tvCityAnim.setTextColor(getResources().getColor(R.color.label_active));
+                    tvCityAnim.setTextColor(getResources().getColor(R.color.colorAccent));
                     tvCityAnim.startAnimation(getHintAnimation(tvCityAnim, "City"));
                     etShippingCity.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -656,7 +656,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                     }else {
                         clearCheckPhone.setVisibility(View.INVISIBLE);
                     }
-                    tvPhone.setTextColor(getResources().getColor(R.color.label_active));
+                    tvPhone.setTextColor(getResources().getColor(R.color.colorAccent));
                     tvPhone.startAnimation(getHintAnimation(tvPhone, getResources().getString(R.string.eg123)));
                     etPhone.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -735,7 +735,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
         switch (v.getId()) {
             case R.id.arrow_checkout_shipping_select_state:
             case R.id.et_checkout_shipping_state:
-//                tvStateAnim.setTextColor(getResources().getColor(R.color.label_active));
+//                tvStateAnim.setTextColor(getResources().getColor(R.color.colorAccent));
 //                tvStateAnim.startAnimation(getHintAnimation(tvStateAnim, "State"));
 //                etShippingState.setFocusable(true);
 //                etShippingState.requestFocus();
@@ -743,7 +743,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                 break;
             case R.id.arrow_checkout_shipping_select_country:
             case R.id.et_checkout_shipping_country:
-                tv_country_anim.setTextColor(getResources().getColor(R.color.label_active));
+                tv_country_anim.setTextColor(getResources().getColor(R.color.colorAccent));
                 tv_country_anim.startAnimation(getHintAnimation(tv_country_anim, "Country"));
                 etShippingCountry.setFocusable(true);
                 etShippingCountry.requestFocus();
@@ -960,7 +960,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                 }, 100);
 
                 tv.setText(hintText);
-                tv.setTextColor(getResources().getColor(R.color.purple));
+                tv.setTextColor(getResources().getColor(R.color.colorAccent));
             }
 
             @Override

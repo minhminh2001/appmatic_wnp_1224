@@ -95,7 +95,7 @@
             android:layout_height="@dimen/button_touch_height"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="17dp"
-            android:background="@drawable/big_button_style_purple"
+            android:background="@drawable/big_button_style_config"
             android:gravity="center"
             android:paddingBottom="11dp"
             android:paddingTop="11dp"

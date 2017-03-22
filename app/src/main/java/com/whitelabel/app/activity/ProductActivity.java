@@ -67,6 +67,7 @@ import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
+import com.whitelabel.app.utils.ColorUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -601,7 +602,8 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
         initToolBar("");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //toolBar变色回调
-        toolBarAlphaBehavior = new ToolBarAlphaBehavior(getBaseContext(), toolbar, "000000", new ToolBarAlphaBehavior.CallBack() {
+        String color = ColorUtils.toHexEncoding(getResources().getColor(R.color.colorPrimary)).substring(2);
+        toolBarAlphaBehavior = new ToolBarAlphaBehavior(getBaseContext(), toolbar, color, new ToolBarAlphaBehavior.CallBack() {
             @Override
             public void callBack(int color) {
                 //状态bar颜色
@@ -1674,7 +1676,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
             ctvAddToCart.setText(getString(R.string.product_detail_addtocart));
             ctvAddToCart.setEnabled(true);
             mLLAddToCart.setEnabled(true);
-            mLLAddToCart.setBackgroundResource(R.drawable.big_button_style_purple);
+            mLLAddToCart.setBackgroundResource(R.drawable.big_button_style_config);
             RelativeLayout.LayoutParams bottomBarLp = (RelativeLayout.LayoutParams) llBottomBar.getLayoutParams();
             long count = getProductCount();
             JLogUtils.d(TAG, "maxSaleQty=" + maxSaleQty + "-------------stockqty=" + stockqty);

@@ -148,7 +148,7 @@
                 android:right="@dimen/multi_switch_button_thumb_solid_inset"
                 android:top="@dimen/multi_switch_button_thumb_solid_inset">
                 <shape android:shape="oval">
-                    <solid android:color="@color/multi_switch_button_solid_checked"/>
+                    <solid android:color="@color/colorAccent"/>
                 </shape>
             </item>
         </layer-list>
@@ -250,7 +250,7 @@
                 android:right="@dimen/multi_switch_button_thumb_solid_inset"
                 android:top="@dimen/multi_switch_button_thumb_solid_inset">
                 <shape android:shape="oval">
-                    <solid android:color="@color/multi_switch_button_solid_checked"/>
+                    <solid android:color="@color/colorAccent"/>
                 </shape>
             </item>
         </layer-list>

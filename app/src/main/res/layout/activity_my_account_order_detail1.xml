@@ -521,7 +521,7 @@
                 android:id="@+id/tv_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:background="@drawable/big_button_style_purple"
+                android:background="@drawable/big_button_style_config"
                 android:visibility="gone"
                 android:gravity="center"
                 android:text="@string/order_detail_confirm"

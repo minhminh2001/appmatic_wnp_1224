@@ -208,7 +208,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 }, DELAY);
                 break;
             case R.id.rl_drawer_store_credit:
-                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_STORECREDITS);
+//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_STORECREDITS);
 //                drawerLayout.closeDrawer(Gravity.LEFT);
 //                baseHandler.postDelayed(new Runnable() {
 //                    @Override
@@ -220,16 +220,16 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 //                }, DELAY);
                 break;
             case R.id.ll_profile:
-//                if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
-//                    switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
-//                drawerLayout.closeDrawer(Gravity.LEFT);
-//                baseHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-////                            getToolbar().getMenu().clear();
-//                        jumpEditProfilePage();
-//                    }
-//                }, DELAY);
+                if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
+                    switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                baseHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+//                            getToolbar().getMenu().clear();
+                        jumpEditProfilePage();
+                    }
+                }, DELAY);
                 break;
         }
     }

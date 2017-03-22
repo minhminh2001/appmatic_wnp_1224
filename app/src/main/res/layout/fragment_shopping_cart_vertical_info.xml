@@ -103,7 +103,7 @@
                     android:layout_width="80dp"
                     android:layout_height="42dp"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/big_button_style_purple"
+                    android:background="@drawable/big_button_style_config"
                     android:gravity="center"
                     android:text="@string/APPLY"
                     android:textColor="@color/whiteFFFFFF"
@@ -218,7 +218,7 @@
                     <!--android:layout_width="80dp"-->
                     <!--android:layout_height="42dp"-->
                     <!--android:layout_centerVertical="true"-->
-                    <!--android:background="@drawable/big_button_style_purple"-->
+                    <!--android:background="@drawable/big_button_style_config"-->
                     <!--android:gravity="center"-->
                     <!--android:text="@string/redeem"-->
                     <!--android:textColor="@color/whiteFFFFFF"-->

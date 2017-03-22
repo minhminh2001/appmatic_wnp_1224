@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Build;
@@ -95,7 +94,7 @@ public class CircularProgressView extends View {
             TypedValue t = new TypedValue();
             getContext().getTheme().resolveAttribute(accentColor, t, true);
 //            color = t.data;
-            color= Color.parseColor("#66006E");
+            color= getContext().getResources().getColor(R.color.colorAccent);
         }
         // If using native accentColor (SDK >21)
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

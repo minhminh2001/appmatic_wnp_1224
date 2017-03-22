@@ -148,7 +148,7 @@ public class ShoppingCartCampaignAdapter extends BaseAdapter {
          */
         if (1 == entity.getInStock() && !"0".equals(entity.getAvailability())) {//In stock
             viewHolder.btnAddToCart.setText(context.getResources().getString(R.string.product_detail_addtocart));
-            viewHolder.btnAddToCart.setBackground(GemfiveApplication.getInstance().getResources().getDrawable(R.drawable.big_button_style_purple));
+            viewHolder.btnAddToCart.setBackground(GemfiveApplication.getInstance().getResources().getDrawable(R.drawable.big_button_style_config));
             viewHolder.btnAddToCart.setEnabled(true);
         } else {//Out of stock
             viewHolder.btnAddToCart.setText(context.getResources().getString(R.string.campaign_item_soldout));

@@ -108,7 +108,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
 
         tryAgain.setOnClickListener(this);
         swipeRefrshLayout.setOnRefreshListener(this);
-        swipeRefrshLayout.setColorSchemeResources(R.color.purple660070);
+        swipeRefrshLayout.setColorSchemeResources(R.color.colorAccent);
         return view;
     }
 

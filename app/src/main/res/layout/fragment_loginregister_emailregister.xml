@@ -66,7 +66,7 @@
                                 android:layout_marginLeft="@dimen/table_margain_left"
                                 android:text="@string/first_name"
                                 android:textSize="@dimen/labelTextFontSize"
-                                android:textColor="@color/label_active"
+                                android:textColor="@color/colorAccent"
                                 android:visibility="invisible" />
                             <RelativeLayout
                                 android:layout_below="@+id/firstName_text2"
@@ -135,7 +135,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:text="@string/last_name"
                                 android:textSize="@dimen/labelTextFontSize"
-                                android:textColor="@color/label_active"
+                                android:textColor="@color/colorAccent"
                                 android:visibility="invisible" />
                             <RelativeLayout
                                 android:layout_below="@+id/lastName_text2"
@@ -263,7 +263,7 @@
                         android:layout_marginLeft="@dimen/table_margain_left"
                         android:text="@string/enter_email_address"
                         android:textSize="@dimen/labelTextFontSize"
-                        android:textColor="@color/label_active"
+                        android:textColor="@color/colorAccent"
                         android:visibility="invisible" />
 
                     <com.whitelabel.app.widget.CustomTextView
@@ -333,7 +333,7 @@
                         android:layout_marginLeft="@dimen/table_margain_left"
                         android:text="@string/enter_password"
                         android:textSize="@dimen/labelTextFontSize"
-                        android:textColor="@color/label_active"
+                        android:textColor="@color/colorAccent"
                         android:visibility="invisible" />
 
                     <com.whitelabel.app.widget.CustomTextView
@@ -403,7 +403,7 @@
                         android:layout_marginLeft="@dimen/table_margain_left"
                         android:text="@string/retype_password"
                         android:textSize="@dimen/labelTextFontSize"
-                        android:textColor="@color/label_active"
+                        android:textColor="@color/colorAccent"
                         android:visibility="invisible" />
 
                     <com.whitelabel.app.widget.CustomTextView
@@ -439,7 +439,7 @@
                     <com.whitelabel.app.widget.CustomCheckBox
                         android:id="@+id/checkbox2"
                         android:layout_centerVertical="true"
-                        imaginato:color_checked="@color/color_checkbox_checked"
+                        imaginato:color_checked="@color/colorAccent"
                         imaginato:color_unchecked_stroke="@color/color_checkbox_unchecked"
                         android:layout_width="24dp"
                         android:layout_height="24dp"/>
@@ -475,7 +475,7 @@
                     android:layout_height="48dp"
                     android:layout_below="@+id/relative6"
                     android:layout_marginTop="42dp"
-                    android:background="@drawable/button_style_purple"
+                    android:background="@drawable/big_button_style_config"
                     android:text="@string/register"
                     android:textColor="@color/whiteFFFFFF"
                     android:textSize="16sp"

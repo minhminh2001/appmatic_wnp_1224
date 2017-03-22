@@ -1,11 +1,9 @@
 package com.whitelabel.app.fragment;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,21 +31,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductActivity;
-import com.whitelabel.app.activity.ShoppingCartCampaignActivity;
 import com.whitelabel.app.adapter.ShoppingCartVerticalAdapter;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.callback.MaterialDialogCallback;
 import com.whitelabel.app.callback.ShoppingCartAdapterCallback;
 import com.whitelabel.app.dao.ShoppingCarDao;
-import com.whitelabel.app.model.ErrorItemsBean;
 import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.ShoppingCartDeleteCellEntity;
@@ -60,7 +54,6 @@ import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JStorageUtils;
@@ -71,9 +64,7 @@ import com.whitelabel.app.utils.SoftInputShownUtil;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -334,7 +325,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         requestErrorHelper = new RequestErrorHelper(getContext(), connectionBreak);
         btnTry = (LinearLayout) view.findViewById(R.id.try_again);
         swipeRefrshLayout = (CustomSwipefreshLayout) view.findViewById(R.id.swipe_container);
-        swipeRefrshLayout.setColorSchemeResources(R.color.purple660070);
+        swipeRefrshLayout.setColorSchemeResources(R.color.colorAccent);
         swipeRefrshLayout.setOnRefreshListener(this);
         llBody.setFocusable(true);
         llBody.setFocusableInTouchMode(true);
@@ -1060,7 +1051,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     public void switchVoucheStatus(String code, int type) {
         if (STATUS_VOUCHERCODE_APPLY == type) {
             tvApply.setText(mApplyStr);
-            tvApply.setBackground(getResources().getDrawable(R.drawable.big_button_style_purple));
+            tvApply.setBackground(getResources().getDrawable(R.drawable.big_button_style_config));
             llApplyAnim.setVisibility(View.GONE);
             etVoucherApply.setEnabled(true);
             etVoucherApply.setText(voucherCode);
@@ -1081,7 +1072,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 //        if (fromType == STATUS_STORECREDIT_REEDEM) {
 //            tvStoreCredit.setText(mReedemStr);
 //            //tvStoreCredit.setBackgroundResource(R.color.purple);
-//            tvStoreCredit.setBackground(getResources().getDrawable(R.drawable.big_button_style_purple));
+//            tvStoreCredit.setBackground(getResources().getDrawable(R.drawable.big_button_style_config));
 //            llStoreCreditHint.setVisibility(View.GONE);
 //        } else {
 //            tvStoreCredit.setText(mCancelStr);

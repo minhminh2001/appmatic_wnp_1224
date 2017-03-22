@@ -80,7 +80,7 @@
                                 android:layout_marginLeft="@dimen/table_margain_left"
                                 android:text="@string/first_name"
                                 android:textSize="@dimen/labelTextFontSize"
-                                android:textColor="@color/label_active"
+                                android:textColor="@color/colorAccent"
                                 android:visibility="invisible" />
                             <RelativeLayout
                                 android:layout_below="@+id/ctv_addaddress_firstName_text2"
@@ -142,7 +142,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:text="@string/last_name"
                                 android:textSize="@dimen/labelTextFontSize"
-                                android:textColor="@color/label_active"
+                                android:textColor="@color/colorAccent"
                                 android:visibility="invisible" />
                             <RelativeLayout
                                 android:layout_below="@+id/ctv_addaddress_lastName_text2"
@@ -259,7 +259,7 @@
                         android:layout_marginBottom="@dimen/table_lable_ani_margain_bottom"
                         android:layout_marginLeft="@dimen/table_margain_left"
                         android:textSize="@dimen/labelTextFontSize"
-                        android:textColor="@color/label_active"
+                        android:textColor="@color/colorAccent"
                         android:id="@+id/ctv_addaddresss_country_text"
                         android:layout_below="@+id/ctv_addaddresss_country_text2"
                         android:visibility="invisible"/>
@@ -322,7 +322,7 @@
                         android:layout_below="@+id/ctv_addaddresss_address1_text2"
                         android:layout_marginLeft="@dimen/table_margain_left"
                         android:textSize="@dimen/labelTextFontSize"
-                        android:textColor="@color/label_active"
+                        android:textColor="@color/colorAccent"
                         android:id="@+id/ctv_addaddresss_address1_text1"
                         android:visibility="invisible"/>
                     <com.whitelabel.app.widget.CustomTextView
@@ -382,7 +382,7 @@
                         android:layout_below="@+id/ctv_addaddresss_address2_text2"
                         android:layout_marginLeft="@dimen/table_margain_left"
                         android:textSize="@dimen/labelTextFontSize"
-                        android:textColor="@color/label_active"
+                        android:textColor="@color/colorAccent"
                         android:id="@+id/ctv_addaddresss_address2_text1"
                         android:visibility="invisible"/>
                     <com.whitelabel.app.widget.CustomTextView
@@ -444,7 +444,7 @@
                         android:layout_below="@+id/ctv_addaddresss_postalcode_text2"
                         android:layout_marginLeft="@dimen/table_margain_left"
                         android:textSize="@dimen/labelTextFontSize"
-                        android:textColor="@color/label_active"
+                        android:textColor="@color/colorAccent"
                         android:id="@+id/ctv_addaddresss_postalcode_text"
                         android:visibility="invisible"/>
                     <com.whitelabel.app.widget.CustomTextView
@@ -505,7 +505,7 @@
                         android:layout_below="@+id/ctv_addaddresss_city_text2"
                         android:layout_marginLeft="@dimen/table_margain_left"
                         android:textSize="@dimen/labelTextFontSize"
-                        android:textColor="@color/label_active"
+                        android:textColor="@color/colorAccent"
                         android:id="@+id/ctv_addaddresss_city_text1"
                         android:visibility="invisible"/>
                     <com.whitelabel.app.widget.CustomTextView
@@ -690,7 +690,7 @@
                             android:text="@string/eg123"
                             android:textSize="@dimen/labelTextFontSize"
                             android:layout_marginLeft="10dp"
-                            android:textColor="@color/label_active"
+                            android:textColor="@color/colorAccent"
                             android:visibility="invisible"
                             style="@style/font_family_robot_regular"
                             android:layout_below="@+id/ctv_addaddresss_eg_text2"
@@ -730,7 +730,7 @@
                     <com.whitelabel.app.widget.CustomCheckBox
                         android:id="@+id/addaddress_checkbox"
                         android:layout_centerVertical="true"
-                        imaginato:color_checked="@color/color_checkbox_checked"
+                        imaginato:color_checked="@color/colorAccent"
                         imaginato:color_unchecked_stroke="@color/color_checkbox_unchecked"
                         android:layout_width="24dp"
                         android:layout_height="24dp"/>

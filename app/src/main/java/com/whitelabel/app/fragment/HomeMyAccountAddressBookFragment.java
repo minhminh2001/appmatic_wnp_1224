@@ -204,7 +204,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
         textView_add = (TextView) contentView.findViewById(R.id.addressbook_add_textview);
         textView_add.setOnClickListener(this);
         refreshLayout.setOnRefreshListener(this);
-        refreshLayout.setColorSchemeResources(R.color.purple660070);
+        refreshLayout.setColorSchemeResources(R.color.colorAccent);
         dao.getLocalAddressData(getActivity(), GemfiveApplication.getAppConfiguration().getUser().getId());
         showRefreshLayout();
         setSwipeListView();

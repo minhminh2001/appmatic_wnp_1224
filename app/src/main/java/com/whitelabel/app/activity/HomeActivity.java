@@ -277,11 +277,11 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpEditProfilePage() {
-//        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
 //            jumpEditProfileActivity();
-//        } else {
-//            jumpLoginActivity();
-//        }
+        } else {
+            jumpLoginActivity();
+        }
     }
 
     @Override
@@ -312,11 +312,11 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
     }
 
-//    private void jumpEditProfileActivity() {
-//        Intent intent = new Intent(this, MyAccountActivity.class);
-//        startActivityForResult(intent, 1000);
-//        overridePendingTransition(R.anim.activity_anim1_enter1, R.anim.activity_anim1_exit1);
-//    }
+    private void jumpEditProfileActivity() {
+        Intent intent = new Intent(this, MyAccountActivity.class);
+        startActivityForResult(intent, 1000);
+        overridePendingTransition(R.anim.activity_anim1_enter1, R.anim.activity_anim1_exit1);
+    }
 
     private void addFragment(int index, Fragment fragment) {
         if (index < 0) {
@@ -584,11 +584,11 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 //                serializable = HomeMyAccountFragmentV2.SWITCH_STORECREDITFRAGMENT;
 //                fragmentType = FRAGMENT_TYPE_HOME_MYACCOUNT;
 //            }
-//            else if (EXTRA_REDIRECTTO_TYPE_VALUE_EDITPROFILE.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
-//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
-//                jumpEditProfileActivity();
-//                fragmentType = FRAGMENT_TYPE_HOME_HOME;
-//            }
+            else if (EXTRA_REDIRECTTO_TYPE_VALUE_EDITPROFILE.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
+                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
+                jumpEditProfileActivity();
+                fragmentType = FRAGMENT_TYPE_HOME_HOME;
+            }
             else {
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
                 serializable = intent.getStringExtra("categoryId");

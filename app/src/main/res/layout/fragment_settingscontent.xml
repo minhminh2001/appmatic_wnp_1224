@@ -45,7 +45,6 @@
         android:id="@+id/rl_setting_notify"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
-        android:visibility="gone"
         android:layout_below="@id/home_title">
 
         <View

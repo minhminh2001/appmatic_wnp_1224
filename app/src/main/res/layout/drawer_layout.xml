@@ -12,10 +12,11 @@
         android:layout_width="match_parent"
         android:layout_gravity="start"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/ll_profile"
             android:paddingTop="@dimen/statusbar_height"
-            android:background="@color/black"
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:gravity="center"
             android:paddingLeft="20dp"
@@ -129,7 +130,7 @@
                     android:layout_width="24dp"
                     android:visibility="gone"
                     android:layout_height="24dp"
-                    android:background="@drawable/remind"
+                    android:background="@drawable/bg_cart_number"
                     android:text="99+"
                     style="@style/font_family_robot_regular"
                     android:layout_centerVertical="true"

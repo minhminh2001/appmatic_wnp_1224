@@ -430,7 +430,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                         fragment.mDialog.cancel();
                     }
                     mActivity.get().btnContinue.setEnabled(true);
-                    mActivity.get().btnContinue.setBackgroundResource(R.drawable.big_button_style_purple);
+                    mActivity.get().btnContinue.setBackgroundResource(R.drawable.big_button_style_config);
 
                     break;
             }
@@ -697,7 +697,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                     }
                 },260);
                 JViewUtils.cleanCurrentViewFocus(getActivity());
-                tvExpirationDateHint.setTextColor(JToolUtils.getColor(R.color.label_active));
+                tvExpirationDateHint.setTextColor(JToolUtils.getColor(R.color.colorAccent));
                 CustomButtomLineRelativeLayout.setBottomLineActive(view_expiration_date_line,true);
                 AnimUtil.rotateArrow(arrowSelectExpirationDate,true);
                 //createDialogPickerOfTwoColumn();
@@ -1180,7 +1180,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
 
 
                 tv.setText(hintText);
-                tv.setTextColor(getResources().getColor(R.color.label_active));
+                tv.setTextColor(getResources().getColor(R.color.colorAccent));
             }
 
             @Override
@@ -1437,7 +1437,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                     CustomButtomLineRelativeLayout.setRelativeBottomLineActive(view_paymentmethod_line, true);
                     AnimUtil.rotateArrow(tvPaymentMethodArrow,true);
 
-                    ctv_payment_method_lab.setTextColor(JToolUtils.getColor(R.color.label_active));
+                    ctv_payment_method_lab.setTextColor(JToolUtils.getColor(R.color.colorAccent));
 
                     final WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
 
@@ -1618,7 +1618,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                 }
                 CustomButtomLineRelativeLayout.setBottomLineActive(view_payment_online_line,true);
                 AnimUtil.rotateArrow(arrowSelectOnlineBankingPayWith,true);
-                tvOnlinebankHint.setTextColor(JToolUtils.getColor(R.color.label_active));
+                tvOnlinebankHint.setTextColor(JToolUtils.getColor(R.color.colorAccent));
                 configEntity.setArrayList(list_onlinebanks);
                 configEntity.setOldValue(oldEntity_onlinebanks);
                 configEntity.setCallBack(new WheelPickerCallback() {

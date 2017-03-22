@@ -54,7 +54,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
 //            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.black000000));
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
 
         }
         currTag = this.getClass().getSimpleName();
