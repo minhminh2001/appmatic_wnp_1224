@@ -92,7 +92,7 @@
             android:background="@drawable/big_button_style_config"
             android:gravity="center"
             android:text="@string/product_detail_addtocart"
-            android:textColor="@color/whiteFFFFFF"
+            android:textColor="@color/buttonTextColorPrimary"
             android:textSize="16sp"
             style="@style/font_family_roboto_medium" />
 

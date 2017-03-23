@@ -9,10 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.callback.ProductDetailCallback;
@@ -104,38 +99,38 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
         // set merchant name
         if (!TextUtils.isEmpty(leftProductEntity.getVendorDisplayName())) {
             String soldBy = viewHolder.ctvLeftProductMerchant.getContext().getResources().getString(R.string.soldby);
-            if (!TextUtils.isEmpty(leftProductEntity.getVendor_id())) {
-                viewHolder.ctvLeftProductMerchant.setTextColor(context.getResources().getColor(R.color.purple92018d));
-                SpannableStringBuilder ss = new SpannableStringBuilder(soldBy + " " + leftProductEntity.getVendorDisplayName());
-                ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyB8B8B8)), 0, soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                viewHolder.ctvLeftProductMerchant.setText(ss);
-                if (!"0".equals(leftProductEntity.getVendor_id())) {
-                    viewHolder.ctvLeftProductMerchant.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(context, MerchantStoreFrontActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, leftProductEntity.getVendor_id());
-                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, leftProductEntity.getVendorDisplayName());
-                            intent.putExtras(bundle);
-                            context.startActivity(intent);
-                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-                        }
-                    });
-                } else {
-                    viewHolder.ctvLeftProductMerchant.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(context, HomeActivity.class);
-                            context.startActivity(i);
-                        }
-                    });
-                }
-
-            } else {
+//            if (!TextUtils.isEmpty(leftProductEntity.getVendor_id())) {
+//                viewHolder.ctvLeftProductMerchant.setTextColor(context.getResources().getColor(R.color.purple92018d));
+//                SpannableStringBuilder ss = new SpannableStringBuilder(soldBy + " " + leftProductEntity.getVendorDisplayName());
+//                ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyB8B8B8)), 0, soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                viewHolder.ctvLeftProductMerchant.setText(ss);
+//                if (!"0".equals(leftProductEntity.getVendor_id())) {
+//                    viewHolder.ctvLeftProductMerchant.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent intent = new Intent(context, MerchantStoreFrontActivity.class);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, leftProductEntity.getVendor_id());
+//                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, leftProductEntity.getVendorDisplayName());
+//                            intent.putExtras(bundle);
+//                            context.startActivity(intent);
+//                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                        }
+//                    });
+//                } else {
+//                    viewHolder.ctvLeftProductMerchant.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent i = new Intent(context, HomeActivity.class);
+//                            context.startActivity(i);
+//                        }
+//                    });
+//                }
+//
+//            } else {
                 viewHolder.ctvLeftProductMerchant.setText(soldBy + " " + leftProductEntity.getVendorDisplayName());
-                viewHolder.ctvLeftProductMerchant.setTextColor(context.getResources().getColor(R.color.greyB8B8B8));
-            }
+                viewHolder.ctvLeftProductMerchant.setTextColor(context.getResources().getColor(R.color.black));
+//            }
         } else {
             viewHolder.ctvLeftProductMerchant.setText("");
         }
@@ -278,39 +273,39 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
         if (!TextUtils.isEmpty(rightProductEntity.getVendorDisplayName())) {
             viewHolder.ctvRightProductMerchant.setTextColor(context.getResources().getColor(R.color.purple92018d));
             String soldBy = viewHolder.ctvRightProductMerchant.getContext().getResources().getString(R.string.soldby);
-            if (!TextUtils.isEmpty(rightProductEntity.getVendor_id())) {
-                viewHolder.ctvRightProductMerchant.setTextColor(context.getResources().getColor(R.color.purple92018d));
-                SpannableStringBuilder ss = new SpannableStringBuilder(soldBy + " " + rightProductEntity.getVendorDisplayName());
-                ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyB8B8B8)), 0, soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                viewHolder.ctvRightProductMerchant.setText(ss);
-                if(!"0".equals(rightProductEntity.getVendor_id())){
-                    viewHolder.ctvRightProductMerchant.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(context, MerchantStoreFrontActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, rightProductEntity.getVendor_id());
-                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, rightProductEntity.getVendorDisplayName());
-                            intent.putExtras(bundle);
-                            context.startActivity(intent);
-                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-                        }
-                    });
-                }else{
-                    viewHolder.ctvRightProductMerchant.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(context, HomeActivity.class);
-                            context.startActivity(i);
-                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-                        }
-                    });
-                }
-
-            } else {
+//            if (!TextUtils.isEmpty(rightProductEntity.getVendor_id())) {
+//                viewHolder.ctvRightProductMerchant.setTextColor(context.getResources().getColor(R.color.purple92018d));
+//                SpannableStringBuilder ss = new SpannableStringBuilder(soldBy + " " + rightProductEntity.getVendorDisplayName());
+//                ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyB8B8B8)), 0, soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                viewHolder.ctvRightProductMerchant.setText(ss);
+//                if(!"0".equals(rightProductEntity.getVendor_id())){
+//                    viewHolder.ctvRightProductMerchant.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent intent = new Intent(context, MerchantStoreFrontActivity.class);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, rightProductEntity.getVendor_id());
+//                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, rightProductEntity.getVendorDisplayName());
+//                            intent.putExtras(bundle);
+//                            context.startActivity(intent);
+//                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                        }
+//                    });
+//                }else{
+//                    viewHolder.ctvRightProductMerchant.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent i = new Intent(context, HomeActivity.class);
+//                            context.startActivity(i);
+//                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                        }
+//                    });
+//                }
+//
+//            } else {
                 viewHolder.ctvRightProductMerchant.setText(soldBy + " " + rightProductEntity.getVendorDisplayName());
-                viewHolder.ctvRightProductMerchant.setTextColor(context.getResources().getColor(R.color.greyB8B8B8));
-            }
+                viewHolder.ctvRightProductMerchant.setTextColor(context.getResources().getColor(R.color.black));
+//            }
 
         } else {
             viewHolder.ctvRightProductMerchant.setText("");

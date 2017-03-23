@@ -65,7 +65,7 @@
                 android:id="@+id/order_product_brand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/purple92018d"
+                android:textColor="@color/black"
                 android:textSize="12sp"
                 android:visibility="gone"
                 style="@style/font_family_robot_regular"

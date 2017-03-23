@@ -104,7 +104,7 @@
             android:id="@+id/s_submit"
             android:background="@drawable/big_button_style_config"
             android:text="@string/submit"
-            android:textColor="@color/whiteFFFFFF"
+            android:textColor="@color/buttonTextColorPrimary"
             android:textSize="16sp"
             />
     </LinearLayout>

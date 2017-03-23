@@ -101,7 +101,7 @@
                         android:singleLine="true"
                         android:paddingRight="55dp"
                         android:text=""
-                        android:textColor="@color/purple92018d"
+                        android:textColor="@color/black"
                         android:textSize="11sp"
                         style="@style/font_family_robot_regular" />
 

@@ -315,7 +315,7 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/big_button_style_config"
                     android:text="@string/sign_in"
-                    android:textColor="@color/whiteFFFFFF"
+                    android:textColor="@color/buttonTextColorPrimary"
                     android:textSize="16sp"/>
 
                 <com.whitelabel.app.widget.CustomTextView
@@ -326,7 +326,7 @@
                     android:layout_marginTop="22dp"
                     android:gravity="center"
                     android:text="@string/forgot_your_password"
-                    android:textColor="@color/purple92018d" />
+                    android:textColor="@color/appColorPrimary" />
 
 
             </LinearLayout>
@@ -356,7 +356,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:text="@string/RegisterNow"
-                android:textColor="@color/purple92018d" />
+                android:textColor="@color/appColorPrimary" />
         </LinearLayout>
     </RelativeLayout>
     </ScrollView>

@@ -88,7 +88,7 @@
             android:text="@string/shop_now"
             android:textSize="@dimen/button_font_size"
             style="@style/font_family_roboto_medium"
-            android:textColor="@color/whiteFFFFFF"/>
+            android:textColor="@color/buttonTextColorPrimary"/>
         </LinearLayout>
     <include
         layout="@layout/connection_breaks"

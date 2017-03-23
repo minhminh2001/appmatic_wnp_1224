@@ -58,12 +58,13 @@
                     android:textColor="@color/black000000"
                     android:textSize="14sp"/>
 
-                 <com.whitelabel.app.widget.CustomTextView  style="@style/font_family_robot_regular"
+                 <com.whitelabel.app.widget.CustomTextView
+                     style="@style/font_family_robot_regular"
                     android:id="@+id/tv_checkout_slider_first"
                     android:layout_width="@dimen/checkout_menu_slider_width"
                     android:layout_height="2dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@color/purple" />
+                    android:background="@color/colorAccent" />
             </LinearLayout>
 
             <LinearLayout
@@ -200,7 +201,7 @@
             android:background="@drawable/big_button_style_config"
             android:gravity="center"
             android:text="@string/CONTINUE"
-            android:textColor="@color/whiteFFFFFF"
+            android:textColor="@color/buttonTextColorPrimary"
             android:textSize="@dimen/button_font_size"
             style="@style/font_family_roboto_medium" />
     </LinearLayout>

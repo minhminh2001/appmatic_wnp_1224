@@ -363,7 +363,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
             checkBoxText1.setClickable(true);
             checkBoxText1.setMovementMethod(LinkMovementMethod.getInstance());
             NoUnderLineClickSpan greyNoLineClickableSpan=new NoUnderLineClickSpan(JToolUtils.getColor(R.color.grayText),false);
-            NoUnderLineClickSpan purpleNoLineClickableSpan=new NoUnderLineClickSpan(JToolUtils.getColor(R.color.purple92018d),true);
+            NoUnderLineClickSpan purpleNoLineClickableSpan=new NoUnderLineClickSpan(JToolUtils.getColor(R.color.appColorPrimary),true);
             greyNoLineClickableSpan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

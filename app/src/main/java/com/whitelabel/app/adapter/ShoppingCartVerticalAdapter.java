@@ -5,14 +5,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +23,6 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.callback.ShoppingCartAdapterCallback;
 import com.whitelabel.app.dao.ShoppingCarDao;
@@ -156,7 +151,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         viewHolder.tvProductBland.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startBrandStoreActivity((Activity) view.getContext(),sc.getBrand(),sc.getBrandId());
+//                startBrandStoreActivity((Activity) view.getContext(),sc.getBrand(),sc.getBrandId());
             }
         });
         //plus or minus Qty
@@ -242,38 +237,38 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         if (!TextUtils.isEmpty(sc.getVendorDisplayName())) {
 
             String soldBy = viewHolder.tvCheckMername.getContext().getResources().getString(R.string.soldby);
-            if (!TextUtils.isEmpty(sc.getVendor_id())) {
-                viewHolder.tvCheckMername.setTextColor(context.getResources().getColor(R.color.purple92018d));
-                SpannableStringBuilder ss = new SpannableStringBuilder(soldBy + " " + sc.getVendorDisplayName());
-                ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyB8B8B8)), 0, soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                viewHolder.tvCheckMername.setText(ss);
-                if (!"0".equals(sc.getVendor_id())) {
-                    viewHolder.tvCheckMername.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(context, MerchantStoreFrontActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, sc.getVendor_id());
-                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, sc.getVendorDisplayName());
-                            intent.putExtras(bundle);
-                            context.startActivity(intent);
-                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-                        }
-                    });
-                } else {
-                    viewHolder.tvCheckMername.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(context, HomeActivity.class);
-                            context.startActivity(i);
-                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-                        }
-                    });
-                   }
-            } else {
+//            if (!TextUtils.isEmpty(sc.getVendor_id())) {
+//                viewHolder.tvCheckMername.setTextColor(context.getResources().getColor(R.color.purple92018d));
+//                SpannableStringBuilder ss = new SpannableStringBuilder(soldBy + " " + sc.getVendorDisplayName());
+//                ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyB8B8B8)), 0, soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                viewHolder.tvCheckMername.setText(ss);
+//                if (!"0".equals(sc.getVendor_id())) {
+//                    viewHolder.tvCheckMername.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent intent = new Intent(context, MerchantStoreFrontActivity.class);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, sc.getVendor_id());
+//                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, sc.getVendorDisplayName());
+//                            intent.putExtras(bundle);
+//                            context.startActivity(intent);
+//                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                        }
+//                    });
+//                } else {
+//                    viewHolder.tvCheckMername.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent i = new Intent(context, HomeActivity.class);
+//                            context.startActivity(i);
+//                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                        }
+//                    });
+//                   }
+//            } else {
                 viewHolder.tvCheckMername.setText(soldBy + " " + sc.getVendorDisplayName());
-                viewHolder.tvCheckMername.setTextColor(context.getResources().getColor(R.color.greyB8B8B8));
-            }
+                viewHolder.tvCheckMername.setTextColor(context.getResources().getColor(R.color.black));
+//            }
         } else {
             viewHolder.tvCheckMername.setText("");
         }

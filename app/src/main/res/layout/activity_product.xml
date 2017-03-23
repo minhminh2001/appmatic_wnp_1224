@@ -100,7 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ctvProductTitleLine"
-                        android:textColor="@color/purple92018d"
+                        android:textColor="@color/black"
 
                         style="@style/font_family_robot_regular"
                         android:textSize="12sp"/>
@@ -313,7 +313,7 @@
                     android:layout_height="wrap_content"
                     android:enabled="false"
                     android:text="@string/product_detail_addtocart"
-                    android:textColor="@color/whiteffffff"
+                    android:textColor="@color/buttonTextColorPrimary"
                     android:textSize="@dimen/button_font_size"
                     imaginato:textFont="LatoBold"/>
             </LinearLayout>

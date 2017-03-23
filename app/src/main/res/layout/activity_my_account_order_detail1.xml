@@ -525,7 +525,7 @@
                 android:visibility="gone"
                 android:gravity="center"
                 android:text="@string/order_detail_confirm"
-                android:textColor="@color/whiteFFFFFF"
+                android:textColor="@color/buttonTextColorPrimary"
                 android:textSize="@dimen/button_font_size" />
         </LinearLayout>
 

@@ -5,10 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.activity.TrackingInfoActivity;
 import com.whitelabel.app.bean.OrderBody;
 import com.whitelabel.app.bean.OrderTip;
@@ -28,7 +23,6 @@ import com.whitelabel.app.model.MyAccountOrderTrackingInfo;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.RefreshLoadMoreRecyclerView;
@@ -165,7 +159,6 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             }
             subOrderHolder.orderImage.setTag(orderBody.getOrderImage());
             subOrderHolder.orderName.setText(orderBody.getOrderName());
-            JLogUtils.d("jay", "orderBody.getTrickingTitle()-->" + orderBody.getTrickingTitle() + "---------------orderBody.getTrickingUrl()---->" + orderBody.getTrickingUrl());
             if (TextUtils.isEmpty(orderBody.getTrickingTitle()) && TextUtils.isEmpty(orderBody.getTrickingUrl())) {
                 subOrderHolder.trackingInfo.setVisibility(View.GONE);
             } else {
@@ -197,39 +190,39 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             JViewUtils.setStatus(subOrderHolder.orderStatus, orderBody.getOrderStatusCode());
             if (!TextUtils.isEmpty(orderBody.getMerchantName())) {
                 String soldBy = subOrderHolder.orderMerName.getContext().getResources().getString(R.string.soldby);
-                if (!TextUtils.isEmpty(orderBody.getVendor_id())) {
-                    subOrderHolder.orderMerName.setTextColor(context.getResources().getColor(R.color.purple92018d));
-                    SpannableStringBuilder ss = new SpannableStringBuilder(soldBy + " " + orderBody.getMerchantName());
-                    ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyB8B8B8)), 0, soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    subOrderHolder.orderMerName.setText(ss);
-                    if (!"0".equals(orderBody.getVendor_id())) {
-                        subOrderHolder.orderMerName.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(context, MerchantStoreFrontActivity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, orderBody.getVendor_id());
-                                bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, orderBody.getMerchantName());
-                                intent.putExtras(bundle);
-                                context.startActivity(intent);
-                                ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-                            }
-                        });
-                    } else {
-                        subOrderHolder.orderMerName.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent i = new Intent(context, HomeActivity.class);
-                                context.startActivity(i);
-                                ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-                            }
-                        });
-                    }
-
-                } else {
+//                if (!TextUtils.isEmpty(orderBody.getVendor_id())) {
+//                    subOrderHolder.orderMerName.setTextColor(context.getResources().getColor(R.color.purple92018d));
+//                    SpannableStringBuilder ss = new SpannableStringBuilder(soldBy + " " + orderBody.getMerchantName());
+//                    ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyB8B8B8)), 0, soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                    subOrderHolder.orderMerName.setText(ss);
+//                    if (!"0".equals(orderBody.getVendor_id())) {
+//                        subOrderHolder.orderMerName.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent intent = new Intent(context, MerchantStoreFrontActivity.class);
+//                                Bundle bundle = new Bundle();
+//                                bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, orderBody.getVendor_id());
+//                                bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, orderBody.getMerchantName());
+//                                intent.putExtras(bundle);
+//                                context.startActivity(intent);
+//                                ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            }
+//                        });
+//                    } else {
+//                        subOrderHolder.orderMerName.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent i = new Intent(context, HomeActivity.class);
+//                                context.startActivity(i);
+//                                ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            }
+//                        });
+//                    }
+//
+//                } else {
                     subOrderHolder.orderMerName.setText(soldBy + " " + orderBody.getMerchantName());
-                    subOrderHolder.orderMerName.setTextColor(context.getResources().getColor(R.color.greyB8B8B8));
-                }
+                    subOrderHolder.orderMerName.setTextColor(context.getResources().getColor(R.color.black));
+//                }
             } else {
                 subOrderHolder.orderMerName.setText("");
             }

@@ -581,7 +581,7 @@ public class CustomTabCustomPageIndicator extends HorizontalScrollView {
                     if (tabsContainer.getChildAt(i) instanceof TextView) {
                         TextView textView = (TextView) tabsContainer.getChildAt(i);
                         if (((Integer) textView.getTag()) == position) {
-                            textView.setTextColor(getContext().getResources().getColor(R.color.purple66006E));
+                            textView.setTextColor(getContext().getResources().getColor(R.color.colorAccent));
                         } else {
                             textView.setTextColor(getContext().getResources().getColor(R.color.black));
                         }
