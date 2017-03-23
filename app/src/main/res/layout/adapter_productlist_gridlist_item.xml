@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="8.9dp">
+              xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:paddingBottom="8.9dp">
 
     <!--<View
         android:layout_width="match_parent"
@@ -51,6 +51,30 @@
             </RelativeLayout>
         </RelativeLayout>
 
+        <RelativeLayout
+            android:padding="10dp"
+            android:layout_marginRight="2dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/rl_productlist_wish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_productlist_wish_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitCenter"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/wishlist_purple_normal_v2"
+                android:visibility="visible" />
+            <ImageView
+                android:id="@+id/iv_productlist_wish_icon2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitCenter"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/wishlist_purple_normal_v2"
+                android:visibility="visible" />
+        </RelativeLayout>
 
         <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/ctvProductBrand"
@@ -63,7 +87,7 @@
             android:paddingRight="9dp"
             android:paddingTop="9dp"
             android:singleLine="true"
-            android:textColor="@color/black"
+            android:textColor="@color/purple92018d"
             android:textSize="11sp"
             style="@style/font_family_robot_regular" />
 

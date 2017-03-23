@@ -111,28 +111,28 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 
                 break;
             case R.id.rl_drawer_notification:
-//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_NOTIFICATION);
-//                drawerLayout.closeDrawer(Gravity.LEFT);
-//                baseHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-////                        getToolbar().getMenu().clear();
-//                        jumpNotificationPage();
-//                    }
-//                }, DELAY);
+                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_NOTIFICATION);
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                baseHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+//                        getToolbar().getMenu().clear();
+                        jumpNotificationPage();
+                    }
+                }, DELAY);
                 break;
             case R.id.rl_drawer_wishlist:
-//                if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this)) {
-//                    switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_WISHLIST);
-//                }
-//                drawerLayout.closeDrawer(Gravity.LEFT);
-//                baseHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-////                        getToolbar().getMenu().clear();
-//                        jumpWistListPage();
-//                    }
-//                }, DELAY);
+                if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this)) {
+                    switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_WISHLIST);
+                }
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                baseHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+//                        getToolbar().getMenu().clear();
+                        jumpWistListPage();
+                    }
+                }, DELAY);
 
                 break;
             case R.id.rl_drawer_order:

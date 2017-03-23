@@ -27,6 +27,8 @@ import com.whitelabel.app.fragment.HomeHelpCenterDetailFragment;
 import com.whitelabel.app.fragment.HomeHelpCenterListFragment;
 import com.whitelabel.app.fragment.HomeHomeFragment;
 import com.whitelabel.app.fragment.HomeMyAccountFragmentV2;
+import com.whitelabel.app.fragment.HomeNotificationDetailFragment;
+import com.whitelabel.app.fragment.HomeNotificationListFragment;
 import com.whitelabel.app.fragment.HomeSettingCotentFragment;
 import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
@@ -241,16 +243,16 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpNotificationPage() {
-//        switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_NOTIFICATIONLIST, null);
+        switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_NOTIFICATIONLIST, null);
     }
 
     @Override
     protected void jumpWistListPage() {
-//        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
-//            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_MYACCOUNT, HomeMyAccountFragmentV2.SWITCH_WISHLISTFRAGMENT);
-//        } else {
-//            jumpLoginActivity();
-//        }
+        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_MYACCOUNT, HomeMyAccountFragmentV2.SWITCH_WISHLISTFRAGMENT);
+        } else {
+            jumpLoginActivity();
+        }
 
     }
 
@@ -278,7 +280,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     @Override
     protected void jumpEditProfilePage() {
         if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
-//            jumpEditProfileActivity();
+            jumpEditProfileActivity();
         } else {
             jumpLoginActivity();
         }
@@ -347,8 +349,8 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         addFragment(FRAGMENT_TYPE_HOME_MYACCOUNT, new HomeMyAccountFragmentV2());
         addFragment(FRAGMENT_TYPE_HOME_HELPCENTERLIST, new HomeHelpCenterListFragment());
         addFragment(FRAGMENT_TYPE_HOME_HELPCENTERDETAIL, new HomeHelpCenterDetailFragment());
-//        addFragment(FRAGMENT_TYPE_HOME_NOTIFICATIONLIST, new HomeNotificationListFragment());
-//        addFragment(FRAGMENT_TYPE_HOME_NOTIFICATIONDETAIL, new HomeNotificationDetailFragment());
+        addFragment(FRAGMENT_TYPE_HOME_NOTIFICATIONLIST, new HomeNotificationListFragment());
+        addFragment(FRAGMENT_TYPE_HOME_NOTIFICATIONDETAIL, new HomeNotificationDetailFragment());
         addFragment(FRAGMENT_TYPE_HOME_SETTING, new HomeSettingCotentFragment());
         addFragment(FRAGMENT_TYPE_HOME_SHOPPINGCART, ShoppingCartVerticalFragment.newInstance(ShoppingCartBaseFragment.FROM_HOME, 0L));
 //        addFragment(FRAGMENT_TYPE_HOME_CREDITCARD, HomeSelectCrditCardFragment.newInstance());
@@ -558,10 +560,10 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                 redirectToAttachedFragment(HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERDETAIL, TYPE_FRAGMENT_SWITCH_NONE, dataentity);
                 return;
             }
-//            else if (EXTRA_REDIRECTTO_TYPE_VALUE_NOTIFICATION.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
-//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_NOTIFICATION);
-//                fragmentType = FRAGMENT_TYPE_HOME_NOTIFICATIONLIST;
-//            }
+            else if (EXTRA_REDIRECTTO_TYPE_VALUE_NOTIFICATION.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
+                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_NOTIFICATION);
+                fragmentType = FRAGMENT_TYPE_HOME_NOTIFICATIONLIST;
+            }
             else if (EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SHOPPINGCART);
                 fragmentType = FRAGMENT_TYPE_HOME_SHOPPINGCART;
