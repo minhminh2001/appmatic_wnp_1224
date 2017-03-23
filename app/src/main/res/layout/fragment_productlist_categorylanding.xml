@@ -31,7 +31,7 @@
         android:layout_height="50dp"
         imaginato:pstsDividerColor="@color/whiteFFFFFF"
         imaginato:pstsDividerPadding="0dp"
-        imaginato:pstsIndicatorColor="@color/colorAccent"
+        imaginato:pstsIndicatorColor="@color/appColorPrimary"
         imaginato:pstsIndicatorHeight="2dp" />
 
     <View

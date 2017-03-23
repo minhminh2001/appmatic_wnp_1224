@@ -52,7 +52,7 @@
         android:layout_below="@+id/rlHeaderBar"
         imaginato:pstsDividerColor="@color/whiteFFFFFF"
         imaginato:pstsDividerPadding="0dp"
-        imaginato:pstsIndicatorColor="@color/colorAccent"
+        imaginato:pstsIndicatorColor="@color/appColorPrimary"
         imaginato:pstsIndicatorHeight="2dp" />
 <!--
     <LinearLayout

@@ -105,16 +105,16 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
     private final int REQUEST_SHOPPINGCART = 2000;
     private ViewGroup group;
     private TextView textView_num, oldprice, ctvAddToCart, price_textview, ctvProductInStock, ctvProductOutOfStock, productUnavailable, productTrans, product_merchant;
-//    private ViewGroup anim_mask_layout;
+    //    private ViewGroup anim_mask_layout;
     private Dialog mDialog;
     private WebView wvProductDesc;
     private TextView ctvProductName, ctvProductBrand;
     private CustomCoordinatorLayout coordinatorLayout;
     private AppBarLayout appbar_layout;
-//    private RelativeLayout rlProductrecommendLine;
+    //    private RelativeLayout rlProductrecommendLine;
 //    mRLAddToWishlistBig  ,ivHeaderBarWishlist, ivHeaderBarWishlist2,mIVHeaderBarWishlist,mIVHeaderBarWishlist2 , mRLAddToWishlistSmall, llProductDetail,
     private LinearLayout llBottomBar, mLLAddToCart;
-    private ImageView  ivHeaderBarShare;
+    private ImageView ivHeaderBarShare;
     private ViewPager viewPager;
     private CustomTextView tvProductSaverm;
     private RelativeLayout rlProductPrice;
@@ -158,7 +158,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
     private ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity> recommendedList = new ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity>();
     private boolean needRefreshWhenBackPressed = false;
     private String mProductFirstImageurl = "";
-//    private RelativeLayout mViewPagerRL;
+    //    private RelativeLayout mViewPagerRL;
     private long mStockQty;
     private long mMaxSaleQty;
     private String mStockOrMaxSaleType;
@@ -186,6 +186,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
         super.onDestroy();
         onDestoryWebView(mWebView);
     }
+
     public void onDestoryWebView(WebView webView) {
         try {
             ViewParent parent = webView.getParent();
@@ -205,12 +206,14 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
             ex.getStackTrace();
         }
     }
+
     private static class DataHandler extends Handler {
         private final WeakReference<ProductActivity> mActivity;
 
         public DataHandler(ProductActivity activity) {
             mActivity = new WeakReference<ProductActivity>(activity);
         }
+
         @Override
         public void handleMessage(Message msg) {
             if (mActivity.get() == null) {
@@ -330,6 +333,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
             super.handleMessage(msg);
         }
     }
+
     private void trackAddWistList() {
 //        try {
 //            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
@@ -341,6 +345,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
 //            e.printStackTrace();
 //        }
     }
+
     private void trackProductDetail() {
 //        try {
 //            FacebookEventUtils.getInstance().facebookEventProductDetail(this, this.productId, this.userSelectedProductFinalPriceFloat);
@@ -355,6 +360,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
 //            ex.getStackTrace();
 //        }
     }
+
     public void addToCartTrack() {
 //        try {
 //            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
@@ -371,6 +377,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
 //        }
 
     }
+
     @Override
     public boolean addProductToWishWhenLoginSuccess(String productId) {
         //点击wish icon 时跳到登陆页面前，需要保存
@@ -386,17 +393,20 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
         }
         return false;
     }
+
     @Override
     public void saveProductIdWhenJumpLoginPage(String productId) {
         //点击wish icon 时跳到登陆页面前，需要保存
         operateProductIdPrecache = new OperateProductIdPrecache(productId);
     }
+
     @Override
     public void changeOperateProductIdPrecacheStatus(boolean available) {
         if (operateProductIdPrecache != null) {
             operateProductIdPrecache.setAvailable(available);
         }
     }
+
     class MyWheelPickerCallback extends WheelPickerCallback {
         private List<SVRAppserviceProductDetailResultPropertyReturnEntity> mPropertyList;
         private int mLevel;
@@ -405,12 +415,15 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
             mLevel = level;
             mPropertyList = propertyList;
         }
+
         @Override
         public void onCancel() {
         }
+
         @Override
         public void onScrolling(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
         }
+
         @Override
         public void onDone(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
             if (newValue.getDisplay() == null) {
@@ -474,6 +487,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
             }
         }
     }
+
     private void clearUserSelectedProduct() {
 //        userSelectedColorPosition = 0;
 //        userSelectedColorId = null;
@@ -739,6 +753,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
         }
         mProductDao.getProductDetail(productId, sessionKey);
     }
+
     @Override
     public void onBackPressed() {
         getToolbar().setVisibility(View.GONE);
@@ -917,6 +932,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
         }
         return propertyList;
     }
+
     @Override
     public void onPageScrollStateChanged(int arg0) {
     }
@@ -1018,6 +1034,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
             ll_productdetail_webview.addView(wvProductDesc);
         }
     }
+
     //因为dimension 必须放到productdetail下面，所以检查是否有productdetail，没有则添加一个
     private void checkShortDescriptionWhenHasDimens() {
         if (mProductDetailBean.getProductDimension() != null && mProductDetailBean.getProductDimension().size() > 0) {
@@ -1085,8 +1102,8 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
 //                }
 //
 //            } else {
-                product_merchant.setText(Sold_fulfilled_by + " " + mProductDetailBean.getVendorDisplayName());
-                product_merchant.setTextColor(ProductActivity.this.getResources().getColor(R.color.black));
+            product_merchant.setText(Sold_fulfilled_by + " " + mProductDetailBean.getVendorDisplayName());
+            product_merchant.setTextColor(ProductActivity.this.getResources().getColor(R.color.black));
 //            }
 
         } else {
@@ -1260,6 +1277,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
             ex.getStackTrace();
         }
     }
+
     protected void setTextViewHTML(TextView text, String html) {
         text.setLinksClickable(true);
         text.setMovementMethod(LinkMovementMethod.getInstance());
@@ -1276,6 +1294,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
             ex.getStackTrace();
         }
     }
+
     private void initProductDetailUIDynamicContent() {
         if (mProductDetailBean == null) {
             return;
@@ -1756,6 +1775,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
             llBottomBar.setLayoutParams(bottomBarLp);
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1894,6 +1914,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
             overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
         }
     }
+
     private Toast mAddToCartToast;
     private Toast mToast;
 
@@ -1933,6 +1954,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
             }
             return count;
         }
+
         @Override
         public boolean isViewFromObject(View arg0, Object arg1) {
             return arg0 == arg1;
@@ -1946,6 +1968,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
                 ex.getMessage();
             }
         }
+
         /**
          * 载入图片进去，用当前的position 除以 图片数组长度取余数是关键
          */
@@ -1966,6 +1989,7 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
             return object;
         }
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -1980,11 +2004,13 @@ public class ProductActivity extends BaseActivitySearchCart implements ProductDe
 //        }
 //        JLogUtils.i("googleGA_screen", "Product Detail Screen");
     }
+
     @Override
     protected void onPause() {
         JLogUtils.d(TAG, "onPause()");
         super.onPause();
     }
+
     @Override
     protected void onStop() {
         mFromProductList = "";

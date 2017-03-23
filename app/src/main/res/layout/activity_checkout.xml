@@ -64,7 +64,7 @@
                     android:layout_width="@dimen/checkout_menu_slider_width"
                     android:layout_height="2dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@color/colorAccent" />
+                    android:background="@color/appColorPrimary" />
             </LinearLayout>
 
             <LinearLayout

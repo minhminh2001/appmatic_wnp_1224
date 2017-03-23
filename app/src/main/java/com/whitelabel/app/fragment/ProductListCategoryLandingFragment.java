@@ -178,6 +178,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         filterSortBottomView = new FilterSortBottomView();
         filterSortBottomView.initView(mTopFilterAndSortBarRL, mIVBottomSlideToTop, this);
         ctpiCategoryList = (CustomTabCustomPageIndicator) mContentView.findViewById(R.id.ctpiCategoryList);
+        ctpiCategoryList.setIndicatorColorResource(R.color.appColorPrimary);
         vpProductList = (ViewPager) mContentView.findViewById(R.id.vpProductList);
         flFilterSortContainer = (FrameLayout) mContentView.findViewById(R.id.flFilterSortContainer);
         flFilterSortContainer.setOnClickListener(this);

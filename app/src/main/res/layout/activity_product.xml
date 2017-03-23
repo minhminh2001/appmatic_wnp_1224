@@ -27,9 +27,8 @@
                 android:id="@+id/scrollView_RelativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="500dp">
-
-
+                android:minHeight="400dp">
+                <!--big picture-->
                 <RelativeLayout
                     android:id="@+id/rl_viewpager"
                     android:layout_width="match_parent"
@@ -40,7 +39,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/product_details_viewpager_height"/>
 
-                    <!-- viewpager的覆盖层 用于Transition-->
+                    <!-- viewpager的覆盖层 用于share Element Transition-->
                     <ImageView
                         android:id="@+id/ivProductImage"
                         android:layout_width="match_parent"
@@ -79,43 +78,7 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/detail_title_RelativeLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/rl_viewpager"
-                    android:background="@color/white"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:visibility="visible">
-
-                    <View
-                        android:id="@+id/ctvProductTitleLine"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"/>
-
-                    <com.whitelabel.app.widget.CustomTextView
-                        android:id="@+id/ctvProductBrand"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ctvProductTitleLine"
-                        android:textColor="@color/black"
-
-                        style="@style/font_family_robot_regular"
-                        android:textSize="12sp"/>
-
-                    <com.whitelabel.app.widget.CustomTextView
-                        android:id="@+id/ctvProductName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ctvProductBrand"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        imaginato:textFont="LatoBold"
-                        />
-                </RelativeLayout>
-                <!--图片指示器-->
+                <!--big picture indicator-->
                 <LinearLayout
                     android:id="@+id/viewGroup"
                     android:layout_width="match_parent"
@@ -125,11 +88,13 @@
                     android:orientation="horizontal"
                     android:visibility="visible"/>
 
+                <!--details-->
                 <RelativeLayout
                     android:id="@+id/final_relativelayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/detail_title_RelativeLayout"
+                    android:layout_marginTop="13dp"
+                    android:layout_below="@+id/rl_viewpager"
                     android:background="@color/white"
                     android:visibility="visible">
 
@@ -140,7 +105,7 @@
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"/>
                 </RelativeLayout>
-
+                <!--推荐产品-->
                 <LinearLayout
                     android:id="@+id/rl_productrecommend_body"
                     android:layout_width="match_parent"
@@ -150,41 +115,41 @@
                     android:orientation="vertical">
 
                     <!--<RelativeLayout-->
-                        <!--android:id="@+id/rl_productrecommend_line"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginBottom="10dp"-->
-                        <!--android:layout_marginLeft="@dimen/activity_pdp_margin"-->
-                        <!--android:layout_marginRight="@dimen/activity_pdp_margin"-->
-                        <!--android:layout_marginTop="5dp"-->
-                        <!--android:visibility="gone">-->
+                    <!--android:id="@+id/rl_productrecommend_line"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="10dp"-->
+                    <!--android:layout_marginLeft="@dimen/activity_pdp_margin"-->
+                    <!--android:layout_marginRight="@dimen/activity_pdp_margin"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:visibility="gone">-->
 
-                        <!--<View-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="1dp"-->
-                            <!--android:layout_centerVertical="true"-->
-                            <!--android:background="@color/greyE1E1E1"></View>-->
+                    <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:background="@color/greyE1E1E1"></View>-->
 
-                        <!--<com.whitelabel.app.widget.CustomTextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_centerInParent="true"-->
-                            <!--android:background="@color/whiteFFFFFF"-->
-                            <!--android:paddingLeft="15dp"-->
-                            <!--android:paddingRight="15dp"-->
-                            <!--android:text="@string/product_detail_recommended_title"-->
-                            <!--android:textColor="@color/black000000"-->
-                            <!--android:textSize="14sp"-->
-                            <!--style="@style/font_family_robot_regular"/>-->
+                    <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:background="@color/whiteFFFFFF"-->
+                    <!--android:paddingLeft="15dp"-->
+                    <!--android:paddingRight="15dp"-->
+                    <!--android:text="@string/product_detail_recommended_title"-->
+                    <!--android:textColor="@color/black000000"-->
+                    <!--android:textSize="14sp"-->
+                    <!--style="@style/font_family_robot_regular"/>-->
                     <!--</RelativeLayout>-->
                     <!--<android.support.v7.widget.RecyclerView-->
-                        <!--android:id="@+id/lvProductRecommendList"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:divider="@null"-->
-                        <!--android:dividerHeight="0dp"-->
-                        <!--android:listSelector="@color/transparent00"-->
-                        <!--android:scrollbars="none"/>-->
+                    <!--android:id="@+id/lvProductRecommendList"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:divider="@null"-->
+                    <!--android:dividerHeight="0dp"-->
+                    <!--android:listSelector="@color/transparent00"-->
+                    <!--android:scrollbars="none"/>-->
 
                 </LinearLayout>
 
@@ -194,7 +159,7 @@
                     android:layout_below="@+id/rl_productrecommend_body"/>
             </RelativeLayout>
         </com.whitelabel.app.widget.CustomNestedScrollView>
-
+        <!--toolbar-->
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
@@ -207,6 +172,7 @@
 
     </com.whitelabel.app.widget.CustomCoordinatorLayout>
 
+    <!--bottom bar-->
     <LinearLayout
         android:id="@+id/llBottomBar"
         android:layout_width="match_parent"
@@ -239,27 +205,27 @@
         </RelativeLayout>
         <!-- 收藏-->
         <!--<RelativeLayout-->
-            <!--android:id="@+id/rl_addtowishlist_big"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginRight="20dp"-->
-            <!--android:visibility="gone">-->
+        <!--android:id="@+id/rl_addtowishlist_big"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:visibility="gone">-->
 
-            <!--<ImageView-->
-                <!--android:id="@+id/ivHeaderBarWishlist"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerInParent="true"-->
-                <!--android:src="@mipmap/wishlist_purple_normal"-->
-                <!--android:visibility="visible"/>-->
+        <!--<ImageView-->
+        <!--android:id="@+id/ivHeaderBarWishlist"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:src="@mipmap/wishlist_purple_normal"-->
+        <!--android:visibility="visible"/>-->
 
-            <!--<ImageView-->
-                <!--android:id="@+id/ivHeaderBarWishlist2"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerInParent="true"-->
-                <!--android:src="@mipmap/wishlist_purple_normal"-->
-                <!--android:visibility="visible"/>-->
+        <!--<ImageView-->
+        <!--android:id="@+id/ivHeaderBarWishlist2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:src="@mipmap/wishlist_purple_normal"-->
+        <!--android:visibility="visible"/>-->
         <!--</RelativeLayout>-->
 
 
@@ -277,27 +243,27 @@
             android:orientation="horizontal">
             <!-- 收藏-->
             <!--<RelativeLayout-->
-                <!--android:id="@+id/rl_addtowishlist_small"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:visibility="gone">-->
+            <!--android:id="@+id/rl_addtowishlist_small"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:visibility="gone">-->
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/ivHeaderBarWishlist11"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerInParent="true"-->
-                    <!--android:src="@mipmap/wishlist_white_normal"-->
-                    <!--android:visibility="visible"/>-->
+            <!--<ImageView-->
+            <!--android:id="@+id/ivHeaderBarWishlist11"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:src="@mipmap/wishlist_white_normal"-->
+            <!--android:visibility="visible"/>-->
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/ivHeaderBarWishlist22"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerInParent="true"-->
-                    <!--android:src="@mipmap/wishlist_white_normal"-->
-                    <!--android:visibility="visible"/>-->
+            <!--<ImageView-->
+            <!--android:id="@+id/ivHeaderBarWishlist22"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:src="@mipmap/wishlist_white_normal"-->
+            <!--android:visibility="visible"/>-->
             <!--</RelativeLayout>-->
 
             <LinearLayout

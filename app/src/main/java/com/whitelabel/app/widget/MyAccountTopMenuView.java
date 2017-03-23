@@ -216,7 +216,7 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
                 if (view instanceof TextView) {
                     TextView textView = (TextView) view;
                     if (((Integer) view.getTag()) == position) {
-                        textView.setTextColor(getContext().getResources().getColor(R.color.colorAccent));
+                        textView.setTextColor(getContext().getResources().getColor(R.color.appColorPrimary));
                     } else {
                         textView.setTextColor(getContext().getResources().getColor(R.color.black000000));
                     }
