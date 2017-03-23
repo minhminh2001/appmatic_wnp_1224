@@ -35,6 +35,7 @@ import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -86,7 +87,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setScrollToolBarEnable(true);
         mContainView = inflater.inflate(R.layout.fragment_home_home, null);
-//        mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+        mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
 //        mGATrackTimeEnable = true;
         return mContainView;
     }
@@ -325,12 +326,12 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             });
             updateShoppingCartItemCount();
         }
-//        if (mGATrackTimeEnable) {
-//            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-//                    GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, mGATrackTimeStart, "Home Screen Loading"
-//            );
-//            mGATrackTimeEnable = false;
-//        }
+        if (mGATrackTimeEnable) {
+            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+                    GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, mGATrackTimeStart, "Home Screen Loading"
+            );
+            mGATrackTimeEnable = false;
+        }
     }
 
     public void showAppRate() {
@@ -550,17 +551,17 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
 
 
         public void homeTrack(int position) {
-//            try {
-//                //追踪点击分类
-//                String brandName = GemfiveApplication.getAppConfiguration().getCategoryArrayList().getCategory().get(position).getName();
-//                GaTrackHelper.getInstance().googleAnalytics(brandName, homeActivity);
-//                JLogUtils.i("googleGA_screen", brandName);
-//                //统计总数
-//                GaTrackHelper.getInstance().googleAnalytics("Main Category Landing Screen", homeActivity);
-//                JLogUtils.i("googleGA_screen", "Category Landing Screen");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            try {
+                //追踪点击分类
+                String brandName = GemfiveApplication.getAppConfiguration().getCategoryArrayList().getCategory().get(position).getName();
+                GaTrackHelper.getInstance().googleAnalytics(brandName, homeActivity);
+                JLogUtils.i("googleGA_screen", brandName);
+                //统计总数
+                GaTrackHelper.getInstance().googleAnalytics("Main Category Landing Screen", homeActivity);
+                JLogUtils.i("googleGA_screen", "Category Landing Screen");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override

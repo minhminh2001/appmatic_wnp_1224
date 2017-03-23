@@ -27,6 +27,7 @@ import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.AddressDeleteCellEntity;
 import com.whitelabel.app.model.AddresslistReslut;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -413,15 +414,15 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
     @Override
     public void onStart() {
         super.onStart();
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(addressBookActivity, true);
-//        GaTrackHelper.getInstance().googleAnalytics("My Address Book Screen", addressBookActivity);
-//        JLogUtils.i("googleGA_screen", "My Address Book Screen ");
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(addressBookActivity, true);
+        GaTrackHelper.getInstance().googleAnalytics("My Address Book Screen", addressBookActivity);
+        JLogUtils.i("googleGA_screen", "My Address Book Screen ");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(addressBookActivity, false);
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(addressBookActivity, false);
         adapter.notifyDataSetChanged();
     }
 }

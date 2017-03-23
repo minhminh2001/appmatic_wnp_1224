@@ -259,14 +259,14 @@ public class CheckoutShippingSelectaddressFragment extends Fragment implements V
                                 ex.getStackTrace();
                             }
                         }
-//                        if(mFragment.get().checkoutActivity.mGATrackCheckoutTimeEnable) {
-//                            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-//                                    GaTrackHelper.GA_TIME_CATEGORY_CHECKOUT,
-//                                    mFragment.get().checkoutActivity.mGATrackCheckoutTimeStart,
-//                                    "Checkout - Address Loading"
-//                            );
-//                            mFragment.get().checkoutActivity.mGATrackCheckoutTimeEnable = false;
-//                        }
+                        if(mFragment.get().checkoutActivity.mGATrackCheckoutTimeEnable) {
+                            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+                                    GaTrackHelper.GA_TIME_CATEGORY_CHECKOUT,
+                                    mFragment.get().checkoutActivity.mGATrackCheckoutTimeStart,
+                                    "Checkout - Address Loading"
+                            );
+                            mFragment.get().checkoutActivity.mGATrackCheckoutTimeEnable = false;
+                        }
                     } else {
                         String errorMsg = String.valueOf(msg.obj);
                         if (!JToolUtils.expireHandler(mActivity.get(),  mFragment.get(), errorMsg, 10000)) {

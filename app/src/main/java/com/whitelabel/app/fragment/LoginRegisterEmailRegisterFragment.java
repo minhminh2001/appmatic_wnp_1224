@@ -44,6 +44,7 @@ import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -805,13 +806,13 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     }
 
     public void trackerRegister(String id){
-//                try {
-//                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", "Register",
-//                            "customerId",
-//                            Long.valueOf(id));
-//        }catch (Exception ex){
-//            ex.getStackTrace();
-//        }
+                try {
+                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", "Register",
+                            "customerId",
+                            Long.valueOf(id));
+        }catch (Exception ex){
+            ex.getStackTrace();
+        }
     }
 
     @Override
@@ -842,9 +843,9 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     @Override
     public void onStart() {
         super.onStart();
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, true);
-//        GaTrackHelper.getInstance().googleAnalytics("Register screen", loginRegisterActivity);
-//        JLogUtils.i("googleGA_screen", "Register screen");
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, true);
+        GaTrackHelper.getInstance().googleAnalytics("Register screen", loginRegisterActivity);
+        JLogUtils.i("googleGA_screen", "Register screen");
 //        if(isstop){
 //            firstName.setText(mFirstName);
 //            lastName.setText(mLastName);
@@ -859,6 +860,6 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
         isClickRegister=true;
         super.onStop();
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, false);
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, false);
     }
 }

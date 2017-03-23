@@ -21,6 +21,8 @@ import com.google.gson.Gson;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.NotificationDetailActivity;
 import com.whitelabel.app.model.NotificationReceivedEntity;
+import com.whitelabel.app.utils.FirebaseEventUtils;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 
@@ -158,15 +160,15 @@ public class MyGcmListenerService extends GcmListenerService {
         }
 
         notificationManager.notify(notifyId, nb.build());
-//        try {
-//            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
-//                    "Notification Received",
-//                    title,
-//                    (long) notifyId);
-//            FirebaseEventUtils.getInstance().customizedNotificationReceive(getApplicationContext(), entity.getTitle());
-//        } catch (Exception ex) {
-//            ex.getMessage();
-//            JLogUtils.e(TAG, ex.getMessage());
-//        }
+        try {
+            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
+                    "Notification Received",
+                    title,
+                    (long) notifyId);
+            FirebaseEventUtils.getInstance().customizedNotificationReceive(getApplicationContext(), entity.getTitle());
+        } catch (Exception ex) {
+            ex.getMessage();
+            JLogUtils.e(TAG, ex.getMessage());
+        }
     }
 }

@@ -26,6 +26,8 @@ import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.dao.OtherDao;
 import com.whitelabel.app.utils.AppUtils;
+import com.whitelabel.app.utils.FirebaseEventUtils;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -173,19 +175,19 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
                     //用户退出后，将不再显示AppRate
                     JStorageUtils.notShowAppRate(mActivity.get());
                     if(msg.arg1==OtherDao.RESPONSE_SUCCESS){
-//                        try {
-//                            GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action",
-//                                    "Sign Out",
-//                                    null,
-//                                    Long.valueOf(mFragment.get().CustomerId));
-//                        }catch (Exception ex){
-//                            ex.getStackTrace();
-//                        }
-//                        try{
-//                            FirebaseEventUtils.getInstance().customizedSignOut(mActivity.get(), GemfiveApplication.getAppConfiguration().getUserInfo(mActivity.get()).getLoginType());
-//                        }catch (Exception ex){
-//                            ex.getMessage();
-//                        }
+                        try {
+                            GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action",
+                                    "Sign Out",
+                                    null,
+                                    Long.valueOf(mFragment.get().CustomerId));
+                        }catch (Exception ex){
+                            ex.getStackTrace();
+                        }
+                        try{
+                            FirebaseEventUtils.getInstance().customizedSignOut(mActivity.get(), GemfiveApplication.getAppConfiguration().getUserInfo(mActivity.get()).getLoginType());
+                        }catch (Exception ex){
+                            ex.getMessage();
+                        }
                         GemfiveApplication.getAppConfiguration().signOut(mActivity.get());
 //                        SVRAppServiceCustomerSignOut signOutEntity = (SVRAppServiceCustomerSignOut) result;
                         Intent intent = new Intent(mActivity.get(), LoginRegisterActivity.class);
@@ -302,7 +304,7 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
 //                null, // Event label
 //                null) // Event value
 //                .build());
-//        GaTrackHelper.getInstance().googleAnalytics("Settings Screen", homeActivity);
+        GaTrackHelper.getInstance().googleAnalytics("Settings Screen", homeActivity);
 //        JLogUtils.i("googleGA_screen", "Settings Screen");
     }
 }

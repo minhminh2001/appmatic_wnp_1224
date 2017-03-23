@@ -40,13 +40,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
-
                 <com.whitelabel.app.widget.CustomTextView
                     style="@style/font_family_roboto_medium"
                     android:id="@+id/tv_checkout_menu_shipping"
@@ -57,13 +55,13 @@
                     android:text="@string/shipping"
                     android:textColor="@color/black000000"
                     android:textSize="14sp"/>
-
-                 <com.whitelabel.app.widget.CustomTextView  style="@style/font_family_robot_regular"
+                 <com.whitelabel.app.widget.CustomTextView
+                     style="@style/font_family_robot_regular"
                     android:id="@+id/tv_checkout_slider_first"
                     android:layout_width="@dimen/checkout_menu_slider_width"
                     android:layout_height="2dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@color/purple" />
+                    android:background="@color/appColorPrimary" />
             </LinearLayout>
 
             <LinearLayout
@@ -79,7 +77,8 @@
                     android:layout_gravity="center_vertical"
                     android:src="@mipmap/arrow_checkout" />
 
-                 <com.whitelabel.app.widget.CustomTextView  style="@style/font_family_robot_regular"
+                 <com.whitelabel.app.widget.CustomTextView
+                     style="@style/font_family_robot_regular"
                     android:layout_width="@dimen/checkout_menu_arrow_width"
                     android:layout_height="1dp" />
             </LinearLayout>
@@ -102,7 +101,8 @@
                     android:textColor="@color/black000000"
                     android:textSize="14sp" />
 
-                 <com.whitelabel.app.widget.CustomTextView  style="@style/font_family_robot_regular"
+                 <com.whitelabel.app.widget.CustomTextView
+                     style="@style/font_family_robot_regular"
                     android:id="@+id/tv_checkout_slider_second"
                     android:layout_width="@dimen/checkout_menu_slider_width"
                     android:layout_height="2dp"
@@ -122,7 +122,8 @@
                     android:layout_gravity="center_vertical"
                     android:src="@mipmap/arrow_checkout" />
 
-                 <com.whitelabel.app.widget.CustomTextView  style="@style/font_family_robot_regular"
+                 <com.whitelabel.app.widget.CustomTextView
+                     style="@style/font_family_robot_regular"
                     android:layout_width="@dimen/checkout_menu_arrow_width"
                     android:layout_height="1dp" />
             </LinearLayout>
@@ -144,7 +145,8 @@
                     android:textColor="@color/black000000"
                     android:textSize="14sp" />
 
-                 <com.whitelabel.app.widget.CustomTextView  style="@style/font_family_robot_regular"
+                 <com.whitelabel.app.widget.CustomTextView
+                     style="@style/font_family_robot_regular"
                     android:id="@+id/tv_checkout_slider_third"
                     android:layout_width="@dimen/checkout_menu_slider_width"
                     android:layout_height="2dp"

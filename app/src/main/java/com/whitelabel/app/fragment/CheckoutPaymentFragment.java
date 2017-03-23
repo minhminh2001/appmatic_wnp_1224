@@ -52,6 +52,7 @@ import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.AnimUtil;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -368,14 +369,14 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                         fragment.brainTreeClientToken = fragment.paymentListEntity.getBraintreetoken();
                         JLogUtils.i("CheckoutPaymentFragment", "======" + fragment.paymentListEntity.getBraintreetoken());
                         fragment.initDatasWithWebServiceReturn(fragment.paymentListEntity);
-//                        if (fragment.checkoutActivity.mGATrackAddressToPaymentTimeEnable) {
-//                            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-//                                    GaTrackHelper.GA_TIME_CATEGORY_CHECKOUT,
-//                                    fragment.checkoutActivity.mGATrackAddressToPaymentTimeStart,
-//                                    "Checkout - Payment"
-//                            );
-//                            fragment.checkoutActivity.mGATrackAddressToPaymentTimeEnable = false;
-//                        }
+                        if (fragment.checkoutActivity.mGATrackAddressToPaymentTimeEnable) {
+                            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+                                    GaTrackHelper.GA_TIME_CATEGORY_CHECKOUT,
+                                    fragment.checkoutActivity.mGATrackAddressToPaymentTimeStart,
+                                    "Checkout - Payment"
+                            );
+                            fragment.checkoutActivity.mGATrackAddressToPaymentTimeEnable = false;
+                        }
                     } else {
                         String errorMsg = String.valueOf(msg.obj);
                         if (!JToolUtils.expireHandler(mActivity.get(), errorMsg, fragment.REQUESTCODE_LOGIN)) {
@@ -1944,14 +1945,14 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         } else if (paymentType == OFFLINEPAYMENT) {
             paymentStr = "Bank Transfer Method";
         }
-//        try {
-//            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
-//                    "Save Payment",
-//                    paymentStr,
-//                    Long.valueOf(GemfiveApplication.getAppConfiguration().getUser().getId()));
-//        } catch (Exception ex) {
-//            ex.getStackTrace();
-//        }
+        try {
+            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
+                    "Save Payment",
+                    paymentStr,
+                    Long.valueOf(GemfiveApplication.getAppConfiguration().getUser().getId()));
+        } catch (Exception ex) {
+            ex.getStackTrace();
+        }
 
     }
 

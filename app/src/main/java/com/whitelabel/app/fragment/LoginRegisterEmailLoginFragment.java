@@ -66,6 +66,7 @@ import com.whitelabel.app.model.FBGraphAPIUserEntity;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
 import com.whitelabel.app.utils.FirebaseEventUtils;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -792,15 +793,15 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         SharedPreferences.Editor editor2 = shared.edit();
                         editor2.putString("email", loginReturnEntity.getEmail());
                         editor2.commit();
-//                        try {
-//                            GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action",
-//                                    "Sign In",
-//                                    "Email",
-//                                    Long.valueOf(loginReturnEntity.getId()));
-//                            FirebaseEventUtils.getInstance().customizedSignIn(mActivity.get(), FirebaseEventUtils.lOGIN_EMAIL);
-//                        }catch (Exception ex){
-//                            ex.getStackTrace();
-//                        }
+                        try {
+                            GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action",
+                                    "Sign In",
+                                    "Email",
+                                    Long.valueOf(loginReturnEntity.getId()));
+                            FirebaseEventUtils.getInstance().customizedSignIn(mActivity.get(), FirebaseEventUtils.lOGIN_EMAIL);
+                        }catch (Exception ex){
+                            ex.getStackTrace();
+                        }
 
                     }else{
                         String errorMsg= (String) msg.obj;
@@ -822,15 +823,15 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         if ((result != null) && (result instanceof SVRAppserviceCustomerFbLoginReturnEntity)) {
                             result.setLoginType(FirebaseEventUtils.LOGIN_FACEBOOK);
                             mFragment.get().loginSuccess(result);
-//                            try {
-//                                GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action",
-//                                        "Sign In",
-//                                        "Facebook",
-//                                        Long.valueOf(result.getId()));
-//                                FirebaseEventUtils.getInstance().customizedSignIn(mActivity.get(), FirebaseEventUtils.LOGIN_FACEBOOK);
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
+                            try {
+                                GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action",
+                                        "Sign In",
+                                        "Facebook",
+                                        Long.valueOf(result.getId()));
+                                FirebaseEventUtils.getInstance().customizedSignIn(mActivity.get(), FirebaseEventUtils.LOGIN_FACEBOOK);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         } else {
                             mFragment.get().fbLoginError();
                         }
@@ -860,15 +861,15 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         if ((result != null) && (result instanceof SVRAppserviceCustomerFbLoginReturnEntity)) {
                             result.setLoginType(FirebaseEventUtils.LOGIN_GOOGLE);
                             mFragment.get().loginSuccess(result);
-//                            try {
-//                                GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action",
-//                                        "Sign In",
-//                                        "Google",
-//                                        Long.valueOf(result.getId()));
-//                                FirebaseEventUtils.getInstance().customizedSignIn(mActivity.get(),FirebaseEventUtils.LOGIN_GOOGLE);
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
+                            try {
+                                GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action",
+                                        "Sign In",
+                                        "Google",
+                                        Long.valueOf(result.getId()));
+                                FirebaseEventUtils.getInstance().customizedSignIn(mActivity.get(),FirebaseEventUtils.LOGIN_GOOGLE);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         } else {
                             mFragment.get().fbLoginError();
                         }
@@ -1119,12 +1120,12 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     @Override
     public void onStart() {
         super.onStart();
-//        if (mGoogleApiClient != null) {
-//            mGoogleApiClient.connect();
-//        }
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, true);
-//        GaTrackHelper.getInstance().googleAnalytics("Sign In screen", loginRegisterActivity);
-//        JLogUtils.i("googleGA_screen", "Sign In screen");
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, true);
+        GaTrackHelper.getInstance().googleAnalytics("Sign In screen", loginRegisterActivity);
+        JLogUtils.i("googleGA_screen", "Sign In screen");
     }
 
     @Override
@@ -1133,6 +1134,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
 //        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
 //            mGoogleApiClient.disconnect();
 //        }
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, false);
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, false);
     }
 }

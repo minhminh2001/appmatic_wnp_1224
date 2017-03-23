@@ -32,6 +32,7 @@ import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.utils.FilterSortHelper;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
@@ -86,7 +87,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContentView = inflater.inflate(R.layout.fragment_productlist_categorylanding, null);
-//        productListActivity.mGATrackTimeStart= GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+        productListActivity.mGATrackTimeStart= GaTrackHelper.getInstance().googleAnalyticsTimeStart();
 //        productListActivity.mGATrackTimeEnable=true;
         setContentView(mContentView);
         return mContentView;
@@ -158,13 +159,13 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         super.onActivityCreated(savedInstanceState);
         initToolBar();
         FRAGMENT_CONTAINER_ID = R.id.flFilterSortContainer;
-//        try {
-//            GaTrackHelper.getInstance().googleAnalytics("Sub Category Screen", getActivity());
-//            JLogUtils.i("googleAnalytics", "Sub Category Screen");
-//
-//        }catch (Exception ex){
-//            ex.getStackTrace();
-//        }
+        try {
+            GaTrackHelper.getInstance().googleAnalytics("Sub Category Screen", getActivity());
+            JLogUtils.i("googleAnalytics", "Sub Category Screen");
+
+        }catch (Exception ex){
+            ex.getStackTrace();
+        }
 
         mIVBottomSlideToTop = (ImageView) mContentView.findViewById(R.id.iv_bottom_slideto_top);
         mTopFilterAndSortBarRL = (RelativeLayout) mContentView.findViewById(R.id.top_switch_and_filter_bar);
@@ -364,14 +365,14 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         }
         productListActivity.setCurrentProductListFragmentPosition(position);
 
-//        try {
-//            String categoryA=  productListActivity.searchCategoryEntity.getName();
-//            String categoryA_B=  categoryArrayList.get(position).getName();
-//            GaTrackHelper.getInstance().googleAnalytics(categoryA + "->" + categoryA_B, productListActivity);
-//            JLogUtils.i("googleGA_screen",categoryA+"->"+categoryA_B);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            String categoryA=  productListActivity.searchCategoryEntity.getName();
+            String categoryA_B=  categoryArrayList.get(position).getName();
+            GaTrackHelper.getInstance().googleAnalytics(categoryA + "->" + categoryA_B, productListActivity);
+            JLogUtils.i("googleGA_screen",categoryA+"->"+categoryA_B);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

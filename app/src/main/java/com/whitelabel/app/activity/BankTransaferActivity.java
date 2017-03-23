@@ -48,6 +48,7 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.network.OkHttpClientManager;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.FileUtils;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -127,11 +128,11 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
 
     private void initData() {
         mHandler = new DataHandler(this);
-//        try {
-//            GaTrackHelper.getInstance().googleAnalytics("Submit Bank Transfer Screen", BankTransaferActivity.this);
-//        } catch (Exception ex) {
-//            ex.getStackTrace();
-//        }
+        try {
+            GaTrackHelper.getInstance().googleAnalytics("Submit Bank Transfer Screen", BankTransaferActivity.this);
+        } catch (Exception ex) {
+            ex.getStackTrace();
+        }
         emailErrorString = getResources().getString(R.string.email_error);
         imageSelectError = getResources().getString(R.string.select_img);
         intentnetErrorString = getResources().getString(R.string.Global_Error_Internet);

@@ -19,6 +19,7 @@ import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.model.NotificationCell;
 import com.whitelabel.app.model.NotificationReceivedEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -229,24 +230,24 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
             ex.getStackTrace();
         }
 
-//        try {
-//            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
-//                    "Open Notification Detail",
-//                    notificationTitle,
-//                    Long.valueOf(itemId));
-//        } catch (NumberFormatException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
+                    "Open Notification Detail",
+                    notificationTitle,
+                    Long.valueOf(itemId));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.notification_detail_open:
-//                GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
-//                        "Notification CTA",
-//                        notificationTitle,
-//                        Long.valueOf(itemId));
+                GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
+                        "Notification CTA",
+                        notificationTitle,
+                        Long.valueOf(itemId));
                 if (mBean != null && mBean.getAttached_link_type() == 1) {
                     if (mBean.getInternal_type() == 1 && mBean.getCategory() != null) {
                         if ("0".equals(mBean.getCategory().getSecondCategory()) && "0".equals(mBean.getCategory().getThirdCategory())) { //1级菜单
@@ -320,9 +321,9 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
     @Override
     protected void onStart() {
         super.onStart();
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
-//        GaTrackHelper.getInstance().googleAnalytics("Notification detail screen", this);
-//        JLogUtils.i("googleGA_screen", "Notification detail screen");
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
+        GaTrackHelper.getInstance().googleAnalytics("Notification detail screen", this);
+        JLogUtils.i("googleGA_screen", "Notification detail screen");
     }
 
     @Override

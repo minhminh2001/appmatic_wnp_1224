@@ -83,13 +83,13 @@ public class CreditInstructionActivity extends com.whitelabel.app.BaseActivity i
     @Override
     protected void onStart() {
         super.onStart();
-//        try {
-//            GaTrackHelper.getInstance().googleAnalyticsReportActivity(this,true);
-//            GaTrackHelper.getInstance().googleAnalytics("Store Credit Instruction Screen", this);
-//        } catch (Exception ex) {
-//            ex.getStackTrace();
-//        }
-//        JLogUtils.i("googleGA_screen", "Store Credit Instruction Screen");
+        try {
+            GaTrackHelper.getInstance().googleAnalyticsReportActivity(this,true);
+            GaTrackHelper.getInstance().googleAnalytics("Store Credit Instruction Screen", this);
+        } catch (Exception ex) {
+            ex.getStackTrace();
+        }
+        JLogUtils.i("googleGA_screen", "Store Credit Instruction Screen");
     }
 
     @Override

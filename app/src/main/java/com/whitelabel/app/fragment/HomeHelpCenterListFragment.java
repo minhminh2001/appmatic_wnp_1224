@@ -14,6 +14,8 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HideFunctionLoginActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.model.TMPHelpCenterListToDetailEntity;
+import com.whitelabel.app.utils.GaTrackHelper;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.CustomTextView;
 
 /**
@@ -186,9 +188,9 @@ public class HomeHelpCenterListFragment extends HomeBaseFragment implements View
 //                null, // Event label
 //                null) // Event value
 //                .build());
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity,true);
-//        GaTrackHelper.getInstance().googleAnalytics("Help Centre Screen", homeActivity);
-//        JLogUtils.i("googleGA_screen", "Help Centre Screen");
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity,true);
+        GaTrackHelper.getInstance().googleAnalytics("Help Centre Screen", homeActivity);
+        JLogUtils.i("googleGA_screen", "Help Centre Screen");
     }
 
     @Override

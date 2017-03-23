@@ -192,7 +192,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         initData();
         initToolBar();
     }
-
     private void initToolBar() {
         setTitle(getResources().getString(R.string.CHECKOUT));
         setLeftMenuIcon(JToolUtils.getDrawable(R.drawable.action_back));
@@ -284,7 +283,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         scrollViewBody = (ScrollView) findViewById(R.id.sv_checkout_body);
         llBody = (LinearLayout) findViewById(R.id.ll_checkout_body);
         progressBarLoading = (ProgressBar) findViewById(R.id.pb_checkout_body_loading);
-        tvMenuShipping.setTextColor(getResources().getColor(R.color.purple));
+        tvMenuShipping.setTextColor(getResources().getColor(R.color.appColorPrimary));
         btnContinue.setOnClickListener(this);
         ll_btn.setOnClickListener(this);
         ll_btn.setVisibility(View.VISIBLE);
@@ -431,7 +430,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     case 2://means payment module
                         changeSliderColor(
                                 getResources().getColor(R.color.grayf8f8f8),
-                                getResources().getColor(R.color.purple),
+                                getResources().getColor(R.color.appColorPrimary),
                                 getResources().getColor(R.color.grayf8f8f8));
                         break;
                     case 1://means shipping module
@@ -440,7 +439,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         inputMethodManager.hideSoftInputFromWindow(llBody.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                         changeSliderColor(
-                                getResources().getColor(R.color.purple),
+                                getResources().getColor(R.color.appColorPrimary),
                                 getResources().getColor(R.color.grayf8f8f8),
                                 getResources().getColor(R.color.grayf8f8f8));
 
@@ -466,35 +465,35 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         switch (currentModule) {
             case 1://In shipping Module
                 sendRequestAndGoToNextPaymentModule();
-//                GaTrackHelper.getInstance().googleAnalytics("Select Address Screen", this);
-//                JLogUtils.i("googleGA_screen", "Select Address Screen");
+                GaTrackHelper.getInstance().googleAnalytics("Select Address Screen", this);
+                JLogUtils.i("googleGA_screen", "Select Address Screen");
                 break;
             case 2://In payment Module
                 sendRequestToSavePayment();
-//                GaTrackHelper.getInstance().googleAnalytics("Select Payment Screen", this);
-//                JLogUtils.i("googleGA_screen", "Select Payment Screen");
+                GaTrackHelper.getInstance().googleAnalytics("Select Payment Screen", this);
+                JLogUtils.i("googleGA_screen", "Select Payment Screen");
                 break;
             case 3://place my order
                 mGATrackPlaceOrderToResultTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
                 placeOrder();
 
-//                try {
-//                    GaTrackHelper.getInstance().googleAnalytics("Review Order Screen ", this);
-////                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getDiscount());
-////                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getShipping());
-//                    String discount = "";
-//                    String shippingFee = "";
-//                    if (paymentSaveReturnEntity.getDiscount() != null) {
-//                        discount = paymentSaveReturnEntity.getDiscount().get("value");
-//                    }
-//                    if (paymentSaveReturnEntity.getShipping() != null) {
-//                        shippingFee = paymentSaveReturnEntity.getShipping().get("value");
-//                    }
-////                    FirebaseEventUtils.getInstance().customizedBeginCheck(CheckoutActivity.this, discount, JDataUtils.formatDouble(paymentSaveReturnEntity.getGrandtotal()), JDataUtils.formatDouble(shippingFee));
-//                } catch (Exception ex) {
-//                    ex.getStackTrace();
-//                }
-//                JLogUtils.i("googleGA_screen", "Review Order Screen ");
+                try {
+                    GaTrackHelper.getInstance().googleAnalytics("Review Order Screen ", this);
+//                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getDiscount());
+//                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getShipping());
+                    String discount = "";
+                    String shippingFee = "";
+                    if (paymentSaveReturnEntity.getDiscount() != null) {
+                        discount = paymentSaveReturnEntity.getDiscount().get("value");
+                    }
+                    if (paymentSaveReturnEntity.getShipping() != null) {
+                        shippingFee = paymentSaveReturnEntity.getShipping().get("value");
+                    }
+//                    FirebaseEventUtils.getInstance().customizedBeginCheck(CheckoutActivity.this, discount, JDataUtils.formatDouble(paymentSaveReturnEntity.getGrandtotal()), JDataUtils.formatDouble(shippingFee));
+                } catch (Exception ex) {
+                    ex.getStackTrace();
+                }
+                JLogUtils.i("googleGA_screen", "Review Order Screen ");
                 break;
         }
     }
@@ -557,15 +556,15 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 
 
     public void gaTrackerPlaceOrder() {
-//        try {
-//            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
-//                    "Place Order",
-//                    null,
-//                    null);
-//
-//        } catch (Exception ex) {
-//            ex.getStackTrace();
-//        }
+        try {
+            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
+                    "Place Order",
+                    null,
+                    null);
+
+        } catch (Exception ex) {
+            ex.getStackTrace();
+        }
 
     }
 
@@ -626,7 +625,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         changeSliderColor(
                 getResources().getColor(R.color.grayf8f8f8),
                 getResources().getColor(R.color.grayf8f8f8),
-                getResources().getColor(R.color.purple));
+                getResources().getColor(R.color.appColorPrimary));
         //switch fragment and set params
         checkoutReviewFragment = new CheckoutReviewFragment();
         Bundle bundle = new Bundle();
@@ -848,7 +847,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                             mActivity.get().changeSliderColor(
                                     mActivity.get().getResources().getColor(R.color.grayf8f8f8),
                                     mActivity.get().getResources().getColor(R.color.grayf8f8f8),
-                                    mActivity.get().getResources().getColor(R.color.purple));
+                                    mActivity.get().getResources().getColor(R.color.appColorPrimary));
                             //switch fragment and set params
                             mActivity.get().checkoutReviewFragment = new CheckoutReviewFragment();
                             Bundle bundle = new Bundle();
@@ -872,7 +871,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                              * normal payment
                              */
                             mActivity.get().skipPayment = 0;
-                            mActivity.get().changeSliderColor(mActivity.get().getResources().getColor(R.color.grayf8f8f8), mActivity.get().getResources().getColor(R.color.purple), mActivity.get().getResources().getColor(R.color.grayf8f8f8));
+                            mActivity.get().changeSliderColor(mActivity.get().getResources().getColor(R.color.grayf8f8f8), mActivity.get().getResources().getColor(R.color.appColorPrimary), mActivity.get().getResources().getColor(R.color.grayf8f8f8));
                             //switch fragment
                             mActivity.get().fragmentTransaction = mActivity.get().getFragmentManager().beginTransaction();
                             mActivity.get().checkoutPaymentFragment = mActivity.get().getFragmentManager().findFragmentByTag("paymentFragment");
@@ -898,16 +897,16 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         }
                         mActivity.get().neverEnterIntoNext = false;
                         mActivity.get().scrollViewBody.scrollTo(0, 0);
-//                        try {
-//                            String CustomerId = GemfiveApplication.getAppConfiguration().getUser().getId();
-//                            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
-//                                    "Save Address",
-//                                    "Shipping State",
-//                                    Long.valueOf(CustomerId));
-////                            JLogUtils.i("googleGA", "checkout shipping  点击 continue");
-//                        } catch (NumberFormatException e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+                            String CustomerId = GemfiveApplication.getAppConfiguration().getUser().getId();
+                            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
+                                    "Save Address",
+                                    "Shipping State",
+                                    Long.valueOf(CustomerId));
+//                            JLogUtils.i("googleGA", "checkout shipping  点击 continue");
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
 
                     } else {
                         String faildStr = (String) msg.obj;
@@ -1073,16 +1072,16 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     }
 
     public void gaTrackerSaveShipping(String state) {
-//        try {
-//
-//            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
-//                    "Save Address",
-//                    state,
-//                    Long.valueOf(GemfiveApplication.getAppConfiguration().getUser().getId()));
-//
-//        } catch (Exception ex) {
-//            ex.getStackTrace();
-//        }
+        try {
+
+            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
+                    "Save Address",
+                    state,
+                    Long.valueOf(GemfiveApplication.getAppConfiguration().getUser().getId()));
+
+        } catch (Exception ex) {
+            ex.getStackTrace();
+        }
 
     }
 
@@ -1273,16 +1272,14 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         TranslateAnimation translateAnimation = null;
 
         //first slide
-        if (firstColorId == getResources().getColor(R.color.purple)) {
-
-
+        if (firstColorId == getResources().getColor(R.color.appColorPrimary)) {
             tvSliderFirst.setBackgroundColor(firstColorId);
             tvSliderSecond.setBackgroundColor(secondColorId);
             tvSliderThird.setBackgroundColor(thirdColorId);
         }
 
         //second slide
-        if (secondColorId == getResources().getColor(R.color.purple)) {
+        if (secondColorId == getResources().getColor(R.color.appColorPrimary)) {
             if (isGoBack) {
 
                 tvSliderSecond.setBackgroundColor(secondColorId);
@@ -1295,7 +1292,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         }
 
         //third slide
-        if (thirdColorId == getResources().getColor(R.color.purple)) {
+        if (thirdColorId == getResources().getColor(R.color.appColorPrimary)) {
 
 
             tvSliderFirst.setBackgroundColor(firstColorId);
@@ -1859,8 +1856,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
-//        GaTrackHelper.getInstance().googleAnalyticsStartCheckout(CheckoutActivity.this, productIds, "checkout", 1);
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
+        GaTrackHelper.getInstance().googleAnalyticsStartCheckout(CheckoutActivity.this, productIds, "checkout", 1);
 
     }
 
@@ -1883,7 +1880,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
     }
 
 }

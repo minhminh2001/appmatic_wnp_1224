@@ -25,6 +25,7 @@ import com.whitelabel.app.model.ShoppingCarStoreCreditBean;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.FileUtils;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -422,16 +423,16 @@ public class CheckoutReviewFragment extends BaseFragment {
         //((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
         lvShoppingCart.setLayoutParams(params);
 
-//        try {
-//            String shippingState = address.getRegion();
-//            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
-//                    "Place Order",
-//                    shippingState,
-//                    null);
-//            JLogUtils.i("googleGA", "checkout shipping  点击 continue" + "shippingState=" + shippingState);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            String shippingState = address.getRegion();
+            GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
+                    "Place Order",
+                    shippingState,
+                    null);
+            JLogUtils.i("googleGA", "checkout shipping  点击 continue" + "shippingState=" + shippingState);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        if (checkoutActivity.mGATrackPaymentToReviewTimeEnable) {
 //            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
 //                    GaTrackHelper.GA_TIME_CATEGORY_CHECKOUT,

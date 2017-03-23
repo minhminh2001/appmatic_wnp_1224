@@ -16,7 +16,10 @@ import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.handler.INITApp;
 import com.whitelabel.app.task.INITExecutor;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JStorageUtils;
+import com.whitelabel.app.utils.JToolUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -143,23 +146,23 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
     private INITApp mCallback;
 
     private void gaTrackNotificationSwitch() {
-//        boolean isNotificationEnabled = JToolUtils.isNotificationEnabled(this);
-//        String trackLabel="";
-//        if (isNotificationEnabled) {
-//            trackLabel = "Enabled";
-//        } else {
-//            trackLabel = "Disabled";
-//        }
-//       //缓存和当前状态是否一样，不一样则track
-//        String cacheState=JStorageUtils.getNotificaitionState(this);
-//        if(!trackLabel.equals(cacheState)){
-//            JStorageUtils.saveNotificaitionState(this,trackLabel);
-//            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
-//                    "Enable Push Notification for GEMFIVE ",
-//                    trackLabel,
-//                    null);
-//            JLogUtils.i("googleGA", "Receive Notification switch");
-//        }
+        boolean isNotificationEnabled = JToolUtils.isNotificationEnabled(this);
+        String trackLabel="";
+        if (isNotificationEnabled) {
+            trackLabel = "Enabled";
+        } else {
+            trackLabel = "Disabled";
+        }
+       //缓存和当前状态是否一样，不一样则track
+        String cacheState=JStorageUtils.getNotificaitionState(this);
+        if(!trackLabel.equals(cacheState)){
+            JStorageUtils.saveNotificaitionState(this,trackLabel);
+            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
+                    "Enable Push Notification for GEMFIVE ",
+                    trackLabel,
+                    null);
+            JLogUtils.i("googleGA", "Receive Notification switch");
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

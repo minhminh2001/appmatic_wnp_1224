@@ -22,6 +22,7 @@ import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceLandingPagesListLandingPageItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -155,7 +156,7 @@ public class CurationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             intent.putExtra(ProductListActivity.INTENT_DATA_CATEGORYID, categoryentity);
                             mContext.startActivity(intent);
                             ((Activity) mContext).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-//                            GaTrackHelper.getInstance().googleAnalytics(categoryentity.getName(), mContext);
+                            GaTrackHelper.getInstance().googleAnalytics(categoryentity.getName(), mContext);
                         } catch (Exception ex) {
                         }
                     }

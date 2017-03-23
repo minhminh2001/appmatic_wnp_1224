@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.NetUtils;
@@ -35,8 +36,8 @@ public class TrackingInfoActivity extends com.whitelabel.app.BaseActivity implem
     @Override
     protected void onStart() {
         super.onStart();
-//        GaTrackHelper.getInstance().googleAnalytics("Tracking Info Screen", this);
-//        JLogUtils.i("googleGA_screen", "Tracking Info Screen Screen");
+        GaTrackHelper.getInstance().googleAnalytics("Tracking Info Screen", this);
+        JLogUtils.i("googleGA_screen", "Tracking Info Screen Screen");
     }
 
     @Override

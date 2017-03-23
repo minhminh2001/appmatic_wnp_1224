@@ -17,6 +17,7 @@ import com.facebook.share.Sharer;
 import com.facebook.share.widget.ShareDialog;
 import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
+import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.adapter.ShareIntentListAdapter;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.dao.OtherDao;
@@ -102,23 +103,23 @@ public class ShareUtil {
         builder.setAdapter(objShareIntentListAdapter, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 ResolveInfo info = (ResolveInfo) activityList.get(item);
-//                try {
-//                    //google追踪分享到某应用
-//                    ProductActivity productActivity= (ProductActivity) mContext;
-//                    if(productActivity.mProductDetailBean !=null){
-//                       productId=productActivity.mProductDetailBean.getId();
-//                    }
-//                    JLogUtils.i("ShareUtil","info.loadLabel(mContext.getPackageManager()).toString():"+info.loadLabel(mContext.getPackageManager()).toString());
-//                    GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
-//                            "Share Product",
-//                            info.loadLabel(mContext.getPackageManager()).toString(),
-//                            Long.valueOf(productId));
-//                    JLogUtils.i("googleGA","shareGA"+ productId);
-//                    FirebaseEventUtils.getInstance().allAppShare(mContext.getApplicationContext(),productId,info.loadLabel(mContext.getPackageManager()).toString());
-////                    JLogUtils.i("googleGA","shareGA"+ info.loadLabel(mContext.getPackageManager()).toString());
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    //google追踪分享到某应用
+                    ProductActivity productActivity= (ProductActivity) mContext;
+                    if(productActivity.mProductDetailBean !=null){
+                       productId=productActivity.mProductDetailBean.getId();
+                    }
+                    JLogUtils.i("ShareUtil","info.loadLabel(mContext.getPackageManager()).toString():"+info.loadLabel(mContext.getPackageManager()).toString());
+                    GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
+                            "Share Product",
+                            info.loadLabel(mContext.getPackageManager()).toString(),
+                            Long.valueOf(productId));
+                    JLogUtils.i("googleGA","shareGA"+ productId);
+                    FirebaseEventUtils.getInstance().allAppShare(mContext.getApplicationContext(),productId,info.loadLabel(mContext.getPackageManager()).toString());
+//                    JLogUtils.i("googleGA","shareGA"+ info.loadLabel(mContext.getPackageManager()).toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 // if email shared by user
                 if (info.activityInfo.packageName.contains("com.facebook.katana")) {
                     JLogUtils.i("share","info.activityInfo.packageName.contains(\"facebook\")");

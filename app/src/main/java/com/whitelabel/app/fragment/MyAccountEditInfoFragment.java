@@ -58,6 +58,7 @@ import com.whitelabel.app.model.SVRGetCityANdStateByPostCodeEntity;
 import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.utils.AnimUtil;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -1862,7 +1863,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
 //                null, // Event label
 //                null) // Event value
 //                .build());
-//        GaTrackHelper.getInstance().googleAnalytics("Edit Profile Screen", myAccountActivity);
-//        JLogUtils.i("googleGA_screen", "Edit Profile Screen");
+        GaTrackHelper.getInstance().googleAnalytics("Edit Profile Screen", myAccountActivity);
+        JLogUtils.i("googleGA_screen", "Edit Profile Screen");
     }
 }

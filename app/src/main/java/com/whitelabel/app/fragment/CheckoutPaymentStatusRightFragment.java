@@ -44,6 +44,8 @@ import com.whitelabel.app.model.GetAnimCodeEntity;
 import com.whitelabel.app.model.ShoppingDiscountBean;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.AppUtils;
+import com.whitelabel.app.utils.FirebaseEventUtils;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JShareUtils;
@@ -231,14 +233,14 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 
         GemfiveApplication.getAppConfiguration().addToOrder(checkoutPaymentStatusActivity);
 
-//        if(checkoutPaymentStatusActivity.mGATrackTimeEnable) {
-//            GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-//                    GaTrackHelper.GA_TIME_CATEGORY_PAYMENT,
-//                    checkoutPaymentStatusActivity.mGATrackTimeStart,
-//                    "Payment Success"
-//            );
-//            checkoutPaymentStatusActivity.mGATrackTimeEnable = false;
-//        }
+        if(checkoutPaymentStatusActivity.mGATrackTimeEnable) {
+            GaTrackHelper .getInstance().googleAnalyticsTimeStop(
+                    GaTrackHelper.GA_TIME_CATEGORY_PAYMENT,
+                    checkoutPaymentStatusActivity.mGATrackTimeStart,
+                    "Payment Success"
+            );
+            checkoutPaymentStatusActivity.mGATrackTimeEnable = false;
+        }
     }
 
     private PopupWindow popupWindow;
