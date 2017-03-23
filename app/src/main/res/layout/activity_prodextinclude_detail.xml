@@ -12,35 +12,72 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--brand and name-->
         <RelativeLayout
-            android:id="@+id/rlProductPrice"
+            android:id="@+id/detail_title_RelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:background="@color/white"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:visibility="visible">
+
+            <View
+                android:id="@+id/ctvProductTitleLine"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
 
             <com.whitelabel.app.widget.CustomTextView
-                android:id="@+id/old_price"
+                android:id="@+id/ctvProductBrand"
                 style="@style/font_family_robot_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="11sp"/>
-        </RelativeLayout>
+                android:layout_below="@+id/ctvProductTitleLine"
 
+                android:textColor="@color/black"
+                android:textSize="12sp"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/ctvProductName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ctvProductBrand"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                imaginato:textFont="LatoBold"
+                />
+        </RelativeLayout>
+        <!--price stock save RM merchant cash-->
         <RelativeLayout
             android:id="@+id/rlProductFinalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rlProductPrice"
+            android:layout_below="@+id/detail_title_RelativeLayout"
             >
+
+            <RelativeLayout
+                android:id="@+id/rlProductPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp">
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/old_price"
+                    style="@style/font_family_robot_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"/>
+            </RelativeLayout>
 
             <com.whitelabel.app.widget.CustomTextView
                 android:id="@+id/price_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/rlProductPrice"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:textColor="@color/black"
@@ -141,7 +178,7 @@
 
         </RelativeLayout>
 
-
+        <!--color size -->
         <LinearLayout
             android:id="@+id/ll_attribute"
             android:layout_width="match_parent"
@@ -152,15 +189,15 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
         </LinearLayout>
-
+        <!--quantity-->
         <RelativeLayout
             android:id="@+id/rlProductQuantity"
             android:layout_width="165dp"
             android:layout_height="25dp"
             android:layout_below="@+id/ll_attribute"
+            android:layout_marginBottom="15dp"
             android:layout_marginLeft="9dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="15dp"
             android:background="@drawable/shape_productdetail_colorsize_bg"
             android:visibility="invisible"
             >
@@ -228,14 +265,14 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/llProductDetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/detail_descriptions_RelativeLayout"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:orientation="vertical"/>
+        <!--<LinearLayout-->
+            <!--android:id="@+id/llProductDetail"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/detail_descriptions_RelativeLayout"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:layout_marginRight="12dp"-->
+            <!--android:orientation="vertical"/>-->
     </RelativeLayout>
 
 </FrameLayout>

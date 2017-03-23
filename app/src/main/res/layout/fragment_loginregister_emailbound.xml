@@ -101,7 +101,7 @@
             android:paddingTop="11dp"
             android:singleLine="true"
             android:text="@string/loginregister_emailbound_createaccount"
-            android:textColor="@color/whiteFFFFFF"
+            android:textColor="@color/buttonTextColorPrimary"
             android:textSize="16sp"
             style="@style/font_family_roboto_medium" />
         </LinearLayout>

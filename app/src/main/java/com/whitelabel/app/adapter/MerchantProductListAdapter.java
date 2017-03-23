@@ -289,7 +289,7 @@ public class MerchantProductListAdapter extends BaseAdapter {
                 viewHolder.ctvLeftProductBrand.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startBrandStoreActivity((Activity) view.getContext(), leftProductEntity.getBrand(), leftProductEntity.getBrandId());
+//                        startBrandStoreActivity((Activity) view.getContext(), leftProductEntity.getBrand(), leftProductEntity.getBrandId());
                     }
                 });
 
@@ -415,7 +415,7 @@ public class MerchantProductListAdapter extends BaseAdapter {
                 viewHolder.ctvRightProductBrand.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startBrandStoreActivity((Activity) view.getContext(), finalRightProductEntity1.getBrand(), finalRightProductEntity1.getBrandId());
+//                        startBrandStoreActivity((Activity) view.getContext(), finalRightProductEntity1.getBrand(), finalRightProductEntity1.getBrandId());
                     }
                 });
 

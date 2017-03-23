@@ -120,7 +120,7 @@ public class CustomEdit extends LinearLayout implements View.OnFocusChangeListen
                     myText1.startAnimation(set);
                 } else {
                     myText2.setVisibility(View.VISIBLE);
-                    myText2.setTextColor(getResources().getColor(R.color.blue5097DA));
+                    myText2.setTextColor(getResources().getColor(R.color.colorAccent));
                 }
 
             }
@@ -189,7 +189,7 @@ public class CustomEdit extends LinearLayout implements View.OnFocusChangeListen
         if(TextUtils.isEmpty(text)){
             myText2.setText(hint);
             myText2.setVisibility(View.VISIBLE);
-            myText2.setTextColor(getResources().getColor(R.color.blue5097DA));
+            myText2.setTextColor(getResources().getColor(R.color.colorAccent));
         }else {
             myEditText.setHint(hint);
             myText2.setVisibility(View.VISIBLE);

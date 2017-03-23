@@ -480,7 +480,7 @@
         android:layout_marginTop="42dp"
         android:background="@drawable/big_button_style_config"
         android:text="@string/register"
-        android:textColor="@color/whiteFFFFFF"
+        android:textColor="@color/buttonTextColorPrimary"
         android:textSize="16sp"
         />
     </RelativeLayout>
@@ -550,7 +550,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/SignInNow"
-            android:textColor="@color/purple92018d" />
+            android:textColor="@color/appColorPrimary" />
     </LinearLayout>
 </RelativeLayout>
 </RelativeLayout>

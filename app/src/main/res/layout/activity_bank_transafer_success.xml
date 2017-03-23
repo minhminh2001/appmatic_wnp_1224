@@ -84,7 +84,7 @@
             android:background="@drawable/big_button_style_config"
             android:gravity="center"
             android:text="@string/CONTINUE_SHOPPING"
-            android:textColor="@color/whiteFFFFFF"
+            android:textColor="@color/buttonTextColorPrimary"
             android:textSize="@dimen/button_font_size"
             />
     </LinearLayout>

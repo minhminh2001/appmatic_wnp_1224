@@ -38,8 +38,10 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.whitelabel.app.R;
 import com.whitelabel.app.utils.JLogUtils;
+
 import java.util.Locale;
 
 /**
@@ -121,7 +123,9 @@ public class CustomTabCustomPageIndicator extends HorizontalScrollView {
         a.recycle();
 
         // get custom attrs
+
         a = context.obtainStyledAttributes(attrs, R.styleable.PagerSlidingTabStrip);
+
         indicatorColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsIndicatorColor, indicatorColor);
         underlineColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsUnderlineColor, underlineColor);
         dividerColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsDividerColor, dividerColor);
@@ -133,14 +137,17 @@ public class CustomTabCustomPageIndicator extends HorizontalScrollView {
         shouldExpand = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsShouldExpand, shouldExpand);
         scrollOffset = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsScrollOffset, scrollOffset);
         textAllCaps = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsTextAllCaps, textAllCaps);
+
         a.recycle();
+
         rectPaint = new Paint();
         rectPaint.setAntiAlias(true);
         rectPaint.setStyle(Paint.Style.FILL);
+
         dividerPaint = new Paint();
         dividerPaint.setAntiAlias(true);
         dividerPaint.setStrokeWidth(dividerWidth);
-        indicatorColor=getResources().getColor(R.color.appColorPrimary);
+
         defaultTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1.0f);
 
@@ -564,7 +571,9 @@ public class CustomTabCustomPageIndicator extends HorizontalScrollView {
                 delegatePageListener.onPageSelected(position);
             }
         }
+
     }
+
     public void setSelectColor(int position){
         try {
             if(tabsContainer!=null) {
@@ -572,7 +581,7 @@ public class CustomTabCustomPageIndicator extends HorizontalScrollView {
                     if (tabsContainer.getChildAt(i) instanceof TextView) {
                         TextView textView = (TextView) tabsContainer.getChildAt(i);
                         if (((Integer) textView.getTag()) == position) {
-                            textView.setTextColor(indicatorColor);
+                            textView.setTextColor(getContext().getResources().getColor(R.color.appColorPrimary));
                         } else {
                             textView.setTextColor(getContext().getResources().getColor(R.color.black));
                         }

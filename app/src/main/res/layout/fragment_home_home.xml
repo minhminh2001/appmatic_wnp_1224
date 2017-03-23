@@ -26,7 +26,7 @@
             android:layout_below="@id/vHeaderCategoryDivider"
             imaginato:pstsDividerColor="@color/whiteFFFFFF"
             imaginato:pstsDividerPadding="0dp"
-            imaginato:pstsIndicatorColor="@color/purple66006E"
+            imaginato:pstsIndicatorColor="@color/appColorPrimary"
             imaginato:pstsIndicatorHeight="2dp"/>
 
         <View

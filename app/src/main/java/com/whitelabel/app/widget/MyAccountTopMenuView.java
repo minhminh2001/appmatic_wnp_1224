@@ -122,6 +122,7 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
         shouldExpand = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsShouldExpand, shouldExpand);
         scrollOffset = a.getDimensionPixelSize(R.styleable.PagerSlidingTabStrip_pstsScrollOffset, scrollOffset);
         textAllCaps = a.getBoolean(R.styleable.PagerSlidingTabStrip_pstsTextAllCaps, textAllCaps);
+
         a.recycle();
 
         rectPaint = new Paint();
@@ -131,7 +132,7 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
         dividerPaint = new Paint();
         dividerPaint.setAntiAlias(true);
         dividerPaint.setStrokeWidth(dividerWidth);
-        indicatorColor=getResources().getColor(R.color.appColorPrimary);
+
         defaultTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1.0f);
 
@@ -215,7 +216,7 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
                 if (view instanceof TextView) {
                     TextView textView = (TextView) view;
                     if (((Integer) view.getTag()) == position) {
-                        textView.setTextColor(indicatorColor);
+                        textView.setTextColor(getContext().getResources().getColor(R.color.appColorPrimary));
                     } else {
                         textView.setTextColor(getContext().getResources().getColor(R.color.black000000));
                     }

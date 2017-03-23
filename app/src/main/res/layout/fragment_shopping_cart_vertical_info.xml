@@ -106,7 +106,7 @@
                     android:background="@drawable/big_button_style_config"
                     android:gravity="center"
                     android:text="@string/APPLY"
-                    android:textColor="@color/whiteFFFFFF"
+                    android:textColor="@color/buttonTextColorPrimary"
                     android:textSize="17dp"
                     style="@style/font_family_robot_regular" />
             </RelativeLayout>

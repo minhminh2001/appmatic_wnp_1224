@@ -63,7 +63,7 @@
             android:paddingRight="9dp"
             android:paddingTop="9dp"
             android:singleLine="true"
-            android:textColor="@color/purple92018d"
+            android:textColor="@color/black"
             android:textSize="11sp"
             style="@style/font_family_robot_regular" />
 

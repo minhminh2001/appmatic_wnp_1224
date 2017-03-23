@@ -20,7 +20,7 @@
             android:visibility="invisible"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:indeterminateTint="@color/purple"
+            android:indeterminateTint="@color/colorAccent"
             android:indeterminateTintMode="src_atop"
             android:layout_centerHorizontal="true" />
         <com.whitelabel.app.widget.CustomTextView

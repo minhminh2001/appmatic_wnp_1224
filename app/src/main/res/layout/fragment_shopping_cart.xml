@@ -151,7 +151,7 @@
                             android:background="@drawable/big_button_style_config"
                             android:gravity="center"
                             android:text="@string/APPLY"
-                            android:textColor="@color/whiteFFFFFF"
+                            android:textColor="@color/buttonTextColorPrimary"
                             android:textSize="17dp" />
                         </RelativeLayout>
                     </RelativeLayout>
@@ -266,7 +266,7 @@
                             android:background="@drawable/big_button_style_config"
                             android:gravity="center"
                             android:text="@string/redeem"
-                            android:textColor="@color/whiteFFFFFF"
+                            android:textColor="@color/buttonTextColorPrimary"
                             android:textSize="17dp" />
                         </RelativeLayout>
                     </RelativeLayout>
@@ -516,7 +516,7 @@
                 android:background="@drawable/big_button_style_config"
                 android:gravity="center"
                 android:text="CHECKOUT 0 ITEMS"
-                android:textColor="@color/whiteffffff"
+                android:textColor="@color/buttonTextColorPrimary"
                 android:textSize="@dimen/button_font_size"
                 />
         </LinearLayout>

@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.whitelabel.app.R;
 import com.whitelabel.app.activity.BaseActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.application.GemfiveApplication;
@@ -329,12 +330,14 @@ public class JToolUtils {
     }
     public static  void webViewFont(Context context,WebView mWebView,String str ,float textSize){
         String html = FileUtils.readAssest(context, "html/product_detail_web.html");
+        String colorStr=ColorUtils.toHexEncoding(context.getResources().getColor(R.color.appColorPrimary)).substring(2);
 //        html = html.replace("@fontName0", "LatoRegular");
 //        html = html.replace("@fontPath0", "../fonts/Lato-Regular.ttf");// assets相对路径
 //        html = html.replace("@fontName1", "LatoBold");
 //        html = html.replace("@fontPath1", "../fonts/Lato-Bold.ttf");// assets相对路径
         html = html.replace("@mytext", str);
         html = html.replace("@myTextsize", textSize+"px");
+        html = html.replace("@myClickColor", "#"+colorStr);
         String baseurl = "file:///android_asset/html/";
         mWebView.loadDataWithBaseURL(baseurl, html, "text/html", "UTF-8", null);
     }
