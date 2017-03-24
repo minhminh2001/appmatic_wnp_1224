@@ -278,14 +278,14 @@
             android:name="io.fabric.ApiKey"
             android:value="${fabricApiKey}" />
 
-        <activity
-            android:name="com.whitelabel.app.qrscan.QrScanActivity"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            tools:replace="screenOrientation" />
-        <activity
-            android:name="com.whitelabel.app.qrscan.QrScanErrorActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name="com.whitelabel.app.qrscan.QrScanActivity"-->
+            <!--android:screenOrientation="fullSensor"-->
+            <!--android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"-->
+            <!--tools:replace="screenOrientation" />-->
+        <!--<activity-->
+            <!--android:name="com.whitelabel.app.qrscan.QrScanErrorActivity"-->
+            <!--android:screenOrientation="portrait" />-->
         <!--
      ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.

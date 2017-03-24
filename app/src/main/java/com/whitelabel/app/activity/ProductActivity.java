@@ -127,7 +127,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     private CustomCoordinatorLayout coordinatorLayout;
     private AppBarLayout appbar_layout;
     private RelativeLayout mRLAddToWishlistSmall, mRLAddToWishlistBig, rlProductrecommendLine;
-    private LinearLayout llProductDetail, llBottomBar, mLLAddToCart;
+    private LinearLayout  llBottomBar, mLLAddToCart;
     private ImageView ivHeaderBarWishlist, ivHeaderBarWishlist2, mIVHeaderBarWishlist, mIVHeaderBarWishlist2, ivHeaderBarShare;
 
     private ViewPager viewPager;
@@ -855,7 +855,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         descriptionsRelative.setVisibility(View.INVISIBLE);
         ctvProductBrand = (CustomTextView) findViewById(R.id.ctvProductBrand);
         ctvProductName = (TextView) findViewById(R.id.ctvProductName);
-        llProductDetail = (LinearLayout) findViewById(R.id.llProductDetail);
+//        llProductDetail = (LinearLayout) findViewById(R.id.llProductDetail);
         tvProductSaverm = (CustomTextView) findViewById(R.id.tv_product_saverm);
         showView = findViewById(R.id.view);
         textView_num.setText("" + userSelectedProductQty);
