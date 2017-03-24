@@ -938,6 +938,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     }
                 });
         TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
+        textView.setBackground(JViewUtils.getCounerDrawable(this));
         long cartCount = getCartItemCount();
         if (cartCount > 0 && cartCount <= 99) {
             textView.setVisibility(View.VISIBLE);
@@ -2348,7 +2349,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             mLLAddToCart.setEnabled(false);
 //            ctvAddToCart.setBackgroundResource(R.drawable.big_button_style_b8);
             mLLAddToCart.setBackgroundResource(R.drawable.big_button_style_b8);
-
             RelativeLayout.LayoutParams bottomBarLp = (RelativeLayout.LayoutParams) llBottomBar.getLayoutParams();
             if (bottomBarLp != null) {
                 bottomBarLp.height = 0;
@@ -2368,8 +2368,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             ctvAddToCart.setEnabled(true);
             mLLAddToCart.setEnabled(true);
 //            ctvAddToCart.setBackgroundResource(R.drawable.big_button_style_purple);
-            mLLAddToCart.setBackgroundResource(R.drawable.big_button_style_config);
-
+            mLLAddToCart.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(this));
             RelativeLayout.LayoutParams bottomBarLp = (RelativeLayout.LayoutParams) llBottomBar.getLayoutParams();
 //            List<SVRAppserviceProductDetailResultPropertyReturnEntity> attributeIds=new ArrayList<>();
 //            for(int i=0;i<mAttributeViews.size();i++){
@@ -2459,7 +2458,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         ctvAddToCart.setText(addWishText);
 //        ctvAddToCart.setBackgroundResource(R.drawable.big_button_style_purple);
-        mLLAddToCart.setBackgroundResource(R.drawable.big_button_style_config);
+        mLLAddToCart.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(this));
         RelativeLayout.LayoutParams bottomBarLp = (RelativeLayout.LayoutParams) llBottomBar.getLayoutParams();
         if (bottomBarLp != null) {
             //  bottom 的高度与xml文件要同时修改

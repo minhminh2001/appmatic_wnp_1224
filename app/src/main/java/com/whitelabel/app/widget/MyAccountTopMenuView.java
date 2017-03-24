@@ -166,7 +166,7 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
                 } else {
                     getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
-                scrollToChild(currentPosition, 0);
+                scrollToChild(0, 0);
             }
         });
     }

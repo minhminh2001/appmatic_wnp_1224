@@ -343,7 +343,7 @@ public class CustomTabCustomPageIndicator extends HorizontalScrollView {
     }
 
     public void setIndicatorColorResource(int resId) {
-        this.indicatorColor = getResources().getColor(resId);
+        this.indicatorColor = resId;
         invalidate();
     }
 
@@ -581,7 +581,7 @@ public class CustomTabCustomPageIndicator extends HorizontalScrollView {
                     if (tabsContainer.getChildAt(i) instanceof TextView) {
                         TextView textView = (TextView) tabsContainer.getChildAt(i);
                         if (((Integer) textView.getTag()) == position) {
-                            textView.setTextColor(getContext().getResources().getColor(R.color.appColorPrimary));
+                            textView.setTextColor(indicatorColor);
                         } else {
                             textView.setTextColor(getContext().getResources().getColor(R.color.black));
                         }

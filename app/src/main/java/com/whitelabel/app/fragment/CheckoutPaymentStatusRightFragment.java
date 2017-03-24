@@ -299,8 +299,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 //            Thread threadAnim=new Thread(bb);
 //             threadAnim.start();
 //        } else {
-//            tvCheckOrder.setVisibility(View.VISIBLE);
-//            tvContinueShopping.setVisibility(View.VISIBLE);}
+
 //
 //        initFacebook();
 //    }
@@ -635,6 +634,11 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
             }
         });
 
+
+            tvCheckOrder.setVisibility(View.VISIBLE);
+            tvContinueShopping.setVisibility(View.VISIBLE);
+            tvCheckOrder.setBackground(JViewUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
+            tvContinueShopping.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(getActivity()));
         return view;
     }
 

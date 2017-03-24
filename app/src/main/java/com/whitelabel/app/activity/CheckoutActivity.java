@@ -155,7 +155,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     static {
         System.loadLibrary("gemfivelocal");
     }
-
     private void placeOrder() {
         mCheckoutPaymentDialog = new CheckoutPaymentDialog(CheckoutActivity.this, R.style.loading_dialog, getResources().getString(R.string.dialog_checkout_text)).showDialog();
         btnContinue.setEnabled(false);
@@ -279,7 +278,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         ivArrow = (ImageView) findViewById(R.id.iv_checkout_arrow);
         btnContinue = (TextView) findViewById(R.id.btn_checkout_payment_continue);
         ll_btn = (LinearLayout) findViewById(R.id.ll_checkout_bottomBar);
-
         scrollViewBody = (ScrollView) findViewById(R.id.sv_checkout_body);
         llBody = (LinearLayout) findViewById(R.id.ll_checkout_body);
         progressBarLoading = (ProgressBar) findViewById(R.id.pb_checkout_body_loading);
@@ -287,6 +285,11 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         btnContinue.setOnClickListener(this);
         ll_btn.setOnClickListener(this);
         ll_btn.setVisibility(View.VISIBLE);
+        changeSliderColor(
+                GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
+                getResources().getColor(R.color.grayf8f8f8),
+                getResources().getColor(R.color.grayf8f8f8));
+        btnContinue.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(this));
     }
 
     public void onClick(View v) {

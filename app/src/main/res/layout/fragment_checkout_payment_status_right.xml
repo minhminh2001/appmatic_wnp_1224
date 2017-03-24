@@ -133,8 +133,6 @@
                     android:textSize="12sp"
                     android:visibility="gone"
                     style="@style/font_family_robot_regular">
-
-
                 </com.whitelabel.app.widget.CustomWebView>
 
                 <com.whitelabel.app.widget.CustomTextView

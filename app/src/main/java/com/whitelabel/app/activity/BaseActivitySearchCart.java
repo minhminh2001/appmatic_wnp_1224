@@ -60,6 +60,7 @@ public class BaseActivitySearchCart<T extends BasePresenter> extends com.whitela
             }
         });
         TextView textView = (TextView) cart.findViewById(R.id.ctv_home_shoppingcart_num);
+        textView.setBackground(JViewUtils.getCounerDrawable(this));
         JViewUtils.updateCartCount(textView, getCartItemCount());
     }
 

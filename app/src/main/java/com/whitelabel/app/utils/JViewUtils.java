@@ -8,6 +8,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -60,6 +64,40 @@ public class JViewUtils {
         ta.recycle();
         return toolBarHeight;
     }
+
+
+    public  static  Drawable getCounerDrawable(Context context){
+        GradientDrawable drawable= (GradientDrawable) ContextCompat.getDrawable(context,R.drawable.bg_cart_number);
+        drawable.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        return drawable;
+    }
+
+
+
+    public static  Drawable getButtonBackgroudSolidDrawable(Context context){
+        StateListDrawable drawable=new StateListDrawable();
+        GradientDrawable  normal= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
+        normal.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        GradientDrawable  pressed= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
+        pressed.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getButtonClickColor());
+        drawable.addState(new int[]{},normal);
+//        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
+        return drawable;
+    }
+
+    public static  Drawable  getbuttonBakcgroundStrokeDrawable(Context context){
+        StateListDrawable drawable=new StateListDrawable();
+        GradientDrawable  normal= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
+        normal.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        GradientDrawable  pressed= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
+        pressed.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getButtonClickColor());
+        drawable.addState(new int[]{},normal);
+//        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
+        return drawable;
+    }
+
+
+
 
     public static void setStatus(TextView textView, String statusCode) {
         JLogUtils.d(TAG, "statusCode==" + statusCode);
