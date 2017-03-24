@@ -340,6 +340,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         listView.setOnTouchListener(gestureTouchListener);
         mGestureListener = new ShoppingOnGestureListener();
         gestureDetector = new GestureDetector(mGestureListener);
+        tvCheckout.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(getActivity()));
     }
 
     //监听StretchScrollView 上下滑动
@@ -468,6 +469,9 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 }
             }
         });
+
+        tvApply.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(getActivity()));
+
     }
 
     @Override

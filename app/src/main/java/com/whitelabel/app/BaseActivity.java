@@ -100,6 +100,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
 
 
     public void setTitleNum(int num) {
+        tvTitleNum.setBackground(JViewUtils.getCounerDrawable(this));
         if (num > 0) {
             tvTitleNum.setVisibility(View.VISIBLE);
             if (num <= 99) {
@@ -208,7 +209,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         tvTitleNum = (TextView) findViewById(R.id.tv_title_num);
         ivTitle = (ImageView) findViewById(R.id.iv_title);
         tvTitle = (TextView) findViewById(R.id.tv_title);
-        tvTitleNum.setBackground(JViewUtils.getCounerDrawable(this));
+
         if (mToolbar != null) {
             mToolbar.setTitle("");
             setSupportActionBar(mToolbar);

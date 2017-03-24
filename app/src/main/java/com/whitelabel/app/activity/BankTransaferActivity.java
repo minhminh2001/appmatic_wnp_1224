@@ -812,6 +812,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
                 }
             }
         });
+        btnSubmit.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(this));
     }
 
 
