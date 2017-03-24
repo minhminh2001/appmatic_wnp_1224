@@ -21,6 +21,7 @@ import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.BadgeUtils;
 import com.whitelabel.app.utils.JStorageUtils;
+import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
 
 import java.io.Serializable;
@@ -256,6 +257,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         tvHelpCenter = (TextView) findViewById(R.id.tv_help_center);
         tvShipping = (TextView) findViewById(R.id.tv_shipping);
         tvShoppingNum = (TextView) findViewById(R.id.tv_shoppingCart_num);
+
         tvNotificationNum = (TextView) findViewById(R.id.tv_notification_num);
         tvWistNum = (TextView) findViewById(R.id.tv_wishlist_num);
         tvAddress = (TextView) findViewById(R.id.tv_address);
@@ -284,6 +286,9 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         tvCustomerService.setOnClickListener(this);
         tvHelpCenter.setOnClickListener(this);
         tvShipping.setOnClickListener(this);
+        tvShoppingNum.setBackground(JViewUtils.getCounerDrawable(this));
+        tvNotificationNum.setBackground(JViewUtils.getCounerDrawable(this));
+        tvWistNum.setBackground(JViewUtils.getCounerDrawable(this));
     }
     private static final class DataHandler extends Handler {
         private WeakReference<DrawerLayoutActivity> mActivity;

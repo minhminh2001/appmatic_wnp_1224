@@ -938,6 +938,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     }
                 });
         TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
+        textView.setBackground(JViewUtils.getCounerDrawable(this));
         long cartCount = getCartItemCount();
         if (cartCount > 0 && cartCount <= 99) {
             textView.setVisibility(View.VISIBLE);

@@ -205,10 +205,10 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mHomeSearchBarRL = (RelativeLayout) findViewById(R.id.rl_home_searchBar);
         mTitleRL = (RelativeLayout) findViewById(R.id.rl_home_searchBar);
-
         tvTitleNum = (TextView) findViewById(R.id.tv_title_num);
         ivTitle = (ImageView) findViewById(R.id.iv_title);
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvTitleNum.setBackground(JViewUtils.getCounerDrawable(this));
         if (mToolbar != null) {
             mToolbar.setTitle("");
             setSupportActionBar(mToolbar);

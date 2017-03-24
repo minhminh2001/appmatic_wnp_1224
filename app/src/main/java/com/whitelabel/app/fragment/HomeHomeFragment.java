@@ -119,6 +119,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             }
         });
         TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
+        textView.setBackground(JViewUtils.getCounerDrawable(getActivity()));
         JViewUtils.updateCartCount(textView, getCartItemCount());
     }
 

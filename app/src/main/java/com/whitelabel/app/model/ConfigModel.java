@@ -13,7 +13,7 @@ public class ConfigModel  implements Serializable{
     private  int primaryColor;
     private int  secondaryColor;
     public ConfigModel(){
-        primaryColor= GemfiveApplication.getInstance().getResources().getColor(R.color.order_status_pending);
+        primaryColor= GemfiveApplication.getInstance().getResources().getColor(R.color.order_status_hold);
         secondaryColor=GemfiveApplication.getInstance().getResources().getColor(R.color.colorPrimary);
     }
     public int getPrimaryColor() {

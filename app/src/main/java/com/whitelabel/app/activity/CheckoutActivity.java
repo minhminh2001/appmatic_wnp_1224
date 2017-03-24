@@ -155,7 +155,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     static {
         System.loadLibrary("gemfivelocal");
     }
-
     private void placeOrder() {
         mCheckoutPaymentDialog = new CheckoutPaymentDialog(CheckoutActivity.this, R.style.loading_dialog, getResources().getString(R.string.dialog_checkout_text)).showDialog();
         btnContinue.setEnabled(false);
@@ -287,6 +286,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         btnContinue.setOnClickListener(this);
         ll_btn.setOnClickListener(this);
         ll_btn.setVisibility(View.VISIBLE);
+        changeSliderColor(
+                GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
+                getResources().getColor(R.color.grayf8f8f8),
+                getResources().getColor(R.color.grayf8f8f8));
     }
 
     public void onClick(View v) {
