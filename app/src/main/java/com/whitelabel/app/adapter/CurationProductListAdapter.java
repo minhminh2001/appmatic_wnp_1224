@@ -1,34 +1,49 @@
 package com.whitelabel.app.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CurationActivity;
 import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.dao.MyAccountDao;
+import com.whitelabel.app.dao.ProductDao;
+import com.whitelabel.app.dao.ShoppingCarDao;
+import com.whitelabel.app.model.AddToWishlistEntity;
+import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceLandingPagesDetailProductListItemReturnEntity;
+import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomTextView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
@@ -42,12 +57,17 @@ public class CurationProductListAdapter extends BaseAdapter {
     private CurationActivity curationActivity;
     private ArrayList<SVRAppserviceLandingPagesDetailProductListItemReturnEntity> productItemEntityArrayList;
     private final ImageLoader mImageLoader;
+    private MyAccountDao myAccountDao;
+    private ProductDao mProductDao;
     private boolean mHideSwitchAndFilterBar=true;
 
     public CurationProductListAdapter(CurationActivity curationActivity, ArrayList<SVRAppserviceLandingPagesDetailProductListItemReturnEntity> productItemEntityArrayList, ImageLoader imageLoader) {
         this.curationActivity = curationActivity;
         this.productItemEntityArrayList = productItemEntityArrayList;
         mImageLoader = imageLoader;
+        DataHandler dataHandler = new DataHandler(curationActivity, this);
+        myAccountDao = new MyAccountDao(TAG, dataHandler);
+        mProductDao = new ProductDao(TAG, dataHandler);
     }
 
     @Override
@@ -160,6 +180,9 @@ public class CurationProductListAdapter extends BaseAdapter {
                     viewHolder.ctvLeftCurationProductMerchant = (CustomTextView) viewHolder.llLeftProduct.findViewById(R.id.ctv_curation_product_merchant);
                     viewHolder.ctvLeftProductFinalPrice = (CustomTextView) viewHolder.llLeftProduct.findViewById(R.id.ctvProductFinalPrice);
                     viewHolder.rlLeftOutOfStock = (RelativeLayout) viewHolder.llLeftProduct.findViewById(R.id.rl_product_list_out_of_stock);
+                    viewHolder.rlLeftCurationWish = (RelativeLayout) viewHolder.llLeftProduct.findViewById(R.id.rl_product_wish);
+                    viewHolder.ivLeftCurationWishIcon = (ImageView) viewHolder.llLeftProduct.findViewById(R.id.iv_product_wish_icon);
+                    viewHolder.ivLeftCurationWishIcon2 = (ImageView) viewHolder.llLeftProduct.findViewById(R.id.iv_product_wish_icon2);
 
                     //Right
                     viewHolder.ivRightProductImage = (ImageView) viewHolder.llRightProduct.findViewById(R.id.ivProductImage);
@@ -168,7 +191,10 @@ public class CurationProductListAdapter extends BaseAdapter {
                     viewHolder.ctvRightProductPrice = (CustomTextView) viewHolder.llRightProduct.findViewById(R.id.ctvProductPrice);
                     viewHolder.ctvRightProductFinalPrice = (CustomTextView) viewHolder.llRightProduct.findViewById(R.id.ctvProductFinalPrice);
                     viewHolder.rlRightOutOfStock = (RelativeLayout) viewHolder.llRightProduct.findViewById(R.id.rl_product_list_out_of_stock);
+                    viewHolder.rlRightCurationWish = (RelativeLayout) viewHolder.llRightProduct.findViewById(R.id.rl_product_wish);
                     viewHolder.ctvRightCurationProductMerchant = (CustomTextView) viewHolder.llRightProduct.findViewById(R.id.ctv_curation_product_merchant);
+                    viewHolder.ivRightCurationWishIcon = (ImageView) viewHolder.llRightProduct.findViewById(R.id.iv_product_wish_icon);
+                    viewHolder.ivRightCurationWishIcon2 = (ImageView) viewHolder.llRightProduct.findViewById(R.id.iv_product_wish_icon2);
                     convertView.setTag(viewHolder);
                     convertView.setTag(R.id.llProductList, curationActivity.isDoubleCol);
                 }
@@ -383,6 +409,28 @@ public class CurationProductListAdapter extends BaseAdapter {
                     }
                 }.init(curationActivity, leftProductEntity.getProductId()));
 
+                //wish icon
+                //初始化 wish icon的状态
+                if (leftProductEntity.getIs_like() == 1) {
+                    setWishIconColorToPurpleNoAnim(viewHolder.ivLeftCurationWishIcon);
+                } else {
+                    setWishIconColorToBlankNoAnim(viewHolder.ivLeftCurationWishIcon);
+                }
+//        wishIcon 正在加载中，是否可以点击？
+                viewHolder.rlLeftCurationWish.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //如果 islike，且有itemId，就执行删除 wish item
+                        if (leftProductEntity.getIs_like() == 1) {
+                            sendRequestToDeteleteCell(viewHolder.ivLeftCurationWishIcon, viewHolder.rlLeftCurationWish, leftProductEntity.getItem_id(), tempPosition);
+                        } else {
+                            addtoWishlistsendRequest(leftProductEntity, viewHolder.rlLeftCurationWish, viewHolder.ivLeftCurationWishIcon, viewHolder.ivLeftCurationWishIcon2, tempPosition);
+                        }
+                    }
+                });
+                if (addProductToWishWhenLoginSuccess(leftProductEntity.getProductId())) {
+                    addtoWishlistsendRequest(leftProductEntity, viewHolder.rlLeftCurationWish, viewHolder.ivLeftCurationWishIcon, viewHolder.ivLeftCurationWishIcon2, tempPosition);
+                }
 
                 /////Right ///////////
                 position = position + 1;
@@ -547,6 +595,26 @@ public class CurationProductListAdapter extends BaseAdapter {
                     }
                 }.init(curationActivity, rightProductEntity.getProductId()));
 
+                //wish icon
+                if (rightProductEntity.getIs_like() == 1) {
+                    setWishIconColorToPurpleNoAnim(viewHolder.ivRightCurationWishIcon);
+                } else {
+                    setWishIconColorToBlankNoAnim(viewHolder.ivRightCurationWishIcon);
+                }
+                viewHolder.rlRightCurationWish.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (rightProductEntity.getIs_like() == 1) {
+                            sendRequestToDeteleteCell(viewHolder.ivRightCurationWishIcon, viewHolder.rlRightCurationWish, rightProductEntity.getItem_id(), tempRightPosition);
+                        } else {
+                            addtoWishlistsendRequest(rightProductEntity, viewHolder.rlRightCurationWish, viewHolder.ivRightCurationWishIcon, viewHolder.ivRightCurationWishIcon2, tempRightPosition);
+                        }
+                    }
+                });
+                // login 成功后会刷新，判断 是否包含此id，如果operateProductIdPrecache包含此id,执行add to wish请求，
+                if (addProductToWishWhenLoginSuccess(rightProductEntity.getProductId())) {
+                    addtoWishlistsendRequest(rightProductEntity, viewHolder.rlRightCurationWish, viewHolder.ivRightCurationWishIcon, viewHolder.ivRightCurationWishIcon2, tempRightPosition);
+                }
 
                 break;
         }
@@ -575,6 +643,20 @@ public class CurationProductListAdapter extends BaseAdapter {
     }
 
 
+    public boolean addProductToWishWhenLoginSuccess(String productId) {
+        //点击wish icon 时跳到登陆页面前，需要保存
+        if (curationActivity.operateProductIdPrecache != null && !TextUtils.isEmpty(productId)) {
+            if (productId.equals(curationActivity.operateProductIdPrecache.getProductId())) {
+                if (curationActivity.operateProductIdPrecache.isAvailable()) {
+                    curationActivity.operateProductIdPrecache = null;
+                    return true;
+                } else {
+                    curationActivity.operateProductIdPrecache = null;
+                }
+            }
+        }
+        return false;
+    }
 
     public void hideSwitchAndFilterBar(boolean b) {
         mHideSwitchAndFilterBar = b;
@@ -583,12 +665,12 @@ public class CurationProductListAdapter extends BaseAdapter {
     public class ViewHolder {
         public LinearLayout llProductListTitle, llProductList, llLeftProduct, llRightProduct;
 
-        public ImageView ivCategory, ivLeftProductImage, ivRightProductImage;
+        public ImageView ivCategory, ivLeftProductImage, ivRightProductImage, ivLeftCurationWishIcon, ivRightCurationWishIcon, ivLeftCurationWishIcon2, ivRightCurationWishIcon2;
 
         public CustomTextView ctvLeftProductName, ctvRightProductName, ctvLeftProductBrand, ctvRightProductBrand,
                 ctvLeftProductPrice, ctvRightProductPrice, ctvLeftProductFinalPrice, ctvRightProductFinalPrice, ctvLeftCurationProductMerchant, ctvRightCurationProductMerchant;
         public View vProductListDivider, vHorDivider;
-        private RelativeLayout rlLeftOutOfStock, rlRightOutOfStock;
+        private RelativeLayout rlLeftOutOfStock, rlRightOutOfStock, rlLeftCurationWish, rlRightCurationWish;
     }
 
     public class ViewHolderBar {
@@ -604,7 +686,159 @@ public class CurationProductListAdapter extends BaseAdapter {
 
     }
 
+    private void setWishIconColorToBlankNoAnim(ImageView ivWishIcon) {
+        ivWishIcon.setVisibility(View.GONE);
+        boolean repeatAnim = true;
+        ivWishIcon.setTag(repeatAnim);
+        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_normal_v2);
+    }
 
+    private void setWishIconColorToBlank(final ImageView ivWishIcon) {
+        ivWishIcon.setVisibility(View.VISIBLE);
+        boolean repeatAnim = true;
+        ivWishIcon.setTag(repeatAnim);
+        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
+        final ScaleAnimation animation2 = new ScaleAnimation(1f, 0f, 1f, 0f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation2.setDuration(250);//设置动画持续时间
+        animation2.setFillAfter(false);//动画执行完后是否停留在执行完的状态
+        animation2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ivWishIcon.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        ivWishIcon.startAnimation(animation2);
+    }
+
+    private void setWishIconColorToPurpleNoAnim(ImageView ivWishIcon) {
+        ivWishIcon.setVisibility(View.VISIBLE);
+        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
+        boolean repeatAnim = false;
+        ivWishIcon.setTag(repeatAnim);
+    }
+
+    private void setWishIconColorToPurple(ImageView ivWishIcon, final ImageView ivWishIcon2) {
+        ivWishIcon2.setVisibility(View.VISIBLE);
+        ivWishIcon.setVisibility(View.VISIBLE);
+        boolean repeatAnim = false;
+        ivWishIcon.setTag(repeatAnim);
+        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
+
+        final ScaleAnimation animation2 = new ScaleAnimation(0.1f, 1f, 0.1f, 1f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation2.setDuration(250);//设置动画持续时间
+        animation2.setFillAfter(true);//动画执行完后是否停留在执行完的状态
+        animation2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        ivWishIcon.startAnimation(animation2);
+    }
+
+    //调用删除接口
+    private void sendRequestToDeteleteCell(ImageView ivWwishIcon, RelativeLayout rlCurationWish, String itemId, int tempPosition) {
+        setWishIconColorToBlank(ivWwishIcon);
+        productItemEntityArrayList.get(tempPosition).setIs_like(0);
+        if (!TextUtils.isEmpty(productItemEntityArrayList.get(tempPosition).getItem_id())) {
+            myAccountDao.deleteWishListById(GemfiveApplication.getAppConfiguration().getUserInfo(curationActivity).getSessionKey(), itemId, tempPosition);
+        }
+    }
+
+    private void addtoWishlistsendRequest(SVRAppserviceLandingPagesDetailProductListItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
+        if (GemfiveApplication.getAppConfiguration().isSignIn(curationActivity)) {
+            entity.setIs_like(1);
+            mProductDao.addProductListToWish(entity.getProductId(), GemfiveApplication.getAppConfiguration().getUserInfo(curationActivity).getSessionKey(), tempPosition);
+            setWishIconColorToPurple(ivWwishIcon, ivWwishIcon2);
+        } else {
+            curationActivity.saveProductIdWhenJumpLoginPage(entity.getProductId());
+            Intent intent = new Intent();
+            intent.setClass(curationActivity, LoginRegisterActivity.class);
+            curationActivity.startActivityForResult(intent, LoginRegisterActivity.REQUESTCODE_LOGIN);
+            curationActivity.overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
+        }
+    }
+
+    private static final class DataHandler extends Handler {
+        private final WeakReference<CurationProductListAdapter> mAdapter;
+        private final WeakReference<Context> mContext;
+
+        public DataHandler(Context context, CurationProductListAdapter curationProductListAdapter) {
+            mAdapter = new WeakReference<CurationProductListAdapter>(curationProductListAdapter);
+            mContext = new WeakReference<Context>(context);
+        }
+
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (mAdapter.get() == null || mContext.get() == null) {
+                return;
+            }
+
+            switch (msg.what) {
+                case MyAccountDao.REQUEST_DELETEWISHLIST:
+                    if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
+                        WishDelEntityResult wishDelEntityResult = (WishDelEntityResult) msg.obj;
+                        int position = Integer.parseInt(String.valueOf(wishDelEntityResult.getParams()));
+                        //update wishlist number
+                        GemfiveApplication.getAppConfiguration().updateWishlist(mAdapter.get().curationActivity, wishDelEntityResult.getWishListItemCount());
+                    }
+                    break;
+                case ProductDao.REQUEST_ADDPRODUCTLISTTOWISH:
+                    if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
+                        AddToWishlistEntity addToWishlistEntity = (AddToWishlistEntity) msg.obj;
+                        int position = Integer.parseInt(String.valueOf(addToWishlistEntity.getParams()));
+                        SVRAppserviceLandingPagesDetailProductListItemReturnEntity productEntity = (SVRAppserviceLandingPagesDetailProductListItemReturnEntity) mAdapter.get().productItemEntityArrayList.get(position);
+                        productEntity.setItem_id(addToWishlistEntity.getItemId());
+                        //update wishlist number
+                        GemfiveApplication.getAppConfiguration().updateWishlist(mAdapter.get().curationActivity, addToWishlistEntity.getWishListItemCount());
+//                        try {
+//                            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
+//                                    "Add To Wishlist",
+//                                    productEntity.getName(),
+//                                    Long.valueOf(productEntity.getProductId()));
+//                            JLogUtils.i("googleGA", "add to wishlist ");
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+                    } else {
+                        try {
+                            ErrorMsgBean bean = (ErrorMsgBean) msg.obj;
+                            int position = Integer.parseInt(String.valueOf(bean.getParams()));
+                            if (!TextUtils.isEmpty(bean.getErrorMessage())) {
+                                Toast.makeText(mAdapter.get().curationActivity, bean.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    break;
+                case MyAccountDao.ERROR:
+                case ProductDao.REQUEST_ERROR:
+                    RequestErrorHelper requestErrorHelper = new RequestErrorHelper(mAdapter.get().curationActivity);
+                    requestErrorHelper.showNetWorkErrorToast(msg);
+                    break;
+            }
+        }
+    }
 
 
     private void startBrandStoreActivity(String brandName, String brandId) {

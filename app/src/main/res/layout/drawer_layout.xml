@@ -144,7 +144,6 @@
                 android:id="@+id/rl_drawer_notification"
                 android:paddingLeft="16sp"
                 android:paddingRight="16sp"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="44dp">
                 <ImageView
@@ -184,7 +183,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/rl_drawer_wishlist"
                 android:paddingLeft="16sp"
                 android:paddingRight="16sp"

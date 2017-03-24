@@ -36,6 +36,7 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
     //    private int screenWidth;
 //    private int fromX = 0;
 //    private int blue,black;
+    public static final String SWITCH_WISHLISTFRAGMENT = "from_checkout_to_wishlist";
     public static final String SWITCH_ORDERFRAGMENT = "from_checkout_to_orders";
     public static final String SWITCH_ADDRESSFRAGMENT = "from_checkout_to_address";
     public static final String SWITCH_STORECREDITFRAGMENT = "storeCredit";
@@ -94,6 +95,10 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
 
     private void removeExpiredFragment() {
         try {
+            Fragment wishFragment = getFragmentManager().findFragmentByTag(TAG_WISHLIST);
+            if (wishFragment != null) {
+                getChildFragmentManager().beginTransaction().remove(wishFragment).commitAllowingStateLoss();
+            }
             Fragment orderFragment = getFragmentManager().findFragmentByTag(TAG_ORDERLIST);
             if (orderFragment != null) {
                 getChildFragmentManager().beginTransaction().remove(orderFragment).commitAllowingStateLoss();
@@ -107,26 +112,40 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
             ex.getStackTrace();
         }
     }
+
     public void startFragmentByType(String type, boolean refresh) {
         if (!isAdded()) return;
         //setCurrentPosition 会触发changePageListener，会调用两遍onActivityCreated,需要注意
         ctpiCategoryList.setIndicatorColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
          if (SWITCH_ADDRESSFRAGMENT.equalsIgnoreCase(type)) {
+        if (SWITCH_ORDERFRAGMENT.equalsIgnoreCase(type)) {
             ctpiCategoryList.setCurrentPosition(1);
-        }  else {
+            switchChildFragment(TAG_ORDERLIST, refresh);
+        } else if (SWITCH_ADDRESSFRAGMENT.equalsIgnoreCase(type)) {
+            ctpiCategoryList.setCurrentPosition(2);
+        } else {
             ctpiCategoryList.setCurrentPosition(0);
             //默认为 wish item,所以setCurrentPosition 不会触发changePageListener，这里要手动调用
-            switchChildFragment(TAG_ORDERLIST, refresh);
+            switchChildFragment(TAG_WISHLIST, refresh);
         }
     }
+
     public void switchChildFragment(String tag, boolean refresh) {
+        //切换fragment的开关
+//        if(!switchFramentEnabled){
+//            return;
+//        }
         mCurrTag = tag;
         FragmentManager fragmentManager = getChildFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragment(transaction);
         Fragment currFragment = fragmentManager.findFragmentByTag(tag);
         if (currFragment == null) {
-             if (tag.equals(TAG_ORDERLIST)) {
+            if (tag.equals(TAG_WISHLIST)) {
+                mFragmentWishlist = new HomeMyAccountWishlistFragment();
+                currFragment = mFragmentWishlist;
+                transaction.add(R.id.frame, mFragmentWishlist, tag);
+            } else if (tag.equals(TAG_ORDERLIST)) {
                 mFragmentOrderlist = new HomeMyAccountOrdersFragment();
                 currFragment = mFragmentOrderlist;
                 transaction.add(R.id.frame, mFragmentOrderlist, tag);
@@ -138,12 +157,22 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         } else {
             ((MyAccountFragmentRefresh) currFragment).refresh(refresh);
         }
+        //如果是addressFragment,则手动判断是否需要guide
+        if (mCurrTag.equals(TAG_ADDRESSLIST) && getActivity() != null) {
+
+        } else if (!mCurrTag.equals(TAG_ADDRESSLIST)) {
+            isShowGuide4 = true;
+        }
+
         transaction.show(currFragment);
         transaction.commitAllowingStateLoss();
 
     }
 
     public void hideFragment(FragmentTransaction transaction) {
+        if (mFragmentWishlist != null) {
+            transaction.hide(mFragmentWishlist);
+        }
         if (mFragmentOrderlist != null) {
             transaction.hide(mFragmentOrderlist);
         }
@@ -163,6 +192,7 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
     private void initData() {
 //        fromX = 0;
         List<String> myAccountMenuTitle = new ArrayList<>();
+        myAccountMenuTitle.add(getResources().getString(R.string.home_myaccount_header_wishlist));
         myAccountMenuTitle.add(getResources().getString(R.string.home_myaccount_header_orders));
         myAccountMenuTitle.add(getResources().getString(R.string.home_myaccount_header_addressbook));
         ctpiCategoryList.setTitles(myAccountMenuTitle);
@@ -173,10 +203,14 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
 
             @Override
             public void onPageSelected(int position) {
+
                 if (position == 0) {
+                    homeActivity.switchMenu(HomeCommonCallback.MENU_WISHLIST);
+                    switchChildFragment(TAG_WISHLIST, false);
+                } else if (position == 1) {
                     homeActivity.switchMenu(HomeCommonCallback.MENU_ORDER);
                     switchChildFragment(TAG_ORDERLIST, false);
-                } else if (position == 1) {
+                } else if (position == 2) {
                     homeActivity.switchMenu(HomeCommonCallback.MENU_ADDRESS);
                     switchChildFragment(TAG_ADDRESSLIST, false);
                 }
