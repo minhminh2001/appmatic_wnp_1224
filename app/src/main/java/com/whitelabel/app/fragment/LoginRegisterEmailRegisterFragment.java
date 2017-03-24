@@ -317,16 +317,24 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         password.setOnFocusChangeListener(this);
         re_password.setOnFocusChangeListener(this);
         sign_in= (TextView) contentView.findViewById(R.id.sign_in);
+        sign_in.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+
         sign_in.setOnClickListener(this);
         signUp= (Button) contentView.findViewById(R.id.sign_up);
+        signUp.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+
         signUp.setOnClickListener(this);
         checkBox= (CustomCheckBox) contentView.findViewById(R.id.checkbox2);
+        checkBox.setColorChecked(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         checkBox.setChecked(true);
         checkBoxText1= (TextView) contentView.findViewById(R.id.checkbox_text1);
         error= (TextView) contentView.findViewById(R.id.error);
         setMoreClickSpan();
         t1= (TextView) contentView.findViewById(R.id.t1);
         t3= (TextView) contentView.findViewById(R.id.t3);
+        t1.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        t3.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+
         t1.setOnClickListener(this);
         t3.setOnClickListener(this);
         TAG=this.getClass().getSimpleName();
@@ -364,7 +372,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
             checkBoxText1.setClickable(true);
             checkBoxText1.setMovementMethod(LinkMovementMethod.getInstance());
             NoUnderLineClickSpan greyNoLineClickableSpan=new NoUnderLineClickSpan(JToolUtils.getColor(R.color.grayText),false);
-            NoUnderLineClickSpan purpleNoLineClickableSpan=new NoUnderLineClickSpan(JToolUtils.getColor(R.color.appColorPrimary),true);
+            NoUnderLineClickSpan purpleNoLineClickableSpan=new NoUnderLineClickSpan(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),true);
             greyNoLineClickableSpan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -412,6 +420,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
             switch (v.getId()) {
                 case R.id.firstName:
                     CustomButtomLineRelativeLayout.setBottomLineActive(view_firstname_line,true);
+                    firstNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                     firstNameText2.setText(getResources().getString(R.string.first_name));
                     if (firstName.getText().length()!=0) {
                         clearFirst.setVisibility(View.VISIBLE);
@@ -444,6 +453,8 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                     });
                     break;
                 case R.id.lastName:
+                    lastNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+
                     CustomButtomLineRelativeLayout.setBottomLineActive(view_lastname_line,true);
                     lastNameText2.setText(getResources().getString(R.string.last_name));
                     if (lastName.getText().length()!=0) {
@@ -479,6 +490,8 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
                     break;
                 case R.id.email:
+                    emailText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+
                     rl_register_email.setBottomLineActive(true);
                     emailText2.setText(getResources().getString(R.string.loginregister_emailbound_email_hint));
                     if (email.getText().length()!=0)
@@ -512,6 +525,8 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                     });
                     break;
                 case R.id.password:
+                    passwordText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+
                     rl_register_pwd.setBottomLineActive(true);
                     passwordText2.setText(getResources().getString(R.string.enter_password));
                     if (password.getText().length()!=0)
@@ -546,6 +561,8 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
                     break;
                 case R.id.re_password:
+                    re_passwordText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+
                     rl_register_repwd.setBottomLineActive(true);
                     re_passwordText2.setText(getResources().getString(R.string.retype_password));
                     if (re_password.getText().length()!=0)

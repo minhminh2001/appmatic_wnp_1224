@@ -114,16 +114,14 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
     }
 
     public void startFragmentByType(String type, boolean refresh) {
-        if (!isAdded()) return;
+        if(!isAdded())return;
         //setCurrentPosition 会触发changePageListener，会调用两遍onActivityCreated,需要注意
-        ctpiCategoryList.setIndicatorColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
-         if (SWITCH_ADDRESSFRAGMENT.equalsIgnoreCase(type)) {
-        if (SWITCH_ORDERFRAGMENT.equalsIgnoreCase(type)) {
+        if(SWITCH_ORDERFRAGMENT.equalsIgnoreCase(type)){
             ctpiCategoryList.setCurrentPosition(1);
             switchChildFragment(TAG_ORDERLIST, refresh);
-        } else if (SWITCH_ADDRESSFRAGMENT.equalsIgnoreCase(type)) {
+        }else if(SWITCH_ADDRESSFRAGMENT.equalsIgnoreCase(type)){
             ctpiCategoryList.setCurrentPosition(2);
-        } else {
+        }else{
             ctpiCategoryList.setCurrentPosition(0);
             //默认为 wish item,所以setCurrentPosition 不会触发changePageListener，这里要手动调用
             switchChildFragment(TAG_WISHLIST, refresh);

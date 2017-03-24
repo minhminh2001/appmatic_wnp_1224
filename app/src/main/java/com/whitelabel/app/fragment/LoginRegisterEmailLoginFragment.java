@@ -472,10 +472,12 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         email = (EditText) contentView.findViewById(R.id.email);
         password = (EditText) contentView.findViewById(R.id.password);
         sign_in = (Button) contentView.findViewById(R.id.sign_in);
+        sign_in.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         ivFacebookLogin = contentView.findViewById(R.id.ivFacebookLogin);
         register = (TextView) contentView.findViewById(R.id.register);
+        register.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         forgotPassword = (TextView) contentView.findViewById(R.id.forgot_password);
-
+        forgotPassword.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         //      bottomText=contentView.findViewById(R.id.bottomText);
         ivFacebookLogin.setOnClickListener(this);
         sign_in.setOnClickListener(this);
@@ -947,6 +949,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
             switch (v.getId()) {
                 case R.id.email:
                     email_text2.setText(getResources().getString(R.string.loginregister_emailbound_email_hint));
+                    email_text.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                     rl_login_email.setBottomLineActive(true);
                     if (email.getText().length()!=0)
                         clearMail.setVisibility(View.VISIBLE);
@@ -956,13 +959,14 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         email_text2.setVisibility(View.INVISIBLE);
                         email.setHint("");
                         email_text.startAnimation(set);
-                    } else {
-                        email_text2.setTextColor(getResources().getColor(R.color.colorAccent));
+                   } else {
+                        email_text2.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                     }
 
                     break;
                 case R.id.password:
                     rl_login_pwd.setBottomLineActive(true);
+                    password_text.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                     password_text2.setText(getResources().getString(R.string.enter_password));
                     if (password.getText().length()!=0)
                         clearPassword.setVisibility(View.VISIBLE);
@@ -973,7 +977,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         password.setHint("");
                         password_text.startAnimation(set);
                     } else {
-                        password_text2.setTextColor(getResources().getColor(R.color.colorAccent));
+                        password_text2.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                     }
 
                     break;

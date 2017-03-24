@@ -142,6 +142,9 @@ public class CustomCheckBox extends View implements Checkable {
         }
         super.onRestoreInstanceState(state);
     }
+    public void setColorChecked(int checkedColor){
+        mCheckedColor=checkedColor;
+    }
 
     @Override
     public boolean isChecked() {

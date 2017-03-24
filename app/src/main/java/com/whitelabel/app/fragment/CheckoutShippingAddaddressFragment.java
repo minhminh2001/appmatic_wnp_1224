@@ -960,7 +960,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                 }, 100);
 
                 tv.setText(hintText);
-                tv.setTextColor(getResources().getColor(R.color.colorAccent));
+                tv.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             }
 
             @Override

@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
+import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.LoginRegisterDao;
 import com.whitelabel.app.model.SVRAppServiceCustomerResetpass;
@@ -177,6 +178,8 @@ public class LoginRegisterResetPassFragment extends Fragment implements View.OnC
         email= (EditText) contentView.findViewById(R.id.email);
         view_reset_email_line= contentView.findViewById(R.id.view_reset_email_line);
         email_text= (TextView) contentView.findViewById(R.id.email_text);
+        email_text.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+
         email_text2= (TextView) contentView.findViewById(R.id.email_text2);
         email.setOnFocusChangeListener(this);
         email.setOnClickListener(this);
@@ -201,6 +204,7 @@ public class LoginRegisterResetPassFragment extends Fragment implements View.OnC
             }
         });
         reset_password= (Button) contentView.findViewById(R.id.reset_password);
+        reset_password.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         reset_password.setOnClickListener(this);
         email.setInputType(EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         clear=(ImageView)contentView.findViewById(R.id.clear);

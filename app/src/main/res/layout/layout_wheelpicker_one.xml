@@ -58,7 +58,7 @@
             android:paddingLeft="17dp"
             android:paddingRight="17dp"
             android:text="@string/global_picker_size_done"
-            android:textColor="@color/purple3A0047"
+            android:textColor="@color/colorPrimary"
             style="@style/font_family_roboto_medium" />
 
         <com.whitelabel.app.widget.CustomTextView

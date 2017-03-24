@@ -314,22 +314,30 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         state.setOnFocusChangeListener(this);
         eg.setOnFocusChangeListener(this);
         firstNameText= (TextView)findViewById(R.id.edit_firstName_text);
+        firstNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         firstNameText2= (TextView)findViewById(R.id.edit_firstName_text2);
         lastNameText= (TextView)findViewById(R.id.edit_lastName_text);
+        lastNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         lastNameText2= (TextView) findViewById(R.id.edit_lastName_text2);
         countryText= (TextView) findViewById(R.id.edit_country_text);
+        countryText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         countryText2= (TextView) findViewById(R.id.edit_country_text2);
         address1Text= (TextView) findViewById(R.id.edit_address1_text1);
+        address1Text.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         address1Text2= (TextView) findViewById(R.id.edit_address1_text2);
         address2Text= (TextView) findViewById(R.id.edit_address2_text1);
+        address1Text.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         address2Text2= (TextView) findViewById(R.id.edit_address2_text2);
         postalcodeText= (TextView) findViewById(R.id.edit_postalcode_text);
+        postalcodeText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         postalcodeText2= (TextView)findViewById(R.id.edit_postalcode_text2);
         cityText= (TextView) findViewById(R.id.edit_city_text1);
+        cityText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         cityText2= (TextView) findViewById(R.id.edit_city_text2);
 
         stateText2= (TextView) findViewById(R.id.edit_state_text2);
         egText= (TextView) findViewById(R.id.ctv_eg_text);
+        egText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         egText2= (TextView) findViewById(R.id.ctv_eg_text2);
         phoneNumber= (TextView) findViewById(R.id.ctv_phone_number_value);
         phoneNumber.setOnClickListener(this);
@@ -1085,7 +1093,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             text2.setVisibility(View.INVISIBLE);
             text.startAnimation(set);
         }else{
-            text2.setTextColor(getResources().getColor(R.color.purple));
+            text2.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         }
         if(relativeLayout!=null) {
             relativeLayout.setBottomLineActive(true);

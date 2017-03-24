@@ -588,6 +588,7 @@ public class JViewUtils {
         final RelativeLayout rlContainer = (RelativeLayout) dialogView.findViewById(R.id.rlContainer);
         final CustomTextView ctvCancel = (CustomTextView) dialogView.findViewById(R.id.ctvCancel);
         final CustomTextView ctvSet = (CustomTextView) dialogView.findViewById(R.id.ctvSet);
+        ctvSet.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         final WheelView wheelView = (WheelView) dialogView.findViewById(R.id.wheelView);
 
         WheelPickerAdapter wheelPickerAdapter = new WheelPickerAdapter(context, pickerConfigEntity.getArrayList());

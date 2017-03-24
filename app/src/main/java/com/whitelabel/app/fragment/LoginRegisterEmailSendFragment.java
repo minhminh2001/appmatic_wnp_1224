@@ -31,6 +31,7 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
+import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.utils.JDataUtils;
@@ -93,9 +94,12 @@ public class LoginRegisterEmailSendFragment extends Fragment implements View.OnC
         rl_send_email= (RelativeLayout) contentView.findViewById(R.id.rl_send_email);
         view_send_email_line= contentView.findViewById(R.id.view_send_email_line);
         s_submit= (Button) contentView.findViewById(R.id.s_submit);
+        s_submit.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+
         s_submit.setOnClickListener(this);
         et_email= (EditText) contentView.findViewById(R.id.et_email);
         email_text= (TextView) contentView.findViewById(R.id.email_text);
+        email_text.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         email_text2= (TextView) contentView.findViewById(R.id.email_text2);
         clearSubmit=(ImageView)contentView.findViewById(R.id.clear_submit);
         clearSubmit.setOnClickListener(this);

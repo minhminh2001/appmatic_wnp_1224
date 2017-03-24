@@ -186,7 +186,7 @@
                     android:layout_below="@id/email_text2"
                     android:text="@string/user_mail_com"
                     android:textSize="@dimen/labelTextFontSize"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/purple66006E"
                     android:visibility="invisible" />
 
                 <RelativeLayout

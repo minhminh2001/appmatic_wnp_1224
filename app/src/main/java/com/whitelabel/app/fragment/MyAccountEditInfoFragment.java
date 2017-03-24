@@ -549,29 +549,42 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         eg.setOnFocusChangeListener(this);
         email.setInputType(EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         firstNameText = (TextView) contentView.findViewById(R.id.ctv_account_firstName_label_ani);
+        firstNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         firstNameText2 = (TextView) contentView.findViewById(R.id.ctv_account_firstName_label);
         lastNameText = (TextView) contentView.findViewById(R.id.ctv_account_lastName_label_ani);
+        lastNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         lastNameText2 = (TextView) contentView.findViewById(R.id.ctv_account_lastName_label);
+
         emailText = (TextView) contentView.findViewById(R.id.ctv_account_email_label_ani);
+        emailText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         emailText2 = (TextView) contentView.findViewById(R.id.ctv_account_email_label);
         countryText = (TextView) contentView.findViewById(R.id.ctv_account_country_label_ani);
+        countryText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         countryText2 = (TextView) contentView.findViewById(R.id.ctv_account_country_label);
         birthdayText = (TextView) contentView.findViewById(R.id.ctv_account_birthday_label_ani);
+        birthdayText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         birthdayText2 = (TextView) contentView.findViewById(R.id.ctv_account_birthday_label);
         genderText = (TextView) contentView.findViewById(R.id.ctv_account_gender_label_ani);
+        genderText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         genderText2 = (TextView) contentView.findViewById(R.id.ctv_account_gender_label);
         monthlyIncomeText = (TextView) contentView.findViewById(R.id.ctv_account_monthlyIncome_label_ani);
+        monthlyIncomeText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         monthlyIncomeText2 = (TextView) contentView.findViewById(R.id.ctv_account_monthlyIncome_label);
         //zip=postal code
         zipText = (TextView) contentView.findViewById(R.id.ctv_account_zip_label_ani);
+        zipText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         zipText2 = (TextView) contentView.findViewById(R.id.ctv_account_zip_label);
         cityText = (TextView) contentView.findViewById(R.id.ctv_account_city_label_ani);
+        cityText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         cityText2 = (TextView) contentView.findViewById(R.id.ctv_account_city_label);
         stateProvinceText = (TextView) contentView.findViewById(R.id.ctv_account_state_label_ani);
+        stateProvinceText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         stateProvinceText2 = (TextView) contentView.findViewById(R.id.ctv_account_state_label);
         egText = (TextView) contentView.findViewById(R.id.ctv_account_eg_label_ani);
+        egText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         egText2 = (TextView) contentView.findViewById(R.id.ctv_account_eg_label);
         changePassword = (TextView) contentView.findViewById(R.id.changePassword);
+        changePassword.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         changePassword.setOnClickListener(this);
 
         photo = (ImageView) contentView.findViewById(R.id.photo);
@@ -1842,7 +1855,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             edit.setHint("");
             text.startAnimation(set);
         } else {
-            text2.setTextColor(getResources().getColor(R.color.blue5097DA));
+            text2.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         }
         if (relativeLayout != null) {
             relativeLayout.setBottomLineActive(true);

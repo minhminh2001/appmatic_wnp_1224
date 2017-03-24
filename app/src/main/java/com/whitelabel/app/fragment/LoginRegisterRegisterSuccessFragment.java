@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
+import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.utils.JToolUtils;
 
@@ -98,6 +99,7 @@ public class LoginRegisterRegisterSuccessFragment extends Fragment implements Vi
         }
 
         goshopping= (TextView) contentView.findViewById(R.id.goshopping);
+        goshopping.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         goshopping.setOnClickListener(this);
         rigisterSuccess1= (TextView) contentView.findViewById(R.id.rigisterSuccess1);
         String myEmail=loginRegisterActivity.getMyEmail();

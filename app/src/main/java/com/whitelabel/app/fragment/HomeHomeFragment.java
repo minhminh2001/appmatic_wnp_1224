@@ -169,7 +169,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             categoryId = (String) getArguments().getSerializable("data");
         }
         ctpiCategoryList = (CustomTabCustomPageIndicator) mContainView.findViewById(R.id.ctpiCategoryList);
-        ctpiCategoryList.setIndicatorColorResource(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+//        ctpiCategoryList.setIndicatorColorResource(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         chvpContainer = (CustomHomeViewPager) mContainView.findViewById(R.id.chvpContainer);
         rlHome = mContainView.findViewById(R.id.rl_home);
         rlHome.setVisibility(View.GONE);
