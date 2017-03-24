@@ -125,7 +125,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     private CustomCoordinatorLayout coordinatorLayout;
     private AppBarLayout appbar_layout;
     private RelativeLayout mRLAddToWishlistSmall, mRLAddToWishlistBig, rlProductrecommendLine;
-    private LinearLayout llProductDetail, llBottomBar, mLLAddToCart;
+    private LinearLayout  llBottomBar, mLLAddToCart;
     private ImageView ivHeaderBarWishlist, ivHeaderBarWishlist2, mIVHeaderBarWishlist, mIVHeaderBarWishlist2, ivHeaderBarShare;
 
     private ViewPager viewPager;

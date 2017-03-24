@@ -283,7 +283,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         scrollViewBody = (ScrollView) findViewById(R.id.sv_checkout_body);
         llBody = (LinearLayout) findViewById(R.id.ll_checkout_body);
         progressBarLoading = (ProgressBar) findViewById(R.id.pb_checkout_body_loading);
-        tvMenuShipping.setTextColor(getResources().getColor(R.color.appColorPrimary));
+        tvMenuShipping.setTextColor(  GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         btnContinue.setOnClickListener(this);
         ll_btn.setOnClickListener(this);
         ll_btn.setVisibility(View.VISIBLE);
@@ -430,7 +430,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     case 2://means payment module
                         changeSliderColor(
                                 getResources().getColor(R.color.grayf8f8f8),
-                                getResources().getColor(R.color.appColorPrimary),
+                                  GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
                                 getResources().getColor(R.color.grayf8f8f8));
                         break;
                     case 1://means shipping module
@@ -439,7 +439,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         inputMethodManager.hideSoftInputFromWindow(llBody.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                         changeSliderColor(
-                                getResources().getColor(R.color.appColorPrimary),
+                                  GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
                                 getResources().getColor(R.color.grayf8f8f8),
                                 getResources().getColor(R.color.grayf8f8f8));
 
@@ -625,7 +625,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         changeSliderColor(
                 getResources().getColor(R.color.grayf8f8f8),
                 getResources().getColor(R.color.grayf8f8f8),
-                getResources().getColor(R.color.appColorPrimary));
+                  GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         //switch fragment and set params
         checkoutReviewFragment = new CheckoutReviewFragment();
         Bundle bundle = new Bundle();
@@ -847,7 +847,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                             mActivity.get().changeSliderColor(
                                     mActivity.get().getResources().getColor(R.color.grayf8f8f8),
                                     mActivity.get().getResources().getColor(R.color.grayf8f8f8),
-                                    mActivity.get().getResources().getColor(R.color.appColorPrimary));
+                                    GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor() );
                             //switch fragment and set params
                             mActivity.get().checkoutReviewFragment = new CheckoutReviewFragment();
                             Bundle bundle = new Bundle();
@@ -871,7 +871,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                              * normal payment
                              */
                             mActivity.get().skipPayment = 0;
-                            mActivity.get().changeSliderColor(mActivity.get().getResources().getColor(R.color.grayf8f8f8), mActivity.get().getResources().getColor(R.color.appColorPrimary), mActivity.get().getResources().getColor(R.color.grayf8f8f8));
+                            mActivity.get().changeSliderColor(mActivity.get().getResources().getColor(R.color.grayf8f8f8), GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(), mActivity.get().getResources().getColor(R.color.grayf8f8f8));
                             //switch fragment
                             mActivity.get().fragmentTransaction = mActivity.get().getFragmentManager().beginTransaction();
                             mActivity.get().checkoutPaymentFragment = mActivity.get().getFragmentManager().findFragmentByTag("paymentFragment");
@@ -1270,16 +1270,16 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     private void changeSliderColor(final int firstColorId, final int secondColorId, final int thirdColorId) {
 
         TranslateAnimation translateAnimation = null;
-
+      
         //first slide
-        if (firstColorId == getResources().getColor(R.color.appColorPrimary)) {
+        if (firstColorId ==   GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()) {
             tvSliderFirst.setBackgroundColor(firstColorId);
             tvSliderSecond.setBackgroundColor(secondColorId);
             tvSliderThird.setBackgroundColor(thirdColorId);
         }
 
         //second slide
-        if (secondColorId == getResources().getColor(R.color.appColorPrimary)) {
+        if (secondColorId ==   GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()) {
             if (isGoBack) {
 
                 tvSliderSecond.setBackgroundColor(secondColorId);
@@ -1292,7 +1292,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         }
 
         //third slide
-        if (thirdColorId == getResources().getColor(R.color.appColorPrimary)) {
+        if (thirdColorId ==   GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()) {
 
 
             tvSliderFirst.setBackgroundColor(firstColorId);

@@ -116,6 +116,8 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
     public void startFragmentByType(String type, boolean refresh) {
         if (!isAdded()) return;
         //setCurrentPosition 会触发changePageListener，会调用两遍onActivityCreated,需要注意
+        ctpiCategoryList.setIndicatorColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+         if (SWITCH_ADDRESSFRAGMENT.equalsIgnoreCase(type)) {
         if (SWITCH_ORDERFRAGMENT.equalsIgnoreCase(type)) {
             ctpiCategoryList.setCurrentPosition(1);
             switchChildFragment(TAG_ORDERLIST, refresh);

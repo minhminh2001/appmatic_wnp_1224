@@ -23,6 +23,7 @@ public class ApplicationConfigurationEntity {
     private String ulImageServerAddress;
     private String ulImageServerGlobalParameter;
     private GOUserEntity user;
+    private ConfigModel configModel;
     private ArrayList<GOThirdPartyUserEntity> thirdPartyUsers;
     private GOStoreViewEntity storeView;
     private GOCurrencyEntity currency;
@@ -32,7 +33,6 @@ public class ApplicationConfigurationEntity {
         user = null;
         thirdPartyUsers = new ArrayList<GOThirdPartyUserEntity>();
     }
-
     public static ApplicationConfigurationEntity getInstance() {
         return SingletonHolder.INSTANCE;
     }
@@ -40,14 +40,17 @@ public class ApplicationConfigurationEntity {
     private static class SingletonHolder {
         static final ApplicationConfigurationEntity INSTANCE = new ApplicationConfigurationEntity();
     }
-
     private Object readResolve() {
         return getInstance();
     }
 
+    public ConfigModel getThemeConfig(){
+        return configModel;
+    }
     public void init(Context context) {
         SVRAppserviceCatalogSearchReturnEntity entity = JStorageUtils.getCategoryArrayList(context);
         GemfiveApplication.getAppConfiguration().setCategoryArrayList(entity);
+        configModel=new ConfigModel();
         httpServerAddress = GlobalData.serviceRequestUrl;
         JLogUtils.i("aaa", "init=" + httpServerAddress);
         httpGlobalParameter = "";

@@ -47,7 +47,7 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
     private LinearLayout tabsContainer;
     private ViewPager pager;
     private int tabCount;
-    private int currentPosition = 0;
+    private int currentPosition = -1;
     private float currentPositionOffset = 0f;
     private Paint rectPaint;
     private Paint dividerPaint;
@@ -216,7 +216,7 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
                 if (view instanceof TextView) {
                     TextView textView = (TextView) view;
                     if (((Integer) view.getTag()) == position) {
-                        textView.setTextColor(getContext().getResources().getColor(R.color.appColorPrimary));
+                        textView.setTextColor(indicatorColor);
                     } else {
                         textView.setTextColor(getContext().getResources().getColor(R.color.black000000));
                     }
