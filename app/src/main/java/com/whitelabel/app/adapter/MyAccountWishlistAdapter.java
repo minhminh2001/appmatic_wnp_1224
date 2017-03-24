@@ -4,11 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.os.Bundle;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +14,11 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.model.Wishlist;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 
 import java.text.DecimalFormat;
@@ -78,7 +72,7 @@ public class MyAccountWishlistAdapter extends ArrayAdapter<Wishlist> {
         viewHolder.tvpicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startBrandStoreActivity((Activity) view.getContext(),aw.getBrand(),aw.getBrandId());
+//                startBrandStoreActivity((Activity) view.getContext(),aw.getBrand(),aw.getBrandId());
             }
         });
         DecimalFormat decimalFormat = new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
@@ -111,41 +105,40 @@ public class MyAccountWishlistAdapter extends ArrayAdapter<Wishlist> {
 
         if(!TextUtils.isEmpty( aw.getVendorDisplayName())) {
             String soldBy=viewHolder.ctvWishMerchant.getContext().getResources().getString(R.string.soldby);
-            JLogUtils.d("jay","------"+aw.getVendor_id());
-            if(!TextUtils.isEmpty(aw.getVendor_id())){
-                viewHolder.ctvWishMerchant.setTextColor(context.getResources().getColor(R.color.purple92018d));
-                SpannableStringBuilder ss=new SpannableStringBuilder(soldBy+" "+aw.getVendorDisplayName());
-                ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyB8B8B8)),0,soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                viewHolder.ctvWishMerchant.setText(ss);
-                if(!"0".equals(aw.getVendor_id())){
-                    viewHolder.ctvWishMerchant.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(context, MerchantStoreFrontActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, aw.getVendor_id());
-                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, aw.getVendorDisplayName());
-                            intent.putExtras(bundle);
-                            context.startActivity(intent);
-                            ((Activity)context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-                        }
-                    });
-                }else{
-                    viewHolder.ctvWishMerchant.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(context, HomeActivity.class);
-                            context.startActivity(i);
-                            ((Activity)context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-                        }
-                    });
-                }
-
-            }
-            else{
+//            if(!TextUtils.isEmpty(aw.getVendor_id())){
+//                viewHolder.ctvWishMerchant.setTextColor(context.getResources().getColor(R.color.purple92018d));
+//                SpannableStringBuilder ss=new SpannableStringBuilder(soldBy+" "+aw.getVendorDisplayName());
+//                ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyB8B8B8)),0,soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                viewHolder.ctvWishMerchant.setText(ss);
+//                if(!"0".equals(aw.getVendor_id())){
+//                    viewHolder.ctvWishMerchant.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent intent = new Intent(context, MerchantStoreFrontActivity.class);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, aw.getVendor_id());
+//                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, aw.getVendorDisplayName());
+//                            intent.putExtras(bundle);
+//                            context.startActivity(intent);
+//                            ((Activity)context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                        }
+//                    });
+//                }else{
+//                    viewHolder.ctvWishMerchant.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent i = new Intent(context, HomeActivity.class);
+//                            context.startActivity(i);
+//                            ((Activity)context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                        }
+//                    });
+//                }
+//
+//            }
+//            else{
                 viewHolder.ctvWishMerchant.setText(soldBy+" "+aw.getVendorDisplayName());
-                viewHolder.ctvWishMerchant.setTextColor(context.getResources().getColor(R.color.greyB8B8B8));
-            }
+                viewHolder.ctvWishMerchant.setTextColor(context.getResources().getColor(R.color.black));
+//            }
         }else {
             viewHolder.ctvWishMerchant.setText("");
         }

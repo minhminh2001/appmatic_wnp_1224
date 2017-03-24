@@ -12,47 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--brand and name-->
-        <RelativeLayout
-            android:id="@+id/detail_title_RelativeLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:visibility="visible">
 
-            <View
-                android:id="@+id/ctvProductTitleLine"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"/>
-
-            <com.whitelabel.app.widget.CustomTextView
-                android:id="@+id/ctvProductBrand"
-                style="@style/font_family_robot_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ctvProductTitleLine"
-
-                android:textColor="@color/black"
-                android:textSize="12sp"/>
-
-            <com.whitelabel.app.widget.CustomTextView
-                android:id="@+id/ctvProductName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ctvProductBrand"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                imaginato:textFont="LatoBold"
-                />
-        </RelativeLayout>
         <!--price stock save RM merchant cash-->
         <RelativeLayout
             android:id="@+id/rlProductFinalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/detail_title_RelativeLayout"
             >
 
             <RelativeLayout

@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/wishlist_textView2"
         android:textSize="12sp"
-        android:textColor="@color/purple92018d"
+        android:textColor="@color/black"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
         android:text="test"
