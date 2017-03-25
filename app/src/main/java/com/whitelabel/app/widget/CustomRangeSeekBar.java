@@ -15,6 +15,7 @@ import android.view.ViewConfiguration;
 import android.widget.ImageView;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.listener.OnRangeSeekBarChangeListener;
 import com.whitelabel.app.utils.JToolUtils;
 
@@ -110,7 +111,7 @@ public class CustomRangeSeekBar<T extends Number> extends ImageView {
         absoluteMinValuePrim = absoluteMinValue.doubleValue();
         absoluteMaxValuePrim = absoluteMaxValue.doubleValue();
         numberType = NumberType.fromNumber(absoluteMinValue);
-        SINGLE_COLOR= 0xFF66006E;
+        SINGLE_COLOR= GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor();
         IS_MULTI_COLORED = false;
         LEFT_COLOR = 0;
         MIDDLE_COLOR = 0;

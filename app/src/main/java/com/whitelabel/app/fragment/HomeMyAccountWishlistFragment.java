@@ -364,7 +364,8 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
         nogoods = contentView.findViewById(R.id.wishlist_no_goods);
         lv = (SwipeMenuListView) contentView.findViewById(R.id.whistlist_lv);
         swipeLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.swipe_container);
-        swipeLayout.setColorSchemeResources(R.color.colorAccent);
+//        swipeLayout.setColorSchemeResources(R.color.colorAccent);
+        swipeLayout.setColorSchemeColors(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         swipeLayout.setOnRefreshListener(this);
         return contentView;
     }

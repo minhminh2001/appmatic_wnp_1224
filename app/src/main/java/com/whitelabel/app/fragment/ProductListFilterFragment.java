@@ -365,7 +365,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
 
             allBrandsListViewIsShow = false;
         } else {
-            ctvAllBrandsTitle.setTextColor(getResources().getColor(R.color.purple66006E));
+            ctvAllBrandsTitle.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             AnimUtil.animatePlusSign(tvAllBrandsPlusAnimate, true, getContext());
 
             LinearLayout.LayoutParams dividerlp = (LinearLayout.LayoutParams) vAllBrandsContentAllTypesTitleDivider.getLayoutParams();
@@ -461,7 +461,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
             }
             allTypesListViewIsShow = false;
         } else {
-            ctvAllTypesTitle.setTextColor(getResources().getColor(R.color.purple66006E));
+            ctvAllTypesTitle.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             rlAllTypesPlus.setVisibility(View.VISIBLE);
 
             filterTypeAdapter = new ProductListFilterSortFilterTypeAdapter((Activity) filterSortActivity, fragmentListener, modelTypeReturnEntityArrayList, productListFilterSortPageEntity);
@@ -530,7 +530,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
                     }
 
                     AnimUtil.animatePlusSign(tvAllBrandsPlusAnimate, true, getContext());
-                    ctvAllBrandsTitle.setTextColor(getResources().getColor(R.color.purple66006E));
+                    ctvAllBrandsTitle.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                 }
 
                 // Types
@@ -574,7 +574,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
                     }
 
                     AnimUtil.animatePlusSign(tvAllTypesPlusAnimate, true, getContext());
-                    ctvAllTypesTitle.setTextColor(getResources().getColor(R.color.purple66006E));
+                    ctvAllTypesTitle.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                 }
 
                 // Brands

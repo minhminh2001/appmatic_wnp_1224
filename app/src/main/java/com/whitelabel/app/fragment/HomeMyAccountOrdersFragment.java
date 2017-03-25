@@ -106,10 +106,10 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         requestErrorHelper=new RequestErrorHelper(getContext(),connectionBreaks);
         swipeRefrshLayout= (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         tryAgain= (LinearLayout) view.findViewById(R.id.try_again);
-
         tryAgain.setOnClickListener(this);
         swipeRefrshLayout.setOnRefreshListener(this);
-        swipeRefrshLayout.setColorSchemeResources(R.color.colorAccent);
+//        swipeRefrshLayout.setColorSchemeResources(R.color.colorAccent);
+        swipeRefrshLayout.setColorSchemeColors(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         return view;
     }
 

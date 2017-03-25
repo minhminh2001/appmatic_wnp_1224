@@ -326,7 +326,8 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         requestErrorHelper = new RequestErrorHelper(getContext(), connectionBreak);
         btnTry = (LinearLayout) view.findViewById(R.id.try_again);
         swipeRefrshLayout = (CustomSwipefreshLayout) view.findViewById(R.id.swipe_container);
-        swipeRefrshLayout.setColorSchemeResources(R.color.colorAccent);
+//        swipeRefrshLayout.setColorSchemeResources(R.color.colorAccent);
+        swipeRefrshLayout.setColorSchemeColors(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         swipeRefrshLayout.setOnRefreshListener(this);
         llBody.setFocusable(true);
         llBody.setFocusableInTouchMode(true);
