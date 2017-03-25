@@ -78,8 +78,8 @@ public class JViewUtils {
         StateListDrawable drawable=new StateListDrawable();
         GradientDrawable  normal= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
         normal.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
-        GradientDrawable  pressed= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
-        pressed.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getButtonClickColor());
+//        GradientDrawable  pressed= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
+//        pressed.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getButtonClickColor());
         drawable.addState(new int[]{},normal);
 //        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
         return drawable;
@@ -756,7 +756,7 @@ public class JViewUtils {
         final WheelView wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         final WheelView wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
         final WheelView wvRight = (WheelView) dialogView.findViewById(R.id.wvRight);
-
+        ctvSet.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         wvLeft.setViewAdapter(wpaLeft);
         wvLeft.setVisibleItems(5);
         wvLeft.setCurrentItem(currentItem1);
@@ -980,7 +980,7 @@ public class JViewUtils {
         final WheelView wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         final WheelView wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
         final WheelView wvRight = (WheelView) dialogView.findViewById(R.id.wvRight);
-
+        ctvSet.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         WheelPickerAdapter wpaLeft = new WheelPickerAdapter(context, pickerConfigEntityLeft.getArrayList());
         wvLeft.setViewAdapter(wpaLeft);
         wvLeft.setVisibleItems(5);
@@ -1208,7 +1208,7 @@ public class JViewUtils {
         final CustomTextView ctvSet = (CustomTextView) dialogView.findViewById(R.id.ctvSet);
         final WheelView wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         final WheelView wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
-
+        ctvSet.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         WheelPickerAdapter wpaLeft = new WheelPickerAdapter(context, pickerConfigEntityLeft.getArrayList());
         wvLeft.setViewAdapter(wpaLeft);
         wvLeft.setVisibleItems(5);

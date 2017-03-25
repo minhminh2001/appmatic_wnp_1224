@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.utils.JLogUtils;
 
 /**
@@ -286,6 +287,8 @@ public class MaterialDialog {
                     R.id.buttonLayout);
             mPositiveButton = (Button) mButtonLayout.findViewById(R.id.btn_p);
             mNegativeButton = (Button) mButtonLayout.findViewById(R.id.btn_n);
+            mPositiveButton.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            mNegativeButton.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             mMessageContentRoot = (ViewGroup) mAlertDialogWindow.findViewById(
                     R.id.message_content_root);
             if (mView != null) {

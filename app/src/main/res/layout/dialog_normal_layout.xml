@@ -71,7 +71,6 @@
                     android:paddingBottom="12dp"
                     android:paddingRight="19dp"
                     android:paddingLeft="19dp"
-                    android:textColor="@color/purple92018d"
                     style="@style/font_family_roboto_medium"
                     android:textSize="14sp" />
 

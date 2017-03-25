@@ -194,6 +194,7 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         myAccountMenuTitle.add(getResources().getString(R.string.home_myaccount_header_orders));
         myAccountMenuTitle.add(getResources().getString(R.string.home_myaccount_header_addressbook));
         ctpiCategoryList.setTitles(myAccountMenuTitle);
+        ctpiCategoryList.setIndicatorColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         ctpiCategoryList.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

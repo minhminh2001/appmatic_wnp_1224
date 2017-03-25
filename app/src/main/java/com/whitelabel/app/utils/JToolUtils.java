@@ -337,7 +337,7 @@ public class JToolUtils {
 //        html = html.replace("@fontPath1", "../fonts/Lato-Bold.ttf");// assets相对路径
         html = html.replace("@mytext", str);
         html = html.replace("@myTextsize", textSize+"px");
-        html = html.replace("@myClickColor", "#"+colorStr);
+//        html = html.replace("@myClickColor", "#"+colorStr);
         String baseurl = "file:///android_asset/html/";
         mWebView.loadDataWithBaseURL(baseurl, html, "text/html", "UTF-8", null);
     }
