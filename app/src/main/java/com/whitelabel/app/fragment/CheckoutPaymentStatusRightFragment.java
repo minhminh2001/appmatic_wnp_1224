@@ -638,6 +638,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
             tvCheckOrder.setVisibility(View.VISIBLE);
             tvContinueShopping.setVisibility(View.VISIBLE);
             tvCheckOrder.setBackground(JViewUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
+            tvCheckOrder.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             tvContinueShopping.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(getActivity()));
         return view;
     }

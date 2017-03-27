@@ -1560,27 +1560,27 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             JToolUtils.webViewFont(this, mWebView, htmlText, 13.5f);
         }
 
-        mWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading (WebView view, String url){
-                //<a href="https://appdev.gemfive.com/index.php/shipping-delivery包含shipping-delivery">
-                if(url!=null&&url.contains("shipping-delivery")){
-                    Bundle bundle2 = new Bundle();
-                    bundle2.putInt("helpCenter", 5);
-                    startNextActivity(bundle2, RegisterToHelpCenter.class, false);
-                    return true;
-                }else {
-                    try {
-                        Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse(url));
-                        startActivity(i);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    return true;
-                }
-            }
-        });
+//        mWebView.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public boolean shouldOverrideUrlLoading (WebView view, String url){
+//                //<a href="https://appdev.gemfive.com/index.php/shipping-delivery包含shipping-delivery">
+//                if(url!=null&&url.contains("shipping-delivery")){
+//                    Bundle bundle2 = new Bundle();
+//                    bundle2.putInt("helpCenter", 5);
+//                    startNextActivity(bundle2, RegisterToHelpCenter.class, false);
+//                    return true;
+//                }else {
+//                    try {
+//                        Intent i = new Intent(Intent.ACTION_VIEW);
+//                        i.setData(Uri.parse(url));
+//                        startActivity(i);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    return true;
+//                }
+//            }
+//        });
         int webviewCount=llWebView.getChildCount();
         if(webviewCount<1) {
             llWebView.addView(mWebView);

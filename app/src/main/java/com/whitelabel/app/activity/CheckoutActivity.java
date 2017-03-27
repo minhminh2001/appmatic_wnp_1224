@@ -609,7 +609,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     public void setButtonEnable(boolean enable) {
         btnContinue.setEnabled(enable);
         if (enable) {
-            btnContinue.setBackgroundResource(R.drawable.big_button_style_config);
+            btnContinue.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(this));
+//            btnContinue.setBackgroundResource(R.drawable.big_button_style_config);
         } else {
             btnContinue.setBackgroundResource(R.drawable.big_button_style_b8);
         }

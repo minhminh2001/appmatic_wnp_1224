@@ -470,7 +470,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             }
         });
 
-        tvApply.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(getActivity()));
+
 
     }
 
@@ -1056,7 +1056,8 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     public void switchVoucheStatus(String code, int type) {
         if (STATUS_VOUCHERCODE_APPLY == type) {
             tvApply.setText(mApplyStr);
-            tvApply.setBackground(getResources().getDrawable(R.drawable.big_button_style_config));
+            tvApply.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(getActivity()));
+//            tvApply.setBackground(getResources().getDrawable(R.drawable.big_button_style_config));
             llApplyAnim.setVisibility(View.GONE);
             etVoucherApply.setEnabled(true);
             etVoucherApply.setText(voucherCode);

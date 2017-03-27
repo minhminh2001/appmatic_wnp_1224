@@ -747,6 +747,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         final RelativeLayout rlContainer = (RelativeLayout) dialogView.findViewById(R.id.rlContainer);
         final CustomTextView ctvCancel = (CustomTextView) dialogView.findViewById(R.id.ctvCancel);
         final CustomTextView ctvSet = (CustomTextView) dialogView.findViewById(R.id.ctvSet);
+        ctvSet.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
 

@@ -39,7 +39,7 @@
                 android:background="@color/black50000000"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true">
-                <com.imaginato.gemfive.widget.CustomTextView
+                <com.whitelabel.app.widget.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/whiteFFFFFF"
@@ -76,7 +76,7 @@
                 android:visibility="visible" />
         </RelativeLayout>
 
-        <com.imaginato.gemfive.widget.CustomTextView
+        <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/ctvProductBrand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             android:textSize="11sp"
             style="@style/font_family_robot_regular" />
 
-        <com.imaginato.gemfive.widget.CustomTextView
+        <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/ctvProductName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
             android:textSize="13.5sp"
             style="@style/font_family_robot_regular"/>
 
-        <com.imaginato.gemfive.widget.CustomTextView
+        <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/ctvProductPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
             android:textSize="11sp"
             style="@style/font_family_robot_regular"/>
 
-        <com.imaginato.gemfive.widget.CustomTextView
+        <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/ctvProductFinalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
             android:textColor="@color/black"
             android:textSize="13.5sp"
             style="@style/font_family_roboto_medium"/>
-        <com.imaginato.gemfive.widget.CustomTextView
+        <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/ctv_product_merchant"
             android:layout_below="@+id/ctvProductFinalPrice"
             android:layout_width="wrap_content"

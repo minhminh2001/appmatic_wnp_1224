@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.application.GemfiveApplication;
 
 /**
  * Created by imaginato on 2015/11/9.
@@ -122,6 +123,10 @@ public class CustomMyDialog extends Dialog {
             // instantiate the dialog with the custom Theme
             final CustomDialog dialog = new CustomDialog(context,R.style.dialog,"");
             View layout = inflater.inflate(R.layout.dialog_normal_layout, null);
+            TextView  okText= (TextView) layout.findViewById(R.id.positiveButton);
+            TextView cancelText= (TextView) layout.findViewById(R.id.negativeButton);
+            okText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            cancelText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             dialog.addContentView(layout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
             // set the dialog title
