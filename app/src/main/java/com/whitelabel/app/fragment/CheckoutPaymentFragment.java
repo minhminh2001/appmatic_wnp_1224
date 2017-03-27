@@ -209,6 +209,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         view_paymentmethod_line = view.findViewById(R.id.view_paymentmethod_line);
         view_payment_online_line = view.findViewById(R.id.view_payment_online_line);
         ctv_payment_method_lab = (TextView) view.findViewById(R.id.ctv_payment_method_lab);
+        ctv_payment_method_lab.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         tvPaymentMethod = (TextView) view.findViewById(R.id.tv_checkout_payment_method);
         tvPaymentMethodArrow = (ImageView) view.findViewById(R.id.tv_checkout_payment_method_arrow);
         llPaymentMethod = (LinearLayout) view.findViewById(R.id.ll_checkout_payment_method);
@@ -223,6 +224,8 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         ivSelectI = (ImageView) view.findViewById(R.id.iv_checkout_payment_select_i);
         ivSelectI.setOnClickListener(this);
         tvCreditCardNumberAnim = (TextView) view.findViewById(R.id.tv_checkout_payment_creditcardnumber_anim);
+        tvCreditCardNumberAnim.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+
         etCreditCardNumber = (EditText) view.findViewById(R.id.et_checkout_payment_creditcardnumber);
         etCreditCardNumber.setOnFocusChangeListener(this);
         etCreditCardNumber.addTextChangedListener(new CreditCartNumberTextWatcher());
@@ -232,6 +235,8 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         etCVC.setOnFocusChangeListener(this);
 
         tvNameoncardAnim = (TextView) view.findViewById(R.id.tv_checkout_payment_nameoncard_anim);
+        tvNameoncardAnim.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+
         etNameoncard = (EditText) view.findViewById(R.id.et_checkout_payment_nameoncard);
         etNameoncard.setOnFocusChangeListener(this);
 
@@ -698,7 +703,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                     }
                 },260);
                 JViewUtils.cleanCurrentViewFocus(getActivity());
-                tvExpirationDateHint.setTextColor(JToolUtils.getColor(R.color.colorAccent));
+                tvExpirationDateHint.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                 CustomButtomLineRelativeLayout.setBottomLineActive(view_expiration_date_line,true);
                 AnimUtil.rotateArrow(arrowSelectExpirationDate,true);
                 //createDialogPickerOfTwoColumn();
@@ -1182,7 +1187,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
 
 
                 tv.setText(hintText);
-                tv.setTextColor(getResources().getColor(R.color.colorAccent));
+                tv.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             }
 
             @Override
@@ -1439,7 +1444,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                     CustomButtomLineRelativeLayout.setRelativeBottomLineActive(view_paymentmethod_line, true);
                     AnimUtil.rotateArrow(tvPaymentMethodArrow,true);
 
-                    ctv_payment_method_lab.setTextColor(JToolUtils.getColor(R.color.colorAccent));
+                    ctv_payment_method_lab.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
                     final WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
 
@@ -1620,7 +1625,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                 }
                 CustomButtomLineRelativeLayout.setBottomLineActive(view_payment_online_line,true);
                 AnimUtil.rotateArrow(arrowSelectOnlineBankingPayWith,true);
-                tvOnlinebankHint.setTextColor(JToolUtils.getColor(R.color.colorAccent));
+                tvOnlinebankHint.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                 configEntity.setArrayList(list_onlinebanks);
                 configEntity.setOldValue(oldEntity_onlinebanks);
                 configEntity.setCallBack(new WheelPickerCallback() {
