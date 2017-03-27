@@ -35,6 +35,22 @@ public class ToolBarAlphaBehavior {
         endOffset = JToolUtils.dip2px(context,maxY)- toolbar.getHeight();//结束变色的位置
     }
 
+
+
+
+
+    public ToolBarAlphaBehavior(Context context, Toolbar toolbar, int defaultColor, CallBack callBack) {
+        this.context = context;
+        this.toolbar=toolbar;
+        String colorStr=String.format("#%06X", 0xFFFFFF & defaultColor);
+        JLogUtils.i("ray","colorStr:"+colorStr);
+        this.defaultColor=colorStr.substring(1);
+        this.callBack=callBack;
+        //  渐变色最大差距值变化滑动距离
+        startOffset= toolbar.getHeight();//开始变色的位置
+        endOffset = JToolUtils.dip2px(context,maxY)- toolbar.getHeight();//结束变色的位置
+    }
+
     //.getBackground().setAlpha方法會改變app所有toolbar的顏色，bug
     public void setAlPha(int num){
         if(num>maxAlpha){

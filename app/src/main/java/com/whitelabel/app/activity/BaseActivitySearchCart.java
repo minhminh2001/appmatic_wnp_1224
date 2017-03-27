@@ -61,7 +61,7 @@ public class BaseActivitySearchCart<T extends BasePresenter> extends com.whitela
             }
         });
         TextView textView = (TextView) cart.findViewById(R.id.ctv_home_shoppingcart_num);
-        textView.setBackground(JImageUtils.getCounerDrawable(this));
+        textView.setBackground(JImageUtils.getThemeCircle(this));
         JViewUtils.updateCartCount(textView, getCartItemCount());
     }
 
@@ -121,6 +121,7 @@ public class BaseActivitySearchCart<T extends BasePresenter> extends com.whitela
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
     }
 
     protected void setToolbarTitle(String title) {

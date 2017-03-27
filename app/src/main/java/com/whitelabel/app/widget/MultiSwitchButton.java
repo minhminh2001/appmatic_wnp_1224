@@ -30,6 +30,8 @@ import android.widget.CompoundButton;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.utils.ColorUtils;
+import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JViewUtils;
 
 public class MultiSwitchButton extends CompoundButton {
 //	背景默认长宽比
@@ -195,6 +197,14 @@ public class MultiSwitchButton extends CompoundButton {
 		mTextMarginH = textMarginH;
 		mAutoAdjustTextPosition = autoAdjustTextPosition;
 
+
+		if(thumbDrawable instanceof StateListDrawable ){
+			StateListDrawable stateListDrawable= (StateListDrawable) thumbDrawable;
+			for(int i=0;i<stateListDrawable.getState().length;i++){
+				JLogUtils.i("ray","stateListDrawable.getState()[i]:"+stateListDrawable.getState()[i]);
+			}
+		}
+
 		// thumb drawable and color
 		mThumbDrawable = thumbDrawable;
 		mThumbColor = thumbColor;
@@ -203,6 +213,7 @@ public class MultiSwitchButton extends CompoundButton {
 		if (mTintColor == 0) {
 			TypedValue typedValue = new TypedValue();
 			boolean found = getContext().getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
+			JLogUtils.i("ray","typedvalue:"+typedValue.data);
 			if (found) {
 				mTintColor = typedValue.data;
 			} else {

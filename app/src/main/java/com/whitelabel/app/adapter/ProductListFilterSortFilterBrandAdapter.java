@@ -18,6 +18,7 @@ import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.widget.CustomRadioButton;
 import com.whitelabel.app.widget.CustomTextView;
 
 import java.util.ArrayList;
@@ -46,16 +47,13 @@ public class ProductListFilterSortFilterBrandAdapter extends ArrayAdapter<SVRApp
         ViewHolder viewHolder = null;
         if (convertView == null) {
             convertView = LayoutInflater.from(mActivity).inflate(R.layout.adapter_productlist_filter_brandlist_item, null);
-
             viewHolder = new ViewHolder();
             viewHolder.ctvBrandTitle = (CustomTextView) convertView.findViewById(R.id.ctvBrandTitle);
-            viewHolder.ivBrandTitle = (ImageView) convertView.findViewById(R.id.ivBrandTitle);
-
+            viewHolder.ivBrandTitle = (CustomRadioButton) convertView.findViewById(R.id.ivBrandTitle);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
         if (brandItemReturnEntityArrayList == null || position < 0 || brandItemReturnEntityArrayList.size() <= position) {
             if (convertView.getLayoutParams() != null) {
                 convertView.getLayoutParams().height = 0;
@@ -78,9 +76,12 @@ public class ProductListFilterSortFilterBrandAdapter extends ArrayAdapter<SVRApp
 
         if (brandItemReturnEntity.isSelected()) {
             mCurrindex = position;
-            viewHolder.ivBrandTitle.setImageDrawable(JImageUtils.getDrawable(mActivity, R.mipmap.dot_checkout_address_selected));
+//            viewHolder.ivBrandTitle.setImageDrawable(JImageUtils.getDrawable(mActivity, R.mipmap.dot_checkout_address_selected));
+            viewHolder.ivBrandTitle.setVisibility(View.VISIBLE);
         } else {
-            viewHolder.ivBrandTitle.setImageDrawable(JImageUtils.getDrawable(mActivity, R.mipmap.dot_checkout_address_unselected));
+            viewHolder.ivBrandTitle.setVisibility(View.INVISIBLE);
+//
+//     viewHolder.ivBrandTitle.setImageDrawable(JImageUtils.getDrawable(mActivity, R.mipmap.dot_checkout_address_unselected));
         }
 
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -158,11 +159,11 @@ public class ProductListFilterSortFilterBrandAdapter extends ArrayAdapter<SVRApp
         return convertView;
     }
 
-
     private Handler mHandler = new Handler();
+
 
     class ViewHolder {
         public CustomTextView ctvBrandTitle;
-        public ImageView ivBrandTitle;
+        public CustomRadioButton ivBrandTitle;
     }
 }

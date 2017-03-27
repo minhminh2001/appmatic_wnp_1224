@@ -9,14 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.widget.CustomWebView;
 
 public class BankTransaferSuccessActivity extends com.whitelabel.app.BaseActivity {
     private CustomWebView wvDesc;
-
+    private TextView tvConfirm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +44,7 @@ public class BankTransaferSuccessActivity extends com.whitelabel.app.BaseActivit
             public void onClick(View v) {
             }
         });
-
-        findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BankTransaferSuccessActivity.this, HomeActivity.class);
@@ -66,6 +67,8 @@ public class BankTransaferSuccessActivity extends com.whitelabel.app.BaseActivit
 
     private void initView() {
         wvDesc= (CustomWebView) findViewById(R.id.tv_desc);
+        tvConfirm= (TextView) findViewById(R.id.tv_confirm);
+        tvConfirm.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
         //initWebView();
     }
     private void initWebView() {

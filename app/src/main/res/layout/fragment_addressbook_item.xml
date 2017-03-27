@@ -94,14 +94,14 @@
                     style="@style/font_family_robot_regular" />
             </LinearLayout>
 
-            <ImageView
+            <com.whitelabel.app.widget.CustomRadioButton
                 android:id="@+id/iv_address_default"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
-                android:src="@drawable/radio_button_on"
+
                />
         </RelativeLayout>
 

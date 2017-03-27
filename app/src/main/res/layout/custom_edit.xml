@@ -38,7 +38,7 @@
         style="@style/font_family_robot_regular"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
+
         android:layout_alignParentBottom="true"
         android:visibility="invisible"
         android:id="@+id/my_text1"

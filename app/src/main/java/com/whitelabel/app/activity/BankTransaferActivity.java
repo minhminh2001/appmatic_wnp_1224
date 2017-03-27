@@ -271,10 +271,8 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
             tvDateHint.setVisibility(View.VISIBLE);
         }
     }
-
     private static final int SELECT_PHOTO = 100;
     private static final int TAKE_PHOTO = 200;
-
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -284,10 +282,8 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
                 if (!TextUtils.isEmpty(tvTrasferFrom.getText().toString())) {
                     tvBankHint.startAnimation(getHintAnimation(tvBankHint, getResources().getString(R.string.bank_from)));
                 }
-
                 tvTrasferFrom.setFocusable(true);
                 tvTrasferFrom.requestFocus();
-
                 showBankFrom();
                 break;
             case R.id.tv_date:
@@ -538,7 +534,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
                 }, 100);
 
                 tv.setText(hintText);
-                tv.setTextColor(getResources().getColor(R.color.colorAccent));
+                tv.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             }
 
             @Override
@@ -757,6 +753,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
         mImageLoader = new ImageLoader(this);
         tvDateHint = (TextView) findViewById(R.id.tv_date_hint);
         tvBankHint = (TextView) findViewById(R.id.tv_bankFrom_hint);
+
         etTransferAmount = (CustomEdit) findViewById(R.id.et_transferAmount);
         tvTrasferFrom = (TextView) findViewById(R.id.tv_bankFrom);
         tvDate = (TextView) findViewById(R.id.tv_date);

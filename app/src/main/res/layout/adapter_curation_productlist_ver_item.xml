@@ -91,7 +91,7 @@
                 android:paddingRight="9dp"
                 android:singleLine="true"
                 android:text="@string/string"
-                android:textColor="@color/purple92018d"
+                android:textColor="@color/black000000"
                 android:textSize="11sp"
                 imaginato:textFont="LatoRegular"
                 />

@@ -44,11 +44,9 @@ public class ProductListFilterSortFilterTypeAdapter extends ArrayAdapter<SVRApps
         ViewHolder viewHolder = null;
         if (convertView == null) {
             convertView = LayoutInflater.from(activity).inflate(R.layout.adapter_productlist_filter_typelist_item, null);
-
             viewHolder = new ViewHolder();
             viewHolder.ctvTypeTitle = (CustomTextView) convertView.findViewById(R.id.ctvTypeTitle);
-            viewHolder.ivTypeTitle = (ImageView) convertView.findViewById(R.id.ivTypeTitle);
-
+            viewHolder.ivTypeTitle =  convertView.findViewById(R.id.ivTypeTitle);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -75,9 +73,11 @@ public class ProductListFilterSortFilterTypeAdapter extends ArrayAdapter<SVRApps
 
         if (modelTypeReturnEntity.isSelected()) {
             mCurrindex=position;
-            viewHolder.ivTypeTitle.setImageDrawable(JImageUtils.getDrawable(activity, R.mipmap.dot_checkout_address_selected));
+            viewHolder.ivTypeTitle.setVisibility(View.VISIBLE);
+//            viewHolder.ivTypeTitle.setImageDrawable(JImageUtils.getDrawable(activity, R.mipmap.dot_checkout_address_selected));
         } else {
-            viewHolder.ivTypeTitle.setImageDrawable(JImageUtils.getDrawable(activity, R.mipmap.dot_checkout_address_unselected));
+            viewHolder.ivTypeTitle.setVisibility(View.INVISIBLE);
+//            viewHolder.ivTypeTitle.setImageDrawable(JImageUtils.getDrawable(activity, R.mipmap.dot_checkout_address_unselected));
         }
 
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +159,6 @@ public class ProductListFilterSortFilterTypeAdapter extends ArrayAdapter<SVRApps
    private Handler mHandler=new Handler();
     class ViewHolder {
         public CustomTextView ctvTypeTitle;
-        public ImageView ivTypeTitle;
+        public View ivTypeTitle;
     }
 }

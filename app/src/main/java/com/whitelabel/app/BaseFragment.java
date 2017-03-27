@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.ui.common.BasePresenter;
 import com.whitelabel.app.ui.common.BaseView;
 import com.whitelabel.app.utils.JToolUtils;
@@ -173,6 +174,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         if (mToolbar != null) {
             mToolbar.setTitle("");
             ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+        }
+        if(mToolbar!=null){
+            mToolbar.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
         }
     }
 

@@ -94,7 +94,7 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
         TextView tvmalaysia ;
         TextView tvtel ;
         TextView tvLine;
-        ImageView ivDefault;
+        View ivDefault;
         // item 主要内容
         RelativeLayout rlAddressItem;
 
@@ -108,7 +108,7 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
             tvmalaysia = (TextView) view.findViewById(R.id.AddAddress_malaysia_textview);
             tvtel = (TextView) view.findViewById(R.id.AddAddress_tel_textview);
 
-            ivDefault= (ImageView) view.findViewById(R.id.iv_address_default);
+            ivDefault=  view.findViewById(R.id.iv_address_default);
             rlAddressItem=(RelativeLayout) view.findViewById(R.id.rl_address_item);
         }
     }

@@ -165,7 +165,9 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     @Override
     public void onRefresh() {
         //暂时没有用到
-        mCarDao.getShoppingCartLocalInfo(getActivity());
+//        mCarDao.getShoppingCartLocalInfo(getActivity());
+
+        sendRequest();
     }
     @Override
     public void onClick(View view) {
@@ -316,6 +318,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     public void initView(View view) {
         mImageLoader = new ImageLoader(getActivity());
         btnGoShopping = view.findViewById(R.id.btn_sc_nothing_goshopping);
+        btnGoShopping.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));
         llBody = (RelativeLayout) view.findViewById(R.id.ll_body);
 //        rlShoppingcartTopGoback= (RelativeLayout) view.findViewById(R.id.rl_shoppingcart_top_goback);
         btnBack = (ImageView) view.findViewById(R.id.tv_shoppingcart_top_goback);

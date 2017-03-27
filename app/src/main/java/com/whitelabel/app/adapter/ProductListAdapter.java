@@ -187,7 +187,7 @@ public class ProductListAdapter extends BaseAdapter {
              */
             String soldBy=viewHolder.ctvLeftProductMerchant.getContext().getResources().getString(R.string.soldby);
             if(!TextUtils.isEmpty(leftProductEntity.getVendor_id())){
-                viewHolder.ctvLeftProductMerchant.setTextColor(productListActivity.getResources().getColor(R.color.purple92018d));
+                viewHolder.ctvLeftProductMerchant.setTextColor(productListActivity.getResources().getColor(R.color.black000000));
                 SpannableStringBuilder ss=new SpannableStringBuilder( soldBy+ " " + leftProductEntity.getVendorDisplayName());
                 ss.setSpan(new ForegroundColorSpan(productListActivity.getResources().getColor(R.color.greyB8B8B8)),0,soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 viewHolder.ctvLeftProductMerchant.setText(ss);
@@ -405,7 +405,7 @@ public class ProductListAdapter extends BaseAdapter {
         if (!TextUtils.isEmpty(rightProductEntity.getVendorDisplayName())) {
             String soldBy=viewHolder.ctvRightProductMerchant.getContext().getResources().getString(R.string.soldby);
             if(!TextUtils.isEmpty(rightProductEntity.getVendor_id())){
-                viewHolder.ctvRightProductMerchant.setTextColor(productListActivity.getResources().getColor(R.color.purple92018d));
+                viewHolder.ctvRightProductMerchant.setTextColor(productListActivity.getResources().getColor(R.color.black000000));
                 SpannableStringBuilder ss=new SpannableStringBuilder( soldBy+ " " + rightProductEntity.getVendorDisplayName());
                 ss.setSpan(new ForegroundColorSpan(productListActivity.getResources().getColor(R.color.greyB8B8B8)),0,soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 viewHolder.ctvRightProductMerchant.setText(ss);

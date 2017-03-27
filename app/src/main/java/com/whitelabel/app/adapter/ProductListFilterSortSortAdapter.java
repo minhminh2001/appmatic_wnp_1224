@@ -44,10 +44,9 @@ public class ProductListFilterSortSortAdapter extends ArrayAdapter<SVRAppservice
         ViewHolder viewHolder = null;
         if (convertView == null) {
             convertView = LayoutInflater.from(mActivity).inflate(R.layout.adapter_productlist_sort_item, null);
-
             viewHolder = new ViewHolder();
             viewHolder.ctvSortTitle = (CustomTextView) convertView.findViewById(R.id.ctvSortTitle);
-            viewHolder.ivSortTitle = (ImageView) convertView.findViewById(R.id.ivSortTitle);
+            viewHolder.ivSortTitle =  convertView.findViewById(R.id.ivSortTitle);
 
             convertView.setTag(viewHolder);
         } else {
@@ -75,11 +74,10 @@ public class ProductListFilterSortSortAdapter extends ArrayAdapter<SVRAppservice
 
         if (sortItemReturnEntity.isSelected()) {
             mCurrindex=position;
-            viewHolder.ivSortTitle.setImageDrawable(JImageUtils.getDrawable(mActivity, R.mipmap.dot_checkout_address_selected));
+            viewHolder.ivSortTitle.setVisibility(View.VISIBLE);
         } else {
-            viewHolder.ivSortTitle.setImageDrawable(JImageUtils.getDrawable(mActivity, R.mipmap.dot_checkout_address_unselected));
+            viewHolder.ivSortTitle.setVisibility(View.INVISIBLE);
         }
-
         convertView.setOnClickListener(new View.OnClickListener() {
             private int index;
             public View.OnClickListener init(int i) {
@@ -144,6 +142,6 @@ public class ProductListFilterSortSortAdapter extends ArrayAdapter<SVRAppservice
     private Handler mHandler=new Handler();
     class ViewHolder {
         public CustomTextView ctvSortTitle;
-        public ImageView ivSortTitle;
+        public View ivSortTitle;
     }
 }

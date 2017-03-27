@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.ui.common.BasePresenter;
 import com.whitelabel.app.ui.common.BaseView;
 import com.whitelabel.app.utils.JImageUtils;
@@ -55,7 +56,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
 //            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+            window.setStatusBarColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
 
         }
         currTag = this.getClass().getSimpleName();
@@ -101,7 +102,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
 
 
     public void setTitleNum(int num) {
-        tvTitleNum.setBackground(JImageUtils.getCounerDrawable(this));
+        tvTitleNum.setBackground(JImageUtils.getThemeCircle(this));
         if (num > 0) {
             tvTitleNum.setVisibility(View.VISIBLE);
             if (num <= 99) {
@@ -214,6 +215,9 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         if (mToolbar != null) {
             mToolbar.setTitle("");
             setSupportActionBar(mToolbar);
+        }
+        if(getToolbar()!=null){
+            getToolbar().setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
         }
     }
 

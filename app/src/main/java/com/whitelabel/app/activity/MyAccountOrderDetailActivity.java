@@ -29,6 +29,7 @@ import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.FileUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -143,6 +144,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         // ViewUtils.inject(this);
         tvConfirm = (TextView) findViewById(R.id.tv_confirm);
         tvConfirm.setOnClickListener(this);
+        tvConfirm.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
         findViewById(R.id.ll_sc_checkout).setOnClickListener(this);
         TAG =this.getClass().getSimpleName();
         dataHandler=new DataHandler(this);

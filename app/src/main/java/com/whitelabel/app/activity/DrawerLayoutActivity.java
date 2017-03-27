@@ -22,7 +22,6 @@ import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.BadgeUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JStorageUtils;
-import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
 
 import java.io.Serializable;
@@ -247,6 +246,8 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         ivMyOrder = (ImageView) findViewById(R.id.iv_orderlist);
         tvUserName = (TextView) findViewById(R.id.tv_user_name);
         llProfile = findViewById(R.id.ll_profile);
+        llProfile.setBackgroundColor(GemfiveApplication.getAppConfiguration().
+                getThemeConfig().getSecondaryColor());
         tvHome = (TextView) findViewById(R.id.tv_home);
         tvCategoryTree = (TextView) findViewById(R.id.tv_category_tree);
         tvShoppingCart = (TextView) findViewById(R.id.tv_shopping_cart);
@@ -287,9 +288,10 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         tvCustomerService.setOnClickListener(this);
         tvHelpCenter.setOnClickListener(this);
         tvShipping.setOnClickListener(this);
-        tvShoppingNum.setBackground(JImageUtils.getCounerDrawable(this));
-        tvNotificationNum.setBackground(JImageUtils.getCounerDrawable(this));
-        tvWistNum.setBackground(JImageUtils.getCounerDrawable(this));
+        tvShoppingNum.setBackground(JImageUtils.getThemeCircle(this));
+        tvNotificationNum.setBackground(JImageUtils.getThemeCircle(this));
+        tvWistNum.setBackground(JImageUtils.getThemeCircle(this));
+
     }
     private static final class DataHandler extends Handler {
         private WeakReference<DrawerLayoutActivity> mActivity;

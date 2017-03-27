@@ -16,7 +16,6 @@
         <LinearLayout
             android:id="@+id/ll_profile"
             android:paddingTop="@dimen/statusbar_height"
-            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:gravity="center"
             android:paddingLeft="20dp"

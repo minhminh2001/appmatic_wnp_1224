@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.MotionEvent;
@@ -17,7 +19,10 @@ import android.widget.ImageView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.listener.OnRangeSeekBarChangeListener;
+import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.JViewUtils;
 
 import java.math.BigDecimal;
 
@@ -68,10 +73,10 @@ public class CustomRangeSeekBar<T extends Number> extends ImageView {
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     // private final Bitmap thumbImage = BitmapFactory.decodeResource(
     // getResources(), R.drawable.seek_thumb_normal);
-    private final Bitmap thumbImage;
+    private  Bitmap thumbImage;
     // private final Bitmap thumbPressedImage = BitmapFactory.decodeResource(
     // getResources(), R.drawable.seek_thumb_pressed);
-    private final Bitmap thumbPressedImage;
+    private  Bitmap thumbPressedImage;
     private final float thumbWidth;
     private final float thumbHalfWidth;
     private final float thumbHalfHeight;
@@ -116,8 +121,17 @@ public class CustomRangeSeekBar<T extends Number> extends ImageView {
         LEFT_COLOR = 0;
         MIDDLE_COLOR = 0;
         RIGHT_COLOR = 0;
-        thumbImage = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_oval_purpal);
-        thumbPressedImage = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_oval_purpal);
+        Drawable drawable= JImageUtils.getThemeCircle(context);
+        Drawable drawable1= JImageUtils.getThemeCircle(context);
+        thumbImage=JImageUtils.drawableToBitmap(drawable, JScreenUtils.dip2px(context,15),JScreenUtils.dip2px(context,15));
+        thumbPressedImage=JImageUtils.drawableToBitmap(drawable1,JScreenUtils.dip2px(context,15),JScreenUtils.dip2px(context,15));
+//        if(drawable instanceof BitmapDrawable){
+//            thumbImage=((BitmapDrawable)drawable).getBitmap();
+//            thumbPressedImage=((BitmapDrawable)drawable1).getBitmap();
+//        }else {
+//            thumbImage = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_oval_purpal);
+//            thumbPressedImage = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_oval_purpal);
+//        }
         thumbWidth = thumbImage.getWidth();
         thumbHalfWidth = 0.5f * thumbWidth;
         thumbHalfHeight = 0.5f * thumbImage.getHeight();

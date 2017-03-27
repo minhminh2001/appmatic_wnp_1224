@@ -80,7 +80,6 @@
                 android:layout_width="fill_parent"
                 android:paddingTop="5dp"
                 android:visibility="invisible"
-                android:textColor="@color/redC2060A"
                 android:layout_height="wrap_content"
                 android:text="@string/apply_hint_red"
                 android:textSize="@dimen/labelTextFontSize"

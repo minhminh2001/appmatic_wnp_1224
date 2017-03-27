@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,7 +36,6 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -905,7 +903,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
         });
         //toolBar变色回调
-        toolBarAlphaBehavior = new ToolBarAlphaBehavior(getBaseContext(), getToolbar(), "000000", new ToolBarAlphaBehavior.CallBack() {
+        toolBarAlphaBehavior = new ToolBarAlphaBehavior(getBaseContext(), getToolbar(), GemfiveApplication.getAppConfiguration().getThemeConfig().getSecondaryColor(), new ToolBarAlphaBehavior.CallBack() {
             @Override
             public void callBack(int color) {
                 //状态bar颜色
@@ -938,7 +936,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     }
                 });
         TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
-        textView.setBackground(JImageUtils.getCounerDrawable(this));
+        textView.setBackground(JImageUtils.getThemeCircle(this));
         long cartCount = getCartItemCount();
         if (cartCount > 0 && cartCount <= 99) {
             textView.setVisibility(View.VISIBLE);
@@ -1366,7 +1364,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 
         for (int index = 0; index < mProductImageViewTips.size(); index++) {
             if (index == selectItems) {
-                mProductImageViewTips.get(index).setBackgroundResource(R.mipmap.doc_checked);
+//                mProductImageViewTips.get(index).setBackgroundResource(R.mipmap.doc_checked);
+                mProductImageViewTips.get(index).setBackground(JImageUtils.getThemeCircle(this));
             } else {
                 mProductImageViewTips.get(index).setBackgroundResource(R.mipmap.dot_unchecked);
             }
@@ -1487,7 +1486,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         if (!TextUtils.isEmpty(mProductDetailBean.getVendorDisplayName())) {
             String Sold_fulfilled_by = product_merchant.getContext().getResources().getString(R.string.soldfulby);
             if (!TextUtils.isEmpty(mProductDetailBean.getVendor_id())) {
-                product_merchant.setTextColor(ProductActivity.this.getResources().getColor(R.color.purple92018d));
+                product_merchant.setTextColor(ProductActivity.this.getResources().getColor(R.color.black000000));
                 SpannableStringBuilder ss = new SpannableStringBuilder(Sold_fulfilled_by + " " + mProductDetailBean.getVendorDisplayName());
                 ss.setSpan(new ForegroundColorSpan(ProductActivity.this.getResources().getColor(R.color.greyB8B8B8)), 0, Sold_fulfilled_by.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 product_merchant.setText(ss);
@@ -2244,7 +2243,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     JLogUtils.e(TAG, "initProductDetailUIDynamicContent", ex);
                 }
                 if (index == 0) {
-                    imageViewTips.setBackgroundResource(R.mipmap.doc_checked);
+                    imageViewTips.setBackground(JImageUtils.getThemeCircle(this));
                 } else {
                     imageViewTips.setBackgroundResource(R.mipmap.dot_unchecked);
                 }

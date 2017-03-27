@@ -19,13 +19,12 @@
         android:textSize="14.5sp"
         style="@style/font_family_robot_regular" />
 
-    <ImageView
+    <com.whitelabel.app.widget.CustomRadioButton
         android:id="@+id/ivTypeTitle"
-        android:layout_width="57dp"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:paddingLeft="20dp"
-        android:paddingRight="14dp"
+        android:layout_marginLeft="20dp"
         android:scaleType="centerInside" />
 </RelativeLayout>

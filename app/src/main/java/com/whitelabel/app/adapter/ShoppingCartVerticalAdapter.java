@@ -336,6 +336,13 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             }
         });
 
+        if ("1".equals(viewHolder.llShoppingcartCellPoint.getTag())) {
+            setDotSelected(viewHolder);
+        } else {
+            setDotDefault(viewHolder);
+        }
+
+
         viewHolder.llShoppingcartCellPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -362,21 +369,27 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             });
         }
     }
-
     private void setPonitColor(ViewHolder viewHolder, boolean darkColor) {
         //是否使用深颜色
         if (!darkColor) {
-            viewHolder.llShoppingcartCellPoint.setTag("1");
-            viewHolder.tvShoppingcartCellPoint1.setBackgroundResource(R.drawable.button_oval_grey);
-            viewHolder.tvShoppingcartCellPoint2.setBackgroundResource(R.drawable.button_oval_grey);
-            viewHolder.tvShoppingcartCellPoint3.setBackgroundResource(R.drawable.button_oval_grey);
+            setDotSelected(viewHolder);
         } else {
-            viewHolder.llShoppingcartCellPoint.setTag("0");
-            viewHolder.tvShoppingcartCellPoint1.setBackgroundResource(R.drawable.button_oval_purple);
-            viewHolder.tvShoppingcartCellPoint2.setBackgroundResource(R.drawable.button_oval_purple);
-            viewHolder.tvShoppingcartCellPoint3.setBackgroundResource(R.drawable.button_oval_purple);
-
+            setDotDefault(viewHolder);
         }
+    }
+
+    private  void setDotSelected(ViewHolder viewHolder){
+        viewHolder.llShoppingcartCellPoint.setTag("1");
+        viewHolder.tvShoppingcartCellPoint1.setBackgroundResource(R.drawable.button_oval_grey);
+        viewHolder.tvShoppingcartCellPoint2.setBackgroundResource(R.drawable.button_oval_grey);
+        viewHolder.tvShoppingcartCellPoint3.setBackgroundResource(R.drawable.button_oval_grey);
+    }
+
+    private void setDotDefault(ViewHolder viewHolder){
+        viewHolder.llShoppingcartCellPoint.setTag("0");
+        viewHolder.tvShoppingcartCellPoint1.setBackground(JImageUtils.getThemeCircle(context));
+        viewHolder.tvShoppingcartCellPoint2.setBackground(JImageUtils.getThemeCircle(context));
+        viewHolder.tvShoppingcartCellPoint3.setBackground(JImageUtils.getThemeCircle(context));
     }
     private boolean initBlankView;
     public void setInitBlankView(boolean init){

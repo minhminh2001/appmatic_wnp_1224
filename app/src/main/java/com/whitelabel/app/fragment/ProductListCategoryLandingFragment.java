@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -34,6 +35,7 @@ import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.utils.FilterSortHelper;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -105,6 +107,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             }
         });
         TextView textView= (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
+        textView.setBackground(JImageUtils.getThemeCircle(getActivity()));
         long cartCount=getCartItemCount();
         if(cartCount>0&&cartCount<=99){
             textView.setVisibility(View.VISIBLE);
@@ -148,6 +151,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
                 onBackPressed();
             }
         });
+
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -248,10 +252,18 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             vpProductList.setAdapter(fragmentPagerAdapter);
 
             ctpiCategoryList.setViewPager(vpProductList);
+
             vpProductList.setOffscreenPageLimit(categoryViewCount);
             vpProductList.addOnPageChangeListener(this);
             vpProductList.setCurrentItem(productListActivity.getCurrentProductListFragmentPosition());
+            JLogUtils.i("ray","currlog:"+productListActivity.getCurrentProductListFragmentPosition());
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    ctpiCategoryList.setSelectColor(productListActivity.getCurrentProductListFragmentPosition());
 
+                }
+            });
         }
 
         filterSortHelper = new FilterSortHelper(getActivity(), sortFragment, filterFragment, flFilterSortContainer, FRAGMENT_CONTAINER_ID);

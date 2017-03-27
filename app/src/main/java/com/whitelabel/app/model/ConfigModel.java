@@ -18,7 +18,7 @@ public class ConfigModel  implements Serializable{
     public ConfigModel(){
         primaryColor= Color.parseColor("#FBC801");
         buttonClickColor=Color.parseColor("#17B1C8");
-        secondaryColor=GemfiveApplication.getInstance().getResources().getColor(R.color.colorPrimary);
+        secondaryColor=GemfiveApplication.getInstance().getResources().getColor(R.color.blue4d9cf2);
     }
     public int getPrimaryColor() {
         return primaryColor;
