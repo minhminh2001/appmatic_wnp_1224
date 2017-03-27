@@ -58,7 +58,7 @@
                     android:id="@+id/iv_home"
                     android:layout_width="24dp"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/drawer_icon_home_selected"
+
                     android:layout_height="24dp" />
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_home"
@@ -109,7 +109,7 @@
                     android:id="@+id/iv_shopping_cart"
                     android:layout_width="24dp"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/drawer_icon_shoppingcart_selected"
+
                     android:layout_height="24dp" />
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_shopping_cart"
@@ -149,7 +149,6 @@
                     android:id="@+id/iv_notification"
                     android:layout_width="24dp"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/drawer_icon_notification_selected"
                     android:layout_height="24dp" />
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_notification"
@@ -191,7 +190,6 @@
                     android:id="@+id/iv_wishlist"
                     android:layout_width="24dp"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/drawer_icon_wishlist_selected"
                     android:layout_height="24dp" />
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_wishlist"
@@ -230,7 +228,7 @@
                     android:id="@+id/iv_orderlist"
                     android:layout_width="24dp"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/drawer_icon_order_selected"
+
                     android:layout_height="24dp" />
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_order"
@@ -271,7 +269,6 @@
                     android:id="@+id/iv_address"
                     android:layout_width="24dp"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/drawer_icon_address_selected"
                     android:layout_height="24dp" />
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_address"

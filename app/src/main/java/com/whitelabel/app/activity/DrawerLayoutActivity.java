@@ -1,9 +1,14 @@
 package com.whitelabel.app.activity;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.text.TextUtils;
@@ -234,7 +239,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 break;
         }
     }
-
     private void initLayout() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ivUserImg = (ImageView) findViewById(R.id.iv_user_img);
@@ -270,6 +274,31 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         rlDrawerCategoryTree = (RelativeLayout) findViewById(R.id.rl_drawer_categorytree);
         rlDrawerShoppingCart = (RelativeLayout) findViewById(R.id.rl_drawer_shoppingcart);
         rlDrawerNotification = (RelativeLayout) findViewById(R.id.rl_drawer_notification);
+
+        int black=ContextCompat.getColor(this,R.color.black000000);
+        tvHome.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+        tvShoppingCart.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+        tvNotification.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+        tvWistlist.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+        tvMyOrder.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+        tvAddress.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+        int gray=ContextCompat.getColor(this,R.color.blackD0);
+        tvSetting.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
+        tvSetting.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
+        tvCustomerService.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
+        tvHelpCenter.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
+        tvShipping.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
+
+        int iconDefaultColor=ContextCompat.getColor(this,R.color.blackD0);
+        ivHome.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_default),iconDefaultColor));
+        ivShoppingCart.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_shoppingcart_default),iconDefaultColor));
+        ivNotification.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_notification_default),iconDefaultColor));
+        ivMyWishList.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_wishlist_default),iconDefaultColor));
+        ivMyOrder.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_order_default),iconDefaultColor));
+        ivAddress.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_address_default),iconDefaultColor));
+
+
+
 //        tvOrderNum= (TextView) findViewById(R.id.tv_order_num);
         rlDrawerWish = (RelativeLayout) findViewById(R.id.rl_drawer_wishlist);
         rlDrawerOrder = (RelativeLayout) findViewById(R.id.rl_drawer_order);
@@ -345,6 +374,8 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 //        mDao.getNotificationDetailCount(sessionKey, GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
 //        SendBoardUtil.sendNotificationBoard(this, SendBoardUtil.READCODE, null);
         initLayout();
+
+
 //        mActionDrawableToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.openDrawer, R.string.closeDrawer) {
 //            @Override
 //            public void onDrawerOpened(View drawerView) {
@@ -359,6 +390,8 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 //        getDrawerLayout().addDrawerListener(mActionDrawableToggle);
 //        mActionDrawableToggle.syncState();
     }
+
+
 
     @Override
     protected void onDestroy() {

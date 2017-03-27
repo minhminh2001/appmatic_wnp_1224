@@ -1,11 +1,13 @@
 package com.whitelabel.app.utils;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
@@ -13,6 +15,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -96,6 +99,32 @@ public class JImageUtils {
 //        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
         return drawable;
     }
+
+
+    public static ColorStateList getThemeTextColorDrawable(int defaultColor){
+        int[] colors = new int[] { GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(), defaultColor,defaultColor};
+        int[][] states = new int[3][];
+        states[0] = new int[] { android.R.attr.state_enabled, android.R.attr.state_selected };
+        states[1] = new int[] { android.R.attr.state_enabled };
+        states[2] = new int[] {};
+        ColorStateList colorList = new ColorStateList(states, colors);
+        return colorList;
+    }
+
+
+    public static Drawable getThemeIconSelector(Drawable drawable,int defaultColor){
+        int[] colors = new int[] { GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(), defaultColor,defaultColor};
+        int[][] states = new int[3][];
+        states[0] = new int[] { android.R.attr.state_enabled, android.R.attr.state_selected };
+        states[1] = new int[] { android.R.attr.state_enabled };
+        states[2] = new int[] {};
+        ColorStateList colorList = new ColorStateList(states, colors);
+        final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+         DrawableCompat.setTintList(wrappedDrawable, colorList);
+
+        return wrappedDrawable;
+    }
+
     /**
      * @param context
      * @param imageUrl
