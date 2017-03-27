@@ -36,6 +36,7 @@ import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEnti
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.GaTrackHelper;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -119,7 +120,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             }
         });
         TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
-        textView.setBackground(JViewUtils.getCounerDrawable(getActivity()));
+        textView.setBackground(JImageUtils.getCounerDrawable(getActivity()));
         JViewUtils.updateCartCount(textView, getCartItemCount());
     }
 

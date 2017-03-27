@@ -5,9 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -15,6 +18,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.whitelabel.app.GlobalData;
+import com.whitelabel.app.R;
+import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.network.ImageLoader;
 
 import java.io.ByteArrayOutputStream;
@@ -33,6 +38,37 @@ public class JImageUtils {
     private final static String TAG = "JImageUtils";
 
 
+
+
+    public  static  Drawable getCounerDrawable(Context context){
+        GradientDrawable drawable= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.bg_cart_number);
+        drawable.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        return drawable;
+    }
+
+
+
+    public static  Drawable getButtonBackgroudSolidDrawable(Context context){
+        StateListDrawable drawable=new StateListDrawable();
+        GradientDrawable  normal= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
+        normal.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+//        GradientDrawable  pressed= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
+//        pressed.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getButtonClickColor());
+        drawable.addState(new int[]{},normal);
+//        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
+        return drawable;
+    }
+
+    public static  Drawable  getbuttonBakcgroundStrokeDrawable(Context context){
+        StateListDrawable drawable=new StateListDrawable();
+        GradientDrawable  normal= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
+        normal.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        GradientDrawable  pressed= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
+        pressed.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getButtonClickColor());
+        drawable.addState(new int[]{},normal);
+//        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
+        return drawable;
+    }
     /**
      * @param context
      * @param imageUrl

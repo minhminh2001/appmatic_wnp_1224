@@ -23,6 +23,7 @@ import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.dao.ShoppingCarDao;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -137,7 +138,7 @@ public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
         });
         rlHeaderBarMenu= (RelativeLayout) view.findViewById(R.id.rlHeaderBarMenu);
         TextView tvRetry = (TextView) view.findViewById(R.id.tv_checkout_payment_status_wrong_retry);
-        tvRetry.setBackground(JViewUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
+        tvRetry.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
         tvRetry.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         tvRetry.setOnClickListener(new View.OnClickListener() {
             @Override

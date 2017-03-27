@@ -28,6 +28,7 @@ import com.whitelabel.app.dao.OtherDao;
 import com.whitelabel.app.utils.AppUtils;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -91,7 +92,7 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         view.findViewById(R.id.rl_sound).setVisibility(View.GONE);
         textView_cancle.setOnClickListener(this);
         sign_out= (TextView) view.findViewById(R.id.sign_out);
-        sign_out.setBackground(JViewUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
+        sign_out.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
         sign_out.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         sign_out.setOnClickListener(this);
         rlBack= (RelativeLayout) view.findViewById(R.id.rl_back);

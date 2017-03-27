@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.whitelabel.app.ui.common.BasePresenter;
 import com.whitelabel.app.ui.common.BaseView;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 
@@ -100,7 +101,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
 
 
     public void setTitleNum(int num) {
-        tvTitleNum.setBackground(JViewUtils.getCounerDrawable(this));
+        tvTitleNum.setBackground(JImageUtils.getCounerDrawable(this));
         if (num > 0) {
             tvTitleNum.setVisibility(View.VISIBLE);
             if (num <= 99) {

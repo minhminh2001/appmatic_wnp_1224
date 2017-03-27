@@ -20,6 +20,7 @@ import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.BadgeUtils;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
@@ -286,9 +287,9 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         tvCustomerService.setOnClickListener(this);
         tvHelpCenter.setOnClickListener(this);
         tvShipping.setOnClickListener(this);
-        tvShoppingNum.setBackground(JViewUtils.getCounerDrawable(this));
-        tvNotificationNum.setBackground(JViewUtils.getCounerDrawable(this));
-        tvWistNum.setBackground(JViewUtils.getCounerDrawable(this));
+        tvShoppingNum.setBackground(JImageUtils.getCounerDrawable(this));
+        tvNotificationNum.setBackground(JImageUtils.getCounerDrawable(this));
+        tvWistNum.setBackground(JImageUtils.getCounerDrawable(this));
     }
     private static final class DataHandler extends Handler {
         private WeakReference<DrawerLayoutActivity> mActivity;

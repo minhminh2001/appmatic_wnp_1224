@@ -47,6 +47,7 @@ import com.whitelabel.app.utils.AppUtils;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JShareUtils;
 import com.whitelabel.app.utils.JStorageUtils;
@@ -637,9 +638,9 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 
             tvCheckOrder.setVisibility(View.VISIBLE);
             tvContinueShopping.setVisibility(View.VISIBLE);
-            tvCheckOrder.setBackground(JViewUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
+            tvCheckOrder.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
             tvCheckOrder.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
-            tvContinueShopping.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(getActivity()));
+            tvContinueShopping.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));
         return view;
     }
 

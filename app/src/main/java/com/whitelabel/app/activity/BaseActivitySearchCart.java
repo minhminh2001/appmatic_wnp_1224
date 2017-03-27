@@ -14,6 +14,7 @@ import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.ui.common.BasePresenter;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -60,7 +61,7 @@ public class BaseActivitySearchCart<T extends BasePresenter> extends com.whitela
             }
         });
         TextView textView = (TextView) cart.findViewById(R.id.ctv_home_shoppingcart_num);
-        textView.setBackground(JViewUtils.getCounerDrawable(this));
+        textView.setBackground(JImageUtils.getCounerDrawable(this));
         JViewUtils.updateCartCount(textView, getCartItemCount());
     }
 

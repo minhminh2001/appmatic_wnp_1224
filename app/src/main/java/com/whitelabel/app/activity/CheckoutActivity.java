@@ -54,6 +54,7 @@ import com.whitelabel.app.model.ShoppingDiscountBean;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLocalMethod;
 import com.whitelabel.app.utils.JLogUtils;
@@ -289,7 +290,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                 GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
                 getResources().getColor(R.color.grayf8f8f8),
                 getResources().getColor(R.color.grayf8f8f8));
-        btnContinue.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(this));
+        btnContinue.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
     }
 
     public void onClick(View v) {
@@ -609,7 +610,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     public void setButtonEnable(boolean enable) {
         btnContinue.setEnabled(enable);
         if (enable) {
-            btnContinue.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(this));
+            btnContinue.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
 //            btnContinue.setBackgroundResource(R.drawable.big_button_style_config);
         } else {
             btnContinue.setBackgroundResource(R.drawable.big_button_style_b8);

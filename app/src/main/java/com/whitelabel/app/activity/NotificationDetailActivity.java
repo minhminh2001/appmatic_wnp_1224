@@ -69,7 +69,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
         mLlBottomBar.setOnClickListener(this);
 //        ivBack.setOnClickListener(this);
         btnOpen.setOnClickListener(this);
-        btnOpen.setBackground(JViewUtils.getButtonBackgroudSolidDrawable(this));
+        btnOpen.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
         dataHandler = new DataHandler(this);
         mDao = new NotificationDao(TAG, dataHandler);
         initData();
