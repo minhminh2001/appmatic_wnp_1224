@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -20,7 +22,9 @@ import android.widget.TextView;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.ui.common.BasePresenter;
 import com.whitelabel.app.ui.common.BaseView;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.widget.CustomButton;
 
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView {
     private View mContentView ;
@@ -161,6 +165,12 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         return mToolbar;
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+
+    }
 
     public void setContentView(View mContentView) {
         this.mContentView=mContentView;
@@ -177,6 +187,17 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         }
         if(mToolbar!=null){
             mToolbar.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ImageView ivTryAgain= (ImageView) getView().findViewById(R.id.iv_try_again);
+        CustomButton btnAgain= (CustomButton)  getView().findViewById(R.id.btn_try_again);
+        if(ivTryAgain!=null&&btnAgain!=null){
+            ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(getActivity(),R.mipmap.connection_break_loading));
+            btnAgain.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         }
     }
 

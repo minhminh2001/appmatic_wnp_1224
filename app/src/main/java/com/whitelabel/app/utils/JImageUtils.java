@@ -121,7 +121,17 @@ public class JImageUtils {
         ColorStateList colorList = new ColorStateList(states, colors);
         final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
          DrawableCompat.setTintList(wrappedDrawable, colorList);
+        return wrappedDrawable;
+    }
 
+
+
+
+    public static Drawable getThemeIcon(Context context,int drawable){
+        Drawable drawable1=ContextCompat.getDrawable(context, drawable);
+        final Drawable wrappedDrawable = DrawableCompat.wrap(drawable1);
+        DrawableCompat.setTintList(wrappedDrawable,
+                ColorStateList.valueOf(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()));
         return wrappedDrawable;
     }
 

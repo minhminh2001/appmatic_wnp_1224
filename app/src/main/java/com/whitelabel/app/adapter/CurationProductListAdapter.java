@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -698,6 +699,8 @@ public class CurationProductListAdapter extends BaseAdapter {
         boolean repeatAnim = true;
         ivWishIcon.setTag(repeatAnim);
         ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
+//        JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2),
+//                GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         final ScaleAnimation animation2 = new ScaleAnimation(1f, 0f, 1f, 0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         animation2.setDuration(250);//设置动画持续时间
@@ -721,7 +724,7 @@ public class CurationProductListAdapter extends BaseAdapter {
 
     private void setWishIconColorToPurpleNoAnim(ImageView ivWishIcon) {
         ivWishIcon.setVisibility(View.VISIBLE);
-        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
+        ivWishIcon.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
         boolean repeatAnim = false;
         ivWishIcon.setTag(repeatAnim);
     }
@@ -731,7 +734,7 @@ public class CurationProductListAdapter extends BaseAdapter {
         ivWishIcon.setVisibility(View.VISIBLE);
         boolean repeatAnim = false;
         ivWishIcon.setTag(repeatAnim);
-        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
+        ivWishIcon.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
 
         final ScaleAnimation animation2 = new ScaleAnimation(0.1f, 1f, 0.1f, 1f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);

@@ -8,11 +8,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.whitelabel.app.R;
+import com.whitelabel.app.*;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -26,7 +27,7 @@ import static com.whitelabel.app.fragment.HomeBaseFragment.REQUEST_SHOPPINGCART;
  * Created by Arman on 3/3/2017.
  */
 
-public class BaseFragmentSearchCart extends Fragment {
+public class BaseFragmentSearchCart extends com.whitelabel.app.BaseFragment {
     protected String TAG = "BaseFragmentSearchCart";
     protected boolean showSearch = true;
     protected boolean showCart = true;
@@ -84,6 +85,7 @@ public class BaseFragmentSearchCart extends Fragment {
             }
         });
         TextView textView = (TextView) cart.findViewById(R.id.ctv_home_shoppingcart_num);
+        textView.setBackground(JImageUtils.getThemeCircle(getActivity()));
         JViewUtils.updateCartCount(textView, getCartItemCount());
     }
 

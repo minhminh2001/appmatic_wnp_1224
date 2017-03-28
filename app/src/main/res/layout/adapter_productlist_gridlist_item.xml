@@ -22,9 +22,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="0dp"
             android:scaleType="fitCenter"
-
             />
-
         <RelativeLayout
             android:id="@+id/rl_product_list_out_of_stock"
             android:layout_width="fill_parent"

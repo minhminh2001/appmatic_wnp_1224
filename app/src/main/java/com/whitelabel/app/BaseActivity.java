@@ -24,6 +24,7 @@ import com.whitelabel.app.ui.common.BaseView;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.widget.CustomButton;
 
 /**
  * Created by Administrator on 2016/10/6.
@@ -211,7 +212,12 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         tvTitleNum = (TextView) findViewById(R.id.tv_title_num);
         ivTitle = (ImageView) findViewById(R.id.iv_title);
         tvTitle = (TextView) findViewById(R.id.tv_title);
-
+        ImageView ivTryAgain= (ImageView) findViewById(R.id.iv_try_again);
+        CustomButton  btnAgain= (CustomButton) findViewById(R.id.btn_try_again);
+        if(ivTryAgain!=null&&btnAgain!=null){
+            ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(this,R.mipmap.connection_break_loading));
+            btnAgain.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        }
         if (mToolbar != null) {
             mToolbar.setTitle("");
             setSupportActionBar(mToolbar);

@@ -113,10 +113,10 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     private ViewGroup group;
     private TextView textView_num, oldprice, ctvAddToCart, price_textview,  ctvProductInStock, ctvProductOutOfStock, productUnavailable, productTrans, product_merchant;
     private ArrayList<View> listV = new ArrayList<View>();
-    private int goodsNumber = 0;//标记购物车内物品数量
-    private ImageView imgIcon;//imgIcon为加入到购物车时移动的图片
-    private int AnimationDuration = 3000;//动画运行时间
-    private ViewGroup anim_mask_layout;
+//    private int goodsNumber = 0;//标记购物车内物品数量
+//    private ImageView imgIcon;//imgIcon为加入到购物车时移动的图片
+//    private int AnimationDuration = 3000;//动画运行时间
+//    private ViewGroup anim_mask_layout;
     private Dialog mDialog;
     private WebView wvProductDesc;
     private TextView ctvProductName, ctvProductBrand;
@@ -504,7 +504,11 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         mIVHeaderBarWishlist2.setVisibility(View.VISIBLE);
         ivHeaderBarWishlist.setVisibility(View.VISIBLE);
         mIVHeaderBarWishlist.setVisibility(View.VISIBLE);
-        ivHeaderBarWishlist.setImageResource(R.mipmap.wishlist_purple_pressed);
+        ivHeaderBarWishlist.setImageDrawable
+                (JImageUtils.getThemeIcon
+                        (ProductActivity.this,
+                                R.mipmap.wishlist_purple_pressed));
+//        ivHeaderBarWishlist.setImageResource(R.mipmap.wishlist_purple_pressed);
         mIVHeaderBarWishlist.setImageResource(R.mipmap.wishlist_white_pressed);
 
         final ScaleAnimation animation2 = new ScaleAnimation(0.1f, 1f, 0.1f, 1f,
@@ -805,6 +809,15 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         ivHeaderBarWishlist2 = (ImageView) findViewById(R.id.ivHeaderBarWishlist2);
         mIVHeaderBarWishlist2 = (ImageView) findViewById(R.id.ivHeaderBarWishlist22);
         ivHeaderBarShare = (ImageView) findViewById(R.id.ivHeaderBarShare);
+        ivHeaderBarShare.setImageDrawable(JImageUtils.getThemeIcon(ProductActivity.this,R.mipmap.share_icon_normal));
+        ivHeaderBarWishlist.setImageDrawable
+                (JImageUtils.getThemeIcon
+                        (ProductActivity.this,
+                                R.mipmap.wishlist_purple_normal));
+        ivHeaderBarWishlist2.setImageDrawable
+                (JImageUtils.getThemeIcon
+                        (ProductActivity.this,
+                                R.mipmap.wishlist_purple_normal));
         llCash = findViewById(R.id.ll_cash);
         llCash.setOnClickListener(this);
         ivHeaderBarWishlist.setOnClickListener(this);
@@ -824,7 +837,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         ctvProductOutOfStock = (TextView) findViewById(R.id.ctvProductOutOfStock);
         productUnavailable = (TextView) findViewById(R.id.product_unavailable);
         productTrans = (TextView) findViewById(R.id.product_trans);
-        anim_mask_layout = createAnimLayout();
+//        anim_mask_layout = createAnimLayout();
         viewPager = (ViewPager) findViewById(R.id.detail_viewpager);
         mViewPagerRL = (RelativeLayout) findViewById(R.id.rl_viewpager);
         group = (ViewGroup) findViewById(R.id.viewGroup);
@@ -836,7 +849,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 //        ctvAddToCart.setOnClickListener(this);
         llBottomBar.setOnClickListener(this);
         textView_num = (TextView) findViewById(R.id.detail_quantity_textview2);
-        imgIcon = (ImageView) this.findViewById(R.id.img_icon);
+//        imgIcon = (ImageView) this.findViewById(R.id.img_icon);
         destWidthColorSize = (GemfiveApplication.getPhoneConfiguration().getScreenWidth() - (JDataUtils.dp2Px(27))) / 2;
         destHeightColorSize = JDataUtils.dp2Px(37);
         mAttributeEntity = new WheelPickerConfigEntity();
@@ -2074,14 +2087,23 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             ctvProductOutOfStock.setVisibility(View.INVISIBLE);
         } else {
             ivHeaderBarShare.setVisibility(View.VISIBLE);
-
             ivHeaderBarWishlist.setVisibility(View.VISIBLE);
             mIVHeaderBarWishlist.setVisibility(View.VISIBLE);
             if (mProductDetailBean.getIsLike() == 1) {
-                ivHeaderBarWishlist.setImageResource(R.mipmap.wishlist_purple_pressed);
+
+                ivHeaderBarWishlist.setImageDrawable
+                        (JImageUtils.getThemeIcon
+                                (ProductActivity.this,
+                                        R.mipmap.wishlist_purple_pressed));
+//                ivHeaderBarWishlist.setImageResource(R.mipmap.wishlist_purple_pressed);
                 mIVHeaderBarWishlist.setImageResource(R.mipmap.wishlist_white_pressed);
             } else {
-                ivHeaderBarWishlist.setImageResource(R.mipmap.wishlist_purple_normal);
+
+                ivHeaderBarWishlist.setImageDrawable
+                        (JImageUtils.getThemeIcon
+                                (ProductActivity.this,
+                                        R.mipmap.wishlist_purple_normal));
+//                ivHeaderBarWishlist.setImageResource(R.mipmap.wishlist_purple_normal);
                 mIVHeaderBarWishlist.setImageResource(R.mipmap.wishlist_white_normal);
             }
             //availability and visibility
