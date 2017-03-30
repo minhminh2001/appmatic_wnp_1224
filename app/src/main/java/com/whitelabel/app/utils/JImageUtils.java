@@ -42,24 +42,16 @@ import okhttp3.HttpUrl;
 public class JImageUtils {
     private final static String TAG = "JImageUtils";
 
-
-
-
     public  static  Drawable getThemeCircle(Context context){
         GradientDrawable drawable= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.bg_cart_number);
         drawable.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         return drawable;
     }
-
-
-
     public static Drawable getColorCircle(Context context,int color){
         GradientDrawable drawable= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.bg_cart_number);
         drawable.setColor(color);
         return drawable;
     }
-
-
 
     public static Bitmap drawableToBitmap (Drawable drawable,int defaultWidth,int  defaultHeight) {
         if (drawable instanceof BitmapDrawable) {
@@ -79,12 +71,15 @@ public class JImageUtils {
 
     public static  Drawable getButtonBackgroudSolidDrawable(Context context){
         StateListDrawable drawable=new StateListDrawable();
-        GradientDrawable  normal= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
+        GradientDrawable  normal= new GradientDrawable();
         normal.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
-//        GradientDrawable  pressed= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
-//        pressed.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getButtonClickColor());
+        normal.setCornerRadius(JScreenUtils.dip2px(context,2));
+        GradientDrawable  pressed= new GradientDrawable();
+        pressed.setCornerRadius(JScreenUtils.dip2px(context,2));
+        pressed.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getButtonPressColor());
+        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
+        drawable.addState(new int[]{android.R.attr.state_enabled},normal);
         drawable.addState(new int[]{},normal);
-//        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
         return drawable;
     }
 

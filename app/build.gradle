@@ -1,3 +1,7 @@
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.android.application'
+//apply plugin: 'io.fabric'
+
 //buildscript {
 //    repositories {
 //        jcenter()
@@ -8,11 +12,6 @@
 //        classpath 'io.fabric.tools:gradle:1.+'
 //    }
 //}
-
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.android.application'
-//apply plugin: 'io.fabric'
-
 //repositories {
 //    maven { url 'https://maven.fabric.io/public' }
 //}
@@ -33,53 +32,57 @@ android {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode    rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
+        versionName  rootProject.ext.android.versionName
         multiDexEnabled true
     }
-
     productFlavors{
-        appdev{
-            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
+        wnp{
+
+            resValue("string","app_name","wnp")
+            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8", app_icon : "@mipmap/icon_google"]
             buildConfigField('String','REQUEST_URL','"https://appdev.gemfive.com/"')
             buildConfigField('String','HASH_KEY','"123456"')
             buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
-            buildConfigField('String','FACEBOOK_ID','"1586589871584877"')
+            buildConfigField('String','FACEBOOK_ID','"1287318627981888"')
         }
-        api{
+        ivs{
+            resValue("string","app_name","ivs")
+            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8"
+                                     , app_icon : "@mipmap/icon_google"]
             manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
             buildConfigField('String',"REQUEST_URL",'"https://api.gemfive.com/"')
             buildConfigField('String','HASH_KEY','"123456"')
             buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
-            buildConfigField('String','FACEBOOK_ID','"1586589871584877"')
+            buildConfigField('String','FACEBOOK_ID','"1287318627981888"')
         }
-        uat{
-            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
-            buildConfigField('String',"REQUEST_URL",'"https://uat.gemfive.com/my/"')
-            buildConfigField('String','HASH_KEY','"123456"')
-            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
-            buildConfigField('String','FACEBOOK_ID','"1586589871584877"')
-        }
-        staging{
-            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
-            buildConfigField('String',"REQUEST_URL",'"https://staging.gemfive.com/my/"')
-            buildConfigField('String','HASH_KEY','"123456"')
-            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
-            buildConfigField('String','FACEBOOK_ID','"1586589871584877"')
-        }
-        livedebug{
-            manifestPlaceholders = [ fabricApiKey: "60c1a182ffa45626fcc599067b045cc2cde1d482" ]
-            buildConfigField('String',"REQUEST_URL",'"https://www.gemfive.com/my/"')
-            buildConfigField('String','HASH_KEY','"123456"')
-            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
-            buildConfigField('String','FACEBOOK_ID','"1586589871584877"')
-        }
-        liverelease{
-            manifestPlaceholders = [ fabricApiKey: "60c1a182ffa45626fcc599067b045cc2cde1d482" ]
-            buildConfigField('String',"REQUEST_URL",'"https://www.gemfive.com/my/"')
-            buildConfigField('String','HASH_KEY','"5d89We"')
-            buildConfigField('String','GA_TRACK_ID','"UA-62438602-3"')
-            buildConfigField('String','FACEBOOK_ID','"604176613049064"')
-        }
+//        uat{
+//            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
+//            buildConfigField('String',"REQUEST_URL",'"https://uat.gemfive.com/my/"')
+//            buildConfigField('String','HASH_KEY','"123456"')
+//            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
+//            buildConfigField('String','FACEBOOK_ID','"1287318627981888"')
+//        }
+//        staging{
+//            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
+//            buildConfigField('String',"REQUEST_URL",'"https://staging.gemfive.com/my/"')
+//            buildConfigField('String','HASH_KEY','"123456"')
+//            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
+//            buildConfigField('String','FACEBOOK_ID','"1287318627981888"')
+//        }
+//        livedebug{
+//            manifestPlaceholders = [ fabricApiKey: "60c1a182ffa45626fcc599067b045cc2cde1d482" ]
+//            buildConfigField('String',"REQUEST_URL",'"https://www.gemfive.com/my/"')
+//            buildConfigField('String','HASH_KEY','"123456"')
+//            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
+//            buildConfigField('String','FACEBOOK_ID','"1287318627981888"')
+//        }
+//        liverelease{
+//            manifestPlaceholders = [ fabricApiKey: "60c1a182ffa45626fcc599067b045cc2cde1d482" ]
+//            buildConfigField('String',"REQUEST_URL",'"https://www.gemfive.com/my/"')
+//            buildConfigField('String','HASH_KEY','"5d89We"')
+//            buildConfigField('String','GA_TRACK_ID','"UA-62438602-3"')
+//            buildConfigField('String','FACEBOOK_ID','"1287318627981888"')
+//        }
     }
 
     signingConfigs {
@@ -87,18 +90,16 @@ android {
     }
 
     buildTypes {
-        release {
-            signingConfig  signingConfigs.sign
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+//        release {
+//            signingConfig  signingConfigs.sign
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
         debug {
-
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     sourceSets{
         main{ jniLibs.srcDirs=['libs']}
     }
@@ -155,20 +156,22 @@ afterEvaluate {
     }
 }
 
-def ksFile = rootProject.file('keystore.properties')
-def props = new Properties();
-if (ksFile.canRead()) {
-    props.load(new FileInputStream(ksFile))
+//println "config code: ${calculateVersionCode()}, name: ${calculateVersionName()}"
 
-    if (props != null) {
-        android.signingConfigs.sign.storeFile file(props['KEYSTORE_FILE'])
-        android.signingConfigs.sign.storePassword props['KEYSTORE_PASSWORD']
-        android.signingConfigs.sign.keyAlias props['KEYSTORE_ALIAS']
-        android.signingConfigs.sign.keyPassword props['KEYSTORE_ALIAS_PASSWORD']
-    } else {
-        println 'some entries in \'keystore.properties\' not found!'
-    }
-} else {
-    println '\'keystore.properties\' not found!'
-}
+//def ksFile = rootProject.file('keystore.properties')
+//def props = new Properties();
+//if (ksFile.canRead()) {
+//    props.load(new FileInputStream(ksFile))
+//
+//    if (props != null) {
+//        android.signingConfigs.sign.storeFile file(props['KEYSTORE_FILE'])
+//        android.signingConfigs.sign.storePassword props['KEYSTORE_PASSWORD']
+//        android.signingConfigs.sign.keyAlias props['KEYSTORE_ALIAS']
+//        android.signingConfigs.sign.keyPassword props['KEYSTORE_ALIAS_PASSWORD']
+//    } else {
+//        println 'some entries in \'keystore.properties\' not found!'
+//    }
+//} else {
+//    println '\'keystore.properties\' not found!'
+//}
 

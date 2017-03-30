@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/librarys/baseframework/baseframework.iml" filepath="$PROJECT_DIR$/librarys/baseframework/baseframework.iml" />
-      <module fileurl="file://$PROJECT_DIR$/librarys/librarys.iml" filepath="$PROJECT_DIR$/librarys/librarys.iml" />
       <module fileurl="file://$PROJECT_DIR$/whitelabel.iml" filepath="$PROJECT_DIR$/whitelabel.iml" />
     </modules>
   </component>

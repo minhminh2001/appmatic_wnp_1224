@@ -160,6 +160,8 @@ public class ShoppingCarDao extends BaseHttp {
 //        requestHttp(HTTP_METHOD.POST, "/appservice/cart/add", params, REQUEST_ADDPRODUCT);
 //    }
 
+
+
     public void sendRecoverOrder(String sessionKey, String orderId, String storeId) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);

@@ -1,6 +1,7 @@
 package com.whitelabel.app.model;
 
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.GemfiveApplication;
@@ -14,23 +15,21 @@ import java.io.Serializable;
 public class ConfigModel  implements Serializable{
     private  int primaryColor;
     private int  secondaryColor;
-    private int  buttonClickColor;
+    private int  buttonPressColor;
+
     public ConfigModel(){
         primaryColor= Color.parseColor("#FBC801");
-        buttonClickColor=Color.parseColor("#17B1C8");
-        secondaryColor=GemfiveApplication.getInstance().getResources().getColor(R.color.blue4d9cf2);
+        buttonPressColor=Color.parseColor("#17B1C8");
+        secondaryColor= ContextCompat.getColor(GemfiveApplication.getInstance(),R.color.blue4d9cf2);
     }
     public int getPrimaryColor() {
         return primaryColor;
     }
-
-
-    public int getButtonClickColor() {
-        return buttonClickColor;
+    public int getButtonPressColor() {
+        return buttonPressColor;
     }
-
-    public void setButtonClickColor(int buttonClickColor) {
-        this.buttonClickColor = buttonClickColor;
+    public void setButtonPressColor(int buttonPressColor) {
+        this.buttonPressColor = buttonPressColor;
     }
 
     public void setPrimaryColor(int primaryColor) {

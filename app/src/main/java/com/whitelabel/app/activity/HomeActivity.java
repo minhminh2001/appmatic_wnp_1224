@@ -218,8 +218,12 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpShoppingCartPage() {
-        if (!(mCurrentFragment instanceof ShoppingCartVerticalFragment)) {
-            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_SHOPPINGCART, null);
+        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+            if (!(mCurrentFragment instanceof ShoppingCartVerticalFragment)) {
+                switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_SHOPPINGCART, null);
+            }
+        }else{
+            jumpLoginActivity();
         }
     }
 

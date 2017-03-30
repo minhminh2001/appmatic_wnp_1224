@@ -465,6 +465,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
         layout=view.findViewById(R.id.rl_root);
         TextView tvOrderNumber = (TextView) view.findViewById(R.id.tv_checkout_payment_status_ordernumber);
         TextView tvEmail = (TextView) view.findViewById(R.id.tv_checkout_payment_status_email);
+        tvEmail.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         tvShare= (TextView) view.findViewById(R.id.tv_share);
         rlRoot=view.findViewById(R.id.sv_content);
         rlBackGroud=view.findViewById(R.id.rlBackGroud);

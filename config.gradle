@@ -4,13 +4,11 @@ ext {
                buildToolsVersion: "25.0.2",
                applicationId    : "com.whitelabel.app",
                minSdkVersion    : 16,
-
                targetSdkVersion : 25,
                versionCode      : 44,
                versionName      : "2.0.8"
 
     ]
-
     ext.supportLibVersion = '24.1.0'
     dependencies = [
             "httpcore"              : "org.apache.httpcomponents:httpcore:4.4.4",
@@ -44,4 +42,6 @@ ext {
             "butterknife-compiler" : "com.jakewharton:butterknife-compiler:8.4.0",
 
     ]
+
+
 }

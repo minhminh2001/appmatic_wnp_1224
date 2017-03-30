@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -119,7 +120,7 @@ public class CurationProductListAdapter extends BaseAdapter {
                 final ViewHolderBar viewHolderBar;
                 if (convertView == null) {
                     convertView = LayoutInflater.from(curationActivity).inflate(R.layout.layout_top_switch_and_filter_bar, null);
-                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, JDataUtils.dp2Px(40));
+                    AbsListView.LayoutParams params = new AbsListView.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, JDataUtils.dp2Px(40));
                     convertView.setLayoutParams(params);
                     viewHolderBar = new ViewHolderBar(convertView);
                     convertView.setTag(viewHolderBar);
