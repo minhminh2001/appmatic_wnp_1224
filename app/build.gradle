@@ -88,11 +88,11 @@ android {
     }
 
     buildTypes {
-//        release {
-//            signingConfig  signingConfigs.sign
-//            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
+        release {
+            signingConfig  signingConfigs.sign
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -157,20 +157,20 @@ afterEvaluate {
 
 //println "config code: ${calculateVersionCode()}, name: ${calculateVersionName()}"
 
-//def ksFile = rootProject.file('keystore.properties')
-//def props = new Properties();
-//if (ksFile.canRead()) {
-//    props.load(new FileInputStream(ksFile))
-//
-//    if (props != null) {
-//        android.signingConfigs.sign.storeFile file(props['KEYSTORE_FILE'])
-//        android.signingConfigs.sign.storePassword props['KEYSTORE_PASSWORD']
-//        android.signingConfigs.sign.keyAlias props['KEYSTORE_ALIAS']
-//        android.signingConfigs.sign.keyPassword props['KEYSTORE_ALIAS_PASSWORD']
-//    } else {
-//        println 'some entries in \'keystore.properties\' not found!'
-//    }
-//} else {
-//    println '\'keystore.properties\' not found!'
-//}
+def ksFile = rootProject.file('keystore.properties')
+def props = new Properties();
+if (ksFile.canRead()) {
+    props.load(new FileInputStream(ksFile))
+
+    if (props != null) {
+        android.signingConfigs.sign.storeFile file(props['KEYSTORE_FILE'])
+        android.signingConfigs.sign.storePassword props['KEYSTORE_PASSWORD']
+        android.signingConfigs.sign.keyAlias props['KEYSTORE_ALIAS']
+        android.signingConfigs.sign.keyPassword props['KEYSTORE_ALIAS_PASSWORD']
+    } else {
+        println 'some entries in \'keystore.properties\' not found!'
+    }
+} else {
+    println '\'keystore.properties\' not found!'
+}
 
