@@ -28,32 +28,30 @@ android {
         preDexLibraries = false
     }
     defaultConfig {
-        applicationId  rootProject.ext.android.applicationId
+        applicationId rootProject.ext.android.applicationId
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode    rootProject.ext.android.versionCode
-        versionName  rootProject.ext.android.versionName
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         multiDexEnabled true
     }
-    productFlavors{
-        wnp{
 
-            resValue("string","app_name","wnp")
-            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8", app_icon : "@mipmap/icon_google"]
-            buildConfigField('String','REQUEST_URL','"https://appdev.gemfive.com/"')
-            buildConfigField('String','HASH_KEY','"123456"')
-            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
-            buildConfigField('String','FACEBOOK_ID','"1287318627981888"')
+    productFlavors {
+        wnp {
+            resValue("string", "app_name", "wnp")
+            manifestPlaceholders = [fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8", app_icon: "@mipmap/icon_v1"]
+            buildConfigField('String', 'REQUEST_URL', '"https://appdev.gemfive.com/"')
+            buildConfigField('String', 'HASH_KEY', '"123456"')
+            buildConfigField('String', 'GA_TRACK_ID', '"UA-72586399-2"')
+            buildConfigField('String', 'FACEBOOK_ID', '"1287318627981888"')
         }
-        ivs{
-            resValue("string","app_name","ivs")
-            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8"
-                                     , app_icon : "@mipmap/icon_google"]
-            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
-            buildConfigField('String',"REQUEST_URL",'"https://api.gemfive.com/"')
-            buildConfigField('String','HASH_KEY','"123456"')
-            buildConfigField('String','GA_TRACK_ID','"UA-72586399-2"')
-            buildConfigField('String','FACEBOOK_ID','"1287318627981888"')
+        evisu {
+            resValue("string", "app_name", "evisu")
+            manifestPlaceholders = [fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8", app_icon: "@mipmap/icon_v1"]
+            buildConfigField('String', "REQUEST_URL", '"https://api.gemfive.com/"')
+            buildConfigField('String', 'HASH_KEY', '"123456"')
+            buildConfigField('String', 'GA_TRACK_ID', '"UA-72586399-2"')
+            buildConfigField('String', 'FACEBOOK_ID', '"1287318627981888"')
         }
 //        uat{
 //            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
@@ -100,8 +98,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets{
-        main{ jniLibs.srcDirs=['libs']}
+    sourceSets {
+        main { jniLibs.srcDirs = ['libs'] }
     }
     lintOptions {
         abortOnError false
@@ -132,15 +130,16 @@ dependencies {
     compile rootProject.ext.dependencies["retrofit-gson"]
     compile rootProject.ext.dependencies["retrofit-rxjava"]
     compile rootProject.ext.dependencies["retrofit-logging"]
-    compile 'com.android.support:multidex:1.0.0'
-    compile "com.github.hotchemi:permissionsdispatcher:2.3.1"
-    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:2.3.1"
-//    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
+    //    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
 //        transitive = true;
 //    }
     //    debugCompile rootProject.ext.dependencies["leak_canary_bug"]
 //    releaseCompile  rootProject.ext.dependencies["leak_canary_release"]
 //    testCompile rootProject.ext.dependencies["leak_canary_test"]
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.github.hotchemi:permissionsdispatcher:2.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.1'
 }
 
 afterEvaluate {

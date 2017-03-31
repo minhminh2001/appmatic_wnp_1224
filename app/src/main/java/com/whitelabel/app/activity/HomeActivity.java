@@ -357,6 +357,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         addFragment(FRAGMENT_TYPE_HOME_NOTIFICATIONDETAIL, new HomeNotificationDetailFragment());
         addFragment(FRAGMENT_TYPE_HOME_SETTING, new HomeSettingCotentFragment());
         addFragment(FRAGMENT_TYPE_HOME_SHOPPINGCART, ShoppingCartVerticalFragment.newInstance(ShoppingCartBaseFragment.FROM_HOME, 0L));
+
 //        addFragment(FRAGMENT_TYPE_HOME_CREDITCARD, HomeSelectCrditCardFragment.newInstance());
 //        addFragment(FRAGMENT_TYPE_HOME_CATEGORY, new HomeCategoryTreeFragment());
     }

@@ -35,6 +35,7 @@ import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.ui.home.HomeCategoryFragment;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -302,12 +303,12 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             mFragment = new ArrayList<>();
             if (categoryArrayList != null) {
                 for (int i = 0; i < categoryArrayList.size(); i++) {
-                    mFragment.add(HomeHomeCategoryFragment.newInstance(i, categoryArrayList.get(i)));
+                    mFragment.add(HomeCategoryFragment.newInstance(categoryArrayList.get(i).getId()));
                 }
             }
             //////////////////////////ray
 //            if (mFragment != null && mFragment.size() > 0) {
-//                HomeHomeCategoryFragment fragment = (HomeHomeCategoryFragment) mFragment.get(0);
+//                HomeCategoryFragment fragment = (HomeCategoryFragment) mFragment.get(0);
 //                fragment.setmCurrDisplayedAndData(0, categoryArrayList.get(0));
 //            }
             categoryViewCount = searchCatalog.getCategory().size() - 1;
@@ -436,7 +437,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         mFragment = new ArrayList<Fragment>();
         if (categoryArrayList != null) {
             for (int i = 0; i < categoryArrayList.size(); i++) {
-                mFragment.add(new HomeHomeCategoryFragment());
+                mFragment.add(new HomeCategoryFragment());
             }
         }
     }
@@ -546,7 +547,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
 
             mFragment.get(currentCategoryFragmentIndex).onPause();
             currentCategoryFragmentIndex = position;
-            ((HomeHomeCategoryFragment) mFragment.get(position)).setmCurrDisplayedAndData(position, categoryArrayList.get(position));
+//            ((HomeCategoryFragment) mFragment.get(position)).setmCurrDisplayedAndData(position, categoryArrayList.get(position));
             mFragment.get(position).onResume();
 //            homeTrack(position);
         }
@@ -571,8 +572,8 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
 
             //If it is sliding, close advertisement.
 //            if (state == 1) {
-//                ((HomeHomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).setmMarketShow(false);
-//                ((HomeHomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).removeOpenMarketRun();
+//                ((HomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).setmMarketShow(false);
+//                ((HomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).removeOpenMarketRun();
 //            }
         }
     };
@@ -580,7 +581,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     public void notifyToCancelCloseMarketRun() {
 //        if (isAdded()) {
 //            if (mFragment != null && mFragment.get(currentCategoryFragmentIndex) != null) {
-//                ((HomeHomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).removeCloseMarketRun();
+//                ((HomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).removeCloseMarketRun();
 //            }
 //        }
     }
