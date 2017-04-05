@@ -297,19 +297,16 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         img3= (ImageView) contentView.findViewById(R.id.img3);
         img4= (ImageView) contentView.findViewById(R.id.img4);
         img5= (ImageView) contentView.findViewById(R.id.img5);
-
         clearFirst=(ImageView)contentView.findViewById(R.id.clearFirst);
         clearFirst.setOnClickListener(this);
         clearLastName=(ImageView)contentView.findViewById(R.id.clearLastName);
         clearLastName.setOnClickListener(this);
         clearMail=(ImageView)contentView.findViewById(R.id.clearMail);
         clearMail.setOnClickListener(this);
-
         clearPassword=(ImageView)contentView.findViewById(R.id.clearPassword);
         clearPassword.setOnClickListener(this);
         clearRePassword=(ImageView)contentView.findViewById(R.id.clearRePassword);
         clearRePassword.setOnClickListener(this);
-
         //焦点监听
         firstName.setOnFocusChangeListener(this);
         lastName.setOnFocusChangeListener(this);
@@ -345,13 +342,10 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                 isStart = true;
             }
         }
-
-
         if(isClickRegister){
             //点了register按钮，再back就清空
             cleanEditText();
         }
-
         dataHandler=new DataHandler(loginRegisterActivity,this);
         mAccountDao=new MyAccountDao(TAG,dataHandler);
         updateDiaTitle = getActivity().getResources().getString(R.string.versionCheckTitle);

@@ -24,6 +24,18 @@ public class RetrofitHelper {
                 .build();
         return retrofit;
     }
+
+    public static  Retrofit getMockRetrofit(){
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl(GlobalData.mockUrl)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .client(getOkHttpClient())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit;
+    }
+
+
     private static OkHttpClient  getOkHttpClient(){
         final OkHttpClient.Builder builder = new OkHttpClient.Builder();
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();

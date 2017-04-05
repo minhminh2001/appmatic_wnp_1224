@@ -47,6 +47,14 @@ public class ApplicationConfigurationEntity {
     public ConfigModel getThemeConfig(){
         return configModel;
     }
+    public void setConfigColor(String themeColor,String navBarColor,String buttonPressColor){
+        if(configModel!=null){
+            JLogUtils.i("ray","====================111111============");
+            configModel.setPrimaryColor(themeColor);
+            configModel.setSecondaryColor(navBarColor);
+            configModel.setButtonPressColor(buttonPressColor);
+        }
+    }
     public void init(Context context) {
         SVRAppserviceCatalogSearchReturnEntity entity = JStorageUtils.getCategoryArrayList(context);
         GemfiveApplication.getAppConfiguration().setCategoryArrayList(entity);

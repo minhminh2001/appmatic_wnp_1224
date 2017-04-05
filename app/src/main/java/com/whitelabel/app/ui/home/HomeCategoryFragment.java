@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import com.whitelabel.app.R;
+import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.ui.brandstore.BrandStoreAdapter;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
@@ -66,8 +64,6 @@ public class HomeCategoryFragment extends Fragment {
     public HomeCategoryFragment() {
         // Required empty public constructor
     }
-
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -91,12 +87,12 @@ public class HomeCategoryFragment extends Fragment {
         ButterKnife.bind(this, view);
         return view;
     }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mImageLoader=new ImageLoader(getActivity());
         initRecyclerView();
+        swipeContainer.setColorSchemeColors(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
     }
 
     private ImageLoader mImageLoader;

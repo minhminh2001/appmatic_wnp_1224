@@ -1,4 +1,4 @@
-package com.whitelabel.app.activity;
+package com.whitelabel.app.ui.start;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -7,21 +7,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.whitelabel.app.BuildConfig;
 import com.whitelabel.app.R;
+import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.handler.INITApp;
 import com.whitelabel.app.task.INITExecutor;
-import com.whitelabel.app.utils.GaTrackHelper;
-import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JStorageUtils;
-import com.whitelabel.app.utils.JToolUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -29,7 +23,7 @@ import java.lang.ref.WeakReference;
 /**
  * Created by imaginato on 2015/6/10.
  */
-public class StartActivityV2 extends com.whitelabel.app.BaseActivity implements View.OnClickListener{
+public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContract.Presenter> implements View.OnClickListener ,StartContract.View{
     public static final int DELAY_TIME = 1000;
     private long mStartTimeLong;
     private String mSessionKey;
@@ -56,6 +50,11 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity implements 
 //                startNextActivity(null, SplashScreenActivity.class, true);
 //            }
         }
+    }
+
+    @Override
+    public StartContract.Presenter getPresenter() {
+        return new StartPresenterImpl();
     }
 
     static class StartHandler extends  Handler{
@@ -98,6 +97,8 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity implements 
             super.handleMessage(msg);
         }
     }
+
+
 
 
     static  class StartRunnable implements   Runnable{
@@ -143,26 +144,25 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity implements 
 //        }
 //    };
     private INITApp mCallback;
-
-    private void gaTrackNotificationSwitch() {
-        boolean isNotificationEnabled = JToolUtils.isNotificationEnabled(this);
-        String trackLabel="";
-        if (isNotificationEnabled) {
-            trackLabel = "Enabled";
-        } else {
-            trackLabel = "Disabled";
-        }
-       //缓存和当前状态是否一样，不一样则track
-        String cacheState=JStorageUtils.getNotificaitionState(this);
-        if(!trackLabel.equals(cacheState)){
-            JStorageUtils.saveNotificaitionState(this,trackLabel);
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
-                    "Enable Push Notification for GEMFIVE ",
-                    trackLabel,
-                    null);
-            JLogUtils.i("googleGA", "Receive Notification switch");
-        }
-    }
+//    private void gaTrackNotificationSwitch() {
+//        boolean isNotificationEnabled = JToolUtils.isNotificationEnabled(this);
+//        String trackLabel="";
+//        if (isNotificationEnabled) {
+//            trackLabel = "Enabled";
+//        } else {
+//            trackLabel = "Disabled";
+//        }
+//       //缓存和当前状态是否一样，不一样则track
+//        String cacheState=JStorageUtils.getNotificaitionState(this);
+//        if(!trackLabel.equals(cacheState)){
+//            JStorageUtils.saveNotificaitionState(this,trackLabel);
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
+//                    "Enable Push Notification for GEMFIVE ",
+//                    trackLabel,
+//                    null);
+//            JLogUtils.i("googleGA", "Receive Notification switch");
+//        }
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,7 +178,7 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity implements 
         }
         mCallback=new INITApp(StartActivityV2.this, new MeInitCallBack(this));
         INITExecutor.getInstance().execute(mCallback);
-
+        mPresenter.getConfigInfo();
     }
 
 
@@ -192,23 +192,25 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity implements 
         @Override
         public void onSuccess(int resultCode, Object object) {
             if(mStartActivity.get()==null)return;
-//            mStartActivity.get().checkAppVersion();
-            delayStart();
+//
         }
 
         @Override
         public void onFailure(int resultCode, Object object) {
             if(mStartActivity.get()==null)return;
 //            mStartActivity.get().checkAppVersion();
-            delayStart();
+
         }
-        private void delayStart() {
-            long deploy=System.currentTimeMillis()-mStartActivity.get().mStartTimeLong;
-            if(deploy<DELAY_TIME){
-                mStartActivity.get(). postDelayed(deploy);
-            }else{
-                mStartActivity.get().startNextActivity();
-            }
+
+
+    }
+
+    public  void delayStart() {
+        long deploy=System.currentTimeMillis()-mStartTimeLong;
+        if(deploy<DELAY_TIME){
+           postDelayed(deploy);
+        }else{
+          startNextActivity();
         }
     }
 
@@ -240,24 +242,24 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity implements 
 
     }
 
-    private boolean checkInstallationPlayServices() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (apiAvailability.isUserResolvableError(resultCode)) {
-                if(mProgressDialog ==null||!mProgressDialog.isShowing()) {
-                    mProgressDialog = apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST);
-                    mProgressDialog.show();
-                }
-            } else {
-                JLogUtils.i(TAG, "This device is not supported.");
-                Toast.makeText(this, "This device is not supported.", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
+//    private boolean checkInstallationPlayServices() {
+//        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+//        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+//        if (resultCode != ConnectionResult.SUCCESS) {
+//            if (apiAvailability.isUserResolvableError(resultCode)) {
+//                if(mProgressDialog ==null||!mProgressDialog.isShowing()) {
+//                    mProgressDialog = apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST);
+//                    mProgressDialog.show();
+//                }
+//            } else {
+//                JLogUtils.i(TAG, "This device is not supported.");
+//                Toast.makeText(this, "This device is not supported.", Toast.LENGTH_SHORT).show();
+//                finish();
+//            }
+//            return false;
+//        }
+//        return true;
+//    }
     @Override
     protected void onStop() {
         super.onStop();

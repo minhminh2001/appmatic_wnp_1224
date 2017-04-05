@@ -28,18 +28,29 @@ public class ConfigModel  implements Serializable{
     public int getButtonPressColor() {
         return buttonPressColor;
     }
-    public void setButtonPressColor(int buttonPressColor) {
-        this.buttonPressColor = buttonPressColor;
+    public void setButtonPressColor(String buttonPressColor) {
+        try {
+        this.buttonPressColor = Color.parseColor(buttonPressColor);
+        }catch (Exception ex){
+            ex.getMessage();
+        }
     }
-
-    public void setPrimaryColor(int primaryColor) {
-        this.primaryColor = primaryColor;
+    public void setPrimaryColor(String primaryColor) {
+        try {
+            this.primaryColor = Color.parseColor(primaryColor);
+        }catch (Exception ex){
+            ex.getMessage();
+        }
     }
     public int getSecondaryColor() {
         return secondaryColor;
     }
 
-    public void setSecondaryColor(int secondaryColor) {
-        this.secondaryColor = secondaryColor;
+    public void setSecondaryColor(String secondaryColor) {
+        try {
+        this.secondaryColor = Color.parseColor(secondaryColor);
+        }catch (Exception ex){
+            ex.getMessage();
+        }
     }
 }

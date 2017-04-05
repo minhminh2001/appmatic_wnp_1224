@@ -39,7 +39,6 @@ import java.util.concurrent.Executors;
 public class ProductDao extends BaseHttp {
     public static final int REQUEST_MERCHANTDETAILS = 1001;
     public static final int REQUEST_SUGGESTIONS = 1002;
-
     public static final int REQUEST_GETSERVICE = 1;
     public static final int REQUEST_ERROR = 10;
     public static final int REQUEST_CATALOGSEARCH = 2;
@@ -53,14 +52,10 @@ public class ProductDao extends BaseHttp {
     public static final int REQUEST_ADDPRODUCTTOWISH = 15;
     public static final int REQUEST_ADDPRODUCTLISTTOWISH = 14;
     public static final int REQUEST_CAMPAGINPRODUCT = 16;
-
     public static final int LOCAL_SAVEMAINCATEOGRY = 17;
     public static final int LOCAL_GETMAINCATEGORY = 18;
     private ExecutorService fixedThreadPool;
-
     public static final int REQUEST_SERVERTIMER = 27;
-
-
     public ProductDao(String TAG, Handler handler) {
         super(TAG, handler);
         fixedThreadPool = Executors.newFixedThreadPool(1);
@@ -187,7 +182,6 @@ public class ProductDao extends BaseHttp {
         if (!TextUtils.isEmpty(dir)) {
             params.put("dir", dir);
         }
-
         if (!TextUtils.isEmpty(brand)) {
             params.put("brand", brand);
         }
@@ -209,8 +203,6 @@ public class ProductDao extends BaseHttp {
         requestHttp(BaseHttp.HTTP_METHOD.POST, "appservice/appmarketing/index", params, REQUEST_MARKETING, identification);
 
     }
-
-
     public void addProductToWish(String productId, String sessionkey) {
         params = new TreeMap<>();
         params.put("product_id", productId);
@@ -270,6 +262,9 @@ public class ProductDao extends BaseHttp {
         JLogUtils.d("response","params="+params.toString());
         requestHttp(HTTP_METHOD.POST, "appservice/product/search", params, REQUEST_PRODUCTSEARCH);
     }
+
+
+
 
     public void getProductRecommendList(String storeId, String limit, String productId, String sessionKey) {
         params = new TreeMap<>();
@@ -447,7 +442,6 @@ public class ProductDao extends BaseHttp {
                     ErrorMsgBean bean = getErrorMsgBean(response);
                     postHandler(requestCode, bean.getErrorMessage(), RESPONSE_FAILED);
                 }
-
                 break;
             case REQUEST_CAMPAGINPRODUCT:
                 if (isOk(response)) {
@@ -457,7 +451,6 @@ public class ProductDao extends BaseHttp {
                     ErrorMsgBean bean = getErrorMsgBean(response);
                     postHandler(requestCode, bean.getErrorMessage(), RESPONSE_FAILED);
                 }
-
                 break;
         }
     }

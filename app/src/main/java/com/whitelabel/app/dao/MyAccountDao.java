@@ -223,8 +223,6 @@ public class MyAccountDao extends BaseHttp {
         requestHttp(BaseHttp.HTTP_METHOD.POST, "appservice/customer/create", params, REQUEST_REGISTERCODE);
 
     }
-
-
     public void facebookLogin(String email, String fbHasEmail, String firstname, String lastname, String fbId, String deviceToken) {
         params = new TreeMap<>();
         if (TextUtils.isEmpty(email)) {
@@ -252,8 +250,6 @@ public class MyAccountDao extends BaseHttp {
         }
         requestHttp(BaseHttp.HTTP_METHOD.POST, "appservice/customer/fbLogin", params, REQUEST_FACEBOOKLOGIN);
     }
-
-
     public void googleLogin(String email, String firstname, String lastname, String fbId, String deviceToken) {
         params = new TreeMap<>();
         if (TextUtils.isEmpty(email)) {

@@ -6,7 +6,8 @@ public abstract class ErrorHandlerAction implements Action1<Throwable> {
 
         @Override
         public void call(Throwable throwable) {
-        requestError(ExceptionParse.parseException(throwable));
-         }
+            JLogUtils.i("ray","throwable:"+throwable.getMessage());
+          requestError(ExceptionParse.parseException(throwable));
+        }
         protected abstract  void  requestError(com.whitelabel.app.model.ApiFaildException ex);
     }

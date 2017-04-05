@@ -49,28 +49,23 @@ public class ShoppingCarDao extends BaseHttp {
     public static final int REQUEST_CHANGESHOPPINGCARCOUNT = 14;
     public static final int REQUEST_DELETEFROMSHOPPINGCART = 23;
     public static final int REQUEST_STORECREDIT = 24;
-
     public ShoppingCarDao(String TAG, Handler handler) {
         super(TAG, handler);
     }
-
     @Override
     public void requestHttp(HTTP_METHOD method, String url, TreeMap map, int requestCode) {
         super.requestHttp(method, url, map, requestCode);
     }
-
     public void getShoppingCarInfo(String sessionKey) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         requestHttp(HTTP_METHOD.POST, "appservice/cart/list", params, REQUEST_SHOPPINGINFO);
     }
-
     public void refershErrorShoppingCarInfo(String sessionKey) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         requestHttp(HTTP_METHOD.POST, "appservice/cart/list", params, REQUEST_REFERSHERRORSHOPPINGINFO);
     }
-
     //1  remove  0 add
     public void redeemStoreCredit(String sessionKey, String remove) {
         params = new TreeMap<>();

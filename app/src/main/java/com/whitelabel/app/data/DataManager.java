@@ -60,9 +60,13 @@ public class DataManager {
     public AppApi  getAppApi(){
         if(mAppApi==null){
             synchronized (DataManager.class){
-                mAppApi= RetrofitHelper.getDefaultRetrofit().create(AppApi.class);
+                mAppApi= RetrofitHelper.getMockRetrofit().create(AppApi.class);
             }
         }
         return mAppApi;
     }
+
+
+
+
 }
