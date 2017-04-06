@@ -42,7 +42,7 @@ public class RemoteConfigResonseModel implements Serializable {
         this.data = data;
     }
 
-    public static class RetomeConfig {
+    public static class RetomeConfig  implements Serializable{
         /**
          * uiStyle : {"themeColor":"","navBarBackgroudColor":"","navBarTextIconColor":"","sideMenuColor":"","sldeMenuTextIconColor":"","sideMenuTextIconSelectedColor":""}
          * baseUrl : {"serviceBaseUrl":""}

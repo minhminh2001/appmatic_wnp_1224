@@ -19,13 +19,13 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
     @Override
     public void getConfigInfo() {
        String currentVersionNumber= DataManager.getInstance().getPreferHelper().getVersionNumber();
+        JLogUtils.i("ray","currentVersionNumber:"+currentVersionNumber);
         DataManager.getInstance().
                 getAppApi().getConfigInfo(currentVersionNumber).
                 compose(RxUtil.<RemoteConfigResonseModel>rxSchedulerHelper())
                 .subscribe(new Action1<RemoteConfigResonseModel>() {
                     @Override
                     public void call(RemoteConfigResonseModel remoteConfigModel) {
-
                         if("1".equals(remoteConfigModel.getStatus())){
                             GemfiveApplication.getAppConfiguration().setConfigColor(remoteConfigModel.
                                     getData().getUiStyle().getThemeColor(),

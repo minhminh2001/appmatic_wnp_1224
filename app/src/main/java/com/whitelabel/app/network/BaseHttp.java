@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -109,6 +111,14 @@ public abstract class BaseHttp {
 
             @Override
             protected Map<String, String> getParams() {
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params=new HashMap<>();
+                params.put("API-VERSION",GlobalData.apiVersion);
+                params.put("API-KEY",GlobalData.apiKey);
                 return params;
             }
         };
@@ -219,7 +229,15 @@ public abstract class BaseHttp {
                 }
 
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params=new HashMap<>();
+                params.put("API-VERSION",GlobalData.apiVersion);
+                params.put("API-KEY",GlobalData.apiKey);
+                return params;
+            }
+        };
         strReq.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 0, 1.0f));
         GemfiveApplication.getInstance().addToRequestQueue(strReq, TAG);
     }

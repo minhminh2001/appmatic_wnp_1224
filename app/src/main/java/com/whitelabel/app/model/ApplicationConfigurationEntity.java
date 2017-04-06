@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import com.google.gson.Gson;
 import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -49,7 +50,6 @@ public class ApplicationConfigurationEntity {
     }
     public void setConfigColor(String themeColor,String navBarColor,String buttonPressColor){
         if(configModel!=null){
-            JLogUtils.i("ray","====================111111============");
             configModel.setPrimaryColor(themeColor);
             configModel.setSecondaryColor(navBarColor);
             configModel.setButtonPressColor(buttonPressColor);
@@ -59,6 +59,11 @@ public class ApplicationConfigurationEntity {
         SVRAppserviceCatalogSearchReturnEntity entity = JStorageUtils.getCategoryArrayList(context);
         GemfiveApplication.getAppConfiguration().setCategoryArrayList(entity);
         configModel=new ConfigModel();
+        RemoteConfigResonseModel.RetomeConfig config=DataManager.getInstance().getPreferHelper().getLocalConfigModel();
+        if(config!=null){
+         setConfigColor(config.getUiStyle().getThemeColor(),config.getUiStyle().
+                 getNavBarBackgroudColor(),config.getUiStyle().getButtonPressColor());
+        }
         httpServerAddress = GlobalData.serviceRequestUrl;
         JLogUtils.i("aaa", "init=" + httpServerAddress);
         httpGlobalParameter = "";

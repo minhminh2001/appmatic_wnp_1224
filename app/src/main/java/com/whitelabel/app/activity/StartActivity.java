@@ -178,24 +178,18 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
         }
         mCallback=new INITApp(StartActivity.this, new MeInitCallBack(this));
         INITExecutor.getInstance().execute(mCallback);
-
     }
-
-
-
     static class MeInitCallBack extends   INITCallback{
         WeakReference<StartActivity> mStartActivity;
         public MeInitCallBack(StartActivity startActivity){
                 mStartActivity=new WeakReference<StartActivity>(startActivity);
         }
-
         @Override
         public void onSuccess(int resultCode, Object object) {
             if(mStartActivity.get()==null)return;
 //            mStartActivity.get().checkAppVersion();
             delayStart();
         }
-
         @Override
         public void onFailure(int resultCode, Object object) {
             if(mStartActivity.get()==null)return;
@@ -211,13 +205,10 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
             }
         }
     }
-
-
     @Override
     public void onClick(View v) {
 
     }
-
     @Override
     protected void onStart() {
         super.onStart();

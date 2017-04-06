@@ -4,8 +4,10 @@ import com.whitelabel.app.GlobalData;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Credentials;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.Route;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -34,13 +36,22 @@ public class RetrofitHelper {
                 .build();
         return retrofit;
     }
-
-
     private static OkHttpClient  getOkHttpClient(){
         final OkHttpClient.Builder builder = new OkHttpClient.Builder();
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(loggingInterceptor);
+            builder.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request original = chain.request();
+                    Request.Builder  builder1=original.newBuilder()
+                            .header("API-VERSION", GlobalData.apiVersion)
+                            .header("API-KEY", GlobalData.apiKey);
+                    Request request1=builder1.method(original.method(), original.body()).build();
+                    return chain.proceed(request1);
+                }
+            });
 //        builder.addInterceptor(new BaseInterceptor());
         if(!TextUtils.isEmpty(GlobalData.authName)&&!TextUtils.isEmpty(GlobalData.authPwd)){
             builder.authenticator(new okhttp3.Authenticator() {
@@ -51,6 +62,7 @@ public class RetrofitHelper {
                 }
             });
         }
+
         builder.connectTimeout(30, TimeUnit.SECONDS);
         builder.readTimeout(30, TimeUnit.SECONDS);
         builder.writeTimeout(30, TimeUnit.SECONDS);

@@ -1214,7 +1214,11 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             showDialog();
         }
         currTime = System.currentTimeMillis();
-        mCarDao.getShoppingCarInfo(GemfiveApplication.getAppConfiguration().getUser().getSessionKey());
+        String sessionKey="";
+        if(GemfiveApplication.getAppConfiguration().isSignIn(getActivity())){
+            sessionKey=GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+        }
+        mCarDao.getShoppingCarInfo(sessionKey);
     }
 
     private void showDialog() {

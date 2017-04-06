@@ -45,6 +45,8 @@ android {
             buildConfigField('String', 'GA_TRACK_ID', '"UA-72586399-2"')
             buildConfigField('String', 'FACEBOOK_ID', '"1287318627981888"')
             buildConfigField('String', 'MOCK_URL','"http://192.168.1.233:3000/"')
+            buildConfigField('String', 'API_VERSION','"v1"')
+            buildConfigField('String', 'API_KEY','"L5M7aUpZRr2ChzDx"')
         }
         evisu {
             resValue("string", "app_name", "evisu")
@@ -54,6 +56,8 @@ android {
             buildConfigField('String', 'GA_TRACK_ID', '"UA-72586399-2"')
             buildConfigField('String', 'FACEBOOK_ID', '"1287318627981888"')
             buildConfigField('String', 'MOCK_URL','"http://192.168.1.233:3000/"')
+            buildConfigField('String', 'API_VERSION','"v1"')
+            buildConfigField('String', 'API_KEY','"L5M7aUpZRr2ChzDx"')
         }
 //        uat{
 //            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
@@ -142,6 +146,9 @@ dependencies {
     compile 'com.github.hotchemi:permissionsdispatcher:2.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.1'
+
+    compile('com.paypal.sdk:paypal-android-sdk:2.15.3')
+
 }
 
 afterEvaluate {

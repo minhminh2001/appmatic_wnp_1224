@@ -26,6 +26,9 @@ public class GlobalData {
     public static String downloadImagePath;
     public static String uploadFilePath;
     public static String mockUrl;
+    public static  String  apiVersion;
+    public static  String apiKey="";
+
     // if true, all https connections are valid regardless of certificate validity
     public static boolean allowInvalidSSLTLS = false;
     private final static String pathSeparator = "/";
@@ -41,6 +44,8 @@ public class GlobalData {
         mockUrl=BuildConfig.MOCK_URL;
         checkoutHashKey = BuildConfig.HASH_KEY;
         gaTrackId = BuildConfig.GA_TRACK_ID;
+        apiVersion=BuildConfig.API_VERSION;
+        apiKey=BuildConfig.API_KEY;
         facebookId = BuildConfig.FACEBOOK_ID;
         if (BuildConfig.REQUEST_URL.indexOf("www.") == -1) {
             serviceRequestUrl = getAuthorizationUrl(BuildConfig.REQUEST_URL);

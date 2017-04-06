@@ -13,6 +13,4 @@ import rx.Observable;
 public interface AppApi {
     @GET("appservice/config/getConfig")
     public Observable<RemoteConfigResonseModel> getConfigInfo(@Query("version") String version);
-
-
 }
