@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
@@ -27,13 +28,18 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
     private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> groupList;
     private Context context;
     private final ImageLoader mImageLoader;
-
+    private int mViewType;
+    public final  static   int VIEW_HORIZONTAL=1;
+    public final static  int VIEW_VERTICAL=2;
     private ChildOnClick childOnClick;
 
     public interface ChildOnClick {
         void childOnClick(int position, Object ob, String parentId);
     }
 
+    public void setViewType(int viewType){
+        mViewType=viewType;
+    }
     public CategoryTreeExpandableAdapter(Activity activity, Context context,
                                          ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> groupList, ImageLoader imageLoader,
                                          ChildOnClick childOnClick) {
@@ -43,7 +49,6 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
         mImageLoader = imageLoader;
         setDataType(groupList);
     }
-
     public void setDataType(ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> groupList) {
         //将entity 排好序，并且设置itemType 和其父类Id
         ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> tempList = new ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity>();
@@ -60,12 +65,16 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
         //将数据更新到 ExpandableRecyclerAdapter
         setItems(this.groupList);
     }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case TYPE_HEADER:
-                View convertView = LayoutInflater.from(context).inflate(R.layout.adapter_category_tree_group_item, null);
+                View convertView =null;
+                if(mViewType==VIEW_HORIZONTAL){
+                    convertView = LayoutInflater.from(context).inflate(R.layout.adapter_category_tree_group_item_hor, null);
+                }else{
+                    convertView = LayoutInflater.from(context).inflate(R.layout.adapter_category_tree_group_item, null);
+                }
                 return new GroupViewHolder(convertView);
             case TYPE_CHILD:
             default:
@@ -73,26 +82,27 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
                 return new ChildViewHolder(convertView2);
         }
     }
-
     @Override
     public void onBindViewHolder(ExpandableRecyclerAdapter.ViewHolder holder, int position2) {
         final int position = position2;
         if (holder instanceof GroupViewHolder) {
             GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
             SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) getItem(position);
+            groupViewHolder.tvCategoryTreeGroupName.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             groupViewHolder.tvCategoryTreeGroupName.setText(entity.getName());
-
             if (groupViewHolder.ivCategoryTreeGroup.getTag() != null && groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage())) {
             } else {
                 JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, groupViewHolder.ivCategoryTreeGroup, entity.getImage());
                 groupViewHolder.ivCategoryTreeGroup.setTag(entity.getImage());
             }
 
-            if (position == 0) {
+            groupViewHolder.ivCategoryTreeGroup.setImageResource(R.mipmap.checkout_success_facebook_share);
+
+//            if (position == 0) {
                 groupViewHolder.tv_category_tree_divi.setVisibility(View.GONE);
-            } else {
-                groupViewHolder.tv_category_tree_divi.setVisibility(View.VISIBLE);
-            }
+//            } else {
+//                groupViewHolder.tv_category_tree_divi.setVisibility(View.VISIBLE);
+//            }
             if (entity.isExpaned()) {
                 groupViewHolder.tvCategoryTreeLine.setVisibility(View.GONE);
             } else {
@@ -110,7 +120,6 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
             });
         }
     }
-
     public class GroupViewHolder extends ExpandableRecyclerAdapter.HeaderViewHolder {
         public TextView tvCategoryTreeGroupName, tvCategoryTreeLine, tv_category_tree_divi;
         public ImageView ivCategoryTreeGroup;
@@ -118,6 +127,8 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
         public GroupViewHolder(View view) {
             super(view);
             tvCategoryTreeGroupName = (TextView) view.findViewById(R.id.tv_category_tree_group_name);
+
+
             ivCategoryTreeGroup = (ImageView) view.findViewById(R.id.iv_category_tree_group);
             tvCategoryTreeLine = (TextView) view.findViewById(R.id.tv_category_tree_line);
             tv_category_tree_divi = (TextView) view.findViewById(R.id.tv_category_tree_divi);

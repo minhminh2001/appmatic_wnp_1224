@@ -36,6 +36,8 @@ import com.whitelabel.app.listener.OnNotificationCountListener;
 import com.whitelabel.app.model.MarketingLayersEntity;
 import com.whitelabel.app.model.TMPHelpCenterListToDetailEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.home.HomeHomeFragmentV2;
+import com.whitelabel.app.ui.home.HomeHomeFragmentV3;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.UserGuideHelper;
@@ -78,17 +80,17 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     public static final String EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART = "toShoppingCartFragment";
     public static final String EXTRA_REDIRECTTO_TYPE_VALUE_SETTING = "toSettingFragment";
     public static final String EXTRA_REDIRECTTO_TYPE_VALUE_EDITPROFILE = "toEditProfileActivity";
-    private View mUserGuideAbove;
+//    private View mUserGuideAbove;
     private ArrayList<Fragment> mAttachedFragmentList;
-    private OnNotificationCountListener onNotificationCountListener;
+//    private OnNotificationCountListener onNotificationCountListener;
     protected Fragment mCurrentFragment;
     private Dialog mDialog;
     public Handler mHandler = new Handler();
     public int fragmentType;
-    private CustomTextView tvMarketingLayers, tvMarketingLayersDesc;
-    private PopupWindow mUserGuidePopWindow;
+//    private CustomTextView tvMarketingLayers, tvMarketingLayersDesc;
+//    private PopupWindow mUserGuidePopWindow;
     public boolean showMarketLayers = true;
-    private boolean marketLayerClosed;
+//    private boolean marketLayerClosed;
 //    public static String BUNDLE_TO_START="toStart";
     private final String DEEPLINK_TYPE_PRODUCTDETAIL = "product";
     private final String DEEPLINK_TYPE_LANDINGPAGE = "landingpage";
@@ -349,7 +351,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
 
     private void initFragment(Bundle savedInstanceState) {
-        addFragment(FRAGMENT_TYPE_HOME_HOME, new HomeHomeFragment());
+        addFragment(FRAGMENT_TYPE_HOME_HOME, new HomeHomeFragmentV3());
         addFragment(FRAGMENT_TYPE_HOME_MYACCOUNT, new HomeMyAccountFragmentV2());
         addFragment(FRAGMENT_TYPE_HOME_HELPCENTERLIST, new HomeHelpCenterListFragment());
         addFragment(FRAGMENT_TYPE_HOME_HELPCENTERDETAIL, new HomeHelpCenterDetailFragment());

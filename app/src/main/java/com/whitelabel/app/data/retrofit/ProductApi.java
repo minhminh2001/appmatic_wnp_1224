@@ -3,6 +3,7 @@ package com.whitelabel.app.data.retrofit;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.ResponseModel;
+import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 
 import retrofit2.http.Field;
@@ -30,4 +31,6 @@ public interface ProductApi {
     @FormUrlEncoded
     @POST("appservice/wishlist/addToWishList")
     public  Observable<AddToWishlistEntity> addWishList(@Field("session_key") String sessionKey, @Field("product_id") String productId);
+    @GET("appservice/catalogSearch")
+    public Observable<SVRAppserviceCatalogSearchReturnEntity>  getCategoryList();
 }

@@ -114,16 +114,6 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (categoryDetailModel == null) return;
-//            if (TextUtils.isEmpty(categoryDetailModel.getCategory_name())) {
-//                headerViewHolder.tvTitle.setVisibility(View.GONE);
-//            } else {
-//                headerViewHolder.tvTitle.setText(categoryDetailModel.getCategory_name());
-//            }
-//            if (TextUtils.isEmpty(categoryDetailModel.getCategory_name())) {
-//                headerViewHolder.tvDesc.setVisibility(View.GONE);
-//            } else {
-//                headerViewHolder.tvDesc.setText(JToolUtils.fromHtml(""));
-//            }
             if (categoryDetailModel.getCategory_img() == null || categoryDetailModel.getCategory_img().size() == 0) {
                 headerViewHolder.detailViewpager.setVisibility(View.GONE);
             } else {

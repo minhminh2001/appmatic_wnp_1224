@@ -1,0 +1,12 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.whitelabel.app.ui.home.HomeHomeFragmentV2">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_category_tree"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:background="@color/greyfdfbfe"
+        android:layout_height="match_parent" />
+</FrameLayout>
