@@ -105,6 +105,7 @@ public class JJsonUtils {
                          t = gson.fromJson(jsonString, cls);
                      } catch (Exception e) {
                         e.getStackTrace();
+                        JLogUtils.i("exception",""+e.getMessage());
                      }
                  return t;
     }

@@ -93,7 +93,6 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
 //        mGATrackTimeEnable = true;
         return mContainView;
     }
-
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         mCommonCallback.setHomeSearchBarAndOnClick(new View.OnClickListener() {
             @Override
@@ -304,6 +303,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             if (categoryArrayList != null) {
                 for (int i = 0; i < categoryArrayList.size(); i++) {
                     mFragment.add(HomeCategoryFragment.newInstance(categoryArrayList.get(i).getId()));
+//                    mFragment.add(HomeHomeCategoryFragment.newInstance(categoryArrayList.get(i).getId()));
                 }
             }
             //////////////////////////ray

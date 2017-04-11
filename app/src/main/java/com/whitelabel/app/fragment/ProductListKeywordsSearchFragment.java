@@ -175,12 +175,10 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     public int getCurrentFilterSortTabIndex() {
         return productListActivity.getCurrentFilterSortTabIndex();
     }
-
     private static class DataHandler extends Handler {
         private final WeakReference<ProductListActivity> mActivity;
         private final WeakReference<ProductListKeywordsSearchFragment> mFragment;
         private long mTime_end;
-
         public DataHandler(ProductListActivity activity, ProductListKeywordsSearchFragment fragment) {
             mActivity = new WeakReference<>(activity);
             mFragment = new WeakReference<>(fragment);

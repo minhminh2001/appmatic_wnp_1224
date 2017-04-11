@@ -11,7 +11,6 @@ public class SVRAppserviceProductSearchFacetsSortItemReturnEntity implements Ser
     private boolean selected;
     private String count;
     private String url;
-
     public String getLabel() {
         return label;
     }

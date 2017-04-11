@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
+import com.whitelabel.app.fragment.HomeCategoryTreeFragment;
 import com.whitelabel.app.fragment.HomeHelpCenterDetailFragment;
 import com.whitelabel.app.fragment.HomeHelpCenterListFragment;
 import com.whitelabel.app.fragment.HomeHomeFragment;
@@ -209,9 +210,9 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpCategoryTreePage() {
-//        if (!(mCurrentFragment instanceof HomeCategoryTreeFragment)) {
-//            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_CATEGORY, null);
-//        }
+        if (!(mCurrentFragment instanceof HomeCategoryTreeFragment)) {
+            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_CATEGORY, null);
+        }
     }
 
     @Override
@@ -343,11 +344,10 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+
     }
-
-
     private void initFragment(Bundle savedInstanceState) {
-        addFragment(FRAGMENT_TYPE_HOME_HOME, new HomeHomeFragmentV3());
+        addFragment(FRAGMENT_TYPE_HOME_HOME, new HomeHomeFragment());
         addFragment(FRAGMENT_TYPE_HOME_MYACCOUNT, new HomeMyAccountFragmentV2());
         addFragment(FRAGMENT_TYPE_HOME_HELPCENTERLIST, new HomeHelpCenterListFragment());
         addFragment(FRAGMENT_TYPE_HOME_HELPCENTERDETAIL, new HomeHelpCenterDetailFragment());
@@ -355,9 +355,9 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         addFragment(FRAGMENT_TYPE_HOME_NOTIFICATIONDETAIL, new HomeNotificationDetailFragment());
         addFragment(FRAGMENT_TYPE_HOME_SETTING, new HomeSettingCotentFragment());
         addFragment(FRAGMENT_TYPE_HOME_SHOPPINGCART, ShoppingCartVerticalFragment.newInstance(ShoppingCartBaseFragment.FROM_HOME, 0L));
-
+        addFragment(FRAGMENT_TYPE_HOME_CATEGORY, new HomeCategoryTreeFragment());
 //        addFragment(FRAGMENT_TYPE_HOME_CREDITCARD, HomeSelectCrditCardFragment.newInstance());
-//        addFragment(FRAGMENT_TYPE_HOME_CATEGORY, new HomeCategoryTreeFragment());
+
     }
     @Override
     public void resetMenuAndListenter() {

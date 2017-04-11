@@ -293,13 +293,15 @@ public class ProductListAdapter extends BaseAdapter {
         viewHolder.ctvLeftProductName.setText(leftProductName);
 
         String leftProductBrand = leftProductEntity.getBrand();
-        viewHolder.ctvLeftProductBrand.setText(leftProductBrand.toUpperCase());
-        viewHolder.ctvLeftProductBrand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startBrandStoreActivity((Activity) view.getContext(),leftProductEntity.getBrand(),leftProductEntity.getBrandId());
-            }
-        });
+        if(!TextUtils.isEmpty(leftProductBrand)) {
+            viewHolder.ctvLeftProductBrand.setText(leftProductBrand.toUpperCase());
+            viewHolder.ctvLeftProductBrand.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startBrandStoreActivity((Activity) view.getContext(), leftProductEntity.getBrand(), leftProductEntity.getBrandId());
+                }
+            });
+        }
 
         float leftProductPriceFloat = 0.0f;
         String leftProductPrice = leftProductEntity.getPrice();
@@ -462,13 +464,15 @@ public class ProductListAdapter extends BaseAdapter {
         viewHolder.ctvRightProductName.setText(rightProductName);
 
         String rightProductBrand = rightProductEntity.getBrand();
-        viewHolder.ctvRightProductBrand.setText(rightProductBrand.toUpperCase());
-        viewHolder.ctvRightProductBrand.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startBrandStoreActivity((Activity) view.getContext(),rightProductEntity.getBrand(),rightProductEntity.getBrandId());
-            }
-        });
+        if(!TextUtils.isEmpty(rightProductBrand)) {
+            viewHolder.ctvRightProductBrand.setText(rightProductBrand.toUpperCase());
+            viewHolder.ctvRightProductBrand.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startBrandStoreActivity((Activity) view.getContext(), rightProductEntity.getBrand(), rightProductEntity.getBrandId());
+                }
+            });
+        }
         Float rightProductPriceFloat = 0.0f;
         String rightProductPrice = rightProductEntity.getPrice();
         try {

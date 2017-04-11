@@ -251,7 +251,7 @@ public class ProductDao extends BaseHttp {
             params.put("model_type", modelType);
         }
         if (!TextUtils.isEmpty(q)) {
-            params.put("q", q);
+            params.put("keywords", q);
         }
         if (!TextUtils.isEmpty(price)) {
             params.put("price", price);
@@ -390,6 +390,8 @@ public class ProductDao extends BaseHttp {
             case REQUEST_PRODUCTSEARCH:
                 if (isOk(response)) {
                     SVRAppserviceProductSearchReturnEntity svrAppserviceProductSearchReturnEntity = JJsonUtils.parseJsonObj(response, SVRAppserviceProductSearchReturnEntity.class);
+                    JLogUtils.i("ray","sss"+svrAppserviceProductSearchReturnEntity);
+
                     postHandler(requestCode, svrAppserviceProductSearchReturnEntity, RESPONSE_SUCCESS);
                 } else {
                     ErrorMsgBean bean = getErrorMsgBean(response);

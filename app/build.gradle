@@ -40,7 +40,7 @@ android {
         wnp {
             resValue("string", "app_name", "wnp")
             manifestPlaceholders = [fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8", app_icon: "@mipmap/icon_v1"]
-            buildConfigField('String', 'REQUEST_URL', '"https://appdev.gemfive.com/"')
+            buildConfigField('String', 'REQUEST_URL', '"http://192.168.1.233/"')
             buildConfigField('String', 'HASH_KEY', '"123456"')
             buildConfigField('String', 'GA_TRACK_ID', '"UA-72586399-2"')
             buildConfigField('String', 'FACEBOOK_ID', '"1287318627981888"')

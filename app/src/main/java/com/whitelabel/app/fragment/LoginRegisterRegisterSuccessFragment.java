@@ -18,6 +18,7 @@ import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 
 /**
@@ -97,10 +98,10 @@ public class LoginRegisterRegisterSuccessFragment extends Fragment implements Vi
                 isStart = true;
             }
         }
-
         goshopping= (TextView) contentView.findViewById(R.id.goshopping);
         goshopping.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         goshopping.setOnClickListener(this);
+        goshopping.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
         rigisterSuccess1= (TextView) contentView.findViewById(R.id.rigisterSuccess1);
         String myEmail=loginRegisterActivity.getMyEmail();
         if(loginRegisterActivity.isEmailConfirm()){

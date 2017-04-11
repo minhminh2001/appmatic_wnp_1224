@@ -22,6 +22,7 @@
             android:layout_height="wrap_content">
             <LinearLayout
                 android:id="@+id/ll_filter"
+                android:visibility="gone"
                 android:layout_toLeftOf="@+id/ll_sort"
                 android:layout_marginRight="30dp"
                 android:orientation="horizontal"
@@ -38,7 +39,6 @@
                     android:id="@+id/tv_filter"
                     android:text="@string/productlist_filter"
                     android:textColor="@color/black1a1a1a"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

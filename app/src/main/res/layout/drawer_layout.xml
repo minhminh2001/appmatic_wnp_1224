@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content" />
             </RelativeLayout>
             <RelativeLayout
-                android:visibility="gone"
+
                 android:id="@+id/rl_drawer_categorytree"
                 android:paddingLeft="16sp"
                 android:paddingRight="16sp"

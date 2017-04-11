@@ -206,7 +206,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                                     activity.stateText.setTextColor(activity.getResources().getColor(R.color.hint));
                                     activity. list_countries = countryEntityResult.getCountry();
                                     activity. list_countries.add(0, new CountrySubclass("", activity.getResources().getString(R.string.pleaseselect)));
-                                    activity. mRegions.addAll(activity.getState("MY", activity.list_countries));
+                                    activity. mRegions.addAll(activity.getState("HK", activity.list_countries));
                                     activity. mRegions.add(0, new CountryRegions("", activity.getResources().getString(R.string.pleaseselect)));
                                     SharedPreferences sharedPreferences = activity.getSharedPreferences("countries", Activity.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -313,7 +313,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             }
         });
         address2= (EditText) findViewById(R.id.edit_addaddresss_address2);
-
         address2.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -466,8 +465,8 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         addaddress_checkbox= (CustomCheckBox) findViewById(R.id.addaddress_checkbox);
         addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         addaddress_checkbox.setChecked(false);
-        country.setTag("MY");
-        country.setText(getResources().getString(R.string.malaysia));
+//        country.setTag("MY");
+//        country.setText(getResources().getString(R.string.malaysia));
         state.setVisibility(View.GONE);
         stateText.setVisibility(View.VISIBLE);
         DisplayMetrics dm = new DisplayMetrics();
@@ -547,7 +546,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         dao.getCountryAndRegions(sessionKey);
 
     }
-
     public final  ArrayList<CountryRegions> getState(String value,ArrayList<CountrySubclass>  countrys){
         ArrayList<CountryRegions>  regions=null;
         for(int i=0;i<countrys.size();i++){
@@ -555,13 +553,11 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             if(value.equals(sub.getCountry_id())){
                 country.setTag(sub.getCountry_id()+"");
                 regions=sub.getRegions();
+                country.setText(sub.getName());
             }
         }
-
         return  regions;
     }
-
-
 
     private ArrayList<CountryRegions>  mRegions=new ArrayList<CountryRegions>();
     private ArrayList<CountrySubclass> countryList;

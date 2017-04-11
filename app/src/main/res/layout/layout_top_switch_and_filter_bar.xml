@@ -25,6 +25,7 @@
         android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/ll_filter_top"
+            android:visibility="gone"
             android:layout_toLeftOf="@+id/ll_sort_top"
             android:orientation="horizontal"
             android:gravity="center_vertical"

@@ -15,6 +15,7 @@ import com.whitelabel.app.activity.IFilterSortActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListFilterSortSortAdapter;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.listener.OnFilterSortFragmentListener;
 import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsSortItemReturnEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
@@ -62,15 +63,16 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
         return contentView;
     }
 
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         Bundle bundle = getArguments();
         if (bundle != null) {
             productListFilterSortPageEntity = (TMPProductListFilterSortPageEntity) bundle.getSerializable("data");
         }
-
+        contentView.findViewById(R.id.rlHeaderBar).setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
         rlHeaderbarCancel = (RelativeLayout) contentView.findViewById(R.id.rl_headerbar_cancel);
         rlHeaderbarCancel.setOnClickListener(this);
         lvSortConditions = (ListView) contentView.findViewById(R.id.lvSortConditions);

@@ -90,15 +90,15 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 }, DELAY);
                 break;
             case R.id.rl_drawer_categorytree:
-//                drawerLayout.closeDrawer(Gravity.LEFT);
-//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_CATEGORYTREE);
-//                baseHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-////                        getToolbar().getMenu().clear();
-//                        jumpCategoryTreePage();
-//                    }
-//                }, DELAY);
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_CATEGORYTREE);
+                baseHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+//                        getToolbar().getMenu().clear();
+                        jumpCategoryTreePage();
+                    }
+                }, DELAY);
                 break;
             case R.id.rl_drawer_shoppingcart:
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SHOPPINGCART);

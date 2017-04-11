@@ -32,16 +32,16 @@
     </RelativeLayout>
 
     <ListView
+        android:layout_below="@+id/rlHeaderBar"
         android:id="@+id/lvSortConditions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/rlHeaderBar"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginRight="22dp"
         android:divider="@null"
-        android:dividerHeight="0dp" />
+        android:dividerHeight="0dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="22dp" />
 
 </RelativeLayout>

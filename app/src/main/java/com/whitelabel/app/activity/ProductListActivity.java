@@ -610,6 +610,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     }
 
     public void setSVRAppserviceProductSearchParameterSort(int type, int index, String sortValue) {
+        JLogUtils.i("ray","type:"+type+"  index:"+index+"  sortvalue:"+sortValue);
         if (FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
             setSVRAppserviceProductSearchParameterSort(index, sortValue);
         } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
