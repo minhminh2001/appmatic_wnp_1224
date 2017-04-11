@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.MerchantProductListAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.ProductListFilterHideCallBack;
 import com.whitelabel.app.dao.ProductDao;
@@ -178,7 +178,7 @@ public class MerchantStoreFrontActivity extends BaseActivitySearchCart implement
 
         //登陆成功后要刷新所有product的信息  //在curationProductListAdapter  onClick wishIcon 里 startActivityForResult 到loginpage;，成功后调用以下方法
         if (LoginRegisterActivity.REQUESTCODE_LOGIN == requestCode && resultCode == LoginRegisterEmailLoginFragment.RESULTCODE) {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(MerchantStoreFrontActivity.this)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(MerchantStoreFrontActivity.this)) {
                 //将预缓存的wishitem productId设为有效，以便稍后自动将其加如wishlist
                 changeOperateProductIdPrecacheStatus(true);
                 onRefresh();
@@ -240,7 +240,7 @@ public class MerchantStoreFrontActivity extends BaseActivitySearchCart implement
     public void initListViewHeader(final SVRAppserviceProductMerchantReturnEntity merchantReturnEntity) {
         int imageWidth = 640;
         int imageHeight = 640 * 240 / 490;
-        int destHeight = GemfiveApplication.getPhoneConfiguration().getScreenWidth(MerchantStoreFrontActivity.this) * 240 / 490;
+        int destHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(MerchantStoreFrontActivity.this) * 240 / 490;
         mHeaderView = LayoutInflater.from(MerchantStoreFrontActivity.this).inflate(R.layout.header_list_merchant, null);
 
 
@@ -740,8 +740,8 @@ public class MerchantStoreFrontActivity extends BaseActivitySearchCart implement
         }
         String modelType = mSVRAppserviceProductSearchParameter.getModel_type();
         String sessionKey = "";
-        if (GemfiveApplication.getAppConfiguration().isSignIn(MerchantStoreFrontActivity.this)) {
-            sessionKey = GemfiveApplication.getAppConfiguration().getUserInfo(MerchantStoreFrontActivity.this).getSessionKey();
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(MerchantStoreFrontActivity.this)) {
+            sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(MerchantStoreFrontActivity.this).getSessionKey();
             mProductDao.getMerchantDetail(order, dir, brand, modelType, price, mVendorId, mOffset + "", LIMIT + "", sessionKey);
         } else {
             mProductDao.getMerchantDetail(order, dir, brand, modelType, price, mVendorId, mOffset + "", LIMIT + "", "");

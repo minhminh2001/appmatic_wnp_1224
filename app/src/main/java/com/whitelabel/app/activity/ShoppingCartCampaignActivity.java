@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.ShoppingCartCampaignAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.ShoppingCartCampaignListEntity;
 import com.whitelabel.app.model.ShoppingCartCampaignListEntityReturn;
@@ -125,7 +125,7 @@ public class ShoppingCartCampaignActivity extends com.whitelabel.app.BaseActivit
     }
 
     private void sendRequestToGetList() {
-        mProductDao.getCampaignProduct(GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
+        mProductDao.getCampaignProduct(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
     }
 
     private void initCampaignList(ArrayList<ShoppingCartCampaignListEntity> list_webservice) {

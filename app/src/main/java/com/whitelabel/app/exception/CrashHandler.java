@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.BuildConfig;
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.OtherDao;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -182,8 +182,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     private void sendCrashReportsToServer(String msg) {
         OtherDao crashDao=new OtherDao("CrashHandler",mHandler);
-        String servercommonaddress = GemfiveApplication.getAppConfiguration().getHttpServerAddress();
-        String servercommonparameter = GemfiveApplication.getAppConfiguration().getHttpGlobalParameter();
+        String servercommonaddress = WhiteLabelApplication.getAppConfiguration().getHttpServerAddress();
+        String servercommonparameter = WhiteLabelApplication.getAppConfiguration().getHttpGlobalParameter();
 
         if (JDataUtils.isEmpty(servercommonaddress)) {
             return;
@@ -203,8 +203,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
         sb.append("\nOS-VERSION: Android" + Build.VERSION.RELEASE);
         sb.append("\nMOBILE: " + Build.MODEL);
-//        if(GemfiveApplication.getPhoneConfiguration()!=null&&!TextUtils.isEmpty(GemfiveApplication.getPhoneConfiguration().getPhoneInfo(mContext))){
-//            sb.append(GemfiveApplication.getPhoneConfiguration().getPhoneInfo(mContext));
+//        if(WhiteLabelApplication.getPhoneConfiguration()!=null&&!TextUtils.isEmpty(WhiteLabelApplication.getPhoneConfiguration().getPhoneInfo(mContext))){
+//            sb.append(WhiteLabelApplication.getPhoneConfiguration().getPhoneInfo(mContext));
 //        }
         sb.append("\nERROR: " + msg);
         msg = sb.toString();

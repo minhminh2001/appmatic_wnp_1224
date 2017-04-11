@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 
 import java.math.BigDecimal;
 import java.security.MessageDigest;
@@ -65,7 +65,7 @@ public class JDataUtils {
 
     public static int dp2Px(int dp) {
         try {
-            return (int) (dp * GemfiveApplication.getPhoneConfiguration().getScreenDensity() + 0.5f);
+            return (int) (dp * WhiteLabelApplication.getPhoneConfiguration().getScreenDensity() + 0.5f);
         } catch (Exception ex) {
             JLogUtils.e(TAG, "dp2Px", ex);
             return dp;
@@ -74,7 +74,7 @@ public class JDataUtils {
 
     public static int px2Dp(int px) {
         try {
-            return (int) (px / GemfiveApplication.getPhoneConfiguration().getScreenDensity() + 0.5f);
+            return (int) (px / WhiteLabelApplication.getPhoneConfiguration().getScreenDensity() + 0.5f);
         } catch (Exception e) {
             JLogUtils.e(TAG, "px2Dp", e);
             return px;
@@ -83,7 +83,7 @@ public class JDataUtils {
 
     public static int px2sp(int px) {
         try {
-            return (int) (px / GemfiveApplication.getPhoneConfiguration().getScreenScaledDensity() + 0.5f);
+            return (int) (px / WhiteLabelApplication.getPhoneConfiguration().getScreenScaledDensity() + 0.5f);
         } catch (Exception e) {
             JLogUtils.e(TAG, "px2sp", e);
             return px;
@@ -92,7 +92,7 @@ public class JDataUtils {
 
     public static float px2sp(float px) {
         try {
-            return (px / GemfiveApplication.getPhoneConfiguration().getScreenScaledDensity() + 0.5f);
+            return (px / WhiteLabelApplication.getPhoneConfiguration().getScreenScaledDensity() + 0.5f);
         } catch (Exception e) {
             JLogUtils.e(TAG, "px2sp", e);
             return px;
@@ -101,7 +101,7 @@ public class JDataUtils {
 
     public static float sp2px(float sp) {
         try {
-            return (int) (sp * GemfiveApplication.getPhoneConfiguration().getScreenScaledDensity() + 0.5f);
+            return (int) (sp * WhiteLabelApplication.getPhoneConfiguration().getScreenScaledDensity() + 0.5f);
         } catch (Exception e) {
             JLogUtils.e(TAG, "sp2px", e);
             return sp;

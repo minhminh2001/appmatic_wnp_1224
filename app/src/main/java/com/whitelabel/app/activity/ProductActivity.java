@@ -45,7 +45,7 @@ import android.widget.Toast;
 import com.google.gson.internal.LinkedTreeMap;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.ProductRecommendedListAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.ProductDetailCallback;
 import com.whitelabel.app.callback.WheelPickerCallback;
@@ -328,7 +328,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
                         WishDelEntityResult wishDelEntityResult = (WishDelEntityResult) msg.obj;
                         //update wishlist number
-                        GemfiveApplication.getAppConfiguration().updateWishlist(activity.getApplicationContext(), wishDelEntityResult.getWishListItemCount());
+                        WhiteLabelApplication.getAppConfiguration().updateWishlist(activity.getApplicationContext(), wishDelEntityResult.getWishListItemCount());
                     }
                     break;
                 case ProductDao.REQUEST_ADDPRODUCTLISTTOWISH:
@@ -355,7 +355,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                         AddToWishlistEntity addToWishlistEntity = (AddToWishlistEntity) msg.obj;
                         activity.mProductDetailBean.setItemId(addToWishlistEntity.getItemId());
                         //update wishlist number
-                        GemfiveApplication.getAppConfiguration().updateWishlist(activity, addToWishlistEntity.getWishListItemCount());
+                        WhiteLabelApplication.getAppConfiguration().updateWishlist(activity, addToWishlistEntity.getWishListItemCount());
 //                        activity.showToast(activity, 2);
                         try {
                             FacebookEventUtils.getInstance().facebookEventAddedToWistList(mActivity.get(), activity.mProductDetailBean.getId(), activity.userSelectedProductFinalPriceFloat);
@@ -850,7 +850,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         llBottomBar.setOnClickListener(this);
         textView_num = (TextView) findViewById(R.id.detail_quantity_textview2);
 //        imgIcon = (ImageView) this.findViewById(R.id.img_icon);
-        destWidthColorSize = (GemfiveApplication.getPhoneConfiguration().getScreenWidth() - (JDataUtils.dp2Px(27))) / 2;
+        destWidthColorSize = (WhiteLabelApplication.getPhoneConfiguration().getScreenWidth() - (JDataUtils.dp2Px(27))) / 2;
         destHeightColorSize = JDataUtils.dp2Px(37);
         mAttributeEntity = new WheelPickerConfigEntity();
         mAttributeEntity.setArrayList(new ArrayList<WheelPickerEntity>());
@@ -916,7 +916,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
         });
         //toolBar变色回调
-        toolBarAlphaBehavior = new ToolBarAlphaBehavior(getBaseContext(), getToolbar(), GemfiveApplication.getAppConfiguration().getThemeConfig().getSecondaryColor(), new ToolBarAlphaBehavior.CallBack() {
+        toolBarAlphaBehavior = new ToolBarAlphaBehavior(getBaseContext(), getToolbar(), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSecondaryColor(), new ToolBarAlphaBehavior.CallBack() {
             @Override
             public void callBack(int color) {
                 //状态bar颜色
@@ -974,8 +974,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     }
 
     private void setActivityImageTransition(Bundle bundle) {
-        int phoneWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
-        int phoneHeight = GemfiveApplication.getPhoneConfiguration().getScreenHeigth(ProductActivity.this);
+        int phoneWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
+        int phoneHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth(ProductActivity.this);
         if (!TextUtils.isEmpty(bundle.getString("imageurl"))) {
             ivProductImage.setVisibility(View.VISIBLE);
             mProductFirstImageurl = bundle.getString("imageurl");
@@ -1022,10 +1022,10 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     public void refreshProductRecommended() {
         //推荐商品，随机加载4个
         // get data
-        String storeId = GemfiveApplication.getAppConfiguration().getStoreView().getId();
+        String storeId = WhiteLabelApplication.getAppConfiguration().getStoreView().getId();
         String sessionKey = "";
-        if (GemfiveApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
-            sessionKey = GemfiveApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey();
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+            sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey();
         }
         String limit = "4";
         mProductDao.getProductRecommendList(storeId, limit, productId, sessionKey);
@@ -1034,8 +1034,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     public long getCartItemCount() {
         long cartItemCount = 0;
         try {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
-                cartItemCount = GemfiveApplication.getAppConfiguration().getUserInfo(this).getCartItemCount();
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
+                cartItemCount = WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getCartItemCount();
                 ArrayList<TMPLocalCartRepositoryProductEntity> list = JStorageUtils.getProductListFromLocalCartRepository(this);
                 if (list.size() > 0) {
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
@@ -1087,8 +1087,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             mDialog = JViewUtils.showProgressDialog(ProductActivity.this);
         }
         String sessionKey = "";
-        if (GemfiveApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
-            sessionKey = GemfiveApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey();
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+            sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey();
         }
         mProductDao.getProductDetail(productId, sessionKey);
     }
@@ -1358,7 +1358,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             setImageBackground(arg0 % mProductImageView.size());
         }
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP && mProductImagesArrayList.size() >= 1) {
-            int destWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
+            int destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
             JLogUtils.d(TAG, "size=" + mProductImagesArrayList.size() + "-----------rul=" + mProductImagesArrayList.get(arg0 % mProductImagesArrayList.size()));
             JImageUtils.downloadImageFromServerByUrl(ProductActivity.this, mImageLoader, ivProductImage, mProductImagesArrayList.get(arg0 % mProductImagesArrayList.size()), destWidth, destWidth);
         }
@@ -2176,7 +2176,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 //        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
         if (mProductFirstImageurl != null && productImageUrlList.size() > 0) {
             if (!mProductFirstImageurl.equals(productImageUrlList.get(0))) {
-                int destWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
+                int destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
                 JImageUtils.downloadImageFromServerByUrl(ProductActivity.this, mImageLoader, ivProductImage, productImageUrlList.get(0), destWidth, destWidth);
                 mProductFirstImageurl = "";
             }
@@ -2193,8 +2193,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             mProductImageViewTips = new ArrayList<>();
         }
         group.removeAllViews();
-        final int destWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
-        int destHeight = GemfiveApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
+        final int destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
+        int destHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
         //加載 圖片
         if (productImageUrlList != null) {
             for (int index = 0; index < productImageUrlList.size(); index++) {
@@ -2346,13 +2346,13 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
 
         if (JDataUtils.compare(userSelectedProductFinalPriceFloat, userSelectedProductPriceFloat) < 0) {
-            oldprice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble((userSelectedProductPriceFloat + userSelectedProductPriceOffsetFloat) + ""));
+            oldprice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble((userSelectedProductPriceFloat + userSelectedProductPriceOffsetFloat) + ""));
             rlProductPrice.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
         } else {
             oldprice.setText("");
             rlProductPrice.getLayoutParams().height = 0;
         }
-        price_textview.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble((userSelectedProductFinalPriceOffsetFloat + userSelectedProductFinalPriceFloat) + ""));
+        price_textview.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble((userSelectedProductFinalPriceOffsetFloat + userSelectedProductFinalPriceFloat) + ""));
         if (TextUtils.isEmpty(saveRM)) {
             tvProductSaverm.setVisibility(View.GONE);
         } else {
@@ -2398,7 +2398,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             long count = getProductCount();
             JLogUtils.d(TAG, "maxSaleQty=" + maxSaleQty + "-------------stockqty=" + stockqty);
 //            TODO MAXQTY
-            if (GemfiveApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
                 userSelectedProductMaxStockQty = stockqty;//userSelectedProductMaxStockQty
                 currUserSelectedProductMaxStockQty = stockqty; //判断加减的时候使用到的
             } else {
@@ -2490,13 +2490,13 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 
     //调用删除接口
     private void sendRequestToDeteleteCell(String itemId) {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
             setWishIconColorToBlank();
             if (ctvProductOutOfStock.getVisibility() == View.VISIBLE) {
                 ctvAddToCart.setText(getResources().getString(R.string.product_detail_addtowishlist));
             }
             mProductDetailBean.setIsLike(0);
-            mAccountDao.deleteWishById(GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), itemId);
+            mAccountDao.deleteWishById(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), itemId);
         }
     }
 
@@ -2505,7 +2505,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (REQUESTCODE_LOGIN == requestCode && resultCode == LoginRegisterEmailLoginFragment.RESULTCODE) {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
                 //登陆成功后刷新上一个页面
 
                 //因推荐商品刷新机制,所以在此手动将其加入wishlist
@@ -2574,8 +2574,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             propertyReturnEntities.add((SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag());
         }
         mGATrackAddCartTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-        if (GemfiveApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
-            mShoppingDao.addProductToShoppingCart(GemfiveApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey(), productId, userSelectedProductQty + "", propertyReturnEntities);
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+            mShoppingDao.addProductToShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey(), productId, userSelectedProductQty + "", propertyReturnEntities);
         } else {
 
             Intent loginIntent = new Intent(this, LoginRegisterActivity.class);
@@ -2663,21 +2663,21 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     }
 
     private void addtoWishlistsendRequestFromProductList(String productId) {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(getApplicationContext())) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(getApplicationContext())) {
             //postion使用-1,因为推荐商品的刷新机制,无法判断它到底是谁
-            mProductDao.addProductListToWish(productId, GemfiveApplication.getAppConfiguration().getUserInfo(getApplicationContext()).getSessionKey(), productId);
+            mProductDao.addProductListToWish(productId, WhiteLabelApplication.getAppConfiguration().getUserInfo(getApplicationContext()).getSessionKey(), productId);
         }
     }
 
     private void addtoWishlistsendRequest() {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(getApplicationContext())) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(getApplicationContext())) {
             if (mProductDetailBean.getIsLike() == 0) {
                 if (ctvProductOutOfStock.getVisibility() == View.VISIBLE) {
                     ctvAddToCart.setText(getResources().getString(R.string.product_detail_addedtowishlist));
                 }
                 setWishIconColorToPurple();
                 mProductDetailBean.setIsLike(1);
-                mProductDao.addProductToWish(productId, GemfiveApplication.getAppConfiguration().getUserInfo(getApplicationContext()).getSessionKey());
+                mProductDao.addProductToWish(productId, WhiteLabelApplication.getAppConfiguration().getUserInfo(getApplicationContext()).getSessionKey());
             }
         } else {
             saveProductIdWhenJumpLoginPage(productId);
@@ -2709,13 +2709,13 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         if (mAddToCartToast == null) {
             mAddToCartToast = Toast.makeText(context.getApplicationContext(), "", Toast.LENGTH_SHORT);
-            if (GemfiveApplication.getPhoneConfiguration() != null && GemfiveApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
-                mAddToCartToast.setGravity(Gravity.BOTTOM, 0, (int) (GemfiveApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
+            if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
+                mAddToCartToast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
             }
             mAddToCartToast.setView(toastView);
         } else {
-            if (GemfiveApplication.getPhoneConfiguration() != null && GemfiveApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
-                mAddToCartToast.setGravity(Gravity.BOTTOM, 0, (int) (GemfiveApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
+            if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
+                mAddToCartToast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
             }
             mAddToCartToast.setView(toastView);
         }
@@ -2730,7 +2730,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         LinearLayout toastView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.layout_prompt_productdetail_notenoughinventory, null);
         TextView message = (TextView) toastView.findViewById(R.id.tv_text);
-        if (GemfiveApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
             message.setText(getResources().getString(R.string.insufficient_stock));
         } else {
             if (mStockQty > 0 && mMaxSaleQty > 0) {
@@ -2748,13 +2748,13 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         if (mToast == null) {
             mToast = Toast.makeText(context.getApplicationContext(), "", Toast.LENGTH_SHORT);
-            if (GemfiveApplication.getPhoneConfiguration() != null && GemfiveApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
-                mToast.setGravity(Gravity.BOTTOM, 0, (int) (GemfiveApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
+            if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
+                mToast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
             }
             mToast.setView(toastView);
         } else {
-            if (GemfiveApplication.getPhoneConfiguration() != null && GemfiveApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
-                mToast.setGravity(Gravity.BOTTOM, 0, (int) (GemfiveApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
+            if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
+                mToast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
             }
             mToast.setView(toastView);
         }

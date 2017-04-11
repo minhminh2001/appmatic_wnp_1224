@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.ProductDetailCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
@@ -135,7 +135,7 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
             viewHolder.ctvLeftProductMerchant.setText("");
         }
 
-        final int phoneWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth(((Activity) context));
+        final int phoneWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(((Activity) context));
         final int marginLeft = phoneWidth * 15 / 640;
         final int marginRight = marginLeft;
         final int dividerWidth = phoneWidth * 16 / 640;
@@ -213,12 +213,12 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
 
             viewHolder.ctvLeftProductPrice.setVisibility(View.VISIBLE);
             viewHolder.ctvLeftProductFinalPrice.setPadding(JDataUtils.dp2Px(9), 0, JDataUtils.dp2Px(9), JDataUtils.dp2Px(5));
-            viewHolder.ctvLeftProductPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductPriceFloat + ""));
+            viewHolder.ctvLeftProductPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductPriceFloat + ""));
             viewHolder.ctvLeftProductPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         } else {
             viewHolder.ctvLeftProductPrice.setVisibility(View.GONE);
         }
-        viewHolder.ctvLeftProductFinalPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
+        viewHolder.ctvLeftProductFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
 
         viewHolder.llLeftProduct.setOnClickListener(new View.OnClickListener() {
 
@@ -356,13 +356,13 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
         if (JDataUtils.compare(rightProductFinalPriceFloat, rightProductPriceFloat) < 0) {
             viewHolder.ctvRightProductPrice.setVisibility(View.VISIBLE);
             viewHolder.ctvRightProductFinalPrice.setPadding(JDataUtils.dp2Px(9), 0, JDataUtils.dp2Px(9), JDataUtils.dp2Px(5));
-            viewHolder.ctvRightProductPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(rightProductPriceFloat + ""));
+            viewHolder.ctvRightProductPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(rightProductPriceFloat + ""));
             viewHolder.ctvRightProductPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         } else {
             viewHolder.ctvRightProductPrice.setVisibility(View.GONE);
 
         }
-        viewHolder.ctvRightProductFinalPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(rightProductFinalPriceFloat + ""));
+        viewHolder.ctvRightProductFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(rightProductFinalPriceFloat + ""));
 
         viewHolder.llRightProduct.setOnClickListener(new View.OnClickListener() {
             private Context context;

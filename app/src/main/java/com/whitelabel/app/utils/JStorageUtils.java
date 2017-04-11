@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.bean.Wishlist;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.MyAccountOrderOuter;
@@ -588,13 +588,13 @@ public class JStorageUtils {
 
     }
     public static void saveAppVersion(){
-        SharedPreferences shared = GemfiveApplication.getInstance().getSharedPreferences("AppVersion", Activity.MODE_PRIVATE);
+        SharedPreferences shared = WhiteLabelApplication.getInstance().getSharedPreferences("AppVersion", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = shared.edit();
         editor.putString("appVersion", JToolUtils.getAppVersion());
         editor.apply();
     }
     public static String getAppVersion(){
-        SharedPreferences shared = GemfiveApplication.getInstance().getSharedPreferences("AppVersion", Activity.MODE_PRIVATE);
+        SharedPreferences shared = WhiteLabelApplication.getInstance().getSharedPreferences("AppVersion", Activity.MODE_PRIVATE);
         String appVersion="";
         if(shared!=null) {
             appVersion= shared.getString("appVersion", "");

@@ -31,7 +31,7 @@ import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.activity.ProductListActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.FragmentOnAdapterCallBack;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
@@ -227,7 +227,7 @@ public class ProductListAdapter extends BaseAdapter {
         }
         convertView.setVisibility(View.VISIBLE);
 
-        final int phoneWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth(productListActivity);
+        final int phoneWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(productListActivity);
         final int marginLeft = phoneWidth * 15 / 640;
         final int marginRight = marginLeft;
         final int dividerWidth = phoneWidth * 16 / 640;
@@ -321,12 +321,12 @@ public class ProductListAdapter extends BaseAdapter {
             viewHolder.ctvLeftProductPrice.setVisibility(View.VISIBLE);
             viewHolder.ctvLeftProductFinalPrice.setPadding(JDataUtils.dp2Px(9), 0, JDataUtils.dp2Px(9), 0);
 
-            viewHolder.ctvLeftProductPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductPriceFloat + ""));
+            viewHolder.ctvLeftProductPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductPriceFloat + ""));
             viewHolder.ctvLeftProductPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         } else {
             viewHolder.ctvLeftProductPrice.setVisibility(View.GONE);
         }
-        viewHolder.ctvLeftProductFinalPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
+        viewHolder.ctvLeftProductFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
 
         final ViewHolder finalViewHolder = viewHolder;
         viewHolder.llLeftProduct.setOnClickListener(new View.OnClickListener() {
@@ -498,13 +498,13 @@ public class ProductListAdapter extends BaseAdapter {
         if (JDataUtils.compare(rightProductFinalPriceFloat, rightProductPriceFloat) < 0) {
             viewHolder.ctvRightProductPrice.setVisibility(View.VISIBLE);
             viewHolder.ctvRightProductFinalPrice.setPadding(JDataUtils.dp2Px(9), 0, JDataUtils.dp2Px(9), 0);
-            viewHolder.ctvRightProductPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(rightProductPriceFloat + ""));
+            viewHolder.ctvRightProductPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(rightProductPriceFloat + ""));
             viewHolder.ctvRightProductPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         } else {
             viewHolder.ctvRightProductPrice.setVisibility(View.GONE);
 
         }
-        viewHolder.ctvRightProductFinalPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(rightProductFinalPriceFloat + ""));
+        viewHolder.ctvRightProductFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(rightProductFinalPriceFloat + ""));
 
         viewHolder.llRightProduct.setOnClickListener(new View.OnClickListener() {
             private ProductListActivity productListActivity;
@@ -671,7 +671,7 @@ public class ProductListAdapter extends BaseAdapter {
         setWishIconColorToBlank(ivWwishIcon);
         productItemEntityArrayList.get(tempPosition).setIs_like(0);
         if (!TextUtils.isEmpty(productItemEntityArrayList.get(tempPosition).getItem_id())) {
-            myAccountDao.deleteWishListById(GemfiveApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), itemId, tempPosition);
+            myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), itemId, tempPosition);
         }
     }
 
@@ -688,9 +688,9 @@ public class ProductListAdapter extends BaseAdapter {
     }
 
     private void addtoWishlistsendRequest(SVRAppserviceProductSearchResultsItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(productListActivity)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(productListActivity)) {
             entity.setIs_like(1);
-            mProductDao.addProductListToWish(entity.getProductId(), GemfiveApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), tempPosition);
+            mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), tempPosition);
             setWishIconColorToPurple(ivWwishIcon, ivWwishIcon2);
         } else {
             productListActivity.saveProductIdWhenJumpLoginPage(entity.getProductId());
@@ -723,7 +723,7 @@ public class ProductListAdapter extends BaseAdapter {
                         WishDelEntityResult wishDelEntityResult = (WishDelEntityResult) msg.obj;
                         int position = Integer.parseInt(String.valueOf(wishDelEntityResult.getParams()));
                         //update wishlist number
-                        GemfiveApplication.getAppConfiguration().updateWishlist(mAdapter.get().productListActivity, wishDelEntityResult.getWishListItemCount());
+                        WhiteLabelApplication.getAppConfiguration().updateWishlist(mAdapter.get().productListActivity, wishDelEntityResult.getWishListItemCount());
                     } else {
                         ErrorMsgBean bean = (ErrorMsgBean) msg.obj;
                         int position = Integer.parseInt(String.valueOf(bean.getParams()));
@@ -739,7 +739,7 @@ public class ProductListAdapter extends BaseAdapter {
                                 (SVRAppserviceProductSearchResultsItemReturnEntity) mAdapter.get().productItemEntityArrayList.get(position);
                         productEntity.setItem_id(addToWishlistEntity.getItemId());
                         //update wishlist number
-                        GemfiveApplication.getAppConfiguration().updateWishlist(mAdapter.get().productListActivity, addToWishlistEntity.getWishListItemCount());
+                        WhiteLabelApplication.getAppConfiguration().updateWishlist(mAdapter.get().productListActivity, addToWishlistEntity.getWishListItemCount());
                         try {
                             GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
                                     "Add To Wishlist",

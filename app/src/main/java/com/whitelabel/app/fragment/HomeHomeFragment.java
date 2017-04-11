@@ -30,7 +30,7 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ProductListActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
@@ -130,8 +130,8 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     public long getCartItemCount() {
         long cartItemCount = 0;
         try {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(homeActivity)) {
-                cartItemCount = GemfiveApplication.getAppConfiguration().getUserInfo(homeActivity).getCartItemCount();
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)) {
+                cartItemCount = WhiteLabelApplication.getAppConfiguration().getUserInfo(homeActivity).getCartItemCount();
                 ArrayList<TMPLocalCartRepositoryProductEntity> list = JStorageUtils.getProductListFromLocalCartRepository(homeActivity);
                 if (list.size() > 0) {
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
@@ -172,7 +172,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             categoryId = (String) getArguments().getSerializable("data");
         }
         ctpiCategoryList = (CustomTabCustomPageIndicator) mContainView.findViewById(R.id.ctpiCategoryList);
-        ctpiCategoryList.setIndicatorColorResource(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctpiCategoryList.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         chvpContainer = (CustomHomeViewPager) mContainView.findViewById(R.id.chvpContainer);
         rlHome = mContainView.findViewById(R.id.rl_home);
         rlHome.setVisibility(View.GONE);
@@ -183,7 +183,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             showLoaderDialog();
             productDao.getBaseCategory();
         } else {
-            SVRAppserviceCatalogSearchReturnEntity catalogSearchReturnEntity = GemfiveApplication.getAppConfiguration().getCategoryArrayList();
+            SVRAppserviceCatalogSearchReturnEntity catalogSearchReturnEntity = WhiteLabelApplication.getAppConfiguration().getCategoryArrayList();
             for (int i = 0; i < catalogSearchReturnEntity.getCategory().size(); i++) {
                 JLogUtils.d("Category", catalogSearchReturnEntity.getCategory().get(i).getName());
             }
@@ -260,7 +260,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
                         SVRAppserviceCatalogSearchReturnEntity searchCatalog = (SVRAppserviceCatalogSearchReturnEntity) msg.obj;
                         if (searchCatalog != null) {
                             fragment.firstloaded = true;
-                            GemfiveApplication.getAppConfiguration().setCategoryArrayList(searchCatalog);
+                            WhiteLabelApplication.getAppConfiguration().setCategoryArrayList(searchCatalog);
                             JStorageUtils.saveCategoryArrayList(mActivity.get(), searchCatalog);
                             fragment.initData(searchCatalog);
                         }
@@ -338,7 +338,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     }
 
     public void showAppRate() {
-//        if (JStorageUtils.isShowAppRate(homeActivity) && !GemfiveApplication.delayShowAppRate && !JStorageUtils.showAppGuide1(homeActivity) && JStorageUtils.isClickDelayShow(homeActivity)) {
+//        if (JStorageUtils.isShowAppRate(homeActivity) && !WhiteLabelApplication.delayShowAppRate && !JStorageUtils.showAppGuide1(homeActivity) && JStorageUtils.isClickDelayShow(homeActivity)) {
 //            if (!!homeActivity.getDrawerLayout().isDrawerOpen(Gravity.LEFT)) {
 //                new Handler().postDelayed(new Runnable() {
 //                    @Override
@@ -404,7 +404,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
                 public void onClick(View v) {
                     popupWindow.dismiss();
                     isShowAppRatePopup = false;
-                    GemfiveApplication.delayShowAppRate = true;
+                    WhiteLabelApplication.delayShowAppRate = true;
                 }
             });
         }
@@ -556,7 +556,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         public void homeTrack(int position) {
             try {
                 //追踪点击分类
-                String brandName = GemfiveApplication.getAppConfiguration().getCategoryArrayList().getCategory().get(position).getName();
+                String brandName = WhiteLabelApplication.getAppConfiguration().getCategoryArrayList().getCategory().get(position).getName();
                 GaTrackHelper.getInstance().googleAnalytics(brandName, homeActivity);
                 JLogUtils.i("googleGA_screen", brandName);
                 //统计总数

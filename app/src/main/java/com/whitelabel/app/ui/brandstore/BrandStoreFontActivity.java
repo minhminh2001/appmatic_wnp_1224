@@ -24,7 +24,7 @@ import com.whitelabel.app.activity.IFilterSortActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.activity.ProductActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
 import com.whitelabel.app.fragment.ProductListFilterFragment;
 import com.whitelabel.app.fragment.ProductListSortFragment;
@@ -425,7 +425,7 @@ public class BrandStoreFontActivity extends BaseActivitySearchCart<BrandStoreCon
                     Intent intent = new Intent(BrandStoreFontActivity.this, ProductActivity.class);
                     intent.putExtras(getProductBundle(mProducts.get(position)));
                     ActivityOptionsCompat aop = ActivityOptionsCompat.makeSceneTransitionAnimation(BrandStoreFontActivity.this,
-                            itemViewHolder.ivProductImage, GemfiveApplication.getInstance().getString(R.string.activity_image_trans));
+                            itemViewHolder.ivProductImage, WhiteLabelApplication.getInstance().getString(R.string.activity_image_trans));
                     ActivityCompat.startActivityForResult(BrandStoreFontActivity.this, intent, MerchantStoreFrontActivity.RESULT_ADD_WISH, aop.toBundle());
                 } else {
                     startNextActivityForResult(getProductBundle(mProducts.get(position)), ProductActivity.class, REQUEST_ADD_WISH, false);
@@ -468,7 +468,7 @@ public class BrandStoreFontActivity extends BaseActivitySearchCart<BrandStoreCon
     }
 
     private void addWishlist(ImageView icon1, ImageView icon2, int position) {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
             mProducts.get(position).setIs_like(1);
             AnimUtil.setWishIconColorToPurple(icon1, icon2);
             mPresenter.addWistList(mProducts.get(position));
@@ -562,7 +562,7 @@ public class BrandStoreFontActivity extends BaseActivitySearchCart<BrandStoreCon
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (REQUEST_PRE_ADD_WISH == requestCode && resultCode == LoginRegisterEmailLoginFragment.RESULTCODE) {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
                 mPresenter.addWistList(mProducts.get(mPreAddWishListPostion));
                 mOffset = 1;
                 mProducts.get(mPreAddWishListPostion).setIs_like(1);

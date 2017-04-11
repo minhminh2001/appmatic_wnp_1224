@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.MyAccountOrderDetailAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.MyAccountOrderDetailEntityResult;
 import com.whitelabel.app.model.MyAccountOrderMiddle;
@@ -202,7 +202,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
 
     private void initSessionKey() {
         //init session_key
-        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
 
             initData();
         } else {
@@ -270,7 +270,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
      */
     private void sendRequest(String orderId) {
         mDialog = JViewUtils.showProgressDialog(MyAccountOrderDetailActivity.this);
-        mDao.sendRequest("", GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), orderId);
+        mDao.sendRequest("", WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), orderId);
 
 //        SVRParameters parameters = new SVRParameters();
 //        parameters.put("storeId", "");
@@ -425,7 +425,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         super.onActivityResult(requestCode, resultCode, data);
 
         if (REQUESTCODE_LOGIN == requestCode) {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(MyAccountOrderDetailActivity.this)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(MyAccountOrderDetailActivity.this)) {
 
                 sendRequest(orderId);
             }

@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.whitelabel.app.R;
 import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.adapter.SelectServiceAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.GetServiceEntity;
 import com.whitelabel.app.model.GetServiceListEntity;
 import com.whitelabel.app.model.SelectServiceEntity;
@@ -113,9 +113,9 @@ public class HideFunctionActivity extends com.whitelabel.app.BaseActivity implem
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.save:
-                if(GemfiveApplication.getPhoneConfiguration().isConnect(this)) {
+                if(WhiteLabelApplication.getPhoneConfiguration().isConnect(this)) {
                     if(clickList) {
-                        GemfiveApplication.getAppConfiguration().signOut(this);
+                        WhiteLabelApplication.getAppConfiguration().signOut(this);
                         myServerAddress = serverAddress.get(serviceNumbel);
                         myDownloadImageServerAddress = downloadImageServerAddress.get(serviceNumbel);
                         myUploadImageServerAddress = UploadImageServerAddress.get(serviceNumbel);
@@ -125,8 +125,8 @@ public class HideFunctionActivity extends com.whitelabel.app.BaseActivity implem
                         }
                         JStorageUtils.clearLocalCartRepository(this);
                         GlobalData.updateGlobalData(myServerAddress, myDownloadImageServerAddress, myUploadImageServerAddress, hashKey);
-                        GemfiveApplication.getAppConfiguration().init(getApplicationContext());
-                        GemfiveApplication.InitappConfigurationEntity();
+                        WhiteLabelApplication.getAppConfiguration().init(getApplicationContext());
+                        WhiteLabelApplication.InitappConfigurationEntity();
                         Intent intent=new Intent(HideFunctionActivity.this,HomeActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         Bundle bundle=new Bundle();

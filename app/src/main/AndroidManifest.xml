@@ -20,7 +20,7 @@
     <!-- GCM requires a Google account. -->
     <!-- <uses-permission android:name="android.permission.GET_ACCOUNTS" /> -->
     <application
-        android:name=".application.GemfiveApplication"
+        android:name=".application.WhiteLabelApplication"
         android:allowBackup="true"
         android:icon="${app_icon}"
         android:theme="@style/AppTheme">

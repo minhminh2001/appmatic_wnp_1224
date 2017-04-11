@@ -20,7 +20,7 @@ import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListFilterSortFilterBrandAdapter;
 import com.whitelabel.app.adapter.ProductListFilterSortFilterTypeAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.listener.OnFilterSortFragmentListener;
 import com.whitelabel.app.listener.OnRangeSeekBarChangeListener;
 import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsBrandItemReturnEntity;
@@ -152,7 +152,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
         tvAllTypesPlusAnimate = (TextView) contentView.findViewById(R.id.tv_all_types_plus_animate);
         rlAllTypesPlus = (RelativeLayout) contentView.findViewById(R.id.rl_all_types_plus);
         View vPriceRangeBrandsDivider  =contentView.findViewById(R.id.vPriceRangeBrandsDivider);
-        ctvPriceRangeTitle.setText(String.format(FILTER_PRICERANGE, GemfiveApplication.getAppConfiguration().getCurrency().getName()));
+        ctvPriceRangeTitle.setText(String.format(FILTER_PRICERANGE, WhiteLabelApplication.getAppConfiguration().getCurrency().getName()));
         addFilterPriceRangeBar();
         JLogUtils.i("ProductListFilterFragment","mCanUserBrand:"+mCanUserBrand);
         if(mCanUserBrand) {
@@ -365,7 +365,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
 
             allBrandsListViewIsShow = false;
         } else {
-            ctvAllBrandsTitle.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            ctvAllBrandsTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             AnimUtil.animatePlusSign(tvAllBrandsPlusAnimate, true, getContext());
 
             LinearLayout.LayoutParams dividerlp = (LinearLayout.LayoutParams) vAllBrandsContentAllTypesTitleDivider.getLayoutParams();
@@ -461,7 +461,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
             }
             allTypesListViewIsShow = false;
         } else {
-            ctvAllTypesTitle.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            ctvAllTypesTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             rlAllTypesPlus.setVisibility(View.VISIBLE);
 
             filterTypeAdapter = new ProductListFilterSortFilterTypeAdapter((Activity) filterSortActivity, fragmentListener, modelTypeReturnEntityArrayList, productListFilterSortPageEntity);
@@ -530,7 +530,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
                     }
 
                     AnimUtil.animatePlusSign(tvAllBrandsPlusAnimate, true, getContext());
-                    ctvAllBrandsTitle.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    ctvAllBrandsTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                 }
 
                 // Types
@@ -574,7 +574,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
                     }
 
                     AnimUtil.animatePlusSign(tvAllTypesPlusAnimate, true, getContext());
-                    ctvAllTypesTitle.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    ctvAllTypesTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                 }
 
                 // Brands

@@ -30,7 +30,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListAdapter;
 import com.whitelabel.app.adapter.SearchSuggestionAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.FragmentOnAdapterCallBack;
 import com.whitelabel.app.callback.ProductListFilterHideCallBack;
 import com.whitelabel.app.dao.ProductDao;
@@ -664,8 +664,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 
 //    private void getSearchSuggestions(String q) {
 //        if (!JDataUtils.isChinese(q) && !TextUtils.isEmpty(cetKeywords.getText().toString().trim())) {
-//            if (GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
-//                mProductDao.getSuggestions(q, GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey());
+//            if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+//                mProductDao.getSuggestions(q, WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey());
 //            } else {
 //                mProductDao.getSuggestions(q, "");
 //            }
@@ -860,7 +860,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 //            productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setModel_type(mSuggestionsModleType);
 //        }
         TYPE = LOADING;
-        String storeId = GemfiveApplication.getAppConfiguration().getStoreView().getId();
+        String storeId = WhiteLabelApplication.getAppConfiguration().getStoreView().getId();
         final SVRAppserviceProductSearchParameter param = productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1);
         String p = param.getP() + "";
         String limit = param.getLimit() + "";
@@ -878,9 +878,9 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             categoryId = param.getCategory_id();
         }
         //传入session是为判断产品是否被wish
-        if (GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
             mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q, price, "",
-                    GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey());
+                    WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey());
         } else {
             mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q, price, "", "");
         }

@@ -27,7 +27,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.CurationProductListAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.ProductListFilterHideCallBack;
 import com.whitelabel.app.dao.ProductDao;
@@ -385,7 +385,7 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
         } catch (Exception ex) {
             ex.getStackTrace();
         }
-//        GemfiveApplication.getRefWatcher(this).watch(this);
+//        WhiteLabelApplication.getRefWatcher(this).watch(this);
 
     }
 
@@ -522,8 +522,8 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
         }
         String modelType = mSVRAppserviceProductSearchParameter.getModel_type();
         String sessionKey = "";
-        if (GemfiveApplication.getAppConfiguration().isSignIn(CurationActivity.this)) {
-            sessionKey = GemfiveApplication.getAppConfiguration().getUserInfo(CurationActivity.this).getSessionKey();
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(CurationActivity.this)) {
+            sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(CurationActivity.this).getSessionKey();
             mProductDao.getCurationDetail(order, dir, brand, modelType, price, mCurationId, offset + "", LIMIT + "", sessionKey);
         } else {
             mProductDao.getCurationDetail(order, dir, brand, modelType, price, mCurationId, offset + "", LIMIT + "", "");
@@ -577,7 +577,7 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
 
         //登陆成功后要刷新所有product的信息  //在curationProductListAdapter  onClick wishIcon 里 startActivityForResult 到loginpage;，成功后调用以下方法
         if (LoginRegisterActivity.REQUESTCODE_LOGIN == requestCode && resultCode == LoginRegisterEmailLoginFragment.RESULTCODE) {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(CurationActivity.this)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(CurationActivity.this)) {
                 //将预缓存的wishitem productId设为有效，以便稍后自动将其加如wishlist
                 changeOperateProductIdPrecacheStatus(true);
                 onRefresh();
@@ -636,7 +636,7 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
     public void initListViewHeader(final SVRAppserviceLandingPagesDetailReturnEntity curationReturnEntity) {
         int imageWidth = 640;
         int imageHeight = 640 * 240 / 490;
-        int mDestHeight = GemfiveApplication.getPhoneConfiguration().getScreenWidth(CurationActivity.this) * 240 / 490;
+        int mDestHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(CurationActivity.this) * 240 / 490;
         view = LayoutInflater.from(CurationActivity.this).inflate(R.layout.header_list_curation, null);
         ivCuration = (ImageView) view.findViewById(R.id.iv_curation);
 

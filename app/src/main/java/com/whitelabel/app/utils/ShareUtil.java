@@ -19,7 +19,7 @@ import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.adapter.ShareIntentListAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.OtherDao;
 import com.whitelabel.app.model.FacebookStoryEntity;
 
@@ -188,9 +188,9 @@ public class ShareUtil {
     }
     private Handler mHandler=new Handler();
     private void sendTrack() {
-        String email= GemfiveApplication.getAppConfiguration().getUserInfo(mContext).getEmail();
-        String name=GemfiveApplication.getAppConfiguration().getUserInfo(mContext).getFirstName() + " " + GemfiveApplication.getAppConfiguration().getUserInfo(mContext).getLastName();
-        new OtherDao("ShareUtil",mHandler).sendTrack(GemfiveApplication.getAppConfiguration().getUserInfo(mContext).getSessionKey(),name,email);
+        String email= WhiteLabelApplication.getAppConfiguration().getUserInfo(mContext).getEmail();
+        String name= WhiteLabelApplication.getAppConfiguration().getUserInfo(mContext).getFirstName() + " " + WhiteLabelApplication.getAppConfiguration().getUserInfo(mContext).getLastName();
+        new OtherDao("ShareUtil",mHandler).sendTrack(WhiteLabelApplication.getAppConfiguration().getUserInfo(mContext).getSessionKey(),name,email);
     }
     public Boolean checkFbInstalled() {
         PackageManager pm = mContext.getPackageManager();

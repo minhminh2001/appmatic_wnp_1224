@@ -38,7 +38,7 @@ import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.adapter.ShoppingCartVerticalAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.MaterialDialogCallback;
 import com.whitelabel.app.callback.ShoppingCartAdapterCallback;
 import com.whitelabel.app.dao.ShoppingCarDao;
@@ -193,13 +193,13 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 //                if (getSwipeRefreshStatus()) {
 //                    return;
 //                }
-//                if (!GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
+//                if (!WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
 //                    startLoginActivity();
 //                } else {
 //                    mDialog = JViewUtils.showProgressDialog(getActivity());
 //                    String sessionKey = "";
-//                    if (GemfiveApplication.getAppConfiguration() != null && GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()) != null) {
-//                        sessionKey = GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
+//                    if (WhiteLabelApplication.getAppConfiguration() != null && WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()) != null) {
+//                        sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
 //                    }
 //                    if (mReedemStr.equals(String.valueOf(tvStoreCredit.getText()))) {
 //                        mCarDao.redeemStoreCredit(sessionKey, "0");
@@ -212,14 +212,14 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 if (getSwipeRefreshStatus()) {
                     return;
                 }
-                if (!GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
+                if (!WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
                     startLoginActivity();
                 } else {
                     showDialog();
                     mGATrackCheckoutTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
                     String sessionKey = "";
-                    if (GemfiveApplication.getAppConfiguration() != null && GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()) != null) {
-                        sessionKey = GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
+                    if (WhiteLabelApplication.getAppConfiguration() != null && WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()) != null) {
+                        sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
                     }
                     mCarDao.checkOutofStock(sessionKey);
                 }
@@ -242,7 +242,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         }
         JViewUtils.cleanCurrentViewFocus(getActivity());
         String voucherCode = etVoucherApply.getText().toString();
-        if (!GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
+        if (!WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
             mVoucherCode = voucherCode;
             startLoginActivity();
         } else {
@@ -255,8 +255,8 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 showDialog();
                 tvNullApplyHint.setVisibility(View.GONE);
                 String sessionKey = "";
-                if (GemfiveApplication.getAppConfiguration() != null && GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()) != null) {
-                    sessionKey = GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
+                if (WhiteLabelApplication.getAppConfiguration() != null && WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()) != null) {
+                    sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
                 }
                 if (mApplyStr.equalsIgnoreCase(tvApply.getText().toString())) {
                     mCarDao.applyOrCancelVoucherCode(sessionKey, voucherCode, "0");
@@ -331,7 +331,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         btnTry = (LinearLayout) view.findViewById(R.id.try_again);
         swipeRefrshLayout = (CustomSwipefreshLayout) view.findViewById(R.id.swipe_container);
 //        swipeRefrshLayout.setColorSchemeResources(R.color.colorAccent);
-        swipeRefrshLayout.setColorSchemeColors(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        swipeRefrshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         swipeRefrshLayout.setOnRefreshListener(this);
         llBody.setFocusable(true);
         llBody.setFocusableInTouchMode(true);
@@ -628,7 +628,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 //                        // 在REQUEST_MULTIPLECODE response里 再调initData(),此时已没有本地缓存，走onLineHandler 从服务器拉数据。
 //                        JLogUtils.d("getShoppingCartInfo", "REQUEST_LOCALSHOPPINGINFO");
 //                        fragment.mCar = (ShoppingCartListEntityCart) msg.obj;
-//                        if (activity != null && !GemfiveApplication.getAppConfiguration().isSignIn(activity)) {
+//                        if (activity != null && !WhiteLabelApplication.getAppConfiguration().isSignIn(activity)) {
 //                            JLogUtils.d("getShoppingCartInfo", "offlineHandler");
 //                            mFragment.get().swipeRefrshLayout.setRefreshing(false);
 //                            fragment.currStatus = LOADSUCCESS;
@@ -897,7 +897,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 
     private void initShoppingCartData(ShoppingCartListEntityCart cart, boolean isInit) {
         if (getActivity() != null) {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
                 if (!TextUtils.isEmpty(cart.getGst())) {
                     mTvGst.setVisibility(View.VISIBLE);
                     mTvGst.setText("(" + cart.getGst().trim() + ")");
@@ -1000,7 +1000,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 //            }
 //
 //
-//            if (cart.getStoreCreditMessage() != null && GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
+//            if (cart.getStoreCreditMessage() != null && WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
 //                llStoreCredit.setVisibility(View.VISIBLE);
 //                tvStoreCreditTitle.setText(cart.getStoreCreditMessage().getMessage());
 //                tvStoreCreditPrice.setText(cart.getStoreCreditMessage().getValue());
@@ -1017,10 +1017,10 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     }
 
     public void saveShoppingCartCount(int num) {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
-            GOUserEntity userEntity = GemfiveApplication.getAppConfiguration().getUserInfo(getActivity());
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+            GOUserEntity userEntity = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity());
             userEntity.setCartItemCount(num);
-            GemfiveApplication.getAppConfiguration().updateDate(getActivity(), userEntity);
+            WhiteLabelApplication.getAppConfiguration().updateDate(getActivity(), userEntity);
         }
     }
 
@@ -1094,7 +1094,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 //    }
 
 //    public void initCampaignSize() {
-//        int width = GemfiveApplication.getPhoneConfiguration().getScreenWidth(getActivity());
+//        int width = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(getActivity());
 //        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ivUpdate.getLayoutParams();
 //        params.height = (int) (width * (200 / 720.0));
 //        params.width = ActionBar.LayoutParams.MATCH_PARENT;
@@ -1165,7 +1165,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 
     public void synShoppingCart() {
         if (mCar != null && mCar.getItems() != null && mCar.getItems().length > 0) {
-            mCarDao.addBatch(GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(), mCar.getItems());
+            mCarDao.addBatch(WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(), mCar.getItems());
         }
     }
 
@@ -1215,8 +1215,8 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         }
         currTime = System.currentTimeMillis();
         String sessionKey="";
-        if(GemfiveApplication.getAppConfiguration().isSignIn(getActivity())){
-            sessionKey=GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
+            sessionKey= WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
         }
         mCarDao.getShoppingCarInfo(sessionKey);
     }

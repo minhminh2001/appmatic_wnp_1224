@@ -1,7 +1,6 @@
 package com.whitelabel.app.fragment;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import com.whitelabel.app.*;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -92,8 +91,8 @@ public class BaseFragmentSearchCart extends com.whitelabel.app.BaseFragment {
     private long getCartItemCount() {
         long cartItemCount = 0;
         try {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
-                cartItemCount = GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getCartItemCount();
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                cartItemCount = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getCartItemCount();
                 ArrayList<TMPLocalCartRepositoryProductEntity> list = JStorageUtils.getProductListFromLocalCartRepository(getActivity());
                 if (list.size() > 0) {
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {

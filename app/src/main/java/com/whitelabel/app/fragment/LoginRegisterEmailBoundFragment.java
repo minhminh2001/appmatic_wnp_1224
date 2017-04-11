@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.LoginRegisterDao;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
@@ -81,7 +81,7 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
             switch (msg.what){
                 case LoginRegisterDao.REQUEST_FBUSERINFO:
                     if(msg.arg1==LoginRegisterDao.RESPONSE_SUCCESS) {
-                        GemfiveApplication.getAppConfiguration().signIn(mActivity.get(), (SVRAppserviceCustomerFbLoginReturnEntity) msg.obj);
+                        WhiteLabelApplication.getAppConfiguration().signIn(mActivity.get(), (SVRAppserviceCustomerFbLoginReturnEntity) msg.obj);
                     }else{
 
                     }
@@ -186,10 +186,10 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
         rl_emailbound_email= (CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_emailbound_email);
         hasEmail= (CustomTextView) contentView.findViewById(R.id.hasEmail);
         emptyAndfileEmail= (CustomTextView) contentView.findViewById(R.id.emptyAndfileEmail);
-        emptyAndfileEmail.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        emptyAndfileEmail.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         cbtSubmit = (CustomButton) contentView.findViewById(R.id.cbtSubmit);
-        cbtSubmit.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        cbtSubmit.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
 
         clearSubmit=(ImageView)contentView.findViewById(R.id.clear_submit);
@@ -291,7 +291,7 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
         String firstnameStr=loginRegisterActivity.fbGraphAPIUserEntity.getFirst_name();
         String lastnameStr=loginRegisterActivity.fbGraphAPIUserEntity.getLast_name();
         String fb_idStr= loginRegisterActivity.fbGraphAPIUserEntity.getId();
-        String device_token=GemfiveApplication.getPhoneConfiguration().getRegistrationToken();
+        String device_token= WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken();
 
         mDao.emailBoundUseInfoToLoginRemoteServer(email,firstnameStr,lastnameStr,fb_idStr,"0","1",device_token);
 
@@ -306,7 +306,7 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
     }
 
     private void emailBoundLoginSuccess(SVRAppserviceCustomerFbLoginReturnEntity fbLoginReturnEntity) {
-        GemfiveApplication.getAppConfiguration().signIn(loginRegisterActivity, fbLoginReturnEntity);
+        WhiteLabelApplication.getAppConfiguration().signIn(loginRegisterActivity, fbLoginReturnEntity);
 
         Intent intent = new Intent(loginRegisterActivity, HomeActivity.class);
         startActivity(intent);
@@ -319,7 +319,7 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
         String firstnameStr=loginRegisterActivity.fbGraphAPIUserEntity.getFirst_name();
         String lastnameStr=loginRegisterActivity.fbGraphAPIUserEntity.getLast_name();
         String fb_id=loginRegisterActivity.fbGraphAPIUserEntity.getId();
-        String device_token=GemfiveApplication.getPhoneConfiguration().getRegistrationToken();
+        String device_token= WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken();
         mDao.fbUseInfoToLoginRemoteServer(eamil,"1",firstnameStr,lastnameStr,fb_id,"1",device_token);
 
     }

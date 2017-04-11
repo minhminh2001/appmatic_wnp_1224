@@ -8,10 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.StateListDrawable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,7 +24,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.WheelPickerAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.GlobalCallBack;
 import com.whitelabel.app.callback.MaterialDialogCallback;
 import com.whitelabel.app.callback.WheelPickerCallback;
@@ -271,8 +267,8 @@ public class JViewUtils {
         }
 
         Toast toast = Toast.makeText(context.getApplicationContext(), "", Toast.LENGTH_SHORT);
-        if (GemfiveApplication.getPhoneConfiguration() != null && GemfiveApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
-            toast.setGravity(Gravity.BOTTOM, 0, (int) (GemfiveApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
+        if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
+            toast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
         }
 
         LinearLayout toastView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.layout_customtoast, null);
@@ -592,7 +588,7 @@ public class JViewUtils {
         final RelativeLayout rlContainer = (RelativeLayout) dialogView.findViewById(R.id.rlContainer);
         final CustomTextView ctvCancel = (CustomTextView) dialogView.findViewById(R.id.ctvCancel);
         final CustomTextView ctvSet = (CustomTextView) dialogView.findViewById(R.id.ctvSet);
-        ctvSet.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         final WheelView wheelView = (WheelView) dialogView.findViewById(R.id.wheelView);
 
         WheelPickerAdapter wheelPickerAdapter = new WheelPickerAdapter(context, pickerConfigEntity.getArrayList());
@@ -722,7 +718,7 @@ public class JViewUtils {
         final WheelView wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         final WheelView wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
         final WheelView wvRight = (WheelView) dialogView.findViewById(R.id.wvRight);
-        ctvSet.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         wvLeft.setViewAdapter(wpaLeft);
         wvLeft.setVisibleItems(5);
         wvLeft.setCurrentItem(currentItem1);
@@ -946,7 +942,7 @@ public class JViewUtils {
         final WheelView wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         final WheelView wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
         final WheelView wvRight = (WheelView) dialogView.findViewById(R.id.wvRight);
-        ctvSet.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         WheelPickerAdapter wpaLeft = new WheelPickerAdapter(context, pickerConfigEntityLeft.getArrayList());
         wvLeft.setViewAdapter(wpaLeft);
         wvLeft.setVisibleItems(5);
@@ -1174,7 +1170,7 @@ public class JViewUtils {
         final CustomTextView ctvSet = (CustomTextView) dialogView.findViewById(R.id.ctvSet);
         final WheelView wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         final WheelView wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
-        ctvSet.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         WheelPickerAdapter wpaLeft = new WheelPickerAdapter(context, pickerConfigEntityLeft.getArrayList());
         wvLeft.setViewAdapter(wpaLeft);
         wvLeft.setVisibleItems(5);
@@ -1332,8 +1328,8 @@ public class JViewUtils {
         }
 
         Toast toast = Toast.makeText(context.getApplicationContext(), "", Toast.LENGTH_SHORT);
-        if (GemfiveApplication.getPhoneConfiguration() != null && GemfiveApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
-            toast.setGravity(Gravity.BOTTOM, 0, (int) (GemfiveApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
+        if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
+            toast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
         }
 
         LinearLayout toastView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.layout_prompt_productdetail_notenoughinventory, null);

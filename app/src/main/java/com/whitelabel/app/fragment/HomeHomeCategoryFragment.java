@@ -24,7 +24,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CurationActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.adapter.CurationAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.ZoomImageViewCallBack;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.MarketingLayersEntity;
@@ -254,7 +254,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
         mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.recyclerView1);
         refreshLayout = (SwipeRefreshLayout) mContentView.findViewById(R.id.swipe_container);
 //        refreshLayout.setColorSchemeResources(R.color.colorAccent);
-        refreshLayout.setColorSchemeColors(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        refreshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         refreshLayout.setOnRefreshListener(this);
         tryAgain.setOnClickListener(this);
         isPrepared = true;
@@ -375,11 +375,11 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
                 mCommonCallback.initMarketingLayers(curationListReturnEntity);
                 showItAfter = curationListReturnEntity.getShowItAfter() * 1000;
                 //loadImage
-                //String imageUrl = JImageUtils.getImageServerUrlByWidthHeight(homeActivity, curationListReturnEntity.getImage(), GemfiveApplication.getPhoneConfiguration().getScreenWidth(homeActivity), GemfiveApplication.getPhoneConfiguration().getScreenHeigth(homeActivity) - JDataUtils.dp2Px(170));
+                //String imageUrl = JImageUtils.getImageServerUrlByWidthHeight(homeActivity, curationListReturnEntity.getImage(), WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(homeActivity), WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth(homeActivity) - JDataUtils.dp2Px(170));
                 //JLogUtils.i("Allen","url== "+imageUrl);
                 //Add callback listener
-                int marketLayerWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth(homeActivity);
-                int marketLayerHeight = GemfiveApplication.getPhoneConfiguration().getScreenHeigth(homeActivity) - JDataUtils.dp2Px(170);
+                int marketLayerWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(homeActivity);
+                int marketLayerHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth(homeActivity) - JDataUtils.dp2Px(170);
 //                JImageUtils.downloadImageFromServerListener(homeActivity, curationListReturnEntity.getImage(), marketLayerWidth, marketLayerHeight, new CategoryLoadImageListener(this));
 //               JImageUtils.getInstance(homeActivity).display(((HomeHomeCallback)(getParentFragment())).getIvMarketLayer(), imageUrl, defaultBitmapLoadCallBack);
             }
@@ -468,7 +468,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        GemfiveApplication.getRefWatcher(getActivity()).watch(this);
+//        WhiteLabelApplication.getRefWatcher(getActivity()).watch(this);
     }
 
     private void initCurationList() {

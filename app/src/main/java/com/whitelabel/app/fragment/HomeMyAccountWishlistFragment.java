@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.adapter.MyAccountWishlistAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.Wishlist;
@@ -158,13 +158,13 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
                         mFragment.get().connectionLayout.setVisibility(View.GONE);
                         final WishlistEntityResult wishlistEntityResult = (WishlistEntityResult) msg.obj;
                         try {
-                            GemfiveApplication.getAppConfiguration().updateWishlist(mActivity.get(), Integer.parseInt(wishlistEntityResult.getTotal()));
+                            WhiteLabelApplication.getAppConfiguration().updateWishlist(mActivity.get(), Integer.parseInt(wishlistEntityResult.getTotal()));
                         } catch (Exception ex) {
                             ex.getStackTrace();
                         }
                         if (mFragment.get().currentPage == 1) {
                             mFragment.get().list.clear();
-                            mFragment.get().mAccountDao.saveLocalWishData(mActivity.get(), GemfiveApplication.getAppConfiguration().getUser().getId(), wishlistEntityResult.getResults());
+                            mFragment.get().mAccountDao.saveLocalWishData(mActivity.get(), WhiteLabelApplication.getAppConfiguration().getUser().getId(), wishlistEntityResult.getResults());
                             if ((null == wishlistEntityResult.getResults() || wishlistEntityResult.getResults().size() == 0)) {
                                 mFragment.get().adapter.notifyDataSetChanged();
                                 mFragment.get().nogoods.setVisibility(View.VISIBLE);
@@ -205,9 +205,9 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
                     break;
                 case MyAccountDao.REQUEST_DELETEWISHLIST:
                     if (msg.arg1 == MyAccountDao.RESPONSE_SUCCESS) {
-                        GemfiveApplication.getAppConfiguration().deleteWishlist(mActivity.get());
+                        WhiteLabelApplication.getAppConfiguration().deleteWishlist(mActivity.get());
                         //如果更换listview,这里可被放开
-//                      mFragment.get().mAccountDao.saveLocalWishData(mActivity.get(), GemfiveApplication.getAppConfiguration().getUser().getId(),mFragment.get(). list);
+//                      mFragment.get().mAccountDao.saveLocalWishData(mActivity.get(), WhiteLabelApplication.getAppConfiguration().getUser().getId(),mFragment.get(). list);
                         mFragment.get().currentPage = 1;
                         mFragment.get().sendRequest();
                         if (mFragment.get().list.size() == 0) {
@@ -253,7 +253,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
         initLisener();
         setSwipeListView();
 
-        mAccountDao.getLocalWishData(getActivity(), GemfiveApplication.getAppConfiguration().getUser().getId());
+        mAccountDao.getLocalWishData(getActivity(), WhiteLabelApplication.getAppConfiguration().getUser().getId());
         showRefreshDialog();
         setHasOptionsMenu(true);
 
@@ -266,7 +266,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
 
     public void sendRequest() {
         Loading = false;
-        mAccountDao.getWishList(GemfiveApplication.getAppConfiguration().getUserInfo(homeActivity).getSessionKey(), currentPage, pageSize);
+        mAccountDao.getWishList(WhiteLabelApplication.getAppConfiguration().getUserInfo(homeActivity).getSessionKey(), currentPage, pageSize);
     }
 
     public void showRefreshDialog() {
@@ -342,7 +342,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
     //调用删除接口
     private void sendRequestToDeteleteCell(String itemId, int position) {
         mDialog = JViewUtils.showProgressDialog(homeActivity);
-        mAccountDao.deleteWishListById(GemfiveApplication.getAppConfiguration().getUserInfo(homeActivity).getSessionKey(), itemId, position);
+        mAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUserInfo(homeActivity).getSessionKey(), itemId, position);
     }
 
     public final SwipeMenuItem createDeleteSwipeItem() {
@@ -365,7 +365,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
         lv = (SwipeMenuListView) contentView.findViewById(R.id.whistlist_lv);
         swipeLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.swipe_container);
 //        swipeLayout.setColorSchemeResources(R.color.colorAccent);
-        swipeLayout.setColorSchemeColors(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        swipeLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         swipeLayout.setOnRefreshListener(this);
         return contentView;
     }

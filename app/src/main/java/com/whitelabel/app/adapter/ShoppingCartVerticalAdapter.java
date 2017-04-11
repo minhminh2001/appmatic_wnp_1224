@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.ShoppingCartAdapterCallback;
 import com.whitelabel.app.dao.ShoppingCarDao;
 import com.whitelabel.app.model.ErrorMsgBean;
@@ -179,7 +179,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(viewHolder.itemView.getWindowToken(), 0);
                 ShoppingCartListEntityCell bean = (ShoppingCartListEntityCell) list.get(position);
-                if (!GemfiveApplication.getAppConfiguration().isSignIn(context)) {
+                if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
                     list.remove(position);
                     calculationToatalPriceAndNum(list);
                     ShoppingCartVerticalAdapter.this.notifyDataSetChanged();
@@ -560,7 +560,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                 return;
             }
             ShoppingCartListEntityCell shoppingCart = (ShoppingCartListEntityCell) list.get(position);
-            if (!GemfiveApplication.getAppConfiguration().isSignIn(context)) {
+            if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
                 if (Integer.parseInt(shoppingCart.getQty().toString()) + 1 <= Integer.parseInt(shoppingCart.getMaxQty())) {
                     if (!TextUtils.isEmpty(shoppingCart.getMaxSaleQty())) {
                         String maxSaleQty = shoppingCart.getMaxSaleQty();
@@ -624,7 +624,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                 return;
             } else {
                 shoppingCart.setQty(newCount + "");
-                if (!GemfiveApplication.getAppConfiguration().isSignIn(context)) {
+                if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
                     if (newCount > Integer.parseInt(shoppingCart.getMaxQty())) {
                         shoppingCart.setInStock("0");
                     } else {
@@ -812,7 +812,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         KeyValueBean bean = new KeyValueBean();
         bean.setKey(position + "");
         bean.setValue(option + "");
-        mShoppingCartDao.requestChangeCount(GemfiveApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), cellId, newCount + "", bean);
+        mShoppingCartDao.requestChangeCount(WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), cellId, newCount + "", bean);
 
     }
     private void startBrandStoreActivity(Activity activity,String brandName,String brandId){
@@ -831,7 +831,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
     }
     private void sendRequestToDeteleteCell(final int position, String itemId) {
         mDialog = JViewUtils.showProgressDialog(context);
-        mShoppingCartDao.deleteProductFromShoppingCart(GemfiveApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), itemId, position + "");
+        mShoppingCartDao.deleteProductFromShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), itemId, position + "");
     }
 
 }

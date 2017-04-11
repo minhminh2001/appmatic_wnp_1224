@@ -22,7 +22,7 @@ import com.whitelabel.app.activity.EditAddressActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.adapter.AddressBookAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.AddressDeleteCellEntity;
@@ -134,7 +134,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
                         if (activity != null && !activity.isFinishing() && fragment.isAdded()) {
                             final AddresslistReslut addresslistReslut = (AddresslistReslut) msg.obj;
                             if (null != addresslistReslut.getAddress()) {
-                                fragment.dao.saveLocalAddressData(activity, GemfiveApplication.getAppConfiguration().getUser().getId(), addresslistReslut.getAddress());
+                                fragment.dao.saveLocalAddressData(activity, WhiteLabelApplication.getAppConfiguration().getUser().getId(), addresslistReslut.getAddress());
                                 boolean isLocalData = false;
                                 fragment.initWithWebServiceDatas(addresslistReslut.getAddress(), isLocalData);
                             }
@@ -206,8 +206,8 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
         textView_add.setOnClickListener(this);
         refreshLayout.setOnRefreshListener(this);
 //        refreshLayout.setColorSchemeResources(R.color.colorAccent);
-        refreshLayout.setColorSchemeColors(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
-        dao.getLocalAddressData(getActivity(), GemfiveApplication.getAppConfiguration().getUser().getId());
+        refreshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        dao.getLocalAddressData(getActivity(), WhiteLabelApplication.getAppConfiguration().getUser().getId());
         showRefreshLayout();
         setSwipeListView();
         setHasOptionsMenu(true);
@@ -353,7 +353,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
 
     private void sendRequestToDeteleteCell(String itemId) {
         mDialog = JViewUtils.showProgressDialog(getActivity());
-        dao.deleteAddress(GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(), itemId);
+        dao.deleteAddress(WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(), itemId);
     }
 
     @Override
@@ -407,7 +407,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
      */
     private void sendRequest() {
         if (getActivity() != null) {
-            dao.getAddresslist(GemfiveApplication.getAppConfiguration().getUserInfo(addressBookActivity).getSessionKey());
+            dao.getAddresslist(WhiteLabelApplication.getAppConfiguration().getUserInfo(addressBookActivity).getSessionKey());
         }
     }
 

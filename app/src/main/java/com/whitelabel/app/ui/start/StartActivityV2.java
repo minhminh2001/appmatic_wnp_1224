@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.handler.INITApp;
@@ -173,8 +173,8 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
         imageView.setImageResource(R.mipmap.icon_v1);
 //        mSplashScreen = JStorageUtils.getToSplashScreenMark(StartActivity.this);
         mStartHandler=new StartHandler(this);
-        if(GemfiveApplication.getAppConfiguration().isSignIn(StartActivityV2.this)) {
-            mSessionKey = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(StartActivityV2.this)) {
+            mSessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
         }
         mCallback=new INITApp(StartActivityV2.this, new MeInitCallBack(this));
         INITExecutor.getInstance().execute(mCallback);

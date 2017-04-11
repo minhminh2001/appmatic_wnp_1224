@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.model.NotificationCell;
 import com.whitelabel.app.model.NotificationReceivedEntity;
@@ -191,7 +191,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
     private void initData() {
         Bundle bundle = getIntent().getExtras();
         mDialog = JViewUtils.showProgressDialog(NotificationDetailActivity.this);
-        String device_token= GemfiveApplication.getPhoneConfiguration().getRegistrationToken();
+        String device_token= WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken();
         if (bundle != null && !JDataUtils.isEmpty(bundle.getString("where"))) {
             entity = (NotificationReceivedEntity) bundle.getSerializable("data");
 //            try {
@@ -207,7 +207,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
                 setTitle(entity.getTitle());
             }
             isUnRead = true;
-            mDao.getNotificationDetail(GemfiveApplication.getAppConfiguration().getUser() == null ? null : GemfiveApplication.getAppConfiguration().getUser().getSessionKey(), itemId, "1",device_token);
+            mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), itemId, "1",device_token);
         } else if (bundle != null) {
             NotificationCell notificationCell = (NotificationCell) bundle.getSerializable("data");
 //            try {
@@ -221,7 +221,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
                 notificationTitle = notificationCell.getTitle();
             }
             itemId = notificationCell.getItems_id();
-            mDao.getNotificationDetail(GemfiveApplication.getAppConfiguration().getUser() == null ? null : GemfiveApplication.getAppConfiguration().getUser().getSessionKey(), itemId, "1","");
+            mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), itemId, "1","");
         }
 
         try {

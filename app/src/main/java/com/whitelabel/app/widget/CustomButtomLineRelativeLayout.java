@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.utils.JToolUtils;
 
 /**
@@ -38,7 +38,7 @@ public class CustomButtomLineRelativeLayout extends RelativeLayout {
 
         LayoutParams lp=(LayoutParams)lineTextView.getLayoutParams() ;
         if (active) {
-            lineTextView.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            lineTextView.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             lp.height=JToolUtils.dip2px(this.getContext(),purpleLineHeight);
             lineTextView.requestLayout();
         }else{
@@ -55,7 +55,7 @@ public class CustomButtomLineRelativeLayout extends RelativeLayout {
 
         LinearLayout.LayoutParams lp=(LinearLayout.LayoutParams)view.getLayoutParams() ;
         if (active) {
-            view.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            view.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             lp.height=JToolUtils.dip2px(view.getContext(),purpleLineHeight);
             view.requestLayout();
         }else{
@@ -68,7 +68,7 @@ public class CustomButtomLineRelativeLayout extends RelativeLayout {
 
         LayoutParams lp=(LayoutParams)view.getLayoutParams() ;
         if (active) {
-            view.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            view.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             lp.height=JToolUtils.dip2px(view.getContext(),purpleLineHeight);
             view.requestLayout();
         }else{

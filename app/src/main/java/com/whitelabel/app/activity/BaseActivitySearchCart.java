@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.ui.common.BasePresenter;
 import com.whitelabel.app.utils.JDataUtils;
@@ -68,8 +68,8 @@ public class BaseActivitySearchCart<T extends BasePresenter> extends com.whitela
     private long getCartItemCount() {
         long cartItemCount = 0;
         try {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
-                cartItemCount = GemfiveApplication.getAppConfiguration().getUserInfo(this).getCartItemCount();
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
+                cartItemCount = WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getCartItemCount();
                 ArrayList<TMPLocalCartRepositoryProductEntity> list = JStorageUtils.getProductListFromLocalCartRepository(this);
                 if (list.size() > 0) {
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {

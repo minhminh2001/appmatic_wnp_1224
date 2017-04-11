@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.CategoryTreeExpandableAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
@@ -119,8 +118,8 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment implements HomeHomeCont
     public long getCartItemCount() {
         long cartItemCount = 0;
         try {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
-                cartItemCount = GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getCartItemCount();
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                cartItemCount = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getCartItemCount();
                 ArrayList<TMPLocalCartRepositoryProductEntity> list = JStorageUtils.getProductListFromLocalCartRepository(getActivity());
                 if (list.size() > 0) {
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {

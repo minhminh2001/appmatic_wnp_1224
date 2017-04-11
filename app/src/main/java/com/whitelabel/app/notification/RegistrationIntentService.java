@@ -24,7 +24,7 @@ import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.whitelabel.app.GlobalData;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.utils.JLogUtils;
 
@@ -49,7 +49,7 @@ public class RegistrationIntentService extends IntentService {
             String token = instanceID.getToken(GlobalData.gcmSendId,
                     GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             // [END get_token]
-            GemfiveApplication.getPhoneConfiguration().setRegistrationToken(token);
+            WhiteLabelApplication.getPhoneConfiguration().setRegistrationToken(token);
             JLogUtils.i(TAG, "GCM Registration Token: " + token);
             // TODO: Implement this method to send any registration to your app's servers.
             if (token != null)
@@ -77,13 +77,13 @@ public class RegistrationIntentService extends IntentService {
 
      */
     private void sendRegistrationToServer() {
-        String sessionKey=GemfiveApplication.getAppConfiguration().getUser() == null ? "" : GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
-        new NotificationDao(TAG,dataHandler).sendRegistrationTokenToServer(sessionKey,GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+        String sessionKey= WhiteLabelApplication.getAppConfiguration().getUser() == null ? "" : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+        new NotificationDao(TAG,dataHandler).sendRegistrationTokenToServer(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
 //
 //        SVRParameters parameter = new SVRParameters();
 //        parameter.put("session_key", );
-//        parameter.put("device_token", GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
-//        JLogUtils.i("RegistrationIntentService","device_token==============="+GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+//        parameter.put("device_token", WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
+//        JLogUtils.i("RegistrationIntentService","device_token==============="+WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
 //        SVRNotificationAppOpen notificationAppOpenHandler = new SVRNotificationAppOpen(getBaseContext(), parameter);
 //        notificationAppOpenHandler.loadDatasFromServer(new SVRCallback() {
 //            @Override

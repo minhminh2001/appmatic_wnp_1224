@@ -39,7 +39,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.RegisterToHelpCenter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
@@ -168,7 +168,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                     if(msg.arg1==MyAccountDao.RESPONSE_SUCCESS){
                         SVRAppServiceCustomerLoginReturnEntity loginReturnEntity = (SVRAppServiceCustomerLoginReturnEntity) msg.obj;
                         loginReturnEntity.setEmailLogin(true);
-                        GemfiveApplication.getAppConfiguration().signIn(mActivity.get(), loginReturnEntity);
+                        WhiteLabelApplication.getAppConfiguration().signIn(mActivity.get(), loginReturnEntity);
                         //跳转界面
                         if (loginReturnEntity.getConfirmation() != 1) {
                             //不需要邮件确认
@@ -314,23 +314,23 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         password.setOnFocusChangeListener(this);
         re_password.setOnFocusChangeListener(this);
         sign_in= (TextView) contentView.findViewById(R.id.sign_in);
-        sign_in.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        sign_in.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         sign_in.setOnClickListener(this);
         signUp= (Button) contentView.findViewById(R.id.sign_up);
-        signUp.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        signUp.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         signUp.setOnClickListener(this);
         checkBox= (CustomCheckBox) contentView.findViewById(R.id.checkbox2);
-        checkBox.setColorChecked(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        checkBox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         checkBox.setChecked(true);
         checkBoxText1= (TextView) contentView.findViewById(R.id.checkbox_text1);
         error= (TextView) contentView.findViewById(R.id.error);
         setMoreClickSpan();
         t1= (TextView) contentView.findViewById(R.id.t1);
         t3= (TextView) contentView.findViewById(R.id.t3);
-        t1.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
-        t3.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        t1.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        t3.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         t1.setOnClickListener(this);
         t3.setOnClickListener(this);
@@ -366,7 +366,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
             checkBoxText1.setClickable(true);
             checkBoxText1.setMovementMethod(LinkMovementMethod.getInstance());
             NoUnderLineClickSpan greyNoLineClickableSpan=new NoUnderLineClickSpan(JToolUtils.getColor(R.color.grayText),false);
-            NoUnderLineClickSpan purpleNoLineClickableSpan=new NoUnderLineClickSpan(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),true);
+            NoUnderLineClickSpan purpleNoLineClickableSpan=new NoUnderLineClickSpan(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),true);
             greyNoLineClickableSpan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -414,7 +414,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
             switch (v.getId()) {
                 case R.id.firstName:
                     CustomButtomLineRelativeLayout.setBottomLineActive(view_firstname_line,true);
-                    firstNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                     firstNameText2.setText(getResources().getString(R.string.first_name));
                     if (firstName.getText().length()!=0) {
                         clearFirst.setVisibility(View.VISIBLE);
@@ -447,7 +447,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                     });
                     break;
                 case R.id.lastName:
-                    lastNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
                     CustomButtomLineRelativeLayout.setBottomLineActive(view_lastname_line,true);
                     lastNameText2.setText(getResources().getString(R.string.last_name));
@@ -484,7 +484,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
                     break;
                 case R.id.email:
-                    emailText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    emailText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
                     rl_register_email.setBottomLineActive(true);
                     emailText2.setText(getResources().getString(R.string.loginregister_emailbound_email_hint));
@@ -519,7 +519,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                     });
                     break;
                 case R.id.password:
-                    passwordText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    passwordText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
                     rl_register_pwd.setBottomLineActive(true);
                     passwordText2.setText(getResources().getString(R.string.enter_password));
@@ -555,7 +555,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
                     break;
                 case R.id.re_password:
-                    re_passwordText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    re_passwordText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
                     rl_register_repwd.setBottomLineActive(true);
                     re_passwordText2.setText(getResources().getString(R.string.retype_password));
@@ -755,7 +755,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                     inputMethodManager.hideSoftInputFromWindow(email.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     String checkBox_numbel=checkBox.isChecked()?"1":"0";
                     mAccountDao.registerUser(firstName.getText().toString().trim(),lastName.getText().toString().trim(),
-                            email.getText().toString().trim(),password.getText().toString().trim(),checkBox_numbel, GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+                            email.getText().toString().trim(),password.getText().toString().trim(),checkBox_numbel, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
 
                 }
                 break;
@@ -839,7 +839,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     }
 
     public void connectionLoginService(){
-        mAccountDao.emailLogin(email.getText().toString().trim(), password.getText().toString().trim(), GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+        mAccountDao.emailLogin(email.getText().toString().trim(), password.getText().toString().trim(), WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
     }
 
 

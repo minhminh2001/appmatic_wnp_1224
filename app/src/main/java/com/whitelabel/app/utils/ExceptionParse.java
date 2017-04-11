@@ -2,7 +2,7 @@ package com.whitelabel.app.utils;
 
 import com.whitelabel.app.R;
 import com.google.gson.JsonParseException;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.ApiException;
 import com.whitelabel.app.model.ApiFaildException;
 
@@ -25,7 +25,7 @@ public class ExceptionParse {
         exception.setThrowable(e);
         if(e instanceof HttpException ||e instanceof ConnectException||e instanceof SocketTimeoutException ||e instanceof UnknownHostException){
             exception.setErrorType(ERROR.HTTP_ERROR);
-            exception.setErrorMsg(GemfiveApplication.getInstance().getResources().getString(R.string.Global_Error_Internet));
+            exception.setErrorMsg(WhiteLabelApplication.getInstance().getResources().getString(R.string.Global_Error_Internet));
         }else if(e instanceof JsonParseException
                 || e instanceof JSONException
                 || e instanceof ParseException) {

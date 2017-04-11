@@ -41,7 +41,7 @@ import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.MyAccountActivity;
 import com.whitelabel.app.activity.MyAccountChangePasswordActivity;
 import com.whitelabel.app.adapter.WheelPickerAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.WheelPickerCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.CountryRegions;
@@ -119,7 +119,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
     }
 
     public void initChangePassword() {
-        if (!GemfiveApplication.getAppConfiguration().getUser().isEmailLogin()) {
+        if (!WhiteLabelApplication.getAppConfiguration().getUser().isEmailLogin()) {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) relative14.getLayoutParams();
             params.height = 0;
             relative14.setLayoutParams(params);
@@ -150,13 +150,13 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                     if (msg.arg1 == MyAccountDao.RESPONSE_SUCCESS) {
                         SVRAppServiceCustomerMyAccount myAccountEntity = (SVRAppServiceCustomerMyAccount) msg.obj;
                         //刷新本地缓存数据
-                        GOUserEntity user = GemfiveApplication.getAppConfiguration().getUser();
+                        GOUserEntity user = WhiteLabelApplication.getAppConfiguration().getUser();
                         String firstName = mFragment.get().firstName.getText().toString().trim();
                         String lastName = mFragment.get().lastName.getText().toString().trim();
                         user.setFirstName(JDataUtils.filterEmoji(firstName));
                         user.setLastName(JDataUtils.filterEmoji(lastName));
                         user.setEmail(mFragment.get().email.getText().toString().trim());
-                        GemfiveApplication.getAppConfiguration().updateDate(mActivity.get(), user);
+                        WhiteLabelApplication.getAppConfiguration().updateDate(mActivity.get(), user);
                         mActivity.get().onBackPressed();
                     } else {
                         //isSaved  在onFoucsChangeListenter里作用，防止showWheelPickerOneDialog在点击save后自动弹出
@@ -311,7 +311,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                             mFragment.get().editorIncome = mFragment.get().sharedIncome.edit();
                             mFragment.get().editorIncome.putBoolean("exits", true);
 
-                            mFragment.get().mDao.MonthlyIncom(GemfiveApplication.getAppConfiguration().getUserInfo(mActivity.get()).getSessionKey());
+                            mFragment.get().mDao.MonthlyIncom(WhiteLabelApplication.getAppConfiguration().getUserInfo(mActivity.get()).getSessionKey());
 //
                         } else {
                             mFragment.get().monthlyIncome.setText(mFragment.get().sharedIncome.getString(mFragment.get().customerList.getIncome(), ""));
@@ -372,7 +372,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             }
 
 
-            String session_key = GemfiveApplication.getAppConfiguration().getUserInfo(myAccountActivity).getSessionKey();
+            String session_key = WhiteLabelApplication.getAppConfiguration().getUserInfo(myAccountActivity).getSessionKey();
             String emailStr = email.getText().toString().trim();
             String firstNameStr = firstName.getText().toString().trim();
             String lastNameStr = lastName.getText().toString().trim();
@@ -549,42 +549,42 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         eg.setOnFocusChangeListener(this);
         email.setInputType(EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         firstNameText = (TextView) contentView.findViewById(R.id.ctv_account_firstName_label_ani);
-        firstNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         firstNameText2 = (TextView) contentView.findViewById(R.id.ctv_account_firstName_label);
         lastNameText = (TextView) contentView.findViewById(R.id.ctv_account_lastName_label_ani);
-        lastNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         lastNameText2 = (TextView) contentView.findViewById(R.id.ctv_account_lastName_label);
 
         emailText = (TextView) contentView.findViewById(R.id.ctv_account_email_label_ani);
-        emailText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        emailText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         emailText2 = (TextView) contentView.findViewById(R.id.ctv_account_email_label);
         countryText = (TextView) contentView.findViewById(R.id.ctv_account_country_label_ani);
-        countryText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        countryText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         countryText2 = (TextView) contentView.findViewById(R.id.ctv_account_country_label);
         birthdayText = (TextView) contentView.findViewById(R.id.ctv_account_birthday_label_ani);
-        birthdayText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        birthdayText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         birthdayText2 = (TextView) contentView.findViewById(R.id.ctv_account_birthday_label);
         genderText = (TextView) contentView.findViewById(R.id.ctv_account_gender_label_ani);
-        genderText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        genderText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         genderText2 = (TextView) contentView.findViewById(R.id.ctv_account_gender_label);
         monthlyIncomeText = (TextView) contentView.findViewById(R.id.ctv_account_monthlyIncome_label_ani);
-        monthlyIncomeText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        monthlyIncomeText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         monthlyIncomeText2 = (TextView) contentView.findViewById(R.id.ctv_account_monthlyIncome_label);
         //zip=postal code
         zipText = (TextView) contentView.findViewById(R.id.ctv_account_zip_label_ani);
-        zipText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        zipText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         zipText2 = (TextView) contentView.findViewById(R.id.ctv_account_zip_label);
         cityText = (TextView) contentView.findViewById(R.id.ctv_account_city_label_ani);
-        cityText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        cityText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         cityText2 = (TextView) contentView.findViewById(R.id.ctv_account_city_label);
         stateProvinceText = (TextView) contentView.findViewById(R.id.ctv_account_state_label_ani);
-        stateProvinceText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        stateProvinceText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         stateProvinceText2 = (TextView) contentView.findViewById(R.id.ctv_account_state_label);
         egText = (TextView) contentView.findViewById(R.id.ctv_account_eg_label_ani);
-        egText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         egText2 = (TextView) contentView.findViewById(R.id.ctv_account_eg_label);
         changePassword = (TextView) contentView.findViewById(R.id.changePassword);
-        changePassword.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        changePassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         changePassword.setOnClickListener(this);
 
         photo = (ImageView) contentView.findViewById(R.id.photo);
@@ -599,7 +599,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         phoneNumber.setOnClickListener(this);
         //加载数据
         initChangePassword();
-        if (GemfiveApplication.getAppConfiguration().isSignIn(myAccountActivity)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(myAccountActivity)) {
             initData();
         } else {
             Intent intent = new Intent();
@@ -616,7 +616,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
     }
 
     public void initData() {
-        mDao.CustomerInfo(GemfiveApplication.getAppConfiguration().getUserInfo(myAccountActivity).getSessionKey());
+        mDao.CustomerInfo(WhiteLabelApplication.getAppConfiguration().getUserInfo(myAccountActivity).getSessionKey());
     }
 
     private SharedPreferences.Editor editor;
@@ -624,7 +624,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
     public void getCountryAndstateProvince() {
         editor = sharedCountry.edit();
         editor.putBoolean("exits", true);
-        mDao.getCountryAndRegions(GemfiveApplication.getAppConfiguration().getUserInfo(myAccountActivity).getSessionKey());
+        mDao.getCountryAndRegions(WhiteLabelApplication.getAppConfiguration().getUserInfo(myAccountActivity).getSessionKey());
 
     }
 
@@ -1826,7 +1826,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
 
     private void sendRequestToGetCityAndStateByPostCode(String postcode) {
         city.setEnabled(false);
-        mDao.sendRequestToGetCityAndStateByPostCode(GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(), postcode, country.getTag() == null ? "MY" : country.getTag().toString());
+        mDao.sendRequestToGetCityAndStateByPostCode(WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(), postcode, country.getTag() == null ? "MY" : country.getTag().toString());
 
     }
 
@@ -1855,7 +1855,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             edit.setHint("");
             text.startAnimation(set);
         } else {
-            text2.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         }
         if (relativeLayout != null) {
             relativeLayout.setBottomLineActive(true);

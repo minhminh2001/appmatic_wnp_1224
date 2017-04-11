@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ShoppingCartCampaignActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.ShoppingCarDao;
 import com.whitelabel.app.model.ShoppingCartCampaignListEntity;
 import com.whitelabel.app.network.ImageLoader;
@@ -148,11 +148,11 @@ public class ShoppingCartCampaignAdapter extends BaseAdapter {
          */
         if (1 == entity.getInStock() && !"0".equals(entity.getAvailability())) {//In stock
             viewHolder.btnAddToCart.setText(context.getResources().getString(R.string.product_detail_addtocart));
-            viewHolder.btnAddToCart.setBackground(GemfiveApplication.getInstance().getResources().getDrawable(R.drawable.big_button_style_config));
+            viewHolder.btnAddToCart.setBackground(WhiteLabelApplication.getInstance().getResources().getDrawable(R.drawable.big_button_style_config));
             viewHolder.btnAddToCart.setEnabled(true);
         } else {//Out of stock
             viewHolder.btnAddToCart.setText(context.getResources().getString(R.string.campaign_item_soldout));
-            viewHolder.btnAddToCart.setBackground(GemfiveApplication.getInstance().getResources().getDrawable(R.drawable.big_button_style_b8));
+            viewHolder.btnAddToCart.setBackground(WhiteLabelApplication.getInstance().getResources().getDrawable(R.drawable.big_button_style_b8));
             viewHolder.btnAddToCart.setEnabled(false);
         }
 
@@ -246,10 +246,10 @@ public class ShoppingCartCampaignAdapter extends BaseAdapter {
      */
     private void addToCart(ShoppingCartCampaignListEntity entity) {
         mDialog = JViewUtils.showProgressDialog(context);
-        mShoppingCarDao.addCampaignProductToCart(GemfiveApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), entity.getProductId());
+        mShoppingCarDao.addCampaignProductToCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), entity.getProductId());
 
 //        SVRParameters parameters = new SVRParameters();
-//        parameters.put("session_key", GemfiveApplication.getAppConfiguration().getUserInfo(context).getSessionKey());
+//        parameters.put("session_key", WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey());
 //        parameters.put("product_id", entity.getProductId());
 //
 //        SVRAddToCartPromotion addToCartHandler = new SVRAddToCartPromotion(context, parameters);
@@ -307,8 +307,8 @@ public class ShoppingCartCampaignAdapter extends BaseAdapter {
         }
 
         Toast toast = Toast.makeText(context.getApplicationContext(), "", Toast.LENGTH_SHORT);
-        if (GemfiveApplication.getPhoneConfiguration() != null && GemfiveApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
-            toast.setGravity(Gravity.BOTTOM, 0, (int) (GemfiveApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
+        if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
+            toast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
         }
 
         LinearLayout toastView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.layout_prompt_productdetail_addtocart, null);

@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.MyAccountOrderDetailActivity;
 import com.whitelabel.app.adapter.OrderListRecyclerViewAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.bean.OrderBody;
 import com.whitelabel.app.bean.OrderTip;
 import com.whitelabel.app.dao.MyAccountDao;
@@ -109,7 +109,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         tryAgain.setOnClickListener(this);
         swipeRefrshLayout.setOnRefreshListener(this);
 //        swipeRefrshLayout.setColorSchemeResources(R.color.colorAccent);
-        swipeRefrshLayout.setColorSchemeColors(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        swipeRefrshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         return view;
     }
 
@@ -125,8 +125,8 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         init();
         initRecyclerView();
         String userId = "";
-        if (GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
-            userId = GemfiveApplication.getAppConfiguration().getUser().getId();
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+            userId = WhiteLabelApplication.getAppConfiguration().getUser().getId();
         }
         mMyAccountDao.getLocalOrderData(getActivity(), userId);
         showSwipeRefreshDialog();
@@ -275,8 +275,8 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                             if (mFragment.get().pageIndex == 1) {
                                 mFragment.get().list_outer_record.clear();
                                 String userId = "";
-                                if (GemfiveApplication.getAppConfiguration().isSignIn(mActivity.get())) {
-                                    userId = GemfiveApplication.getAppConfiguration().getUser().getId();
+                                if (WhiteLabelApplication.getAppConfiguration().isSignIn(mActivity.get())) {
+                                    userId = WhiteLabelApplication.getAppConfiguration().getUser().getId();
                                 }
                                 mFragment.get().mMyAccountDao.saveLocalOrderData(mActivity.get(), userId, orderlistEntityResult.getResults());
                             }
@@ -328,7 +328,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
      * send request to server
      */
     private void sendRequest() {
-        mMyAccountDao.getOrderList(GemfiveApplication.getAppConfiguration().getUserInfo(homeActivity).getSessionKey(), pageIndex + "", pageSize + "");
+        mMyAccountDao.getOrderList(WhiteLabelApplication.getAppConfiguration().getUserInfo(homeActivity).getSessionKey(), pageIndex + "", pageSize + "");
 
     }
 
@@ -355,7 +355,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (REQUESTCODE_LOGIN == requestCode) {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(homeActivity)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)) {
                 showSwipeRefreshDialog();
                 sendRequest();
             }

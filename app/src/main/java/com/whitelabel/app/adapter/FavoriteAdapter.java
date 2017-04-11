@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.FavoriteSonEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
@@ -71,7 +71,7 @@ public class FavoriteAdapter extends BaseAdapter {
         FavoriteSonEntity entity = (FavoriteSonEntity) getItem(position);
         if (entity != null) {
             viewHolder.contentText.setText(entity.getCategoryName());
-            int screenWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth();
+            int screenWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth();
             ViewGroup.LayoutParams para = viewHolder.contentImg.getLayoutParams();
             para.width = (screenWidth - 80) / 2;
             para.height = (screenWidth - 80) / 2;

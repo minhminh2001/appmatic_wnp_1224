@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.google.gson.Gson;
 import com.whitelabel.app.GlobalData;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JJsonUtils;
@@ -57,7 +57,7 @@ public class ApplicationConfigurationEntity {
     }
     public void init(Context context) {
         SVRAppserviceCatalogSearchReturnEntity entity = JStorageUtils.getCategoryArrayList(context);
-        GemfiveApplication.getAppConfiguration().setCategoryArrayList(entity);
+        WhiteLabelApplication.getAppConfiguration().setCategoryArrayList(entity);
         configModel=new ConfigModel();
         RemoteConfigResonseModel.RetomeConfig config=DataManager.getInstance().getPreferHelper().getLocalConfigModel();
         if(config!=null){
@@ -209,7 +209,7 @@ public class ApplicationConfigurationEntity {
     }
     public GOUserEntity getUserInfo() {
         user = null;
-        SharedPreferences sharedPreferences = GemfiveApplication.getInstance().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
         String jsonUserInfo = sharedPreferences.getString("user_info", "");
         if (JDataUtils.isEmpty(jsonUserInfo)) {
             return user;

@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +27,7 @@ import com.whitelabel.app.activity.CurationActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.dao.ShoppingCarDao;
@@ -263,7 +262,7 @@ public class CurationProductListAdapter extends BaseAdapter {
                 }
                 convertView.setVisibility(View.VISIBLE);
 
-                final int phoneWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth();
+                final int phoneWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth();
                 final int marginLeft = phoneWidth * 15 / 640;
                 final int marginRight = marginLeft;
                 final int dividerWidth = phoneWidth * 16 / 640;
@@ -370,12 +369,12 @@ public class CurationProductListAdapter extends BaseAdapter {
                 if (JDataUtils.compare(leftProductFinalPriceFloat, leftProductPriceFloat) < 0) {
                     viewHolder.ctvLeftProductPrice.setVisibility(View.VISIBLE);
                     viewHolder.ctvLeftProductFinalPrice.setPadding(JDataUtils.dp2Px(9), 0, JDataUtils.dp2Px(9), 0);
-                    viewHolder.ctvLeftProductPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductPriceFloat + ""));
+                    viewHolder.ctvLeftProductPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductPriceFloat + ""));
                     viewHolder.ctvLeftProductPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
                 } else {
                     viewHolder.ctvLeftProductPrice.setVisibility(View.GONE);
                 }
-                viewHolder.ctvLeftProductFinalPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
+                viewHolder.ctvLeftProductFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
 //
                 final ViewHolder finalViewHolder = viewHolder;
                 viewHolder.llLeftProduct.setOnClickListener(new View.OnClickListener() {
@@ -554,13 +553,13 @@ public class CurationProductListAdapter extends BaseAdapter {
                 if (JDataUtils.compare(rightProductFinalPriceFloat, rightProductPriceFloat) < 0) {
                     viewHolder.ctvRightProductFinalPrice.setPadding(JDataUtils.dp2Px(9), 0, JDataUtils.dp2Px(9), 0);
                     viewHolder.ctvRightProductPrice.setVisibility(View.VISIBLE);
-                    viewHolder.ctvRightProductPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(rightProductPriceFloat + ""));
+                    viewHolder.ctvRightProductPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(rightProductPriceFloat + ""));
                     viewHolder.ctvRightProductPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
                 } else {
                     viewHolder.ctvRightProductPrice.setVisibility(View.GONE);
 
                 }
-                viewHolder.ctvRightProductFinalPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(rightProductFinalPriceFloat + ""));
+                viewHolder.ctvRightProductFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(rightProductFinalPriceFloat + ""));
 
                 viewHolder.llRightProduct.setOnClickListener(new View.OnClickListener() {
                     private CurationActivity curationActivity;
@@ -701,7 +700,7 @@ public class CurationProductListAdapter extends BaseAdapter {
         ivWishIcon.setTag(repeatAnim);
         ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
 //        JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2),
-//                GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+//                WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         final ScaleAnimation animation2 = new ScaleAnimation(1f, 0f, 1f, 0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         animation2.setDuration(250);//设置动画持续时间
@@ -762,14 +761,14 @@ public class CurationProductListAdapter extends BaseAdapter {
         setWishIconColorToBlank(ivWwishIcon);
         productItemEntityArrayList.get(tempPosition).setIs_like(0);
         if (!TextUtils.isEmpty(productItemEntityArrayList.get(tempPosition).getItem_id())) {
-            myAccountDao.deleteWishListById(GemfiveApplication.getAppConfiguration().getUserInfo(curationActivity).getSessionKey(), itemId, tempPosition);
+            myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUserInfo(curationActivity).getSessionKey(), itemId, tempPosition);
         }
     }
 
     private void addtoWishlistsendRequest(SVRAppserviceLandingPagesDetailProductListItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(curationActivity)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(curationActivity)) {
             entity.setIs_like(1);
-            mProductDao.addProductListToWish(entity.getProductId(), GemfiveApplication.getAppConfiguration().getUserInfo(curationActivity).getSessionKey(), tempPosition);
+            mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(curationActivity).getSessionKey(), tempPosition);
             setWishIconColorToPurple(ivWwishIcon, ivWwishIcon2);
         } else {
             curationActivity.saveProductIdWhenJumpLoginPage(entity.getProductId());
@@ -802,7 +801,7 @@ public class CurationProductListAdapter extends BaseAdapter {
                         WishDelEntityResult wishDelEntityResult = (WishDelEntityResult) msg.obj;
                         int position = Integer.parseInt(String.valueOf(wishDelEntityResult.getParams()));
                         //update wishlist number
-                        GemfiveApplication.getAppConfiguration().updateWishlist(mAdapter.get().curationActivity, wishDelEntityResult.getWishListItemCount());
+                        WhiteLabelApplication.getAppConfiguration().updateWishlist(mAdapter.get().curationActivity, wishDelEntityResult.getWishListItemCount());
                     }
                     break;
                 case ProductDao.REQUEST_ADDPRODUCTLISTTOWISH:
@@ -812,7 +811,7 @@ public class CurationProductListAdapter extends BaseAdapter {
                         SVRAppserviceLandingPagesDetailProductListItemReturnEntity productEntity = (SVRAppserviceLandingPagesDetailProductListItemReturnEntity) mAdapter.get().productItemEntityArrayList.get(position);
                         productEntity.setItem_id(addToWishlistEntity.getItemId());
                         //update wishlist number
-                        GemfiveApplication.getAppConfiguration().updateWishlist(mAdapter.get().curationActivity, addToWishlistEntity.getWishListItemCount());
+                        WhiteLabelApplication.getAppConfiguration().updateWishlist(mAdapter.get().curationActivity, addToWishlistEntity.getWishListItemCount());
 //                        try {
 //                            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
 //                                    "Add To Wishlist",

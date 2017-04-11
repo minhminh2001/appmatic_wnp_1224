@@ -42,7 +42,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.adapter.WheelPickerAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.WheelPickerCallback;
 import com.whitelabel.app.dao.CheckoutDao;
 import com.whitelabel.app.dao.OtherDao;
@@ -209,7 +209,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         view_paymentmethod_line = view.findViewById(R.id.view_paymentmethod_line);
         view_payment_online_line = view.findViewById(R.id.view_payment_online_line);
         ctv_payment_method_lab = (TextView) view.findViewById(R.id.ctv_payment_method_lab);
-        ctv_payment_method_lab.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         tvPaymentMethod = (TextView) view.findViewById(R.id.tv_checkout_payment_method);
         tvPaymentMethodArrow = (ImageView) view.findViewById(R.id.tv_checkout_payment_method_arrow);
         llPaymentMethod = (LinearLayout) view.findViewById(R.id.ll_checkout_payment_method);
@@ -224,7 +224,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         ivSelectI = (ImageView) view.findViewById(R.id.iv_checkout_payment_select_i);
         ivSelectI.setOnClickListener(this);
         tvCreditCardNumberAnim = (TextView) view.findViewById(R.id.tv_checkout_payment_creditcardnumber_anim);
-        tvCreditCardNumberAnim.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        tvCreditCardNumberAnim.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         etCreditCardNumber = (EditText) view.findViewById(R.id.et_checkout_payment_creditcardnumber);
         etCreditCardNumber.setOnFocusChangeListener(this);
@@ -235,7 +235,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         etCVC.setOnFocusChangeListener(this);
 
         tvNameoncardAnim = (TextView) view.findViewById(R.id.tv_checkout_payment_nameoncard_anim);
-        tvNameoncardAnim.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        tvNameoncardAnim.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         etNameoncard = (EditText) view.findViewById(R.id.et_checkout_payment_nameoncard);
         etNameoncard.setOnFocusChangeListener(this);
@@ -703,7 +703,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                     }
                 },260);
                 JViewUtils.cleanCurrentViewFocus(getActivity());
-                tvExpirationDateHint.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                tvExpirationDateHint.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                 CustomButtomLineRelativeLayout.setBottomLineActive(view_expiration_date_line,true);
                 AnimUtil.rotateArrow(arrowSelectExpirationDate,true);
                 //createDialogPickerOfTwoColumn();
@@ -747,7 +747,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         final RelativeLayout rlContainer = (RelativeLayout) dialogView.findViewById(R.id.rlContainer);
         final CustomTextView ctvCancel = (CustomTextView) dialogView.findViewById(R.id.ctvCancel);
         final CustomTextView ctvSet = (CustomTextView) dialogView.findViewById(R.id.ctvSet);
-        ctvSet.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
 
@@ -1022,7 +1022,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
 //            return;
 //        }
 //        SVRParameters parameters = new SVRParameters();
-//        parameters.put("session_key", GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey());
+//        parameters.put("session_key", WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey());
 //
 //        SVRCheckoutPaymentIssuerBankList issuerBankListHandler = new SVRCheckoutPaymentIssuerBankList(checkoutActivity, parameters);
 //
@@ -1187,7 +1187,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
 
 
                 tv.setText(hintText);
-                tv.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             }
 
             @Override
@@ -1266,7 +1266,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
             paymentType = CARDPAYMENT;
         }
         mDialog = JViewUtils.showProgressDialog(getActivity());
-        offlineDao.getPaymentList(GemfiveApplication.getAppConfiguration().getUser().getSessionKey());
+        offlineDao.getPaymentList(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
     }
 
 
@@ -1291,7 +1291,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
              * turn to login page ,
              * then go back to shoppingcart page
              */
-            if (GemfiveApplication.getAppConfiguration().isSignIn(checkoutActivity)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(checkoutActivity)) {
                 JLogUtils.i("checkout-payment-fragment---->", "login back");
                 checkoutActivity.startNextActivity(null, ShoppingCartActivity1.class, true);
             }
@@ -1331,7 +1331,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
             if (paymentListEntity.getCashondelivery() != null && !TextUtils.isEmpty(paymentListEntity.getCashondelivery().getContent()) && !"null".equals(paymentListEntity.getCashondelivery().getContent())) {
                 wvHtml.setVisibility(View.VISIBLE);
                 String content = JToolUtils.replaceFont(paymentListEntity.getCashondelivery().getContent());
-                JToolUtils.webViewFont(GemfiveApplication.getInstance().getBaseContext(), wvHtml, content);
+                JToolUtils.webViewFont(WhiteLabelApplication.getInstance().getBaseContext(), wvHtml, content);
                 //wvHtml.loadDataWithBaseURL("file:///android_asset/html/", paymentListEntity.getCashondelivery().getContent(), "text/html", "utf-8", null);
             }
             tvHtml.setVisibility(View.GONE);
@@ -1344,7 +1344,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                 if (paymentListEntity.getBanktransfer() != null && !TextUtils.isEmpty(paymentListEntity.getBanktransfer().getContent()) && !"null".equals(paymentListEntity.getBanktransfer().getContent())) {
                     tvHtml.setVisibility(View.VISIBLE);
                     String content = JToolUtils.replaceFont(paymentListEntity.getBanktransfer().getContent());
-                    JToolUtils.webViewFont(GemfiveApplication.getInstance().getBaseContext(), tvHtml, content);
+                    JToolUtils.webViewFont(WhiteLabelApplication.getInstance().getBaseContext(), tvHtml, content);
                 }
                 wvHtml.setVisibility(View.GONE);
                 tvPaymentMethod.setText(getPaymengStr(method, paymentType));
@@ -1444,7 +1444,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                     CustomButtomLineRelativeLayout.setRelativeBottomLineActive(view_paymentmethod_line, true);
                     AnimUtil.rotateArrow(tvPaymentMethodArrow,true);
 
-                    ctv_payment_method_lab.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
                     final WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
 
@@ -1625,7 +1625,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                 }
                 CustomButtomLineRelativeLayout.setBottomLineActive(view_payment_online_line,true);
                 AnimUtil.rotateArrow(arrowSelectOnlineBankingPayWith,true);
-                tvOnlinebankHint.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                tvOnlinebankHint.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                 configEntity.setArrayList(list_onlinebanks);
                 configEntity.setOldValue(oldEntity_onlinebanks);
                 configEntity.setCallBack(new WheelPickerCallback() {
@@ -1766,7 +1766,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         String paymentImageUrl = paymentListEntity.getPaymentlist_image();
 //        String paymentImageUrl = "paymentlist_app/default/img_secure_payment.png";
         if (!TextUtils.isEmpty(paymentImageUrl)) {
-             int destWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth();
+             int destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth();
              int imageHeight = destWidth*65/600;
 //            JImageUtils.downloadImageFromServerByUrl(getActivity(),mImageLoader, mPaymentListImage, paymentImageUrl);
             JImageUtils.downloadImageFromServerListener(getActivity(), mImageLoader, mPaymentListImage, paymentImageUrl, new RequestListener<String, Bitmap>() {
@@ -1818,7 +1818,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         String ccSecureHash = "";
 
         //1 online  2.credit 3. offline payment
-//        parameters.put("session_key", GemfiveApplication.getAppConfiguration().getUser().getSessionKey());
+//        parameters.put("session_key", WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
         //we need to get params from paymentFragment first.
         if (paymentType == ONLINEPAYMENT) {
             /**
@@ -1939,7 +1939,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
 //        btnContinue.setEnabled(false);
 //        btnContinue.setBackgroundr(R.dwa);
         checkoutActivity.setButtonEnable(false);
-        mCheckoutDao.savePayment(GemfiveApplication.getAppConfiguration().getUser().getSessionKey(), paymentMethod, molpayType, paymentCountry, ccNumber, ccId, ccExpMonth, ccExpYear, ccOwner, ccType, ccBank, ccSecureHash, nonce);
+        mCheckoutDao.savePayment(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), paymentMethod, molpayType, paymentCountry, ccNumber, ccId, ccExpMonth, ccExpYear, ccOwner, ccType, ccBank, ccSecureHash, nonce);
     }
 
     public void gaTrackerSavePayment() {
@@ -1955,7 +1955,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
             GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
                     "Save Payment",
                     paymentStr,
-                    Long.valueOf(GemfiveApplication.getAppConfiguration().getUser().getId()));
+                    Long.valueOf(WhiteLabelApplication.getAppConfiguration().getUser().getId()));
         } catch (Exception ex) {
             ex.getStackTrace();
         }

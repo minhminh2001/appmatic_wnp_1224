@@ -57,7 +57,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
@@ -329,7 +329,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
             fbHasEmail="1";
             loginRegisterActivity.setSubEmail(fbGraphAPIUserEntity.getEmail());
         }
-        mMyAccountDao.facebookLogin(fbGraphAPIUserEntity.getEmail(), fbHasEmail, fbGraphAPIUserEntity.getFirst_name(), fbGraphAPIUserEntity.getLast_name(), fbGraphAPIUserEntity.getId(), GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+        mMyAccountDao.facebookLogin(fbGraphAPIUserEntity.getEmail(), fbHasEmail, fbGraphAPIUserEntity.getFirst_name(), fbGraphAPIUserEntity.getLast_name(), fbGraphAPIUserEntity.getId(), WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
     }
     private void fbLoginCancel() {
     }
@@ -342,7 +342,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     private void loginSuccess(SVRAppserviceCustomerFbLoginReturnEntity fbLoginReturnEntity) {
 
         if(getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
-            GemfiveApplication.getAppConfiguration().signIn(loginRegisterActivity, fbLoginReturnEntity);
+            WhiteLabelApplication.getAppConfiguration().signIn(loginRegisterActivity, fbLoginReturnEntity);
             if (false) {
                 String testMessage = "sessionKey:" + fbLoginReturnEntity.getSessionKey() + "\n" + "user id:" + fbLoginReturnEntity.getId();
                 JViewUtils.showMessageDialog(loginRegisterActivity, testMessage, new OnMessageDialogListener() {
@@ -446,6 +446,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         FacebookSdk.sdkInitialize(loginRegisterActivity.getApplicationContext());
         facebookCallbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(facebookCallbackManager, facebookCallback);
+
     }
 
     @Override
@@ -472,12 +473,12 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         email = (EditText) contentView.findViewById(R.id.email);
         password = (EditText) contentView.findViewById(R.id.password);
         sign_in = (Button) contentView.findViewById(R.id.sign_in);
-        sign_in.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        sign_in.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         ivFacebookLogin = contentView.findViewById(R.id.ivFacebookLogin);
         register = (TextView) contentView.findViewById(R.id.register);
-        register.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        register.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         forgotPassword = (TextView) contentView.findViewById(R.id.forgot_password);
-        forgotPassword.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        forgotPassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         //      bottomText=contentView.findViewById(R.id.bottomText);
         ivFacebookLogin.setOnClickListener(this);
         sign_in.setOnClickListener(this);
@@ -553,7 +554,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         try {
             sessionExpire = loginRegisterActivity.getIntent().getBooleanExtra("expire", false);
             if(sessionExpire){ //假设session过期 删除本地缓存数据
-                GemfiveApplication.getAppConfiguration().signOut(loginRegisterActivity);
+                WhiteLabelApplication.getAppConfiguration().signOut(loginRegisterActivity);
             }
         }catch (Exception ex){
             ex.getStackTrace();
@@ -655,7 +656,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                 inputMethodManager.hideSoftInputFromWindow(email.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 if (onblur(R.id.email) && onblur(R.id.password)) {
                     mDialog= JViewUtils.showProgressDialog(loginRegisterActivity);
-                    mMyAccountDao.emailLogin(email.getText().toString().trim(), password.getText().toString().trim(), GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+                    mMyAccountDao.emailLogin(email.getText().toString().trim(), password.getText().toString().trim(), WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
                 }
                 break;
             case R.id.register:
@@ -744,9 +745,9 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         //成功后将数据放到Entity中
                         SVRAppServiceCustomerLoginReturnEntity loginReturnEntity = (SVRAppServiceCustomerLoginReturnEntity) msg.obj;
                         loginReturnEntity.setEmailLogin(true);
-                        // GemfiveApplication.getAppConfiguration().signIn(loginReturnEntity);
+                        // WhiteLabelApplication.getAppConfiguration().signIn(loginReturnEntity);
                         loginReturnEntity.setLoginType(FirebaseEventUtils.lOGIN_EMAIL);
-                        GemfiveApplication.getAppConfiguration().signIn(mActivity.get(), loginReturnEntity);
+                        WhiteLabelApplication.getAppConfiguration().signIn(mActivity.get(), loginReturnEntity);
 
                         //跳转界面
                         if (loginReturnEntity.getConfirmation() == 1) {
@@ -949,7 +950,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
             switch (v.getId()) {
                 case R.id.email:
                     email_text2.setText(getResources().getString(R.string.loginregister_emailbound_email_hint));
-                    email_text.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    email_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                     rl_login_email.setBottomLineActive(true);
                     if (email.getText().length()!=0)
                         clearMail.setVisibility(View.VISIBLE);
@@ -960,13 +961,13 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         email.setHint("");
                         email_text.startAnimation(set);
                    } else {
-                        email_text2.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                        email_text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                     }
 
                     break;
                 case R.id.password:
                     rl_login_pwd.setBottomLineActive(true);
-                    password_text.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    password_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                     password_text2.setText(getResources().getString(R.string.enter_password));
                     if (password.getText().length()!=0)
                         clearPassword.setVisibility(View.VISIBLE);
@@ -977,7 +978,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         password.setHint("");
                         password_text.startAnimation(set);
                     } else {
-                        password_text2.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                        password_text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                     }
 
                     break;
@@ -1044,7 +1045,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
 //
 //        if(set!=null) {
 //            SVRParameters parameters = new SVRParameters();
-//            parameters.put("session_key", GemfiveApplication.getAppConfiguration().getUserInfo(loginRegisterActivity).getSessionKey());
+//            parameters.put("session_key", WhiteLabelApplication.getAppConfiguration().getUserInfo(loginRegisterActivity).getSessionKey());
 //
 //            for (String str : set) {
 //                String category_ids = "category_ids[" + str + "]";
@@ -1098,6 +1099,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
         JLogUtils.i(mCurrTag,"result:"+resultCode);
         if(getActivity()==null)return;
@@ -1116,7 +1118,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
 
     private void ggUseInfoToLoginRemoteServer(String email,String firstName,String lastName,String id) {
         mDialog=JViewUtils.showProgressDialog(getActivity());
-        mMyAccountDao.googleLogin(email, firstName, lastName, id, GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+        mMyAccountDao.googleLogin(email, firstName, lastName, id, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
         loginRegisterActivity.setSubEmail(email);
     }
 

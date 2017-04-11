@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JJsonUtils;
@@ -92,7 +92,7 @@ public class HomeCategoryFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mImageLoader=new ImageLoader(getActivity());
         initRecyclerView();
-        swipeContainer.setColorSchemeColors(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
     }
 
     private ImageLoader mImageLoader;

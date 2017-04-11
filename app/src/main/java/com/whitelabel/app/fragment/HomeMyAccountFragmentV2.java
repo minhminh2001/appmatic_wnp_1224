@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.MyAccountTopMenuView;
@@ -194,7 +194,7 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         myAccountMenuTitle.add(getResources().getString(R.string.home_myaccount_header_orders));
         myAccountMenuTitle.add(getResources().getString(R.string.home_myaccount_header_addressbook));
         ctpiCategoryList.setTitles(myAccountMenuTitle);
-        ctpiCategoryList.setIndicatorColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctpiCategoryList.setIndicatorColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         ctpiCategoryList.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -231,10 +231,10 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
     }
 
     private void updateProfileUI() {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(homeActivity)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)) {
             String username = "";
-            String firstname = GemfiveApplication.getAppConfiguration().getUser().getFirstName();
-            String lastname = GemfiveApplication.getAppConfiguration().getUser().getLastName();
+            String firstname = WhiteLabelApplication.getAppConfiguration().getUser().getFirstName();
+            String lastname = WhiteLabelApplication.getAppConfiguration().getUser().getLastName();
             if (!JDataUtils.isEmpty(firstname)) {
                 username = username + firstname + " ";
             }

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.GlobalData;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -116,8 +116,8 @@ public class SplashScreenActivity extends com.whitelabel.app.BaseActivity {
 
             }
         });
-//                int screenWidth=GemfiveApplication.getPhoneConfiguration().getScreenWidth();
-//                int screenHeigh= GemfiveApplication.getPhoneConfiguration().getScreenHeigth();
+//                int screenWidth=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth();
+//                int screenHeigh= WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth();
     }
 
     @Override
@@ -158,7 +158,7 @@ public class SplashScreenActivity extends com.whitelabel.app.BaseActivity {
 //    }
     //判断登陆
     public boolean isLogin(){
-        return GemfiveApplication.getAppConfiguration().isSignIn(this);
+        return WhiteLabelApplication.getAppConfiguration().isSignIn(this);
     }
 //    //判断是否更新app版本
 //    public boolean isUpdateVersion(){
@@ -188,7 +188,7 @@ public class SplashScreenActivity extends com.whitelabel.app.BaseActivity {
     //判断Service 是否有Favorsite数据
 //    public void isFavoriteData(){
 //
-//        String session_key=GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+//        String session_key=WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
 //        SVRParameters parameters = new SVRParameters();
 //        parameters.put("session_key", session_key);
 //        SVRGetFavoriteDate svrhandler = new SVRGetFavoriteDate(this, parameters);

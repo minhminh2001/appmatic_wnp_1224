@@ -28,7 +28,7 @@ import android.widget.Toast;
 import com.whitelabel.app.R;
 import com.google.gson.Gson;
 import com.whitelabel.app.activity.CheckoutActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.WheelPickerCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.CheckoutDefaultShippingAddress;
@@ -698,7 +698,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
     private void sendRequestToGetCityAndStateByPostcode(String postcode) {
         etShippingCity.setEnabled(false);
         String countryId=etShippingCountry.getTag()==null?"":etShippingCountry.getTag().toString();
-        mAccountDao.getCityAndStateByPostCodet(GemfiveApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey(), postcode, countryId);
+        mAccountDao.getCityAndStateByPostCodet(WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey(), postcode, countryId);
 
     }
 
@@ -793,7 +793,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
      */
     private void sendRequestToGetCountryAndRegions(final String type) {
         mProgressBar.setVisibility(View.VISIBLE);
-        mAccountDao.getCountryAndRegions(GemfiveApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey());
+        mAccountDao.getCountryAndRegions(WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey());
     }
 
     public boolean AllVerifyNotNull(){
@@ -960,7 +960,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                 }, 100);
 
                 tv.setText(hintText);
-                tv.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             }
 
             @Override

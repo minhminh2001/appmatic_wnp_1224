@@ -24,7 +24,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.adapter.FlowViewAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.BannerModel;
 import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
@@ -131,7 +131,7 @@ public class BrandStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 headerViewHolder.viewPager.setVisibility(View.GONE);
             } else {
                 if (headerViewHolder.viewPager.getTag() == null) {
-                    int width = GemfiveApplication.getPhoneConfiguration().getScreenWidth((Activity) headerViewHolder.tvTitle.getContext());
+                    int width = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity) headerViewHolder.tvTitle.getContext());
                     int imageHeight = width * 240 / 490;
                     headerViewHolder.viewPager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
                     headerViewHolder.viewPager.setAdapter(new FlowViewAdapter(createImageViewList(headerViewHolder.itemView.getContext(), mImageLoader, mHeaderBean.getBannerImages())));
@@ -177,7 +177,7 @@ public class BrandStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             int destWidth = JScreenUtils.dip2px(itemViewHolder.itemView.getContext(), 100);
             int destHeight = JScreenUtils.dip2px(itemViewHolder.itemView.getContext(), 120);
             if (isTwoRow) {
-                int phoneWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth((Activity) itemViewHolder.itemView.getContext());
+                int phoneWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity) itemViewHolder.itemView.getContext());
                 int marginLeft = phoneWidth * 15 / 640;
                 int dividerWidth = phoneWidth * 16 / 640;
                 destWidth = (phoneWidth - (marginLeft * 2) - dividerWidth) / 2;
@@ -235,12 +235,12 @@ public class BrandStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             if (JDataUtils.compare(leftProductFinalPriceFloat, leftProductPriceFloat) < 0) {
                 itemViewHolder.ctvProductPrice.setVisibility(View.VISIBLE);
                 itemViewHolder.ctvProductFinalPrice.setPadding(JDataUtils.dp2Px(9), 0, JDataUtils.dp2Px(9), 0);
-                itemViewHolder.ctvProductPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductPriceFloat + ""));
+                itemViewHolder.ctvProductPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductPriceFloat + ""));
                 itemViewHolder.ctvProductPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             } else {
                 itemViewHolder.ctvProductPrice.setVisibility(View.GONE);
             }
-            itemViewHolder.ctvProductFinalPrice.setText(GemfiveApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
+            itemViewHolder.ctvProductFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
             setMerchantName(leftProductEntity.getVendorDisplayName(), leftProductEntity.getVendor_id(), itemViewHolder.ctvCurationProductMerchant);
         }
     }

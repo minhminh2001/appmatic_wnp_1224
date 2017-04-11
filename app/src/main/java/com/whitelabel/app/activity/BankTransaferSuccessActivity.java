@@ -60,7 +60,7 @@ public class BankTransaferSuccessActivity extends com.whitelabel.app.BaseActivit
         String desc=getIntent().getStringExtra("desc");
         if(!TextUtils.isEmpty(desc)) {
             String content = JToolUtils.replaceFont(desc);
-            //JToolUtils.webViewFont(GemfiveApplication.getInstance().getBaseContext(),wvDesc,content);
+            //JToolUtils.webViewFont(WhiteLabelApplication.getInstance().getBaseContext(),wvDesc,content);
             wvDesc.setText(content);
         }
     }

@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.OtherDao;
 import com.whitelabel.app.utils.AppUtils;
 import com.whitelabel.app.utils.FirebaseEventUtils;
@@ -93,14 +93,14 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         textView_cancle.setOnClickListener(this);
         sign_out= (TextView) view.findViewById(R.id.sign_out);
         sign_out.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
-        sign_out.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        sign_out.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         sign_out.setOnClickListener(this);
         rlBack= (RelativeLayout) view.findViewById(R.id.rl_back);
         rlBack.setOnClickListener(this);
         switchButton= (MultiSwitchButton) view.findViewById(R.id.swithch_button1);
         int kai=0;
-        if(GemfiveApplication.getAppConfiguration().isSignIn(homeActivity)){
-            kai=GemfiveApplication.getAppConfiguration().getUser().getNewsletterSubscribed();
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)){
+            kai= WhiteLabelApplication.getAppConfiguration().getUser().getNewsletterSubscribed();
         }
         if(kai==1){
             switchButton.setCheckedImmediately(true);
@@ -110,16 +110,16 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         dataHandler=new DataHandler(homeActivity,this);
         mOtherDao=new OtherDao(TAG,dataHandler);
         sbClosedSound= (MultiSwitchButton) view.findViewById(R.id.sb_close_sound);
-        if(GemfiveApplication.getInstance().getAppConfiguration().isSignIn(getActivity())) {
-            sbClosedSound.setCheckedImmediately(GemfiveApplication.getInstance().getAppConfiguration().getUser().isClosedSound());
+        if(WhiteLabelApplication.getInstance().getAppConfiguration().isSignIn(getActivity())) {
+            sbClosedSound.setCheckedImmediately(WhiteLabelApplication.getInstance().getAppConfiguration().getUser().isClosedSound());
         }
 
         sbClosedSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (GemfiveApplication.getInstance().getAppConfiguration().isSignIn(getActivity())&&getActivity()!=null){
-                    GemfiveApplication.getInstance().getAppConfiguration().getUser().setClosedSound(isChecked);
-                    GemfiveApplication.getInstance().getAppConfiguration().updateDate(getActivity(),GemfiveApplication.getInstance().getAppConfiguration().getUser());
+                if (WhiteLabelApplication.getInstance().getAppConfiguration().isSignIn(getActivity())&&getActivity()!=null){
+                    WhiteLabelApplication.getInstance().getAppConfiguration().getUser().setClosedSound(isChecked);
+                    WhiteLabelApplication.getInstance().getAppConfiguration().updateDate(getActivity(), WhiteLabelApplication.getInstance().getAppConfiguration().getUser());
                 }
             }
         });
@@ -127,16 +127,16 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
 //            @Override
 //            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                String newsletterSubscribed;
-//                if(GemfiveApplication.getAppConfiguration().isSignIn(homeActivity)) {
-//                    String session_key = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+//                if(WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)) {
+//                    String session_key = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
 //                    if (isChecked) {
-//                        GemfiveApplication.getAppConfiguration().getUser().setNewsletterSubscribed(1);
-//                        GemfiveApplication.getAppConfiguration().updateDate(homeActivity, GemfiveApplication.getAppConfiguration().getUser());
+//                        WhiteLabelApplication.getAppConfiguration().getUser().setNewsletterSubscribed(1);
+//                        WhiteLabelApplication.getAppConfiguration().updateDate(homeActivity, WhiteLabelApplication.getAppConfiguration().getUser());
 //                        newsletterSubscribed = "1";
 //                    } else {
-//                        GemfiveApplication.getAppConfiguration().getUser().setNewsletterSubscribed(0);
+//                        WhiteLabelApplication.getAppConfiguration().getUser().setNewsletterSubscribed(0);
 //                        newsletterSubscribed = "0";
-//                        GemfiveApplication.getAppConfiguration().updateDate(homeActivity, GemfiveApplication.getAppConfiguration().getUser());
+//                        WhiteLabelApplication.getAppConfiguration().updateDate(homeActivity, WhiteLabelApplication.getAppConfiguration().getUser());
 //                    }
 //                    mOtherDao.changeSubscribed(session_key,newsletterSubscribed);
 //                }
@@ -187,11 +187,11 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
                             ex.getStackTrace();
                         }
                         try{
-                            FirebaseEventUtils.getInstance().customizedSignOut(mActivity.get(), GemfiveApplication.getAppConfiguration().getUserInfo(mActivity.get()).getLoginType());
+                            FirebaseEventUtils.getInstance().customizedSignOut(mActivity.get(), WhiteLabelApplication.getAppConfiguration().getUserInfo(mActivity.get()).getLoginType());
                         }catch (Exception ex){
                             ex.getMessage();
                         }
-                        GemfiveApplication.getAppConfiguration().signOut(mActivity.get());
+                        WhiteLabelApplication.getAppConfiguration().signOut(mActivity.get());
 //                        SVRAppServiceCustomerSignOut signOutEntity = (SVRAppServiceCustomerSignOut) result;
                         Intent intent = new Intent(mActivity.get(), LoginRegisterActivity.class);
                         Bundle bundle = new Bundle();
@@ -232,10 +232,10 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         builder.setPositiveButton(getString(R.string.yes_upp), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                CustomerId = GemfiveApplication.getAppConfiguration().getUser().getId();
+                CustomerId = WhiteLabelApplication.getAppConfiguration().getUser().getId();
                 signing = true;
                 mDialog = JViewUtils.showProgressDialog(homeActivity);
-                mOtherDao.signOut(GemfiveApplication.getPhoneConfiguration().getRegistrationToken(), GemfiveApplication.getAppConfiguration().getUser().getSessionKey());
+                mOtherDao.signOut(WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken(), WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
             }
         });
         builder.setNegativeButton(getString(R.string.no_upp),
@@ -265,7 +265,7 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
                 startActivity(i);
                 break;
             case R.id.sign_out:
-                if(!signing&&GemfiveApplication.getAppConfiguration().getUser()!=null) {
+                if(!signing&& WhiteLabelApplication.getAppConfiguration().getUser()!=null) {
                     showSignOutDialogPrompt();
                 }
                 break;
@@ -276,17 +276,17 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
     public void onResume() {
         super.onResume();
 //        int kai= 0;
-//        if(GemfiveApplication.getAppConfiguration().isSignIn(homeActivity)) {
-//            kai = GemfiveApplication.getAppConfiguration().getUser().getNewsletterSubscribed();
+//        if(WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)) {
+//            kai = WhiteLabelApplication.getAppConfiguration().getUser().getNewsletterSubscribed();
 //        }
 //        if(kai == 1) {
 //            switchButton.setChecked(true);
 //        } else {
 //            switchButton.setChecked(false);
 //        }
-              //   GemfiveApplication.getAppConfiguration().getUser().setNewsletterSubscribed(0);
+              //   WhiteLabelApplication.getAppConfiguration().getUser().setNewsletterSubscribed(0);
 
-//        if(!GemfiveApplication.getAppConfiguration().isSignIn(homeActivity)){
+//        if(!WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)){
 //            new Handler().postDelayed(new Runnable() {
 //                                @Override
 //                                public void run() {

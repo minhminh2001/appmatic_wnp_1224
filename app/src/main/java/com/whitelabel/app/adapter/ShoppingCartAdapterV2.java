@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.ShoppingCartAdapterCallback;
 import com.whitelabel.app.dao.ShoppingCarDao;
 import com.whitelabel.app.model.ErrorMsgBean;
@@ -138,7 +138,7 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(viewHolder.ivCancel.getWindowToken(), 0);
                 ShoppingCartListEntityCell bean = list.get(position);
-                if (!GemfiveApplication.getAppConfiguration().isSignIn(context)) {
+                if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
                     list.remove(position);
                     calculationToatalPriceAndNum(list);
                     ShoppingCartAdapterV2.this.notifyDataSetChanged();
@@ -292,7 +292,7 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
 //    public void swipeMenuDelete(int position,View bodyView){
 //        this.bodyView=bodyView;
 //        ShoppingCartListEntityCell bean = list.get(position);
-//        if (!GemfiveApplication.getAppConfiguration().isSignIn(context)) {
+//        if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
 //            list.remove(position);
 //            calculationToatalPriceAndNum(list);
 //            ShoppingCartAdapterV2.this.notifyDataSetChanged();
@@ -385,7 +385,7 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
         public void onClick(View v) {
             int position = (Integer) v.getTag();
             ShoppingCartListEntityCell shoppingCart = list.get(position);
-            if (!GemfiveApplication.getAppConfiguration().isSignIn(context)) {
+            if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
                 if (Integer.parseInt(shoppingCart.getQty().toString()) + 1 <= Integer.parseInt(shoppingCart.getMaxQty())) {
                     final int newCount = Integer.parseInt(shoppingCart.getQty().toString()) + 1;
                     shoppingCart.setQty(newCount + "");
@@ -416,7 +416,7 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
                 return;
             } else {
                 shoppingCart.setQty(newCount + "");
-                if (!GemfiveApplication.getAppConfiguration().isSignIn(context)) {
+                if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
                     if (newCount > Integer.parseInt(shoppingCart.getMaxQty())) {
                         shoppingCart.setInStock("0");
                     } else {
@@ -581,13 +581,13 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
         KeyValueBean bean = new KeyValueBean();
         bean.setKey(position + "");
         bean.setValue(option + "");
-        mShoppingCartDao.requestChangeCount(GemfiveApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), cellId, newCount + "", bean);
+        mShoppingCartDao.requestChangeCount(WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), cellId, newCount + "", bean);
 
     }
 
     private void sendRequestToDeteleteCell(final int position, String itemId) {
         mDialog = JViewUtils.showProgressDialog(context);
-        mShoppingCartDao.deleteProductFromShoppingCart(GemfiveApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), itemId, position + "");
+        mShoppingCartDao.deleteProductFromShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), itemId, position + "");
     }
 
 }

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.FavoriteAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.FavoriteSonEntity;
 import com.whitelabel.app.utils.JViewUtils;
 
@@ -81,7 +81,7 @@ public class FavoriteActivity extends BaseActivity {
 
                     Bundle mBundle = new Bundle();
                     mBundle.putString("Activity", "start");//压入数据
-                    if (GemfiveApplication.getAppConfiguration().isSignIn(FavoriteActivity.this)) {
+                    if (WhiteLabelApplication.getAppConfiguration().isSignIn(FavoriteActivity.this)) {
                         updateFavoriteData(set);
                         startNextActivity(mBundle, HomeActivity.class, true);
 
@@ -134,7 +134,7 @@ public class FavoriteActivity extends BaseActivity {
     public void updateFavoriteData(Set<String> set) {
 //        if(set!=null) {
 //            SVRParameters parameters = new SVRParameters();
-//            parameters.put("session_key", GemfiveApplication.getAppConfiguration().getUserInfo(FavoriteActivity.this).getSessionKey());
+//            parameters.put("session_key", WhiteLabelApplication.getAppConfiguration().getUserInfo(FavoriteActivity.this).getSessionKey());
 //
 //            for (String str : set) {
 //                String category_ids = "category_ids[" + str + "]";

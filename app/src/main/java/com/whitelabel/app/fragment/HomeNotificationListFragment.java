@@ -18,7 +18,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.NotificationDetailActivity;
 import com.whitelabel.app.adapter.HomeNotificationListAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.model.NotificationCell;
 import com.whitelabel.app.model.SVRAppserviceNotificationListReturnEntity;
@@ -149,8 +149,8 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
         });
     }
     private boolean allowSendRequest(){
-        String deviceToken= GemfiveApplication.getPhoneConfiguration().getRegistrationToken();
-        boolean isSignIn=GemfiveApplication.getAppConfiguration().isSignIn(homeActivity);
+        String deviceToken= WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken();
+        boolean isSignIn= WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity);
         if(("".equals(deviceToken)||deviceToken==null)&&!isSignIn){
             return  false;
         }
@@ -158,8 +158,8 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
     }
     private void sendRequestToGetList() {
         currType=LOADING;
-        String session_key=GemfiveApplication.getAppConfiguration().getUser() == null ? null : GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
-        String device_token= GemfiveApplication.getPhoneConfiguration().getRegistrationToken();
+        String session_key= WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+        String device_token= WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken();
         mDao.sendRequestToGetList(session_key, String.valueOf(page), String.valueOf(pagesize), device_token);
     }
     private static final class DataHandler extends Handler{
@@ -268,7 +268,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
                 newSendRequestToGetList();
             }else if(type== SendBoardUtil.NOTIFICATION){
                 if(!TextUtils.isEmpty(id)&&currType==SUCCESS) {
-                    mDao.getNotificationDetail(GemfiveApplication.getAppConfiguration().getUser() == null ? null : GemfiveApplication.getAppConfiguration().getUser().getSessionKey(), id,"0","");
+                    mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), id,"0","");
                 }
             }else if(type==SendBoardUtil.READFLAG){
                 setRead(id);

@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CreditInstructionActivity;
 import com.whitelabel.app.adapter.StoreCreditAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.OtherDao;
 import com.whitelabel.app.model.StoreCreditBean;
 import com.whitelabel.app.model.StoreCreditItemBean;
@@ -83,8 +83,8 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
     @Override
     public void onRefresh() {
         String sessionKey="";
-        if(GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
-            sessionKey=GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+            sessionKey= WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
         }
         mOtherDao.getStoreCredit(sessionKey);
     }
@@ -227,8 +227,8 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
     private void sendRequest() {
         if (getActivity() != null) {
             String sessionKey="";
-            if(GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
-                sessionKey=GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+            if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                sessionKey= WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
             }
             mOtherDao.getStoreCredit(sessionKey);
         }

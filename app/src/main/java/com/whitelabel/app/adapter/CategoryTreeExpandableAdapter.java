@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
@@ -88,7 +88,7 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
         if (holder instanceof GroupViewHolder) {
             GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
             SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) getItem(position);
-            groupViewHolder.tvCategoryTreeGroupName.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            groupViewHolder.tvCategoryTreeGroupName.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             groupViewHolder.tvCategoryTreeGroupName.setText(entity.getName());
             if (groupViewHolder.ivCategoryTreeGroup.getTag() != null && groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage())) {
             } else {

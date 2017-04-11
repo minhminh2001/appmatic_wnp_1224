@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
@@ -24,7 +23,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.network.ImageLoader;
 
 import java.io.ByteArrayOutputStream;
@@ -44,7 +43,7 @@ public class JImageUtils {
 
     public  static  Drawable getThemeCircle(Context context){
         GradientDrawable drawable= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.bg_cart_number);
-        drawable.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        drawable.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         return drawable;
     }
     public static Drawable getColorCircle(Context context,int color){
@@ -72,11 +71,11 @@ public class JImageUtils {
     public static  Drawable getButtonBackgroudSolidDrawable(Context context){
         StateListDrawable drawable=new StateListDrawable();
         GradientDrawable  normal= new GradientDrawable();
-        normal.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        normal.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         normal.setCornerRadius(JScreenUtils.dip2px(context,2));
         GradientDrawable  pressed= new GradientDrawable();
         pressed.setCornerRadius(JScreenUtils.dip2px(context,2));
-        pressed.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getButtonPressColor());
+        pressed.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getButtonPressColor());
         drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
         drawable.addState(new int[]{android.R.attr.state_enabled},normal);
         drawable.addState(new int[]{},normal);
@@ -87,9 +86,9 @@ public class JImageUtils {
         StateListDrawable drawable=new StateListDrawable();
         GradientDrawable  normal= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
         normal.setColor(ContextCompat.getColor(context,R.color.transparent00));
-        normal.setStroke(JScreenUtils.dip2px(context,1.5f),GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        normal.setStroke(JScreenUtils.dip2px(context,1.5f), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 //        GradientDrawable  pressed= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
-//        pressed.setColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getButtonClickColor());
+//        pressed.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getButtonClickColor());
         drawable.addState(new int[]{},normal);
 //        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
         return drawable;
@@ -97,7 +96,7 @@ public class JImageUtils {
 
 
     public static ColorStateList getThemeTextColorDrawable(int defaultColor){
-        int[] colors = new int[] { GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(), defaultColor,defaultColor};
+        int[] colors = new int[] { WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(), defaultColor,defaultColor};
         int[][] states = new int[3][];
         states[0] = new int[] { android.R.attr.state_enabled, android.R.attr.state_selected };
         states[1] = new int[] { android.R.attr.state_enabled };
@@ -108,7 +107,7 @@ public class JImageUtils {
 
 
     public static Drawable getThemeIconSelector(Drawable drawable,int defaultColor){
-        int[] colors = new int[] { GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(), defaultColor,defaultColor};
+        int[] colors = new int[] { WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(), defaultColor,defaultColor};
         int[][] states = new int[3][];
         states[0] = new int[] { android.R.attr.state_enabled, android.R.attr.state_selected };
         states[1] = new int[] { android.R.attr.state_enabled };
@@ -126,7 +125,7 @@ public class JImageUtils {
         Drawable drawable1=ContextCompat.getDrawable(context, drawable);
         final Drawable wrappedDrawable = DrawableCompat.wrap(drawable1);
         DrawableCompat.setTintList(wrappedDrawable,
-                ColorStateList.valueOf(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()));
+                ColorStateList.valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()));
         return wrappedDrawable;
     }
 

@@ -31,7 +31,7 @@ import android.widget.Toast;
 import com.molpay.molpayxdk.MOLPayActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.DialogProductAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.CheckoutDao;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
@@ -160,7 +160,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         mCheckoutPaymentDialog = new CheckoutPaymentDialog(CheckoutActivity.this, R.style.loading_dialog, getResources().getString(R.string.dialog_checkout_text)).showDialog();
         btnContinue.setEnabled(false);
         btnContinue.setBackgroundResource(R.drawable.big_button_style_b8);
-        mCheckoutDao.savePlaceOrder(GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
+        mCheckoutDao.savePlaceOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
     }
 //
 //    public void IsOldVersion() {
@@ -228,7 +228,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         errorProductTitle = getResources().getString(R.string.checkout_product_error_title);
         list_fragment = new ArrayList<Fragment>();
         list_fragment_shipping = new ArrayList<Fragment>();
-        if (GemfiveApplication.getAppConfiguration().isSignIn(CheckoutActivity.this)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(CheckoutActivity.this)) {
             setButtonEnable(true);
             openSelectFragment();
         } else {
@@ -282,12 +282,12 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         scrollViewBody = (ScrollView) findViewById(R.id.sv_checkout_body);
         llBody = (LinearLayout) findViewById(R.id.ll_checkout_body);
         progressBarLoading = (ProgressBar) findViewById(R.id.pb_checkout_body_loading);
-        tvMenuShipping.setTextColor(  GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        tvMenuShipping.setTextColor(  WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         btnContinue.setOnClickListener(this);
         ll_btn.setOnClickListener(this);
         ll_btn.setVisibility(View.VISIBLE);
         changeSliderColor(
-                GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
+                WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
                 getResources().getColor(R.color.grayf8f8f8),
                 getResources().getColor(R.color.grayf8f8f8));
         btnContinue.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
@@ -434,7 +434,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     case 2://means payment module
                         changeSliderColor(
                                 getResources().getColor(R.color.grayf8f8f8),
-                                  GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
+                                  WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
                                 getResources().getColor(R.color.grayf8f8f8));
                         break;
                     case 1://means shipping module
@@ -443,7 +443,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         inputMethodManager.hideSoftInputFromWindow(llBody.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                         changeSliderColor(
-                                  GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
+                                  WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
                                 getResources().getColor(R.color.grayf8f8f8),
                                 getResources().getColor(R.color.grayf8f8f8));
 
@@ -523,7 +523,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         //Go to next payment redirect activity ,then open a webview and send Request Of Payment Redirect
         Bundle bundle = new Bundle();
         bundle.putLong("mGATrackTimeStart", mGATrackPlaceOrderToResultTimeStart);
-        bundle.putString("session_key", GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
+        bundle.putString("session_key", WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
         bundle.putString("lastrealorderid", lastrealorderid);
         bundle.putString("payment_type", payment_type);
         bundle.putString("grand_total", grandTotal.replace("RM", "").trim());
@@ -630,7 +630,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         changeSliderColor(
                 getResources().getColor(R.color.grayf8f8f8),
                 getResources().getColor(R.color.grayf8f8f8),
-                  GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                  WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         //switch fragment and set params
         checkoutReviewFragment = new CheckoutReviewFragment();
         Bundle bundle = new Bundle();
@@ -688,7 +688,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         mGATrackAddressToPaymentTimeEnable = true;
         mGATrackAddressToPaymentTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
 //        SVRParameters parameters = new SVRParameters();
-//        parameters.put("session_key",  GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
+//        parameters.put("session_key",  WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
         //judge to show which fragment(module)
         switch (Integer.parseInt(addressConditionInShipping)) {
 
@@ -709,7 +709,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     /**
                      * step1, send request to save address
                      */
-                    mAccountDao.addressSave(GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey(),
+                    mAccountDao.addressSave(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(),
                             addressParams.getFirstname(), addressParams.getLastname(), addressParams.getCountryId(), addressParams.getTelephone(), addressParams.getStreet0(),
                             addressParams.getStreet1(), addressParams.getPostcode(), addressParams.getCity(), addressParams.getRegion(), addressParams.getRegionId(), "0");
                 } else if (editAddressFragment != null && editAddressFragment.AllVerifyNotNull()) {
@@ -726,7 +726,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
                     setButtonEnable(false);
                     editAddressFragment.tvErrorMsg.setText("");
-                    mAccountDao.EditSave(addressParams.getAddressId(), GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), addressParams.getFirstname(),
+                    mAccountDao.EditSave(addressParams.getAddressId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), addressParams.getFirstname(),
                             addressParams.getLastname(), addressParams.getCountryId(), addressParams.getTelephone(), addressParams.getStreet0(), addressParams.getStreet1(),
                             addressParams.getPostcode(), addressParams.getCity(), addressParams.getRegion(), addressParams.getRegionId(), null);
                 } else {
@@ -773,7 +773,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     addressParams.setTelephone(defaultShippingAddress.getTelephone());
                     mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
                     setButtonEnable(false);
-                    mCheckoutDao.saveBilling(GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), addressParams);
+                    mCheckoutDao.saveBilling(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), addressParams);
                 } catch (ClassCastException e) {
                     e.printStackTrace();
                 }
@@ -812,7 +812,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     if (msg.arg1 == MyAccountDao.RESPONSE_SUCCESS) {
                         SVRAddAddress address = (SVRAddAddress) msg.obj;
                         mActivity.get().addressParams.setAddressId(address.getId());
-                        mActivity.get().mCheckoutDao.saveBilling(GemfiveApplication.getAppConfiguration().getUserInfo(mActivity.get()).getSessionKey(), mActivity.get().addressParams);
+                        mActivity.get().mCheckoutDao.saveBilling(WhiteLabelApplication.getAppConfiguration().getUserInfo(mActivity.get()).getSessionKey(), mActivity.get().addressParams);
                     } else {
                         if (mActivity.get().mDialog != null) {
                             mActivity.get().mDialog.cancel();
@@ -852,7 +852,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                             mActivity.get().changeSliderColor(
                                     mActivity.get().getResources().getColor(R.color.grayf8f8f8),
                                     mActivity.get().getResources().getColor(R.color.grayf8f8f8),
-                                    GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor() );
+                                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor() );
                             //switch fragment and set params
                             mActivity.get().checkoutReviewFragment = new CheckoutReviewFragment();
                             Bundle bundle = new Bundle();
@@ -876,7 +876,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                              * normal payment
                              */
                             mActivity.get().skipPayment = 0;
-                            mActivity.get().changeSliderColor(mActivity.get().getResources().getColor(R.color.grayf8f8f8), GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(), mActivity.get().getResources().getColor(R.color.grayf8f8f8));
+                            mActivity.get().changeSliderColor(mActivity.get().getResources().getColor(R.color.grayf8f8f8), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(), mActivity.get().getResources().getColor(R.color.grayf8f8f8));
                             //switch fragment
                             mActivity.get().fragmentTransaction = mActivity.get().getFragmentManager().beginTransaction();
                             mActivity.get().checkoutPaymentFragment = mActivity.get().getFragmentManager().findFragmentByTag("paymentFragment");
@@ -903,7 +903,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         mActivity.get().neverEnterIntoNext = false;
                         mActivity.get().scrollViewBody.scrollTo(0, 0);
                         try {
-                            String CustomerId = GemfiveApplication.getAppConfiguration().getUser().getId();
+                            String CustomerId = WhiteLabelApplication.getAppConfiguration().getUser().getId();
                             GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
                                     "Save Address",
                                     "Shipping State",
@@ -937,7 +937,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     break;
                 case MyAccountDao.REQUEST_EDIT_SAVE:
                     if (msg.arg1 == MyAccountDao.RESPONSE_SUCCESS) {
-                        mActivity.get().mCheckoutDao.saveBilling(GemfiveApplication.getAppConfiguration().getUserInfo(mActivity.get()).getSessionKey(), mActivity.get().addressParams);
+                        mActivity.get().mCheckoutDao.saveBilling(WhiteLabelApplication.getAppConfiguration().getUserInfo(mActivity.get()).getSessionKey(), mActivity.get().addressParams);
                     } else {
                         if (mActivity.get().mDialog != null) {
                             mActivity.get().mDialog.cancel();
@@ -1082,7 +1082,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
                     "Save Address",
                     state,
-                    Long.valueOf(GemfiveApplication.getAppConfiguration().getUser().getId()));
+                    Long.valueOf(WhiteLabelApplication.getAppConfiguration().getUser().getId()));
 
         } catch (Exception ex) {
             ex.getStackTrace();
@@ -1277,14 +1277,14 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         TranslateAnimation translateAnimation = null;
       
         //first slide
-        if (firstColorId ==   GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()) {
+        if (firstColorId ==   WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()) {
             tvSliderFirst.setBackgroundColor(firstColorId);
             tvSliderSecond.setBackgroundColor(secondColorId);
             tvSliderThird.setBackgroundColor(thirdColorId);
         }
 
         //second slide
-        if (secondColorId ==   GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()) {
+        if (secondColorId ==   WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()) {
             if (isGoBack) {
 
                 tvSliderSecond.setBackgroundColor(secondColorId);
@@ -1297,7 +1297,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         }
 
         //third slide
-        if (thirdColorId ==   GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()) {
+        if (thirdColorId ==   WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()) {
 
 
             tvSliderFirst.setBackgroundColor(firstColorId);
@@ -1354,7 +1354,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     private void goToMolpayPage(String orderId, String amount, String shippingFee, String phone, String
             channel, String productName) {
         order_id = orderId;
-        GOUserEntity user = GemfiveApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this);
+        GOUserEntity user = WhiteLabelApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this);
 
         JLocalMethod method = new JLocalMethod();
         HashMap<String, Object> paymentDetails = new HashMap<>();
@@ -1416,7 +1416,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 //    private void goToMolpayPage(String orderId, String amount, String shippingFee, String phone, String
 //            channel, String productName) {
 //        order_id = orderId;
-//        GOUserEntity user = GemfiveApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this);
+//        GOUserEntity user = WhiteLabelApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this);
 //        Intent intent = new Intent(CheckoutActivity.this, MOLPayActivity.class);
 //        Bundle bundle = new Bundle();
 //        JLocalMethod  method=new JLocalMethod();
@@ -1539,7 +1539,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 //     */
 //    private void goToMolpayPage(String orderId, String amount, String shippingFee, String phone, String channel, String productName) {
 //        order_id = orderId;
-//        GOUserEntity user = GemfiveApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this);
+//        GOUserEntity user = WhiteLabelApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this);
 //        Intent intent = new Intent(CheckoutActivity.this, MOLPayActivity.class);
 //        Bundle bundle = new Bundle();
 //        JLocalMethod  method=new JLocalMethod();
@@ -1585,7 +1585,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (REQUESTCODE_LOGIN == requestCode) {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(CheckoutActivity.this)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(CheckoutActivity.this)) {
                 JLogUtils.i("checkout-continue-option---->", "login back");
                 startNextActivity(null, ShoppingCartActivity1.class, true);
             }
@@ -1620,13 +1620,13 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 
             if (TextUtils.isEmpty(orderId)) {
 //                mDialog=JViewUtils.showProgressDialog(CheckoutActivity.this);
-                mShoppingCarDao.sendRecoverOrder(GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
+                mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
                 return;
             }
 //            if (TextUtils.isEmpty(orderId)) {
 //                orderId = order_id;
 //            }
-            mCheckoutDao.changeOrderStatus(GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey(),
+            mCheckoutDao.changeOrderStatus(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(),
                     orderId, transaction_status, channel, transaction_id, payDate, amount, currency, appCode);
         }
 
@@ -1663,7 +1663,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 //                    }
 //                });
 ////                if (TextUtils.isEmpty(orderId)) {
-////                    mShoppingCarDao.sendRecoverOrder(GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
+////                    mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
 ////                    return;
 ////                }
 //            }
@@ -1695,7 +1695,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 //             * turn to login page ,
 //             * then go back to shoppingcart page
 //             */
-//            if (GemfiveApplication.getAppConfiguration().isSignIn(CheckoutActivity.this)) {
+//            if (WhiteLabelApplication.getAppConfiguration().isSignIn(CheckoutActivity.this)) {
 //                JLogUtils.i("checkout-continue-option---->", "login back");
 //                startNextActivity(null, ShoppingCartActivity1.class, true);
 //            }
@@ -1751,7 +1751,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 //                }
 //            }else{
 //                if (TextUtils.isEmpty(orderId)) {
-//                    mShoppingCarDao.sendRecoverOrder(GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
+//                    mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
 //                    return;
 //                }
 //            }
@@ -1766,7 +1766,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 ////
 ////            }
 ////        });
-//        mCheckoutDao.changeOrderStatus(GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey(),
+//        mCheckoutDao.changeOrderStatus(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(),
 //                orderId,transaction_status,channel,transaction_id,payDate,amount,currency,appCode);
 //
 //
@@ -1775,7 +1775,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 //         * Call WebService
 //         */
 ////        SVRParameters parameters = new SVRParameters();
-////        parameters.put("session_key",  GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
+////        parameters.put("session_key",  WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
 ////        parameters.put("orderid", orderId);
 ////        parameters.put("method", "molpay");
 ////        parameters.put("status", transaction_status);
@@ -1840,7 +1840,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 
 
     public void retryOrder(String orderId) {
-        mShoppingCarDao.sendRecoverOrder(GemfiveApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this).getSessionKey(), orderId, "");
+        mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this).getSessionKey(), orderId, "");
     }
 
     public void startShoppingActivity() {
@@ -1852,9 +1852,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     }
 
     public void saveShoppingCartCount(int num) {
-        GOUserEntity userEntity = GemfiveApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this);
+        GOUserEntity userEntity = WhiteLabelApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this);
         userEntity.setCartItemCount(num);
-        GemfiveApplication.getAppConfiguration().updateDate(CheckoutActivity.this, userEntity);
+        WhiteLabelApplication.getAppConfiguration().updateDate(CheckoutActivity.this, userEntity);
     }
 
 
@@ -1879,7 +1879,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         }
         closeCheckoutPaymentDialog();
         super.onDestroy();
-//        GemfiveApplication.getRefWatcher(this).watch(this);
+//        WhiteLabelApplication.getRefWatcher(this).watch(this);
     }
 
     @Override

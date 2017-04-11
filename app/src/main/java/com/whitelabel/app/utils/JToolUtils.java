@@ -30,7 +30,7 @@ import android.widget.ListView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.BaseActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.fragment.BaseFragment;
 
 import java.io.ByteArrayInputStream;
@@ -307,10 +307,10 @@ public class JToolUtils {
     }
 
     public static int getColor(int id){
-        return ContextCompat.getColor(GemfiveApplication.getInstance().getBaseContext(), id);
+        return ContextCompat.getColor(WhiteLabelApplication.getInstance().getBaseContext(), id);
     }
     public static Drawable getDrawable(int id){
-        return ContextCompat.getDrawable(GemfiveApplication.getInstance().getBaseContext(), id);
+        return ContextCompat.getDrawable(WhiteLabelApplication.getInstance().getBaseContext(), id);
     }
     public static boolean  expireHandler(Activity context,String errorMsg,int requestCode){
         String SESSION_EXPIRED = "session expired,login again please";
@@ -428,8 +428,8 @@ public class JToolUtils {
     public static String getAppVersion() {
         String version = "0";
         try {
-            version = GemfiveApplication.getInstance().getPackageManager().getPackageInfo(
-                    GemfiveApplication.getInstance().getPackageName(), 0).versionName;
+            version = WhiteLabelApplication.getInstance().getPackageManager().getPackageInfo(
+                    WhiteLabelApplication.getInstance().getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

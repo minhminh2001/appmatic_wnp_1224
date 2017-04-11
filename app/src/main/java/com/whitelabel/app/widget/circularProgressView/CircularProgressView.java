@@ -18,7 +18,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -95,7 +95,7 @@ public class CircularProgressView extends View {
             TypedValue t = new TypedValue();
             getContext().getTheme().resolveAttribute(accentColor, t, true);
 //            color = t.data;
-            color= GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor();
+            color= WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor();
         }
         // If using native accentColor (SDK >21)
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

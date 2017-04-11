@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
@@ -48,7 +48,7 @@ public class GalleryAdapter extends
     }
 
     public GalleryAdapter(Activity context, ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> datats, ImageLoader imageLoader) {
-        final int destScreenWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth(context);
+        final int destScreenWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(context);
 //		final int destPageMargin = 3 * destScreenWidth / 10;
         mContext = context;
         mDestWidthChildCategory = (int) ((destScreenWidth - JToolUtils.dip2px(mContext, 24)) / 2.5);

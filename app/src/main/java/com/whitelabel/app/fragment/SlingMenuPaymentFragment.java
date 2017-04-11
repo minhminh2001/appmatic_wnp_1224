@@ -17,7 +17,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.JDataUtils;
@@ -98,7 +98,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                 break;
             }
             case R.id.signin_whishlist_RelativeLayout: {
-                if (GemfiveApplication.getAppConfiguration().isSignIn(paymentStatusActivity)) {
+                if (WhiteLabelApplication.getAppConfiguration().isSignIn(paymentStatusActivity)) {
                     Intent intent = new Intent(paymentStatusActivity, HomeActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("from_checkout_to_wishlist", "from_checkout_to_wishlist");
@@ -269,8 +269,8 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
     }
 
     public void updateMenuShowNumber(){
-        if(GemfiveApplication.getAppConfiguration().isSignIn(paymentStatusActivity)) {
-            long wishlistItem = GemfiveApplication.getAppConfiguration().getUserInfo(paymentStatusActivity).getWishListItemCount();
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(paymentStatusActivity)) {
+            long wishlistItem = WhiteLabelApplication.getAppConfiguration().getUserInfo(paymentStatusActivity).getWishListItemCount();
             if (wishlistItem > 0) {
                 if(wishlistItem>99){
                     tvWhishlistNum.setText(getResources().getString(R.string.nine));
@@ -281,7 +281,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
             }else{
                 tvWhishlistNum.setVisibility(View.INVISIBLE);
             }
-            long orgerItem=GemfiveApplication.getAppConfiguration().getUserInfo(paymentStatusActivity).getOrderCount();
+            long orgerItem= WhiteLabelApplication.getAppConfiguration().getUserInfo(paymentStatusActivity).getOrderCount();
             if(orgerItem>0){
                 if(orgerItem>99){
                     tvOrsersNum.setText(getResources().getString(R.string.nine));
@@ -292,7 +292,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
             }else{
                 tvOrsersNum.setVisibility(View.INVISIBLE);
             }
-            long cartItemCount=GemfiveApplication.getAppConfiguration().getUserInfo(paymentStatusActivity).getCartItemCount();
+            long cartItemCount= WhiteLabelApplication.getAppConfiguration().getUserInfo(paymentStatusActivity).getCartItemCount();
             ArrayList<TMPLocalCartRepositoryProductEntity> list = JStorageUtils.getProductListFromLocalCartRepository(paymentStatusActivity);
             if (list.size() > 0) {
                 for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
@@ -332,12 +332,12 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
 //        SharedPreferences shared = paymentStatusActivity.getSharedPreferences("session_key", Activity.MODE_PRIVATE);
 //            sessionKey = shared.getString("session_key", "");
 
-        if (GemfiveApplication.getAppConfiguration().isSignIn(paymentStatusActivity)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(paymentStatusActivity)) {
             String username = "";
-            String firstname = GemfiveApplication.getAppConfiguration().getUser().getFirstName();
-            String lastname = GemfiveApplication.getAppConfiguration().getUser().getLastName();
+            String firstname = WhiteLabelApplication.getAppConfiguration().getUser().getFirstName();
+            String lastname = WhiteLabelApplication.getAppConfiguration().getUser().getLastName();
 
-            String avater = GemfiveApplication.getAppConfiguration().getUser().getHeadImage();
+            String avater = WhiteLabelApplication.getAppConfiguration().getUser().getHeadImage();
 //            JImageUtils.downloadImageFromServerByUrl(homeActivity, ccivUserAvater, avater, JDataUtils.dp2Px(50), JDataUtils.dp2Px(50));
 
             if (!JDataUtils.isEmpty(firstname)) {
@@ -369,15 +369,15 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
 
     private void updateNotificationCount() {
        String  sessionKey="";
-        if (GemfiveApplication.getAppConfiguration().getUser() != null && GemfiveApplication.getAppConfiguration() != null) {
-            sessionKey = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+        if (WhiteLabelApplication.getAppConfiguration().getUser() != null && WhiteLabelApplication.getAppConfiguration() != null) {
+            sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
         }
-        mDao.getNotificationDetailCount(sessionKey, GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+        mDao.getNotificationDetailCount(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
 
 //        final String SESSION_EXPIRED = "session expired,login again please";
 //        SVRParameters parameters = new SVRParameters();
-//        parameters.put("session_key", GemfiveApplication.getAppConfiguration().getUser() == null ? null : GemfiveApplication.getAppConfiguration().getUser().getSessionKey());
-//        parameters.put("device_token", GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+//        parameters.put("session_key", WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
+//        parameters.put("device_token", WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
 //        //parameters.put("device_token", "dXHj4TRWf20:APA91bGJ-7eqohReIDBYu4GPy9FomqMsBbTYanmDjAFhdltrq6KDX9z2QcmDU8V0qU4PrsORk3J8j3c0LWmRwTysCOXV1xfGNTtY04QmMF6Xae8-J-SRPIvQ6d0mLu8aI31W6HjSOU7d");
 //
 //        final SVRNotificationCount notificationCountHandler = new SVRNotificationCount(getActivity(), parameters);

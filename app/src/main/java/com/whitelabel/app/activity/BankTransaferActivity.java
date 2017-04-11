@@ -34,7 +34,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.CustomFocusChangeCallBack;
 import com.whitelabel.app.callback.GlobalCallBack;
 import com.whitelabel.app.callback.MyResultCallback;
@@ -193,10 +193,10 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
                 llSubmit.setVisibility(View.GONE);
                 bottomBlack.setVisibility(View.GONE);
             }
-            etEmailAddress.setText(GemfiveApplication.getAppConfiguration().getUser().getEmail());
+            etEmailAddress.setText(WhiteLabelApplication.getAppConfiguration().getUser().getEmail());
             etOrderNum.setText(mBean.getOrderNo());
             etOrderNum.setEnabled(false);
-            etCustomer.setText(GemfiveApplication.getAppConfiguration().getUser().getFirstName() + " " + GemfiveApplication.getAppConfiguration().getUser().getLastName());
+            etCustomer.setText(WhiteLabelApplication.getAppConfiguration().getUser().getFirstName() + " " + WhiteLabelApplication.getAppConfiguration().getUser().getLastName());
         }
 
         mDao = new OtherDao(TAG, mHandler);
@@ -443,7 +443,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
             transferDate = date[2] + "/" + date[1] + "/" + date[0];
         }
         String id = mBean.getTransferId();
-        mDao.saveBankTransferConfirm(id, GemfiveApplication.getAppConfiguration().getUser().getSessionKey(), rankFrom, email, orderNumber, transferee, transferred, transferDate, profFile);
+        mDao.saveBankTransferConfirm(id, WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), rankFrom, email, orderNumber, transferee, transferred, transferDate, profFile);
     }
 
     public void closeKeyBoard() {
@@ -534,7 +534,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
                 }, 100);
 
                 tv.setText(hintText);
-                tv.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             }
 
             @Override
@@ -694,7 +694,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
 
     public void uploadFile(File file) {
         OkHttpClientManager.Param[] params = new OkHttpClientManager.Param[1];
-        OkHttpClientManager.Param param = new OkHttpClientManager.Param("session_key", GemfiveApplication.getAppConfiguration().getUser().getSessionKey());
+        OkHttpClientManager.Param param = new OkHttpClientManager.Param("session_key", WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
         params[0] = param;
         OkHttpClientManager.getUploadDelegate().postAsyn(GlobalData.upLoadFileUrl, "proof_file", file, params, new MyResultCallback<String>() {
             @Override

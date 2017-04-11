@@ -1,6 +1,6 @@
 package com.whitelabel.app.ui.start;
 
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.model.ApiFaildException;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
@@ -27,7 +27,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                     @Override
                     public void call(RemoteConfigResonseModel remoteConfigModel) {
                         if("1".equals(remoteConfigModel.getStatus())){
-                            GemfiveApplication.getAppConfiguration().setConfigColor(remoteConfigModel.
+                            WhiteLabelApplication.getAppConfiguration().setConfigColor(remoteConfigModel.
                                     getData().getUiStyle().getThemeColor(),
                                     remoteConfigModel.getData().getUiStyle().getNavBarBackgroudColor(),
                                     remoteConfigModel.getData().getUiStyle().getButtonPressColor());

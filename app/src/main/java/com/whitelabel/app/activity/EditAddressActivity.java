@@ -31,7 +31,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.google.gson.Gson;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.WheelPickerCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.AddressBook;
@@ -314,30 +314,30 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         state.setOnFocusChangeListener(this);
         eg.setOnFocusChangeListener(this);
         firstNameText= (TextView)findViewById(R.id.edit_firstName_text);
-        firstNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         firstNameText2= (TextView)findViewById(R.id.edit_firstName_text2);
         lastNameText= (TextView)findViewById(R.id.edit_lastName_text);
-        lastNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         lastNameText2= (TextView) findViewById(R.id.edit_lastName_text2);
         countryText= (TextView) findViewById(R.id.edit_country_text);
-        countryText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        countryText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         countryText2= (TextView) findViewById(R.id.edit_country_text2);
         address1Text= (TextView) findViewById(R.id.edit_address1_text1);
-        address1Text.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         address1Text2= (TextView) findViewById(R.id.edit_address1_text2);
         address2Text= (TextView) findViewById(R.id.edit_address2_text1);
-        address1Text.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         address2Text2= (TextView) findViewById(R.id.edit_address2_text2);
         postalcodeText= (TextView) findViewById(R.id.edit_postalcode_text);
-        postalcodeText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        postalcodeText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         postalcodeText2= (TextView)findViewById(R.id.edit_postalcode_text2);
         cityText= (TextView) findViewById(R.id.edit_city_text1);
-        cityText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        cityText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         cityText2= (TextView) findViewById(R.id.edit_city_text2);
 
         stateText2= (TextView) findViewById(R.id.edit_state_text2);
         egText= (TextView) findViewById(R.id.ctv_eg_text);
-        egText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         egText2= (TextView) findViewById(R.id.ctv_eg_text2);
         phoneNumber= (TextView) findViewById(R.id.ctv_phone_number_value);
         phoneNumber.setOnClickListener(this);
@@ -606,7 +606,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             }
 
             String address_id=mBean.getAddressId();
-            String sessionKey=GemfiveApplication.getAppConfiguration().getUserInfo(EditAddressActivity.this).getSessionKey();
+            String sessionKey= WhiteLabelApplication.getAppConfiguration().getUserInfo(EditAddressActivity.this).getSessionKey();
             String firstname =firstName.getText().toString().trim();
             String lastname=lastName.getText().toString().trim();
             String country_id = String.valueOf(country.getTag());
@@ -1061,7 +1061,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
 
     private void sendRequestToGetCityAndStateByPostCode(String postcode) {
         city.setEnabled(false);
-        String session_key= GemfiveApplication.getAppConfiguration().getUserInfo(EditAddressActivity.this).getSessionKey();
+        String session_key= WhiteLabelApplication.getAppConfiguration().getUserInfo(EditAddressActivity.this).getSessionKey();
         String country_id=country.getTag() == null ? "" : country.getTag().toString();
         dao.getCityAndStateByPostCodet(session_key, postcode, country_id);
 
@@ -1093,7 +1093,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             text2.setVisibility(View.INVISIBLE);
             text.startAnimation(set);
         }else{
-            text2.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         }
         if(relativeLayout!=null) {
             relativeLayout.setBottomLineActive(true);
@@ -1105,10 +1105,10 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
      */
     private void sendRequestToGetCountryAndRegions() {
         mDialog=JViewUtils.showProgressDialog(EditAddressActivity.this);
-        dao.getCountryAndRegions(GemfiveApplication.getAppConfiguration().getUserInfo(EditAddressActivity.this).getSessionKey());
+        dao.getCountryAndRegions(WhiteLabelApplication.getAppConfiguration().getUserInfo(EditAddressActivity.this).getSessionKey());
 
 //        SVRParameters parameters = new SVRParameters();
-//        parameters.put("session_key", GemfiveApplication.getAppConfiguration().getUserInfo(EditAddressActivity.this).getSessionKey());
+//        parameters.put("session_key", WhiteLabelApplication.getAppConfiguration().getUserInfo(EditAddressActivity.this).getSessionKey());
 //        SVRCountry countryHandler = new SVRCountry(EditAddressActivity.this, parameters);
 //        countryHandler.loadDatasFromServer(new SVRCallback() {
 //            @Override

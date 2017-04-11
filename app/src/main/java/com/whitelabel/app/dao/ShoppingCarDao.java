@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.KeyValueBean;
@@ -82,8 +82,8 @@ public class ShoppingCarDao extends BaseHttp {
     }
 
     public void saveShoppingCartCount(Context context, int num) {
-        GOUserEntity userEntity = GemfiveApplication.getAppConfiguration().getUserInfo(context);
-        GemfiveApplication.getAppConfiguration().updateDate(context, userEntity);
+        GOUserEntity userEntity = WhiteLabelApplication.getAppConfiguration().getUserInfo(context);
+        WhiteLabelApplication.getAppConfiguration().updateDate(context, userEntity);
     }
 
     public void addProductToShoppingCart(String sessionKey, String productId, String qty, List<SVRAppserviceProductDetailResultPropertyReturnEntity> propertyReturnEntities) {

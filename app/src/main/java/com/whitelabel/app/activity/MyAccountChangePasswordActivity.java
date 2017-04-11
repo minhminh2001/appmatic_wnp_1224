@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -139,7 +139,7 @@ public class MyAccountChangePasswordActivity extends com.whitelabel.app.BaseActi
     private void clickSaveOption() {
         if(onblurAll(R.id.old)&&onblurAll(R.id.newpassword)&&onblurAll(R.id.confirm)) {
             mDialog = JViewUtils.showProgressDialog(this);//test
-            String session_key = GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey();
+            String session_key = WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey();
             mDao.changePass(session_key, old.getText().toString().trim(), newPassword.getText().toString().trim(), confirm.getText().toString().trim());
         }
     }

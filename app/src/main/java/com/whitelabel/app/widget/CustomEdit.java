@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.CustomFocusChangeCallBack;
 import com.whitelabel.app.utils.JDataUtils;
 
@@ -66,7 +66,7 @@ public class CustomEdit extends LinearLayout implements View.OnFocusChangeListen
         myText1= (TextView) view.findViewById(R.id.my_text1);
         myText2=(TextView) view.findViewById(R.id.my_text2);
         myEditText.setOnFocusChangeListener(this);
-        myText1.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        myText1.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         myEditText.setHint(hint);
         myText1.setText(hint);
         myText2.setText(hint);
@@ -121,7 +121,7 @@ public class CustomEdit extends LinearLayout implements View.OnFocusChangeListen
                     myText1.startAnimation(set);
                 } else {
                     myText2.setVisibility(View.VISIBLE);
-                    myText2.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    myText2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
                 }
 
             }
@@ -190,7 +190,7 @@ public class CustomEdit extends LinearLayout implements View.OnFocusChangeListen
         if(TextUtils.isEmpty(text)){
             myText2.setText(hint);
             myText2.setVisibility(View.VISIBLE);
-            myText2.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            myText2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         }else {
             myEditText.setHint(hint);
             myText2.setVisibility(View.VISIBLE);

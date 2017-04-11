@@ -207,7 +207,7 @@ public class CheckoutShippingDefaultaddressFragment extends Fragment {
 //            return ;
 //        }
 //        SVRParameters parameters = new SVRParameters();
-//        parameters.put("session_key", GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey());
+//        parameters.put("session_key", WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey());
 //
 //        SVRCheckoutDefaultShippingAddress defaultShippingAddressHandler = new SVRCheckoutDefaultShippingAddress(checkoutActivity, parameters);
 //

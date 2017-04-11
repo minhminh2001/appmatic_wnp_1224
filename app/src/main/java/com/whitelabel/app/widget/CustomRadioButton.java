@@ -10,10 +10,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JScreenUtils;
-import com.whitelabel.app.utils.JViewUtils;
 
 /**
  * Created by ray on 2017/3/27.
@@ -33,7 +32,7 @@ public class CustomRadioButton  extends RelativeLayout{
         ivBigImage.setBackground(JImageUtils.getThemeCircle(context));
         ivSmallImage.setBackground(JImageUtils.getThemeCircle(context));
         GradientDrawable drawable= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.radio_oval);
-        drawable.setStroke(JScreenUtils.dip2px(context,2), GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        drawable.setStroke(JScreenUtils.dip2px(context,2), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         ivBigImage.setBackground(drawable);
         addView(view);
     }

@@ -1,14 +1,10 @@
 package com.whitelabel.app.activity;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.text.TextUtils;
@@ -19,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.NotificationCallback;
 import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.fragment.HomeBaseFragment;
@@ -128,7 +124,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 }, DELAY);
                 break;
             case R.id.rl_drawer_wishlist:
-                if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this)) {
+                if (WhiteLabelApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this)) {
                     switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_WISHLIST);
                 }
                 drawerLayout.closeDrawer(Gravity.LEFT);
@@ -147,7 +143,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
+                        if (WhiteLabelApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
 //                              getToolbar().getMenu().clear();
                             jumpOrderPage();
                     }
@@ -155,7 +151,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 
                 break;
             case R.id.tv_setting:
-                if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this)) {
+                if (WhiteLabelApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this)) {
                     switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SETTING);
                 }
                 drawerLayout.closeDrawer(Gravity.LEFT);
@@ -207,7 +203,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
+                        if (WhiteLabelApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
 //                        getToolbar().getMenu().clear();
                             jumpAddressPage();
                     }
@@ -219,14 +215,14 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 //                baseHandler.postDelayed(new Runnable() {
 //                    @Override
 //                    public void run() {
-//                        if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
+//                        if (WhiteLabelApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
 ////                        getToolbar().getMenu().clear();
 //                            jumpStoreCreditPage();
 //                    }
 //                }, DELAY);
                 break;
             case R.id.ll_profile:
-                if (GemfiveApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
+                if (WhiteLabelApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
                     switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
                 drawerLayout.closeDrawer(Gravity.LEFT);
                 baseHandler.postDelayed(new Runnable() {
@@ -250,7 +246,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         ivMyOrder = (ImageView) findViewById(R.id.iv_orderlist);
         tvUserName = (TextView) findViewById(R.id.tv_user_name);
         llProfile = findViewById(R.id.ll_profile);
-        llProfile.setBackgroundColor(GemfiveApplication.getAppConfiguration().
+        llProfile.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().
                 getThemeConfig().getSecondaryColor());
         tvHome = (TextView) findViewById(R.id.tv_home);
         tvCategoryTree = (TextView) findViewById(R.id.tv_category_tree);
@@ -368,10 +364,10 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         DataHandler dataHandler = new DataHandler(this);
 //        mDao = new NotificationDao("NotificationReceiver", dataHandler);
 //        String sessionKey = "";
-//        if (GemfiveApplication.getAppConfiguration().getUser() != null && GemfiveApplication.getAppConfiguration() != null) {
-//            sessionKey = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+//        if (WhiteLabelApplication.getAppConfiguration().getUser() != null && WhiteLabelApplication.getAppConfiguration() != null) {
+//            sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
 //        }
-//        mDao.getNotificationDetailCount(sessionKey, GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+//        mDao.getNotificationDetailCount(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
 //        SendBoardUtil.sendNotificationBoard(this, SendBoardUtil.READCODE, null);
         initLayout();
 
@@ -381,10 +377,10 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 //            public void onDrawerOpened(View drawerView) {
 //                super.onDrawerOpened(drawerView);
 //                String sessionKey = "";
-//                if (GemfiveApplication.getAppConfiguration().getUser() != null && GemfiveApplication.getAppConfiguration() != null) {
-//                    sessionKey = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+//                if (WhiteLabelApplication.getAppConfiguration().getUser() != null && WhiteLabelApplication.getAppConfiguration() != null) {
+//                    sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
 //                }
-//                mDao.getNotificationDetailCount(sessionKey, GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+//                mDao.getNotificationDetailCount(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
 //            }
 //        };
 //        getDrawerLayout().addDrawerListener(mActionDrawableToggle);
@@ -408,10 +404,10 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
             String sessionKey = "";
             boolean bool = DrawerLayoutActivity.this.refreshNotification(type, id);
             if (!bool) {
-                if (GemfiveApplication.getAppConfiguration().getUser() != null && GemfiveApplication.getAppConfiguration() != null) {
-                    sessionKey = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+                if (WhiteLabelApplication.getAppConfiguration().getUser() != null && WhiteLabelApplication.getAppConfiguration() != null) {
+                    sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
                 }
-                mDao.getNotificationDetailCount(sessionKey, GemfiveApplication.getPhoneConfiguration().getRegistrationToken());
+                mDao.getNotificationDetailCount(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
             }
         }
     };
@@ -488,21 +484,21 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                     cartItemCount += localCartRepositoryProductEntity.getSelectedQty();
                 }
             }
-            if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
                 rlDrawerOrder.setVisibility(View.VISIBLE);
                 rlDrawerAddress.setVisibility(View.VISIBLE);
 //                rlDrawerSotreCredit.setVisibility(View.VISIBLE);
                 String username = "";
-                if (!TextUtils.isEmpty(GemfiveApplication.getAppConfiguration().getUser().getFirstName())) {
-                    username += GemfiveApplication.getAppConfiguration().getUser().getFirstName() + " ";
+                if (!TextUtils.isEmpty(WhiteLabelApplication.getAppConfiguration().getUser().getFirstName())) {
+                    username += WhiteLabelApplication.getAppConfiguration().getUser().getFirstName() + " ";
                 }
-                username += GemfiveApplication.getAppConfiguration().getUser().getLastName();
+                username += WhiteLabelApplication.getAppConfiguration().getUser().getLastName();
                 tvUserName.setText(username);
                 ivUserImg.setVisibility(View.VISIBLE);
                 //update  wishlist  orderlist  cart list  count
-                long wishtlistNum = GemfiveApplication.getAppConfiguration().getUserInfo(this).getWishListItemCount();
-                long orderNum = GemfiveApplication.getAppConfiguration().getUserInfo(this).getOrderCount();
-                cartItemCount += GemfiveApplication.getAppConfiguration().getUserInfo(this).getCartItemCount();
+                long wishtlistNum = WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getWishListItemCount();
+                long orderNum = WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getOrderCount();
+                cartItemCount += WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getCartItemCount();
 
                 if (wishtlistNum > 0 && wishtlistNum <= 99) {
                     tvWistNum.setVisibility(View.VISIBLE);

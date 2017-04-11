@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -16,13 +15,11 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.ImageView;
 
-import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.listener.OnRangeSeekBarChangeListener;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JToolUtils;
-import com.whitelabel.app.utils.JViewUtils;
 
 import java.math.BigDecimal;
 
@@ -116,7 +113,7 @@ public class CustomRangeSeekBar<T extends Number> extends ImageView {
         absoluteMinValuePrim = absoluteMinValue.doubleValue();
         absoluteMaxValuePrim = absoluteMaxValue.doubleValue();
         numberType = NumberType.fromNumber(absoluteMinValue);
-        SINGLE_COLOR= GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor();
+        SINGLE_COLOR= WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor();
         IS_MULTI_COLORED = false;
         LEFT_COLOR = 0;
         MIDDLE_COLOR = 0;

@@ -17,11 +17,10 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.fragment.HomeHelpCenterDetailFragment;
 import com.whitelabel.app.fragment.HomeHelpCenterListFragment;
@@ -32,16 +31,13 @@ import com.whitelabel.app.fragment.HomeNotificationListFragment;
 import com.whitelabel.app.fragment.HomeSettingCotentFragment;
 import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
-import com.whitelabel.app.listener.OnNotificationCountListener;
 import com.whitelabel.app.model.MarketingLayersEntity;
 import com.whitelabel.app.model.TMPHelpCenterListToDetailEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.ui.home.HomeHomeFragmentV2;
 import com.whitelabel.app.ui.home.HomeHomeFragmentV3;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.UserGuideHelper;
-import com.whitelabel.app.widget.CustomTextView;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
@@ -220,7 +216,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpShoppingCartPage() {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
             if (!(mCurrentFragment instanceof ShoppingCartVerticalFragment)) {
                 switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_SHOPPINGCART, null);
             }
@@ -231,7 +227,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpAddressPage() {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
             switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_MYACCOUNT, HomeMyAccountFragmentV2.SWITCH_ADDRESSFRAGMENT);
         } else {
             jumpLoginActivity();
@@ -240,7 +236,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpStoreCreditPage() {
-//        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+//        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
 //            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_MYACCOUNT, HomeMyAccountFragmentV2.SWITCH_STORECREDITFRAGMENT);
 //        } else {
 //            jumpLoginActivity();
@@ -254,7 +250,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpWistListPage() {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
             switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_MYACCOUNT, HomeMyAccountFragmentV2.SWITCH_WISHLISTFRAGMENT);
         } else {
             jumpLoginActivity();
@@ -264,7 +260,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpOrderPage() {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
             switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_MYACCOUNT, HomeMyAccountFragmentV2.SWITCH_ORDERFRAGMENT);
         } else {
             jumpLoginActivity();
@@ -275,7 +271,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     @Override
     protected void jumpSettingPage() {
         if (!(mCurrentFragment instanceof HomeSettingCotentFragment)) {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
                 switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_SETTING, "setting");
             } else {
                 jumpLoginActivity();
@@ -285,7 +281,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpEditProfilePage() {
-        if (GemfiveApplication.getAppConfiguration().isSignIn(this)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
             jumpEditProfileActivity();
         } else {
             jumpLoginActivity();
@@ -480,7 +476,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 //            public void onDrawerOpened(View drawerView) {
 //                updateLeftMenuNumber();
 //                boolean showGuide = JStorageUtils.showAppGuide3(HomeActivity.this);
-//                boolean islogin = GemfiveApplication.getAppConfiguration().isSignIn(HomeActivity.this);
+//                boolean islogin = WhiteLabelApplication.getAppConfiguration().isSignIn(HomeActivity.this);
 //                if (showGuide && islogin) {
 //                    showUserGuide(HomeBaseFragment.UserGuideType.LEFTMENU);
 //                }
@@ -724,7 +720,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        GemfiveApplication.delayShowAppRate = false;
+                        WhiteLabelApplication.delayShowAppRate = false;
                         HomeActivity.this.finish();//执行完dialog的动画
                     }
                 }, 300);
@@ -747,7 +743,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (!GemfiveApplication.getAppConfiguration().isSignIn(HomeActivity.this) && requestCode == HomeSettingCotentFragment.CODE) {
+        if (!WhiteLabelApplication.getAppConfiguration().isSignIn(HomeActivity.this) && requestCode == HomeSettingCotentFragment.CODE) {
             if (!(mCurrentFragment instanceof HomeHomeFragment)) {
                 switchFragment(-1, FRAGMENT_TYPE_HOME_HOME, "1");
             }

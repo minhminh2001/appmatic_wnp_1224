@@ -14,14 +14,11 @@ import android.webkit.WebViewClient;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.GlobalData;
-import com.whitelabel.app.application.GemfiveApplication;
 import com.whitelabel.app.dao.CheckoutDao;
-import com.whitelabel.app.model.CustomAnimEntity;
 import com.whitelabel.app.model.ShoppingDiscountBean;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
-import com.whitelabel.app.utils.JViewUtils;
 
 import java.io.Serializable;
 
@@ -106,7 +103,7 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
         }else{
             startPaymentStatusScreen();
 //            mDialog = JViewUtils.showProgressDialog(CheckoutPaymentRedirectActivity.this);
-//            mDao.getLuckdraw(GemfiveApplication.getAppConfiguration().getUser().getSessionKey(), lastrealorderid);
+//            mDao.getLuckdraw(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), lastrealorderid);
         }
     }
     private void initToolBar() {
@@ -173,7 +170,7 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
                             if (url.indexOf(SUCCESS) != -1) {
                                 isSuccess=true;
                                 startPaymentStatusScreen();
-//                                mDao.getLuckdraw(GemfiveApplication.getAppConfiguration().getUser().getSessionKey(), lastrealorderid);
+//                                mDao.getLuckdraw(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), lastrealorderid);
                                 return false;
                             } else if (url.indexOf(FAILD) != -1) {
                                 Bundle bundle = new Bundle();

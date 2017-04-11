@@ -1,6 +1,6 @@
 package com.whitelabel.app.ui.brandstore;
 
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.ApiFaildException;
@@ -28,8 +28,8 @@ public class BrandStorePresenter
 
     public void getBrandProductList(String brandId,final int offset, int  limit, String price, String order,String dir,String  modelType){
         String sessionKey="";
-        if(GemfiveApplication.getAppConfiguration().getUserInfo()!=null){
-            sessionKey=GemfiveApplication.getAppConfiguration().getUserInfo().getSessionKey();
+        if(WhiteLabelApplication.getAppConfiguration().getUserInfo()!=null){
+            sessionKey= WhiteLabelApplication.getAppConfiguration().getUserInfo().getSessionKey();
         }
        Subscription  subscription= DataManager.getInstance().getProductApi().
                 getProductListByBrandId(brandId,String.valueOf(offset),
@@ -63,8 +63,8 @@ public class BrandStorePresenter
     @Override
     public void addWistList(final  SVRAppserviceProductSearchResultsItemReturnEntity bean) {
         String sessionKey="";
-        if(GemfiveApplication.getAppConfiguration().getUserInfo()!=null){
-            sessionKey=GemfiveApplication.getAppConfiguration().getUserInfo().getSessionKey();
+        if(WhiteLabelApplication.getAppConfiguration().getUserInfo()!=null){
+            sessionKey= WhiteLabelApplication.getAppConfiguration().getUserInfo().getSessionKey();
         }
         Subscription subscription=DataManager.getInstance().getProductApi().
                 addWishList(sessionKey,bean.getProductId()).
@@ -73,7 +73,7 @@ public class BrandStorePresenter
                     @Override
                     public void call(AddToWishlistEntity addToWishlistEntity) {
                         bean.setItem_id(addToWishlistEntity.getItemId());
-                        GemfiveApplication.getAppConfiguration().updateWishlist(GemfiveApplication.getInstance(), addToWishlistEntity.getWishListItemCount());
+                        WhiteLabelApplication.getAppConfiguration().updateWishlist(WhiteLabelApplication.getInstance(), addToWishlistEntity.getWishListItemCount());
                         GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
                                 "Add To Wishlist",
                                 bean.getName(),
@@ -104,14 +104,14 @@ public class BrandStorePresenter
     @Override
     public void deleteWishListByItemId(final SVRAppserviceProductSearchResultsItemReturnEntity bean) {
         String sessionKey=null;
-        if(GemfiveApplication.getAppConfiguration().getUserInfo()!=null){
-            sessionKey=GemfiveApplication.getAppConfiguration().getUserInfo().getSessionKey();
+        if(WhiteLabelApplication.getAppConfiguration().getUserInfo()!=null){
+            sessionKey= WhiteLabelApplication.getAppConfiguration().getUserInfo().getSessionKey();
         }
         Subscription  subscription=DataManager.getInstance().getProductApi().deleteWistListById(sessionKey,bean.getItem_id())
                 .compose(RxUtil.<WishDelEntityResult>rxSchedulerHelper()).subscribe(new Action1<WishDelEntityResult>() {
                     @Override
                     public void call(WishDelEntityResult wishDelEntityResult) {
-                        GemfiveApplication.getAppConfiguration().updateWishlist(GemfiveApplication.getInstance(), wishDelEntityResult.getWishListItemCount());
+                        WhiteLabelApplication.getAppConfiguration().updateWishlist(WhiteLabelApplication.getInstance(), wishDelEntityResult.getWishListItemCount());
                     }
                 });
         addSubscrebe(subscription);

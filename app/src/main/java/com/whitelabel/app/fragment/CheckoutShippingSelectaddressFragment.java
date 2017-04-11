@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.adapter.CheckoutShippingAddressAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.CheckoutDefaultShippingAddress;
 import com.whitelabel.app.model.CheckoutSelectShippingAddressEntity;
@@ -117,7 +117,7 @@ public class CheckoutShippingSelectaddressFragment extends Fragment implements V
 
 //    @Override
 //    public void onRefresh() {
-//        new MyAccountDao(TAG,mHandler).getAddressBySession(GemfiveApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey());
+//        new MyAccountDao(TAG,mHandler).getAddressBySession(WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey());
 //    }
 
     @Override
@@ -142,7 +142,7 @@ public class CheckoutShippingSelectaddressFragment extends Fragment implements V
         checkoutShippingAddressAdapter = new CheckoutShippingAddressAdapter(getActivity(),mBeans,lvAddress);
         lvAddress.setAdapter(checkoutShippingAddressAdapter);
         sendRequestToGetSelectAddress();
-//        new MyAccountDao(TAG,mHandler).getAddressBySession(GemfiveApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey());
+//        new MyAccountDao(TAG,mHandler).getAddressBySession(WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey());
     }
 
     @Override
@@ -301,7 +301,7 @@ private DataHandler mHandler;
 //                swipeLayout.setRefreshing(true);
 //            }
 //        });
-        new MyAccountDao(TAG,mHandler).getAddressBySession(GemfiveApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey());
+        new MyAccountDao(TAG,mHandler).getAddressBySession(WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey());
     }
     private int oldIndex=-1;
     private void initListViewDatasWithWebServiceReturn(final LinkedList<CheckoutDefaultShippingAddress> list) {

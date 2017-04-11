@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.ui.common.BasePresenter;
 import com.whitelabel.app.ui.common.BaseView;
 import com.whitelabel.app.utils.JImageUtils;
@@ -186,7 +186,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
             ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
         }
         if(mToolbar!=null){
-            mToolbar.setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
+            mToolbar.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
         }
     }
 
@@ -197,7 +197,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         CustomButton btnAgain= (CustomButton)  getView().findViewById(R.id.btn_try_again);
         if(ivTryAgain!=null&&btnAgain!=null){
             ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(getActivity(),R.mipmap.connection_break_loading));
-            btnAgain.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         }
     }
 

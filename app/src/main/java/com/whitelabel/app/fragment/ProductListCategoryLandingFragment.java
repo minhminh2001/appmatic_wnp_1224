@@ -26,7 +26,7 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.listener.OnFilterSortFragmentListener;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
@@ -183,7 +183,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         filterSortBottomView = new FilterSortBottomView();
         filterSortBottomView.initView(mTopFilterAndSortBarRL, mIVBottomSlideToTop, this);
         ctpiCategoryList = (CustomTabCustomPageIndicator) mContentView.findViewById(R.id.ctpiCategoryList);
-        ctpiCategoryList.setIndicatorColorResource(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctpiCategoryList.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         vpProductList = (ViewPager) mContentView.findViewById(R.id.vpProductList);
         flFilterSortContainer = (FrameLayout) mContentView.findViewById(R.id.flFilterSortContainer);
         flFilterSortContainer.setOnClickListener(this);
@@ -271,8 +271,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     public long getCartItemCount(){
         long cartItemCount = 0;
         try{
-            if (GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
-                cartItemCount = GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getCartItemCount();
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                cartItemCount = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getCartItemCount();
                 ArrayList<TMPLocalCartRepositoryProductEntity> list = JStorageUtils.getProductListFromLocalCartRepository(getActivity());
                 if (list.size() > 0) {
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {

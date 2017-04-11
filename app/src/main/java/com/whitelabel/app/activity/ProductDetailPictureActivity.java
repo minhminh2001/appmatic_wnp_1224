@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -46,8 +46,8 @@ public class ProductDetailPictureActivity extends com.whitelabel.app.BaseActivit
         }
         listGroupTips = new ArrayList<ImageView>();
 
-        final int destWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth();
-        final int destHeight = GemfiveApplication.getPhoneConfiguration().getScreenHeigth();
+        final int destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth();
+        final int destHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth();
 
         /**
          * As long as app can come here , the pictures mustn't be empty
@@ -247,7 +247,7 @@ public class ProductDetailPictureActivity extends com.whitelabel.app.BaseActivit
     protected void onStop() {
         super.onStop();
 //        EasyTracker.getInstance(this).activityStop(this);
-//        GemfiveApplication.getRefWatcher(this).watch(this);
+//        WhiteLabelApplication.getRefWatcher(this).watch(this);
 
     }
 

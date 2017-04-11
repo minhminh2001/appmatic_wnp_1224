@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.ui.common.BasePresenter;
 import com.whitelabel.app.ui.common.BaseView;
 import com.whitelabel.app.utils.JImageUtils;
@@ -57,7 +57,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
 //            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
+            window.setStatusBarColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
 
         }
         currTag = this.getClass().getSimpleName();
@@ -216,14 +216,14 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         CustomButton  btnAgain= (CustomButton) findViewById(R.id.btn_try_again);
         if(ivTryAgain!=null&&btnAgain!=null){
             ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(this,R.mipmap.connection_break_loading));
-            btnAgain.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         }
         if (mToolbar != null) {
             mToolbar.setTitle("");
             setSupportActionBar(mToolbar);
         }
         if(getToolbar()!=null){
-            getToolbar().setBackgroundColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
+            getToolbar().setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
         }
     }
 

@@ -30,7 +30,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.google.gson.Gson;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.WheelPickerCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.AddressBook;
@@ -401,39 +401,39 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         state.setOnFocusChangeListener(this);
         eg.setOnFocusChangeListener(this);
         firstNameText= (TextView)findViewById(R.id.ctv_addaddress_firstName_text);
-        firstNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         firstNameText2= (TextView)findViewById(R.id.ctv_addaddress_firstName_text2);
         lastNameText= (TextView)findViewById(R.id.ctv_addaddress_lastName_text);
-        lastNameText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         lastNameText2= (TextView) findViewById(R.id.ctv_addaddress_lastName_text2);
         countryText= (TextView) findViewById(R.id.ctv_addaddresss_country_text);
-        countryText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        countryText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         countryText2= (TextView) findViewById(R.id.ctv_addaddresss_country_text2);
         address1Text= (TextView) findViewById(R.id.ctv_addaddresss_address1_text1);
-        address1Text.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         address1Text2= (TextView) findViewById(R.id.ctv_addaddresss_address1_text2);
         address2Text= (TextView) findViewById(R.id.ctv_addaddresss_address2_text1);
-        address2Text.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        address2Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         address2Text2= (TextView) findViewById(R.id.ctv_addaddresss_address2_text2);
         postalcodeText= (TextView) findViewById(R.id.ctv_addaddresss_postalcode_text);
-        postalcodeText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        postalcodeText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         postalcodeText2= (TextView)findViewById(R.id.ctv_addaddresss_postalcode_text2);
         cityText= (TextView) findViewById(R.id.ctv_addaddresss_city_text1);
-        cityText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        cityText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         cityText2= (TextView) findViewById(R.id.ctv_addaddresss_city_text2);
         stateText= (TextView) findViewById(R.id.ctv_addaddresss_state_text1);
-        stateText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        stateText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         stateText2= (TextView) findViewById(R.id.ctv_addaddresss_state_text2);
         egText= (TextView) findViewById(R.id.ctv_addaddresss_eg_text);
-        egText.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
 
         egText2= (TextView) findViewById(R.id.ctv_addaddresss_eg_text2);
         phoneNumber= (TextView) findViewById(R.id.ctv_addaddress_number_value);
@@ -464,7 +464,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         scrollView= (RelativeLayout) findViewById(R.id.addaddress_ScrollView);
         scrollView.setOnClickListener(this);
         addaddress_checkbox= (CustomCheckBox) findViewById(R.id.addaddress_checkbox);
-        addaddress_checkbox.setColorChecked(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         addaddress_checkbox.setChecked(false);
         country.setTag("MY");
         country.setText(getResources().getString(R.string.malaysia));
@@ -541,8 +541,8 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     private void sendRequestToGetCountryAndRegions() {
         mDialog=JViewUtils.showProgressDialog(AddAddressActivity.this);
         String sessionKey="";
-        if (GemfiveApplication.getAppConfiguration().isSignIn(this)){
-            sessionKey= GemfiveApplication.getAppConfiguration().getUserInfo(AddAddressActivity.this).getSessionKey();
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)){
+            sessionKey= WhiteLabelApplication.getAppConfiguration().getUserInfo(AddAddressActivity.this).getSessionKey();
         }
         dao.getCountryAndRegions(sessionKey);
 
@@ -705,8 +705,8 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                 }
             }
             String sessionKey="";
-            if(GemfiveApplication.getAppConfiguration().isSignIn(AddAddressActivity.this)){
-                 sessionKey= GemfiveApplication.getAppConfiguration().getUserInfo(AddAddressActivity.this).getSessionKey();
+            if(WhiteLabelApplication.getAppConfiguration().isSignIn(AddAddressActivity.this)){
+                 sessionKey= WhiteLabelApplication.getAppConfiguration().getUserInfo(AddAddressActivity.this).getSessionKey();
             }
 
 
@@ -1092,8 +1092,8 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     private void sendRequestToGetCityAndStateByPostCode(String postcode) {
         city.setEnabled(false);
         String session_key="";
-        if(GemfiveApplication.getAppConfiguration().isSignIn(AddAddressActivity.this)){
-            session_key=GemfiveApplication.getAppConfiguration().getUserInfo(AddAddressActivity.this).getSessionKey();
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(AddAddressActivity.this)){
+            session_key= WhiteLabelApplication.getAppConfiguration().getUserInfo(AddAddressActivity.this).getSessionKey();
         }
         String country_id=country.getTag() == null ? "" : country.getTag().toString();
         dao.getCityAndStateByPostCodet(session_key,postcode,country_id);
@@ -1124,7 +1124,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             edit.setHint("");
             text.startAnimation(set);
         }else{
-            text2.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         }
         if(relativeLayout!=null) {
             relativeLayout.setBottomLineActive(true);

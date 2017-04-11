@@ -20,7 +20,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.FragmentOnAdapterCallBack;
 import com.whitelabel.app.callback.ProductListFilterHideCallBack;
 import com.whitelabel.app.dao.ProductDao;
@@ -125,7 +125,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
         }
         //登陆成功后要刷新所有product的信息  //在curationProductListAdapter  onClick wishIcon 里 startActivityForResult 到loginpage;，成功后调用以下方法
         if (LoginRegisterActivity.REQUESTCODE_LOGIN == requestCode && resultCode == LoginRegisterEmailLoginFragment.RESULTCODE) {
-            if (GemfiveApplication.getAppConfiguration().isSignIn(productListActivity)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(productListActivity)) {
                 productListActivity.changeOperateProductIdPrecacheStatus(true);
                 onRefresh();
             }
@@ -488,7 +488,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
             currentP = 1;
         }
         TYPE = LOADING;
-        String storeId = GemfiveApplication.getAppConfiguration().getStoreView().getId();
+        String storeId = WhiteLabelApplication.getAppConfiguration().getStoreView().getId();
         String p = currentP + "";
         String limit = param.getLimit() + "";
         if (SEARCH_TYPE_REFRESH == searchType) {
@@ -522,9 +522,9 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
         String price=param.getPrice();
         JLogUtils.d(TAG,"price："+price);
         //传入session是为判断产品是否被wish
-        if (GemfiveApplication.getAppConfiguration().isSignIn(getActivity())) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
             mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q, price,
-                    GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),"");
+                    WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),"");
         } else {
             mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q, price, "","");
         }

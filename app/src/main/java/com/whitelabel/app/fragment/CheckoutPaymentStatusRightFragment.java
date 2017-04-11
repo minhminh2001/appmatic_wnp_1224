@@ -1,7 +1,6 @@
 package com.whitelabel.app.fragment;
 
 
-import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,31 +21,22 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.share.Sharer;
 import com.facebook.share.widget.ShareDialog;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.CheckoutDao;
-import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.model.FacebookStoryEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.GetAnimCodeEntity;
 import com.whitelabel.app.model.ShoppingDiscountBean;
 import com.whitelabel.app.utils.AnimUtil;
-import com.whitelabel.app.utils.AppUtils;
-import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
-import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JShareUtils;
@@ -56,7 +46,6 @@ import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomWebView;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 
 public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements View.OnClickListener{
 
@@ -209,7 +198,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
         AnimUtil.alpha_0_1_500(rlRoot);
         if(!TextUtils.isEmpty(checkoutPaymentStatusActivity.html)){
             String content=JToolUtils.replaceFont(checkoutPaymentStatusActivity.html);
-            JToolUtils.webViewFont(GemfiveApplication.getInstance().getBaseContext(), wvHtml, content);
+            JToolUtils.webViewFont(WhiteLabelApplication.getInstance().getBaseContext(), wvHtml, content);
             //wvHtml.setText(checkoutPaymentStatusActivity.html);
         }
 
@@ -223,7 +212,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 //        CustomAnimtion();
 //        initLuckDraw();
 
-        if(JStorageUtils.isShowAppRate(checkoutPaymentStatusActivity)&&!GemfiveApplication.delayShowAppRate) {
+        if(JStorageUtils.isShowAppRate(checkoutPaymentStatusActivity)&&!WhiteLabelApplication.delayShowAppRate) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -232,7 +221,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
             }, 300);
         }
 
-        GemfiveApplication.getAppConfiguration().addToOrder(checkoutPaymentStatusActivity);
+        WhiteLabelApplication.getAppConfiguration().addToOrder(checkoutPaymentStatusActivity);
 
         if(checkoutPaymentStatusActivity.mGATrackTimeEnable) {
             GaTrackHelper .getInstance().googleAnalyticsTimeStop(
@@ -287,7 +276,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
-                GemfiveApplication.delayShowAppRate=true;
+                WhiteLabelApplication.delayShowAppRate=true;
                 JStorageUtils.clickDelayShow(checkoutPaymentStatusActivity);
             }
         });
@@ -362,11 +351,11 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 //    http://192.168.1.96/appservice/checkout/trackInformation
 
     private void sendTrack() {
-        mCheckoutDao.sendTrack( GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getSessionKey(), GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getFirstName() + " " + GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getLastName(),GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getEmail());
+        mCheckoutDao.sendTrack( WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getSessionKey(), WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getFirstName() + " " + WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getLastName(), WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getEmail());
 //        SVRParameters parameters = new SVRParameters();
-//        parameters.put("session_key", GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getSessionKey());
-//        parameters.put("name", GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getFirstName() + " " + GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getLastName());
-//        parameters.put("email", GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getEmail());
+//        parameters.put("session_key", WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getSessionKey());
+//        parameters.put("name", WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getFirstName() + " " + WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getLastName());
+//        parameters.put("email", WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getEmail());
 //        TrackInformation shoppingCartListHandler = new TrackInformation(checkoutPaymentStatusActivity, parameters);
 //        shoppingCartListHandler.loadDatasFromServer(new SVRCallback() {
 //            @Override
@@ -465,7 +454,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
         layout=view.findViewById(R.id.rl_root);
         TextView tvOrderNumber = (TextView) view.findViewById(R.id.tv_checkout_payment_status_ordernumber);
         TextView tvEmail = (TextView) view.findViewById(R.id.tv_checkout_payment_status_email);
-        tvEmail.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        tvEmail.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         tvShare= (TextView) view.findViewById(R.id.tv_share);
         rlRoot=view.findViewById(R.id.sv_content);
         rlBackGroud=view.findViewById(R.id.rlBackGroud);
@@ -504,7 +493,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 
 //        paymentSaveReturnEntity = (CheckoutPaymentSaveReturnEntity) bundle.getSerializable("paymentSaveReturnEntity");
         /////////////////////set email////////////////////
-        GOUserEntity user = GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity);
+        GOUserEntity user = WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity);
 
         if (user != null) {
             tvEmail.setText(user.getEmail());
@@ -525,8 +514,8 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 
         animImgView=view.findViewById(R.id.animImgView);
         showCodeFailure=view.findViewById(R.id.showCode_failure);
-//        windowWinth= GemfiveApplication.getPhoneConfiguration().getScreenWidth();
-//        windowHeight=GemfiveApplication.getPhoneConfiguration().getScreenHeigth()- AppUtils.getStatusBarHeight(checkoutPaymentStatusActivity)-AppUtils.getNavigationBarHeight(checkoutPaymentStatusActivity);
+//        windowWinth= WhiteLabelApplication.getPhoneConfiguration().getScreenWidth();
+//        windowHeight=WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth()- AppUtils.getStatusBarHeight(checkoutPaymentStatusActivity)-AppUtils.getNavigationBarHeight(checkoutPaymentStatusActivity);
         animImg= (ImageView) view.findViewById(R.id.animImg);
 //        myText1= (TextView) view.findViewById(R.id.my_text1);
 //        myText2= (TextView) view.findViewById(R.id.my_text2);
@@ -640,7 +629,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
             tvCheckOrder.setVisibility(View.VISIBLE);
             tvContinueShopping.setVisibility(View.VISIBLE);
             tvCheckOrder.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
-            tvCheckOrder.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            tvCheckOrder.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             tvContinueShopping.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));
         return view;
     }
@@ -826,7 +815,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
     }
 //
 //    public void getAnmitionCode(){
-//        String session_key= GemfiveApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getSessionKey();
+//        String session_key= WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutPaymentStatusActivity).getSessionKey();
 //        mCheckoutDao.getWinCode(session_key,orderNumber);
 //    }
 //

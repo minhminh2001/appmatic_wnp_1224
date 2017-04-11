@@ -30,7 +30,7 @@ import android.webkit.WebSettings;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.HttpStack;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -67,7 +67,7 @@ public class OkHttpStack implements HttpStack {
         String userAgent = "";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             try {
-                userAgent = WebSettings.getDefaultUserAgent(GemfiveApplication.getInstance());
+                userAgent = WebSettings.getDefaultUserAgent(WhiteLabelApplication.getInstance());
             } catch (Exception e) {
                 userAgent = System.getProperty("http.agent");
             }

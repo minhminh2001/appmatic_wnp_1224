@@ -22,9 +22,9 @@ import com.whitelabel.app.utils.JToolUtils;
 /**
  * Created by imaginato on 2015/6/10.
  */
-public class GemfiveApplication extends MultiDexApplication {
+public class WhiteLabelApplication extends MultiDexApplication {
 
-    private static GemfiveApplication mInstance;
+    private static WhiteLabelApplication mInstance;
     public static boolean delayShowAppRate = false;
     private static PhoneConfigurationEntity phoneConfiguration;
     private static ApplicationConfigurationEntity appConfiguration;
@@ -39,7 +39,7 @@ public class GemfiveApplication extends MultiDexApplication {
         return phoneConfiguration;
     }
 
-    public static GemfiveApplication getInstance() {
+    public static WhiteLabelApplication getInstance() {
         return mInstance;
     }
 
@@ -76,8 +76,8 @@ public class GemfiveApplication extends MultiDexApplication {
             GlobalData.init(this);
             FacebookSdk.sdkInitialize(getApplicationContext());
             FacebookSdk.setApplicationId(GlobalData.facebookId);
-            GemfiveApplication.getAppConfiguration().isSignIn(getApplicationContext());
-            GemfiveApplication.getAppConfiguration().init(getApplicationContext());
+            WhiteLabelApplication.getAppConfiguration().isSignIn(getApplicationContext());
+            WhiteLabelApplication.getAppConfiguration().init(getApplicationContext());
 //            getAnalyticTracherInstance(this);
             ViewTarget.setTagId(R.id.glide_tag);
         } catch (Exception ex) {
@@ -88,7 +88,7 @@ public class GemfiveApplication extends MultiDexApplication {
     }
 
     //    public  static RefWatcher getRefWatcher(Context context){
-//        GemfiveApplication application = (GemfiveApplication) context.getApplicationContext();
+//        WhiteLabelApplication application = (WhiteLabelApplication) context.getApplicationContext();
 //        return application.refWatcher;
 //    }
 //    private RefWatcher refWatcher;

@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.handler.INITApp;
@@ -173,8 +173,8 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
         mNetworkErrorMsg =getResources().getString(R.string.productlist_list_prompt_error_nointernet);
 //        mSplashScreen = JStorageUtils.getToSplashScreenMark(StartActivity.this);
         mStartHandler=new StartHandler(this);
-        if(GemfiveApplication.getAppConfiguration().isSignIn(StartActivity.this)) {
-            mSessionKey = GemfiveApplication.getAppConfiguration().getUser().getSessionKey();
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(StartActivity.this)) {
+            mSessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
         }
         mCallback=new INITApp(StartActivity.this, new MeInitCallBack(this));
         INITExecutor.getInstance().execute(mCallback);

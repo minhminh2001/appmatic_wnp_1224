@@ -19,7 +19,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.ShoppingCarDao;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
@@ -122,7 +122,7 @@ public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
      */
     private void sendRequestToRecoverOrder() {
         isLoading=true;
-        mShoppingCarDao.sendRecoverOrder( GemfiveApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),orderNumber,"");
+        mShoppingCarDao.sendRecoverOrder( WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),orderNumber,"");
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -139,7 +139,7 @@ public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
         rlHeaderBarMenu= (RelativeLayout) view.findViewById(R.id.rlHeaderBarMenu);
         TextView tvRetry = (TextView) view.findViewById(R.id.tv_checkout_payment_status_wrong_retry);
         tvRetry.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
-        tvRetry.setTextColor(GemfiveApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        tvRetry.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         tvRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

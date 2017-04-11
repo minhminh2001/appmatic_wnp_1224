@@ -2,22 +2,16 @@ package com.whitelabel.app.activity;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewConfiguration;
-import android.widget.FrameLayout;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.fragment.CheckoutPaymentStatusRightFragment;
 import com.whitelabel.app.fragment.CheckoutPaymentStatusWrongFragment;
 import com.whitelabel.app.utils.GaTrackHelper;
@@ -39,7 +33,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
 //        mContiner = (FrameLayout) findViewById(R.id.flContainer);
         //init session_key
         //SharedPreferences sharedPreferences = getSharedPreferences("session_key", Activity.MODE_PRIVATE);
-        SESSION_KEY = GemfiveApplication.getAppConfiguration().getUserInfo(this).getSessionKey();
+        SESSION_KEY = WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey();
         setTitle(getResources().getString(R.string.PAYMENT_STATUS));
         setLeftMenuIcon(R.drawable.action_menu);
         setLeftMenuClickListener(new View.OnClickListener() {

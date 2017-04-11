@@ -18,7 +18,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductListActivity;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceLandingPagesListLandingPageItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
@@ -85,14 +85,14 @@ public class CurationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         try {
             mContext = context;
             mImageLoader = imageLoader;
-            mDestWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth(context);
-            mDestHeight = GemfiveApplication.getPhoneConfiguration().getScreenWidth(context) * 240 / 490;
+            mDestWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(context);
+            mDestHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(context) * 240 / 490;
             final int destWidthChildCategory = (int) ((mDestWidth - JToolUtils.dip2px(mContext, 24)) / 2.5);
             int mDestHeightChildCategory = (int) (destWidthChildCategory * 0.444);
             vpCateHeight = mDestHeightChildCategory;
             mCurationList = curationList;
             mChildren = children;
-            screenWidth = GemfiveApplication.getPhoneConfiguration().getScreenWidth(context);
+            screenWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(context);
             hasHead = mChildren != null && mChildren.size() != 0;
         } catch (Exception ex) {
             ex.getStackTrace();

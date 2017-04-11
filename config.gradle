@@ -40,8 +40,5 @@ ext {
             "retrofit-logging" :  "com.squareup.okhttp3:logging-interceptor:3.5.0",
             "butterknife" :         "com.jakewharton:butterknife:8.4.0",
             "butterknife-compiler" : "com.jakewharton:butterknife-compiler:8.4.0",
-
     ]
-
-
 }

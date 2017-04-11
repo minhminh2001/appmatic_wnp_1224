@@ -3,8 +3,7 @@ package com.whitelabel.app.handler;
 import android.app.Activity;
 import android.os.Handler;
 
-import com.whitelabel.app.application.GemfiveApplication;
-import com.whitelabel.app.callback.INITCallback;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.INITCallback;
 
 import java.lang.ref.WeakReference;
@@ -30,8 +29,8 @@ public class INITApp implements Runnable {
             return;
         }
         if(activity.get()==null)return;
-        GemfiveApplication.getPhoneConfiguration().init(activity.get());
-        GemfiveApplication.getAppConfiguration().init(activity.get());
+        WhiteLabelApplication.getPhoneConfiguration().init(activity.get());
+        WhiteLabelApplication.getAppConfiguration().init(activity.get());
         callOnSuccess(INITCallback.CODE_OK, "Successful initialization");
     }
 

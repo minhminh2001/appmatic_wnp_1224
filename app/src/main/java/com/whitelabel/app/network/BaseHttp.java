@@ -11,7 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.whitelabel.app.GlobalData;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.utils.JLogUtils;
 
@@ -123,7 +123,7 @@ public abstract class BaseHttp {
             }
         };
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 0, 1.0f));
-        GemfiveApplication.getInstance().addToRequestQueue(jsonObjReq, TAG);
+        WhiteLabelApplication.getInstance().addToRequestQueue(jsonObjReq, TAG);
     }
 
     //处理get 请求中的空格
@@ -239,7 +239,7 @@ public abstract class BaseHttp {
             }
         };
         strReq.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 0, 1.0f));
-        GemfiveApplication.getInstance().addToRequestQueue(strReq, TAG);
+        WhiteLabelApplication.getInstance().addToRequestQueue(strReq, TAG);
     }
 
     protected boolean isOk(String json) {
@@ -258,7 +258,7 @@ public abstract class BaseHttp {
     }
 
     public void cancelHttpByTag(String tag) {
-        GemfiveApplication.getInstance().cancelPendingRequests(tag);
+        WhiteLabelApplication.getInstance().cancelPendingRequests(tag);
     }
 
     public ErrorMsgBean getErrorMsgBean(String response) {

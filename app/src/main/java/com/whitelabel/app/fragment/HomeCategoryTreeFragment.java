@@ -22,7 +22,7 @@ import com.whitelabel.app.activity.DrawerLayoutActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.CategoryTreeExpandableAdapter;
 import com.whitelabel.app.adapter.CategoryTreeRootAdapter;
-import com.whitelabel.app.application.GemfiveApplication;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
@@ -93,7 +93,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
 
     public void initData() {
         //得到数据
-        SVRAppserviceCatalogSearchReturnEntity categoryEntity = GemfiveApplication.getAppConfiguration().getCategoryArrayList();
+        SVRAppserviceCatalogSearchReturnEntity categoryEntity = WhiteLabelApplication.getAppConfiguration().getCategoryArrayList();
         allData.clear();
         if (categoryEntity != null && categoryEntity.getCategory() != null && categoryEntity.getCategory().size() > 0) {
             for (SVRAppserviceCatalogSearchCategoryItemReturnEntity entity : categoryEntity.getCategory()) {
@@ -279,7 +279,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
                     }
                     if (msg.arg1 == ProductDao.RESPONSE_SUCCESS) {
                         SVRAppserviceCatalogSearchReturnEntity searchCatalog = (SVRAppserviceCatalogSearchReturnEntity) msg.obj;
-                        GemfiveApplication.getAppConfiguration().setCategoryArrayList(searchCatalog);
+                        WhiteLabelApplication.getAppConfiguration().setCategoryArrayList(searchCatalog);
                         JStorageUtils.saveCategoryArrayList(mActivity.get(), searchCatalog);
                         fragment.initData();
                     }
