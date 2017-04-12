@@ -284,6 +284,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         tvCustomerService.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
         tvHelpCenter.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
         tvShipping.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
+        tvCategoryTree.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
 
         int iconDefaultColor=ContextCompat.getColor(this,R.color.blackD0);
         ivHome.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_default),iconDefaultColor));
@@ -292,7 +293,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         ivMyWishList.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_wishlist_default),iconDefaultColor));
         ivMyOrder.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_order_default),iconDefaultColor));
         ivAddress.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_address_default),iconDefaultColor));
-
+        ivCategoryTree.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_categorytree_default),iconDefaultColor));
 
 
 //        tvOrderNum= (TextView) findViewById(R.id.tv_order_num);

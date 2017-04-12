@@ -174,14 +174,14 @@
                             style="@style/font_family_robot_regular"/>
                     </RelativeLayout>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/lvProductRecommendList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:divider="@null"
-                        android:dividerHeight="0dp"
-                        android:listSelector="@color/transparent00"
-                        android:scrollbars="none"/>
+                    <!--<android.support.v7.widget.RecyclerView-->
+                        <!--android:id="@+id/lvProductRecommendList"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:divider="@null"-->
+                        <!--android:dividerHeight="0dp"-->
+                        <!--android:listSelector="@color/transparent00"-->
+                        <!--android:scrollbars="none"/>-->
 
                 </LinearLayout>
 

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.utils.JToolUtils;
 
@@ -54,7 +55,7 @@ public class CategoryTreeRootAdapter extends RecyclerView.Adapter<RecyclerView.V
         });
 
         if(position==currentRootPosition){
-            viewHolder.itemView.setBackgroundColor(JToolUtils.getColor(R.color.purple66006E));
+            viewHolder.itemView.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
             viewHolder.tvCategoryTreeRootName.setTextColor(JToolUtils.getColor(R.color.whiteFFFFFF));
         }else{
             viewHolder.itemView.setBackgroundColor(JToolUtils.getColor(R.color.greyF8F8F8));

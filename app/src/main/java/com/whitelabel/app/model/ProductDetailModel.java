@@ -6,9 +6,10 @@ import java.util.ArrayList;
 /**
  * Created by imaginato on 2015/7/8.
  */
-public class SVRAppserviceProductDetailResultReturnEntity implements Serializable {
+public class ProductDetailModel implements Serializable {
     public static final String TYPE_CONFIGURABLE = "configurable";
     public static final String TYPE_SIMPLE = "simple";
+    public static final String TYPE_GROUP="group";
     private String id;
     private String name;
     private String brand;

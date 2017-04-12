@@ -5,7 +5,7 @@ package com.whitelabel.app.model;
  */
 public class SVRAppserviceProductDetailReturnEntity extends SVRReturnEntity {
     private int status;
-    private SVRAppserviceProductDetailResultReturnEntity result;
+    private ProductDetailModel result;
 
     public int getStatus() {
         return status;
@@ -15,11 +15,11 @@ public class SVRAppserviceProductDetailReturnEntity extends SVRReturnEntity {
         this.status = status;
     }
 
-    public SVRAppserviceProductDetailResultReturnEntity getResult() {
+    public ProductDetailModel getResult() {
         return result;
     }
 
-    public void setResult(SVRAppserviceProductDetailResultReturnEntity result) {
+    public void setResult(ProductDetailModel result) {
         this.result = result;
     }
 
