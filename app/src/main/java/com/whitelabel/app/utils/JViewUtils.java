@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.adapter.WheelPickerAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.GlobalCallBack;
@@ -94,6 +95,23 @@ public class JViewUtils {
         } catch (Exception ex) {
             JLogUtils.e(TAG, "hideKeyboard", ex);
         }
+    }
+
+
+
+    public static  void showNoInventoryToast(Context context,String str){
+        if (context == null) {
+            return;
+        }
+        LinearLayout toastView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.layout_prompt_productdetail_notenoughinventory, null);
+        TextView message = (TextView) toastView.findViewById(R.id.tv_text);
+           message.setText(str);
+           Toast mToast = Toast.makeText(context.getApplicationContext(), "", Toast.LENGTH_SHORT);
+            if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
+                mToast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
+            }
+            mToast.setView(toastView);
+        mToast.show();
     }
 
 

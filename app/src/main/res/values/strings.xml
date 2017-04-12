@@ -681,4 +681,6 @@
     <string name="banktransfer_permission_album_rationale">GEMFIVE needs to access your device\'s storage</string>
     <string name="switch_view_bar_results">&#160;results</string>
 
+    <string name="product_detail_total">Total:</string>
+
 </resources>

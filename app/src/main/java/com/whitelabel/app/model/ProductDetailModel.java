@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ProductDetailModel implements Serializable {
     public static final String TYPE_CONFIGURABLE = "configurable";
     public static final String TYPE_SIMPLE = "simple";
-    public static final String TYPE_GROUP="group";
+    public static final String TYPE_GROUP="grouped";
     private String id;
     private String name;
     private String brand;

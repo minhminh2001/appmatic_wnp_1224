@@ -33,7 +33,6 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -78,7 +77,6 @@ import com.whitelabel.app.widget.CustomCoordinatorLayout;
 import com.whitelabel.app.widget.CustomDialog;
 import com.whitelabel.app.widget.CustomNestedScrollView;
 import com.whitelabel.app.widget.CustomTextView;
-import com.whitelabel.app.widget.ProductChildListView;
 import com.whitelabel.app.widget.ToolBarAlphaBehavior;
 
 import java.lang.ref.WeakReference;
@@ -90,7 +88,8 @@ import java.util.Map;
 /**
  * Created by imaginato on 2015/6/10.
  */
-public class ProductActivity extends com.whitelabel.app.BaseActivity implements ProductDetailCallback, OnPageChangeListener, View.OnClickListener {
+@Deprecated
+public class ProductDetailOldActivity extends com.whitelabel.app.BaseActivity implements ProductDetailCallback, OnPageChangeListener, View.OnClickListener {
     //mGATrackTimeStart 加载pdp的时间，mGATrackAddCartTimeStart点击add to cart的时间
     public Long mGATrackTimeStart = 0L;
     public Long mGATrackAddCartTimeStart = 0L;
@@ -98,22 +97,25 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     public static final int RESULT_WISH = 101;
     public static final int REQUEST_TOOLBAREXPAN = 1112;
     public static final int PRODUCT_PICTURE_REQUEST_CODE = 0x200;
-    private String TAG = "ProductActivity";
+    private String TAG = "ProductDetailOldActivity";
     private final int REQUESTCODE_LOGIN = 1000;
     private final int REQUEST_SHOPPINGCART = 2000;
     private ViewGroup group;
     private TextView textView_num, oldprice, ctvAddToCart, price_textview,  ctvProductInStock, ctvProductOutOfStock, productUnavailable, productTrans, product_merchant;
     private Dialog mDialog;
+    private WebView wvProductDesc;
     private TextView ctvProductName, ctvProductBrand;
     private CustomCoordinatorLayout coordinatorLayout;
     private AppBarLayout appbar_layout;
     private RelativeLayout mRLAddToWishlistSmall, mRLAddToWishlistBig;
     private LinearLayout  llBottomBar, mLLAddToCart;
     private ImageView ivHeaderBarWishlist, ivHeaderBarWishlist2, mIVHeaderBarWishlist, mIVHeaderBarWishlist2, ivHeaderBarShare;
+
     private ViewPager viewPager;
     private CustomTextView tvProductSaverm;
     private RelativeLayout rlProductPrice;
     private RelativeLayout rlProductQuantity, descriptionsRelative;
+
     private String productId;
     private LinearLayout llLayout;
     private LinearLayout llAttribute;
@@ -121,10 +123,10 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     private ArrayList<ImageView> mProductImageViewTips;
     public ProductDetailModel mProductDetailBean;
     private float userSelectedProductPriceFloat;
+    private float userSelectedProductPriceOffsetFloat;
     private float userSelectedProductFinalPriceFloat;
+    private float userSelectedProductFinalPriceOffsetFloat;
     private int userSelectedProductInStock;
-//    private FrameLayout flSimpleConfig;
-    private ProductChildListView pcGroupConfig;
     private long currUserSelectedProductMaxStockQty;
     private long userSelectedProductMaxStockQty;
     private long userSelectedProductQty;
@@ -146,7 +148,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     private ImageView ivProductImage;
     private ArrayList<String> mProductImagesArrayList = new ArrayList<>();
     public OperateProductIdPrecache operateProductIdPrecache;//未登录时点击了wishicon,登陆成功后主动将其添加到wishlist
-//    private RecyclerView recycleView;
+    //    private RecyclerView recycleView;
 //    private ProductRecommendedListAdapter recommendedAdapter;
 //    private ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity> recommendedList = new ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity>();
     //只要是未登录状态下进入其他产品页,登陆后返回至此页面时needRefreshWhenBackPressed会等于true
@@ -205,10 +207,10 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     }
 
     private static class DataHandler extends Handler {
-        private final WeakReference<ProductActivity> mActivity;
+        private final WeakReference<ProductDetailOldActivity> mActivity;
 
-        public DataHandler(ProductActivity activity) {
-            mActivity = new WeakReference<ProductActivity>(activity);
+        public DataHandler(ProductDetailOldActivity activity) {
+            mActivity = new WeakReference<ProductDetailOldActivity>(activity);
         }
 
         @Override
@@ -216,7 +218,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             if (mActivity.get() == null) {
                 return;
             }
-            final ProductActivity activity = mActivity.get();
+            final ProductDetailOldActivity activity = mActivity.get();
             switch (msg.what) {
                 case REQUEST_TOOLBAREXPAN:
                     mActivity.get().appbar_layout.setExpanded(true);
@@ -477,7 +479,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         mIVHeaderBarWishlist.setVisibility(View.VISIBLE);
         ivHeaderBarWishlist.setImageDrawable
                 (JImageUtils.getThemeIcon
-                        (ProductActivity.this,
+                        (ProductDetailOldActivity.this,
                                 R.mipmap.wishlist_purple_pressed));
 //        ivHeaderBarWishlist.setImageResource(R.mipmap.wishlist_purple_pressed);
         mIVHeaderBarWishlist.setImageResource(R.mipmap.wishlist_white_pressed);
@@ -588,7 +590,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         userSelectedProductMaxStockQty = 0;
         userSelectedProductQty = 1;
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -601,8 +602,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         getProductInfo();
         initNestedScrollView();
     }
-
-
     private void initData() {
         setStatusBarColor(JToolUtils.getColor(R.color.transparent5000));
         TAG = TAG + JTimeUtils.getCurrentTimeLong();
@@ -622,9 +621,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         setActivityImageTransition(bundle);
     }
 
+
     public void initView(){
-//        flSimpleConfig= (FrameLayout) findViewById(R.id.fl_simple_config);
-        pcGroupConfig = (ProductChildListView) findViewById(R.id.pc_group_config);
+
         coordinatorLayout = (CustomCoordinatorLayout) findViewById(R.id.cl_product);
         coordinatorLayout.setSwitchScroll(false);
         appbar_layout = ((AppBarLayout) findViewById(R.id.appbar_layout));
@@ -643,14 +642,14 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         ivHeaderBarWishlist2 = (ImageView) findViewById(R.id.ivHeaderBarWishlist2);
         mIVHeaderBarWishlist2 = (ImageView) findViewById(R.id.ivHeaderBarWishlist22);
         ivHeaderBarShare = (ImageView) findViewById(R.id.ivHeaderBarShare);
-        ivHeaderBarShare.setImageDrawable(JImageUtils.getThemeIcon(ProductActivity.this,R.mipmap.share_icon_normal));
+        ivHeaderBarShare.setImageDrawable(JImageUtils.getThemeIcon(ProductDetailOldActivity.this,R.mipmap.share_icon_normal));
         ivHeaderBarWishlist.setImageDrawable
                 (JImageUtils.getThemeIcon
-                        (ProductActivity.this,
+                        (ProductDetailOldActivity.this,
                                 R.mipmap.wishlist_purple_normal));
         ivHeaderBarWishlist2.setImageDrawable
                 (JImageUtils.getThemeIcon
-                        (ProductActivity.this,
+                        (ProductDetailOldActivity.this,
                                 R.mipmap.wishlist_purple_normal));
         llCash = findViewById(R.id.ll_cash);
         llCash.setOnClickListener(this);
@@ -735,7 +734,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 
     private void gotoShoppingCartActivity() {
         isClickShopping = true;
-        Intent intent = new Intent(ProductActivity.this, ShoppingCartActivity1.class);
+        Intent intent = new Intent(ProductDetailOldActivity.this, ShoppingCartActivity1.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityForResult(intent, REQUEST_SHOPPINGCART);
         overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
@@ -780,7 +779,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     }
 
     private void setActivityImageTransition(Bundle bundle) {
-        int phoneWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
+        int phoneWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductDetailOldActivity.this);
         if (!TextUtils.isEmpty(bundle.getString("imageurl"))) {
             ivProductImage.setVisibility(View.VISIBLE);
             mProductFirstImageurl = bundle.getString("imageurl");
@@ -788,7 +787,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             int marginLeft = phoneWidth * 15 / 640;
             int dividerWidth = phoneWidth * 16 / 640;
             int destWidth = (phoneWidth - (2 * marginLeft) - dividerWidth) / 2;
-            JImageUtils.downloadImageFromServerByUrl(ProductActivity.this, mImageLoader, ivProductImage, mProductFirstImageurl, destWidth, destWidth);
+            JImageUtils.downloadImageFromServerByUrl(ProductDetailOldActivity.this, mImageLoader, ivProductImage, mProductFirstImageurl, destWidth, destWidth);
         } else {
             ivProductImage.setAlpha(0.0f);
         }
@@ -824,8 +823,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 //        // get data
 //        String storeId = WhiteLabelApplication.getAppConfiguration().getStoreView().getId();
 //        String sessionKey = "";
-//        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
-//            sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey();
+//        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductDetailOldActivity.this)) {
+//            sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductDetailOldActivity.this).getSessionKey();
 //        }
 //        String limit = "4";
 //        mProductDao.getProductRecommendList(storeId, limit, productId, sessionKey);
@@ -856,7 +855,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         return cartItemCount;
     }
+
     private boolean isLoad = false;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -879,13 +880,13 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     public void getProductInfo() {
         JLogUtils.d(TAG, "from=" + mFromProductList);
         if (!TextUtils.isEmpty(mFromProductList) && "from_product_list".equals(mFromProductList)) {
-            mDialog = JViewUtils.showProgressDialog(ProductActivity.this, CustomDialog.BOOTOM);
+            mDialog = JViewUtils.showProgressDialog(ProductDetailOldActivity.this, CustomDialog.BOOTOM);
         } else {
-            mDialog = JViewUtils.showProgressDialog(ProductActivity.this);
+            mDialog = JViewUtils.showProgressDialog(ProductDetailOldActivity.this);
         }
         String sessionKey = "";
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
-            sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey();
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductDetailOldActivity.this)) {
+            sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductDetailOldActivity.this).getSessionKey();
         }
         mProductDao.getProductDetail(productId, sessionKey);
     }
@@ -945,7 +946,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
             case R.id.ivPriceMinus: {
                 if (currUserSelectedProductMaxStockQty <= 0) {
-                    showNoInventory(ProductActivity.this);
+                    showNoInventory(ProductDetailOldActivity.this);
                     return;
                 }
                 --userSelectedProductQty;
@@ -953,7 +954,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     userSelectedProductQty = 1;
                 } else if (userSelectedProductQty > currUserSelectedProductMaxStockQty) {
                     userSelectedProductQty = currUserSelectedProductMaxStockQty;
-                    showNoInventory(ProductActivity.this);
+                    showNoInventory(ProductDetailOldActivity.this);
                 }
 
                 textView_num.setText(userSelectedProductQty + "");
@@ -962,7 +963,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 
             case R.id.ivPricePlus: {
                 if (currUserSelectedProductMaxStockQty <= 0) {
-                    showNoInventory(ProductActivity.this);
+                    showNoInventory(ProductDetailOldActivity.this);
                     return;
                 }
                 ++userSelectedProductQty;
@@ -970,7 +971,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     userSelectedProductQty = 1;
                 } else if (userSelectedProductQty > currUserSelectedProductMaxStockQty) {
                     userSelectedProductQty = currUserSelectedProductMaxStockQty;
-                    showNoInventory(ProductActivity.this);
+                    showNoInventory(ProductDetailOldActivity.this);
                 }
                 textView_num.setText(userSelectedProductQty + "");
                 break;
@@ -980,8 +981,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             case R.id.ll_addtocart: {
                 if (!isOutOfStock) {
                     if (userSelectedProductQty > 0 && mProductDetailBean != null && !JDataUtils.isEmpty(mProductDetailBean.getId())) {
-                        //                    JViewUtils.showProgressBar(ProductActivity.this);
-                        mDialog = JViewUtils.showProgressDialog(ProductActivity.this);
+                        //                    JViewUtils.showProgressBar(ProductDetailOldActivity.this);
+                        mDialog = JViewUtils.showProgressDialog(ProductDetailOldActivity.this);
                         addToCartSendRequest();
                     }
                 } else {
@@ -996,7 +997,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 break;
             }
             case R.id.ll_cash:
-                Intent intent = new Intent(ProductActivity.this, PaymentHelpActivity.class);
+                Intent intent = new Intent(ProductDetailOldActivity.this, PaymentHelpActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
                 break;
@@ -1123,9 +1124,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             setImageBackground(arg0 % mProductImageView.size());
         }
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP && mProductImagesArrayList.size() >= 1) {
-            int destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
+            int destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductDetailOldActivity.this);
             JLogUtils.d(TAG, "size=" + mProductImagesArrayList.size() + "-----------rul=" + mProductImagesArrayList.get(arg0 % mProductImagesArrayList.size()));
-            JImageUtils.downloadImageFromServerByUrl(ProductActivity.this, mImageLoader, ivProductImage, mProductImagesArrayList.get(arg0 % mProductImagesArrayList.size()), destWidth, destWidth);
+            JImageUtils.downloadImageFromServerByUrl(ProductDetailOldActivity.this, mImageLoader, ivProductImage, mProductImagesArrayList.get(arg0 % mProductImagesArrayList.size()), destWidth, destWidth);
         }
     }
 
@@ -1161,39 +1162,39 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         if (!TextUtils.isEmpty(mProductDetailBean.getVendorDisplayName())) {
             String Sold_fulfilled_by = product_merchant.getContext().getResources().getString(R.string.soldfulby);
             if (!TextUtils.isEmpty(mProductDetailBean.getVendor_id())) {
-                product_merchant.setTextColor(ProductActivity.this.getResources().getColor(R.color.black000000));
+                product_merchant.setTextColor(ProductDetailOldActivity.this.getResources().getColor(R.color.black000000));
                 SpannableStringBuilder ss = new SpannableStringBuilder(Sold_fulfilled_by + " " + mProductDetailBean.getVendorDisplayName());
-                ss.setSpan(new ForegroundColorSpan(ProductActivity.this.getResources().getColor(R.color.greyB8B8B8)), 0, Sold_fulfilled_by.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                ss.setSpan(new ForegroundColorSpan(ProductDetailOldActivity.this.getResources().getColor(R.color.greyB8B8B8)), 0, Sold_fulfilled_by.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 product_merchant.setText(ss);
                 if (!"0".equals(mProductDetailBean.getVendor_id())) {
                     product_merchant.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(ProductActivity.this, MerchantStoreFrontActivity.class);
+                            Intent intent = new Intent(ProductDetailOldActivity.this, MerchantStoreFrontActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, mProductDetailBean.getVendor_id());
                             bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, mProductDetailBean.getVendorDisplayName());
                             intent.putExtras(bundle);
-                            ProductActivity.this.startActivity(intent);
-                            ProductActivity.this.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                            ProductDetailOldActivity.this.startActivity(intent);
+                            ProductDetailOldActivity.this.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
                         }
                     });
                 } else {
 //                    product_merchant.setText(Sold_fulfilled_by + " " + mProductDetailBean.getVendorDisplayName());
-//                    product_merchant.setTextColor(ProductActivity.this.getResources().getColor(R.color.purple92018d));
+//                    product_merchant.setTextColor(ProductDetailOldActivity.this.getResources().getColor(R.color.purple92018d));
                     product_merchant.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent i = new Intent(ProductActivity.this, HomeActivity.class);
-                            ProductActivity.this.startActivity(i);
-                            ProductActivity.this.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                            Intent i = new Intent(ProductDetailOldActivity.this, HomeActivity.class);
+                            ProductDetailOldActivity.this.startActivity(i);
+                            ProductDetailOldActivity.this.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
                         }
                     });
                 }
 
             } else {
                 product_merchant.setText(Sold_fulfilled_by + " " + mProductDetailBean.getVendorDisplayName());
-                product_merchant.setTextColor(ProductActivity.this.getResources().getColor(R.color.greyB8B8B8));
+                product_merchant.setTextColor(ProductDetailOldActivity.this.getResources().getColor(R.color.greyB8B8B8));
             }
 
         } else {
@@ -1385,26 +1386,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 createAttributeView(0, mProductDetailBean.getProperty().get(0));
             }
         }else if(ProductDetailModel.TYPE_GROUP.equals(mProductDetailBean.getType())){
-            showView.setVisibility(View.GONE);
-            pcGroupConfig.setVisibility(View.VISIBLE);
-            pcGroupConfig.initProductChildListView(mProductDetailBean.getProperty());
-            boolean instock=false;
-            for(SVRAppserviceProductDetailResultPropertyReturnEntity bean:mProductDetailBean.getProperty() ){
-                if(bean.getInStock()==1){
-                    instock=true;
-                    break;
-                }
-            }
-            if(instock) {
-                mRLAddToWishlistSmall.setVisibility(View.GONE);
-                mRLAddToWishlistBig.setVisibility(View.VISIBLE);
-                ctvAddToCart.setText(getString(R.string.product_detail_addtocart));
-                ctvAddToCart.setEnabled(true);
-                mLLAddToCart.setEnabled(true);
-                mLLAddToCart.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
-            }else{
-                outOfStockToWishlist();
-            }
+
         }
         updateProductDetailUIProductImage(productImagesArrayList);
         initVisibleProduct();
@@ -1449,7 +1431,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             updateProductDetailUIProductPriceStock(userSelectedProductPriceFloat + "", userSelectedProductFinalPriceFloat + "", userSelectedProductInStock, userSelectedProductMaxStockQty, tmpProductMaxSaleQty, childProductsaveRM, childProductItemsLeft);
         }
     }
-    private final static  int BOTTONBAR_HEIGHT=80;
 
     //    currUserSelectedProductMaxStockQty - count > 0
     public void initVisibleProduct() {
@@ -1468,6 +1449,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             RelativeLayout.LayoutParams param2 = (RelativeLayout.LayoutParams) mIVHeaderBarWishlist.getLayoutParams();
             param1.width = 0;
             mIVHeaderBarWishlist.setLayoutParams(param2);
+
             llBottomBar.setVisibility(View.GONE);
 //            rlProductSizeColor.setVisibility(View.GONE);
             rlProductQuantity.setVisibility(View.GONE);
@@ -1478,17 +1460,20 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             ivHeaderBarWishlist.setVisibility(View.VISIBLE);
             mIVHeaderBarWishlist.setVisibility(View.VISIBLE);
             if (mProductDetailBean.getIsLike() == 1) {
+
                 ivHeaderBarWishlist.setImageDrawable
                         (JImageUtils.getThemeIcon
-                                (ProductActivity.this,
+                                (ProductDetailOldActivity.this,
                                         R.mipmap.wishlist_purple_pressed));
+//                ivHeaderBarWishlist.setImageResource(R.mipmap.wishlist_purple_pressed);
                 mIVHeaderBarWishlist.setImageResource(R.mipmap.wishlist_white_pressed);
             } else {
 
                 ivHeaderBarWishlist.setImageDrawable
                         (JImageUtils.getThemeIcon
-                                (ProductActivity.this,
+                                (ProductDetailOldActivity.this,
                                         R.mipmap.wishlist_purple_normal));
+//                ivHeaderBarWishlist.setImageResource(R.mipmap.wishlist_purple_normal);
                 mIVHeaderBarWishlist.setImageResource(R.mipmap.wishlist_white_normal);
             }
             //availability and visibility
@@ -1497,7 +1482,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     ivHeaderBarWishlist.setVisibility(View.VISIBLE);
                     ivHeaderBarShare.setVisibility(View.VISIBLE);
                     llBottomBar.setVisibility(View.VISIBLE);
-                    setBottonBarHeight(BOTTONBAR_HEIGHT);
                     JLogUtils.i(TAG, "111currUserSelectedProductMaxStockQty:" + currUserSelectedProductMaxStockQty);
                     if (1 == userSelectedProductInStock && currUserSelectedProductMaxStockQty > 0) {
                         rlProductQuantity.setVisibility(View.VISIBLE);
@@ -1550,8 +1534,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 //        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
         if (mProductFirstImageurl != null && productImageUrlList.size() > 0) {
             if (!mProductFirstImageurl.equals(productImageUrlList.get(0))) {
-                int destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
-                JImageUtils.downloadImageFromServerByUrl(ProductActivity.this, mImageLoader, ivProductImage, productImageUrlList.get(0), destWidth, destWidth);
+                int destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductDetailOldActivity.this);
+                JImageUtils.downloadImageFromServerByUrl(ProductDetailOldActivity.this, mImageLoader, ivProductImage, productImageUrlList.get(0), destWidth, destWidth);
                 mProductFirstImageurl = "";
             }
         }
@@ -1566,8 +1550,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             mProductImageViewTips = new ArrayList<>();
         }
         group.removeAllViews();
-        final int destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
-        int destHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductActivity.this);
+        final int destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductDetailOldActivity.this);
+        int destHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductDetailOldActivity.this);
         //加載 圖片
         if (productImageUrlList != null) {
             for (int index = 0; index < productImageUrlList.size(); index++) {
@@ -1578,7 +1562,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 } else {
                     imageView = new ImageView(this);
                     imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    JImageUtils.downloadImageFromServerByUrl(ProductActivity.this, mImageLoader, imageView, productImageUrlList.get(index), destWidth, destHeight);
+                    JImageUtils.downloadImageFromServerByUrl(ProductDetailOldActivity.this, mImageLoader, imageView, productImageUrlList.get(index), destWidth, destHeight);
 
                     if (md5Key != null || !"".equals(md5Key)) {
                         cacheImageMap.put(md5Key, imageView);
@@ -1598,11 +1582,12 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                         this.list = list;
                         return this;
                     }
+
                     @Override
                     public void onClick(View v) {
 //                        startActivityToBigPictureDetail(index,list);
                         Intent intent = new Intent();
-                        intent.setClass(ProductActivity.this, ProductDetailPictureActivity.class);
+                        intent.setClass(ProductDetailOldActivity.this, ProductDetailPictureActivity.class);
                         Bundle bundle = new Bundle();
                         JLogUtils.d(TAG, "currrrentItem--->" + viewPager.getCurrentItem() + "---" + mProductImageView.size());
                         if (ivProductImage.getDrawable() == null) {
@@ -1616,8 +1601,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                             bundle.putStringArrayList("pictures", list);
                             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
                                 intent.putExtras(bundle);
-                                ActivityOptionsCompat aop = ActivityOptionsCompat.makeSceneTransitionAnimation(ProductActivity.this, ivProductImage, ProductActivity.this.getString(R.string.activity_image_trans));
-                                ActivityCompat.startActivityForResult(ProductActivity.this, intent, PRODUCT_PICTURE_REQUEST_CODE, aop.toBundle());
+                                ActivityOptionsCompat aop = ActivityOptionsCompat.makeSceneTransitionAnimation(ProductDetailOldActivity.this, ivProductImage, ProductDetailOldActivity.this.getString(R.string.activity_image_trans));
+                                ActivityCompat.startActivityForResult(ProductDetailOldActivity.this, intent, PRODUCT_PICTURE_REQUEST_CODE, aop.toBundle());
                             } else {
                                 intent.putExtras(bundle);
                                 startActivity(intent);
@@ -1709,7 +1694,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             oldprice.setText("");
             rlProductPrice.getLayoutParams().height = 0;
         }
-        price_textview.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble((userSelectedProductFinalPriceFloat) + ""));
+        price_textview.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble((userSelectedProductFinalPriceOffsetFloat) + ""));
         if (TextUtils.isEmpty(saveRM)) {
             tvProductSaverm.setVisibility(View.GONE);
         } else {
@@ -1725,6 +1710,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             rlProductQuantity.setVisibility(View.GONE);
             ctvAddToCart.setEnabled(false);
             mLLAddToCart.setEnabled(false);
+//            ctvAddToCart.setBackgroundResource(R.drawable.big_button_style_b8);
             mLLAddToCart.setBackgroundResource(R.drawable.big_button_style_b8);
             RelativeLayout.LayoutParams bottomBarLp = (RelativeLayout.LayoutParams) llBottomBar.getLayoutParams();
             if (bottomBarLp != null) {
@@ -1754,7 +1740,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             long count = getProductCount();
             JLogUtils.d(TAG, "maxSaleQty=" + maxSaleQty + "-------------stockqty=" + stockqty);
 //            TODO MAXQTY
-            if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductDetailOldActivity.this)) {
                 userSelectedProductMaxStockQty = stockqty;//userSelectedProductMaxStockQty
                 currUserSelectedProductMaxStockQty = stockqty; //判断加减的时候使用到的
             } else {
@@ -1767,6 +1753,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     currUserSelectedProductMaxStockQty = stockqty; //判断加减的时候使用到的
                 }
             }
+
             JLogUtils.d(TAG, "currUserSelectedProductMaxStockQty=" + (currUserSelectedProductMaxStockQty - count));
             userSelectedProductQty = 1;
             if (currUserSelectedProductMaxStockQty - count > 0) {
@@ -1805,20 +1792,12 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     }
 
 
-
-
-
-    public void setBottonBarHeight(int px){
-        RelativeLayout.LayoutParams bottomBarLp = (RelativeLayout.LayoutParams) llBottomBar.getLayoutParams();
-        bottomBarLp.height=JDataUtils.dp2Px(px);
-        llBottomBar.setLayoutParams(bottomBarLp);
-    }
     public long getProductCount() {
         List<SVRAppserviceProductDetailResultPropertyReturnEntity> attributeIds = new ArrayList<>();
         for (int i = 0; i < mAttributeViews.size(); i++) {
             attributeIds.add((SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag());
         }
-        long count = JStorageUtils.getProductCountByAttribute(ProductActivity.this, mProductDetailBean.getId(), attributeIds);
+        long count = JStorageUtils.getProductCountByAttribute(ProductDetailOldActivity.this, mProductDetailBean.getId(), attributeIds);
         JLogUtils.i(TAG, "count:" + count);
         return count;
     }
@@ -1848,7 +1827,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 
     //调用删除接口
     private void sendRequestToDeteleteCell(String itemId) {
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductDetailOldActivity.this)) {
             setWishIconColorToBlank();
             if (ctvProductOutOfStock.getVisibility() == View.VISIBLE) {
                 ctvAddToCart.setText(getResources().getString(R.string.product_detail_addtowishlist));
@@ -1863,7 +1842,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (REQUESTCODE_LOGIN == requestCode && resultCode == LoginRegisterEmailLoginFragment.RESULTCODE) {
-            if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductDetailOldActivity.this)) {
                 addRecommendedToWishByOperate();
                 needRefreshWhenBackPressed = true;
                 changeOperateProductIdPrecacheStatus(true);
@@ -1871,7 +1850,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
         }
 
-        if (requestCode == ProductActivity.RESULT_WISH && resultCode == Activity.RESULT_OK) {
+        if (requestCode == ProductDetailOldActivity.RESULT_WISH && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 if (!data.getBooleanExtra("needRefreshWhenBackPressed", false)) {
                     String productId = data.getStringExtra("productId");
@@ -1887,7 +1866,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 }
             }
         }
-        if (requestCode == ProductActivity.PRODUCT_PICTURE_REQUEST_CODE) {
+        if (requestCode == ProductDetailOldActivity.PRODUCT_PICTURE_REQUEST_CODE) {
             if (data != null) {
                 if (data.getExtras() != null) {
                     int currentIndex = data.getExtras().getInt("currentIndex");
@@ -1901,8 +1880,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
     }
 
-//    private void refreWishIconByPDPResult(String productId, int isLike, String itemId) {
-        //pdp 页面，isLike或itemId有变动，就刷新
+    //    private void refreWishIconByPDPResult(String productId, int isLike, String itemId) {
+    //pdp 页面，isLike或itemId有变动，就刷新
 //        Iterator<SVRAppserviceProductRecommendedResultsItemReturnEntity> itemReturnEntityIterator = recommendedList.iterator();
 //        while (itemReturnEntityIterator.hasNext()) {
 //            SVRAppserviceProductRecommendedResultsItemReturnEntity entity = itemReturnEntityIterator.next();
@@ -1925,8 +1904,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             propertyReturnEntities.add((SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag());
         }
         mGATrackAddCartTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
-            mShoppingDao.addProductToShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey(), productId, userSelectedProductQty + "", propertyReturnEntities);
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductDetailOldActivity.this)) {
+            mShoppingDao.addProductToShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductDetailOldActivity.this).getSessionKey(), productId, userSelectedProductQty + "", propertyReturnEntities);
         } else {
             Intent loginIntent = new Intent(this, LoginRegisterActivity.class);
             startActivityForResult(loginIntent,REQUESTCODE_LOGIN );
@@ -1953,7 +1932,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         } else {
             saveProductIdWhenJumpLoginPage(productId);
             Intent intent = new Intent();
-            intent.setClass(ProductActivity.this, LoginRegisterActivity.class);
+            intent.setClass(ProductDetailOldActivity.this, LoginRegisterActivity.class);
             startActivityForResult(intent, REQUESTCODE_LOGIN);
             overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
         }
@@ -1965,7 +1944,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         LinearLayout toastView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.layout_prompt_productdetail_notenoughinventory, null);
         TextView message = (TextView) toastView.findViewById(R.id.tv_text);
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductDetailOldActivity.this)) {
             message.setText(getResources().getString(R.string.insufficient_stock));
         } else {
             if (mStockQty > 0 && mMaxSaleQty > 0) {

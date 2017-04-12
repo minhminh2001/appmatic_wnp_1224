@@ -297,13 +297,11 @@ public class MyAccountDao extends BaseHttp {
         params.put("address_id", addressId);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/customer/removeAddress", params, REQUEST_DELETEADDRESS);
     }
-
     public void getCountryAndRegions(String sessionKey) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/directory/getCountryAndRegionList", params, REQUEST_GETCOUNTRY_REGIONS);
     }
-
     public void getCityAndStateByPostCodet(String session_key, String postcode, String country_id) {
         params = new TreeMap<>();
         params.put("session_key", session_key);
@@ -311,7 +309,6 @@ public class MyAccountDao extends BaseHttp {
         params.put("country_id", country_id);
         requestHttp(BaseHttp.HTTP_METHOD.POST, "appservice/customer/getCityRegionByPostcode", params, REQUEST_CITY_STATE_BYPOSTCODE);
     }
-
     public void addressSave(String sessionKey, String firstname, String lastname,
                             String country_id, String telephone, String street0, String street1,
                             String postcode, String city, String region, String region_id, String default_shipping) {

@@ -16,12 +16,21 @@ public class SVRAppserviceProductDetailResultPropertyReturnEntity implements Ser
     private int eligibleForCod;
     private String superLabel;
     private long stockQty;
+    private long qty;
     private int level;
     private long maxSaleQty;
     private int inStock;
     private ArrayList<String> images;
     private ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity> child;
 
+
+    public long getQty() {
+        return qty;
+    }
+
+    public void setQty(long qty) {
+        this.qty = qty;
+    }
 
     public int getLevel() {
         return level;

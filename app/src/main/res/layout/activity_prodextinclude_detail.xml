@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@color/whiteFFFFFF"
@@ -209,25 +210,7 @@
                 android:src="@drawable/draw_plus"/>
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/detail_descriptions_RelativeLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rlProductQuantity"
-            android:layout_marginBottom="-20dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            >
-            <!--BLOCK_DESCENDANTS是当一个view获取焦点时 viewgroup会覆盖子类控件而直接获得焦点,防止webview过大,导致scrollView滚动-->
-            <LinearLayout
-                android:id="@+id/ll_webView"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:descendantFocusability="blocksDescendants"
-                android:orientation="vertical">
-            </LinearLayout>
 
-        </RelativeLayout>
 
         <!--<LinearLayout-->
             <!--android:id="@+id/llProductDetail"-->

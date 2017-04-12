@@ -75,7 +75,14 @@
                     </TextView>
 
                 </RelativeLayout>
-
+                <LinearLayout
+                    android:id="@+id/viewGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/product_details_viewpager_dot_margin_top"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:visibility="visible"/>
                 <RelativeLayout
                     android:id="@+id/detail_title_RelativeLayout"
                     android:layout_width="match_parent"
@@ -100,7 +107,6 @@
                         android:textColor="@color/black000000"
                         style="@style/font_family_robot_regular"
                         android:textSize="12sp"/>
-
                     <com.whitelabel.app.widget.CustomTextView
                         android:id="@+id/ctvProductName"
                         android:layout_width="wrap_content"
@@ -108,19 +114,8 @@
                         android:layout_below="@+id/ctvProductBrand"
                         android:textColor="@color/black"
                         android:textSize="18sp"
-                        imaginato:textFont="LatoBold"
-                        />
+                        imaginato:textFont="LatoBold" />
                 </RelativeLayout>
-                <!--图片指示器-->
-                <LinearLayout
-                    android:id="@+id/viewGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/product_details_viewpager_dot_margin_top"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:visibility="visible"/>
-
                 <RelativeLayout
                     android:id="@+id/final_relativelayout"
                     android:layout_width="match_parent"
@@ -128,67 +123,93 @@
                     android:layout_below="@+id/detail_title_RelativeLayout"
                     android:background="@color/white"
                     android:visibility="visible">
-
                     <include
                         android:id="@+id/view"
                         layout="@layout/activity_prodextinclude_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="10dp"/>
+
+                    <com.whitelabel.app.widget.ProductChildListView
+                        android:id="@+id/pc_group_config"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </com.whitelabel.app.widget.ProductChildListView>
                 </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/rl_productrecommend_body"
+                <RelativeLayout
+                    android:id="@+id/detail_descriptions_RelativeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/final_relativelayout"
-                    android:background="@color/white"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="-20dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    >
+                    <!--BLOCK_DESCENDANTS是当一个view获取焦点时 viewgroup会覆盖子类控件而直接获得焦点,防止webview过大,导致scrollView滚动-->
+                    <LinearLayout
+                        android:id="@+id/ll_webView"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:descendantFocusability="blocksDescendants"
+                        android:orientation="vertical">
+                    </LinearLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/rl_productrecommend_line"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="@dimen/activity_pdp_margin"
-                        android:layout_marginRight="@dimen/activity_pdp_margin"
-                        android:layout_marginTop="5dp"
-                        android:visibility="gone">
+                </RelativeLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_centerVertical="true"
-                            android:background="@color/greyE1E1E1"></View>
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/rl_productrecommend_body"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@+id/final_relativelayout"-->
+                    <!--android:background="@color/white"-->
+                    <!--android:orientation="vertical">-->
 
-                        <com.whitelabel.app.widget.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:background="@color/whiteFFFFFF"
-                            android:paddingLeft="15dp"
-                            android:paddingRight="15dp"
-                            android:text="@string/product_detail_recommended_title"
-                            android:textColor="@color/black000000"
-                            android:textSize="14sp"
-                            style="@style/font_family_robot_regular"/>
-                    </RelativeLayout>
-
-                    <!--<android.support.v7.widget.RecyclerView-->
-                        <!--android:id="@+id/lvProductRecommendList"-->
+                    <!--<RelativeLayout-->
+                        <!--android:id="@+id/rl_productrecommend_line"-->
                         <!--android:layout_width="match_parent"-->
                         <!--android:layout_height="wrap_content"-->
-                        <!--android:divider="@null"-->
-                        <!--android:dividerHeight="0dp"-->
-                        <!--android:listSelector="@color/transparent00"-->
-                        <!--android:scrollbars="none"/>-->
+                        <!--android:layout_marginBottom="10dp"-->
+                        <!--android:layout_marginLeft="@dimen/activity_pdp_margin"-->
+                        <!--android:layout_marginRight="@dimen/activity_pdp_margin"-->
+                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:visibility="gone">-->
 
-                </LinearLayout>
+                        <!--<View-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="1dp"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:background="@color/greyE1E1E1"></View>-->
+
+                        <!--<com.whitelabel.app.widget.CustomTextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_centerInParent="true"-->
+                            <!--android:background="@color/whiteFFFFFF"-->
+                            <!--android:paddingLeft="15dp"-->
+                            <!--android:paddingRight="15dp"-->
+                            <!--android:text="@string/product_detail_recommended_title"-->
+                            <!--android:textColor="@color/black000000"-->
+                            <!--android:textSize="14sp"-->
+                            <!--style="@style/font_family_robot_regular"/>-->
+                    <!--</RelativeLayout>-->
+
+                    <!--&lt;!&ndash;<android.support.v7.widget.RecyclerView&ndash;&gt;-->
+                        <!--&lt;!&ndash;android:id="@+id/lvProductRecommendList"&ndash;&gt;-->
+                        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                        <!--&lt;!&ndash;android:divider="@null"&ndash;&gt;-->
+                        <!--&lt;!&ndash;android:dividerHeight="0dp"&ndash;&gt;-->
+                        <!--&lt;!&ndash;android:listSelector="@color/transparent00"&ndash;&gt;-->
+                        <!--&lt;!&ndash;android:scrollbars="none"/>&ndash;&gt;-->
+
+                <!--</LinearLayout>-->
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_below="@+id/rl_productrecommend_body"/>
+                    android:layout_below="@+id/detail_descriptions_RelativeLayout"/>
             </RelativeLayout>
         </com.whitelabel.app.widget.CustomNestedScrollView>
 
