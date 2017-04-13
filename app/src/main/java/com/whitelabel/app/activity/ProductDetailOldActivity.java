@@ -1905,7 +1905,7 @@ public class ProductDetailOldActivity extends com.whitelabel.app.BaseActivity im
         }
         mGATrackAddCartTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductDetailOldActivity.this)) {
-            mShoppingDao.addProductToShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductDetailOldActivity.this).getSessionKey(), productId, userSelectedProductQty + "", propertyReturnEntities);
+//            mShoppingDao.addProductToShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductDetailOldActivity.this).getSessionKey(), productId, userSelectedProductQty + "", propertyReturnEntities);
         } else {
             Intent loginIntent = new Intent(this, LoginRegisterActivity.class);
             startActivityForResult(loginIntent,REQUESTCODE_LOGIN );

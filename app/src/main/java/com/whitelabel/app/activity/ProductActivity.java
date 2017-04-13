@@ -1919,14 +1919,25 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         if (mProductDetailBean == null) {
             return;
         }
-        List<SVRAppserviceProductDetailResultPropertyReturnEntity> propertyReturnEntities = new ArrayList<>();
-        JLogUtils.i("ray", "mAttributeViews:" + mAttributeViews.size());
-        for (int i = 0; i < mAttributeViews.size(); i++) {
-            propertyReturnEntities.add((SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag());
+        //simple:qty
+        Map<String, String>  idQtys=null;
+        if(mProductDetailBean.getType().equals(ProductDetailModel.TYPE_GROUP)){
+            idQtys=pcGroupConfig.getChildIdAndQty();
+        }else if(mProductDetailBean.getType().equals(ProductDetailModel.TYPE_CONFIGURABLE)){
+            List<SVRAppserviceProductDetailResultPropertyReturnEntity> propertyReturnEntities = new ArrayList<>();
+            for (int i = 0; i < mAttributeViews.size(); i++) {
+                propertyReturnEntities.add((SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag());
+            }
+        }else if(mProductDetailBean.getType().equals(ProductDetailModel.getTypeSimple())){
+
+        }
+        if(idQtys.size()==0){
+            JViewUtils.showErrorToast(this,"");
+            return ;
         }
         mGATrackAddCartTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
-            mShoppingDao.addProductToShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey(), productId, userSelectedProductQty + "", propertyReturnEntities);
+            mShoppingDao.addProductToShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey(), productId,idQtys);
         } else {
             Intent loginIntent = new Intent(this, LoginRegisterActivity.class);
             startActivityForResult(loginIntent,REQUESTCODE_LOGIN );

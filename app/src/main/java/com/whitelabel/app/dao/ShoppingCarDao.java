@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -86,22 +87,16 @@ public class ShoppingCarDao extends BaseHttp {
         WhiteLabelApplication.getAppConfiguration().updateDate(context, userEntity);
     }
 
-    public void addProductToShoppingCart(String sessionKey, String productId, String qty, List<SVRAppserviceProductDetailResultPropertyReturnEntity> propertyReturnEntities) {
+    public void addProductToShoppingCart(String sessionKey, String productId, Map<String,String> idQtys) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
+        params.put("store_id","1");
         params.put("product_id", productId);
-        params.put("qty", qty);
-        if (propertyReturnEntities != null) {
-            for (int i = 0; i < propertyReturnEntities.size(); i++) {
-                params.put("super_attribute[" + propertyReturnEntities.get(i).getSuperAttribute() + "]", propertyReturnEntities.get(i).getId());
-            }
+        int index=0;
+        for(String  id: idQtys.keySet()){
+            params.put("simpleId["+index+"]",id);
+            params.put("qty["+index+"]",idQtys.get(id));
         }
-//        if(!JDataUtils.isEmpty(colorAttribute)&&!JDataUtils.isEmpty(colorId)){
-//            params.put("super_attribute["+colorAttribute+"]",colorId);
-//        }
-//        if(!JDataUtils.isEmpty(sizeAttribute)&&!JDataUtils.isEmpty(sizeId)){
-//            params.put("super_attribute["+sizeAttribute+"]",sizeId);
-//        }
         requestHttp(HTTP_METHOD.POST, "appservice/cart/add", params, REQUEST_ADDPRODUCT);
     }
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * Created by imaginato on 2015/7/8.
  */
 public class SVRAppserviceProductDetailResultPropertyReturnEntity implements Serializable {
+    private String name;
     private String id;
     private String label;
     private String price;
@@ -22,7 +23,13 @@ public class SVRAppserviceProductDetailResultPropertyReturnEntity implements Ser
     private int inStock;
     private ArrayList<String> images;
     private ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity> child;
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public long getQty() {
         return qty;

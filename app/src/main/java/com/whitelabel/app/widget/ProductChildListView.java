@@ -19,7 +19,9 @@ import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JViewUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.paypal.android.sdk.cu.l;
 
@@ -56,6 +58,17 @@ public class ProductChildListView extends LinearLayout{
         addView(tvTotal);
         addView(getLine());
     }
+   // id : qty
+    public Map<String,String>  getChildIdAndQty(){
+        Map<String,String> hashMap=new HashMap<>();
+        for(int i=0;i<mBeans.size();i++){
+             if(mBeans.get(i).getInStock()==1&&!"0".equals(tvNumbers.get(i).getText().toString())){
+                 hashMap.put(mBeans.get(i).getId(),tvNumbers.get(i).getText().toString());
+             }
+        }
+        return hashMap;
+    }
+
     private void setTotalPrice(){
          double  totalPrice=0;
          for(int i=0;i<mBeans.size();i++){
@@ -89,6 +102,7 @@ public class ProductChildListView extends LinearLayout{
         final  TextView tvChildNumber = (TextView) view.findViewById(R.id.tv_child_number);
         ImageView ivChildPricePlus = (ImageView) view.findViewById(R.id.ivChildPricePlus);
 //        textView.setText(bean.getLabel());
+        textView.setText(bean.getName());
         tvChildPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         tvChildPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+bean.getPrice());
         tvChildFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+bean.getFinalPrice());
