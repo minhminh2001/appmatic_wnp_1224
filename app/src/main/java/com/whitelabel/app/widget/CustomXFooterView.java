@@ -7,14 +7,23 @@
 package com.whitelabel.app.widget;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.facebook.share.widget.ShareDialog;
 import com.whitelabel.app.R;
+import com.whitelabel.app.application.WhiteLabelApplication;
 
 
 public class CustomXFooterView extends LinearLayout {
@@ -24,7 +33,7 @@ public class CustomXFooterView extends LinearLayout {
     View line;
     private Context mContext;
     private View mContentView;
-    private View mProgressBar;
+    private ProgressBar mProgressBar;
     private TextView mHintView;
     private boolean isGoneLine;
 
@@ -142,7 +151,16 @@ public class CustomXFooterView extends LinearLayout {
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         line = moreView.findViewById(R.id.line);
         mContentView = moreView.findViewById(R.id.xlistview_footer_content);
-        mProgressBar = moreView.findViewById(R.id.xlistview_footer_progressbar);
+        mProgressBar = (ProgressBar) moreView.findViewById(R.id.xlistview_footer_progressbar);
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+
+            mProgressBar.setIndeterminateTintMode(PorterDuff.Mode.SRC_ATOP);
+            mProgressBar.setIndeterminateTintList(ColorStateList.
+                    valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()));
+//            mProgressBar.getIndeterminateDrawable().setColorFilter(
+//                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(), android.graphics.PorterDuff.Mode.MULTIPLY);
+        }
         mHintView = (TextView) moreView
                 .findViewById(R.id.xlistview_footer_hint_textview);
     }
