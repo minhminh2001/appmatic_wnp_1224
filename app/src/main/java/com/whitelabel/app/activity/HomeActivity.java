@@ -468,28 +468,24 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 //        tvMarketingLayersDesc = (CustomTextView) findViewById(R.id.tv_marketing_layers_desc);
 
         resetMenuAndListenter();
-//        getDrawerLayout().addDrawerListener(new DrawerLayout.DrawerListener() {
-//            @Override
-//            public void onDrawerSlide(View drawerView, float slideOffset) {
-//            }
-//            @Override
-//            public void onDrawerOpened(View drawerView) {
-//                updateLeftMenuNumber();
-//                boolean showGuide = JStorageUtils.showAppGuide3(HomeActivity.this);
-//                boolean islogin = WhiteLabelApplication.getAppConfiguration().isSignIn(HomeActivity.this);
-//                if (showGuide && islogin) {
-//                    showUserGuide(HomeBaseFragment.UserGuideType.LEFTMENU);
-//                }
-//            }
-//
-//            @Override
-//            public void onDrawerClosed(View drawerView) {
-//            }
-//
-//            @Override
-//            public void onDrawerStateChanged(int newState) {
-//            }
-//        });
+        getDrawerLayout().addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+            }
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                updateLeftMenuNumber();
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
         initFragment(savedInstanceState);
         redirectToFragmentByIntent(getIntent());
         redirectToInterfaceByDeepLink();

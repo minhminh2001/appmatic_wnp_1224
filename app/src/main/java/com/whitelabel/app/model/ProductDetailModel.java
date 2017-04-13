@@ -14,23 +14,18 @@ public class ProductDetailModel implements Serializable {
     private String name;
     private String brand;
     private String brandId;
-
     public static String getTypeSimple() {
         return TYPE_SIMPLE;
     }
-
     public String getBrandId() {
         return brandId;
     }
-
     public void setBrandId(String brandId) {
         this.brandId = brandId;
     }
-
     public static String getTypeConfigurable() {
         return TYPE_CONFIGURABLE;
     }
-
     private String category;
     private long stockQty;
     private long maxSaleQty;

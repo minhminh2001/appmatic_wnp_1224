@@ -68,13 +68,15 @@ public class MyAccountWishlistAdapter extends ArrayAdapter<Wishlist> {
 //        }
         final Wishlist aw = list.get(position);
         viewHolder.tvshort.setText(aw.getName());
-        viewHolder.tvpicture.setText(aw.getBrand().toUpperCase());
-        viewHolder.tvpicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if(!TextUtils.isEmpty(aw.getBrand())) {
+            viewHolder.tvpicture.setText(aw.getBrand().toUpperCase());
+            viewHolder.tvpicture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 //                startBrandStoreActivity((Activity) view.getContext(),aw.getBrand(),aw.getBrandId());
-            }
-        });
+                }
+            });
+        }
         DecimalFormat decimalFormat = new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
         String newPrice = JDataUtils.formatDouble(aw.getFinalPrice());//format 返回的是字符串
         String oldPrice = JDataUtils.formatDouble(aw.getPrice());//format 返回的是字符串

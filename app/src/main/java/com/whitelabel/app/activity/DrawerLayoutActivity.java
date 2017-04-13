@@ -473,8 +473,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
             tvShipping.setSelected(true);
         }
     }
-
-
     public void updateLeftMenuNumber() {
         try {
             long cartItemCount = 0;
@@ -510,15 +508,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 } else {
                     tvWistNum.setVisibility(View.GONE);
                 }
-//                if (orderNum > 0 && orderNum <= 99) {
-//                    tvOrderNum.setVisibility(View.VISIBLE);
-//                    tvOrderNum.setText(orderNum + "");
-//                } else if (orderNum > 99) {
-//                    tvOrderNum.setVisibility(View.VISIBLE);
-//                    tvOrderNum.setText("99+");
-//                } else {
-//                    tvOrderNum.setVisibility(View.GONE);
-//                }
             } else {
 //            ivUserImg.setVisibility(View.GONE);
                 tvWistNum.setVisibility(View.GONE);

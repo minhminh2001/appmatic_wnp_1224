@@ -29,7 +29,6 @@ public class ApplicationConfigurationEntity {
     private GOStoreViewEntity storeView;
     private GOCurrencyEntity currency;
     private SVRAppserviceCatalogSearchReturnEntity categoryArrayList;
-
     private ApplicationConfigurationEntity() {
         user = null;
         thirdPartyUsers = new ArrayList<GOThirdPartyUserEntity>();
@@ -37,14 +36,12 @@ public class ApplicationConfigurationEntity {
     public static ApplicationConfigurationEntity getInstance() {
         return SingletonHolder.INSTANCE;
     }
-
     private static class SingletonHolder {
         static final ApplicationConfigurationEntity INSTANCE = new ApplicationConfigurationEntity();
     }
     private Object readResolve() {
         return getInstance();
     }
-
     public ConfigModel getThemeConfig(){
         return configModel;
     }
@@ -290,7 +287,7 @@ public class ApplicationConfigurationEntity {
             currency = new GOCurrencyEntity();
         }
         currency.setId(1);
-        currency.setName("RM");
+        currency.setName("HK$");
         return currency;
     }
 
