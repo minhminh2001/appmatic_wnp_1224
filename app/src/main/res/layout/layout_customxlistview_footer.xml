@@ -17,9 +17,10 @@
             android:visibility="invisible"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:indeterminateTint="@color/colorAccent"
-            android:indeterminateTintMode="src_atop"
+
          />
+        <!--android:indeterminateTint="@color/colorAccent"-->
+        <!--android:indeterminateTintMode="src_atop"-->
 
         <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/xlistview_footer_hint_textview"

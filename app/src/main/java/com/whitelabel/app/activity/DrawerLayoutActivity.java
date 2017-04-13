@@ -101,7 +101,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 }, DELAY);
                 break;
             case R.id.rl_drawer_shoppingcart:
-                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SHOPPINGCART);
+
                 drawerLayout.closeDrawer(Gravity.LEFT);
                 baseHandler.postDelayed(new Runnable() {
                     @Override

@@ -682,5 +682,7 @@
     <string name="switch_view_bar_results">&#160;results</string>
 
     <string name="product_detail_total">Total:</string>
+    <string name="home_new_arrivals">NEW ARRIVALS</string>
+    <string name="home_best_sellers">BEST SELLERS</string>
 
 </resources>

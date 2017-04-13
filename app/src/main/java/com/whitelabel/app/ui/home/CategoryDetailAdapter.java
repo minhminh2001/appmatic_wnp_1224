@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
@@ -14,30 +16,47 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.adapter.FlowViewAdapter;
+import com.whitelabel.app.adapter.ProductListAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.dao.MyAccountDao;
+import com.whitelabel.app.dao.ProductDao;
+import com.whitelabel.app.dao.ShoppingCarDao;
+import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
+import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomTextView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.whitelabel.app.utils.AnimUtil.setWishIconColorToPurple;
 
 
 public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -58,10 +77,87 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         void onSortClick();
     }
 
-    public CategoryDetailAdapter(CategoryDetailModel categoryDetailModel, ImageLoader loader) {
+
+    private static final class DataHandler extends Handler {
+        private final WeakReference<CategoryDetailAdapter> mAdapter;
+        private final WeakReference<Context> mContext;
+
+        public DataHandler(Context context, CategoryDetailAdapter productListAdapter) {
+            mAdapter = new WeakReference<CategoryDetailAdapter>(productListAdapter);
+            mContext = new WeakReference<Context>(context);
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            if (mAdapter.get() == null || mContext.get() == null) {
+                return;
+            }
+
+            switch (msg.what) {
+                case MyAccountDao.REQUEST_DELETEWISHLIST:
+                    if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
+                        WishDelEntityResult wishDelEntityResult = (WishDelEntityResult) msg.obj;
+                        int position = Integer.parseInt(String.valueOf(wishDelEntityResult.getParams()));
+                        //update wishlist number
+                        WhiteLabelApplication.getAppConfiguration().updateWishlist(mContext.get(), wishDelEntityResult.getWishListItemCount());
+                    } else {
+                        ErrorMsgBean bean = (ErrorMsgBean) msg.obj;
+                        int position = Integer.parseInt(String.valueOf(bean.getParams()));
+                    }
+                    break;
+                case ProductDao.REQUEST_ADDPRODUCTLISTTOWISH:
+                    if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
+                        AddToWishlistEntity addToWishlistEntity = (AddToWishlistEntity) msg.obj;
+                        int position = Integer.parseInt(String.valueOf(addToWishlistEntity.getParams()));
+                        SVRAppserviceProductSearchResultsItemReturnEntity productEntity =null;
+                        int bestcount=mAdapter.get().categoryDetailModel.getNewArrivalProducts().size();
+                                if(position>mAdapter.get().categoryDetailModel.getNewArrivalProducts().size()){
+                                    productEntity=mAdapter.get().categoryDetailModel.getBestSellerProducts().get((position-bestcount-2));
+                                }else{
+                                    productEntity=mAdapter.get().categoryDetailModel.getNewArrivalProducts().get((position-1));
+                                }
+
+                        productEntity.setItem_id(addToWishlistEntity.getItemId());
+                        //update wishlist number
+                        WhiteLabelApplication.getAppConfiguration().updateWishlist(mContext.get(), addToWishlistEntity.getWishListItemCount());
+                        try {
+                            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
+                                    "Add To Wishlist",
+                                    productEntity.getName(),
+                                    Long.valueOf(productEntity.getProductId()));
+                            JLogUtils.i("googleGA", "add to wishlist ");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        ErrorMsgBean bean = (ErrorMsgBean) msg.obj;
+                        if (!TextUtils.isEmpty(bean.getErrorMessage())) {
+                            Toast.makeText(mContext.get(), bean.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    break;
+                case MyAccountDao.ERROR:
+                case ProductDao.REQUEST_ERROR:
+                    RequestErrorHelper requestErrorHelper=new RequestErrorHelper(mContext.get());
+                    requestErrorHelper.showNetWorkErrorToast(msg);
+                    break;
+            }
+        }
+    }
+    private final String TAG = this.getClass().getSimpleName();
+    MyAccountDao  myAccountDao;
+    ProductDao mProductDao;
+    public CategoryDetailAdapter(Context context,CategoryDetailModel categoryDetailModel, ImageLoader loader) {
         this.categoryDetailModel = categoryDetailModel;
         mImageLoader = loader;
+        DataHandler dataHandler = new DataHandler(context, this);
+        myAccountDao = new MyAccountDao(TAG, dataHandler);
+        mProductDao = new ProductDao(TAG, dataHandler);
     }
+
+   public CategoryDetailModel getData(){
+       return categoryDetailModel;
+   }
 
 
     public int getNewArrivalProductSize() {
@@ -108,11 +204,11 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (categoryDetailModel == null) return;
-            if (categoryDetailModel.getCategory_img() == null || categoryDetailModel.getCategory_img().size() == 0) {
+            if (TextUtils.isEmpty(categoryDetailModel.getCategory_img())) {
                 headerViewHolder.detailViewpager.setVisibility(View.GONE);
             } else {
                 if (headerViewHolder.detailViewpager.getTag() == null) {
@@ -120,12 +216,14 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                             headerViewHolder.detailViewpager.getContext());
                     int imageHeight = width * 240 / 490;
                     headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
-                    headerViewHolder.detailViewpager.setAdapter(new FlowViewAdapter(createImageViewList(headerViewHolder.itemView.getContext(), mImageLoader, categoryDetailModel.getCategory_img())));
-                    headerViewHolder.detailViewpager.addOnPageChangeListener(mPageChangeListener);
-                    addTisView(headerViewHolder.llTips, categoryDetailModel.getCategory_img().size());
-                    if (mImageViewTips.size() == 1) {
-                        headerViewHolder.llTips.setVisibility(View.GONE);
-                    }
+                    List<String> imgs=new ArrayList<>();
+                    imgs.add(categoryDetailModel.getCategory_img());
+                    headerViewHolder.detailViewpager.setAdapter(new FlowViewAdapter(createImageViewList(headerViewHolder.itemView.getContext(), mImageLoader, imgs)));
+//                    headerViewHolder.detailViewpager.addOnPageChangeListener(mPageChangeListener);
+//                    addTisView(headerViewHolder.llTips, categoryDetailModel.getCategory_img().size());
+//                    if (mImageViewTips.size() == 1) {
+//                        headerViewHolder.llTips.setVisibility(View.GONE);
+//                    }
                     headerViewHolder.detailViewpager.setTag("use");
                 }
             }
@@ -163,6 +261,14 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 JImageUtils.downloadImageFromServerByUrl(itemViewHolder.itemView.getContext(), mImageLoader, itemViewHolder.ivProductImage, leftProductImageUrl, destWidth, destHeight);
                 itemViewHolder.ivProductImage.setTag(leftProductImageUrl);
             }
+            itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(onItemClickLitener!=null){
+                        onItemClickLitener.onItemClick(itemViewHolder,position);
+                    }
+                }
+            });
             String leftProductName = leftProductEntity.getName();
             itemViewHolder.ctvProductName.setText(leftProductName);
             ///////////////////////russell////////////////////////
@@ -183,11 +289,7 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             float leftProductPriceFloat = 0.0f;
             String leftProductPrice = leftProductEntity.getPrice();
-            try {
-                leftProductPriceFloat = Float.parseFloat(leftProductPrice);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+
             float leftProductFinalPriceFloat = 0.0f;
             String leftProductFinalPrice = leftProductEntity.getFinal_price();
             try {
@@ -195,6 +297,24 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+            try {
+                leftProductPriceFloat = Float.parseFloat(leftProductPrice);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            final SVRAppserviceProductSearchResultsItemReturnEntity finalLeftProductEntity = leftProductEntity;
+            itemViewHolder.rlLeftProductlistWish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (finalLeftProductEntity.getIs_like() == 1) {
+                        sendRequestToDeteleteCell(finalLeftProductEntity,itemViewHolder.ivLeftProductlistWishIcon, finalLeftProductEntity.getItem_id(),itemViewHolder.getAdapterPosition());
+                    } else {
+                        addtoWishlistsendRequest(finalLeftProductEntity,
+                                itemViewHolder.rlLeftProductlistWish, itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2,
+                                itemViewHolder.getAdapterPosition());
+                    }
+                }
+            });
             if (JDataUtils.compare(leftProductFinalPriceFloat, leftProductPriceFloat) < 0) {
                 itemViewHolder.ctvProductPrice.setVisibility(View.VISIBLE);
                 itemViewHolder.ctvProductFinalPrice.setPadding(JDataUtils.dp2Px(9), 0, JDataUtils.dp2Px(9), 0);
@@ -205,31 +325,86 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
             itemViewHolder.ctvProductFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
             setMerchantName(leftProductEntity.getVendorDisplayName(), leftProductEntity.getVendor_id(), itemViewHolder.ctvCurationProductMerchant);
+        }else if(holder instanceof ViewHolder){
+            ViewHolder viewHolder= (ViewHolder) holder;
+            if(position==0){
+                viewHolder.tvTxt.setText(viewHolder.itemView.getContext().getResources().getString(R.string.home_new_arrivals));
+            }else{
+                viewHolder.tvTxt.setText(viewHolder.itemView.getContext().getResources().getString(R.string.home_best_sellers));
+            }
         }
     }
 
-    private final ViewPager.OnPageChangeListener mPageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//    private final ViewPager.OnPageChangeListener mPageChangeListener = new ViewPager.OnPageChangeListener() {
+//        @Override
+//        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//        }
+//
+//        @Override
+//        public void onPageSelected(int position) {
+//            for (int index = 0; index < mImageViewTips.size(); index++) {
+//                if (index == position) {
+//                    mImageViewTips.get(index).setBackground(JImageUtils.getThemeCircle( mImageViewTips.get(index).getContext()));
+//                } else {
+//                    mImageViewTips.get(index).setBackgroundResource(R.mipmap.dot_unchecked);
+//                }
+//            }
+//        }
+//
+//        @Override
+//        public void onPageScrollStateChanged(int state) {
+//
+//        }
+//    };
 
+
+
+    private void addtoWishlistsendRequest(SVRAppserviceProductSearchResultsItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ivWwishIcon.getContext())) {
+            entity.setIs_like(1);
+            mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo().getSessionKey(), tempPosition);
+            setWishIconColorToPurple(ivWwishIcon, ivWwishIcon2);
+        } else {
+            Intent intent = new Intent();
+            intent.setClass(ivWwishIcon.getContext(), LoginRegisterActivity.class);
+            ((Activity)ivWwishIcon.getContext()). startActivityForResult(intent, LoginRegisterActivity.REQUESTCODE_LOGIN);
+            ((Activity)ivWwishIcon.getContext()).overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
         }
-
-        @Override
-        public void onPageSelected(int position) {
-            for (int index = 0; index < mImageViewTips.size(); index++) {
-                if (index == position) {
-                    mImageViewTips.get(index).setBackground(JImageUtils.getThemeCircle( mImageViewTips.get(index).getContext()));
-                } else {
-                    mImageViewTips.get(index).setBackgroundResource(R.mipmap.dot_unchecked);
-                }
+    }
+    private void setWishIconColorToBlank(final ImageView ivWishIcon) {
+        ivWishIcon.setVisibility(View.VISIBLE);
+        boolean repeatAnim = true;
+        ivWishIcon.setTag(repeatAnim);
+        ivWishIcon.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
+//        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
+        final ScaleAnimation animation2 = new ScaleAnimation(1f, 0f, 1f, 0f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation2.setDuration(250);//设置动画持续时间
+        animation2.setFillAfter(false);//动画执行完后是否停留在执行完的状态
+        animation2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
             }
-        }
 
-        @Override
-        public void onPageScrollStateChanged(int state) {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ivWishIcon.setVisibility(View.GONE);
+            }
 
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        ivWishIcon.startAnimation(animation2);
+    }
+    private void sendRequestToDeteleteCell(SVRAppserviceProductSearchResultsItemReturnEntity bean,ImageView ivWwishIcon, String itemId, int tempPosition) {
+        setWishIconColorToBlank(ivWwishIcon);
+        bean.setIs_like(0);
+        if(!TextUtils.isEmpty(itemId)) {
+            myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUserInfo().getSessionKey(), itemId, tempPosition);
         }
-    };
+    }
 
     private void setMerchantName(final String merchantName, final String merchantId, final TextView ctvLeftCurationProductMerchant) {
         if (!TextUtils.isEmpty(merchantName)) {
@@ -277,6 +452,13 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
 
+    private OnItemClickLitener onItemClickLitener;
+
+
+    public  void  setOnItemClickLitener(OnItemClickLitener  onItemClickLitener){
+        this.onItemClickLitener=onItemClickLitener;
+
+    }
     @Override
     public int getItemCount() {
         return categoryDetailModel.getBestSellerProducts().size() + categoryDetailModel.getNewArrivalProducts().size() + 2;
@@ -337,30 +519,35 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         CustomTextView ctvCurationProductMerchant;
         @BindView(R.id.product_item)
         LinearLayout productItem;
-
+        @BindView(R.id.rl_product_wish)
+        RelativeLayout rlLeftProductlistWish;
+        @BindView(R.id.iv_product_wish_icon)
+        ImageView ivLeftProductlistWishIcon;
+       @BindView(R.id.iv_product_wish_icon2)
+        ImageView ivLeftProductlistWishIcon2;
         ItemViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
     }
 
-    private final List<ImageView> mImageViewTips = new ArrayList<>();
-
-    private final void addTisView(LinearLayout linearLayout, int count) {
-        for (int i = 0; i < count; i++) {
-            ImageView imageViewTips = new ImageView(linearLayout.getContext());
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(15, 15);
-            lp.setMargins(5, 0, 5, 0);
-            imageViewTips.setLayoutParams(lp);
-            if (i == 0) {
-                imageViewTips.setBackground(JImageUtils.getThemeCircle(linearLayout.getContext()));
-            } else {
-                imageViewTips.setBackgroundResource(R.mipmap.dot_unchecked);
-            }
-            linearLayout.addView(imageViewTips);
-            mImageViewTips.add(imageViewTips);
-        }
-    }
+//    private final List<ImageView> mImageViewTips = new ArrayList<>();
+//
+//    private final void addTisView(LinearLayout linearLayout, int count) {
+//        for (int i = 0; i < count; i++) {
+//            ImageView imageViewTips = new ImageView(linearLayout.getContext());
+//            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(15, 15);
+//            lp.setMargins(5, 0, 5, 0);
+//            imageViewTips.setLayoutParams(lp);
+//            if (i == 0) {
+//                imageViewTips.setBackground(JImageUtils.getThemeCircle(linearLayout.getContext()));
+//            } else {
+//                imageViewTips.setBackgroundResource(R.mipmap.dot_unchecked);
+//            }
+//            linearLayout.addView(imageViewTips);
+//            mImageViewTips.add(imageViewTips);
+//        }
+//    }
 
     private List<ImageView> createImageViewList(Context context, ImageLoader imageLoader, List<String> images) {
         List<ImageView> imgs = new ArrayList<>();

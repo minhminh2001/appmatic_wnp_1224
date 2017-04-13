@@ -12,6 +12,7 @@ import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.ui.common.BasePresenter;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
@@ -26,7 +27,7 @@ import static com.whitelabel.app.fragment.HomeBaseFragment.REQUEST_SHOPPINGCART;
  * Created by Arman on 3/3/2017.
  */
 
-public class BaseFragmentSearchCart extends com.whitelabel.app.BaseFragment {
+public class BaseFragmentSearchCart<T extends BasePresenter> extends com.whitelabel.app.BaseFragment<T> {
     protected String TAG = "BaseFragmentSearchCart";
     protected boolean showSearch = true;
     protected boolean showCart = true;

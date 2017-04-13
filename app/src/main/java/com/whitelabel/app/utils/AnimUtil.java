@@ -52,14 +52,13 @@ public class AnimUtil {
         });
         ivWishIcon.startAnimation(animation2);
     }
-
-
     public static void setWishIconColorToPurple(ImageView ivWishIcon, final ImageView ivWishIcon2) {
         ivWishIcon2.setVisibility(View.VISIBLE);
         ivWishIcon.setVisibility(View.VISIBLE);
         boolean repeatAnim = false;
         ivWishIcon.setTag(repeatAnim);
-        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
+        ivWishIcon.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
+//        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
         final ScaleAnimation animation2 = new ScaleAnimation(0.1f, 1f, 0.1f, 1f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         animation2.setDuration(250);//设置动画持续时间

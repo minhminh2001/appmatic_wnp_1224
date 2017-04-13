@@ -35,7 +35,7 @@ import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
-import com.whitelabel.app.ui.home.HomeCategoryFragment;
+import com.whitelabel.app.ui.home.HomeCategoryDetailFragment;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -302,13 +302,14 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             mFragment = new ArrayList<>();
             if (categoryArrayList != null) {
                 for (int i = 0; i < categoryArrayList.size(); i++) {
-                    mFragment.add(HomeCategoryFragment.newInstance(categoryArrayList.get(i).getId()));
+                    mFragment.add(HomeCategoryDetailFragment.newInstance(i,categoryArrayList.get(i).getId()));
+                    JLogUtils.i("ray","mCategoryId:"+categoryArrayList.get(i).getId());
 //                    mFragment.add(HomeHomeCategoryFragment.newInstance(categoryArrayList.get(i).getId()));
                 }
             }
             //////////////////////////ray
 //            if (mFragment != null && mFragment.size() > 0) {
-//                HomeCategoryFragment fragment = (HomeCategoryFragment) mFragment.get(0);
+//                HomeCategoryDetailFragment fragment = (HomeCategoryDetailFragment) mFragment.get(0);
 //                fragment.setmCurrDisplayedAndData(0, categoryArrayList.get(0));
 //            }
             categoryViewCount = searchCatalog.getCategory().size() - 1;
@@ -437,7 +438,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         mFragment = new ArrayList<Fragment>();
         if (categoryArrayList != null) {
             for (int i = 0; i < categoryArrayList.size(); i++) {
-                mFragment.add(new HomeCategoryFragment());
+                mFragment.add(new HomeCategoryDetailFragment());
             }
         }
     }
@@ -496,7 +497,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
                 bundle.putSerializable("categoryEntity", categoryArrayList.get(position));
                 bundle.putInt("index", position);
             }
-            fragment.setArguments(bundle);
+//            fragment.setArguments(bundle);
             return fragment;
         }
 
@@ -547,7 +548,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
 
             mFragment.get(currentCategoryFragmentIndex).onPause();
             currentCategoryFragmentIndex = position;
-//            ((HomeCategoryFragment) mFragment.get(position)).setmCurrDisplayedAndData(position, categoryArrayList.get(position));
+//            ((HomeCategoryDetailFragment) mFragment.get(position)).setmCurrDisplayedAndData(position, categoryArrayList.get(position));
             mFragment.get(position).onResume();
 //            homeTrack(position);
         }
@@ -572,8 +573,8 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
 
             //If it is sliding, close advertisement.
 //            if (state == 1) {
-//                ((HomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).setmMarketShow(false);
-//                ((HomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).removeOpenMarketRun();
+//                ((HomeCategoryDetailFragment) mFragment.get(currentCategoryFragmentIndex)).setmMarketShow(false);
+//                ((HomeCategoryDetailFragment) mFragment.get(currentCategoryFragmentIndex)).removeOpenMarketRun();
 //            }
         }
     };
@@ -581,7 +582,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     public void notifyToCancelCloseMarketRun() {
 //        if (isAdded()) {
 //            if (mFragment != null && mFragment.get(currentCategoryFragmentIndex) != null) {
-//                ((HomeCategoryFragment) mFragment.get(currentCategoryFragmentIndex)).removeCloseMarketRun();
+//                ((HomeCategoryDetailFragment) mFragment.get(currentCategoryFragmentIndex)).removeCloseMarketRun();
 //            }
 //        }
     }

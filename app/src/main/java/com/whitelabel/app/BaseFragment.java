@@ -1,5 +1,6 @@
 package com.whitelabel.app;
 
+import android.app.Dialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.whitelabel.app.ui.common.BasePresenter;
 import com.whitelabel.app.ui.common.BaseView;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomButton;
 
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView {
@@ -34,22 +36,20 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     private RelativeLayout mTitleRL;
     private TextView tvTitleNum,tvTitle;
     private ImageView ivTitle;
-
+    private Dialog mProgressDialog;
     @Override
     public void showProgressDialog() {
-
+        mProgressDialog= JViewUtils.showProgressDialog(getActivity());
     }
-
     @Override
     public void closeProgressDialog() {
-
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
     }
-
     public void setToolBarColor(int colorId){
         getToolbar().setBackgroundColor(JToolUtils.getColor(colorId));
     }
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

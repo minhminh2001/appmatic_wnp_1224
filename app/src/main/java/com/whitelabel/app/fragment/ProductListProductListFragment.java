@@ -83,14 +83,13 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
     private boolean mIsFirst=true;
     private LinearLayout mHeaderFilterLL;
     private LinearLayout mHeaderSortLL;
-
+    private String TAG = this.getClass().getSimpleName();
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         productListActivity = (ProductListActivity) activity;
     }
 
-    private String TAG = this.getClass().getSimpleName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -9,11 +9,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.whitelabel.app.model.MarketingLayersEntity;
+import com.whitelabel.app.ui.common.BasePresenter;
 
 /**
  * Created by Administrator on 2016/7/7.
  */
-public class HomeBaseFragment extends BaseFragmentSearchCart {
+public class HomeBaseFragment<T extends BasePresenter> extends BaseFragmentSearchCart<T> {
     protected HomeCommonCallback mCommonCallback;
     protected String TAG = "HomeBaseFragment";
     //todo remove this and in base activity somewhere else

@@ -219,6 +219,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     protected void jumpShoppingCartPage() {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
             if (!(mCurrentFragment instanceof ShoppingCartVerticalFragment)) {
+                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SHOPPINGCART);
                 switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_SHOPPINGCART, null);
             }
         }else{
@@ -234,7 +235,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             jumpLoginActivity();
         }
     }
-
     @Override
     protected void jumpStoreCreditPage() {
 //        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
@@ -243,7 +243,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 //            jumpLoginActivity();
 //        }
     }
-
     @Override
     protected void jumpNotificationPage() {
         switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_NOTIFICATIONLIST, null);

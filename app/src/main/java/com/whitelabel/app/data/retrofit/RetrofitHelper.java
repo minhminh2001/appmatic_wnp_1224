@@ -63,9 +63,9 @@ public class RetrofitHelper {
             });
         }
 
-        builder.connectTimeout(30, TimeUnit.SECONDS);
-        builder.readTimeout(30, TimeUnit.SECONDS);
-        builder.writeTimeout(30, TimeUnit.SECONDS);
+        builder.connectTimeout(60, TimeUnit.SECONDS);
+        builder.readTimeout(60, TimeUnit.SECONDS);
+        builder.writeTimeout(60, TimeUnit.SECONDS);
         builder.retryOnConnectionFailure(true);
         OkHttpClient mOkHttpClient=builder.build();
         return mOkHttpClient;

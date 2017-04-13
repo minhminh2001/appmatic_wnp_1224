@@ -21,7 +21,7 @@ public class CategoryDetailModel  implements Serializable {
 
         private String category_id;
         private String category_name;
-        private List<String> category_img;
+        private String category_img;
         private List<SVRAppserviceProductSearchResultsItemReturnEntity> newArrivalProducts;
         private List<SVRAppserviceProductSearchResultsItemReturnEntity> bestSellerProducts;
 
@@ -41,15 +41,15 @@ public class CategoryDetailModel  implements Serializable {
             this.category_name = category_name;
         }
 
-        public List<String> getCategory_img() {
-            return category_img;
-        }
+    public String getCategory_img() {
+        return category_img;
+    }
 
-        public void setCategory_img(List<String> category_img) {
-            this.category_img = category_img;
-        }
+    public void setCategory_img(String category_img) {
+        this.category_img = category_img;
+    }
 
-        public List<SVRAppserviceProductSearchResultsItemReturnEntity> getNewArrivalProducts() {
+    public List<SVRAppserviceProductSearchResultsItemReturnEntity> getNewArrivalProducts() {
             return newArrivalProducts;
         }
 
