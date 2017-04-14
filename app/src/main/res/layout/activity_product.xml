@@ -19,24 +19,19 @@
             android:overScrollMode="ifContentScrolls"
             android:scrollbars="vertical"
             imaginato:parallax_factor="2">
-
             <RelativeLayout
                 android:id="@+id/scrollView_RelativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="500dp">
-
-
                 <RelativeLayout
                     android:id="@+id/rl_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/product_details_viewpager_height">
-
                     <android.support.v4.view.ViewPager
                         android:id="@+id/detail_viewpager"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/product_details_viewpager_height"/>
-
                     <!-- viewpager的覆盖层 用于Transition-->
                     <ImageView
                         android:id="@+id/ivProductImage"
@@ -64,16 +59,13 @@
                         android:textSize="18dp"
                         android:visibility="gone"
                         imaginato:textFont="LatoBold"/>
-
                     <TextView
                         android:id="@+id/product_trans"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/product_details_viewpager_height"
                         android:background="@color/tranwhite"
-                        android:visibility="gone"
-                        >
+                        android:visibility="gone">
                     </TextView>
-
                 </RelativeLayout>
                 <LinearLayout
                     android:id="@+id/viewGroup"

@@ -30,7 +30,7 @@ import static com.paypal.android.sdk.cu.l;
  */
 
 public class ProductChildListView extends LinearLayout{
-    private List<TextView>  tvNumbers=new ArrayList<>();
+    private List<TextView>  tvNumbers;
      public ProductChildListView(Context context){
         super(context);
      }
@@ -40,6 +40,7 @@ public class ProductChildListView extends LinearLayout{
     private  ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity>  mBeans;
     private TextView tvTotal;
     public void initProductChildListView(ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity>  beans){
+        tvNumbers=new ArrayList<>();
         setPadding(JScreenUtils.dip2px(getContext(),10),0,JScreenUtils.dip2px(getContext(),10),0);
         mBeans=beans;
         if(mBeans==null||mBeans.size()==0){
@@ -137,19 +138,8 @@ public class ProductChildListView extends LinearLayout{
                         tvChildNumber.setText(count+"");
                         setTotalPrice();
                     }
-
             }
         });
         return view;
     }
-
-
-
-
-
-
-
-
-
-
 }

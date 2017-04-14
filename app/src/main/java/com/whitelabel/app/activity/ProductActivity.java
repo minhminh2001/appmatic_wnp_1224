@@ -131,6 +131,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     private LinearLayout llWebView;
     private int destWidthColorSize;
     private int destHeightColorSize;
+    private Toast mToast;
     private WebView mWebView;
     private boolean isClickShopping = false;
     private DataHandler dataHandler;
@@ -161,8 +162,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     private ToolBarAlphaBehavior toolBarAlphaBehavior;
 
     private ImageLoader mImageLoader;
-
-
     @Override
     protected void onDestroy() {
         JLogUtils.d(TAG, "onDestroy() ");
@@ -180,9 +179,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         super.onDestroy();
         onDestoryWebView(mWebView);
-
     }
-
     public void onDestoryWebView(WebView webView) {
         try {
             ViewParent parent = webView.getParent();
@@ -439,7 +436,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             operateProductIdPrecache.setAvailable(available);
         }
     }
-
     private void setWishIconColorToBlank() {
         ivHeaderBarWishlist2.setVisibility(View.VISIBLE);
         ivHeaderBarWishlist.setVisibility(View.VISIBLE);
@@ -455,13 +451,11 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             @Override
             public void onAnimationStart(Animation animation) {
             }
-
             @Override
             public void onAnimationEnd(Animation animation) {
                 ivHeaderBarWishlist.setVisibility(View.GONE);
                 mIVHeaderBarWishlist.setVisibility(View.GONE);
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
             }
@@ -511,11 +505,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             mLevel = level;
             mPropertyList = propertyList;
         }
-
         @Override
         public void onCancel() {
         }
-
         @Override
         public void onScrolling(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
         }
@@ -588,7 +580,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         userSelectedProductMaxStockQty = 0;
         userSelectedProductQty = 1;
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -601,8 +592,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         getProductInfo();
         initNestedScrollView();
     }
-
-
     private void initData() {
         setStatusBarColor(JToolUtils.getColor(R.color.transparent5000));
         TAG = TAG + JTimeUtils.getCurrentTimeLong();
@@ -621,7 +610,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         mAttributeEntity.setOldValue(new WheelPickerEntity());
         setActivityImageTransition(bundle);
     }
-
     public void initView(){
 //        flSimpleConfig= (FrameLayout) findViewById(R.id.fl_simple_config);
         pcGroupConfig = (ProductChildListView) findViewById(R.id.pc_group_config);
@@ -981,7 +969,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 if (!isOutOfStock) {
                     if (userSelectedProductQty > 0 && mProductDetailBean != null && !JDataUtils.isEmpty(mProductDetailBean.getId())) {
                         //                    JViewUtils.showProgressBar(ProductActivity.this);
-                        mDialog = JViewUtils.showProgressDialog(ProductActivity.this);
                         addToCartSendRequest();
                     }
                 } else {
@@ -1924,17 +1911,22 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         if(mProductDetailBean.getType().equals(ProductDetailModel.TYPE_GROUP)){
             idQtys=pcGroupConfig.getChildIdAndQty();
         }else if(mProductDetailBean.getType().equals(ProductDetailModel.TYPE_CONFIGURABLE)){
-            List<SVRAppserviceProductDetailResultPropertyReturnEntity> propertyReturnEntities = new ArrayList<>();
+//            List<SVRAppserviceProductDetailResultPropertyReturnEntity> propertyReturnEntities = new ArrayList<>();
+            idQtys=pcGroupConfig.getChildIdAndQty();
             for (int i = 0; i < mAttributeViews.size(); i++) {
-                propertyReturnEntities.add((SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag());
+          SVRAppserviceProductDetailResultPropertyReturnEntity bean=
+                (SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag();
+                idQtys.put(bean.getId(),userSelectedProductQty+"");
             }
         }else if(mProductDetailBean.getType().equals(ProductDetailModel.getTypeSimple())){
-
+            idQtys=new HashMap<>();
+            idQtys.put(mProductDetailBean.getId(),userSelectedProductQty+"");
         }
         if(idQtys.size()==0){
             JViewUtils.showErrorToast(this,"");
             return ;
         }
+        mDialog = JViewUtils.showProgressDialog(ProductActivity.this);
         mGATrackAddCartTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
             mShoppingDao.addProductToShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey(), productId,idQtys);
@@ -1950,7 +1942,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             mProductDao.addProductListToWish(productId, WhiteLabelApplication.getAppConfiguration().getUserInfo(getApplicationContext()).getSessionKey(), productId);
         }
     }
-
     private void addtoWishlistsendRequest() {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(getApplicationContext())) {
             if (mProductDetailBean.getIsLike() == 0) {
@@ -1969,7 +1960,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
         }
     }
-    private Toast mToast;
     private void showNoInventory(Context context) {
         if (context == null) {
             return;

@@ -348,7 +348,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
             SVRAppServiceCustomerCountry  countrys=new Gson().fromJson(countryJson,SVRAppServiceCustomerCountry.class);
             list_countries=countrys.getCountry();
             list_countries.set(0,new CountrySubclass("",getResources().getString(R.string.pleaseselect)));
-            mRegions.addAll(getState("MY", list_countries));
+            mRegions.addAll(getState("HK", list_countries));
             mRegions.add(0, new CountryRegions("", getResources().getString(R.string.pleaseselect)));
             if(list_countries.size()>1){
                 etShippingCountry.setText(list_countries.get(1).getName());
