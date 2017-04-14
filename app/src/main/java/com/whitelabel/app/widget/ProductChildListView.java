@@ -59,6 +59,13 @@ public class ProductChildListView extends LinearLayout{
         addView(tvTotal);
         addView(getLine());
     }
+     public  interface OnProductCountChangeListener{
+          void  change(int count);
+    }
+    private OnProductCountChangeListener  mOnProductCountChangeListener;
+    public  void  setOnProductCountChangeListener(OnProductCountChangeListener  listener){
+          this.mOnProductCountChangeListener=listener;
+    }
    // id : qty
     public Map<String,String>  getChildIdAndQty(){
         Map<String,String> hashMap=new HashMap<>();
@@ -83,7 +90,6 @@ public class ProductChildListView extends LinearLayout{
     public View getLine(){
         View view=new View(getContext());
         float  height= (float) 0.8;
-
        LinearLayout.LayoutParams params= new LinearLayout.LayoutParams(ViewGroup.
                 LayoutParams.MATCH_PARENT, JScreenUtils.dip2px(getContext(),height));
          params.setMargins(0,JScreenUtils.dip2px(getContext(),15),0,0);
@@ -102,7 +108,6 @@ public class ProductChildListView extends LinearLayout{
         final ImageView ivChildPriceMinus = (ImageView) view.findViewById(R.id.ivChildPriceMinus);
         final  TextView tvChildNumber = (TextView) view.findViewById(R.id.tv_child_number);
         ImageView ivChildPricePlus = (ImageView) view.findViewById(R.id.ivChildPricePlus);
-//        textView.setText(bean.getLabel());
         textView.setText(bean.getName());
         tvChildPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         tvChildPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+bean.getPrice());
@@ -125,6 +130,9 @@ public class ProductChildListView extends LinearLayout{
                     tvChildNumber.setText(count+"");
                     setTotalPrice();
                 }
+                if(mOnProductCountChangeListener!=null) {
+                    mOnProductCountChangeListener.change(getProductSelectQty());
+                }
             }
         });
         ivChildPricePlus.setOnClickListener(new OnClickListener() {
@@ -137,9 +145,20 @@ public class ProductChildListView extends LinearLayout{
                     }else{
                         tvChildNumber.setText(count+"");
                         setTotalPrice();
+                        if(mOnProductCountChangeListener!=null) {
+                            mOnProductCountChangeListener.change(getProductSelectQty());
+                        }
                     }
             }
         });
         return view;
+    }
+
+    private  int getProductSelectQty(){
+        int qty=0;
+        for(int i=0;i<tvNumbers.size();i++){
+            qty+=Integer.parseInt(tvNumbers.get(i).getText().toString());
+        }
+        return qty;
     }
 }
