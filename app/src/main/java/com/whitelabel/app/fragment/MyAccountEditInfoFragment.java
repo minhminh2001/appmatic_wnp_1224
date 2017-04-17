@@ -230,7 +230,6 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                             mFragment.get().editor.putString("" + index, label);
                             mFragment.get().editor.putString(value, label);
                             mFragment.get().editor.putString(label, value);
-
                             //stateProvince
                             ArrayList<CountryRegions> stateProvinceList = mFragment.get().countryList.get(index).getRegions();
                             for (int i = 0; i < stateProvinceList.size(); i++) {
@@ -244,9 +243,9 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                         }
                         mFragment.get().editor.putInt("size", mFragment.get().countryList.size());
                         mFragment.get().editor.commit();
-                        if (!"".equals(mFragment.get().sharedCountry.getString(mFragment.get().customerList.getCountry_id(), ""))) {
-                            mFragment.get().country.setText(mFragment.get().sharedCountry.getString(mFragment.get().customerList.getCountry_id(), ""));
-                        }
+                            if(countryEntity.getCountry()!=null&&countryEntity.getCountry().size()>0) {
+                                mFragment.get().country.setText(countryEntity.getCountry().get(0).getName());
+                            }
                         mFragment.get().stateProvince.setText(mFragment.get().sharedCountry.getString(mFragment.get().customerList.getRegion(), ""));
                         mFragment.get().initAllHint();
                     } else {
@@ -280,7 +279,6 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                 case MyAccountDao.REQUEST_ACCOUNTUPDATEA:
                     if (msg.arg1 == MyAccountDao.RESPONSE_SUCCESS) {
                         //成功后将数据放到Entity中
-                        JLogUtils.d("Allen", "成功读取数据！！！！！！！！！！！");
                         SVRAppServiceCustomerMyAccountUpdate myAccountUpdateEntity = (SVRAppServiceCustomerMyAccountUpdate) msg.obj;
                         mFragment.get().customerList = myAccountUpdateEntity.getCustomer();
 
@@ -293,7 +291,6 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                             String MyBrithday = birthdayStr[2] + "-" + mFragment.get().mothMap.get(birthdayStr[1]) + "-" + birthdayStr[0];
                             mFragment.get().birthday.setText(MyBrithday);
                         }
-
                         if (mFragment.get().customerList.getGender().equals("1")) {
                             mFragment.get().gender.setText("Male");
                         } else if (mFragment.get().customerList.getGender().equals("2")) {
@@ -306,24 +303,23 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                         mFragment.get().eg.setText(mFragment.get().customerList.getTelephone());
 
                         //mothleIncome数据存取
-                        mFragment.get().sharedIncome = mFragment.get().myAccountActivity.getSharedPreferences("mothleIncome", Activity.MODE_PRIVATE);
-                        if (!mFragment.get().sharedIncome.getBoolean("exits", false)) {
-                            mFragment.get().editorIncome = mFragment.get().sharedIncome.edit();
-                            mFragment.get().editorIncome.putBoolean("exits", true);
-
-                            mFragment.get().mDao.MonthlyIncom(WhiteLabelApplication.getAppConfiguration().getUserInfo(mActivity.get()).getSessionKey());
+//                        mFragment.get().sharedIncome = mFragment.get().myAccountActivity.getSharedPreferences("mothleIncome", Activity.MODE_PRIVATE);
+//                        if (!mFragment.get().sharedIncome.getBoolean("exits", false)) {
+//                            mFragment.get().editorIncome = mFragment.get().sharedIncome.edit();
+//                            mFragment.get().editorIncome.putBoolean("exits", true);
 //
-                        } else {
-                            mFragment.get().monthlyIncome.setText(mFragment.get().sharedIncome.getString(mFragment.get().customerList.getIncome(), ""));
-                        }
+////                            mFragment.get().mDao.MonthlyIncom(WhiteLabelApplication.getAppConfiguration().getUserInfo(mActivity.get()).getSessionKey());
+////
+//                        } else {
+//                            mFragment.get().monthlyIncome.setText(mFragment.get().sharedIncome.getString(mFragment.get().customerList.getIncome(), ""));
+//                        }
 
                         //Country数据存取
                         mFragment.get().sharedCountry = mActivity.get().getSharedPreferences("country", Activity.MODE_PRIVATE);
-
-                        if (!mFragment.get().sharedCountry.getBoolean("exits", false)) {
-
-                            mFragment.get().getCountryAndstateProvince();
-                        }
+                        mFragment.get().getCountryAndstateProvince();
+//                        if (!mFragment.get().sharedCountry.getBoolean("exits", false)) {
+//
+//                        }
                         if (!"".equals(mFragment.get().sharedCountry.getString(mFragment.get().customerList.getCountry_id(), ""))) {
                             mFragment.get().country.setText(mFragment.get().sharedCountry.getString(mFragment.get().customerList.getCountry_id(), ""));
                         }
@@ -381,7 +377,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             String countryIdStr = sharedCountry.getString(country.getText().toString().trim(), "");
             String regionIdStr = sharedCountry.getString(stateProvince.getText().toString().trim(), "");
             String cityStr = city.getText().toString().trim();
-            String incomeIdStr = sharedIncome.getString(monthlyIncome.getText().toString().trim(), "");
+//            String incomeIdStr = sharedIncome.getString(monthlyIncome.getText().toString().trim(), "");
             String postcodeStr = zip.getText().toString().trim();
             String telephoneCodeStr = phoneNumber.getText().toString().trim();
             String telephoneStr = eg.getText().toString().trim();
@@ -408,7 +404,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                 }
             }
             saving = true;
-            mDao.save(session_key, emailStr, firstNameStr, lastNameStr, genderStr, birthdayNum, countryIdStr, regionIdStr, cityStr, incomeIdStr, postcodeStr, telephoneCodeStr, telephoneStr);
+            mDao.save(session_key, emailStr, firstNameStr, lastNameStr, genderStr, birthdayNum, countryIdStr, regionIdStr, cityStr, "", postcodeStr, telephoneCodeStr, telephoneStr);
         }
     }
 
@@ -1355,7 +1351,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         ArrayList<WheelPickerEntity> wheel = new ArrayList<WheelPickerEntity>();
         WheelPickerEntity oldwheel = new WheelPickerEntity();
         String oldlabel = country.getText().toString().trim();
-        oldlabel = oldlabel.equals("") ? "Malaysia" : oldlabel;
+//        oldlabel = oldlabel.equals("") ? "Malaysia" : oldlabel;
         if (sharedCountry == null) {
             sharedCountry = myAccountActivity.getSharedPreferences("country", Activity.MODE_PRIVATE);
         }
@@ -1763,7 +1759,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                     return false;
                 } else {
                     zipText.clearAnimation();
-                    sendRequestToGetCityAndStateByPostCode(zip.getText().toString().trim());
+//                    sendRequestToGetCityAndStateByPostCode(zip.getText().toString().trim());
                 }
                 break;
             case R.id.et_account_city:
@@ -1824,11 +1820,11 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         return true;
     }
 
-    private void sendRequestToGetCityAndStateByPostCode(String postcode) {
-        city.setEnabled(false);
-        mDao.sendRequestToGetCityAndStateByPostCode(WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(), postcode, country.getTag() == null ? "MY" : country.getTag().toString());
-
-    }
+//    private void sendRequestToGetCityAndStateByPostCode(String postcode) {
+//        city.setEnabled(false);
+//        mDao.sendRequestToGetCityAndStateByPostCode(WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(), postcode, country.getTag() == null ? "MY" : country.getTag().toString());
+//
+//    }
 
     public void onFocus(EditText edit, TextView text, TextView text2, String hint, CustomButtomLineRelativeLayout relativeLayout) {
         AnimationSet set = new AnimationSet(true);

@@ -1030,7 +1030,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                      * send request to get city and state by postcode.
                      * russell
                      */
-                    sendRequestToGetCityAndStateByPostCode(postalcode.getText().toString().trim());
+//                    sendRequestToGetCityAndStateByPostCode(postalcode.getText().toString().trim());
                 }
                 break;
             case R.id.edit_addaddresss_city:
@@ -1085,15 +1085,15 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         return true;
     }
 
-    private void sendRequestToGetCityAndStateByPostCode(String postcode) {
-        city.setEnabled(false);
-        String session_key="";
-        if(WhiteLabelApplication.getAppConfiguration().isSignIn(AddAddressActivity.this)){
-            session_key= WhiteLabelApplication.getAppConfiguration().getUserInfo(AddAddressActivity.this).getSessionKey();
-        }
-        String country_id=country.getTag() == null ? "" : country.getTag().toString();
-        dao.getCityAndStateByPostCodet(session_key,postcode,country_id);
-    }
+//    private void sendRequestToGetCityAndStateByPostCode(String postcode) {
+//        city.setEnabled(false);
+//        String session_key="";
+//        if(WhiteLabelApplication.getAppConfiguration().isSignIn(AddAddressActivity.this)){
+//            session_key= WhiteLabelApplication.getAppConfiguration().getUserInfo(AddAddressActivity.this).getSessionKey();
+//        }
+//        String country_id=country.getTag() == null ? "" : country.getTag().toString();
+//        dao.getCityAndStateByPostCodet(session_key,postcode,country_id);
+//    }
 
     public void onFocus(EditText edit,TextView text,TextView text2,String hint,CustomButtomLineRelativeLayout relativeLayout){
         AnimationSet set = new AnimationSet(true);

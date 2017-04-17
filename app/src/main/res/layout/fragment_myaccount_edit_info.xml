@@ -480,10 +480,11 @@
 
             <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
                 android:id="@+id/rl_editinfo_monthly"
+
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rl_editinfo_gender"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
@@ -750,6 +751,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="@dimen/table_margain_left"
+                    android:visibility="gone"
                     android:text="@string/_phone"
                     android:textColor="@color/label_saved"
                     android:textSize="@dimen/labelTextFontSize"
@@ -763,6 +765,7 @@
                     android:layout_marginBottom="@dimen/table_lable_margain_bottom"
                     android:layout_marginLeft="@dimen/table_margain_left"
                     android:layout_marginTop="8dp"
+                    android:visibility="gone"
                     android:text="@string/add6"
                     android:textColor="@color/editColor"
                     android:textSize="@dimen/editTextFontSize"
@@ -774,6 +777,7 @@
                     android:layout_alignRight="@+id/phoneNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/line_height"
+                    android:visibility="gone"
                     android:background="@color/edittext_line" />
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -783,6 +787,7 @@
                         android:layout_width="@dimen/line_height"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/rl_eg_layout"
+                        android:visibility="gone"
                         android:layout_alignParentTop="true"
                         android:layout_marginLeft="3dp"
                         android:layout_marginBottom="-10dp"
@@ -793,8 +798,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ctv_account_eg_label"
                         android:layout_marginBottom="@dimen/table_lable_margain_bottom"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="10dp">
+                        android:layout_marginTop="5dp">
                         <com.whitelabel.app.widget.CustomEditText
                             android:id="@+id/et_account_eg"
                             android:layout_width="fill_parent"
@@ -826,7 +830,6 @@
                         android:layout_below="@+id/ctv_account_eg_label"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:text="@string/eg123"
                         android:textSize="@dimen/labelTextFontSize"
                         android:textColor="@color/label_active"

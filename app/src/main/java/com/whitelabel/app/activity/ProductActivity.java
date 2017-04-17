@@ -1383,6 +1383,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             pcGroupConfig.setVisibility(View.VISIBLE);
             pcGroupConfig.initProductChildListView(mProductDetailBean.getProperty());
             boolean instock=false;
+            if(mProductDetailBean.getImages()!=null) {
+                productImagesArrayList.addAll(mProductDetailBean.getImages());
+            }
             for(SVRAppserviceProductDetailResultPropertyReturnEntity bean:mProductDetailBean.getProperty() ){
                 if(bean.getInStock()==1){
                     instock=true;

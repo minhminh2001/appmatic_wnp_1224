@@ -253,6 +253,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
 //        SharedPreferences sharedPreferences = getSharedPreferences("session_key", Activity.MODE_PRIVATE);
         checkBoxView=findViewById(R.id.relative14);
         addaddress_checkbox= (CustomCheckBox) findViewById(R.id.addaddress_checkbox);
+        addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         addaddress_checkbox.setChecked(false);
         myScrollView= (ScrollView) findViewById(R.id.myScrollView);
 //        SESSION_KEY = sharedPreferences.getString("session_key", "");
@@ -1009,7 +1010,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                      * send request to get city and state by postcode.
                      * russell
                      */
-                    sendRequestToGetCityAndStateByPostCode(postalcode.getText().toString().trim());
+//                    sendRequestToGetCityAndStateByPostCode(postalcode.getText().toString().trim());
                 }
                 break;
             case R.id.edit_city_EditText:
@@ -1058,14 +1059,12 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         }
         return true;
     }
-
-    private void sendRequestToGetCityAndStateByPostCode(String postcode) {
-        city.setEnabled(false);
-        String session_key= WhiteLabelApplication.getAppConfiguration().getUserInfo(EditAddressActivity.this).getSessionKey();
-        String country_id=country.getTag() == null ? "" : country.getTag().toString();
-        dao.getCityAndStateByPostCodet(session_key, postcode, country_id);
-
-    }
+//    private void sendRequestToGetCityAndStateByPostCode(String postcode) {
+//        city.setEnabled(false);
+//        String session_key= WhiteLabelApplication.getAppConfiguration().getUserInfo(EditAddressActivity.this).getSessionKey();
+//        String country_id=country.getTag() == null ? "" : country.getTag().toString();
+//        dao.getCityAndStateByPostCodet(session_key, postcode, country_id);
+//    }
 
     public void onFocus(EditText edit,TextView text,TextView text2,String hint,CustomButtomLineRelativeLayout relativeLayout){
         AnimationSet set = new AnimationSet(true);

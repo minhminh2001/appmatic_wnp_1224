@@ -619,10 +619,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 
     public String paymentMethodCode;
     public String molpayType;
-    private int paymethodType;//1 online 2credit 3.offline payment
+    private String paymethodType;//1 online 2credit 3.offline payment
     private String bank;
 
-    public void switReviewFragment(String molpayType, CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity, String code, String html, int type, String bank) {
+    public void switReviewFragment(String molpayType, CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity, String code, String html, String type, String bank) {
         this.html = html;
         this.paymentMethodCode = code;
         paymethodType = type;
@@ -965,7 +965,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         String shippingFee = reviewFragment.tvShippingfee.getText().toString();
                         mActivity.get().paymentSaveReturnEntity = reviewFragment.getPaymentSaveReturnEntity();
                         //getResources().getString(R.string.payment_method_ONLINE_BANKING)
-                        if (mActivity.get().paymethodType == CheckoutPaymentFragment.ONLINEPAYMENT) {
+                        if (mActivity.get().paymethodType .equals(CheckoutPaymentFragment.ONLINEPAYMENT))  {
                             /**
                              * Online Banking
                              */
@@ -982,9 +982,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         } else {
 
                             //offline payment
-                            if (mActivity.get().paymethodType == CheckoutPaymentFragment.OFFLINEPAYMENT) {
+                            if (mActivity.get().paymethodType .equals(CheckoutPaymentFragment.OFFLINEPAYMENT)) {
                                 mActivity.get().goToPaymentSuccess(saveOrderReturnEntity.getLastrealorderid(), reviewFragment.payment_type, grandTotal, shippingFee, mActivity.get().html);
-                            } else if (mActivity.get().paymethodType == CheckoutPaymentFragment.CODPAYMENT) {
+                            } else if (mActivity.get().paymethodType .equals( CheckoutPaymentFragment.CODPAYMENT)) {
 
                                 mActivity.get().goToPaymentSuccess(saveOrderReturnEntity.getLastrealorderid(), reviewFragment.payment_type, grandTotal, shippingFee, saveOrderReturnEntity.getCashondeliveryContent());
                             } else {
