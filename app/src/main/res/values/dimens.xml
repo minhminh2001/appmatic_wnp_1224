@@ -102,4 +102,6 @@
     <dimen name="statusbar_height">0dp</dimen>
 
     <dimen name="switch_view_and_filter_bar_height">40dp</dimen>
+
+    <dimen name="scroll_height">1px</dimen>
 </resources>

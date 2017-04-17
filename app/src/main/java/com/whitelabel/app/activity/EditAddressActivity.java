@@ -118,7 +118,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
 
                                 activity.list_countries = countryEntityResult.getCountry();
                                 activity. list_countries.add(0, new CountrySubclass("", activity.getResources().getString(R.string.pleaseselect)));
-                                ArrayList<CountryRegions> regisons=activity.getState(activity.mBean.getCountryId(), activity.list_countries);
+                                ArrayList<CountryRegions> regisons=activity.getState( activity.list_countries);
                                 if(regisons==null||regisons.size()==0){
                                     activity.stateText.setVisibility(View.GONE);
                                     activity.state.setVisibility(View.VISIBLE);
@@ -1163,11 +1163,11 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
     }
 
 
-    public final  ArrayList<CountryRegions> getState(String value,ArrayList<CountrySubclass>  countrys){
+    public final  ArrayList<CountryRegions> getState(ArrayList<CountrySubclass>  countrys){
         ArrayList<CountryRegions>  regions=null;
         for(int i=0;i<countrys.size();i++){
-            CountrySubclass sub=countrys.get(i);
-            if(value.equals(sub.getCountry_id())){
+            if(i==1){
+               CountrySubclass sub=countrys.get(i);
                 country.setTag(sub.getCountry_id()+"");
                 regions=sub.getRegions();
             }

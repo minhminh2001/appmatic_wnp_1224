@@ -206,7 +206,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                                     activity.stateText.setTextColor(activity.getResources().getColor(R.color.hint));
                                     activity. list_countries = countryEntityResult.getCountry();
                                     activity. list_countries.add(0, new CountrySubclass("", activity.getResources().getString(R.string.pleaseselect)));
-                                    activity. mRegions.addAll(activity.getState("HK", activity.list_countries));
+                                    activity. mRegions.addAll(activity.getState( activity.list_countries));
                                     activity. mRegions.add(0, new CountryRegions("", activity.getResources().getString(R.string.pleaseselect)));
                                     SharedPreferences sharedPreferences = activity.getSharedPreferences("countries", Activity.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -546,11 +546,11 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         dao.getCountryAndRegions(sessionKey);
 
     }
-    public final  ArrayList<CountryRegions> getState(String value,ArrayList<CountrySubclass>  countrys){
+    public final  ArrayList<CountryRegions> getState(ArrayList<CountrySubclass>  countrys){
         ArrayList<CountryRegions>  regions=null;
         for(int i=0;i<countrys.size();i++){
             CountrySubclass sub=countrys.get(i);
-            if(value.equals(sub.getCountry_id())){
+            if(i==1){
                 country.setTag(sub.getCountry_id()+"");
                 regions=sub.getRegions();
                 country.setText(sub.getName());

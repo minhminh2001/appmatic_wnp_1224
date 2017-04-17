@@ -33,7 +33,6 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -683,9 +682,17 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         showView = findViewById(R.id.view);
         textView_num.setText("1");
         ctvProductBrand.setOnClickListener(this);
-
+        pcGroupConfig.setOnProductCountChangeListener(new ProductChildListView.OnProductCountChangeListener() {
+            @Override
+            public void change(int count) {
+                if(count==0){
+                    setAddCartButtonEnable(false);
+                }else{
+                    setAddCartButtonEnable(true);
+                }
+            }
+        });
     }
-
 
     private void initNestedScrollView() {
         myScrollView.setOnCustomScroolChangeListener(new CustomNestedScrollView.ScrollInterface() {
@@ -1386,9 +1393,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 mRLAddToWishlistSmall.setVisibility(View.GONE);
                 mRLAddToWishlistBig.setVisibility(View.VISIBLE);
                 ctvAddToCart.setText(getString(R.string.product_detail_addtocart));
-                ctvAddToCart.setEnabled(true);
-                mLLAddToCart.setEnabled(true);
-                mLLAddToCart.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
+                setAddCartButtonEnable(false);
             }else{
                 outOfStockToWishlist();
             }
@@ -1651,6 +1656,20 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             viewPager.getLayoutParams().width = destWidth;
         }
     }
+    public void setAddCartButtonEnable(boolean enable){
+        if(enable){
+            ctvAddToCart.setText(getString(R.string.product_detail_addtocart));
+            ctvAddToCart.setEnabled(true);
+            mLLAddToCart.setEnabled(true);
+            mLLAddToCart.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
+        }else{
+            ctvAddToCart.setEnabled(false);
+            mLLAddToCart.setEnabled(false);
+            mLLAddToCart.setBackgroundResource(R.drawable.big_button_style_b8);
+        }
+    }
+
+
 
     private void updateProductDetailUIProductPriceStock(String price, String finalPrice, int instock, long stockqty, long maxSaleQty, String saveRM, String itemsLeft) {
         mStockQty = stockqty;
@@ -1710,9 +1729,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         JLogUtils.i(TAG, "userSelectedProductInStock:" + userSelectedProductInStock);
         if (0 == userSelectedProductInStock) {
             rlProductQuantity.setVisibility(View.GONE);
-            ctvAddToCart.setEnabled(false);
-            mLLAddToCart.setEnabled(false);
-            mLLAddToCart.setBackgroundResource(R.drawable.big_button_style_b8);
+            setAddCartButtonEnable(false);
             RelativeLayout.LayoutParams bottomBarLp = (RelativeLayout.LayoutParams) llBottomBar.getLayoutParams();
             if (bottomBarLp != null) {
                 bottomBarLp.height = 0;
@@ -1728,11 +1745,12 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         } else if (1 == userSelectedProductInStock) { // in stock
             mRLAddToWishlistSmall.setVisibility(View.GONE);
             mRLAddToWishlistBig.setVisibility(View.VISIBLE);
-            ctvAddToCart.setText(getString(R.string.product_detail_addtocart));
-            ctvAddToCart.setEnabled(true);
-            mLLAddToCart.setEnabled(true);
+
+            setAddCartButtonEnable(true);
+//            ctvAddToCart.setEnabled(true);
+//            mLLAddToCart.setEnabled(true);
 //            ctvAddToCart.setBackgroundResource(R.drawable.big_button_style_purple);
-            mLLAddToCart.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
+//            mLLAddToCart.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
             RelativeLayout.LayoutParams bottomBarLp = (RelativeLayout.LayoutParams) llBottomBar.getLayoutParams();
 //            List<SVRAppserviceProductDetailResultPropertyReturnEntity> attributeIds=new ArrayList<>();
 //            for(int i=0;i<mAttributeViews.size();i++){

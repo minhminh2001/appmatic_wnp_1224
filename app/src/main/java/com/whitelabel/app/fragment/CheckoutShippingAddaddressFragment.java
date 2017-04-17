@@ -11,6 +11,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
@@ -126,7 +128,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                                 fragment.etShippingCountry.setText(fragment.list_countries.get(1).getName());
                                 fragment.etShippingCountry.setTag(fragment.list_countries.get(1).getCountry_id());
                             }
-                            fragment.mRegions.addAll(fragment.getState("MY", fragment.list_countries));
+                            fragment.mRegions.addAll(fragment.getState(fragment.list_countries));
                             fragment.mRegions.add(0, new CountryRegions("", activity.getResources().getString(R.string.pleaseselect)));
                             SharedPreferences sharedPreferences = activity.getSharedPreferences("countries", Activity.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -297,14 +299,12 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
         // arrow selector --define begin
         return view;
     }
-    public final  ArrayList<CountryRegions> getState(String value,ArrayList<CountrySubclass>  countrys){
+    public final  ArrayList<CountryRegions> getState(ArrayList<CountrySubclass>  countrys){
         ArrayList<CountryRegions>  regions=null;
-        for(int i=0;i<countrys.size();i++){
-            CountrySubclass sub=countrys.get(i);
-            if(value.equals(sub.getCountry_id())){
-                etShippingCountry.setTag(sub.getCountry_id()+"");
-                regions=sub.getRegions();
-            }
+        if(countrys!=null&&countrys.size()>1){
+            CountrySubclass country=  countrys.get(1);
+            etShippingCountry.setTag(country.getCountry_id() + "");
+            regions = country.getRegions();
         }
         return  regions;
     }
@@ -348,14 +348,14 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
             SVRAppServiceCustomerCountry  countrys=new Gson().fromJson(countryJson,SVRAppServiceCustomerCountry.class);
             list_countries=countrys.getCountry();
             list_countries.set(0,new CountrySubclass("",getResources().getString(R.string.pleaseselect)));
-            mRegions.addAll(getState("HK", list_countries));
+            mRegions.addAll(getState(list_countries));
             mRegions.add(0, new CountryRegions("", getResources().getString(R.string.pleaseselect)));
             if(list_countries.size()>1){
                 etShippingCountry.setText(list_countries.get(1).getName());
                 etShippingCountry.setTag(list_countries.get(1).getCountry_id());
             }
         }
-        checkoutActivity. scrollViewBody.scrollTo(0, -100);
+        checkoutActivity. scrollViewBody.scrollTo(0, (int) (getResources().getDimension(R.dimen.scroll_height)*100));
         if("".equals(etShippingState.getText().toString().trim())){
             tvStateAnim.setVisibility(View.INVISIBLE);
         }
@@ -598,7 +598,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                         /**
                          * We need to send request to get city and state by postcode.
                          */
-                        sendRequestToGetCityAndStateByPostcode(etPostCode.getText().toString());
+//                        sendRequestToGetCityAndStateByPostcode(etPostCode.getText().toString());
                         tvPostCode.setTextColor(getResources().getColor(R.color.label_saved));
                     }
                 }
@@ -695,12 +695,12 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
         }
     }
 
-    private void sendRequestToGetCityAndStateByPostcode(String postcode) {
-        etShippingCity.setEnabled(false);
-        String countryId=etShippingCountry.getTag()==null?"":etShippingCountry.getTag().toString();
-        mAccountDao.getCityAndStateByPostCodet(WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey(), postcode, countryId);
-
-    }
+//    private void sendRequestToGetCityAndStateByPostcode(String postcode) {
+//        etShippingCity.setEnabled(false);
+//        String countryId=etShippingCountry.getTag()==null?"":etShippingCountry.getTag().toString();
+//        mAccountDao.getCityAndStateByPostCodet(WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey(), postcode, countryId);
+//
+//    }
 
 
     public void openState(){

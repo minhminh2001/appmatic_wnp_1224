@@ -471,6 +471,7 @@
                     <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:visibility="gone"
                         android:layout_weight="2">
                         <com.whitelabel.app.widget.CustomTextView
                             style="@style/font_family_robot_regular"
@@ -500,6 +501,7 @@
                         android:layout_weight="1">
                         <View
                             android:layout_width="@dimen/line_height"
+                            android:visibility="gone"
                             android:layout_height="match_parent"
                             android:background="@color/edittext_line"/>
                         <com.whitelabel.app.widget.CustomTextView
