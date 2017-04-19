@@ -138,7 +138,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
         while (itemReturnEntityIterator.hasNext()) {
             SVRAppserviceProductSearchResultsItemReturnEntity entity = itemReturnEntityIterator.next();
             if (entity.getProductId().equals(productId)) {
-                entity.setIs_like(isLike);
+                entity.setIsLike(isLike);
                 entity.setItem_id(itemId);
                 productListAdapter.notifyDataSetChanged();
                 continue;

@@ -41,43 +41,25 @@ public class CheckoutDao extends BaseHttp {
         requestHttp(HTTP_METHOD.POST, "appservice/checkout/getRandomprizeCount", params, REQUEST_GETLUCKDRAW);
     }
 
-    public void changeOrderStatus(String sessionKey, String orderId, String status, String channel, String tranID, String paydate, String amount, String currency, String appCode) {
+
+
+    public void changeOrderStatus(String sessionKey, String orderId,
+                                  String method,String productName,String currencyCode,String amount,String id,String state,String createTime) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         params.put("orderid", orderId);
-        JLogUtils.i("CheckoutDao", "orderId:" + orderId);
-        params.put("method", "molpay");
-//        if(!TextUtils.isEmpty(status)) {
-        params.put("status", status);
-        JLogUtils.i("CheckoutDao", "status:" + status);
-//        }
-//        if(!TextUtils.isEmpty(channel)) {
-        params.put("channel", channel);
-        JLogUtils.i("CheckoutDao", "channel:" + channel);
-//        }
-//        if(!TextUtils.isEmpty(tranID)) {
-        params.put("tranID", tranID);
-        JLogUtils.i("CheckoutDao", "tranID:" + tranID);
-//        }
-//        if(!TextUtils.isEmpty(paydate)) {
-        params.put("paydate", paydate);
-        JLogUtils.i("CheckoutDao", "paydate:" + paydate);
-//        }
-//        if(!TextUtils.isEmpty(amount)) {
-        params.put("amount", amount);
-        JLogUtils.i("CheckoutDao", "amount:" + amount);
-//        }
-//        if(!TextUtils.isEmpty(currency)) {
-        params.put("currency", currency);
-        JLogUtils.i("CheckoutDao", "currency:" + currency);
-//        }
-//        if(!TextUtils.isEmpty(appCode)) {
-        params.put("appCode", appCode);
-        JLogUtils.i("CheckoutDao", "appCode:" + appCode);
-//        }
+        params.put("method",method);
+        params.put("paypal[product_name]",productName);
+        params.put("paypal[currency_code]",currencyCode);
+        params.put("paypal[amount]",amount);
+        params.put("paypal[id]",id);
+        params.put("paypal[state]",state);
+        params.put("paypal[create_time]",createTime);
         requestHttp(HTTP_METHOD.POST, "appservice/checkout/changeOrderStatus", params, REQUEST_CHANGEORDERSTATUS);
-
     }
+
+
+
 
 
     public void saveBilling(String session, AddressParameter addressParameter) {

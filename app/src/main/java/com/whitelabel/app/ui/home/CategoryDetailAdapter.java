@@ -302,11 +302,17 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
+            if (leftProductEntity.getIsLike() == 1) {
+                setWishIconColorToPurpleNoAnim(itemViewHolder.ivLeftProductlistWishIcon);
+            } else {
+                setWishIconColorToBlankNoAnim(itemViewHolder.ivLeftProductlistWishIcon);
+            }
             final SVRAppserviceProductSearchResultsItemReturnEntity finalLeftProductEntity = leftProductEntity;
             itemViewHolder.rlLeftProductlistWish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (finalLeftProductEntity.getIs_like() == 1) {
+                    if (finalLeftProductEntity.getIsLike() == 1) {
                         sendRequestToDeteleteCell(finalLeftProductEntity,itemViewHolder.ivLeftProductlistWishIcon, finalLeftProductEntity.getItem_id(),itemViewHolder.getAdapterPosition());
                     } else {
                         addtoWishlistsendRequest(finalLeftProductEntity,
@@ -333,6 +339,20 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder.tvTxt.setText(viewHolder.itemView.getContext().getResources().getString(R.string.home_best_sellers));
             }
         }
+    }
+    private void setWishIconColorToBlankNoAnim(ImageView ivWishIcon) {
+        ivWishIcon.setVisibility(View.GONE);
+        boolean repeatAnim = true;
+        ivWishIcon.setTag(repeatAnim);
+        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_normal_v2);
+    }
+
+    private void setWishIconColorToPurpleNoAnim(ImageView ivWishIcon) {
+        ivWishIcon.setVisibility(View.VISIBLE);
+//        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
+        ivWishIcon.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
+        boolean repeatAnim = false;
+        ivWishIcon.setTag(repeatAnim);
     }
 
 //    private final ViewPager.OnPageChangeListener mPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -362,7 +382,7 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private void addtoWishlistsendRequest(SVRAppserviceProductSearchResultsItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(ivWwishIcon.getContext())) {
-            entity.setIs_like(1);
+            entity.setIsLike(1);
             mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo().getSessionKey(), tempPosition);
             setWishIconColorToPurple(ivWwishIcon, ivWwishIcon2);
         } else {
@@ -400,12 +420,11 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
     private void sendRequestToDeteleteCell(SVRAppserviceProductSearchResultsItemReturnEntity bean,ImageView ivWwishIcon, String itemId, int tempPosition) {
         setWishIconColorToBlank(ivWwishIcon);
-        bean.setIs_like(0);
+        bean.setIsLike(0);
         if(!TextUtils.isEmpty(itemId)) {
             myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUserInfo().getSessionKey(), itemId, tempPosition);
         }
     }
-
     private void setMerchantName(final String merchantName, final String merchantId, final TextView ctvLeftCurationProductMerchant) {
         if (!TextUtils.isEmpty(merchantName)) {
             String soldBy = ctvLeftCurationProductMerchant.getContext().getResources().getString(R.string.soldby);

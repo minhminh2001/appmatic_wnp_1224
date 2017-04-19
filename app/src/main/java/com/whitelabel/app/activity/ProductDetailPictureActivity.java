@@ -102,7 +102,8 @@ public class ProductDetailPictureActivity extends com.whitelabel.app.BaseActivit
                 JLogUtils.e("ProductDetailPictureActivity", "initProductDetailPictures", ex);
             }
             if (index == currentIndex) {
-                imageViewTips.setImageResource(R.drawable.shape_oval_productdetail_picture_checked);
+
+                imageViewTips.setImageDrawable(JImageUtils.getColorCircle(this,WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()));
             } else {
                 imageViewTips.setImageResource(R.drawable.shape_oval_productdetail_picture_unchecked);
             }
@@ -179,7 +180,7 @@ public class ProductDetailPictureActivity extends com.whitelabel.app.BaseActivit
     private void resetGroupTips(int position) {
         for (int i = 0; i < listGroupTips.size(); i++) {
             if (i == position) {
-                listGroupTips.get(i).setImageResource(R.drawable.shape_oval_productdetail_picture_checked);
+                listGroupTips.get(i).setImageDrawable(JImageUtils.getColorCircle(this,WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()));
             } else {
                 listGroupTips.get(i).setImageResource(R.drawable.shape_oval_productdetail_picture_unchecked);
             }

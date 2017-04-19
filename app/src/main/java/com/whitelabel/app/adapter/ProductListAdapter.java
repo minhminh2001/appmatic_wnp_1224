@@ -368,7 +368,7 @@ public class ProductListAdapter extends BaseAdapter {
 
         //wish icon
         //初始化 wish icon的状态
-        if (leftProductEntity.getIs_like() == 1) {
+        if (leftProductEntity.getIsLike() == 1) {
             setWishIconColorToPurpleNoAnim(viewHolder.ivLeftProductlistWishIcon);
         } else {
             setWishIconColorToBlankNoAnim(viewHolder.ivLeftProductlistWishIcon);
@@ -378,7 +378,7 @@ public class ProductListAdapter extends BaseAdapter {
         viewHolder.rlLeftProductlistWish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (leftProductEntity.getIs_like() == 1) {
+                if (leftProductEntity.getIsLike() == 1) {
                     sendRequestToDeteleteCell(viewHolder.ivLeftProductlistWishIcon, viewHolder.rlLeftProductlistWish, leftProductEntity.getItem_id(), tempPosition);
                 } else {
                     addtoWishlistsendRequest(leftProductEntity, viewHolder.rlLeftProductlistWish, viewHolder.ivLeftProductlistWishIcon, viewHolder.ivLeftProductlistWishIcon2, tempPosition);
@@ -543,7 +543,7 @@ public class ProductListAdapter extends BaseAdapter {
             }
         }.init(productListActivity, rightProductEntity.getProductId()));
         //wish icon
-        if (rightProductEntity.getIs_like() == 1) {
+        if (rightProductEntity.getIsLike() == 1) {
             setWishIconColorToPurpleNoAnim(viewHolder.ivRightProductlistWishIcon);
         } else {
             setWishIconColorToBlankNoAnim(viewHolder.ivRightProductlistWishIcon);
@@ -553,7 +553,7 @@ public class ProductListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //如果 islike，且有itemId，就执行删除 wish item
-                if (rightProductEntity.getIs_like() == 1) {
+                if (rightProductEntity.getIsLike() == 1) {
                     sendRequestToDeteleteCell(viewHolder.ivRightProductlistWishIcon, viewHolder.rlRightProductlistWish, rightProductEntity.getItem_id(), rightTempPosition);
                 } else {
                     addtoWishlistsendRequest(rightProductEntity, viewHolder.rlRightProductlistWish, viewHolder.ivRightProductlistWishIcon, viewHolder.ivRightProductlistWishIcon2, rightTempPosition);
@@ -634,14 +634,11 @@ public class ProductListAdapter extends BaseAdapter {
 
     private void setWishIconColorToPurpleNoAnim(ImageView ivWishIcon) {
         ivWishIcon.setVisibility(View.VISIBLE);
-
-
 //        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
         ivWishIcon.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
         boolean repeatAnim = false;
         ivWishIcon.setTag(repeatAnim);
     }
-
     private void setWishIconColorToPurple(ImageView ivWishIcon, final ImageView ivWishIcon2) {
         ivWishIcon2.setVisibility(View.VISIBLE);
         ivWishIcon.setVisibility(View.VISIBLE);
@@ -673,7 +670,7 @@ public class ProductListAdapter extends BaseAdapter {
     //调用删除接口
     private void sendRequestToDeteleteCell(ImageView ivWwishIcon, RelativeLayout rlCurationWish, String itemId, int tempPosition) {
         setWishIconColorToBlank(ivWwishIcon);
-        productItemEntityArrayList.get(tempPosition).setIs_like(0);
+        productItemEntityArrayList.get(tempPosition).setIsLike(0);
         if (!TextUtils.isEmpty(productItemEntityArrayList.get(tempPosition).getItem_id())) {
             myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), itemId, tempPosition);
         }
@@ -693,7 +690,7 @@ public class ProductListAdapter extends BaseAdapter {
 
     private void addtoWishlistsendRequest(SVRAppserviceProductSearchResultsItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(productListActivity)) {
-            entity.setIs_like(1);
+            entity.setIsLike(1);
             mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), tempPosition);
             setWishIconColorToPurple(ivWwishIcon, ivWwishIcon2);
         } else {

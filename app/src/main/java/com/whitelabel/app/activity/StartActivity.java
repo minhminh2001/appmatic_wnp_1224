@@ -31,6 +31,7 @@ import java.lang.ref.WeakReference;
 public class StartActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener{
     public static final int DELAY_TIME = 1000;
     private long mStartTimeLong;
+    private INITApp mCallback;
     private String mSessionKey;
     private  boolean mSplashScreen;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -143,7 +144,7 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
 //            }
 //        }
 //    };
-    private INITApp mCallback;
+
 
     private void gaTrackNotificationSwitch() {
         boolean isNotificationEnabled = JToolUtils.isNotificationEnabled(this);
@@ -164,6 +165,8 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
             JLogUtils.i("googleGA", "Receive Notification switch");
         }
     }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,7 +185,7 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
     static class MeInitCallBack extends   INITCallback{
         WeakReference<StartActivity> mStartActivity;
         public MeInitCallBack(StartActivity startActivity){
-                mStartActivity=new WeakReference<StartActivity>(startActivity);
+                mStartActivity=new WeakReference<>(startActivity);
         }
         @Override
         public void onSuccess(int resultCode, Object object) {
@@ -205,6 +208,7 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
             }
         }
     }
+
     @Override
     public void onClick(View v) {
 

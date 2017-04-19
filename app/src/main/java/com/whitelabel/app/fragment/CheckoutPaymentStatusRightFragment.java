@@ -211,15 +211,15 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
         }
 //        CustomAnimtion();
 //        initLuckDraw();
-
-        if(JStorageUtils.isShowAppRate(checkoutPaymentStatusActivity)&&!WhiteLabelApplication.delayShowAppRate) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    appRate();
-                }
-            }, 300);
-        }
+//
+//        if(JStorageUtils.isShowAppRate(checkoutPaymentStatusActivity)&&!WhiteLabelApplication.delayShowAppRate) {
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    appRate();
+//                }
+//            }, 300);
+//        }
 
         WhiteLabelApplication.getAppConfiguration().addToOrder(checkoutPaymentStatusActivity);
 
@@ -236,51 +236,51 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
     private PopupWindow popupWindow;
     private TextView rateNow,askMeLater,noThanks;
 
-    public void appRate(){
-        LayoutInflater inflater= (LayoutInflater) checkoutPaymentStatusActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View popupWindowView=inflater.inflate(R.layout.popupwindow_app_rate, null);
-        popupWindow=new PopupWindow(popupWindowView,LinearLayout.LayoutParams.FILL_PARENT,LinearLayout.LayoutParams.FILL_PARENT,false);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        rateNow= (TextView) popupWindowView.findViewById(R.id.rate_now);
-        askMeLater= (TextView) popupWindowView.findViewById(R.id.ask_me_later);
-        noThanks= (TextView) popupWindowView.findViewById(R.id.no_thanks);
-        popupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
-        rateNow= (TextView) popupWindowView.findViewById(R.id.rate_now);
-        rateNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                JStorageUtils.notShowAppRate(checkoutPaymentStatusActivity);
-                popupWindow.dismiss();
-              //  mWebView.setVisibility(View.VISIBLE);
-              //  mWebView.loadUrl(getString(R.string.play_store_url));//需要翻墙
-//                Intent intent = new Intent();
-//                intent.setAction("android.intent.action.VIEW");
-//                intent.addCategory("android.intent.category.DEFAULT");
-//                intent.addCategory("android.intent.category.BROWSABLE");
-//                intent.setData(Uri.parse(getString(R.string.play_store_url)));
-//                startActivity(intent);
-
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(getString(R.string.play_store_url)));
-                startActivity(i);
-            }
-        });
-        noThanks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-                JStorageUtils.notShowAppRate(checkoutPaymentStatusActivity);
-            }
-        });
-        askMeLater.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-                WhiteLabelApplication.delayShowAppRate=true;
-                JStorageUtils.clickDelayShow(checkoutPaymentStatusActivity);
-            }
-        });
-    }
+//    public void appRate(){
+//        LayoutInflater inflater= (LayoutInflater) checkoutPaymentStatusActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        final View popupWindowView=inflater.inflate(R.layout.popupwindow_app_rate, null);
+//        popupWindow=new PopupWindow(popupWindowView,LinearLayout.LayoutParams.FILL_PARENT,LinearLayout.LayoutParams.FILL_PARENT,false);
+//        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+//        rateNow= (TextView) popupWindowView.findViewById(R.id.rate_now);
+//        askMeLater= (TextView) popupWindowView.findViewById(R.id.ask_me_later);
+//        noThanks= (TextView) popupWindowView.findViewById(R.id.no_thanks);
+//        popupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
+//        rateNow= (TextView) popupWindowView.findViewById(R.id.rate_now);
+//        rateNow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                JStorageUtils.notShowAppRate(checkoutPaymentStatusActivity);
+//                popupWindow.dismiss();
+//              //  mWebView.setVisibility(View.VISIBLE);
+//              //  mWebView.loadUrl(getString(R.string.play_store_url));//需要翻墙
+////                Intent intent = new Intent();
+////                intent.setAction("android.intent.action.VIEW");
+////                intent.addCategory("android.intent.category.DEFAULT");
+////                intent.addCategory("android.intent.category.BROWSABLE");
+////                intent.setData(Uri.parse(getString(R.string.play_store_url)));
+////                startActivity(intent);
+//
+//                Intent i = new Intent(Intent.ACTION_VIEW);
+//                i.setData(Uri.parse(getString(R.string.play_store_url)));
+//                startActivity(i);
+//            }
+//        });
+//        noThanks.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                popupWindow.dismiss();
+//                JStorageUtils.notShowAppRate(checkoutPaymentStatusActivity);
+//            }
+//        });
+//        askMeLater.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                popupWindow.dismiss();
+//                WhiteLabelApplication.delayShowAppRate=true;
+//                JStorageUtils.clickDelayShow(checkoutPaymentStatusActivity);
+//            }
+//        });
+//    }
 //    private void initLuckDraw() {
 //        if (checkoutPaymentStatusActivity.isLuckDraw) {
 //            myBoxGroup.setBackgroundResource(R.mipmap.choujiang);

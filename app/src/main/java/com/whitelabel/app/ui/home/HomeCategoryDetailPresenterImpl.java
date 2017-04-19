@@ -19,8 +19,8 @@ import rx.functions.Action1;
 
 public class HomeCategoryDetailPresenterImpl extends RxPresenter<HomeCategoryDetailContract.View> implements HomeCategoryDetailContract.Presenter{
 
-    public void getCategoryDetail(String categoryId){
-       Subscription subscription= DataManager.getInstance().getProductApi().getCategoryDetail(categoryId)
+    public void getCategoryDetail(String categoryId,String sessionKey){
+       Subscription subscription= DataManager.getInstance().getProductApi().getCategoryDetail(categoryId,sessionKey)
                 .compose(RxUtil.<ResponseModel<CategoryDetailModel>>rxSchedulerHelper())
                 .compose(RxUtil.<CategoryDetailModel>handleResult())
                 .subscribe(new Action1<CategoryDetailModel>() {

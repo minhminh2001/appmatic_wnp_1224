@@ -244,7 +244,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         MyAccountOrderMiddle[] orderMiddle = orderOuter.getSuborders();
         LinkedList<MyAccountOrderMiddle> list_orderMiddles = new LinkedList<MyAccountOrderMiddle>();
         list_orderMiddles.addAll(Arrays.asList(orderMiddle));
-        adapter = new MyAccountOrderDetailAdapter(this, mImageLoader);
+        adapter = new MyAccountOrderDetailAdapter(this, mImageLoader,orderOuter.getStatusCode(),orderOuter.getStatus());
         adapter.list = list_orderMiddles;
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
@@ -375,7 +375,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         tvDate.setText(orderDetail.getDate());
         tvSubTotal.setText(orderDetail.getSubtotal());
         tvShippingFee.setText(orderDetail.getShippingFee());
-        if (!TextUtils.isEmpty(orderDetail.getGst().trim())) {
+        if (!TextUtils.isEmpty(orderDetail.getGst())) {
             mTvGst.setText(orderDetail.getGst());
         }else{
             mTvGst.setText("");

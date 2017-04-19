@@ -151,7 +151,6 @@ public class CheckoutReviewFragment extends BaseFragment {
     }
 
     private void initData() {
-
         //Get datas from CheckoutActivity
 /*<<<<<<< HEAD
         paymentSaveReturnEntity = (CheckoutPaymentSaveReturnEntity) getArguments().getSerializable("paymentSaveReturnEntity");
@@ -187,18 +186,18 @@ public class CheckoutReviewFragment extends BaseFragment {
         cityStatePostcode += address.getPostcode();
         tvCityStatePostcode.setText(cityStatePostcode);
 =======*/
-        try {
+//        try {
             /**
              * Train of thought:
              * First to cast to CheckoutPaymentSaveReturnEntity, if failed, means should catch exception...
              */
             paymentSaveReturnEntity = (CheckoutPaymentSaveReturnEntity) getArguments().getSerializable("paymentSaveReturnEntity");
-            if (!TextUtils.isEmpty(paymentSaveReturnEntity.getGst().trim())) {
+            if (!TextUtils.isEmpty(String.valueOf(paymentSaveReturnEntity.getGst()))) {
                 mGst.setText(paymentSaveReturnEntity.getGst());
             }else{
                 mGst.setText("");
             }
-            if (!TextUtils.isEmpty(paymentSaveReturnEntity.getOrders_notice().trim())) {
+            if (!TextUtils.isEmpty(String.valueOf(paymentSaveReturnEntity.getOrders_notice()))) {
                 mTvInstruction.setText(paymentSaveReturnEntity.getOrders_notice());
             }else{
                 mTvInstruction.setText("");
@@ -209,7 +208,6 @@ public class CheckoutReviewFragment extends BaseFragment {
             view.findViewById(R.id.image_address_select_top).setVisibility(View.GONE);
             view.findViewById(R.id.image_address_select_end).setVisibility(View.GONE);
             //view.findViewById(R.id.btn_address_select_cover).setVisibility(View.GONE);
-
             TextView tvFirstname = (TextView) view.findViewById(R.id.tv_address_select_firstname);
             //TextView tvLastname = (TextView) view.findViewById(R.id.tv_address_select_lastname);
             TextView tvAddress1 = (TextView) view.findViewById(R.id.tv_address_select_address1);
@@ -217,14 +215,12 @@ public class CheckoutReviewFragment extends BaseFragment {
             TextView tvCityStatePostcode = (TextView) view.findViewById(R.id.tv_address_select_citystatepostcode);
             TextView tvCountry = (TextView) view.findViewById(R.id.tv_address_select_country);
             TextView tvTelephone = (TextView) view.findViewById(R.id.tv_address_select_telephone);
-
             tvFirstname.setText(address.getFirstname() + " " + address.getLastname());
             //tvLastname.setText(address.getLastname());
             tvAddress1.setText(address.getStreet());
             tvAddress2.setVisibility(View.GONE);
             //initstoreCredit
             initStoreCredit(paymentSaveReturnEntity.getStoreCredit());
-
 
             /**
              * Constructor city,state,postcode
@@ -309,101 +305,101 @@ public class CheckoutReviewFragment extends BaseFragment {
             }
             tvGrandTotal.setText(" " + paymentSaveReturnEntity.getGrandtotal());
 
-        } catch (Exception e) {
-            /**
-             * Train of thought:
-             * if throughs exception, means grand total is 0, should cast to SVRAppserviceSaveBillingEntity.
-             */
-            try {
-                SVRAppserviceSaveBillingEntity paymentSaveReturnEntity = (SVRAppserviceSaveBillingEntity) getArguments().getSerializable("paymentSaveReturnEntity");
-                if (paymentSaveReturnEntity.getGst() != null) {
-                    mGst.setText(paymentSaveReturnEntity.getGst());
-                }
-                if (paymentSaveReturnEntity.getOrders_notice() != null) {
-                    mTvInstruction.setText(paymentSaveReturnEntity.getOrders_notice());
-                }
-                //Set Datas to ShippingAddress and inflate llAddress with an address cell
-                address = paymentSaveReturnEntity.getShippingAddress();
-                View view = LayoutInflater.from(checkoutActivity).inflate(R.layout.fragment_checkout_shipping_selectaddress_cell_for_review, null);
-                view.findViewById(R.id.image_address_select_top).setVisibility(View.GONE);
-                view.findViewById(R.id.image_address_select_end).setVisibility(View.GONE);
-                //view.findViewById(R.id.btn_address_select_cover).setVisibility(View.GONE);
-
-                TextView tvFirstname = (TextView) view.findViewById(R.id.tv_address_select_firstname);
-                //TextView tvLastname = (TextView) view.findViewById(R.id.tv_address_select_lastname);
-                TextView tvAddress1 = (TextView) view.findViewById(R.id.tv_address_select_address1);
-                TextView tvAddress2 = (TextView) view.findViewById(R.id.tv_address_select_address2);
-                TextView tvCityStatePostcode = (TextView) view.findViewById(R.id.tv_address_select_citystatepostcode);
-                TextView tvCountry = (TextView) view.findViewById(R.id.tv_address_select_country);
-                TextView tvTelephone = (TextView) view.findViewById(R.id.tv_address_select_telephone);
-
-                tvFirstname.setText(address.getFirstname() + " " + address.getLastname());
-                //tvLastname.setText(address.getLastname());
-                tvAddress1.setText(address.getStreet());
-                tvAddress2.setVisibility(View.GONE);
-
-                /**
-                 * Constructor city,state,postcode
-                 */
-                String cityStatePostcode = address.getCity() + ", ";
-                if (!JDataUtils.isEmpty(address.getRegion()) && !address.getRegion().equalsIgnoreCase("null")) {
-
-                    cityStatePostcode += address.getRegion() + ", ";
-                }
-                cityStatePostcode += address.getPostcode();
-                tvCityStatePostcode.setText(cityStatePostcode);
-
-                tvCountry.setText(address.getCountry());
-                tvTelephone.setText(getResources().getString(R.string.t) + address.getTelephone());
-
-                llAddress.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-                //Set Datas to Payment Method
-                payment_type = getArguments().getString("payment[molpay_type]");
-
-//                tvCardNumber.setVisibility(View.GONE);
-//                tvCardType.setVisibility(View.GONE);
-                if (!TextUtils.isEmpty(paymentSaveReturnEntity.getPaymentinfo())) {
-                    JToolUtils.setWebViewText(checkoutActivity, paymentSaveReturnEntity.getPaymentinfo(), tvCreditCartTitleOnly);
-                }
-
-                final ArrayList<ShoppingCartListEntityCell> list = paymentSaveReturnEntity.getReviewOrder();
-                //Set Datas to ShoppingCartCell
-                checkoutReviewShoppingCartAdapter.list = list;
-                productName = paymentSaveReturnEntity.getReviewOrder().get(0).getName();
-                checkoutReviewShoppingCartAdapter.notifyDataSetChanged();
-
-                lvShoppingCart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent it = new Intent(getActivity(), ProductActivity.class);
-                        it.putExtra("productId", list.get(position).getProductId());
-                        checkoutActivity.startActivity(it);
-                    }
-                });
-
-                //Set Datas to last four RM number
-                tvSubtotal.setText(paymentSaveReturnEntity.getSubtotal());
-                tvShippingfee.setText(paymentSaveReturnEntity.getShipping() == null ? "RM 0.00" : paymentSaveReturnEntity.getShipping().get("value"));
-                //Voucher or Discount
-                if (null != paymentSaveReturnEntity.getDiscount() && paymentSaveReturnEntity.getDiscount().size() > 0) {
-                    if (JDataUtils.isEmpty(paymentSaveReturnEntity.getDiscount().get("title"))) {
-                        tvVoucherTitle.setText(getResources().getString(R.string.Discount));
-                    } else {
-                        tvVoucherTitle.setText(paymentSaveReturnEntity.getDiscount().get("title"));
-                    }
-                    tvVoucher.setText(paymentSaveReturnEntity.getDiscount().get("value"));
-                    rlVoucherText.setVisibility(View.VISIBLE);
-                }
-                tvGrandTotal.setText(paymentSaveReturnEntity.getGrandtotal());
-
-                initStoreCredit(paymentSaveReturnEntity.getStoreCredit());
-            } catch (Exception e_inner) {
-                e_inner.printStackTrace();
-                JLogUtils.e("revieworder", e_inner.getMessage());
-            }
-
-        }
+//        } catch (Exception e) {
+//            /**
+//             * Train of thought:
+//             * if throughs exception, means grand total is 0, should cast to SVRAppserviceSaveBillingEntity.
+//             */
+//            try {
+//                SVRAppserviceSaveBillingEntity paymentSaveReturnEntity = (SVRAppserviceSaveBillingEntity) getArguments().getSerializable("paymentSaveReturnEntity");
+//                if (paymentSaveReturnEntity.getGst() != null) {
+//                    mGst.setText(paymentSaveReturnEntity.getGst());
+//                }
+//                if (paymentSaveReturnEntity.getOrders_notice() != null) {
+//                    mTvInstruction.setText(paymentSaveReturnEntity.getOrders_notice());
+//                }
+//                //Set Datas to ShippingAddress and inflate llAddress with an address cell
+//                address = paymentSaveReturnEntity.getShippingAddress();
+//                View view = LayoutInflater.from(checkoutActivity).inflate(R.layout.fragment_checkout_shipping_selectaddress_cell_for_review, null);
+//                view.findViewById(R.id.image_address_select_top).setVisibility(View.GONE);
+//                view.findViewById(R.id.image_address_select_end).setVisibility(View.GONE);
+//                //view.findViewById(R.id.btn_address_select_cover).setVisibility(View.GONE);
+//
+//                TextView tvFirstname = (TextView) view.findViewById(R.id.tv_address_select_firstname);
+//                //TextView tvLastname = (TextView) view.findViewById(R.id.tv_address_select_lastname);
+//                TextView tvAddress1 = (TextView) view.findViewById(R.id.tv_address_select_address1);
+//                TextView tvAddress2 = (TextView) view.findViewById(R.id.tv_address_select_address2);
+//                TextView tvCityStatePostcode = (TextView) view.findViewById(R.id.tv_address_select_citystatepostcode);
+//                TextView tvCountry = (TextView) view.findViewById(R.id.tv_address_select_country);
+//                TextView tvTelephone = (TextView) view.findViewById(R.id.tv_address_select_telephone);
+//
+//                tvFirstname.setText(address.getFirstname() + " " + address.getLastname());
+//                //tvLastname.setText(address.getLastname());
+//                tvAddress1.setText(address.getStreet());
+//                tvAddress2.setVisibility(View.GONE);
+//
+//                /**
+//                 * Constructor city,state,postcode
+//                 */
+//                String cityStatePostcode = address.getCity() + ", ";
+//                if (!JDataUtils.isEmpty(address.getRegion()) && !address.getRegion().equalsIgnoreCase("null")) {
+//
+//                    cityStatePostcode += address.getRegion() + ", ";
+//                }
+//                cityStatePostcode += address.getPostcode();
+//                tvCityStatePostcode.setText(cityStatePostcode);
+//
+//                tvCountry.setText(address.getCountry());
+//                tvTelephone.setText(getResources().getString(R.string.t) + address.getTelephone());
+//
+//                llAddress.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//
+//                //Set Datas to Payment Method
+//                payment_type = getArguments().getString("payment[molpay_type]");
+//
+////                tvCardNumber.setVisibility(View.GONE);
+////                tvCardType.setVisibility(View.GONE);
+//                if (!TextUtils.isEmpty(paymentSaveReturnEntity.getPaymentinfo())) {
+//                    JToolUtils.setWebViewText(checkoutActivity, paymentSaveReturnEntity.getPaymentinfo(), tvCreditCartTitleOnly);
+//                }
+//
+//                final ArrayList<ShoppingCartListEntityCell> list = paymentSaveReturnEntity.getReviewOrder();
+//                //Set Datas to ShoppingCartCell
+//                checkoutReviewShoppingCartAdapter.list = list;
+//                productName = paymentSaveReturnEntity.getReviewOrder().get(0).getName();
+//                checkoutReviewShoppingCartAdapter.notifyDataSetChanged();
+//
+//                lvShoppingCart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        Intent it = new Intent(getActivity(), ProductActivity.class);
+//                        it.putExtra("productId", list.get(position).getProductId());
+//                        checkoutActivity.startActivity(it);
+//                    }
+//                });
+//
+//                //Set Datas to last four RM number
+//                tvSubtotal.setText(paymentSaveReturnEntity.getSubtotal());
+//                tvShippingfee.setText(paymentSaveReturnEntity.getShipping() == null ? "RM 0.00" : paymentSaveReturnEntity.getShipping().get("value"));
+//                //Voucher or Discount
+//                if (null != paymentSaveReturnEntity.getDiscount() && paymentSaveReturnEntity.getDiscount().size() > 0) {
+//                    if (JDataUtils.isEmpty(paymentSaveReturnEntity.getDiscount().get("title"))) {
+//                        tvVoucherTitle.setText(getResources().getString(R.string.Discount));
+//                    } else {
+//                        tvVoucherTitle.setText(paymentSaveReturnEntity.getDiscount().get("title"));
+//                    }
+//                    tvVoucher.setText(paymentSaveReturnEntity.getDiscount().get("value"));
+//                    rlVoucherText.setVisibility(View.VISIBLE);
+//                }
+//                tvGrandTotal.setText(paymentSaveReturnEntity.getGrandtotal());
+//
+//                initStoreCredit(paymentSaveReturnEntity.getStoreCredit());
+//            } catch (Exception e_inner) {
+//                e_inner.printStackTrace();
+//                JLogUtils.e("revieworder", e_inner.getMessage());
+//            }
+//
+//        }
 
 
         //To fix measurement on page

@@ -1,5 +1,7 @@
 package com.whitelabel.app.ui.start;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.model.ApiFaildException;
@@ -9,13 +11,51 @@ import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Response;
+import rx.Subscription;
 import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * Created by ray on 2017/4/5.
  */
 
 public class StartPresenterImpl extends RxPresenter<StartContract.View> implements StartContract.Presenter{
+    @Override
+    public void openApp(String sessionKey, String deviceToken) {
+      Subscription  subscription= DataManager.getInstance().getAppApi().openApp(sessionKey,deviceToken)
+                .compose(RxUtil.<JsonObject>rxSchedulerHelper())
+                .map(new Func1<JsonObject, String>() {
+                    @Override
+                    public String call(JsonObject jsonObject) {
+                        String unit="";
+                        JsonObject  jsonObj= jsonObject.getAsJsonObject("data");
+                        unit=jsonObj.get("unit").getAsString();
+                        return unit;
+                    }
+                }).subscribe(new Action1<String>() {
+                  @Override
+                  public void call(String s) {
+                      JLogUtils.i("ray","unit:"+s);
+                      WhiteLabelApplication.getAppConfiguration().getCurrency().setName(s);
+                      DataManager.getInstance().getPreferHelper().saveCurrency(s);
+                  }
+              }, new Action1<Throwable>() {
+                  @Override
+                  public void call(Throwable throwable) {
+                      JLogUtils.i("ray","response:"+throwable.getMessage());
+                  }
+              });
+
+        addSubscrebe(subscription);
+    }
+
     @Override
     public void getConfigInfo() {
        String currentVersionNumber= DataManager.getInstance().getPreferHelper().getVersionNumber();
@@ -42,5 +82,17 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                         JLogUtils.i("ray","ex"+ex.getErrorMsg());
                     }
                 });
+
+
     }
+
+
+
+
+
+
+
+
+
+
 }

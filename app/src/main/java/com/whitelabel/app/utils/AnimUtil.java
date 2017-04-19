@@ -52,7 +52,7 @@ public class AnimUtil {
         });
         ivWishIcon.startAnimation(animation2);
     }
-    public static void setWishIconColorToPurple(ImageView ivWishIcon, final ImageView ivWishIcon2) {
+    public static void setWishIconColorToPurple(final ImageView ivWishIcon, final ImageView ivWishIcon2) {
         ivWishIcon2.setVisibility(View.VISIBLE);
         ivWishIcon.setVisibility(View.VISIBLE);
         boolean repeatAnim = false;
@@ -71,6 +71,7 @@ public class AnimUtil {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                ivWishIcon2.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
 
             }
 

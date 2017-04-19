@@ -37,13 +37,17 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
     public LinkedList<MyAccountOrderMiddle> list;
     private Context context;
     private MyAccountOrderDetailActivity activity;
+    private String mStatusCode;
+    private String mStatus;
     private static final String TAG = "MyAccountOrderDetailAda";
     private final ImageLoader mImageLoader;
-    public MyAccountOrderDetailAdapter(Context context, ImageLoader imageLoader) {
+    public MyAccountOrderDetailAdapter(Context context, ImageLoader imageLoader,String statusCode,String status) {
         this.context = context;
         this.list = new LinkedList<MyAccountOrderMiddle>();
         activity = (MyAccountOrderDetailActivity) context;
         mImageLoader = imageLoader;
+        mStatusCode=statusCode;
+        mStatus=status;
     }
 
     @Override
@@ -219,8 +223,8 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
             tvPrice.setText(JDataUtils.formatDouble(orderInner.getPrice()));
             // Image download
             JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, image, orderInner.getImage(), JToolUtils.dip2px(context, 160), JToolUtils.dip2px(context, 160));
-            orderNewStatus.setText(orderMiddle.getStatus());
-            JViewUtils.setStatus(orderStatus,orderMiddle.getStatusCode());
+            orderNewStatus.setText(mStatus);
+            JViewUtils.setStatus(orderStatus,mStatusCode);
             //GET color and size: {"label":xxx,"value":xxx}
             ArrayList<HashMap<String, String>> colorAndSizes = orderInner.getOptions();
             if (colorAndSizes != null && colorAndSizes.size() > 0) {

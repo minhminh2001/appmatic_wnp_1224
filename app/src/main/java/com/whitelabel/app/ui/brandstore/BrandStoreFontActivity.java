@@ -469,7 +469,7 @@ public class BrandStoreFontActivity extends BaseActivitySearchCart<BrandStoreCon
 
     private void addWishlist(ImageView icon1, ImageView icon2, int position) {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
-            mProducts.get(position).setIs_like(1);
+            mProducts.get(position).setIsLike(1);
             AnimUtil.setWishIconColorToPurple(icon1, icon2);
             mPresenter.addWistList(mProducts.get(position));
         } else {
@@ -483,7 +483,7 @@ public class BrandStoreFontActivity extends BaseActivitySearchCart<BrandStoreCon
 
     private void deleteWishlist(SVRAppserviceProductSearchResultsItemReturnEntity bean, ImageView icon1) {
         AnimUtil.setWishIconColorToBlank(icon1);
-        bean.setIs_like(0);
+        bean.setIsLike(0);
         if (!TextUtils.isEmpty(bean.getItem_id())) {
             mPresenter.deleteWishListByItemId(bean);
         }
@@ -537,7 +537,7 @@ public class BrandStoreFontActivity extends BaseActivitySearchCart<BrandStoreCon
             rlmRecycler.setLoadMoreEnable(false);
         }
         if (mPreAddWishListPostion != -1 && mPreAddWishListPostion < mProducts.size()) {
-            mProducts.get(mPreAddWishListPostion).setIs_like(1);
+            mProducts.get(mPreAddWishListPostion).setIsLike(1);
             mPreAddWishListPostion = -1;
         }
         mAdapter.notifyDataSetChanged();
@@ -565,7 +565,7 @@ public class BrandStoreFontActivity extends BaseActivitySearchCart<BrandStoreCon
             if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
                 mPresenter.addWistList(mProducts.get(mPreAddWishListPostion));
                 mOffset = 1;
-                mProducts.get(mPreAddWishListPostion).setIs_like(1);
+                mProducts.get(mPreAddWishListPostion).setIsLike(1);
                 mAdapter.notifyDataSetChanged();
                 showProgressDialog();
                 search();

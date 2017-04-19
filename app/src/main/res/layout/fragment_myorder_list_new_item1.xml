@@ -188,7 +188,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/tv_orderlist_tracking"
                     android:orientation="horizontal">
-
                     <com.whitelabel.app.widget.CustomTextView
                         android:id="@+id/order_status"
                         android:layout_width="10dp"

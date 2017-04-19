@@ -68,8 +68,8 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     orderBody.setOrderName(orderInners.getName());
                     orderBody.setOrderPrice(orderInners.getPrice());
                     orderBody.setOrderQuantity(orderInners.getQty());
-                    orderBody.setOrderTextStatus(orderlist[j].getStatus());
-                    orderBody.setOrderStatusCode(orderlist[j].getStatusCode());
+                    orderBody.setOrderTextStatus(myAccountOrderOuter.getStatus());
+                    orderBody.setOrderStatusCode(myAccountOrderOuter.getStatusCode());
                     orderBody.setMerchantName(orderInners.getVendorDisplayName());
                     orderBody.setVendor_id(orderInners.getVendor_id());
                     if(trackingInfo!=null){
@@ -330,32 +330,32 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         return str;
     }
 
-    public void setStatus(TextView textView, String statusCode) {
-        if ("pending".equalsIgnoreCase(statusCode)) {
-            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_pending));
-            textView.setBackgroundResource(R.drawable.order_item_status_pending);
-        }
-        /*else  if ("pendingCD".equalsIgnoreCase(orderListCellNew.getStatusCode())) {
-            tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_pending_cd));
-        }*/
-        else if ("processing".equalsIgnoreCase(statusCode)) {
-            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_proccessing));
-            textView.setBackgroundResource(R.drawable.order_item_status_process);
-        } else if (statusCode.contains("verified")) {
-            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_verified));
-            textView.setBackgroundResource(R.drawable.order_item_status_verified);
-        } else if ("shipped".equalsIgnoreCase(statusCode)) {
-            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_shipped));
-            textView.setBackgroundResource(R.drawable.order_item_status_ship);
-        } else if (statusCode.contains("delivered")) {
-            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_delivered));
-            textView.setBackgroundResource(R.drawable.order_item_status_delivered);
-        } else if ("deliveryFailed".equalsIgnoreCase(statusCode)) {
-            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_delivery_failed));
-            textView.setBackgroundResource(R.drawable.order_item_status_failed);
-        } else if (statusCode.contains("canceled")) {
-            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_canceled));
-            textView.setBackgroundResource(R.drawable.order_item_status_cancel);
-        }
-    }
+//    public void setStatus(TextView textView, String statusCode) {
+//        if ("pending".equalsIgnoreCase(statusCode)) {
+//            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_pending));
+//            textView.setBackgroundResource(R.drawable.order_item_status_pending);
+//        }
+//        /*else  if ("pendingCD".equalsIgnoreCase(orderListCellNew.getStatusCode())) {
+//            tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_pending_cd));
+//        }*/
+//        else if ("processing".equalsIgnoreCase(statusCode)) {
+//            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_proccessing));
+//            textView.setBackgroundResource(R.drawable.order_item_status_process);
+//        } else if (statusCode.contains("verified")) {
+//            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_verified));
+//            textView.setBackgroundResource(R.drawable.order_item_status_verified);
+//        } else if ("shipped".equalsIgnoreCase(statusCode)) {
+//            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_shipped));
+//            textView.setBackgroundResource(R.drawable.order_item_status_ship);
+//        } else if (statusCode.contains("delivered")) {
+//            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_delivered));
+//            textView.setBackgroundResource(R.drawable.order_item_status_delivered);
+//        } else if ("deliveryFailed".equalsIgnoreCase(statusCode)) {
+//            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_delivery_failed));
+//            textView.setBackgroundResource(R.drawable.order_item_status_failed);
+//        } else if (statusCode.contains("canceled")) {
+//            //viewHolder.tvStatus.setBackgroundColor(context.getResources().getColor(R.color.order_status_canceled));
+//            textView.setBackgroundResource(R.drawable.order_item_status_cancel);
+//        }
+//    }
 }

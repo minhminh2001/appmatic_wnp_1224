@@ -1642,6 +1642,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 
         }
         viewPager.setAdapter(new MyAdapter());
+        JLogUtils.i("ray","mProductImageViewTips:"+mProductImageViewTips.size());
         if (mProductImageViewTips.size() == 1) {
             group.setVisibility(View.INVISIBLE);
         } else {
@@ -1878,7 +1879,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 getProductInfo();
             }
         }
-
         if (requestCode == ProductActivity.RESULT_WISH && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 if (!data.getBooleanExtra("needRefreshWhenBackPressed", false)) {
@@ -1947,9 +1947,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             JViewUtils.showErrorToast(this,"");
             return ;
         }
-        mDialog = JViewUtils.showProgressDialog(ProductActivity.this);
         mGATrackAddCartTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+                            mDialog = JViewUtils.showProgressDialog(ProductActivity.this);
             mShoppingDao.addProductToShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey(), productId,idQtys);
         } else {
             Intent loginIntent = new Intent(this, LoginRegisterActivity.class);

@@ -12,6 +12,15 @@ public class SVRAppserviceSaveOrderReturnEntity extends SVRReturnEntity {
     private String vcode;
     private String amount;
     private String paymentUrl;
+    private String unit;
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
 
     public String getPaymentUrl() {
         return paymentUrl;

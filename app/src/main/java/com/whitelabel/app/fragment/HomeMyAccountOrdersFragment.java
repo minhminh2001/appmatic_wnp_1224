@@ -112,7 +112,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         swipeRefrshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
         return view;
     }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -131,7 +130,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         mMyAccountDao.getLocalOrderData(getActivity(), userId);
         showSwipeRefreshDialog();
         setHasOptionsMenu(true);
-
     }
 
     public void initRecyclerView() {
@@ -259,7 +257,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                         mFragment.get().requestErrorHelper.showConnectionBreaks(msg);
                     }else{
                         mFragment.get().requestErrorHelper.showNetWorkErrorToast(msg);
-
                     }
                     break;
                 case MyAccountDao.REQUEST_ORDERLIST:

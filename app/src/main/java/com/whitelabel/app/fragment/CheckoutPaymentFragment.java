@@ -116,7 +116,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
     public final static String CARDPAYMENT = "cc_payment";
     public final static String OFFLINEPAYMENT = "offline";
     public final static String CODPAYMENT = "cod";
-    public final static  String PAYPAL="paypal";
+    public final static  String PAYPAL="paypal_standard";
     private final static String CURRENT_YEAR = "2017";
     private String paymentType="";
 //    public int paymentType;
@@ -1477,14 +1477,12 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                             if (newValue.getDisplay() == null) {
                                 return;
                             }
+                             paymentType=newValue.getValue();
                             if (newValue.getDisplay().contains("Online")) {
-
                                 handlerPaymentType(methods, ONLINEPAYMENT);
-
                             } else if (newValue.getDisplay().startsWith("Credit")) {
                                 handlerPaymentType(methods, CARDPAYMENT);
                             } else if ("banktransfer".equals(newValue.getValue())) {
-
                                 handlerPaymentType(methods, OFFLINEPAYMENT);
 
                             } else if ("cashondelivery".equals(newValue.getValue())) {

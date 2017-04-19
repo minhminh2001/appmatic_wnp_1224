@@ -12,7 +12,16 @@ public class MyAccountOrderOuter extends SVRReturnEntity implements Serializable
     private String total;
     private String totalFormatted;
     private String status;
+    private String statusCode;
     private MyAccountOrderMiddle[] suborders;//MyAccountOrderMiddle
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
 
     public String getOrderId() {
         return orderId;

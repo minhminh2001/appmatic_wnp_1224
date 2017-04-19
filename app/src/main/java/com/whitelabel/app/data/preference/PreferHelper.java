@@ -15,6 +15,7 @@ import com.whitelabel.app.utils.JLogUtils;
 public class PreferHelper {
     private static  final String FILE_NAME="whtelabel";
     private static final String TABLE_CONFIG="config";
+    private static final String TABLE_CURRENCY="currency";
     public String  getVersionNumber(){
         RemoteConfigResonseModel.RetomeConfig config=getLocalConfigModel();
         JLogUtils.i("ray","retomeconfig:"+config);
@@ -34,6 +35,22 @@ public class PreferHelper {
         editor.putString(TABLE_CONFIG,configStr);
         editor.apply();
     }
+
+
+    public void saveCurrency(String currency){
+        SharedPreferences  sharedPreferences= WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME,-1);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TABLE_CURRENCY,currency);
+        editor.apply();
+    }
+
+
+
+    public String getCurrency(){
+        SharedPreferences  sharedPreferences= WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME,-1);
+        return  sharedPreferences.getString(TABLE_CURRENCY,"HK$");
+    }
+
 
     public RemoteConfigResonseModel.RetomeConfig  getLocalConfigModel(){
         SharedPreferences  sharedPreferences  = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME,-1);

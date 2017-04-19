@@ -16,5 +16,6 @@ public class StartContract {
       }
      interface  Presenter extends BasePresenter<View>{
          void getConfigInfo();
+         void openApp(String sessionKey,String deviceToken);
      }
 }

@@ -16,7 +16,7 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
     private String smallImage;
     private String inStock;
     private String vendorDisplayName;
-    private int is_like;
+    private int isLike;
     private String item_id;
     private boolean syncnServering=false;
 
@@ -28,12 +28,16 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
         this.brandId = brandId;
     }
 
-    public int getIs_like() {
-        return is_like;
+    public int getIsLike() {
+        return isLike;
     }
 
-    public void setIs_like(int is_like) {
-        this.is_like = is_like;
+    public void setIsLike(int isLike) {
+        this.isLike = isLike;
+    }
+
+    public boolean isSyncnServering() {
+        return syncnServering;
     }
 
     public String getItem_id() {

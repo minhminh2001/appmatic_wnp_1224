@@ -68,8 +68,10 @@ public class HomeCategoryDetailFragment extends HomeBaseFragment<HomeCategoryDet
     ImageView ivClose;
     @BindView(R.id.connectionBreaks)
     RelativeLayout connectionBreaks;
+    private ImageLoader mImageLoader;
+    private CategoryDetailAdapter mAdapter;
     /**
-     * Use this factory method to create a new instance of
+     * Use this factory method to creaøte a new instance of
      * this fragment using the provided parameters.
      *
      * @return A new instance of fragment HomeCategoryDetailFragment.
@@ -102,17 +104,12 @@ public class HomeCategoryDetailFragment extends HomeBaseFragment<HomeCategoryDet
         ButterKnife.bind(this, view);
         return view;
     }
-
-
     @Override
     public void closeRefreshLaout() {
         if(swipeContainer!=null){
             swipeContainer.setRefreshing(false);
         }
     }
-
-    private ImageLoader mImageLoader;
-    private CategoryDetailAdapter mAdapter;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -122,11 +119,19 @@ public class HomeCategoryDetailFragment extends HomeBaseFragment<HomeCategoryDet
         if(mIndex==0) {
             showProgressDialog();
         }
-        mPresenter.getCategoryDetail(mCategoryId);
+        String sessionKey="";
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
+            sessionKey=WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+        }
+        mPresenter.getCategoryDetail(mCategoryId,sessionKey);
     }
     @Override
     public void onRefresh() {
-        mPresenter.getCategoryDetail(mCategoryId);
+        String sessionKey="";
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
+            sessionKey=WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+        }
+        mPresenter.getCategoryDetail(mCategoryId,sessionKey);
     }
 
     private final GridLayoutManager.SpanSizeLookup mTwoRowSpan = new GridLayoutManager.SpanSizeLookup() {
@@ -138,143 +143,6 @@ public class HomeCategoryDetailFragment extends HomeBaseFragment<HomeCategoryDet
             return 1;
         }
     };
-//    public CategoryDetailModel  getData(){
-//        String  data="{\n" +
-//                "    \"category_id\": \"1111\",\n" +
-//                "    \"category_name\": \"category1\",\n" +
-//                "    \"category_img\": [\n" +
-//                "      \"image.jpg\",\n" +
-//                "      \"icon\"\n" +
-//                "    ],\n" +
-//                "    \"newArrivalProducts\": [\n" +
-//                "      {\n" +
-//                "        \"productId\": \"243008\",\n" +
-//                "        \"name\": \"Jh 12045 Banquet Table White (70844151) (70844151)\",\n" +
-//                "        \"brand\": \"Tesco\",\n" +
-//                "        \"brandId\": \"10677\",\n" +
-//                "        \"inStock\": \"1\",\n" +
-//                "        \"maxSaleQty\": 10,\n" +
-//                "        \"price\": \"84.90\",\n" +
-//                "        \"final_price\": \"55.90\",\n" +
-//                "        \"smallImage\": \"catalog/product/1076/7/0/70844151-(1).jpg\",\n" +
-//                "        \"is_like\": 0,\n" +
-//                "        \"item_id\": 0,\n" +
-//                "        \"vendorDisplayName\": \"Tesco\",\n" +
-//                "        \"vendor_id\": \"1076\"\n" +
-//                "      },\n" +
-//                "      {\n" +
-//                "        \"productId\": \"243008\",\n" +
-//                "        \"name\": \"Jh 12045 Banquet Table White (70844151) (70844151)\",\n" +
-//                "        \"brand\": \"Tesco\",\n" +
-//                "        \"brandId\": \"10677\",\n" +
-//                "        \"inStock\": \"1\",\n" +
-//                "        \"maxSaleQty\": 10,\n" +
-//                "        \"price\": \"84.90\",\n" +
-//                "        \"final_price\": \"55.90\",\n" +
-//                "        \"smallImage\": \"catalog/product/1076/7/0/70844151-(1).jpg\",\n" +
-//                "        \"is_like\": 0,\n" +
-//                "        \"item_id\": 0,\n" +
-//                "        \"vendorDisplayName\": \"Tesco\",\n" +
-//                "        \"vendor_id\": \"1076\"\n" +
-//                "      },\n" +
-//                "      {\n" +
-//                "        \"productId\": \"243008\",\n" +
-//                "        \"name\": \"Jh 12045 Banquet Table White (70844151) (70844151)\",\n" +
-//                "        \"brand\": \"Tesco\",\n" +
-//                "        \"brandId\": \"10677\",\n" +
-//                "        \"inStock\": \"1\",\n" +
-//                "        \"maxSaleQty\": 10,\n" +
-//                "        \"price\": \"84.90\",\n" +
-//                "        \"final_price\": \"55.90\",\n" +
-//                "        \"smallImage\": \"catalog/product/1076/7/0/70844151-(1).jpg\",\n" +
-//                "        \"is_like\": 0,\n" +
-//                "        \"item_id\": 0,\n" +
-//                "        \"vendorDisplayName\": \"Tesco\",\n" +
-//                "        \"vendor_id\": \"1076\"\n" +
-//                "      },\n" +
-//                "      {\n" +
-//                "        \"productId\": \"243008\",\n" +
-//                "        \"name\": \"Jh 12045 Banquet Table White (70844151) (70844151)\",\n" +
-//                "        \"brand\": \"Tesco\",\n" +
-//                "        \"brandId\": \"10677\",\n" +
-//                "        \"inStock\": \"1\",\n" +
-//                "        \"maxSaleQty\": 10,\n" +
-//                "        \"price\": \"84.90\",\n" +
-//                "        \"final_price\": \"55.90\",\n" +
-//                "        \"smallImage\": \"catalog/product/1076/7/0/70844151-(1).jpg\",\n" +
-//                "        \"is_like\": 0,\n" +
-//                "        \"item_id\": 0,\n" +
-//                "        \"vendorDisplayName\": \"Tesco\",\n" +
-//                "        \"vendor_id\": \"1076\"\n" +
-//                "      }\n" +
-//                "    ],\n" +
-//                "    \"bestSellerProducts\": [\n" +
-//                "      {\n" +
-//                "        \"productId\": \"243008\",\n" +
-//                "        \"name\": \"Jh 12045 Banquet Table White (70844151) (70844151)\",\n" +
-//                "        \"brand\": \"Tesco\",\n" +
-//                "        \"brandId\": \"10677\",\n" +
-//                "        \"inStock\": \"1\",\n" +
-//                "        \"maxSaleQty\": 10,\n" +
-//                "        \"price\": \"84.90\",\n" +
-//                "        \"final_price\": \"55.90\",\n" +
-//                "        \"smallImage\": \"catalog/product/1076/7/0/70844151-(1).jpg\",\n" +
-//                "        \"is_like\": 0,\n" +
-//                "        \"item_id\": 0,\n" +
-//                "        \"vendorDisplayName\": \"Tesco\",\n" +
-//                "        \"vendor_id\": \"1076\"\n" +
-//                "      },\n" +
-//                "      {\n" +
-//                "        \"productId\": \"243008\",\n" +
-//                "        \"name\": \"Jh 12045 Banquet Table White (70844151) (70844151)\",\n" +
-//                "        \"brand\": \"Tesco\",\n" +
-//                "        \"brandId\": \"10677\",\n" +
-//                "        \"inStock\": \"1\",\n" +
-//                "        \"maxSaleQty\": 10,\n" +
-//                "        \"price\": \"84.90\",\n" +
-//                "        \"final_price\": \"55.90\",\n" +
-//                "        \"smallImage\": \"catalog/product/1076/7/0/70844151-(1).jpg\",\n" +
-//                "        \"is_like\": 0,\n" +
-//                "        \"item_id\": 0,\n" +
-//                "        \"vendorDisplayName\": \"Tesco\",\n" +
-//                "        \"vendor_id\": \"1076\"\n" +
-//                "      },\n" +
-//                "      {\n" +
-//                "        \"productId\": \"243008\",\n" +
-//                "        \"name\": \"Jh 12045 Banquet Table White (70844151) (70844151)\",\n" +
-//                "        \"brand\": \"Tesco\",\n" +
-//                "        \"brandId\": \"10677\",\n" +
-//                "        \"inStock\": \"1\",\n" +
-//                "        \"maxSaleQty\": 10,\n" +
-//                "        \"price\": \"84.90\",\n" +
-//                "        \"final_price\": \"55.90\",\n" +
-//                "        \"smallImage\": \"catalog/product/1076/7/0/70844151-(1).jpg\",\n" +
-//                "        \"is_like\": 0,\n" +
-//                "        \"item_id\": 0,\n" +
-//                "        \"vendorDisplayName\": \"Tesco\",\n" +
-//                "        \"vendor_id\": \"1076\"\n" +
-//                "      },\n" +
-//                "      {\n" +
-//                "        \"productId\": \"243008\",\n" +
-//                "        \"name\": \"Jh 12045 Banquet Table White (70844151) (70844151)\",\n" +
-//                "        \"brand\": \"Tesco\",\n" +
-//                "        \"brandId\": \"10677\",\n" +
-//                "        \"inStock\": \"1\",\n" +
-//                "        \"maxSaleQty\": 10,\n" +
-//                "        \"price\": \"84.90\",\n" +
-//                "        \"final_price\": \"55.90\",\n" +
-//                "        \"smallImage\": \"catalog/product/1076/7/0/70844151-(1).jpg\",\n" +
-//                "        \"is_like\": 0,\n" +
-//                "        \"item_id\": 0,\n" +
-//                "        \"vendorDisplayName\": \"Tesco\",\n" +
-//                "        \"vendor_id\": \"1076\"\n" +
-//                "      }\n" +
-//                "    ]\n" +
-//                "  }";
-//        CategoryDetailModel categoryDetailModel=JJsonUtils.parseJsonObj(data,CategoryDetailModel.class);
-//        return categoryDetailModel;
-//    }
-
     @Override
     public void showErrorMsg(String errorMsg) {
         if(getActivity()!=null)

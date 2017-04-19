@@ -15,7 +15,7 @@ public class HomeCategoryDetailContract {
          void closeRefreshLaout();
      }
     public  static interface Presenter extends BasePresenter<View>{
-       public void  getCategoryDetail(String categoryId);
+       public void  getCategoryDetail(String categoryId,String sessionKey);
 
     }
 }

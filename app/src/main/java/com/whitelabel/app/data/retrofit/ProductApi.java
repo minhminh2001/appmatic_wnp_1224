@@ -35,6 +35,6 @@ public interface ProductApi {
     @GET("appservice/catalogSearch")
     public Observable<SVRAppserviceCatalogSearchReturnEntity>  getCategoryList();
     @GET("appservice/category/categoryDetail")
-    public Observable<ResponseModel<CategoryDetailModel>>  getCategoryDetail(@Query("category_id") String categoryId);
+    public Observable<ResponseModel<CategoryDetailModel>>  getCategoryDetail(@Query("category_id") String categoryId ,@Query("session_key") String sessionKey);
 
 }

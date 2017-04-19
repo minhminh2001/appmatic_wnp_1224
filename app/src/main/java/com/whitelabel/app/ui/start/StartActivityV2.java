@@ -27,10 +27,7 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
     public static final int DELAY_TIME = 1000;
     private long mStartTimeLong;
     private String mSessionKey;
-    private  boolean mSplashScreen;
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final String TAG = "StartActivity";
-    private Dialog mProgressDialog;
+    private INITApp mCallback;
     private StartHandler mStartHandler;
     private String currTag="StartActivity";
     public void startNextActivity(){
@@ -143,7 +140,7 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
 //            }
 //        }
 //    };
-    private INITApp mCallback;
+
 //    private void gaTrackNotificationSwitch() {
 //        boolean isNotificationEnabled = JToolUtils.isNotificationEnabled(this);
 //        String trackLabel="";
@@ -179,9 +176,8 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
         mCallback=new INITApp(StartActivityV2.this, new MeInitCallBack(this));
         INITExecutor.getInstance().execute(mCallback);
         mPresenter.getConfigInfo();
+        mPresenter.openApp(mSessionKey,"");
     }
-
-
 
     static class MeInitCallBack extends   INITCallback{
         WeakReference<StartActivityV2> mStartActivity;
@@ -194,15 +190,11 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
             if(mStartActivity.get()==null)return;
 //
         }
-
         @Override
         public void onFailure(int resultCode, Object object) {
             if(mStartActivity.get()==null)return;
 //            mStartActivity.get().checkAppVersion();
-
         }
-
-
     }
 
     public  void delayStart() {
@@ -267,9 +259,9 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
 
     @Override
     protected void onDestroy() {
-        if(mProgressDialog !=null){
-            mProgressDialog.dismiss();
-        }
+//        if(mProgressDialog !=null){
+//            mProgressDialog.dismiss();
+//        }
         if(mCallback!=null){
             INITExecutor.getInstance().clearTask(mCallback);
         }

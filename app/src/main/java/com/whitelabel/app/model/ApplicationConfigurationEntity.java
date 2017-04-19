@@ -73,7 +73,7 @@ public class ApplicationConfigurationEntity {
         storeView.setName("English");
         currency = new GOCurrencyEntity();
         currency.setId(1);
-        currency.setName("RM");
+        currency.setName(DataManager.getInstance().getPreferHelper().getCurrency());
     }
 
     public String getHttpServerAddress() {
@@ -286,8 +286,8 @@ public class ApplicationConfigurationEntity {
         if (currency == null) {
             currency = new GOCurrencyEntity();
         }
-        currency.setId(1);
-        currency.setName("HK$");
+//        currency.setId(1);
+//        currency.setName("HK$");
         return currency;
     }
 
