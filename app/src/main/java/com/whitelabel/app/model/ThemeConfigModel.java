@@ -163,7 +163,7 @@ public class ThemeConfigModel implements Serializable{
         this.sideMenuTextIconColorDefault = sideMenuTextIconColorDefault;
     }
 
-    public int getSldeMenuTextIconColorSelected() {
+    public int getSideMenuTextIconColorSelected() {
 
         try {
             return Color.parseColor(sideMenuTextIconColorSelected);

@@ -567,7 +567,7 @@
     <string name="reset_password">, you will receive an email with a link to reset your password.</string>
     <string name="process_email">Thank you for registering on GEMFIVE. To complete your registration process, please check your email&#160;</string>
     <string name="to_confirm">to confirm.</string>
-    <string name="register_gemfive">Thank you for registering on GEMFIVE.</string>
+    <string name="register_whitelabel">Thank you for registering on</string>
     <string name="current_password">Invalid current password.</string>
     <string name="password_empty">New password field cannot be empty.</string>
     <string name="confirmation_password">The confirmation is not the new password.</string>

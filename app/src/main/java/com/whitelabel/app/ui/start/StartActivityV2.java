@@ -141,25 +141,7 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
 //        }
 //    };
 
-//    private void gaTrackNotificationSwitch() {
-//        boolean isNotificationEnabled = JToolUtils.isNotificationEnabled(this);
-//        String trackLabel="";
-//        if (isNotificationEnabled) {
-//            trackLabel = "Enabled";
-//        } else {
-//            trackLabel = "Disabled";
-//        }
-//       //缓存和当前状态是否一样，不一样则track
-//        String cacheState=JStorageUtils.getNotificaitionState(this);
-//        if(!trackLabel.equals(cacheState)){
-//            JStorageUtils.saveNotificaitionState(this,trackLabel);
-//            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
-//                    "Enable Push Notification for GEMFIVE ",
-//                    trackLabel,
-//                    null);
-//            JLogUtils.i("googleGA", "Receive Notification switch");
-//        }
-//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

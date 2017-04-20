@@ -104,7 +104,7 @@ public class JViewUtils {
     public static  void setSlideMenuTextStyle(TextView tvText,boolean defaultIsGray){
         int defaultColor=defaultIsGray? ContextCompat.getColor(tvText.getContext(),R.color.blackD0):
                 WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSideMenuTextIconColorDefault();
-        int[] colors = new int[] {WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSideMenuBackgroundColorSelected()
+        int[] colors = new int[] {WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSideMenuTextIconColorSelected()
                 , WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSideMenuTextIconColorTapping(),
                 defaultColor};
         int[][] states = new int[3][];

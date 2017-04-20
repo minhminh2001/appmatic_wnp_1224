@@ -9,12 +9,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.JViewUtils;
 
 /**
  * Created by imaginato on 2015/6/23.
@@ -46,6 +48,15 @@ public class LoginRegisterEmailSendSuccessFragment extends Fragment implements V
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_cancel, menu);
+        View view=menu.findItem(R.id.action_cancel).getActionView();
+        ImageView ivCancel= (ImageView) view.findViewById(R.id.iv_img);
+        JViewUtils.setNavBarIconColor(getActivity(),ivCancel,R.drawable.ic_action_close);
+        ivCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickRightMenu(v);
+            }
+        });
         super.onCreateOptionsMenu(menu, inflater);
     }
     @Override
@@ -71,7 +82,7 @@ public class LoginRegisterEmailSendSuccessFragment extends Fragment implements V
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         toolBarFragmentCallback.setToolBarTitle(getResources().getString(R.string.send_confirmation_email));
-        toolBarFragmentCallback.setToolBarLeftIconAndListenter(JToolUtils.getDrawable(R.drawable.action_back), new View.OnClickListener() {
+        toolBarFragmentCallback.setToolBarLeftIconAndListenter(JViewUtils.getNavBarIconDrawable(getActivity(),R.drawable.ic_action_back), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickLeftMenu(v);

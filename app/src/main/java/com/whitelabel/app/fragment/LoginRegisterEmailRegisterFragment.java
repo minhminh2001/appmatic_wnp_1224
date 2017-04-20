@@ -250,6 +250,15 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_cancel, menu);
+        View view=menu.findItem(R.id.action_cancel).getActionView();
+        ImageView ivCancel= (ImageView) view.findViewById(R.id.iv_img);
+        JViewUtils.setNavBarIconColor(getActivity(),ivCancel,R.drawable.ic_action_close);
+        ivCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickRightMenu(v);
+            }
+        });
         super.onCreateOptionsMenu(menu, inflater);
     }
     @Override
@@ -265,7 +274,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         toolBarFragmentCallback.setToolBarTitle(getResources().getString(R.string.register));
-        toolBarFragmentCallback.setToolBarLeftIconAndListenter(JToolUtils.getDrawable(R.drawable.action_back), new View.OnClickListener() {
+        toolBarFragmentCallback.setToolBarLeftIconAndListenter(JViewUtils.getNavBarIconDrawable(getActivity(),R.drawable.ic_action_back), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickLeftMenu(v);
@@ -331,7 +340,6 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         t3= (TextView) contentView.findViewById(R.id.t3);
         t1.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         t3.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-
         t1.setOnClickListener(this);
         t3.setOnClickListener(this);
         TAG=this.getClass().getSimpleName();

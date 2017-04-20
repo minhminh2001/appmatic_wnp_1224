@@ -120,9 +120,6 @@ public class HideFunctionActivity extends com.whitelabel.app.BaseActivity implem
                         myDownloadImageServerAddress = downloadImageServerAddress.get(serviceNumbel);
                         myUploadImageServerAddress = UploadImageServerAddress.get(serviceNumbel);
                         String hashKey="123456";
-                        if(myServerAddress.contains("www.gemfive.com")){
-                             hashKey="5d89We";
-                        }
                         JStorageUtils.clearLocalCartRepository(this);
                         GlobalData.updateGlobalData(myServerAddress, myDownloadImageServerAddress, myUploadImageServerAddress, hashKey);
                         WhiteLabelApplication.getAppConfiguration().init(getApplicationContext());

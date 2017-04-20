@@ -574,17 +574,28 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_cancel, menu);
+        View view=menu.findItem(R.id.action_cancel).getActionView();
+        ImageView ivCancel= (ImageView) view.findViewById(R.id.iv_img);
+        JViewUtils.setNavBarIconColor(getActivity(),ivCancel,R.drawable.ic_action_close);
+        ivCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickRightMenu(v);
+            }
+        });
         super.onCreateOptionsMenu(menu, inflater);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.action_cancel:
-                onClickRightMenu(item.getActionView());
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch(item.getItemId()){
+//            case R.id.action_cancel:
+//                onClickRightMenu(item.getActionView());
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     public void onClickLeftMenu(View v) {
     }

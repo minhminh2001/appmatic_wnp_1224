@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
@@ -71,6 +72,15 @@ public class LoginRegisterRegisterSuccessFragment extends Fragment implements Vi
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_cancel, menu);
+        View view=menu.findItem(R.id.action_cancel).getActionView();
+        ImageView ivCancel= (ImageView) view.findViewById(R.id.iv_img);
+        JViewUtils.setNavBarIconColor(getActivity(),ivCancel,R.drawable.ic_action_close);
+        ivCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickRightMenu(v);
+            }
+        });
         super.onCreateOptionsMenu(menu, inflater);
     }
     @Override
@@ -86,13 +96,12 @@ public class LoginRegisterRegisterSuccessFragment extends Fragment implements Vi
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         toolBarFragmentCallback.setToolBarTitle(getResources().getString(R.string.register));
-        toolBarFragmentCallback.setToolBarLeftIconAndListenter(JToolUtils.getDrawable(R.drawable.action_back), new View.OnClickListener() {
+        toolBarFragmentCallback.setToolBarLeftIconAndListenter(JViewUtils.getNavBarIconDrawable(getActivity(),R.drawable.ic_action_back), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickLeftMenu(v);
             }
         });
-
         if(loginRegisterActivity.getIntent()!=null&&loginRegisterActivity.getIntent().getExtras()!=null){
             String activityAata = loginRegisterActivity.getIntent().getExtras().getString("Activity");//读出数据
             if ("start".equals(activityAata)){
@@ -100,7 +109,6 @@ public class LoginRegisterRegisterSuccessFragment extends Fragment implements Vi
             }
         }
         goshopping= (TextView) contentView.findViewById(R.id.goshopping);
-
         goshopping.setOnClickListener(this);
 //        goshopping.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 //        goshopping.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
@@ -110,7 +118,7 @@ public class LoginRegisterRegisterSuccessFragment extends Fragment implements Vi
         if(loginRegisterActivity.isEmailConfirm()){
             rigisterSuccess1.setText(getResources().getString(R.string.process_email)+myEmail+" "+getResources().getString(R.string.to_confirm));
         }else {
-            rigisterSuccess1.setText(getResources().getString(R.string.register_gemfive));
+            rigisterSuccess1.setText(getResources().getString(R.string.register_whitelabel)+" "+getResources().getString(R.string.app_name)+".");
         }
     }
 

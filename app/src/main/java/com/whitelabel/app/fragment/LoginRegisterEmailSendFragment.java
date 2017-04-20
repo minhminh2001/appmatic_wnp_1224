@@ -85,7 +85,7 @@ public class LoginRegisterEmailSendFragment extends Fragment implements View.OnC
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         toolBarFragmentCallback.setToolBarTitle(getResources().getString(R.string.send_confirmation_email));
-        toolBarFragmentCallback.setToolBarLeftIconAndListenter(JToolUtils.getDrawable(R.drawable.action_back), new View.OnClickListener() {
+        toolBarFragmentCallback.setToolBarLeftIconAndListenter(JViewUtils.getNavBarIconDrawable(getActivity(),R.drawable.ic_action_back), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickLeftMenu(v);
@@ -147,6 +147,15 @@ public class LoginRegisterEmailSendFragment extends Fragment implements View.OnC
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_cancel, menu);
+        View view=menu.findItem(R.id.action_cancel).getActionView();
+        ImageView ivCancel= (ImageView) view.findViewById(R.id.iv_img);
+        JViewUtils.setNavBarIconColor(getActivity(),ivCancel,R.drawable.ic_action_close);
+        ivCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickRightMenu(v);
+            }
+        });
         super.onCreateOptionsMenu(menu, inflater);
     }
     @Override

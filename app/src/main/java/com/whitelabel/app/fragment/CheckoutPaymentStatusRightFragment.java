@@ -144,10 +144,6 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
                         GetAnimCodeEntity entity = (GetAnimCodeEntity) msg.obj;
                         JLogUtils.i("Allen", "  !!!!Success =" + entity.getStatus() + " message=" + entity.getMessage());
                         if(entity.getWon_type().equals("none")){
-//                    myText1.setText("Oops,Sorry!");
-//                    myText2.setText("This promotion has been fully redeemed.");
-//                    myText3.setText("Stay tuned for more exciting offers on GEMFIVE.");
-//                    codeNumber.setVisibility(View.GONE);
                             mFragment.get().rlBackGroud.setVisibility(View.INVISIBLE);
                             mFragment.get().showCodeFailure.setBackgroundResource(R.mipmap.sexangle);
                             mFragment.get().showCodeFailure.setVisibility(View.VISIBLE);

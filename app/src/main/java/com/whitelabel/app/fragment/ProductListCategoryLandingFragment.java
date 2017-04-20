@@ -104,6 +104,15 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         MenuItem   searchItem=menu.findItem(R.id.action_search);
         View searchView=searchItem.getActionView();
         ImageView ivSearch= (ImageView) searchView.findViewById(R.id.iv_img1);
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (productListActivity != null) {
+                    filterSortBottomView.hideSwitchAndFilterBar(true);
+                    productListActivity.switchFragment(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, null);
+                }
+            }
+        });
         JViewUtils.setNavBarIconColor(getActivity(),ivSearch,R.drawable.ic_action_search);
         View view=menuItem.getActionView();
         view. setOnClickListener(new View.OnClickListener() {

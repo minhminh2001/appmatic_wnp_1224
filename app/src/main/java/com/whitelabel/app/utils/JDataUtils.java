@@ -646,7 +646,7 @@ public class JDataUtils {
         return url.queryParameter("actionType");
     }
 
-    public static boolean isValidGemfiveUrl(String url) {
+    public static boolean isValidUrl(String url) {
         String quoted_url = Pattern.quote(url);
         String http = "http";
         String https = "https";

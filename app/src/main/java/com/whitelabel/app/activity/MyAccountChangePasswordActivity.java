@@ -103,18 +103,17 @@ public class MyAccountChangePasswordActivity extends com.whitelabel.app.BaseActi
     }
     private void initToolbar() {
         setTitle(getResources().getString(R.string.change_password));
-        setLeftMenuIcon(R.drawable.action_back);
+        setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.ic_action_back));
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        setRightTextMenuClickListener(
+        View view=setRightTextMenuClickListener(
                 getMenuInflater(),
                 R.menu.menu_save,
                 menu,
@@ -125,6 +124,9 @@ public class MyAccountChangePasswordActivity extends com.whitelabel.app.BaseActi
                         clickSaveOption();
                     }
                 });
+
+        TextView tvMenuSave= (TextView) view.findViewById(R.id.tv_menu_item_save);
+        JViewUtils.setNavBarTextColor(tvMenuSave);
         return super.onCreateOptionsMenu(menu);
     }
     @Override

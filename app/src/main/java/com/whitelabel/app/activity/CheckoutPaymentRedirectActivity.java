@@ -25,8 +25,7 @@ import java.io.Serializable;
 public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActivity {
     private Dialog mDialog;
     private WebView webView;
-    //String str = "https://payment.gemfive.com.my/";
-//    private static final String REDIRECT_PAYMENT_URL = "https://alpha:Alphaapi@api.gemfive.com/appservice/checkout/";
+
     private ShoppingDiscountBean mDiscountBean;
     private   String REDIRECT_PAYMENT_URL= GlobalData.serviceRequestUrl+ "appservice/checkout/"; ;
     private   String lastrealorderid;
