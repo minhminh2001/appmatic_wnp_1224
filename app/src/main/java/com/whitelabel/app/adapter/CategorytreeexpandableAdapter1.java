@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Created by kevin on 2016/11/3.
  */
 
-public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<SVRAppserviceCatalogSearchCategoryItemReturnEntity> {
+public  class CategoryTreeexpandableAdapter1 extends ExpandableRecyclerAdapter<SVRAppserviceCatalogSearchCategoryItemReturnEntity> {
     public static final int TYPE_CHILD = 1001;
     private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> groupList;
     private Context context;
@@ -34,9 +34,9 @@ public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<S
         void childOnClick(int position, Object ob, String parentId);
     }
 
-    public CategoryTreeExpandableAdapter1(Activity activity, Context context,
-                                         ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> groupList, ImageLoader imageLoader,
-                                         ChildOnClick childOnClick) {
+    public CategoryTreeexpandableAdapter1(Activity activity, Context context,
+                                          ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> groupList, ImageLoader imageLoader,
+                                          ChildOnClick childOnClick) {
         super(context, activity);
         this.context = context;
         this.childOnClick = childOnClick;
@@ -75,7 +75,7 @@ public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<S
     }
 
     @Override
-    public void onBindViewHolder(ExpandableRecyclerAdapter.ViewHolder holder, int position2) {
+    public void onBindViewHolder(ViewHolder holder, int position2) {
         final int position = position2;
         if (holder instanceof GroupViewHolder) {
             GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
@@ -111,7 +111,7 @@ public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<S
         }
     }
 
-    public class GroupViewHolder extends ExpandableRecyclerAdapter.HeaderViewHolder {
+    public class GroupViewHolder extends HeaderViewHolder {
         public TextView tvCategoryTreeGroupName, tvCategoryTreeLine, tv_category_tree_divi;
         public ImageView ivCategoryTreeGroup;
 
@@ -166,7 +166,7 @@ public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<S
         }
     }
 
-    public class ChildViewHolder extends ExpandableRecyclerAdapter.ViewHolder {
+    public class ChildViewHolder extends ViewHolder {
         public TextView tvCategoryTreeChildName;
 
         public ChildViewHolder(View view) {
