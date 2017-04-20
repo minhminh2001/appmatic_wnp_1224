@@ -37,9 +37,11 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:visibility="gone"
                 android:src="@mipmap/v2_search_white_pressed"
                 />
             <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

@@ -49,15 +49,15 @@ public class RemoteConfigResonseModel implements Serializable {
          * version : 100001
          */
 
-        private UiStyleBean uiStyle;
+        private ThemeConfigModel uiStyle;
         private BaseUrlBean baseUrl;
         private String version;
 
-        public UiStyleBean getUiStyle() {
+        public ThemeConfigModel getUiStyle() {
             return uiStyle;
         }
 
-        public void setUiStyle(UiStyleBean uiStyle) {
+        public void setUiStyle(ThemeConfigModel uiStyle) {
             this.uiStyle = uiStyle;
         }
 

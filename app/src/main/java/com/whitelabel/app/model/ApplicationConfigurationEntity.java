@@ -46,16 +46,9 @@ public class ApplicationConfigurationEntity {
     public ThemeConfigModel getThemeConfig(){
         return configModel;
     }
-    public void setConfigColor(String themeColor,String navBarColor,String buttonPressColor){
-        if(configModel!=null){
-            configModel.setKeyColor(themeColor);
-            configModel.setNavBarBackgroundColor(navBarColor);
-            configModel.setButtonColorTapping(buttonPressColor);
-        }else if(configModel==null){
-            configModel=new ThemeConfigModel();
-            configModel.setKeyColor(themeColor);
-            configModel.setNavBarBackgroundColor(navBarColor);
-            configModel.setButtonColorTapping(buttonPressColor);
+    public void setConfigColor(ThemeConfigModel configModel){
+        if(configModel!=null) {
+            this.configModel=configModel;
         }
     }
     public void init(Context context) {
@@ -63,10 +56,9 @@ public class ApplicationConfigurationEntity {
         WhiteLabelApplication.getAppConfiguration().setCategoryArrayList(entity);
         configModel=new ThemeConfigModel();
         RemoteConfigResonseModel.RetomeConfig config=DataManager.getInstance().getPreferHelper().getLocalConfigModel();
-//        if(config!=null){
-//         setConfigColor(config.getUiStyle().getThemeColor(),config.getUiStyle().
-//                 getNavBarBackgroudColor(),config.getUiStyle().getButtonPressColor());
-//        }
+        if(config!=null){
+          setConfigColor(config.getUiStyle());
+        }
         httpServerAddress = GlobalData.serviceRequestUrl;
         JLogUtils.i("aaa", "init=" + httpServerAddress);
         httpGlobalParameter = "";

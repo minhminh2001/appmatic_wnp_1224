@@ -65,13 +65,11 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                 .subscribe(new Action1<RemoteConfigResonseModel>() {
                     @Override
                     public void call(RemoteConfigResonseModel remoteConfigModel) {
-//                        if(remoteConfigModel.getCode()==1){
-//                            WhiteLabelApplication.getAppConfiguration().setConfigColor(remoteConfigModel.
-//                                    getData().getUiStyle().getThemeColor(),
-//                                    remoteConfigModel.getData().getUiStyle().getNavBarBackgroudColor(),
-//                                    remoteConfigModel.getData().getUiStyle().getButtonPressColor());
-//                            DataManager.getInstance().getPreferHelper().saveConfigInfo(remoteConfigModel);
-//                        }
+                        if(remoteConfigModel.getCode()==1){
+                            WhiteLabelApplication.getAppConfiguration().setConfigColor(
+                                    remoteConfigModel.getData().getUiStyle());
+                            DataManager.getInstance().getPreferHelper().saveConfigInfo(remoteConfigModel);
+                        }
                         mView.delayStart();
                     }
                 }, new ErrorHandlerAction() {
