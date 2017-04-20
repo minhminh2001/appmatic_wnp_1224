@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.DrawerLayoutActivity;
 import com.whitelabel.app.activity.ProductListActivity;
+import com.whitelabel.app.adapter.CategoryTreeExpandableAdapter1;
 import com.whitelabel.app.adapter.CategoryTreeRootAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.ProductDao;
@@ -54,7 +55,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
     private RecyclerView rvRootCategory, rlCategoryTree;
 
     private CategoryTreeRootAdapter categoryTreeRootAdapter;
-    private CategoryTreeexpandableAdapter1 categoryTreeExpandableAdapter;
+    private CategoryTreeExpandableAdapter1 categoryTreeExpandableAdapter;
     private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> categoryList = new ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity>();
     private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> allData = new ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity>();
     private ImageLoader mImageLoader;
@@ -146,14 +147,14 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
         if (categoryTreeRootAdapter.currentRootPosition < allData.size()) {
             categoryList.addAll(allData.get(categoryTreeRootAdapter.currentRootPosition).getChildren());
         }
-        categoryTreeExpandableAdapter = new CategoryTreeexpandableAdapter1(getActivity(), getContext(), categoryList, mImageLoader, childOnClick);
+        categoryTreeExpandableAdapter = new CategoryTreeExpandableAdapter1(getActivity(), getContext(), categoryList, mImageLoader, childOnClick);
         //点击一个，关闭其他所有item
         categoryTreeExpandableAdapter.setMode(ExpandableRecyclerAdapter.MODE_ACCORDION);
         rlCategoryTree.setAdapter(categoryTreeExpandableAdapter);
         categoryTreeExpandableAdapter.setRecycleView(rlCategoryTree);
     }
 
-    private CategoryTreeexpandableAdapter1.ChildOnClick childOnClick = new CategoryTreeexpandableAdapter1.ChildOnClick() {
+    private CategoryTreeExpandableAdapter1.ChildOnClick childOnClick = new CategoryTreeExpandableAdapter1.ChildOnClick() {
         @Override
         public void childOnClick(int position, Object ob, String parentId) {
             //   GO TO  ProductListActivity
@@ -181,7 +182,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
         //重新加载数据
         categoryList.clear();
         categoryList.addAll(allData.get(posotion).getChildren());
-        categoryTreeExpandableAdapter = new CategoryTreeexpandableAdapter1(getActivity(), getContext(), categoryList, mImageLoader, childOnClick);
+        categoryTreeExpandableAdapter = new CategoryTreeExpandableAdapter1(getActivity(), getContext(), categoryList, mImageLoader, childOnClick);
         categoryTreeExpandableAdapter.setMode(ExpandableRecyclerAdapter.MODE_ACCORDION);
         rlCategoryTree.setAdapter(categoryTreeExpandableAdapter);
         categoryTreeExpandableAdapter.setRecycleView(rlCategoryTree);
