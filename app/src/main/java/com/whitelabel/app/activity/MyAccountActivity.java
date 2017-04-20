@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.fragment.BaseFragment;
 import com.whitelabel.app.fragment.MyAccountEditInfoFragment;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.JViewUtils;
 
 import java.util.ArrayList;
 
@@ -28,7 +30,7 @@ public class MyAccountActivity extends com.whitelabel.app.BaseActivity {
     }
     public void initToolBar(String title) {
         setTitle(title);
-        setLeftMenuIcon(JToolUtils.getDrawable(R.drawable.action_back));
+        setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.ic_action_back));
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +40,7 @@ public class MyAccountActivity extends com.whitelabel.app.BaseActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        setRightTextMenuClickListener(
+       View view= setRightTextMenuClickListener(
                 getMenuInflater(),
                 R.menu.menu_save,
                 menu,
@@ -49,6 +51,8 @@ public class MyAccountActivity extends com.whitelabel.app.BaseActivity {
                         ((MyAccountEditInfoFragment)attachedFragmentArray.get(EDITINFO_FLAG)).save();
                     }
                 });
+        TextView  tvSave= (TextView) view.findViewById(R.id.tv_menu_item_save);
+        JViewUtils.setNavBarTextColor(tvSave);
         return super.onCreateOptionsMenu(menu);
     }
     @Override

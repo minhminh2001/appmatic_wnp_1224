@@ -36,8 +36,8 @@ public class ThemeConfigModel implements Serializable{
     private String sideMenuBackgroudColorDefault="#FBC801";
     private String sideMenuBackgroundColorSelected="#FBC801";
     private String sideMenuTextIconColorDefault="#7D66006E";
-    private String sldeMenuTextIconColorSelected="#D82529";
-    private String sldeMenuTextIconColorTapping="#66006e";
+    private String sideMenuTextIconColorSelected="#D82529";
+    private String sideMenuTextIconColorTapping="#66006e";
     private String searchBoxBackgroundColor="#7f66006e";
     private String searchBoxTextColor="#EAFFFFFF";
 
@@ -166,7 +166,7 @@ public class ThemeConfigModel implements Serializable{
     public int getSldeMenuTextIconColorSelected() {
 
         try {
-            return Color.parseColor(sldeMenuTextIconColorSelected);
+            return Color.parseColor(sideMenuTextIconColorSelected);
         }catch (Exception ex){
             ex.getMessage();
         }
@@ -174,14 +174,14 @@ public class ThemeConfigModel implements Serializable{
 
     }
 
-    public void setSldeMenuTextIconColorSelected(String sldeMenuTextIconColorSelected) {
-        this.sldeMenuTextIconColorSelected = sldeMenuTextIconColorSelected;
+    public void setSideMenuTextIconColorSelected(String sldeMenuTextIconColorSelected) {
+        this.sideMenuTextIconColorSelected = sldeMenuTextIconColorSelected;
     }
 
-    public int getSldeMenuTextIconColorTapping() {
+    public int getSideMenuTextIconColorTapping() {
 
         try {
-            return Color.parseColor(sldeMenuTextIconColorTapping);
+            return Color.parseColor(sideMenuTextIconColorTapping);
         }catch (Exception ex){
             ex.getMessage();
         }
@@ -190,7 +190,7 @@ public class ThemeConfigModel implements Serializable{
     }
 
     public void setSldeMenuTextIconColorTapping(String sldeMenuTextIconColorTapping) {
-        this.sldeMenuTextIconColorTapping = sldeMenuTextIconColorTapping;
+        this.sideMenuTextIconColorTapping = sldeMenuTextIconColorTapping;
     }
 
     public int getSearchBoxBackgroundColor() {

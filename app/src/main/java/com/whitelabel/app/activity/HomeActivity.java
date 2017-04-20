@@ -356,7 +356,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         addFragment(FRAGMENT_TYPE_HOME_SHOPPINGCART, ShoppingCartVerticalFragment.newInstance(ShoppingCartBaseFragment.FROM_HOME, 0L));
         addFragment(FRAGMENT_TYPE_HOME_CATEGORY, new HomeCategoryTreeFragment());
 //        addFragment(FRAGMENT_TYPE_HOME_CREDITCARD, HomeSelectCrditCardFragment.newInstance());
-
     }
     @Override
     public void resetMenuAndListenter() {

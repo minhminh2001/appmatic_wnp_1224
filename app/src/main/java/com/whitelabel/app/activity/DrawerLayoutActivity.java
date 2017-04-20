@@ -23,6 +23,7 @@ import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.BadgeUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JStorageUtils;
+import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
 
 import java.io.Serializable;
@@ -248,7 +249,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         tvUserName = (TextView) findViewById(R.id.tv_user_name);
         llProfile = findViewById(R.id.ll_profile);
         llProfile.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().
-                getThemeConfig().getNavBarBackgroundColor());
+                getThemeConfig().getSideMenuBackgroudColorDefault());
         tvHome = (TextView) findViewById(R.id.tv_home);
         tvCategoryTree = (TextView) findViewById(R.id.tv_category_tree);
         tvShoppingCart = (TextView) findViewById(R.id.tv_shopping_cart);
@@ -273,19 +274,33 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         rlDrawerNotification = (RelativeLayout) findViewById(R.id.rl_drawer_notification);
 
         int black=ContextCompat.getColor(this,R.color.black000000);
-        tvHome.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-        tvShoppingCart.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-        tvNotification.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-        tvWistlist.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-        tvMyOrder.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-        tvAddress.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-        int gray=ContextCompat.getColor(this,R.color.blackD0);
-        tvSetting.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
-        tvSetting.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
-        tvCustomerService.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
-        tvHelpCenter.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
-        tvShipping.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
-        tvCategoryTree.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+
+        JViewUtils.setSlideMenuTextStyle(tvHome,false);
+        JViewUtils.setSlideMenuTextStyle(tvShoppingCart,false);
+        JViewUtils.setSlideMenuTextStyle(tvNotification,false);
+        JViewUtils.setSlideMenuTextStyle(tvWistlist,false);
+        JViewUtils.setSlideMenuTextStyle(tvMyOrder,false);
+        JViewUtils.setSlideMenuTextStyle(tvAddress,false);
+        JViewUtils.setSlideMenuTextStyle(tvCategoryTree,false);
+
+        JViewUtils.setSlideMenuTextStyle(tvSetting,true);
+        JViewUtils.setSlideMenuTextStyle(tvCustomerService,true);
+        JViewUtils.setSlideMenuTextStyle(tvHelpCenter,true);
+        JViewUtils.setSlideMenuTextStyle(tvShipping,true);
+
+
+//        tvHome.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+//        tvShoppingCart.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+//        tvNotification.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+//        tvWistlist.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+//        tvMyOrder.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+//        tvAddress.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
+//        int gray=ContextCompat.getColor(this,R.color.blackD0);
+//        tvSetting.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
+//        tvCustomerService.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
+//        tvHelpCenter.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
+//        tvShipping.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
+//        tvCategoryTree.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
 
         int iconDefaultColor=ContextCompat.getColor(this,R.color.blackD0);
         ivHome.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_default),iconDefaultColor));

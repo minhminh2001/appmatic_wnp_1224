@@ -623,8 +623,9 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 
             tvCheckOrder.setVisibility(View.VISIBLE);
             tvContinueShopping.setVisibility(View.VISIBLE);
-            tvCheckOrder.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
-            tvCheckOrder.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+            JViewUtils.setStrokeButtonGlobalStyle(getActivity(),tvCheckOrder);
+//            tvCheckOrder.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
+//            tvCheckOrder.setTextColor();
 
         JViewUtils.setSoildButtonGlobalStyle(getActivity(),tvContinueShopping);
 //            tvContinueShopping.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));

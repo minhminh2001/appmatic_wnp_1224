@@ -202,16 +202,23 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             }
         }
     }
-
+    private TextView tvSearch;
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mHomeSearchBarRL = (RelativeLayout) findViewById(R.id.rl_home_searchBar);
+        if(mHomeSearchBarRL!=null){
+            mHomeSearchBarRL.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSearchBoxBackgroundColor());
+        }
         mTitleRL = (RelativeLayout) findViewById(R.id.rl_home_searchBar);
         tvTitleNum = (TextView) findViewById(R.id.tv_title_num);
         ivTitle = (ImageView) findViewById(R.id.iv_title);
+        tvSearch= (TextView) findViewById(R.id.tv_search);
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        if(tvSearch!=null){
+            tvSearch.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSearchBoxTextColor());
+        }
         if(tvTitle!=null) {
             JViewUtils.setNavBarTextColor(tvTitle);
         }

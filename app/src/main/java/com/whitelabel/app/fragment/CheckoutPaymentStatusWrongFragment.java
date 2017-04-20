@@ -138,8 +138,9 @@ public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
         });
         rlHeaderBarMenu= (RelativeLayout) view.findViewById(R.id.rlHeaderBarMenu);
         TextView tvRetry = (TextView) view.findViewById(R.id.tv_checkout_payment_status_wrong_retry);
-        tvRetry.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
-        tvRetry.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+//        tvRetry.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
+//        tvRetry.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        JViewUtils.setStrokeButtonGlobalStyle(getActivity(),tvRetry);
         tvRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

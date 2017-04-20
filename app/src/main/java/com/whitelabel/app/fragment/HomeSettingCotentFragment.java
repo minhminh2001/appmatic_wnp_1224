@@ -92,8 +92,10 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         view.findViewById(R.id.rl_sound).setVisibility(View.GONE);
         textView_cancle.setOnClickListener(this);
         sign_out= (TextView) view.findViewById(R.id.sign_out);
-        sign_out.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
-        sign_out.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        JViewUtils.setStrokeButtonGlobalStyle(getActivity(),sign_out);
+//
+//        sign_out.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
+//        sign_out.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         sign_out.setOnClickListener(this);
         rlBack= (RelativeLayout) view.findViewById(R.id.rl_back);
         rlBack.setOnClickListener(this);

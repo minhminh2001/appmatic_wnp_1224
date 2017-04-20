@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -100,6 +101,20 @@ public class JViewUtils {
                         WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarTextIconColorTapping()));
     }
 
+    public static  void setSlideMenuTextStyle(TextView tvText,boolean defaultIsGray){
+        int defaultColor=defaultIsGray? ContextCompat.getColor(tvText.getContext(),R.color.blackD0):
+                WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSideMenuTextIconColorDefault();
+        int[] colors = new int[] {WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSideMenuBackgroundColorSelected()
+                , WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSideMenuTextIconColorTapping(),
+                defaultColor};
+        int[][] states = new int[3][];
+        states[0] = new int[] { android.R.attr.state_enabled, android.R.attr.state_selected };
+        states[1] = new int[] { android.R.attr.state_enabled,android.R.attr.state_pressed};
+        states[2] = new int[] {};
+        ColorStateList colorList = new ColorStateList(states, colors);
+        tvText.setTextColor(colorList);
+    }
+
 
     public static Drawable getNavBarIconDrawable(Context context, int icon){
      return   JImageUtils.
@@ -107,7 +122,10 @@ public class JViewUtils {
                         WhiteLabelApplication.getAppConfiguration().
                                 getThemeConfig().getNavBarTextIconColorDefault(),
                         WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarTextIconColorTapping());
-
+    }
+    public static void setStrokeButtonGlobalStyle(Context context,TextView textView){
+        textView.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(context));
+        textView.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
     }
 
 

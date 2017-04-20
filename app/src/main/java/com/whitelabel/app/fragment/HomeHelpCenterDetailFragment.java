@@ -164,7 +164,7 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
 
     private void initToolBar() {
         if (listToDetailEntity.getType() == FIREST_MENU) {
-            mCommonCallback.setLeftMenuIcon(JToolUtils.getDrawable(R.drawable.action_menu));
+            mCommonCallback.setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(getActivity(),R.drawable.ic_action_menu));
         } else {
             mCommonCallback.setLeftMenuIcon(JToolUtils.getDrawable(R.drawable.action_back));
         }
