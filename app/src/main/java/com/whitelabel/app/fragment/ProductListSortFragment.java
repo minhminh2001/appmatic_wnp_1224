@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CurationActivity;
@@ -20,6 +22,7 @@ import com.whitelabel.app.listener.OnFilterSortFragmentListener;
 import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsSortItemReturnEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
+import com.whitelabel.app.utils.JViewUtils;
 
 import java.util.ArrayList;
 
@@ -60,6 +63,10 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView = inflater.inflate(R.layout.fragment_productlist_sort, null);
+        TextView  tvTitle= (TextView) contentView.findViewById(R.id.ctvHeaderBarTitle);
+        JViewUtils.setNavBarTextColor(tvTitle);
+        ImageView ivCancel= (ImageView) contentView.findViewById(R.id.tv_headerbar_cancel);
+        JViewUtils.setNavBarIconColor(getActivity(),ivCancel,R.drawable.ic_action_close);
         return contentView;
     }
 
@@ -72,7 +79,7 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
         if (bundle != null) {
             productListFilterSortPageEntity = (TMPProductListFilterSortPageEntity) bundle.getSerializable("data");
         }
-        contentView.findViewById(R.id.rlHeaderBar).setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
+        contentView.findViewById(R.id.rlHeaderBar).setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor());
         rlHeaderbarCancel = (RelativeLayout) contentView.findViewById(R.id.rl_headerbar_cancel);
         rlHeaderbarCancel.setOnClickListener(this);
         lvSortConditions = (ListView) contentView.findViewById(R.id.lvSortConditions);

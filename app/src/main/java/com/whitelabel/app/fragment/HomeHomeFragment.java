@@ -12,6 +12,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -119,6 +121,8 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
                 startActivity(intent);
             }
         });
+        ImageView ivImg= (ImageView) view.findViewById(R.id.iv_img);
+        JViewUtils.setNavBarIconColor(getActivity(),ivImg,R.drawable.action_cart);
         TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
         textView.setBackground(JImageUtils.getThemeCircle(getActivity()));
         JViewUtils.updateCartCount(textView, getCartItemCount());
@@ -171,7 +175,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             categoryId = (String) getArguments().getSerializable("data");
         }
         ctpiCategoryList = (CustomTabCustomPageIndicator) mContainView.findViewById(R.id.ctpiCategoryList);
-        ctpiCategoryList.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctpiCategoryList.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         chvpContainer = (CustomHomeViewPager) mContainView.findViewById(R.id.chvpContainer);
         rlHome = mContainView.findViewById(R.id.rl_home);
         rlHome.setVisibility(View.GONE);

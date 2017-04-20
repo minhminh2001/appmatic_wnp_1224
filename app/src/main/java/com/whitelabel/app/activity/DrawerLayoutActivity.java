@@ -40,7 +40,8 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
     private ImageView ivUserImg, ivHome, ivCategoryTree, ivShoppingCart, ivNotification, ivMyWishList, ivMyOrder, ivAddress, ivStoreCredit;
     private TextView tvUserName, tvHome, tvCategoryTree, tvShoppingCart, tvNotification, tvWistlist, tvMyOrder, tvSetting, tvCustomerService, tvHelpCenter, tvOrderNum, tvMyOrderNum, tvShipping, tvShoppingNum, tvNotificationNum, tvWistNum, tvAddress, tvStoreCredit;
     private Handler baseHandler = new Handler();
-    private RelativeLayout rlDrawerHome, rlDrawerCategoryTree, rlDrawerShoppingCart, rlDrawerNotification, rlDrawerWish, rlDrawerOrder, rlDrawerAddress, rlDrawerSotreCredit;
+    private RelativeLayout rlDrawerHome,
+            rlDrawerCategoryTree, rlDrawerShoppingCart, rlDrawerNotification, rlDrawerWish, rlDrawerOrder, rlDrawerAddress, rlDrawerSotreCredit;
     private NotificationReceiver receiver;
 
     protected abstract boolean refreshNotification(int type, String id);
@@ -247,7 +248,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         tvUserName = (TextView) findViewById(R.id.tv_user_name);
         llProfile = findViewById(R.id.ll_profile);
         llProfile.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().
-                getThemeConfig().getSecondaryColor());
+                getThemeConfig().getNavBarBackgroundColor());
         tvHome = (TextView) findViewById(R.id.tv_home);
         tvCategoryTree = (TextView) findViewById(R.id.tv_category_tree);
         tvShoppingCart = (TextView) findViewById(R.id.tv_shopping_cart);

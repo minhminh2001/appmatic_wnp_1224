@@ -705,11 +705,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
         });
     }
-
-
     private void initToolBar() {
         setTitle("");
-        setLeftMenuIcon(JToolUtils.getDrawable(R.drawable.action_back));
+        setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.ic_action_back));
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -717,7 +715,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
         });
         //toolBar变色回调
-        toolBarAlphaBehavior = new ToolBarAlphaBehavior(getBaseContext(), getToolbar(), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSecondaryColor(), new ToolBarAlphaBehavior.CallBack() {
+        toolBarAlphaBehavior = new ToolBarAlphaBehavior(getBaseContext(), getToolbar(), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor(), new ToolBarAlphaBehavior.CallBack() {
             @Override
             public void callBack(int color) {
                 //状态bar颜色
@@ -751,6 +749,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 });
         TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
         textView.setBackground(JImageUtils.getThemeCircle(this));
+        ImageView ivShopping= (ImageView) view.findViewById(R.id.iv_img);
+        JViewUtils.setNavBarIconColor(this,ivShopping,R.drawable.ic_action_cart);
         long cartCount = getCartItemCount();
         if (cartCount > 0 && cartCount <= 99) {
             textView.setVisibility(View.VISIBLE);
@@ -1665,7 +1665,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             ctvAddToCart.setText(getString(R.string.product_detail_addtocart));
             ctvAddToCart.setEnabled(true);
             mLLAddToCart.setEnabled(true);
+//            JViewUtils.setSoildButtonGlobalStyle(this,mLLAddToCart);
             mLLAddToCart.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
+
         }else{
             ctvAddToCart.setEnabled(false);
             mLLAddToCart.setEnabled(false);

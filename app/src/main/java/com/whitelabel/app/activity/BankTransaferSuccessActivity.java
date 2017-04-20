@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomWebView;
 
 public class BankTransaferSuccessActivity extends com.whitelabel.app.BaseActivity {
@@ -68,7 +69,8 @@ public class BankTransaferSuccessActivity extends com.whitelabel.app.BaseActivit
     private void initView() {
         wvDesc= (CustomWebView) findViewById(R.id.tv_desc);
         tvConfirm= (TextView) findViewById(R.id.tv_confirm);
-        tvConfirm.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
+        JViewUtils.setSoildButtonGlobalStyle(this,tvConfirm);
+//        tvConfirm.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
         //initWebView();
     }
     private void initWebView() {

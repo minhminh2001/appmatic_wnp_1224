@@ -534,7 +534,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
                 }, 100);
 
                 tv.setText(hintText);
-                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
             }
 
             @Override
@@ -809,7 +809,8 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
                 }
             }
         });
-        btnSubmit.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
+        JViewUtils.setSoildButtonGlobalStyle(this,btnSubmit);
+//        btnSubmit.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
     }
 
 

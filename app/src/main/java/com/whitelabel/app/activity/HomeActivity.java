@@ -360,7 +360,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     }
     @Override
     public void resetMenuAndListenter() {
-        setLeftMenuIcon(R.drawable.action_menu);
+        setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.ic_action_menu));
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -186,10 +186,10 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
         rl_emailbound_email= (CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_emailbound_email);
         hasEmail= (CustomTextView) contentView.findViewById(R.id.hasEmail);
         emptyAndfileEmail= (CustomTextView) contentView.findViewById(R.id.emptyAndfileEmail);
-        emptyAndfileEmail.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        emptyAndfileEmail.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         cbtSubmit = (CustomButton) contentView.findViewById(R.id.cbtSubmit);
-        cbtSubmit.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        cbtSubmit.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
 
         clearSubmit=(ImageView)contentView.findViewById(R.id.clear_submit);

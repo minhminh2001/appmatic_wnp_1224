@@ -314,23 +314,23 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         password.setOnFocusChangeListener(this);
         re_password.setOnFocusChangeListener(this);
         sign_in= (TextView) contentView.findViewById(R.id.sign_in);
-        sign_in.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        sign_in.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         sign_in.setOnClickListener(this);
         signUp= (Button) contentView.findViewById(R.id.sign_up);
-        signUp.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        signUp.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         signUp.setOnClickListener(this);
         checkBox= (CustomCheckBox) contentView.findViewById(R.id.checkbox2);
-        checkBox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        checkBox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         checkBox.setChecked(true);
         checkBoxText1= (TextView) contentView.findViewById(R.id.checkbox_text1);
         error= (TextView) contentView.findViewById(R.id.error);
         setMoreClickSpan();
         t1= (TextView) contentView.findViewById(R.id.t1);
         t3= (TextView) contentView.findViewById(R.id.t3);
-        t1.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
-        t3.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        t1.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        t3.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         t1.setOnClickListener(this);
         t3.setOnClickListener(this);
@@ -366,7 +366,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
             checkBoxText1.setClickable(true);
             checkBoxText1.setMovementMethod(LinkMovementMethod.getInstance());
             NoUnderLineClickSpan greyNoLineClickableSpan=new NoUnderLineClickSpan(JToolUtils.getColor(R.color.grayText),false);
-            NoUnderLineClickSpan purpleNoLineClickableSpan=new NoUnderLineClickSpan(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),true);
+            NoUnderLineClickSpan purpleNoLineClickableSpan=new NoUnderLineClickSpan(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(),true);
             greyNoLineClickableSpan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -414,7 +414,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
             switch (v.getId()) {
                 case R.id.firstName:
                     CustomButtomLineRelativeLayout.setBottomLineActive(view_firstname_line,true);
-                    firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
                     firstNameText2.setText(getResources().getString(R.string.first_name));
                     if (firstName.getText().length()!=0) {
                         clearFirst.setVisibility(View.VISIBLE);
@@ -447,7 +447,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                     });
                     break;
                 case R.id.lastName:
-                    lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
                     CustomButtomLineRelativeLayout.setBottomLineActive(view_lastname_line,true);
                     lastNameText2.setText(getResources().getString(R.string.last_name));
@@ -484,7 +484,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
                     break;
                 case R.id.email:
-                    emailText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    emailText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
                     rl_register_email.setBottomLineActive(true);
                     emailText2.setText(getResources().getString(R.string.loginregister_emailbound_email_hint));
@@ -519,7 +519,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                     });
                     break;
                 case R.id.password:
-                    passwordText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    passwordText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
                     rl_register_pwd.setBottomLineActive(true);
                     passwordText2.setText(getResources().getString(R.string.enter_password));
@@ -555,7 +555,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
                     break;
                 case R.id.re_password:
-                    re_passwordText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    re_passwordText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
                     rl_register_repwd.setBottomLineActive(true);
                     re_passwordText2.setText(getResources().getString(R.string.retype_password));

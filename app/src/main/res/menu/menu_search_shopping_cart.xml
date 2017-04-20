@@ -2,11 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.administrator.myapplication.MainActivity">
-
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/action_search"
         android:title="@string/search"
+        app:actionLayout="@layout/item_search"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_shopping_cart"

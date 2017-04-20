@@ -99,7 +99,7 @@ public class LoginRegisterRegisterSuccessFragment extends Fragment implements Vi
             }
         }
         goshopping= (TextView) contentView.findViewById(R.id.goshopping);
-        goshopping.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        goshopping.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         goshopping.setOnClickListener(this);
         goshopping.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
         rigisterSuccess1= (TextView) contentView.findViewById(R.id.rigisterSuccess1);

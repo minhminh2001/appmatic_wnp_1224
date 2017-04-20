@@ -2,16 +2,13 @@ package com.whitelabel.app.fragment;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +16,6 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -40,7 +36,6 @@ import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JShareUtils;
-import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomWebView;
@@ -454,7 +449,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
         layout=view.findViewById(R.id.rl_root);
         TextView tvOrderNumber = (TextView) view.findViewById(R.id.tv_checkout_payment_status_ordernumber);
         TextView tvEmail = (TextView) view.findViewById(R.id.tv_checkout_payment_status_email);
-        tvEmail.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        tvEmail.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         tvShare= (TextView) view.findViewById(R.id.tv_share);
         rlRoot=view.findViewById(R.id.sv_content);
         rlBackGroud=view.findViewById(R.id.rlBackGroud);
@@ -629,8 +624,10 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
             tvCheckOrder.setVisibility(View.VISIBLE);
             tvContinueShopping.setVisibility(View.VISIBLE);
             tvCheckOrder.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
-            tvCheckOrder.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
-            tvContinueShopping.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));
+            tvCheckOrder.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+
+        JViewUtils.setSoildButtonGlobalStyle(getActivity(),tvContinueShopping);
+//            tvContinueShopping.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));
         return view;
     }
 

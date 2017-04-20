@@ -55,7 +55,7 @@ public class CategoryTreeRootAdapter extends RecyclerView.Adapter<RecyclerView.V
         });
 
         if(position==currentRootPosition){
-            viewHolder.itemView.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            viewHolder.itemView.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
             viewHolder.tvCategoryTreeRootName.setTextColor(JToolUtils.getColor(R.color.whiteFFFFFF));
         }else{
             viewHolder.itemView.setBackgroundColor(JToolUtils.getColor(R.color.greyF8F8F8));

@@ -400,39 +400,39 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         state.setOnFocusChangeListener(this);
         eg.setOnFocusChangeListener(this);
         firstNameText= (TextView)findViewById(R.id.ctv_addaddress_firstName_text);
-        firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         firstNameText2= (TextView)findViewById(R.id.ctv_addaddress_firstName_text2);
         lastNameText= (TextView)findViewById(R.id.ctv_addaddress_lastName_text);
-        lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         lastNameText2= (TextView) findViewById(R.id.ctv_addaddress_lastName_text2);
         countryText= (TextView) findViewById(R.id.ctv_addaddresss_country_text);
-        countryText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        countryText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         countryText2= (TextView) findViewById(R.id.ctv_addaddresss_country_text2);
         address1Text= (TextView) findViewById(R.id.ctv_addaddresss_address1_text1);
-        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         address1Text2= (TextView) findViewById(R.id.ctv_addaddresss_address1_text2);
         address2Text= (TextView) findViewById(R.id.ctv_addaddresss_address2_text1);
-        address2Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        address2Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         address2Text2= (TextView) findViewById(R.id.ctv_addaddresss_address2_text2);
         postalcodeText= (TextView) findViewById(R.id.ctv_addaddresss_postalcode_text);
-        postalcodeText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        postalcodeText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         postalcodeText2= (TextView)findViewById(R.id.ctv_addaddresss_postalcode_text2);
         cityText= (TextView) findViewById(R.id.ctv_addaddresss_city_text1);
-        cityText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        cityText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         cityText2= (TextView) findViewById(R.id.ctv_addaddresss_city_text2);
         stateText= (TextView) findViewById(R.id.ctv_addaddresss_state_text1);
-        stateText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        stateText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         stateText2= (TextView) findViewById(R.id.ctv_addaddresss_state_text2);
         egText= (TextView) findViewById(R.id.ctv_addaddresss_eg_text);
-        egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         egText2= (TextView) findViewById(R.id.ctv_addaddresss_eg_text2);
         phoneNumber= (TextView) findViewById(R.id.ctv_addaddress_number_value);
@@ -463,7 +463,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         scrollView= (RelativeLayout) findViewById(R.id.addaddress_ScrollView);
         scrollView.setOnClickListener(this);
         addaddress_checkbox= (CustomCheckBox) findViewById(R.id.addaddress_checkbox);
-        addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         addaddress_checkbox.setChecked(false);
 //        country.setTag("MY");
 //        country.setText(getResources().getString(R.string.malaysia));
@@ -494,7 +494,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     }
     private void initToolBar() {
         setTitle(getResources().getString(R.string.add_address));
-        setLeftMenuIcon(R.drawable.action_back);
+        setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.ic_action_back));
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -505,7 +505,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        setRightTextMenuClickListener(
+       View view= setRightTextMenuClickListener(
                 getMenuInflater(),
                 R.menu.menu_save,
                 menu,
@@ -516,6 +516,8 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                         saveAddressOption();
                     }
                 });
+        TextView tvMenuSave= (TextView) view.findViewById(R.id.tv_menu_item_save);
+        JViewUtils.setNavBarTextColor(tvMenuSave);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -1120,7 +1122,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             edit.setHint("");
             text.startAnimation(set);
         }else{
-            text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         }
         if(relativeLayout!=null) {
             relativeLayout.setBottomLineActive(true);

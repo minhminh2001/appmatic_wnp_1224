@@ -254,7 +254,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
         mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.recyclerView1);
         refreshLayout = (SwipeRefreshLayout) mContentView.findViewById(R.id.swipe_container);
 //        refreshLayout.setColorSchemeResources(R.color.colorAccent);
-        refreshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        refreshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         refreshLayout.setOnRefreshListener(this);
         tryAgain.setOnClickListener(this);
         isPrepared = true;

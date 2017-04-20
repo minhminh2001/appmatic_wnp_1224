@@ -9,12 +9,14 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.fragment.CheckoutPaymentStatusRightFragment;
 import com.whitelabel.app.fragment.CheckoutPaymentStatusWrongFragment;
 import com.whitelabel.app.utils.GaTrackHelper;
+import com.whitelabel.app.utils.JViewUtils;
 
 import java.io.Serializable;
 
@@ -35,7 +37,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         //SharedPreferences sharedPreferences = getSharedPreferences("session_key", Activity.MODE_PRIVATE);
         SESSION_KEY = WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey();
         setTitle(getResources().getString(R.string.PAYMENT_STATUS));
-        setLeftMenuIcon(R.drawable.action_menu);
+        setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.ic_action_menu));
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +49,8 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        setRightTextMenuClickListener(
+        View view
+        =setRightTextMenuClickListener(
                 getMenuInflater(),
                 R.menu.menu_shopping_cart,
                 menu,
@@ -58,6 +61,8 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
                         jumpShoppingCartPage();
                     }
                 });
+        ImageView ivShopping= (ImageView) view.findViewById(R.id.iv_img);
+        JViewUtils.setNavBarIconColor(this,ivShopping,R.drawable.ic_action_cart);
         return super.onCreateOptionsMenu(menu);
     }
     @Override

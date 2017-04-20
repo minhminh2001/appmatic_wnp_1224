@@ -39,6 +39,7 @@ import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomTabCustomPageIndicator;
 import com.whitelabel.app.widget.FilterSortBottomView;
 
@@ -99,6 +100,11 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         inflater.inflate(R.menu.menu_search_shopping_cart, menu);
         MenuItem menuItem= menu.findItem(R.id.action_shopping_cart);
         MenuItemCompat.setActionView(menuItem, R.layout.item_count);
+
+        MenuItem   searchItem=menu.findItem(R.id.action_search);
+        View searchView=searchItem.getActionView();
+        ImageView ivSearch= (ImageView) searchView.findViewById(R.id.iv_img1);
+        JViewUtils.setNavBarIconColor(getActivity(),ivSearch,R.drawable.ic_action_search);
         View view=menuItem.getActionView();
         view. setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +114,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         });
         TextView textView= (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
         textView.setBackground(JImageUtils.getThemeCircle(getActivity()));
+        ImageView  ivShopping= (ImageView) view.findViewById(R.id.iv_img);
+        JViewUtils.setNavBarIconColor(getActivity(),ivShopping,R.drawable.ic_action_cart);
         long cartCount=getCartItemCount();
         if(cartCount>0&&cartCount<=99){
             textView.setVisibility(View.VISIBLE);
@@ -135,6 +143,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
                 gotoShoppingCartActivity();
                 break;
             case R.id.action_search:
+
                 if (productListActivity != null) {
                     filterSortBottomView.hideSwitchAndFilterBar(true);
                     productListActivity.switchFragment(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, null);
@@ -144,7 +153,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         return super.onOptionsItemSelected(item);
     }
     private void initToolBar(){
-        setLeftMenuIcon(JToolUtils.getDrawable(R.drawable.action_back));
+        setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(getActivity(),R.drawable.ic_action_back));
         setLeftMenuClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,7 +192,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         filterSortBottomView = new FilterSortBottomView();
         filterSortBottomView.initView(mTopFilterAndSortBarRL, mIVBottomSlideToTop, this);
         ctpiCategoryList = (CustomTabCustomPageIndicator) mContentView.findViewById(R.id.ctpiCategoryList);
-        ctpiCategoryList.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctpiCategoryList.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         vpProductList = (ViewPager) mContentView.findViewById(R.id.vpProductList);
         flFilterSortContainer = (FrameLayout) mContentView.findViewById(R.id.flFilterSortContainer);
         flFilterSortContainer.setOnClickListener(this);

@@ -10,6 +10,7 @@ import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.JViewUtils;
 
 /**
  * Created by Administrator on 2016/1/26.
@@ -32,7 +33,7 @@ public class ShoppingCartActivity1 extends com.whitelabel.app.BaseActivity {
     
     private void initToolBar() {
         setTitle(getResources().getString(R.string.SHOPPINGCART));
-        setLeftMenuIcon(JToolUtils.getDrawable(R.drawable.action_back));
+        setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.action_back));
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -253,7 +253,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
 //        SharedPreferences sharedPreferences = getSharedPreferences("session_key", Activity.MODE_PRIVATE);
         checkBoxView=findViewById(R.id.relative14);
         addaddress_checkbox= (CustomCheckBox) findViewById(R.id.addaddress_checkbox);
-        addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         addaddress_checkbox.setChecked(false);
         myScrollView= (ScrollView) findViewById(R.id.myScrollView);
 //        SESSION_KEY = sharedPreferences.getString("session_key", "");
@@ -315,30 +315,30 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         state.setOnFocusChangeListener(this);
         eg.setOnFocusChangeListener(this);
         firstNameText= (TextView)findViewById(R.id.edit_firstName_text);
-        firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         firstNameText2= (TextView)findViewById(R.id.edit_firstName_text2);
         lastNameText= (TextView)findViewById(R.id.edit_lastName_text);
-        lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         lastNameText2= (TextView) findViewById(R.id.edit_lastName_text2);
         countryText= (TextView) findViewById(R.id.edit_country_text);
-        countryText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        countryText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         countryText2= (TextView) findViewById(R.id.edit_country_text2);
         address1Text= (TextView) findViewById(R.id.edit_address1_text1);
-        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         address1Text2= (TextView) findViewById(R.id.edit_address1_text2);
         address2Text= (TextView) findViewById(R.id.edit_address2_text1);
-        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         address2Text2= (TextView) findViewById(R.id.edit_address2_text2);
         postalcodeText= (TextView) findViewById(R.id.edit_postalcode_text);
-        postalcodeText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        postalcodeText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         postalcodeText2= (TextView)findViewById(R.id.edit_postalcode_text2);
         cityText= (TextView) findViewById(R.id.edit_city_text1);
-        cityText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        cityText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         cityText2= (TextView) findViewById(R.id.edit_city_text2);
 
         stateText2= (TextView) findViewById(R.id.edit_state_text2);
         egText= (TextView) findViewById(R.id.ctv_eg_text);
-        egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         egText2= (TextView) findViewById(R.id.ctv_eg_text2);
         phoneNumber= (TextView) findViewById(R.id.ctv_phone_number_value);
         phoneNumber.setOnClickListener(this);
@@ -525,7 +525,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
     }
     private void initToolBar() {
         setTitle(getResources().getString(R.string.edit_address));
-        setLeftMenuIcon(R.drawable.action_back);
+        setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.ic_action_back));
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -555,7 +555,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        setRightTextMenuClickListener(
+       View view= setRightTextMenuClickListener(
                 getMenuInflater(),
                 R.menu.menu_save,
                 menu,
@@ -566,6 +566,9 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                         clickSave();
                     }
                 });
+
+        TextView tvMenuSave= (TextView) view.findViewById(R.id.tv_menu_item_save);
+        JViewUtils.setNavBarTextColor(tvMenuSave);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -1092,7 +1095,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             text2.setVisibility(View.INVISIBLE);
             text.startAnimation(set);
         }else{
-            text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         }
         if(relativeLayout!=null) {
             relativeLayout.setBottomLineActive(true);

@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,13 +19,13 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.adapter.WheelPickerAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.GlobalCallBack;
@@ -83,6 +85,36 @@ public class JViewUtils {
         }
     }
 
+
+
+    public  static   void  setNavBarTextColor(TextView textView){
+         textView.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarTextIconColorDefault());
+    }
+
+
+    public static  void setNavBarIconColor(Context context , ImageView ivImg,int icon){
+        ivImg.setImageDrawable(JImageUtils.
+                getThemeIconTapping(ContextCompat.getDrawable(context,icon),
+                        WhiteLabelApplication.getAppConfiguration().
+                                getThemeConfig().getNavBarTextIconColorDefault(),
+                        WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarTextIconColorTapping()));
+    }
+
+
+    public static Drawable getNavBarIconDrawable(Context context, int icon){
+     return   JImageUtils.
+                getThemeIconTapping(ContextCompat.getDrawable(context,icon),
+                        WhiteLabelApplication.getAppConfiguration().
+                                getThemeConfig().getNavBarTextIconColorDefault(),
+                        WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarTextIconColorTapping());
+
+    }
+
+
+    public static   void setSoildButtonGlobalStyle(Context context,TextView textView){
+        textView.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(context));
+        textView.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getButtonTextColor());
+    }
     public static void showErrorToast(Context context, String error) {
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
     }
@@ -606,7 +638,7 @@ public class JViewUtils {
         final RelativeLayout rlContainer = (RelativeLayout) dialogView.findViewById(R.id.rlContainer);
         final CustomTextView ctvCancel = (CustomTextView) dialogView.findViewById(R.id.ctvCancel);
         final CustomTextView ctvSet = (CustomTextView) dialogView.findViewById(R.id.ctvSet);
-        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         final WheelView wheelView = (WheelView) dialogView.findViewById(R.id.wheelView);
 
         WheelPickerAdapter wheelPickerAdapter = new WheelPickerAdapter(context, pickerConfigEntity.getArrayList());
@@ -736,7 +768,7 @@ public class JViewUtils {
         final WheelView wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         final WheelView wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
         final WheelView wvRight = (WheelView) dialogView.findViewById(R.id.wvRight);
-        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         wvLeft.setViewAdapter(wpaLeft);
         wvLeft.setVisibleItems(5);
         wvLeft.setCurrentItem(currentItem1);
@@ -960,7 +992,7 @@ public class JViewUtils {
         final WheelView wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         final WheelView wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
         final WheelView wvRight = (WheelView) dialogView.findViewById(R.id.wvRight);
-        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         WheelPickerAdapter wpaLeft = new WheelPickerAdapter(context, pickerConfigEntityLeft.getArrayList());
         wvLeft.setViewAdapter(wpaLeft);
         wvLeft.setVisibleItems(5);
@@ -1188,7 +1220,7 @@ public class JViewUtils {
         final CustomTextView ctvSet = (CustomTextView) dialogView.findViewById(R.id.ctvSet);
         final WheelView wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         final WheelView wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
-        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         WheelPickerAdapter wpaLeft = new WheelPickerAdapter(context, pickerConfigEntityLeft.getArrayList());
         wvLeft.setViewAdapter(wpaLeft);
         wvLeft.setVisibleItems(5);

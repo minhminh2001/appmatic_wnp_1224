@@ -7,12 +7,9 @@
 package com.whitelabel.app.widget;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -21,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.facebook.share.widget.ShareDialog;
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
 
@@ -157,9 +153,9 @@ public class CustomXFooterView extends LinearLayout {
 
             mProgressBar.setIndeterminateTintMode(PorterDuff.Mode.SRC_ATOP);
             mProgressBar.setIndeterminateTintList(ColorStateList.
-                    valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()));
+                    valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor()));
 //            mProgressBar.getIndeterminateDrawable().setColorFilter(
-//                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(), android.graphics.PorterDuff.Mode.MULTIPLY);
+//                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(), android.graphics.PorterDuff.Mode.MULTIPLY);
         }
         mHintView = (TextView) moreView
                 .findViewById(R.id.xlistview_footer_hint_textview);

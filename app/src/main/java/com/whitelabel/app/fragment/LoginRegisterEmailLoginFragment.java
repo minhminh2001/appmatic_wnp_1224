@@ -473,12 +473,12 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         email = (EditText) contentView.findViewById(R.id.email);
         password = (EditText) contentView.findViewById(R.id.password);
         sign_in = (Button) contentView.findViewById(R.id.sign_in);
-        sign_in.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        sign_in.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         ivFacebookLogin = contentView.findViewById(R.id.ivFacebookLogin);
         register = (TextView) contentView.findViewById(R.id.register);
-        register.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        register.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         forgotPassword = (TextView) contentView.findViewById(R.id.forgot_password);
-        forgotPassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        forgotPassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         //      bottomText=contentView.findViewById(R.id.bottomText);
         ivFacebookLogin.setOnClickListener(this);
         sign_in.setOnClickListener(this);
@@ -950,7 +950,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
             switch (v.getId()) {
                 case R.id.email:
                     email_text2.setText(getResources().getString(R.string.loginregister_emailbound_email_hint));
-                    email_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    email_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
                     rl_login_email.setBottomLineActive(true);
                     if (email.getText().length()!=0)
                         clearMail.setVisibility(View.VISIBLE);
@@ -961,13 +961,13 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         email.setHint("");
                         email_text.startAnimation(set);
                    } else {
-                        email_text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                        email_text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
                     }
 
                     break;
                 case R.id.password:
                     rl_login_pwd.setBottomLineActive(true);
-                    password_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    password_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
                     password_text2.setText(getResources().getString(R.string.enter_password));
                     if (password.getText().length()!=0)
                         clearPassword.setVisibility(View.VISIBLE);
@@ -978,7 +978,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         password.setHint("");
                         password_text.startAnimation(set);
                     } else {
-                        password_text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                        password_text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
                     }
 
                     break;

@@ -65,6 +65,8 @@ import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.SoftInputShownUtil;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 
+import org.w3c.dom.Text;
+
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 
@@ -139,7 +141,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private String mCancelStr, mApplyStr;
     private String voucherCode = "";
     private RelativeLayout llBody;
-    private View btnGoShopping;
+    private TextView btnGoShopping;
     private final int APPLIED = 1;
     private final int UNAPPLIED = 2;
     private final int REDEEM = 1;
@@ -317,8 +319,9 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 
     public void initView(View view) {
         mImageLoader = new ImageLoader(getActivity());
-        btnGoShopping = view.findViewById(R.id.btn_sc_nothing_goshopping);
-        btnGoShopping.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));
+        btnGoShopping = (TextView) view.findViewById(R.id.btn_sc_nothing_goshopping);
+//        btnGoShopping.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));
+        JViewUtils.setSoildButtonGlobalStyle(getActivity(),btnGoShopping);
         llBody = (RelativeLayout) view.findViewById(R.id.ll_body);
 //        rlShoppingcartTopGoback= (RelativeLayout) view.findViewById(R.id.rl_shoppingcart_top_goback);
         btnBack = (ImageView) view.findViewById(R.id.tv_shoppingcart_top_goback);
@@ -331,7 +334,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         btnTry = (LinearLayout) view.findViewById(R.id.try_again);
         swipeRefrshLayout = (CustomSwipefreshLayout) view.findViewById(R.id.swipe_container);
 //        swipeRefrshLayout.setColorSchemeResources(R.color.colorAccent);
-        swipeRefrshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        swipeRefrshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         swipeRefrshLayout.setOnRefreshListener(this);
         llBody.setFocusable(true);
         llBody.setFocusableInTouchMode(true);
@@ -345,7 +348,8 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         listView.setOnTouchListener(gestureTouchListener);
         mGestureListener = new ShoppingOnGestureListener();
         gestureDetector = new GestureDetector(mGestureListener);
-        tvCheckout.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));
+//        tvCheckout.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));
+        JViewUtils.setSoildButtonGlobalStyle(getActivity(),tvCheckout);
     }
 
     //监听StretchScrollView 上下滑动
@@ -1061,7 +1065,8 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     public void switchVoucheStatus(String code, int type) {
         if (STATUS_VOUCHERCODE_APPLY == type) {
             tvApply.setText(mApplyStr);
-            tvApply.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));
+            JViewUtils.setSoildButtonGlobalStyle(getContext(),tvApply);
+//            tvApply.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));
 //            tvApply.setBackground(getResources().getDrawable(R.drawable.big_button_style_config));
             llApplyAnim.setVisibility(View.GONE);
             etVoucherApply.setEnabled(true);

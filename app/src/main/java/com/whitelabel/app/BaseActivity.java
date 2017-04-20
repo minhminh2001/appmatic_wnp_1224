@@ -57,7 +57,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
 //            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
+            window.setStatusBarColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor());
 
         }
         currTag = this.getClass().getSimpleName();
@@ -212,18 +212,21 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         tvTitleNum = (TextView) findViewById(R.id.tv_title_num);
         ivTitle = (ImageView) findViewById(R.id.iv_title);
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        if(tvTitle!=null) {
+            JViewUtils.setNavBarTextColor(tvTitle);
+        }
         ImageView ivTryAgain= (ImageView) findViewById(R.id.iv_try_again);
         CustomButton  btnAgain= (CustomButton) findViewById(R.id.btn_try_again);
         if(ivTryAgain!=null&&btnAgain!=null){
             ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(this,R.mipmap.connection_break_loading));
-            btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         }
         if (mToolbar != null) {
             mToolbar.setTitle("");
             setSupportActionBar(mToolbar);
         }
         if(getToolbar()!=null){
-            getToolbar().setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
+            getToolbar().setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor());
         }
     }
 

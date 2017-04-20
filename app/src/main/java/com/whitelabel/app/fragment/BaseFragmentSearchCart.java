@@ -5,6 +5,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whitelabel.app.*;
@@ -77,6 +78,7 @@ public class BaseFragmentSearchCart<T extends BasePresenter> extends com.whitela
     private void initCartMenu(Menu menu) {
         searchItem = menu.findItem(R.id.action_search);
         cartItem = menu.findItem(R.id.action_shopping_cart);
+        View search=searchItem.getActionView();
         final View cart = cartItem.getActionView();
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +86,15 @@ public class BaseFragmentSearchCart<T extends BasePresenter> extends com.whitela
                 launchShoppingCart();
             }
         });
+
+        //
+        ImageView searchIcon= (ImageView) search.findViewById(R.id.iv_img1);
+        JViewUtils.setNavBarIconColor(getActivity(),searchIcon,R.drawable.ic_action_search_pressed);
+
+        //
         TextView textView = (TextView) cart.findViewById(R.id.ctv_home_shoppingcart_num);
+        ImageView  imageView= (ImageView) cart.findViewById(R.id.iv_img);
+        JViewUtils.setNavBarIconColor(getActivity(),imageView,R.drawable.ic_action_cart);
         textView.setBackground(JImageUtils.getThemeCircle(getActivity()));
         JViewUtils.updateCartCount(textView, getCartItemCount());
     }

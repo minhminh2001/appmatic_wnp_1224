@@ -212,7 +212,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         view_paymentmethod_line = view.findViewById(R.id.view_paymentmethod_line);
         view_payment_online_line = view.findViewById(R.id.view_payment_online_line);
         ctv_payment_method_lab = (TextView) view.findViewById(R.id.ctv_payment_method_lab);
-        ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         tvPaymentMethod = (TextView) view.findViewById(R.id.tv_checkout_payment_method);
         tvPaymentMethodArrow = (ImageView) view.findViewById(R.id.tv_checkout_payment_method_arrow);
         llPaymentMethod = (LinearLayout) view.findViewById(R.id.ll_checkout_payment_method);
@@ -227,7 +227,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         ivSelectI = (ImageView) view.findViewById(R.id.iv_checkout_payment_select_i);
         ivSelectI.setOnClickListener(this);
         tvCreditCardNumberAnim = (TextView) view.findViewById(R.id.tv_checkout_payment_creditcardnumber_anim);
-        tvCreditCardNumberAnim.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        tvCreditCardNumberAnim.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         etCreditCardNumber = (EditText) view.findViewById(R.id.et_checkout_payment_creditcardnumber);
         etCreditCardNumber.setOnFocusChangeListener(this);
@@ -238,7 +238,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         etCVC.setOnFocusChangeListener(this);
 
         tvNameoncardAnim = (TextView) view.findViewById(R.id.tv_checkout_payment_nameoncard_anim);
-        tvNameoncardAnim.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        tvNameoncardAnim.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         etNameoncard = (EditText) view.findViewById(R.id.et_checkout_payment_nameoncard);
         etNameoncard.setOnFocusChangeListener(this);
@@ -702,7 +702,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                     }
                 },260);
                 JViewUtils.cleanCurrentViewFocus(getActivity());
-                tvExpirationDateHint.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                tvExpirationDateHint.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
                 CustomButtomLineRelativeLayout.setBottomLineActive(view_expiration_date_line,true);
                 AnimUtil.rotateArrow(arrowSelectExpirationDate,true);
                 //createDialogPickerOfTwoColumn();
@@ -746,7 +746,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         final RelativeLayout rlContainer = (RelativeLayout) dialogView.findViewById(R.id.rlContainer);
         final CustomTextView ctvCancel = (CustomTextView) dialogView.findViewById(R.id.ctvCancel);
         final CustomTextView ctvSet = (CustomTextView) dialogView.findViewById(R.id.ctvSet);
-        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
 
@@ -1186,7 +1186,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
 
 
                 tv.setText(hintText);
-                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
             }
 
             @Override
@@ -1443,7 +1443,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                     CustomButtomLineRelativeLayout.setRelativeBottomLineActive(view_paymentmethod_line, true);
                     AnimUtil.rotateArrow(tvPaymentMethodArrow,true);
 
-                    ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
                     final WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
 
@@ -1625,7 +1625,7 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
                     }
                     CustomButtomLineRelativeLayout.setBottomLineActive(view_payment_online_line, true);
                     AnimUtil.rotateArrow(arrowSelectOnlineBankingPayWith, true);
-                    tvOnlinebankHint.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    tvOnlinebankHint.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
                     configEntity.setArrayList(list_onlinebanks);
                     configEntity.setOldValue(oldEntity_onlinebanks);
                     configEntity.setCallBack(new WheelPickerCallback() {

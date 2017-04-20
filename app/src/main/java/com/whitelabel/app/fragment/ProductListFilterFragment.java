@@ -365,7 +365,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
 
             allBrandsListViewIsShow = false;
         } else {
-            ctvAllBrandsTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            ctvAllBrandsTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
             AnimUtil.animatePlusSign(tvAllBrandsPlusAnimate, true, getContext());
 
             LinearLayout.LayoutParams dividerlp = (LinearLayout.LayoutParams) vAllBrandsContentAllTypesTitleDivider.getLayoutParams();
@@ -461,7 +461,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
             }
             allTypesListViewIsShow = false;
         } else {
-            ctvAllTypesTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            ctvAllTypesTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
             rlAllTypesPlus.setVisibility(View.VISIBLE);
 
             filterTypeAdapter = new ProductListFilterSortFilterTypeAdapter((Activity) filterSortActivity, fragmentListener, modelTypeReturnEntityArrayList, productListFilterSortPageEntity);
@@ -530,7 +530,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
                     }
 
                     AnimUtil.animatePlusSign(tvAllBrandsPlusAnimate, true, getContext());
-                    ctvAllBrandsTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    ctvAllBrandsTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
                 }
 
                 // Types
@@ -574,7 +574,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
                     }
 
                     AnimUtil.animatePlusSign(tvAllTypesPlusAnimate, true, getContext());
-                    ctvAllTypesTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                    ctvAllTypesTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
                 }
 
                 // Brands

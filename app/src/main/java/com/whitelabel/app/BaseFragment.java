@@ -181,12 +181,15 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         tvTitleNum= (TextView) mContentView.findViewById(R.id.tv_title_num);
         ivTitle= (ImageView) mContentView.findViewById(R.id.iv_title);
         tvTitle= (TextView) mContentView.findViewById(R.id.tv_title);
+        if(tvTitle!=null){
+            JViewUtils.setNavBarTextColor(tvTitle);
+        }
         if (mToolbar != null) {
             mToolbar.setTitle("");
             ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
         }
         if(mToolbar!=null){
-            mToolbar.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSecondaryColor());
+            mToolbar.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor());
         }
     }
 
@@ -197,7 +200,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         CustomButton btnAgain= (CustomButton)  getView().findViewById(R.id.btn_try_again);
         if(ivTryAgain!=null&&btnAgain!=null){
             ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(getActivity(),R.mipmap.connection_break_loading));
-            btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         }
     }
 

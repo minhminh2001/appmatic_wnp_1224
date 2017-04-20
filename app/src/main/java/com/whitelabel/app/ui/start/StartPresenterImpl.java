@@ -55,7 +55,6 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
 
         addSubscrebe(subscription);
     }
-
     @Override
     public void getConfigInfo() {
        String currentVersionNumber= DataManager.getInstance().getPreferHelper().getVersionNumber();
@@ -66,24 +65,21 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                 .subscribe(new Action1<RemoteConfigResonseModel>() {
                     @Override
                     public void call(RemoteConfigResonseModel remoteConfigModel) {
-                        if("1".equals(remoteConfigModel.getStatus())){
-                            WhiteLabelApplication.getAppConfiguration().setConfigColor(remoteConfigModel.
-                                    getData().getUiStyle().getThemeColor(),
-                                    remoteConfigModel.getData().getUiStyle().getNavBarBackgroudColor(),
-                                    remoteConfigModel.getData().getUiStyle().getButtonPressColor());
-                            DataManager.getInstance().getPreferHelper().saveConfigInfo(remoteConfigModel);
-                        }
+//                        if(remoteConfigModel.getCode()==1){
+//                            WhiteLabelApplication.getAppConfiguration().setConfigColor(remoteConfigModel.
+//                                    getData().getUiStyle().getThemeColor(),
+//                                    remoteConfigModel.getData().getUiStyle().getNavBarBackgroudColor(),
+//                                    remoteConfigModel.getData().getUiStyle().getButtonPressColor());
+//                            DataManager.getInstance().getPreferHelper().saveConfigInfo(remoteConfigModel);
+//                        }
                         mView.delayStart();
                     }
                 }, new ErrorHandlerAction() {
                     @Override
                     protected void requestError(ApiFaildException ex) {
                         mView.delayStart();
-                        JLogUtils.i("ray","ex"+ex.getErrorMsg());
                     }
                 });
-
-
     }
 
 

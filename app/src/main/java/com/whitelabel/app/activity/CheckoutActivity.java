@@ -36,7 +36,6 @@ import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
-import com.paypal.android.sdk.payments.ShippingAddress;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.DialogProductAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -54,7 +53,6 @@ import com.whitelabel.app.model.CheckoutDefaultShippingAddress;
 import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.model.DialogProductBean;
 import com.whitelabel.app.model.GOUserEntity;
-import com.whitelabel.app.model.MolpayResponseBean;
 import com.whitelabel.app.model.SVRAddAddress;
 import com.whitelabel.app.model.SVRAppserviceSaveBillingEntity;
 import com.whitelabel.app.model.SVRAppserviceSaveOrderReturnEntity;
@@ -63,7 +61,6 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLocalMethod;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -215,7 +212,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     }
     private void initToolBar() {
         setTitle(getResources().getString(R.string.CHECKOUT));
-        setLeftMenuIcon(JToolUtils.getDrawable(R.drawable.action_back));
+        setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.action_back));
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -303,15 +300,16 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         scrollViewBody = (ScrollView) findViewById(R.id.sv_checkout_body);
         llBody = (LinearLayout) findViewById(R.id.ll_checkout_body);
         progressBarLoading = (ProgressBar) findViewById(R.id.pb_checkout_body_loading);
-        tvMenuShipping.setTextColor(  WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        tvMenuShipping.setTextColor(  WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         btnContinue.setOnClickListener(this);
         ll_btn.setOnClickListener(this);
         ll_btn.setVisibility(View.VISIBLE);
         changeSliderColor(
-                WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
+                WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(),
                 getResources().getColor(R.color.grayf8f8f8),
                 getResources().getColor(R.color.grayf8f8f8));
-        btnContinue.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
+        JViewUtils.setSoildButtonGlobalStyle(this,btnContinue);
+//        btnContinue.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
     }
 
     public void onClick(View v) {
@@ -455,7 +453,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     case 2://means payment module
                         changeSliderColor(
                                 getResources().getColor(R.color.grayf8f8f8),
-                                  WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
+                                  WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(),
                                 getResources().getColor(R.color.grayf8f8f8));
                         break;
                     case 1://means shipping module
@@ -464,7 +462,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         inputMethodManager.hideSoftInputFromWindow(llBody.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                         changeSliderColor(
-                                  WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(),
+                                  WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(),
                                 getResources().getColor(R.color.grayf8f8f8),
                                 getResources().getColor(R.color.grayf8f8f8));
 
@@ -631,7 +629,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     public void setButtonEnable(boolean enable) {
         btnContinue.setEnabled(enable);
         if (enable) {
-            btnContinue.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
+            JViewUtils.setSoildButtonGlobalStyle(this,btnContinue);
+//            btnContinue.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
 //            btnContinue.setBackgroundResource(R.drawable.big_button_style_config);
         } else {
             btnContinue.setBackgroundResource(R.drawable.big_button_style_b8);
@@ -651,7 +650,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         changeSliderColor(
                 getResources().getColor(R.color.grayf8f8f8),
                 getResources().getColor(R.color.grayf8f8f8),
-                  WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                  WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         //switch fragment and set params
         checkoutReviewFragment = new CheckoutReviewFragment();
         Bundle bundle = new Bundle();
@@ -873,7 +872,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                             mActivity.get().changeSliderColor(
                                     mActivity.get().getResources().getColor(R.color.grayf8f8f8),
                                     mActivity.get().getResources().getColor(R.color.grayf8f8f8),
-                                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor() );
+                                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor() );
                             //switch fragment and set params
                             mActivity.get().checkoutReviewFragment = new CheckoutReviewFragment();
                             Bundle bundle = new Bundle();
@@ -897,7 +896,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                              * normal payment
                              */
                             mActivity.get().skipPayment = 0;
-                            mActivity.get().changeSliderColor(mActivity.get().getResources().getColor(R.color.grayf8f8f8), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor(), mActivity.get().getResources().getColor(R.color.grayf8f8f8));
+                            mActivity.get().changeSliderColor(mActivity.get().getResources().getColor(R.color.grayf8f8f8), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(), mActivity.get().getResources().getColor(R.color.grayf8f8f8));
                             //switch fragment
                             mActivity.get().fragmentTransaction = mActivity.get().getFragmentManager().beginTransaction();
                             mActivity.get().checkoutPaymentFragment = mActivity.get().getFragmentManager().findFragmentByTag("paymentFragment");
@@ -1319,14 +1318,14 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         TranslateAnimation translateAnimation = null;
       
         //first slide
-        if (firstColorId ==   WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()) {
+        if (firstColorId ==   WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor()) {
             tvSliderFirst.setBackgroundColor(firstColorId);
             tvSliderSecond.setBackgroundColor(secondColorId);
             tvSliderThird.setBackgroundColor(thirdColorId);
         }
 
         //second slide
-        if (secondColorId ==   WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()) {
+        if (secondColorId ==   WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor()) {
             if (isGoBack) {
 
                 tvSliderSecond.setBackgroundColor(secondColorId);
@@ -1339,7 +1338,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         }
 
         //third slide
-        if (thirdColorId ==   WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor()) {
+        if (thirdColorId ==   WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor()) {
 
 
             tvSliderFirst.setBackgroundColor(firstColorId);
@@ -1945,6 +1944,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     @Override
     protected void onDestroy() {
         stopService(new Intent(this, PayPalService.class));
+        if(mDialog!=null){
+            mDialog.dismiss();
+        }
         if (mAccountDao != null) {
             mAccountDao.cancelHttpByTag(TAG);
         }

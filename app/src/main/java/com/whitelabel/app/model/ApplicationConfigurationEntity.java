@@ -24,7 +24,7 @@ public class ApplicationConfigurationEntity {
     private String ulImageServerAddress;
     private String ulImageServerGlobalParameter;
     private GOUserEntity user;
-    private ConfigModel configModel;
+    private ThemeConfigModel configModel;
     private ArrayList<GOThirdPartyUserEntity> thirdPartyUsers;
     private GOStoreViewEntity storeView;
     private GOCurrencyEntity currency;
@@ -42,25 +42,31 @@ public class ApplicationConfigurationEntity {
     private Object readResolve() {
         return getInstance();
     }
-    public ConfigModel getThemeConfig(){
+
+    public ThemeConfigModel getThemeConfig(){
         return configModel;
     }
     public void setConfigColor(String themeColor,String navBarColor,String buttonPressColor){
         if(configModel!=null){
-            configModel.setPrimaryColor(themeColor);
-            configModel.setSecondaryColor(navBarColor);
-            configModel.setButtonPressColor(buttonPressColor);
+            configModel.setKeyColor(themeColor);
+            configModel.setNavBarBackgroundColor(navBarColor);
+            configModel.setButtonColorTapping(buttonPressColor);
+        }else if(configModel==null){
+            configModel=new ThemeConfigModel();
+            configModel.setKeyColor(themeColor);
+            configModel.setNavBarBackgroundColor(navBarColor);
+            configModel.setButtonColorTapping(buttonPressColor);
         }
     }
     public void init(Context context) {
         SVRAppserviceCatalogSearchReturnEntity entity = JStorageUtils.getCategoryArrayList(context);
         WhiteLabelApplication.getAppConfiguration().setCategoryArrayList(entity);
-        configModel=new ConfigModel();
+        configModel=new ThemeConfigModel();
         RemoteConfigResonseModel.RetomeConfig config=DataManager.getInstance().getPreferHelper().getLocalConfigModel();
-        if(config!=null){
-         setConfigColor(config.getUiStyle().getThemeColor(),config.getUiStyle().
-                 getNavBarBackgroudColor(),config.getUiStyle().getButtonPressColor());
-        }
+//        if(config!=null){
+//         setConfigColor(config.getUiStyle().getThemeColor(),config.getUiStyle().
+//                 getNavBarBackgroudColor(),config.getUiStyle().getButtonPressColor());
+//        }
         httpServerAddress = GlobalData.serviceRequestUrl;
         JLogUtils.i("aaa", "init=" + httpServerAddress);
         httpGlobalParameter = "";
@@ -75,12 +81,10 @@ public class ApplicationConfigurationEntity {
         currency.setId(1);
         currency.setName(DataManager.getInstance().getPreferHelper().getCurrency());
     }
-
     public String getHttpServerAddress() {
         JLogUtils.i("aaa", "ApplicationConfigurationEntity ->getServerAddress()=" + httpServerAddress);
         return httpServerAddress;
     }
-
     public void setHttpServerAddresst(String HttpService) {
         this.httpServerAddress = HttpService;
     }

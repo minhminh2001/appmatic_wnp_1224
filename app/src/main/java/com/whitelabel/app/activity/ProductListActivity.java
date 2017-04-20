@@ -156,7 +156,6 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         iv_bottom_slideto_top = (ImageView) findViewById(R.id.iv_bottom_slideto_top);
         tvSortAnimate = (TextView) findViewById(R.id.tv_sort_plus_animate);
         tvFilterAnimate = (TextView) findViewById(R.id.tv_filter_plus_animate);
-
         iv_bottom_slideto_top.setOnClickListener(this);
         singleClickListener = new SingleClickListener();
         rlBottomBarFilter.setOnClickListener(singleClickListener);

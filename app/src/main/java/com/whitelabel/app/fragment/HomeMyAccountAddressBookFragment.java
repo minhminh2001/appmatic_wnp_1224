@@ -206,7 +206,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
         textView_add.setOnClickListener(this);
         refreshLayout.setOnRefreshListener(this);
 //        refreshLayout.setColorSchemeResources(R.color.colorAccent);
-        refreshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        refreshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         dao.getLocalAddressData(getActivity(), WhiteLabelApplication.getAppConfiguration().getUser().getId());
         showRefreshLayout();
         setSwipeListView();

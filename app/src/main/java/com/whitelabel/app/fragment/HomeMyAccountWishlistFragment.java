@@ -365,7 +365,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
         lv = (SwipeMenuListView) contentView.findViewById(R.id.whistlist_lv);
         swipeLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.swipe_container);
 //        swipeLayout.setColorSchemeResources(R.color.colorAccent);
-        swipeLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        swipeLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         swipeLayout.setOnRefreshListener(this);
         return contentView;
     }

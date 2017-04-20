@@ -11,7 +11,6 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +42,6 @@ import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
@@ -960,7 +958,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                 }, 100);
 
                 tv.setText(hintText);
-                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
             }
 
             @Override

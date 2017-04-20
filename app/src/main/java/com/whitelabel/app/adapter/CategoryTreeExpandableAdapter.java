@@ -88,7 +88,7 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
         if (holder instanceof GroupViewHolder) {
             GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
             SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) getItem(position);
-            groupViewHolder.tvCategoryTreeGroupName.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            groupViewHolder.tvCategoryTreeGroupName.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
             groupViewHolder.tvCategoryTreeGroupName.setText(entity.getName());
             if (groupViewHolder.ivCategoryTreeGroup.getTag() != null && groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage())) {
             } else {

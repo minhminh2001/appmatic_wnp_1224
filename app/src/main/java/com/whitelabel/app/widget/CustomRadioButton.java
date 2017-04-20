@@ -32,7 +32,7 @@ public class CustomRadioButton  extends RelativeLayout{
         ivBigImage.setBackground(JImageUtils.getThemeCircle(context));
         ivSmallImage.setBackground(JImageUtils.getThemeCircle(context));
         GradientDrawable drawable= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.radio_oval);
-        drawable.setStroke(JScreenUtils.dip2px(context,2), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        drawable.setStroke(JScreenUtils.dip2px(context,2), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         ivBigImage.setBackground(drawable);
         addView(view);
     }

@@ -114,7 +114,7 @@ public class HomeCategoryDetailFragment extends HomeBaseFragment<HomeCategoryDet
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mImageLoader=new ImageLoader(getActivity());
-        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         swipeContainer.setOnRefreshListener(this);
         if(mIndex==0) {
             showProgressDialog();

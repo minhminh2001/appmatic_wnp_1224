@@ -38,7 +38,7 @@ public class CustomButtomLineRelativeLayout extends RelativeLayout {
 
         LayoutParams lp=(LayoutParams)lineTextView.getLayoutParams() ;
         if (active) {
-            lineTextView.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            lineTextView.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
             lp.height=JToolUtils.dip2px(this.getContext(),purpleLineHeight);
             lineTextView.requestLayout();
         }else{
@@ -55,7 +55,7 @@ public class CustomButtomLineRelativeLayout extends RelativeLayout {
 
         LinearLayout.LayoutParams lp=(LinearLayout.LayoutParams)view.getLayoutParams() ;
         if (active) {
-            view.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            view.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
             lp.height=JToolUtils.dip2px(view.getContext(),purpleLineHeight);
             view.requestLayout();
         }else{
@@ -68,7 +68,7 @@ public class CustomButtomLineRelativeLayout extends RelativeLayout {
 
         LayoutParams lp=(LayoutParams)view.getLayoutParams() ;
         if (active) {
-            view.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getPrimaryColor());
+            view.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
             lp.height=JToolUtils.dip2px(view.getContext(),purpleLineHeight);
             view.requestLayout();
         }else{

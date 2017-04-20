@@ -14,16 +14,16 @@ public class RemoteConfigResonseModel implements Serializable {
      * data : {"uiStyle":{"themeColor":"","navBarBackgroudColor":"","navBarTextIconColor":"","sideMenuColor":"","sldeMenuTextIconColor":"","sideMenuTextIconSelectedColor":""},"baseUrl":{"serviceBaseUrl":""},"version":100001}
      */
 
-    private String status;
+    private int code;
     private String message;
     private RetomeConfig data;
 
-    public String getStatus() {
-        return status;
+    public int getCode() {
+        return code;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public String getMessage() {
