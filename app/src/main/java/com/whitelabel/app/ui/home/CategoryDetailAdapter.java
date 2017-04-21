@@ -315,7 +315,7 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     if (finalLeftProductEntity.getIsLike() == 1) {
                         sendRequestToDeteleteCell(finalLeftProductEntity,itemViewHolder.ivLeftProductlistWishIcon, finalLeftProductEntity.getItem_id(),itemViewHolder.getAdapterPosition());
                     } else {
-                        addtoWishlistsendRequest(finalLeftProductEntity,
+                        addtoWishlistsendRequest(itemViewHolder.itemView.getContext(),finalLeftProductEntity,
                                 itemViewHolder.rlLeftProductlistWish, itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2,
                                 itemViewHolder.getAdapterPosition());
                     }
@@ -380,7 +380,7 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
 
 
-    private void addtoWishlistsendRequest(SVRAppserviceProductSearchResultsItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
+    private void addtoWishlistsendRequest(Context context,SVRAppserviceProductSearchResultsItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(ivWwishIcon.getContext())) {
             entity.setIsLike(1);
             mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo().getSessionKey(), tempPosition);
@@ -388,8 +388,8 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else {
             Intent intent = new Intent();
             intent.setClass(ivWwishIcon.getContext(), LoginRegisterActivity.class);
-            ((Activity)ivWwishIcon.getContext()). startActivityForResult(intent, LoginRegisterActivity.REQUESTCODE_LOGIN);
-            ((Activity)ivWwishIcon.getContext()).overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
+            ((Activity)context).startActivityForResult(intent, LoginRegisterActivity.REQUESTCODE_LOGIN);
+            ((Activity)context).overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
         }
     }
     private void setWishIconColorToBlank(final ImageView ivWishIcon) {

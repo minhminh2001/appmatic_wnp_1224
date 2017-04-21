@@ -61,6 +61,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     private final int TYPE_FRAGMENT_SWITCH_NONE = 0;
     private final int TYPE_FRAGMENT_SWITCH_RIGHT2LEFT = 1;
     private final int TYPE_FRAGMENT_SWITCH_LEFT2RIGHT = -1;
+    public boolean mCanback = true;
     private final int TYPE_FRAGMENT_SWITCH = -2;
     //跳转到哪个Fragment上
     public final static String EXTRA_REDIRECTTO_TYPE_VALUE_EXITAPP = "exitApp";
@@ -226,7 +227,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             jumpLoginActivity();
         }
     }
-
     @Override
     protected void jumpAddressPage() {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
@@ -447,8 +447,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 //            tvMarketingLayersDesc.setText(entity.getDescription());
 //        }
     }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -518,7 +516,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         setIntent(intent);
         redirectToInterfaceByDeepLink();
         redirectToFragmentByIntent(intent);
-
     }
 
     public void redirectToFragmentByIntent(Intent intent) {
@@ -698,7 +695,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         }
     }
 
-    public boolean mCanback = true;
     @Override
     public void onBackPressed() {
         showExitDialog();
@@ -726,6 +722,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             }
         });
     }
+
     public boolean refreshNotification(int type, String id) {
 //        if (mCurrentFragment instanceof HomeNotificationListFragment) {
 //            ((HomeNotificationListFragment) mCurrentFragment).refresh(type, id);
@@ -749,7 +746,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
              }
         }
     }
-
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 //            if (rlMarketLayer.getVisibility() == View.VISIBLE) {
