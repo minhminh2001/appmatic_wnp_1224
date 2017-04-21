@@ -158,7 +158,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
     }
     private void initListViewHeader(){
         View view = LayoutInflater.from(productListActivity).inflate(R.layout.header_product_list_switch_and_filter_bar, null);
-        RelativeLayout.LayoutParams params=new RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT,JDataUtils.dp2Px(40));
+        AbsListView.LayoutParams params=new AbsListView.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT,JDataUtils.dp2Px(40));
         view.setLayoutParams(params);
         mRlViewbar = (RelativeLayout) view.findViewById(R.id.rl_viewbar);
         mIvViewToggle = (ImageView) view.findViewById(R.id.iv_view_toggle);

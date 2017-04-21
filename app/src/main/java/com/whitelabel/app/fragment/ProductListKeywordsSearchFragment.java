@@ -526,7 +526,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 
     private void initListViewHeader(){
         View view = LayoutInflater.from(productListActivity).inflate(R.layout.header_product_list_switch_and_filter_bar, null);
-        RelativeLayout.LayoutParams params=new RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT,JDataUtils.dp2Px(40));
+        AbsListView.LayoutParams params=new AbsListView.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT,JDataUtils.dp2Px(40));
         view.setLayoutParams(params);
         mRlSwitchViewbar = (RelativeLayout) view.findViewById(R.id.rl_viewbar);
         mHeaderFilterLL = (LinearLayout) view.findViewById(R.id.ll_filter);
