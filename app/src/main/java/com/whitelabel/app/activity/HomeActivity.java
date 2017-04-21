@@ -741,6 +741,12 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             if (!(mCurrentFragment instanceof HomeHomeFragment)) {
                 switchFragment(-1, FRAGMENT_TYPE_HOME_HOME, "1");
             }
+        }else if(requestCode==LoginRegisterActivity.REQUESTCODE_LOGIN&&
+                WhiteLabelApplication.getAppConfiguration().isSignIn(HomeActivity.this)){
+             if(mCurrentFragment instanceof  HomeHomeFragment){
+                 HomeHomeFragment fragment= (HomeHomeFragment) mCurrentFragment;
+                 fragment.requestData();
+             }
         }
     }
 

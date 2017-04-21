@@ -182,6 +182,12 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         everythingIndex = 0;
         categoryViewCount = 0;
         categoryArrayList = new ArrayList<>();
+        requestData();
+        setHasOptionsMenu(true);
+    }
+
+
+    public void requestData(){
         if (!firstloaded) {//first request  data;
             showLoaderDialog();
             productDao.getBaseCategory();
@@ -192,7 +198,6 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             }
             initData(catalogSearchReturnEntity);
         }
-        setHasOptionsMenu(true);
     }
 
     @Override

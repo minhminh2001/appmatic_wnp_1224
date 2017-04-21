@@ -24,7 +24,7 @@
     <!-- product detail  -->
     <dimen name="activity_pdp_margin">11dp</dimen>
     <dimen name="product_details_viewpager_height">360dp</dimen>
-    <dimen name="product_details_viewpager_dot_margin_top">355dp</dimen>
+    <dimen name="product_details_viewpager_dot_margin_top">350dp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
