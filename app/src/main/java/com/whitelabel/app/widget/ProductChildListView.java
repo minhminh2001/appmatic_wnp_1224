@@ -118,7 +118,7 @@ public class ProductChildListView extends LinearLayout{
         tvNumbers.add(tvChildNumber);
         tvChildNumber.setText("0");
         if(bean.getInStock()==0){
-            rlChildProductQuantity.setVisibility(View.GONE);
+            rlChildProductQuantity.setVisibility(View.INVISIBLE);
             rlChildSold.setVisibility(View.VISIBLE);
         }
         ivChildPriceMinus.setOnClickListener(new OnClickListener() {
