@@ -14,6 +14,7 @@ import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.MyAccountOrderDetailEntityResult;
 import com.whitelabel.app.model.MyAccountOrderListEntityResult;
 import com.whitelabel.app.model.MyAccountOrderOuter;
+import com.whitelabel.app.model.RepaymentInfoModel;
 import com.whitelabel.app.model.SVRAddAddress;
 import com.whitelabel.app.model.SVRAppServiceCustomerCountry;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
@@ -57,7 +58,7 @@ public class MyAccountDao extends BaseHttp {
     public static final int REQUEST_MONTHLYINCOM = 1000011;
     public static final int REQUEST_SENDREQUESTTOGET = 1000012;
     public static final int REQUEST_SAVE = 1000013;
-
+    public static  final int REQUEST_RE_PAYMENT=10000040;
     public static final int REQUEST_CHECKEMAIL = 10009;
     public static final int REQUEST_EMAILLOGIN = 10010;
     public static final int REQUEST_FACEBOOKLOGIN = 10011;
@@ -357,6 +358,14 @@ public class MyAccountDao extends BaseHttp {
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/order/detail", params, REQUEST_SENDREQUEST);
     }
 
+
+    public void rePaymentInfo(String sessionKey,String id){
+        params = new TreeMap<>();
+        params.put("orderId", id);
+        params.put("session_key",sessionKey);
+        requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/order/repayment", params, REQUEST_RE_PAYMENT);
+    }
+
     public void changePass(String session_key, String current_password, String password, String confirmation) {
         params = new TreeMap<>();
         params.put("session_key", session_key);
@@ -607,6 +616,15 @@ public class MyAccountDao extends BaseHttp {
                     SVRAppserviceCustomerFbLoginReturnEntity entity = JJsonUtils.parseJsonObj(response, SVRAppserviceCustomerFbLoginReturnEntity.class);
                     postHandler(requestCode, entity, RESPONSE_SUCCESS);
                 } else {
+                    ErrorMsgBean errorBean = getErrorMsgBean(response);
+                    postHandler(requestCode, errorBean.getErrorMessage(), RESPONSE_FAILED);
+                }
+                break;
+            case REQUEST_RE_PAYMENT:
+                if(isOk(response)){
+                    RepaymentInfoModel  repaymentInfoModel=JJsonUtils.parseJsonObj(response,RepaymentInfoModel.class);
+                    postHandler(requestCode, repaymentInfoModel, RESPONSE_SUCCESS);
+                }else{
                     ErrorMsgBean errorBean = getErrorMsgBean(response);
                     postHandler(requestCode, errorBean.getErrorMessage(), RESPONSE_FAILED);
                 }

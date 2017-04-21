@@ -1,12 +1,14 @@
 package com.whitelabel.app.activity;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -16,13 +18,17 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.MyAccountOrderDetailAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.dao.CheckoutDao;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.MyAccountOrderDetailEntityResult;
 import com.whitelabel.app.model.MyAccountOrderMiddle;
 import com.whitelabel.app.model.MyAccountOrderOuter;
+import com.whitelabel.app.model.RepaymentInfoModel;
 import com.whitelabel.app.model.ShippingAddress;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.AnimUtil;
@@ -33,8 +39,12 @@ import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.PaypalHelper;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomWebView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
@@ -112,6 +122,53 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                         }
                     }
                     break;
+                case MyAccountDao.REQUEST_RE_PAYMENT:
+                    if(mActivity.get().mDialog!=null){
+                        mActivity.get().mDialog.dismiss();
+                    }
+                    if(msg.arg1==MyAccountDao.RESPONSE_SUCCESS){
+                        RepaymentInfoModel  repaymentInfoModel= (RepaymentInfoModel) msg.obj;
+                        String productName="";
+                        try {
+                            productName = mActivity.get().mBean.getSuborders()[0].getItems()[0].getName();
+                        }catch (Exception ex){
+                            ex.getMessage();
+                        }
+                        mActivity.get().mOrderNumber=repaymentInfoModel.getOrderSn();
+                        mActivity.get().mPaypalHelper.startPaypalPayment(mActivity.get(),
+                                repaymentInfoModel.
+                                getGrandTotal(),
+                                repaymentInfoModel.getUnit(),
+                                productName,
+                                repaymentInfoModel.getOrderSn());
+                    }else{
+                        String errorMsg = msg.obj.toString();
+                        if (!JDataUtils.errorMsgHandler(mActivity.get(), errorMsg)) {
+
+                        }
+                    }
+                    break;
+                case CheckoutDao.REQUEST_CHANGEORDERSTATUS:
+                    if(mActivity.get().mDialog!=null) {
+                        mActivity.get().mDialog.dismiss();
+                    }
+                    if (msg.arg1 == CheckoutDao.RESPONSE_SUCCESS) {
+                        Bundle bundle_success = new Bundle();
+                        bundle_success.putString("payment_status", "1");
+                        bundle_success.putString("lastrealorderid", mActivity.get().mOrderNumber);
+                        bundle_success.putInt("paymentMethod", CheckoutPaymentRedirectActivity.PAYMENT_ONLINE);
+                        mActivity.get().startNextActivity(bundle_success, CheckoutPaymentRedirectActivity.class, true);
+                    } else {
+                        String errorMsg = (String) msg.obj;
+                        if (!JToolUtils.expireHandler(mActivity.get(), errorMsg, mActivity.get().REQUESTCODE_LOGIN)) {
+                            Bundle bundle_failuer = new Bundle();
+                            bundle_failuer.putString("payment_status", "0");
+                            bundle_failuer.putString("errorMsg", errorMsg);
+                            bundle_failuer.putString("orderNumber", mActivity.get().mBean.getOrderId());
+                            mActivity.get().startNextActivity(bundle_failuer, CheckoutPaymentStatusActivity.class, true);
+                        }
+                    }
+                    break;
                 case MyAccountDao.ERROR:
                     RequestErrorHelper requestErrorHelper=new RequestErrorHelper(mActivity.get());
                     requestErrorHelper.showNetWorkErrorToast(msg);
@@ -121,6 +178,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
             super.handleMessage(msg);
         }
     }
+    private String mOrderNumber;
 
     private DataHandler dataHandler;
 
@@ -133,8 +191,8 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         }
         super.onDestroy();
     }
-
-
+    private PaypalHelper  mPaypalHelper;
+    private CheckoutDao mCheckoutDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,13 +208,11 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         TAG =this.getClass().getSimpleName();
         dataHandler=new DataHandler(this);
         mDao=new MyAccountDao(TAG,dataHandler);
+        mCheckoutDao = new CheckoutDao(TAG, dataHandler);
+        mPaypalHelper=new PaypalHelper();
+        mPaypalHelper.startPaypalService(this);
         initSessionKey();
     }
-
-
-
-
-
     private void initToolBar() {
         setTitle(getResources().getString(R.string.order_detail));
         setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.ic_action_back));
@@ -217,13 +273,24 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_confirm:
-                Intent intent = new Intent(MyAccountOrderDetailActivity.this, BankTransaferActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("bean", mBean.getBanktransfer());
-                intent.putExtras(bundle);
-                startActivityForResult(intent, REQUESTCODE_TRANSAFER);
-                overridePendingTransition(R.anim.enter_righttoleft,
-                        R.anim.exit_righttoleft);
+                if(mBean.getIsRPayment()==1){
+//                    if()
+//                    mPaypalHelper.startPaypalPayment(this,mBean.get,
+//                            WhiteLabelApplication.getAppConfiguration().getCurrency().getName(),
+//
+//                            );
+                    mDialog=JViewUtils.showProgressDialog(this);
+                    mDao.rePaymentInfo(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),mBean.getOrderId());
+
+                }else {
+                    Intent intent = new Intent(MyAccountOrderDetailActivity.this, BankTransaferActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bean", mBean.getBanktransfer());
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, REQUESTCODE_TRANSAFER);
+                    overridePendingTransition(R.anim.enter_righttoleft,
+                            R.anim.exit_righttoleft);
+                }
                 break;
 
             default:
@@ -367,11 +434,19 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
             tvConfirm.setVisibility(View.VISIBLE);
             findViewById(R.id.ll_sc_checkout).setVisibility(View.VISIBLE);
             findViewById(R.id.bottom_black).setVisibility(View.VISIBLE);
-        } else {
+        } else  if(orderDetail.getIsRPayment()==1){
+            tvConfirm.setVisibility(View.VISIBLE);
+            tvConfirm.setText(getResources().getString(R.string.order_re_payment));
+            findViewById(R.id.ll_sc_checkout).setVisibility(View.VISIBLE);
+            findViewById(R.id.bottom_black).setVisibility(View.VISIBLE);
+
+        }else {
             findViewById(R.id.ll_sc_checkout).setVisibility(View.GONE);
             findViewById(R.id.bottom_black).setVisibility(View.GONE);
             tvConfirm.setVisibility(View.GONE);
         }
+
+
 
         tvDate.setText(orderDetail.getDate());
         tvSubTotal.setText(orderDetail.getSubtotal());
@@ -427,7 +502,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
 
         if (REQUESTCODE_LOGIN == requestCode) {
             if (WhiteLabelApplication.getAppConfiguration().isSignIn(MyAccountOrderDetailActivity.this)) {
-
                 sendRequest(orderId);
             }
         } else if (resultCode == BankTransaferActivity.RESULTCODE && data != null) {
@@ -454,6 +528,38 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                 ex.getStackTrace();
             }
 
+        }else if(requestCode==PaypalHelper.REQUEST_CODE_PAYMENT){
+
+            if (resultCode == Activity.RESULT_OK) {
+                PaymentConfirmation confirm =
+                        data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                if (confirm != null) {
+                    try {
+                        Log.i(TAG, confirm.toJSONObject().toString(4));
+                        Log.i(TAG, confirm.getPayment().toJSONObject().toString(4));
+                    } catch (JSONException e) {
+                        Log.e(TAG, "an extremely unlikely failure occurred: ", e);
+                    }
+                }
+                JSONObject jsonObject= confirm.getPayment().toJSONObject();
+                String productName="PayPal-Android-SDK";
+                String currencyCode="";
+                String amount="";
+                String id=confirm.getProofOfPayment().getPaymentId();
+                String state=confirm.getProofOfPayment().getState();
+                String createTime=confirm.getProofOfPayment().getCreateTime();
+                try {
+                    currencyCode=jsonObject.getString("currency_code");
+                    amount=jsonObject.getString("amount");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                mDialog=JViewUtils.showProgressDialog(this);
+                mCheckoutDao.changeOrderStatus(WhiteLabelApplication.getAppConfiguration().
+                                getUserInfo(this).getSessionKey(),
+                        mOrderNumber,mBean.getPaymentCode(),productName,currencyCode,amount,id,state,createTime);
+            }else {
+            }
         }
     }
 

@@ -6,7 +6,6 @@ import java.util.HashMap;
  * Created by Administrator on 2015/7/7.
  */
 public class MyAccountOrderDetailEntityResult extends SVRReturnEntity{
-
     private String orderId;
     private String date;
     private String state;
@@ -19,7 +18,24 @@ public class MyAccountOrderDetailEntityResult extends SVRReturnEntity{
     private String gst;
     private ShippingAddress shippingAddress;
     private String paymentMethod;
+    private String paymentCode;
+    private int isRPayment;
     private HashMap<String,String> discount;
+    public String getPaymentCode() {
+        return paymentCode;
+    }
+
+    public void setPaymentCode(String paymentCode) {
+        this.paymentCode = paymentCode;
+    }
+
+    public int getIsRPayment() {
+        return isRPayment;
+    }
+
+    public void setIsRPayment(int isRPayment) {
+        this.isRPayment = isRPayment;
+    }
 
     public String getGst() {
         return gst;

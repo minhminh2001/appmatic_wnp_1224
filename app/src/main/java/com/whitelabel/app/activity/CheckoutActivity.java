@@ -168,9 +168,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             PayPalConfiguration().
             environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(CONFIG_CLIENT_ID);
-    static {
-        System.loadLibrary("gemfivelocal");
-    }
+//    static {
+//        System.loadLibrary("gemfivelocal");
+//    }
     private void placeOrder() {
         mCheckoutPaymentDialog = new CheckoutPaymentDialog(CheckoutActivity.this, R.style.loading_dialog, getResources().getString(R.string.dialog_checkout_text)).showDialog();
         btnContinue.setEnabled(false);
