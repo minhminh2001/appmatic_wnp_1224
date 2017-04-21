@@ -75,7 +75,7 @@ public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<S
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position2) {
+    public void onBindViewHolder(ExpandableRecyclerAdapter.ViewHolder holder, int position2) {
         final int position = position2;
         if (holder instanceof GroupViewHolder) {
             GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
