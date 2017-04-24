@@ -96,6 +96,7 @@ public class ShoppingCarDao extends BaseHttp {
         for(String  id: idQtys.keySet()){
             params.put("simpleId["+index+"]",id);
             params.put("qty["+index+"]",idQtys.get(id));
+            index++;
         }
         requestHttp(HTTP_METHOD.POST, "appservice/cart/add", params, REQUEST_ADDPRODUCT);
     }

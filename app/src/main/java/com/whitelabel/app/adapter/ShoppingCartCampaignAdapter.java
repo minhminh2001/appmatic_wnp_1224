@@ -98,7 +98,7 @@ public class ShoppingCartCampaignAdapter extends BaseAdapter {
 
         viewHolder.productName.setText(entity.getName());
         viewHolder.by.setText(entity.getBrand());
-        viewHolder.finalPrice.setText(context.getResources().getString(R.string.rm) + " " + entity.getFinalPrice());
+        viewHolder.finalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+ " " + entity.getFinalPrice());
 
         /**
          * we have set padding bottom space in the single item layout,
@@ -118,7 +118,7 @@ public class ShoppingCartCampaignAdapter extends BaseAdapter {
             viewHolder.oldPrice.setVisibility(View.INVISIBLE);
         } else {
             viewHolder.oldPrice.setVisibility(View.VISIBLE);
-            viewHolder.oldPrice.setText(context.getResources().getString(R.string.rm) + " " + entity.getPrice());
+            viewHolder.oldPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + entity.getPrice());
             viewHolder.oldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         }
         if (!TextUtils.isEmpty(entity.getVendorDisplayName())) {

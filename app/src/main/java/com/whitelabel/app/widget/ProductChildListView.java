@@ -15,6 +15,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JViewUtils;
 
@@ -70,13 +71,13 @@ public class ProductChildListView extends LinearLayout{
     public Map<String,String>  getChildIdAndQty(){
         Map<String,String> hashMap=new HashMap<>();
         for(int i=0;i<mBeans.size();i++){
+            JLogUtils.i("ray","mBeans.get(i).getInStock():"+mBeans.get(i).getInStock() +"==============tvNumbers.get(i).getText().toString():"+tvNumbers.get(i).getText().toString());
              if(mBeans.get(i).getInStock()==1&&!"0".equals(tvNumbers.get(i).getText().toString())){
                  hashMap.put(mBeans.get(i).getId(),tvNumbers.get(i).getText().toString());
              }
         }
         return hashMap;
     }
-
     private void setTotalPrice(){
          double  totalPrice=0;
          for(int i=0;i<mBeans.size();i++){

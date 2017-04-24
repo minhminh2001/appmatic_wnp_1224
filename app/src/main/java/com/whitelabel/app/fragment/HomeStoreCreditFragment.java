@@ -260,7 +260,7 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
                 View vRecentTransaction = headView.findViewById(R.id.recentTransaction);
                 View vBottomLine = headView.findViewById(R.id.v_bottom_line);
                 tvTitle.setText(JDataUtils.formatThousand(bean.getAmount()) + "");
-                tvValue.setText("RM " + JDataUtils.formatDouble(bean.getAmountToRM()) + " equivalent");
+                tvValue.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(bean.getAmountToRM()) + " equivalent");
                 headView.findViewById(R.id.rl_help).setOnClickListener(this);
                 TextView tvCms = (TextView) headView.findViewById(R.id.ctvcms);
                 if (!TextUtils.isEmpty(bean.getCMScontentTitle())) {

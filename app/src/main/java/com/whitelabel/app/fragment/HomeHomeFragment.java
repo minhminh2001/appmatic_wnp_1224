@@ -188,7 +188,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
 
 
     public void requestData(){
-        if (!firstloaded) {//first request  data;
+        if (!firstloaded) {
             showLoaderDialog();
             productDao.getBaseCategory();
         } else {
@@ -295,16 +295,14 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             mDialog.dismiss();
         }
     }
-
-
     private void initData(SVRAppserviceCatalogSearchReturnEntity searchCatalog) {
         if (getActivity() != null) {
             rlHome.setVisibility(View.VISIBLE);
             hideErrorLayout();
-            boolean showGuide = JStorageUtils.showAppGuide1(homeActivity);
-            if (showGuide) {
-                mCommonCallback.showUserGuide(UserGuideType.HOMELEFTICON);
-            }
+//            boolean showGuide = JStorageUtils.showAppGuide1(homeActivity);
+//            if (showGuide) {
+//                mCommonCallback.showUserGuide(UserGuideType.HOMELEFTICON);
+//            }
             //categoryArrayList.addAll(searchCatalog.getCategory());
             categoryArrayList = searchCatalog.getCategory();
             //initFragment();
@@ -312,15 +310,8 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             if (categoryArrayList != null) {
                 for (int i = 0; i < categoryArrayList.size(); i++) {
                     mFragment.add(HomeCategoryDetailFragment.newInstance(i,categoryArrayList.get(i).getId()));
-                    JLogUtils.i("ray","mCategoryId:"+categoryArrayList.get(i).getId());
-//                    mFragment.add(HomeHomeCategoryFragment.newInstance(categoryArrayList.get(i).getId()));
                 }
             }
-            //////////////////////////ray
-//            if (mFragment != null && mFragment.size() > 0) {
-//                HomeCategoryDetailFragment fragment = (HomeCategoryDetailFragment) mFragment.get(0);
-//                fragment.setmCurrDisplayedAndData(0, categoryArrayList.get(0));
-//            }
             categoryViewCount = searchCatalog.getCategory().size() - 1;
             fragmentPagerAdapter = new CustomTabPageIndicatorAdapter(getChildFragmentManager());
             chvpContainer.setAdapter(fragmentPagerAdapter);
@@ -347,7 +338,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         }
     }
 
-    public void showAppRate() {
+//    public void showAppRate() {
 //        if (JStorageUtils.isShowAppRate(homeActivity) && !WhiteLabelApplication.delayShowAppRate && !JStorageUtils.showAppGuide1(homeActivity) && JStorageUtils.isClickDelayShow(homeActivity)) {
 //            if (!!homeActivity.getDrawerLayout().isDrawerOpen(Gravity.LEFT)) {
 //                new Handler().postDelayed(new Runnable() {
@@ -360,7 +351,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
 //                }, 300);
 //            }
 //        }
-    }
+//    }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (isShowAppRatePopup) {
@@ -376,49 +367,49 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         return false;
     }
 
-    public void appRate() {
-        if (getActivity() != null) {
-            LayoutInflater inflater = (LayoutInflater) homeActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View popupWindowView = inflater.inflate(R.layout.popupwindow_app_rate, null);
-            popupWindow = new PopupWindow(popupWindowView, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, false);
-            popupWindow.setBackgroundDrawable(new BitmapDrawable());
-            rateNow = (TextView) popupWindowView.findViewById(R.id.rate_now);
-            askMeLater = (TextView) popupWindowView.findViewById(R.id.ask_me_later);
-            noThanks = (TextView) popupWindowView.findViewById(R.id.no_thanks);
-            popupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
-            rateNow = (TextView) popupWindowView.findViewById(R.id.rate_now);
-            rateNow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popupWindow.dismiss();
-                    isShowAppRatePopup = false;
-                    JStorageUtils.notShowAppRate(homeActivity);
-                    Intent intent = new Intent();
-                    intent.setAction("android.intent.action.VIEW");
-                    intent.addCategory("android.intent.category.DEFAULT");
-                    intent.addCategory("android.intent.category.BROWSABLE");
-                    intent.setData(Uri.parse(getString(R.string.play_store_url)));
-                    startActivity(intent);
-                }
-            });
-            noThanks.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popupWindow.dismiss();
-                    isShowAppRatePopup = false;
-                    JStorageUtils.notShowAppRate(homeActivity);
-                }
-            });
-            askMeLater.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popupWindow.dismiss();
-                    isShowAppRatePopup = false;
-                    WhiteLabelApplication.delayShowAppRate = true;
-                }
-            });
-        }
-    }
+//    public void appRate() {
+//        if (getActivity() != null) {
+//            LayoutInflater inflater = (LayoutInflater) homeActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            final View popupWindowView = inflater.inflate(R.layout.popupwindow_app_rate, null);
+//            popupWindow = new PopupWindow(popupWindowView, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, false);
+//            popupWindow.setBackgroundDrawable(new BitmapDrawable());
+//            rateNow = (TextView) popupWindowView.findViewById(R.id.rate_now);
+//            askMeLater = (TextView) popupWindowView.findViewById(R.id.ask_me_later);
+//            noThanks = (TextView) popupWindowView.findViewById(R.id.no_thanks);
+//            popupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
+//            rateNow = (TextView) popupWindowView.findViewById(R.id.rate_now);
+//            rateNow.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    popupWindow.dismiss();
+//                    isShowAppRatePopup = false;
+//                    JStorageUtils.notShowAppRate(homeActivity);
+//                    Intent intent = new Intent();
+//                    intent.setAction("android.intent.action.VIEW");
+//                    intent.addCategory("android.intent.category.DEFAULT");
+//                    intent.addCategory("android.intent.category.BROWSABLE");
+//                    intent.setData(Uri.parse(getString(R.string.play_store_url)));
+//                    startActivity(intent);
+//                }
+//            });
+//            noThanks.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    popupWindow.dismiss();
+//                    isShowAppRatePopup = false;
+//                    JStorageUtils.notShowAppRate(homeActivity);
+//                }
+//            });
+//            askMeLater.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    popupWindow.dismiss();
+//                    isShowAppRatePopup = false;
+//                    WhiteLabelApplication.delayShowAppRate = true;
+//                }
+//            });
+//        }
+//    }
 
     public void switchTab(String categoryId) {
 
@@ -442,15 +433,15 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         super.onResume();
 
     }
-
-    private void initFragment() {
-        mFragment = new ArrayList<Fragment>();
-        if (categoryArrayList != null) {
-            for (int i = 0; i < categoryArrayList.size(); i++) {
-                mFragment.add(new HomeCategoryDetailFragment());
-            }
-        }
-    }
+//
+//    private void initFragment() {
+//        mFragment = new ArrayList<Fragment>();
+//        if (categoryArrayList != null) {
+//            for (int i = 0; i < categoryArrayList.size(); i++) {
+//                mFragment.add(new HomeCategoryDetailFragment());
+//            }
+//        }
+//    }
 
     public static boolean isCategory(SVRAppserviceCatalogSearchCategoryItemReturnEntity categoryEntity) {
         if (categoryEntity != null && categoryEntity.getChildren() != null && categoryEntity.getChildren().size() > 0) {
@@ -510,6 +501,16 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
             return fragment;
         }
 
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            JLogUtils.i("ray","instantiateItem ======" +position);
+            return super.instantiateItem(container, position);
+        }
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            JLogUtils.i("ray","destroyItem ======" +position);
+            super.destroyItem(container, position, object);
+        }
         @Override
         public CharSequence getPageTitle(int position) {
             String categoryName = null;

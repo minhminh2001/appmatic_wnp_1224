@@ -18,7 +18,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
@@ -255,9 +254,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         } else {
             jumpLoginActivity();
         }
-
     }
-
     @Override
     protected void jumpOrderPage() {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
@@ -265,7 +262,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         } else {
             jumpLoginActivity();
         }
-
     }
 
     @Override
@@ -321,7 +317,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         startActivityForResult(intent, 1000);
         overridePendingTransition(R.anim.activity_anim1_enter1, R.anim.activity_anim1_exit1);
     }
-
     private void addFragment(int index, Fragment fragment) {
         if (index < 0) {
             return;
@@ -340,10 +335,8 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             mAttachedFragmentList.set(index, fragment);
         }
     }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
     }
     private void initFragment(Bundle savedInstanceState) {
         addFragment(FRAGMENT_TYPE_HOME_HOME, new HomeHomeFragment());
@@ -369,7 +362,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             }
         });
     }
-
     private Animation getFadeOutAnimation() {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_fade_out);
         animation.setAnimationListener(new Animation.AnimationListener() {
@@ -383,7 +375,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                 rlMarketLayer.setVisibility(View.GONE);
                 rlMarketLayer.setClickable(true);
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
             }
@@ -742,6 +733,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                 WhiteLabelApplication.getAppConfiguration().isSignIn(HomeActivity.this)){
              if(mCurrentFragment instanceof  HomeHomeFragment){
                  HomeHomeFragment fragment= (HomeHomeFragment) mCurrentFragment;
+                 JLogUtils.i("ray","=========================================");
                  fragment.requestData();
              }
         }

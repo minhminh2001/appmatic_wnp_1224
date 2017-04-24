@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.Wishlist;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
@@ -80,9 +81,9 @@ public class MyAccountWishlistAdapter extends ArrayAdapter<Wishlist> {
         DecimalFormat decimalFormat = new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
         String newPrice = JDataUtils.formatDouble(aw.getFinalPrice());//format 返回的是字符串
         String oldPrice = JDataUtils.formatDouble(aw.getPrice());//format 返回的是字符串
-        viewHolder.tvNewPrice.setText(context.getResources().getString(R.string.rm) + " "+newPrice);
+        viewHolder.tvNewPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " "+newPrice);
         if (!newPrice.equals(oldPrice)) {
-            viewHolder.tvoldprice.setText(context.getResources().getString(R.string.rm)+" "+ oldPrice);
+            viewHolder.tvoldprice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+ oldPrice);
         } else {
             viewHolder.tvoldprice.setText("");
             viewHolder.tvoldprice.setHeight(0);

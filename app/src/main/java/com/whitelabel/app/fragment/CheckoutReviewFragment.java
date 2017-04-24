@@ -18,6 +18,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.adapter.CheckoutReviewShoppingCartAdapter;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.CheckoutPaymentReturnShippingAddress;
 import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceSaveBillingEntity;
@@ -292,7 +293,7 @@ public class CheckoutReviewFragment extends BaseFragment {
 
             //Set Datas to last four RM number
             tvSubtotal.setText(paymentSaveReturnEntity.getSubtotal());
-            tvShippingfee.setText(paymentSaveReturnEntity.getShipping() == null ? "RM 0.00" : paymentSaveReturnEntity.getShipping().get("value"));
+            tvShippingfee.setText(paymentSaveReturnEntity.getShipping() == null ? WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+" 0.00" : paymentSaveReturnEntity.getShipping().get("value"));
             //Voucher or Discount
             if (null != paymentSaveReturnEntity.getDiscount() && paymentSaveReturnEntity.getDiscount().size() > 0) {
                 if (JDataUtils.isEmpty(paymentSaveReturnEntity.getDiscount().get("title"))) {

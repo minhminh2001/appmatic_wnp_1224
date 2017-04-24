@@ -169,7 +169,6 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
             }
             tvTrasferFrom.setText(bankFrom);
             JImageUtils.downloadImageFromServerByUrl(BankTransaferActivity.this, mImageLoader, ivImg, mBean.getProofFile(), JDataUtils.dp2Px(100), JDataUtils.dp2Px(100));
-
             if (mBean.getCanSubmit() == 1) {
                 isEdit = true;
                 etOrderNum.setEnabled(false);

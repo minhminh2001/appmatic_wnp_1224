@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.TrackingInfoActivity;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.bean.OrderBody;
 import com.whitelabel.app.bean.OrderTip;
 import com.whitelabel.app.model.MyAccountOrderInner;
@@ -144,7 +145,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 }
             });
         } else if (holder instanceof VHHeader) {
-            //cast holder to VHHeader and set data for header.
+            //cast holder to VHHeader and set data for header.f196704ba8a04d420409a3bcdf8efe20
 
         } else if (holder instanceof VHFooter) {
 //            if(!loadMore){
@@ -158,6 +159,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, subOrderHolder.orderImage, orderBody.getOrderImage(), JToolUtils.dip2px(context, 85), JToolUtils.dip2px(context, 85));
             }
             subOrderHolder.orderImage.setTag(orderBody.getOrderImage());
+            subOrderHolder.rmTop.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+"");
             subOrderHolder.orderName.setText(orderBody.getOrderName());
             if (TextUtils.isEmpty(orderBody.getTrickingTitle()) && TextUtils.isEmpty(orderBody.getTrickingUrl())) {
                 subOrderHolder.trackingInfo.setVisibility(View.GONE);
@@ -298,7 +300,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         ImageView orderImage;
 
         TextView orderName, orderCS, orderPrice, orderNum, orderStatus, orderNewStatus, orderMerName, trackingInfo;
-
+        TextView rmTop;
 
         public SubOrderHolder(View view) {
             super(view);
@@ -311,6 +313,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             orderNewStatus = (TextView) view.findViewById(R.id.tv_orderlist_new_status);
             orderMerName = (TextView) view.findViewById(R.id.tv_orderlist_new_mername);
             trackingInfo = (TextView) view.findViewById(R.id.tv_orderlist_tracking);
+            rmTop= (TextView) view.findViewById(R.id.rm_top);
 
         }
     }

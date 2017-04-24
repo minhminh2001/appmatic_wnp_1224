@@ -911,10 +911,10 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             } else {
                 mTvGst.setVisibility(View.GONE);
             }
-            tvSubtotal.setText("RM " + JDataUtils.formatDouble(cart.getSubTotal()));
-            tvGrandTotal.setText(" RM " + JDataUtils.formatDouble(cart.getGrandTotal()));
+            tvSubtotal.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(cart.getSubTotal()));
+            tvGrandTotal.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(cart.getGrandTotal()));
             if (cart.getShipping() != null) {
-                tvShippingFree.setText("RM " + cart.getShipping().getValue());
+                tvShippingFree.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + cart.getShipping().getValue());
             }
             setButtonQty(cart.getSummaryQty());
             saveShoppingCartCount(cart.getSummaryQty());

@@ -1498,8 +1498,8 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         oldWheel.setDisplay(oldLabel);
         oldWheel.setValue(oldValue);
         if ("".equals(oldLabel)) {
-            oldWheel.setDisplay("RM 0-2000");
-            oldWheel.setValue("RM 0-2000");
+            oldWheel.setDisplay(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+"0-2000");
+            oldWheel.setValue(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+" 0-2000");
         }
         int incomeSize = sharedIncome.getInt("size", 0);
 

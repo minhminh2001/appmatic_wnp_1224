@@ -808,13 +808,13 @@ public class ProductDetailOldActivity extends com.whitelabel.app.BaseActivity im
             }
             ctvProductName.setText(productEntity.getName());
             if (JDataUtils.compare(Float.parseFloat(productEntity.getFinalPrice()), Float.parseFloat(productEntity.getPrice())) < 0) {
-                oldprice.setText("RM " + JDataUtils.formatDouble(productEntity.getPrice()));
+                oldprice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(productEntity.getPrice()));
                 rlProductPrice.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
             } else {
                 oldprice.setText("");
                 rlProductPrice.getLayoutParams().height = 0;
             }
-            price_textview.setText("RM " + JDataUtils.formatDouble(productEntity.getFinalPrice()));
+            price_textview.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(productEntity.getFinalPrice()));
         }
     }
 

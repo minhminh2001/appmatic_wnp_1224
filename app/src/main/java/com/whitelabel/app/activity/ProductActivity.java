@@ -804,13 +804,13 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
             ctvProductName.setText(productEntity.getName());
             if (JDataUtils.compare(Float.parseFloat(productEntity.getFinalPrice()), Float.parseFloat(productEntity.getPrice())) < 0) {
-                oldprice.setText("RM " + JDataUtils.formatDouble(productEntity.getPrice()));
+                oldprice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(productEntity.getPrice()));
                 rlProductPrice.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
             } else {
                 oldprice.setText("");
                 rlProductPrice.getLayoutParams().height = 0;
             }
-            price_textview.setText("RM " + JDataUtils.formatDouble(productEntity.getFinalPrice()));
+            price_textview.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+ JDataUtils.formatDouble(productEntity.getFinalPrice()));
         }
     }
 
@@ -1934,10 +1934,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         if(mProductDetailBean.getType().equals(ProductDetailModel.TYPE_GROUP)){
             idQtys=pcGroupConfig.getChildIdAndQty();
         }else if(mProductDetailBean.getType().equals(ProductDetailModel.TYPE_CONFIGURABLE)){
-//            List<SVRAppserviceProductDetailResultPropertyReturnEntity> propertyReturnEntities = new ArrayList<>();
             idQtys=pcGroupConfig.getChildIdAndQty();
             for (int i = 0; i < mAttributeViews.size(); i++) {
-          SVRAppserviceProductDetailResultPropertyReturnEntity bean=
+              SVRAppserviceProductDetailResultPropertyReturnEntity bean=
                 (SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag();
                 idQtys.put(bean.getId(),userSelectedProductQty+"");
             }
@@ -1951,7 +1950,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         mGATrackAddCartTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
-                            mDialog = JViewUtils.showProgressDialog(ProductActivity.this);
+          mDialog = JViewUtils.showProgressDialog(ProductActivity.this);
             mShoppingDao.addProductToShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey(), productId,idQtys);
         } else {
             Intent loginIntent = new Intent(this, LoginRegisterActivity.class);

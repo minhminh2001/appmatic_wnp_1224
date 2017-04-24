@@ -174,9 +174,9 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder.tvPrice.setText("");
             } else {
                 viewHolder.tvPrice.setVisibility(View.VISIBLE);
-                viewHolder.tvPrice.setText("RM " + JDataUtils.formatDouble(sc.getPrice()));
+                viewHolder.tvPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(sc.getPrice()));
             }
-            viewHolder.tvFinalPrice.setText("RM " + JDataUtils.formatDouble(sc.getFinalPrice()));
+            viewHolder.tvFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(sc.getFinalPrice()));
 
         } catch (Exception ex) {
             ex.getStackTrace();

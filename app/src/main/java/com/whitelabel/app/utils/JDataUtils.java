@@ -596,7 +596,7 @@ public class JDataUtils {
     }
 
     public static String formatPrice(int price) {
-        return "RM " + price + ".00";
+        return WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + price + ".00";
     }
 
     public static String getFirstLetterToUpperCase(String title) {
