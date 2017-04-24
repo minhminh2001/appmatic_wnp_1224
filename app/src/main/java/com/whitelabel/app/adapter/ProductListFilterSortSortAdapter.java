@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CurationActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
@@ -16,13 +14,11 @@ import com.whitelabel.app.listener.OnFilterSortFragmentListener;
 import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsSortItemReturnEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
-import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.CustomRadioButton;
 import com.whitelabel.app.widget.CustomTextView;
 
 import java.util.ArrayList;
-
 /**
  * Created by imaginato on 2015/8/6.
  */
@@ -31,7 +27,6 @@ public class ProductListFilterSortSortAdapter extends ArrayAdapter<SVRAppservice
     private OnFilterSortFragmentListener filterSortFragmentListener;
     private ArrayList<SVRAppserviceProductSearchFacetsSortItemReturnEntity> facetsSortItemReturnEntityArrayList;
     private TMPProductListFilterSortPageEntity productListFilterSortPageEntity;
-
     public ProductListFilterSortSortAdapter(Activity activity, OnFilterSortFragmentListener listener, ArrayList<SVRAppserviceProductSearchFacetsSortItemReturnEntity> array, TMPProductListFilterSortPageEntity filterSortPageEntity) {
         super(activity, R.layout.adapter_productlist_sort_item, array);
         this.mActivity = activity;

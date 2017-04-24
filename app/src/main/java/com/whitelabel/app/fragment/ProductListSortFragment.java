@@ -34,15 +34,11 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
     private IFilterSortActivity filterSortActivity;
     private View contentView;
     private OnFilterSortFragmentListener fragmentListener;
-
     private ListView lvSortConditions;
     private RelativeLayout rlHeaderbarCancel;
-
     private TMPProductListFilterSortPageEntity productListFilterSortPageEntity;
-
     private ArrayList<SVRAppserviceProductSearchFacetsSortItemReturnEntity> facetsSortItemReturnEntityArrayList;
     private ProductListFilterSortSortAdapter sortAdapter;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -59,7 +55,6 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
             facetsSortItemReturnEntityArrayList = new ArrayList<>();
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView = inflater.inflate(R.layout.fragment_productlist_sort, null);
@@ -69,9 +64,6 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
         JViewUtils.setNavBarIconColor(getActivity(),ivCancel,R.drawable.ic_action_close);
         return contentView;
     }
-
-
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -83,10 +75,8 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
         rlHeaderbarCancel = (RelativeLayout) contentView.findViewById(R.id.rl_headerbar_cancel);
         rlHeaderbarCancel.setOnClickListener(this);
         lvSortConditions = (ListView) contentView.findViewById(R.id.lvSortConditions);
-
         addSortSortConditions();
     }
-
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
@@ -96,16 +86,13 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
             }
         }
     }
-
     @Override
     protected void onAnimationEnded() {
         fragmentListener.onAnimationFinished(this);
     }
-
     private void addSortSortConditions() {
         if (facetsSortItemReturnEntityArrayList != null) {
             facetsSortItemReturnEntityArrayList.clear();
-
             if (sortAdapter != null) {
                 sortAdapter.notifyDataSetChanged();
             }
@@ -120,16 +107,12 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
             }
             for (int index = 0; index < productListFilterSortPageEntity.getFacets().getSort_filter().size(); ++index) {
                 SVRAppserviceProductSearchFacetsSortItemReturnEntity sortItem = productListFilterSortPageEntity.getFacets().getSort_filter().get(index);
-//                if (index == 0 && defaultItem) {
-//                    sortItem.setSelected(true);
-//                }
                 facetsSortItemReturnEntityArrayList.add(sortItem);
             }
         }
         sortAdapter = new ProductListFilterSortSortAdapter((Activity) filterSortActivity, fragmentListener, facetsSortItemReturnEntityArrayList, productListFilterSortPageEntity);
         lvSortConditions.setAdapter(sortAdapter);
     }
-
     public void setFragmentListener(OnFilterSortFragmentListener listener) {
         this.fragmentListener = listener;
     }

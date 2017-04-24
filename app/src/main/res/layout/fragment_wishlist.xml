@@ -15,6 +15,7 @@
             android:id="@+id/whistlist_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:listSelector="@null"
             android:divider="@color/v2_line"
             android:dividerHeight="@dimen/myAccount_lineHeight"
             android:layout_below="@+id/addressbook_add_RelativeLayout"/>

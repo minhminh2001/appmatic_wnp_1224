@@ -1846,7 +1846,12 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 addRecommendedToWishByOperate();
                 needRefreshWhenBackPressed = true;
                 changeOperateProductIdPrecacheStatus(true);
-                getProductInfo();
+                if(reAddCart){
+                    addToCartSendRequest();
+                    reAddCart=false;
+                }else {
+                    getProductInfo();
+                }
             }
         }
         if (requestCode == ProductActivity.RESULT_WISH && resultCode == Activity.RESULT_OK) {
@@ -1921,6 +1926,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             mDialog = JViewUtils.showProgressDialog(ProductActivity.this);
             mShoppingDao.addProductToShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey(), productId,idQtys);
         } else {
+            reAddCart=true;
             Intent loginIntent = new Intent(this, LoginRegisterActivity.class);
             startActivityForResult(loginIntent,REQUESTCODE_LOGIN );
             overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
