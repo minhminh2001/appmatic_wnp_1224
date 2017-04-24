@@ -125,11 +125,13 @@ public class HomeCategoryDetailFragment extends HomeBaseFragment<HomeCategoryDet
     }
     @Override
     public void onRefresh() {
-        String sessionKey="";
-        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
-            sessionKey=WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+        if (!getActivity().isFinishing()&&isAdded()) {
+            String sessionKey = "";
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+            }
+            mPresenter.getCategoryDetail(mCategoryId, sessionKey);
         }
-        mPresenter.getCategoryDetail(mCategoryId,sessionKey);
     }
 
     private final GridLayoutManager.SpanSizeLookup mTwoRowSpan = new GridLayoutManager.SpanSizeLookup() {

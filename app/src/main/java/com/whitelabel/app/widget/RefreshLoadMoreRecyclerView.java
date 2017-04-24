@@ -1,7 +1,10 @@
 package com.whitelabel.app.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +17,12 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.OrderListRecyclerViewAdapter;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.utils.JLogUtils;
 
 import java.util.Timer;
@@ -640,7 +645,7 @@ public class RefreshLoadMoreRecyclerView extends RecyclerView {
 
         private Context mContext;
         private View mContentView;
-        private View mProgressBar;
+        private ProgressBar mProgressBar;
         private TextView mHintView;
 
         public CustomDragRecyclerFooterView(Context context) {
@@ -731,7 +736,16 @@ public class RefreshLoadMoreRecyclerView extends RecyclerView {
             addView(moreView);
             moreView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
             mContentView = moreView.findViewById(R.id.rlContentView);
-            mProgressBar = moreView.findViewById(R.id.pbContentView);
+            mProgressBar = (ProgressBar) moreView.findViewById(R.id.pbContentView);
+
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+
+                mProgressBar.setIndeterminateTintMode(PorterDuff.Mode.SRC_ATOP);
+                mProgressBar.setIndeterminateTintList(ColorStateList.
+                        valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor()));
+//            mProgressBar.getIndeterminateDrawable().setColorFilter(
+//                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(), android.graphics.PorterDuff.Mode.MULTIPLY);
+            }
             mProgressBar.setVisibility(GONE);
             mHintView = (TextView)moreView.findViewById(R.id.ctvContentView);
         }

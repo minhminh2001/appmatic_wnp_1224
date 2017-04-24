@@ -51,7 +51,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
-
+    private String mOrderNumber;
+    private DataHandler dataHandler;
     private MyAccountOrderDetailAdapter adapter;
     private TextView tvOrderNumber;
     private TextView tvDate;
@@ -178,9 +179,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
             super.handleMessage(msg);
         }
     }
-    private String mOrderNumber;
 
-    private DataHandler dataHandler;
 
 
     @Override

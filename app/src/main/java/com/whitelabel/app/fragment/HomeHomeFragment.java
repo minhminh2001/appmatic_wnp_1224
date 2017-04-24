@@ -297,38 +297,39 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     }
     private void initData(SVRAppserviceCatalogSearchReturnEntity searchCatalog) {
         if (getActivity() != null) {
-            rlHome.setVisibility(View.VISIBLE);
-            hideErrorLayout();
-//            boolean showGuide = JStorageUtils.showAppGuide1(homeActivity);
-//            if (showGuide) {
-//                mCommonCallback.showUserGuide(UserGuideType.HOMELEFTICON);
-//            }
-            //categoryArrayList.addAll(searchCatalog.getCategory());
-            categoryArrayList = searchCatalog.getCategory();
-            //initFragment();
-            mFragment = new ArrayList<>();
-            if (categoryArrayList != null) {
-                for (int i = 0; i < categoryArrayList.size(); i++) {
-                    mFragment.add(HomeCategoryDetailFragment.newInstance(i,categoryArrayList.get(i).getId()));
+            if(mFragment!=null&&mFragment.size()>0){
+                for(int i=0;i<mFragment.size();i++){
+                    ((HomeCategoryDetailFragment)mFragment.get(i)).onRefresh();
                 }
+            }else {
+                rlHome.setVisibility(View.VISIBLE);
+                hideErrorLayout();
+                categoryArrayList = searchCatalog.getCategory();
+                //initFragment();
+                mFragment = new ArrayList<>();
+                if (categoryArrayList != null) {
+                    for (int i = 0; i < categoryArrayList.size(); i++) {
+                        mFragment.add(HomeCategoryDetailFragment.newInstance(i, categoryArrayList.get(i).getId()));
+                    }
+                }
+                categoryViewCount = searchCatalog.getCategory().size() - 1;
+                fragmentPagerAdapter = new CustomTabPageIndicatorAdapter(getChildFragmentManager());
+                chvpContainer.setAdapter(fragmentPagerAdapter);
+                ctpiCategoryList.setViewPager(chvpContainer);
+                //page change listener -- russell
+                ctpiCategoryList.setOnPageChangeListener(pageChangeListener);
+                everythingIndex = getCurrIndex(categoryId) == -1 ? everythingIndex : getCurrIndex(categoryId);
+                chvpContainer.setOffscreenPageLimit(1);
+                JLogUtils.i(TAG, "everythingIndex:" + everythingIndex);
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ctpiCategoryList.setSelectColor(everythingIndex);
+                        chvpContainer.setCurrentItem(everythingIndex);
+                    }
+                });
+                updateShoppingCartItemCount();
             }
-            categoryViewCount = searchCatalog.getCategory().size() - 1;
-            fragmentPagerAdapter = new CustomTabPageIndicatorAdapter(getChildFragmentManager());
-            chvpContainer.setAdapter(fragmentPagerAdapter);
-            ctpiCategoryList.setViewPager(chvpContainer);
-            //page change listener -- russell
-            ctpiCategoryList.setOnPageChangeListener(pageChangeListener);
-            everythingIndex = getCurrIndex(categoryId) == -1 ? everythingIndex : getCurrIndex(categoryId);
-            chvpContainer.setOffscreenPageLimit(categoryViewCount);
-            JLogUtils.i(TAG, "everythingIndex:" + everythingIndex);
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    ctpiCategoryList.setSelectColor(everythingIndex);
-                    chvpContainer.setCurrentItem(everythingIndex);
-                }
-            });
-            updateShoppingCartItemCount();
         }
         if (mGATrackTimeEnable) {
             GaTrackHelper.getInstance().googleAnalyticsTimeStop(
@@ -503,12 +504,10 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            JLogUtils.i("ray","instantiateItem ======" +position);
             return super.instantiateItem(container, position);
         }
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            JLogUtils.i("ray","destroyItem ======" +position);
             super.destroyItem(container, position, object);
         }
         @Override

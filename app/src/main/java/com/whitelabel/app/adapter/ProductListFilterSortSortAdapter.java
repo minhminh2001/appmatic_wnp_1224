@@ -18,6 +18,7 @@ import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.widget.CustomRadioButton;
 import com.whitelabel.app.widget.CustomTextView;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class ProductListFilterSortSortAdapter extends ArrayAdapter<SVRAppservice
             convertView = LayoutInflater.from(mActivity).inflate(R.layout.adapter_productlist_sort_item, null);
             viewHolder = new ViewHolder();
             viewHolder.ctvSortTitle = (CustomTextView) convertView.findViewById(R.id.ctvSortTitle);
-            viewHolder.ivSortTitle =  convertView.findViewById(R.id.ivSortTitle);
+            viewHolder.ivSortTitle = (CustomRadioButton) convertView.findViewById(R.id.ivSortTitle);
 
             convertView.setTag(viewHolder);
         } else {
@@ -67,16 +68,14 @@ public class ProductListFilterSortSortAdapter extends ArrayAdapter<SVRAppservice
             }
             return convertView;
         }
-
         String brandLabel = sortItemReturnEntity.getLabel();
         viewHolder.ctvSortTitle.setText(brandLabel);
-       JLogUtils.i("zz",""+brandLabel);
-
+        JLogUtils.i("zz",""+brandLabel+"---sortItemReturnEntity.isSelected():"+sortItemReturnEntity.isSelected());
         if (sortItemReturnEntity.isSelected()) {
             mCurrindex=position;
-            viewHolder.ivSortTitle.setVisibility(View.VISIBLE);
+            viewHolder.ivSortTitle.setSelect(true);
         } else {
-            viewHolder.ivSortTitle.setVisibility(View.INVISIBLE);
+            viewHolder.ivSortTitle.setSelect(false);
         }
         convertView.setOnClickListener(new View.OnClickListener() {
             private int index;
@@ -84,7 +83,6 @@ public class ProductListFilterSortSortAdapter extends ArrayAdapter<SVRAppservice
                 this.index = i;
                 return this;
             }
-
             @Override
             public void onClick(View view) {
                 if (productListFilterSortPageEntity == null) {
@@ -142,6 +140,6 @@ public class ProductListFilterSortSortAdapter extends ArrayAdapter<SVRAppservice
     private Handler mHandler=new Handler();
     class ViewHolder {
         public CustomTextView ctvSortTitle;
-        public View ivSortTitle;
+        public CustomRadioButton ivSortTitle;
     }
 }

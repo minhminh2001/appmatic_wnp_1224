@@ -329,7 +329,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
 
     }
 
-
     public ArrayList<MyAccountOrderOuter> initArray(List<MyAccountOrderOuter> array) {
         ArrayList<MyAccountOrderOuter> arrayList = new ArrayList<>();
         for (int i = 0; i < array.size(); i++) {
@@ -366,7 +365,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             initData();
         }
     }
-
     @Override
     public void onStart() {
         super.onStart();

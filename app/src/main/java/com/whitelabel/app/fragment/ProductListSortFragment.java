@@ -110,7 +110,6 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
                 sortAdapter.notifyDataSetChanged();
             }
         }
-
         boolean defaultItem = true;
         if (productListFilterSortPageEntity != null && productListFilterSortPageEntity.getFacets() != null && productListFilterSortPageEntity.getFacets().getSort_filter() != null) {
             for (int index = 0; index < productListFilterSortPageEntity.getFacets().getSort_filter().size(); ++index) {
@@ -134,7 +133,6 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
     public void setFragmentListener(OnFilterSortFragmentListener listener) {
         this.fragmentListener = listener;
     }
-
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.rl_headerbar_cancel) {

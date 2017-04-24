@@ -36,7 +36,6 @@ import java.util.ArrayList;
  * Created by Administrator on 2015/8/26.
  */
 public class ShoppingCartCampaignAdapter extends BaseAdapter {
-
     private Context context;
     private ShoppingCartCampaignActivity activity;
     private ArrayList<ShoppingCartCampaignListEntity> list;
@@ -44,7 +43,6 @@ public class ShoppingCartCampaignAdapter extends BaseAdapter {
     private boolean flag = true;//escape resubmitting
     private ShoppingCarDao mShoppingCarDao;
     private final ImageLoader mImageLoader;
-
     public ShoppingCartCampaignAdapter(Context context, ArrayList<ShoppingCartCampaignListEntity> list, ImageLoader imageLoader) {
         this.context = context;
         this.activity = (ShoppingCartCampaignActivity) context;

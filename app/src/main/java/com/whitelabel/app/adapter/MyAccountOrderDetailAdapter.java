@@ -18,6 +18,7 @@ import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.MyAccountOrderDetailActivity;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.activity.TrackingInfoActivity;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.MyAccountOrderInner;
 import com.whitelabel.app.model.MyAccountOrderMiddle;
 import com.whitelabel.app.model.MyAccountOrderTrackingInfo;
@@ -109,6 +110,7 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
                 }
             });
             View line = view_inner.findViewById(R.id.line);
+             TextView tvCurreny= (TextView) view_inner.findViewById(R.id.rm_top);
             TextView productId = (TextView) view_inner.findViewById(R.id.order_product_id);
             TextView productBrand = (TextView) view_inner.findViewById(R.id.order_product_brand);
             TextView tvProductName = (TextView) view_inner.findViewById(R.id.tv_orderlist_new_name);
@@ -118,14 +120,12 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
             TextView tvColorsAndSize = (TextView) view_inner.findViewById(R.id.tv_orderlist_new_det);
             TextView orderNewStatus=(TextView)view_inner.findViewById(R.id.tv_orderlist_new_status);
             TextView orderStatus=(TextView)view_inner.findViewById(R.id.order_status);
-
             TextView tvTrickingInfo=(TextView)view_inner.findViewById(R.id.tv_orderlist_tracking);
             TextView unavailable=(TextView)view_inner.findViewById(R.id.order_detail_unavailable);
             TextView orderDetailTrans=(TextView)view_inner.findViewById(R.id.order_detail_trans);
             TextView orderMerchantName=(TextView)view_inner.findViewById(R.id.tv_orderlist_new_mername);
             final MyAccountOrderTrackingInfo  trackingInfo = orderMiddle.getTrackingInfo();;
-
-
+            tvCurreny.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+"");
             if (trackingInfo!=null) {
                 tvTrickingInfo.setVisibility(View.VISIBLE);
                 tvTrickingInfo.setOnClickListener(new View.OnClickListener() {
@@ -222,7 +222,8 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
             tvQuantity.setText("Quantity: " + orderInner.getQty());
             tvPrice.setText(JDataUtils.formatDouble(orderInner.getPrice()));
             // Image download
-            JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, image, orderInner.getImage(), JToolUtils.dip2px(context, 160), JToolUtils.dip2px(context, 160));
+            JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, image, orderInner.getImage(), JToolUtils.dip2px(context, 160),
+                    JToolUtils.dip2px(context, 160));
             orderNewStatus.setText(mStatus);
             JViewUtils.setStatus(orderStatus,mStatusCode);
             //GET color and size: {"label":xxx,"value":xxx}
