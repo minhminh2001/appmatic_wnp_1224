@@ -120,9 +120,9 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
             }
             for (int index = 0; index < productListFilterSortPageEntity.getFacets().getSort_filter().size(); ++index) {
                 SVRAppserviceProductSearchFacetsSortItemReturnEntity sortItem = productListFilterSortPageEntity.getFacets().getSort_filter().get(index);
-                if (index == 0 && defaultItem) {
-                    sortItem.setSelected(true);
-                }
+//                if (index == 0 && defaultItem) {
+//                    sortItem.setSelected(true);
+//                }
                 facetsSortItemReturnEntityArrayList.add(sortItem);
             }
         }

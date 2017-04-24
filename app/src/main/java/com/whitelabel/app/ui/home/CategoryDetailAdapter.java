@@ -71,17 +71,12 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public interface OnFilterSortBarListener {
         void onSwitchViewClick(View view);
-
         void onFilterClick();
-
         void onSortClick();
     }
-
-
     private static final class DataHandler extends Handler {
         private final WeakReference<CategoryDetailAdapter> mAdapter;
         private final WeakReference<Context> mContext;
-
         public DataHandler(Context context, CategoryDetailAdapter productListAdapter) {
             mAdapter = new WeakReference<CategoryDetailAdapter>(productListAdapter);
             mContext = new WeakReference<Context>(context);
@@ -193,41 +188,26 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else {
             return TYPE_TWOROW_ITEM;
         }
-//        else {
-//            return TYPE_SINGLEROW_ITEM;
-//        }
-
-
-        //        else if (position == mProducts.size() + 1) {
-//            return TYPE_FOOTER;
-//        }
     }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (categoryDetailModel == null) return;
+            int width = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity)
+                    headerViewHolder.detailViewpager.getContext());
+            int imageHeight = width * 240 / 490;
+            headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
             if (TextUtils.isEmpty(categoryDetailModel.getCategory_img())) {
-                headerViewHolder.detailViewpager.setVisibility(View.GONE);
+                headerViewHolder.detailViewpager.setVisibility(View.VISIBLE);
             } else {
                 if (headerViewHolder.detailViewpager.getTag() == null) {
-                    int width = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity)
-                            headerViewHolder.detailViewpager.getContext());
-                    int imageHeight = width * 240 / 490;
-                    headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
                     List<String> imgs=new ArrayList<>();
                     imgs.add(categoryDetailModel.getCategory_img());
                     headerViewHolder.detailViewpager.setAdapter(new FlowViewAdapter(createImageViewList(headerViewHolder.itemView.getContext(), mImageLoader, imgs)));
-//                    headerViewHolder.detailViewpager.addOnPageChangeListener(mPageChangeListener);
-//                    addTisView(headerViewHolder.llTips, categoryDetailModel.getCategory_img().size());
-//                    if (mImageViewTips.size() == 1) {
-//                        headerViewHolder.llTips.setVisibility(View.GONE);
-//                    }
                     headerViewHolder.detailViewpager.setTag("use");
                 }
             }
-
         } else if (holder instanceof ItemViewHolder) {
             final ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             SVRAppserviceProductSearchResultsItemReturnEntity leftProductEntity = null;
@@ -249,7 +229,6 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 leftImagelp.height = destHeight;
                 itemViewHolder.ivProductImage.setLayoutParams(leftImagelp);
             }
-
             final String leftProductImageUrl = leftProductEntity.getSmallImage();
             // load left image
             if (itemViewHolder.ivProductImage.getTag() != null) {
