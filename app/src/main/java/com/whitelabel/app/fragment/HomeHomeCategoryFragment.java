@@ -60,14 +60,12 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
     private RequestErrorHelper requestErrorHelper;
 
     private View connectionLayout;
-    private LinearLayout tryAgain;
     private boolean isinit = false;
     private static String TAG;
     private ProductDao mDao;
     private boolean isPrepared, isVisible, mHasLoadedOnce;
     //    private GetServiceListDao mDao;
     private int showItAfter;
-    private int duration;
     private Handler mHandler = new Handler();
     private CurationAdapter adapter;
     private DataHandler mHandler1;
@@ -250,7 +248,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
         View mContentView = inflater.inflate(R.layout.fragment_home_home_category, null);
         connectionLayout = mContentView.findViewById(R.id.connectionBreaks);
         requestErrorHelper = new RequestErrorHelper(getContext(), connectionLayout);
-        tryAgain = (LinearLayout) mContentView.findViewById(R.id.try_again);
+        LinearLayout tryAgain = (LinearLayout) mContentView.findViewById(R.id.try_again);
         mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.recyclerView1);
         refreshLayout = (SwipeRefreshLayout) mContentView.findViewById(R.id.swipe_container);
 //        refreshLayout.setColorSchemeResources(R.color.colorAccent);
@@ -347,7 +345,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
                     mCommonCallback.showMarketLayers();
                     mCurrDisplayed = true;
                     try {
-                        duration = Integer.parseInt(mCurationListReturnEntity.getDuration()) * 1000;
+                        int duration = Integer.parseInt(mCurationListReturnEntity.getDuration()) * 1000;
                         mHandler.postDelayed(closeMarketRun, duration);
                     } catch (Exception ex) {
                         ex.getStackTrace();

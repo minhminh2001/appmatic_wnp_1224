@@ -29,8 +29,6 @@ import com.whitelabel.app.utils.JViewUtils;
 public class LoginRegisterRegisterSuccessFragment extends Fragment implements View.OnClickListener {
     private LoginRegisterActivity loginRegisterActivity;
     private View contentView;
-    private TextView goshopping;
-    private TextView rigisterSuccess1;
     private boolean  isStart;
     private ToolBarFragmentCallback toolBarFragmentCallback;
     @Override
@@ -108,12 +106,12 @@ public class LoginRegisterRegisterSuccessFragment extends Fragment implements Vi
                 isStart = true;
             }
         }
-        goshopping= (TextView) contentView.findViewById(R.id.goshopping);
+        TextView goshopping = (TextView) contentView.findViewById(R.id.goshopping);
         goshopping.setOnClickListener(this);
 //        goshopping.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 //        goshopping.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
-        JViewUtils.setStrokeButtonGlobalStyle(getActivity(),goshopping);
-        rigisterSuccess1= (TextView) contentView.findViewById(R.id.rigisterSuccess1);
+        JViewUtils.setStrokeButtonGlobalStyle(getActivity(), goshopping);
+        TextView rigisterSuccess1 = (TextView) contentView.findViewById(R.id.rigisterSuccess1);
         String myEmail=loginRegisterActivity.getMyEmail();
         if(loginRegisterActivity.isEmailConfirm()){
             rigisterSuccess1.setText(getResources().getString(R.string.process_email)+myEmail+" "+getResources().getString(R.string.to_confirm));

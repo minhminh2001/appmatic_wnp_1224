@@ -58,11 +58,9 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
     public ArrayList<AddressBook> mBeans = new ArrayList<AddressBook>();
     private Dialog mDialog;
     private View gride;
-    private HomeMyAccountFragmentV2 myAccountUserGuide;
     private MyAccountDao dao;
     private String TAG;
     private SwipeRefreshLayout refreshLayout;
-    private DataHandler dataHandler;
     private int index;
 
     private final static class DataHandler extends Handler {
@@ -184,7 +182,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
 
     private RequestErrorHelper requestErrorHelper;
     private View connectionLayout;
-    private LinearLayout tryAgain;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -193,12 +190,12 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
             mCommonCallback.switchMenu(HomeCommonCallback.MENU_ADDRESS);
         }
         TAG = addressBookActivity.getClass().getSimpleName();
-        dataHandler = new DataHandler(addressBookActivity, this);
+        DataHandler dataHandler = new DataHandler(addressBookActivity, this);
         dao = new MyAccountDao(TAG, dataHandler);
 //        mBar=(ProgressBar)contentView.findViewById(R.id.pb_shoppingcart);
         connectionLayout = contentView.findViewById(R.id.connectionBreaks);
         requestErrorHelper = new RequestErrorHelper(getContext(), connectionLayout);
-        tryAgain = (LinearLayout) contentView.findViewById(R.id.try_again);
+        LinearLayout tryAgain = (LinearLayout) contentView.findViewById(R.id.try_again);
         tryAgain.setOnClickListener(this);
         refreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.swipe_container);
         mListView = (SwipeMenuListView) contentView.findViewById(R.id.mListView);
@@ -299,7 +296,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
 
 
     private void onAccountFragment(Fragment fragment) {
-        myAccountUserGuide = (HomeMyAccountFragmentV2) fragment;
+        HomeMyAccountFragmentV2 myAccountUserGuide = (HomeMyAccountFragmentV2) fragment;
     }
 
     @Override

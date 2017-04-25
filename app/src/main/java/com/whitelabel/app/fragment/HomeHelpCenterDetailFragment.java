@@ -109,7 +109,6 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
     }
 
     private View connectionLayout;
-    private LinearLayout tryAgain;
     private RequestErrorHelper requestErrorHelper;
 
     @Override
@@ -118,7 +117,7 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
         mHandler = new DataHandler(getActivity(), this);
         connectionLayout=contentView.findViewById(R.id.connectionBreaks);
         requestErrorHelper=new RequestErrorHelper(getContext(),connectionLayout);
-        tryAgain= (LinearLayout) contentView.findViewById(R.id.try_again);
+        LinearLayout tryAgain = (LinearLayout) contentView.findViewById(R.id.try_again);
 
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override

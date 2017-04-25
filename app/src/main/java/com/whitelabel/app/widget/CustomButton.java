@@ -13,9 +13,7 @@ import com.whitelabel.app.utils.JFontUtils;
 
 
 public class CustomButton extends Button {
-	
-	private int typefaceIndex;
-	
+
 	public CustomButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
 //		initTypeface(context, attrs);
@@ -30,8 +28,8 @@ public class CustomButton extends Button {
 		if (types == null) {
 			return;
 		}
-		
-		typefaceIndex = types.getInt(R.styleable.CustomTextStyle_textFont, -1);
+
+		int typefaceIndex = types.getInt(R.styleable.CustomTextStyle_textFont, -1);
 		
 		types.recycle();
 		

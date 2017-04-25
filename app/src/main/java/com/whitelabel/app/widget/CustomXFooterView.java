@@ -27,7 +27,6 @@ public class CustomXFooterView extends LinearLayout {
     public final static int STATE_READY = 1;
     public final static int STATE_LOADING = 2;
     View line;
-    private Context mContext;
     private View mContentView;
     private ProgressBar mProgressBar;
     private TextView mHintView;
@@ -139,7 +138,7 @@ public class CustomXFooterView extends LinearLayout {
     }
 
     private void initView(Context context) {
-        mContext = context;
+        Context mContext = context;
         LinearLayout moreView = (LinearLayout) LayoutInflater.from(mContext)
                 .inflate(R.layout.layout_customxlistview_footer, null);
         addView(moreView);

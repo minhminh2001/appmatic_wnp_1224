@@ -25,13 +25,12 @@ public class ApplicationConfigurationEntity {
     private String ulImageServerGlobalParameter;
     private GOUserEntity user;
     private ThemeConfigModel configModel;
-    private ArrayList<GOThirdPartyUserEntity> thirdPartyUsers;
     private GOStoreViewEntity storeView;
     private GOCurrencyEntity currency;
     private SVRAppserviceCatalogSearchReturnEntity categoryArrayList;
     private ApplicationConfigurationEntity() {
         user = null;
-        thirdPartyUsers = new ArrayList<GOThirdPartyUserEntity>();
+        ArrayList<GOThirdPartyUserEntity> thirdPartyUsers = new ArrayList<GOThirdPartyUserEntity>();
     }
     public static ApplicationConfigurationEntity getInstance() {
         return SingletonHolder.INSTANCE;

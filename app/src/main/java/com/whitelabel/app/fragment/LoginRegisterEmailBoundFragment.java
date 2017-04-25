@@ -53,11 +53,8 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
     private CustomEditText cetEmail;
     private CustomTextView emptyAndfileEmail;
     private CustomTextView hasEmail;
-    private CustomButton cbtSubmit;
     private final String TAG = "LoginRegisterEmailBoundFragment";
     private LoginRegisterDao mDao;
-    private DataHandler mHandler;
-    private InputMethodManager inputMethodManager;
     private ToolBarFragmentCallback toolBarFragmentCallback;
 
     private static final class DataHandler extends android.os.Handler {
@@ -134,7 +131,7 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
         setHasOptionsMenu(true);
     }
     public void onClickLeftMenu(View v) {
-        inputMethodManager = (InputMethodManager)loginRegisterActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) loginRegisterActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if(inputMethodManager != null) {
             inputMethodManager.hideSoftInputFromWindow(loginRegisterActivity.getWindow().getDecorView().getWindowToken(), 0); //隐藏
         }
@@ -189,15 +186,15 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
                 onClickLeftMenu(v);
             }
         });
-        mHandler=new DataHandler(loginRegisterActivity,this);
-        mDao=new LoginRegisterDao(TAG,mHandler);
+        DataHandler mHandler = new DataHandler(loginRegisterActivity, this);
+        mDao=new LoginRegisterDao(TAG, mHandler);
         cetEmail = (CustomEditText) contentView.findViewById(R.id.cetEmail);
         rl_emailbound_email= (CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_emailbound_email);
         hasEmail= (CustomTextView) contentView.findViewById(R.id.hasEmail);
         emptyAndfileEmail= (CustomTextView) contentView.findViewById(R.id.emptyAndfileEmail);
         emptyAndfileEmail.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
-        cbtSubmit = (CustomButton) contentView.findViewById(R.id.cbtSubmit);
+        CustomButton cbtSubmit = (CustomButton) contentView.findViewById(R.id.cbtSubmit);
         cbtSubmit.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
 

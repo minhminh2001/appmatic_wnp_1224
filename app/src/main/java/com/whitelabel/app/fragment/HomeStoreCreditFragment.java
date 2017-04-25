@@ -47,8 +47,6 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-    // TODO: Rename and change types of parameters
-    private String TAG;
     private OtherDao mOtherDao;
     private DataHandler mHandler;
     private StoreCreditBean mBean;
@@ -57,12 +55,10 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
     private CustomSwipefreshLayout swipeLayout;
     //    private View ivMenu;
     private View headView;
-    private List<StoreCreditItemBean> history;
     private View llNotData;
     private String currTag = "HomeStoreCreditFragment";
 
-    private  StoreCreditAdapter mAdapter;
-//    private OnMyAccountUserGuide MyAccountUserGuide;
+    //    private OnMyAccountUserGuide MyAccountUserGuide;
 
     public HomeStoreCreditFragment() {
         // Required empty public constructor
@@ -166,7 +162,7 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
 
 
     private void initListView() {
-        history = new ArrayList<>();
+        List<StoreCreditItemBean> history = new ArrayList<>();
         xListView.setPullRefreshEnable(false);
         xListView.setPullLoadEnable(false);
         xListView.setHeaderDividersEnabled(false);
@@ -217,7 +213,7 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
     }
 
     private void initData() {
-        TAG = this.getClass().getSimpleName();
+        String TAG = this.getClass().getSimpleName();
         mHandler = new DataHandler(getActivity(), this);
         mOtherDao = new OtherDao(TAG, mHandler);
         showRefreshLayout();
@@ -273,7 +269,7 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
                 xListView.addHeaderView(headView);
                 xListView.setVisibility(View.VISIBLE);
                 if (bean.getHistory() != null && bean.getHistory().size() > 0) {
-                    mAdapter = new StoreCreditAdapter(getActivity(), bean.getHistory());
+                    StoreCreditAdapter mAdapter = new StoreCreditAdapter(getActivity(), bean.getHistory());
                     xListView.setAdapter(mAdapter);
                     tvNotCredit.setVisibility(View.GONE);
                 } else {

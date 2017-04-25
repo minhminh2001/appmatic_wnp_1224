@@ -139,13 +139,14 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
         }
     }
-    private final String TAG = this.getClass().getSimpleName();
+
     MyAccountDao  myAccountDao;
     ProductDao mProductDao;
     public CategoryDetailAdapter(Context context,CategoryDetailModel categoryDetailModel, ImageLoader loader) {
         this.categoryDetailModel = categoryDetailModel;
         mImageLoader = loader;
         DataHandler dataHandler = new DataHandler(context, this);
+        String TAG = this.getClass().getSimpleName();
         myAccountDao = new MyAccountDao(TAG, dataHandler);
         mProductDao = new ProductDao(TAG, dataHandler);
     }

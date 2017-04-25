@@ -149,7 +149,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment implements HomeHomeCont
     public void onDetach() {
         super.onDetach();
     }
-    private HomeHomeContract.Presenter mHomePresenter;
+
     @Override
     public void showErrorMsg(String errormsg) {
         Toast.makeText(getActivity(), errormsg, Toast.LENGTH_SHORT).show();
@@ -162,7 +162,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment implements HomeHomeCont
         mImageLoader=new ImageLoader(getActivity());
         initRecyclerView();
         showProgressDialog();
-        mHomePresenter=getPresenter();
+        HomeHomeContract.Presenter mHomePresenter = getPresenter();
         mHomePresenter.attachView(this);
         mHomePresenter.getSearchCategory();
         setHasOptionsMenu(true);

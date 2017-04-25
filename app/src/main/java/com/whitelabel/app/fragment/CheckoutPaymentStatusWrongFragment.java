@@ -31,6 +31,7 @@ import com.whitelabel.app.utils.RequestErrorHelper;
 
 import java.lang.ref.WeakReference;
 
+@SuppressWarnings("ALL")
 public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
     private CheckoutPaymentStatusActivity checkoutPaymentStatusActivity;
     private TextView tvErrorMsg;
@@ -40,10 +41,8 @@ public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
     private boolean isLoading;
     private Dialog mDialog;
     private int fromType=0;
-    private RelativeLayout rlHeaderBarMenu;
-    private DataHandler dataHandler;
     private ShoppingCarDao mShoppingCarDao;
-    private String TAG;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -136,7 +135,7 @@ public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
                 startShoppingCart();
             }
         });
-        rlHeaderBarMenu= (RelativeLayout) view.findViewById(R.id.rlHeaderBarMenu);
+        RelativeLayout rlHeaderBarMenu = (RelativeLayout) view.findViewById(R.id.rlHeaderBarMenu);
         TextView tvRetry = (TextView) view.findViewById(R.id.tv_checkout_payment_status_wrong_retry);
 //        tvRetry.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
 //        tvRetry.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
@@ -186,9 +185,9 @@ public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
             String content=JToolUtils.replaceFont(errorMsg);
             tvErrorMsg.setText(content);
         }
-        TAG=this.getClass().getSimpleName();
-        dataHandler=new DataHandler((CheckoutPaymentStatusActivity) getActivity(),this);
-        mShoppingCarDao=new ShoppingCarDao(TAG,dataHandler);
+        String TAG = this.getClass().getSimpleName();
+        DataHandler dataHandler = new DataHandler((CheckoutPaymentStatusActivity) getActivity(), this);
+        mShoppingCarDao=new ShoppingCarDao(TAG, dataHandler);
         if(checkoutPaymentStatusActivity.mGATrackTimeEnable) {
             GaTrackHelper.getInstance().googleAnalyticsTimeStop(
                     GaTrackHelper.GA_TIME_CATEGORY_PAYMENT,

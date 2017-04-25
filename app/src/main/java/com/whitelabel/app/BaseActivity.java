@@ -202,7 +202,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             }
         }
     }
-    private TextView tvSearch;
+
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
@@ -214,9 +214,9 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         mTitleRL = (RelativeLayout) findViewById(R.id.rl_home_searchBar);
         tvTitleNum = (TextView) findViewById(R.id.tv_title_num);
         ivTitle = (ImageView) findViewById(R.id.iv_title);
-        tvSearch= (TextView) findViewById(R.id.tv_search);
+        TextView tvSearch = (TextView) findViewById(R.id.tv_search);
         tvTitle = (TextView) findViewById(R.id.tv_title);
-        if(tvSearch!=null){
+        if(tvSearch !=null){
             tvSearch.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSearchBoxTextColor());
         }
         if(tvTitle!=null) {

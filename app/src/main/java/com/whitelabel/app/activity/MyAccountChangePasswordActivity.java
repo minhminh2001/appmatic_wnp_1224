@@ -39,7 +39,6 @@ public class MyAccountChangePasswordActivity extends com.whitelabel.app.BaseActi
     private ImageView clearOldPassword,clearNewPassword,clearConfirmPassword;
     private MyAccountDao mDao;
     private final String TAG = "MyAccountChangePasswordFragment";
-    private DataHandler mHandler;
     private Dialog mDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -353,8 +352,8 @@ public class MyAccountChangePasswordActivity extends com.whitelabel.app.BaseActi
     }
 
     private void initView() {
-        mHandler=new DataHandler(this);
-        mDao=new MyAccountDao(TAG,mHandler);
+        DataHandler mHandler = new DataHandler(this);
+        mDao=new MyAccountDao(TAG, mHandler);
         old= (EditText) findViewById(R.id.old);
         oldText= (TextView) findViewById(R.id.old_text);
         oldText2=(TextView)findViewById(R.id.old_text2);

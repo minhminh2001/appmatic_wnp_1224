@@ -309,15 +309,12 @@ public class BrandStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    private OnItemClickLitener mItemClickListener;
-    private OnItemClickLitener mWishListLisener;
-
     public void setOnItemClickListener(OnItemClickLitener listener) {
-        mItemClickListener = listener;
+        OnItemClickLitener mItemClickListener = listener;
     }
 
     public void setOnItemWishListCliekListener(OnItemClickLitener listener) {
-        mWishListLisener = listener;
+        OnItemClickLitener mWishListLisener = listener;
     }
 
     public interface OnItemClickLitener {
@@ -395,7 +392,7 @@ public class BrandStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private final List<ImageView> mImageViewTips = new ArrayList<>();
 
-    private final void addTisView(LinearLayout linearLayout, int count) {
+    private void addTisView(LinearLayout linearLayout, int count) {
         for (int i = 0; i < count; i++) {
             ImageView imageViewTips = new ImageView(linearLayout.getContext());
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(15, 15);

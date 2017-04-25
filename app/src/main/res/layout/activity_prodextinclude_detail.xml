@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:imaginato="http://schemas.android.com/apk/res-auto"
-
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/whiteFFFFFF"
-             android:minHeight="200dp"
+             android:layout_height="wrap_content"
+             android:background="@color/whiteffffff"
              android:orientation="vertical"
              android:paddingBottom="10dp">
-
-    <RelativeLayout
+       <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
         <!--price stock save RM merchant cash-->
         <RelativeLayout
             android:id="@+id/rlProductFinalPrice"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-
+            android:layout_height="wrap_content">
             <RelativeLayout
                 android:id="@+id/rlProductPrice"
                 android:layout_width="match_parent"
@@ -28,7 +21,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp">
-
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/old_price"
                     style="@style/font_family_robot_regular"
@@ -38,7 +30,6 @@
                     android:textColor="@color/black"
                     android:textSize="11sp"/>
             </RelativeLayout>
-
             <com.whitelabel.app.widget.CustomTextView
                 android:id="@+id/price_textview"
                 android:layout_width="wrap_content"
@@ -209,9 +200,6 @@
                 android:paddingTop="10dp"
                 android:src="@drawable/draw_plus"/>
         </RelativeLayout>
-
-
-
         <!--<LinearLayout-->
             <!--android:id="@+id/llProductDetail"-->
             <!--android:layout_width="match_parent"-->
@@ -221,5 +209,4 @@
             <!--android:layout_marginRight="12dp"-->
             <!--android:orientation="vertical"/>-->
     </RelativeLayout>
-
 </FrameLayout>

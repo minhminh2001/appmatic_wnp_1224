@@ -81,12 +81,7 @@ public class MerchantStoreFrontActivity extends BaseActivitySearchCart implement
     private boolean mIsFirst = true;//listview header 只在第一次进入时加载
     private DataHandler mDataHandler;
     private SearchResultHandler mSearchResultHandler;
-    private View mHeaderView;
     private CustomXListView mCustomXListView;
-    private CustomTextView mCtvHeaderBarTitle;
-    //filter&sort
-    private int FRAGMENT_CONTAINER_ID;
-    private FrameLayout mFlFilterSortContainer;
     private ImageView mIVBottomSlideToTop;
     private SVRAppserviceProductSearchParameter mSVRAppserviceProductSearchParameter = new SVRAppserviceProductSearchParameter();
     private View mConnectionLayout, mRlNodata;
@@ -99,16 +94,11 @@ public class MerchantStoreFrontActivity extends BaseActivitySearchCart implement
     private String mVendorId;
     private String mVendorDisplayName;
     private ImageLoader imageLoader;
-    private ProductListFilterFragment filterFragment;
-    private ProductListSortFragment sortFragment;
     private FilterSortHelper filterSortHelper;
     private FilterSortBottomView filterSortBottomView;
     public OperateProductIdPrecache mOperateProductIdPrecache;//未登录时点击了wishicon,登陆成功后主动将其添加到wishlist
     public boolean isDoubleCol = true;
     private ImageView mTopViewToggleIV;
-    private LinearLayout mTopFilterLL;
-    private LinearLayout mTopSortLL;
-    private RelativeLayout mTopFilterAndSortBarRL;
     private boolean mIsShowSwitchFilterBar;
 
 
@@ -241,7 +231,7 @@ public class MerchantStoreFrontActivity extends BaseActivitySearchCart implement
         int imageWidth = 640;
         int imageHeight = 640 * 240 / 490;
         int destHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(MerchantStoreFrontActivity.this) * 240 / 490;
-        mHeaderView = LayoutInflater.from(MerchantStoreFrontActivity.this).inflate(R.layout.header_list_merchant, null);
+        View mHeaderView = LayoutInflater.from(MerchantStoreFrontActivity.this).inflate(R.layout.header_list_merchant, null);
 
 
         final ImageView ivMerchant = (ImageView) mHeaderView.findViewById(R.id.iv_merchant_banner);
@@ -341,32 +331,32 @@ public class MerchantStoreFrontActivity extends BaseActivitySearchCart implement
     private void initView() {
         mConnectionLayout = findViewById(R.id.connectionBreaks);
         mTryAgain = (LinearLayout) findViewById(R.id.try_again);
-        mCtvHeaderBarTitle = (CustomTextView) findViewById(R.id.ctvHeaderBarTitle);
+        CustomTextView mCtvHeaderBarTitle = (CustomTextView) findViewById(R.id.ctvHeaderBarTitle);
         mCustomXListView = (CustomXListView) findViewById(R.id.cxlvProductList);
 
         //filter&sort
 
-        mTopFilterAndSortBarRL = (RelativeLayout) findViewById(R.id.top_switch_and_filter_bar);
+        RelativeLayout mTopFilterAndSortBarRL = (RelativeLayout) findViewById(R.id.top_switch_and_filter_bar);
         mTopViewToggleIV = (ImageView) findViewById(R.id.iv_view_toggle_top);
-        mTopFilterLL = (LinearLayout) findViewById(R.id.ll_filter_top);
-        mTopSortLL = (LinearLayout) findViewById(R.id.ll_sort_top);
+        LinearLayout mTopFilterLL = (LinearLayout) findViewById(R.id.ll_filter_top);
+        LinearLayout mTopSortLL = (LinearLayout) findViewById(R.id.ll_sort_top);
         mTopFilterLL.setOnClickListener(this);
         mTopSortLL.setOnClickListener(this);
         mTopViewToggleIV.setOnClickListener(this);
 
-        mFlFilterSortContainer = (FrameLayout) findViewById(R.id.flFilterSortContainer);
+        FrameLayout mFlFilterSortContainer = (FrameLayout) findViewById(R.id.flFilterSortContainer);
         mIVBottomSlideToTop = (ImageView) findViewById(R.id.iv_bottom_slideto_top);
 
         mRlNodata = findViewById(R.id.rlNodata);
         mTryAgain = (LinearLayout) findViewById(R.id.try_again);
         mCustomXListView = (CustomXListView) findViewById(R.id.cxlvProductList);
-        FRAGMENT_CONTAINER_ID = R.id.flFilterSortContainer;
+        int FRAGMENT_CONTAINER_ID = R.id.flFilterSortContainer;
         mFlFilterSortContainer.setOnClickListener(this);
         filterSortBottomView = new FilterSortBottomView();
         filterSortBottomView.initView(mTopFilterAndSortBarRL, mIVBottomSlideToTop, this);
-        filterFragment = new ProductListFilterFragment();
+        ProductListFilterFragment filterFragment = new ProductListFilterFragment();
         filterFragment.setFragmentListener(this);
-        sortFragment = new ProductListSortFragment();
+        ProductListSortFragment sortFragment = new ProductListSortFragment();
         sortFragment.setFragmentListener(this);
         filterSortHelper = new FilterSortHelper(this, sortFragment, filterFragment, mFlFilterSortContainer, FRAGMENT_CONTAINER_ID);
     }

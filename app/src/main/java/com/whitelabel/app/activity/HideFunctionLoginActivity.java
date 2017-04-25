@@ -25,14 +25,10 @@ import java.lang.ref.WeakReference;
 public class HideFunctionLoginActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
 
 
-    private TextView cancel, okay;
     private CustomEdit userName, password;
-    private TextView currentService;
     private String TAG;
     private ProductDao mDao;
-    private ImageView back;
     private Dialog mDialog;
-    private DataHandler mHandler;
 
     private static final class DataHandler extends Handler {
         private final WeakReference<HideFunctionLoginActivity> mActivity;
@@ -74,17 +70,17 @@ public class HideFunctionLoginActivity extends com.whitelabel.app.BaseActivity i
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hide_login);
         initToolBar();
-        mHandler = new DataHandler(this);
+        DataHandler mHandler = new DataHandler(this);
         TAG = HideFunctionLoginActivity.this.getClass().getSimpleName();
-        cancel = (TextView) findViewById(R.id.cancel);
-        okay = (TextView) findViewById(R.id.okay);
+        TextView cancel = (TextView) findViewById(R.id.cancel);
+        TextView okay = (TextView) findViewById(R.id.okay);
         cancel.setOnClickListener(this);
         okay.setOnClickListener(this);
         userName = (CustomEdit) findViewById(R.id.userName);
         password = (CustomEdit) findViewById(R.id.password);
-        currentService = (TextView) findViewById(R.id.currentService);
+        TextView currentService = (TextView) findViewById(R.id.currentService);
         currentService.setText(GlobalData.serviceRequestUrl);
-        back = (ImageView) findViewById(R.id.vHeaderBarBack);
+        ImageView back = (ImageView) findViewById(R.id.vHeaderBarBack);
         findViewById(R.id.rl_vHeaderBarBack).setOnClickListener(this);
         back.setOnClickListener(this);
         mDao = new ProductDao(TAG, mHandler);

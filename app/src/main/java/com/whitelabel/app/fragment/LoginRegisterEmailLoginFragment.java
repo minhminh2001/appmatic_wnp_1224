@@ -91,13 +91,10 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     private View contentView;
     private EditText email, password;
     private String mCurrTag;
-    private View ivFacebookLogin;
-    private Button sign_in;
     private ImageView clearMail,clearPassword;
     private ToolBarFragmentCallback toolBarFragmentCallback;
     private LoginRegisterActivity loginRegisterActivity;
     private CustomButtomLineRelativeLayout rl_login_email,rl_login_pwd;
-    private TextView forgotPassword, register;
     private TextView email_text, email_text2, password_text, password_text2, error, clickEmail2;
     //   private View bottomText;
     private View clickEmailInfo;
@@ -106,9 +103,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     private Dialog mDialog;
     private boolean existVending=false;
     private boolean isStart=false;
-    private boolean fromSignOut=false;
-    private String updateDiaHintmsg,updateDiaTitle;
-    private  String updateDiaBtnMsg;
     private  MyAccountDao mMyAccountDao;
     private DataHandler dataHandler;
     // Facebook
@@ -382,7 +376,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
 
     }
 
-    private LinearLayout llGoogleLogin;
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -469,15 +462,15 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         rl_login_email=(CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_login_email);
         rl_login_pwd=(CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_login_pwd);
 
-        llGoogleLogin = (LinearLayout) contentView.findViewById(R.id.ll_googleLogin);
+        LinearLayout llGoogleLogin = (LinearLayout) contentView.findViewById(R.id.ll_googleLogin);
         email = (EditText) contentView.findViewById(R.id.email);
         password = (EditText) contentView.findViewById(R.id.password);
-        sign_in = (Button) contentView.findViewById(R.id.sign_in);
+        Button sign_in = (Button) contentView.findViewById(R.id.sign_in);
         sign_in.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-        ivFacebookLogin = contentView.findViewById(R.id.ivFacebookLogin);
-        register = (TextView) contentView.findViewById(R.id.register);
+        View ivFacebookLogin = contentView.findViewById(R.id.ivFacebookLogin);
+        TextView register = (TextView) contentView.findViewById(R.id.register);
         register.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-        forgotPassword = (TextView) contentView.findViewById(R.id.forgot_password);
+        TextView forgotPassword = (TextView) contentView.findViewById(R.id.forgot_password);
         forgotPassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         //      bottomText=contentView.findViewById(R.id.bottomText);
         ivFacebookLogin.setOnClickListener(this);
@@ -536,16 +529,16 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         clickEmail2 = (TextView) contentView.findViewById(R.id.clickEmail2);
         setResendEmailClickSpan();
         email.setInputType(EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        updateDiaTitle= getActivity().getResources().getString(R.string.versionCheckTitle);
-        updateDiaHintmsg = getActivity().getResources().getString(R.string.versionCheckMsg);
-        updateDiaBtnMsg = getActivity().getResources().getString(R.string.update);
+        String updateDiaTitle = getActivity().getResources().getString(R.string.versionCheckTitle);
+        String updateDiaHintmsg = getActivity().getResources().getString(R.string.versionCheckMsg);
+        String updateDiaBtnMsg = getActivity().getResources().getString(R.string.update);
         dataHandler=new DataHandler(loginRegisterActivity,this);
         mMyAccountDao=new MyAccountDao(TAG,dataHandler);
 
         if(loginRegisterActivity.getIntent().getExtras()!=null){
             Bundle bundle =loginRegisterActivity.getIntent().getExtras();
             String activityAata = bundle.getString("Activity");//读出数据
-            fromSignOut=bundle.getBoolean("fromSignOut");
+            boolean fromSignOut = bundle.getBoolean("fromSignOut");
             if("start".equals(activityAata)){
                 isStart=true;
             }

@@ -21,7 +21,6 @@ import com.whitelabel.app.utils.JViewUtils;
 import java.io.Serializable;
 
 public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
-    private Fragment checkoutPaymentStatusFragment;
     private static String SESSION_KEY;
     public String html;
     private final int PAYMENTSUCESS = 1;
@@ -226,17 +225,17 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
 
     public boolean mGATrackTimeEnable = true;
     public long mGATrackTimeStart;
-    private int fromType;
 
     private void initData() {
         Bundle bundle = getIntent().getExtras();
         mGATrackTimeStart = bundle.getLong("mGATrackTimeStart", 0);
-        fromType = bundle.getInt("fromType");
+        int fromType = bundle.getInt("fromType");
         String paymentStatus = bundle.getString("payment_status");
         String errorMsg = bundle.getString("errorMsg");
         String orderNumber = bundle.getString("orderNumber");
         isLuckDraw = bundle.getBoolean("isLuckDraw", false);
         html = bundle.getString("html");
+        Fragment checkoutPaymentStatusFragment;
         if ("1".equalsIgnoreCase(paymentStatus)) {
             checkoutPaymentStatusFragment = new CheckoutPaymentStatusRightFragment();
             checkoutPaymentStatusFragment.setArguments(bundle);

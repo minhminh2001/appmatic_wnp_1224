@@ -30,7 +30,6 @@ public class INITExecutor implements Executor {
 		return SingletonHolder.INSTANCE;
 	}
 
-	private final BlockingQueue<Runnable> mPoolWorkQueue = new INITBlockingQueue<Runnable>();
 	private final ThreadPoolExecutor mThreadPoolExecutor;
 
 	private INITExecutor() {
@@ -38,6 +37,7 @@ public class INITExecutor implements Executor {
 	}
 
 	private INITExecutor(int poolSize) {
+		BlockingQueue<Runnable> mPoolWorkQueue = new INITBlockingQueue<Runnable>();
 		mThreadPoolExecutor = new ThreadPoolExecutor(poolSize,
 				MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.MINUTES,
 				mPoolWorkQueue, sThreadFactory);

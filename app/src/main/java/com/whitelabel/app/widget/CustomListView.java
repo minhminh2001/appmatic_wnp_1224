@@ -6,7 +6,10 @@ import android.view.MotionEvent;
 import android.widget.ListView;
 
 public class CustomListView extends ListView{
-    private float orginX,orginY,apartX,apartY,curX,curY;
+    private float orginX;
+    private float orginY;
+    private float curX;
+    private float curY;
     private boolean delete = false;
     private int itemHeight =50;
     private int ratio = 1;
@@ -39,15 +42,15 @@ public class CustomListView extends ListView{
             case MotionEvent.ACTION_MOVE:
                 float deltaX = ev.getX(ev.getPointerCount() - 1) - orginX;
                 //float deltaY = Math.abs(ev.getY(ev.getPointerCount() - 1) - orginY);
-                apartX = ev.getX()-curX;
-                apartY = ev.getY()-curY;
+                float apartX = ev.getX() - curX;
+                float apartY = ev.getY() - curY;
                 curX = ev.getX();
                 curY = ev.getY();
                 //手指触摸的上下距离不能太大(即水平移动)
                 if(apartX < 0 && -20 < apartY && apartY < 20){
 
-                    if(itemHeight>apartY && filpperDeleterListener != null){
-                        filpperDeleterListener.onFlipping(orginX,orginY,apartX,apartY);
+                    if(itemHeight> apartY && filpperDeleterListener != null){
+                        filpperDeleterListener.onFlipping(orginX,orginY, apartX, apartY);
                     }
                     if (Math.abs(deltaX) > this.getWidth() / ratio) {
                         delete = true;

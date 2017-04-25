@@ -151,7 +151,7 @@ public class CheckoutShippingSelectaddressFragment extends Fragment implements V
         mHandler=new DataHandler((CheckoutActivity) getActivity(),this);
         initListView();
         initData();
-        checkoutActivity. scrollViewBody.scrollTo(0, -100);
+        checkoutActivity. scrollViewBody.scrollTo(0, (int) (getResources().getDimension(R.dimen.scroll_height)*-100));
     }
 
     public void initListView(){

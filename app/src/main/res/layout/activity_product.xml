@@ -42,7 +42,6 @@
                         android:layout_alignRight="@+id/detail_viewpager"
                         android:layout_alignTop="@+id/detail_viewpager"
                         android:scaleType="fitXY"/>
-
                     <com.whitelabel.app.widget.CustomTextView
                         android:id="@+id/product_unavailable"
                         android:layout_width="wrap_content"
@@ -85,12 +84,10 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:visibility="visible">
-
                     <View
                         android:id="@+id/ctvProductTitleLine"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"/>
-
                     <com.whitelabel.app.widget.CustomTextView
                         android:id="@+id/ctvProductBrand"
                         android:layout_width="wrap_content"
@@ -119,9 +116,7 @@
                         android:id="@+id/view"
                         layout="@layout/activity_prodextinclude_detail"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="10dp"/>
-
+                        android:layout_height="wrap_content" />
                     <com.whitelabel.app.widget.ProductChildListView
                         android:id="@+id/pc_group_config"
                         android:orientation="vertical"
@@ -129,7 +124,6 @@
                         android:layout_height="wrap_content">
                     </com.whitelabel.app.widget.ProductChildListView>
                 </RelativeLayout>
-
                 <RelativeLayout
                     android:id="@+id/detail_descriptions_RelativeLayout"
                     android:layout_width="match_parent"
@@ -137,8 +131,7 @@
                     android:layout_below="@+id/final_relativelayout"
                     android:layout_marginBottom="-20dp"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    >
+                    android:layout_marginRight="12dp">
                     <!--BLOCK_DESCENDANTS是当一个view获取焦点时 viewgroup会覆盖子类控件而直接获得焦点,防止webview过大,导致scrollView滚动-->
                     <LinearLayout
                         android:id="@+id/ll_webView"
@@ -147,9 +140,7 @@
                         android:descendantFocusability="blocksDescendants"
                         android:orientation="vertical">
                     </LinearLayout>
-
                 </RelativeLayout>
-
                 <!--<LinearLayout-->
                     <!--android:id="@+id/rl_productrecommend_body"-->
                     <!--android:layout_width="match_parent"-->
@@ -195,9 +186,7 @@
                         <!--&lt;!&ndash;android:dividerHeight="0dp"&ndash;&gt;-->
                         <!--&lt;!&ndash;android:listSelector="@color/transparent00"&ndash;&gt;-->
                         <!--&lt;!&ndash;android:scrollbars="none"/>&ndash;&gt;-->
-
                 <!--</LinearLayout>-->
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="80dp"

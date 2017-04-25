@@ -67,10 +67,8 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
     private Typeface tabTypeface = Typeface.SANS_SERIF;
     private int tabTypefaceStyle = Typeface.NORMAL;
     private int lastScrollX = 0;
-    private List<String> mTitle;
     private int tabBackgroundResId = R.drawable.background_tab;
     private Locale locale;
-    private OnMyAccountUserGuide onMyAccountUserGuide;
     public MyAccountTopMenuView(Context context) {
         this(context, null);
     }
@@ -87,17 +85,14 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
         tabsContainer.setOrientation(LinearLayout.HORIZONTAL);
         tabsContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         addView(tabsContainer);
-
         DisplayMetrics dm = getResources().getDisplayMetrics();
-
         scrollOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, scrollOffset, dm);
         indicatorHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, indicatorHeight, dm);
         underlineHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, underlineHeight, dm);
         dividerPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerPadding, dm);
         tabPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tabPadding, dm);
-        dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, dm);
+        int dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm);
         tabTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, tabTextSize, dm);
-
         // get system attrs (android:textSize and android:textColor)
 
         TypedArray a = context.obtainStyledAttributes(attrs, ATTRS);
@@ -141,7 +136,7 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
         }
     }
     public void setOnMyAccountUserGuide(OnMyAccountUserGuide myAccountUserGuide){
-        this.onMyAccountUserGuide=myAccountUserGuide;
+        OnMyAccountUserGuide onMyAccountUserGuide = myAccountUserGuide;
     }
     public void setCurrentPosition(int index){
         notifyDataSetChanged(index);
@@ -150,10 +145,10 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
         this.mOldIndex=position;
     }
     public void setTitles(List<String> titles){
-        this.mTitle=titles;
+        List<String> mTitle = titles;
         tabCount = titles.size();
         for(int i=0;i<tabCount;i++){
-            addTextTab(i,mTitle.get(i));
+            addTextTab(i, mTitle.get(i));
         }
         updateTabStyles();
         getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {

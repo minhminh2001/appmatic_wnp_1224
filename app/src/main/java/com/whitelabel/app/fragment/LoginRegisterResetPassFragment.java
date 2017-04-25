@@ -49,11 +49,9 @@ import java.lang.ref.WeakReference;
 public class LoginRegisterResetPassFragment extends Fragment implements View.OnClickListener,View.OnFocusChangeListener{
     private LoginRegisterActivity loginRegisterActivity;
     private View contentView,view_reset_email_line;
-    private Button reset_password;
     private EditText email;
     private TextView email_text, email_text2;
     private final String TAG = "LoginRegisterResetPassFragment";
-    private DataHandler mHandler;
     private LoginRegisterDao mDao;
     private Dialog mDialog;
     private ImageView clear;
@@ -182,8 +180,8 @@ public class LoginRegisterResetPassFragment extends Fragment implements View.OnC
                 onClickLeftMenu(v);
             }
         });
-        mHandler=new DataHandler(loginRegisterActivity,this);
-        mDao=new LoginRegisterDao(TAG,mHandler);
+        DataHandler mHandler = new DataHandler(loginRegisterActivity, this);
+        mDao=new LoginRegisterDao(TAG, mHandler);
         email= (EditText) contentView.findViewById(R.id.email);
         view_reset_email_line= contentView.findViewById(R.id.view_reset_email_line);
         email_text= (TextView) contentView.findViewById(R.id.email_text);
@@ -212,7 +210,7 @@ public class LoginRegisterResetPassFragment extends Fragment implements View.OnC
 
             }
         });
-        reset_password= (Button) contentView.findViewById(R.id.reset_password);
+        Button reset_password = (Button) contentView.findViewById(R.id.reset_password);
         reset_password.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         reset_password.setOnClickListener(this);
         email.setInputType(EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);

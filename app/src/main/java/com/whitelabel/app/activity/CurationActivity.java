@@ -71,7 +71,6 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
     public final int TYPE_FILTER = 1;
     public Long mGATrackTimeStart = 0L;
     public boolean mGATrackTimeEnable = false;
-    private String mCategoryName = "";
     public static final int RESULT_WISH = 101;
     private final int SEARCH_TYPE_INIT = 1;
     private final int SEARCH_TYPE_REFRESH = 2;
@@ -94,12 +93,7 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
     private static String TAG;
     private SearchResultHandler searchResultHandler;
     private String PROMPT_ERROR_NOINTERNET;
-    //filter&sort
-    private int FRAGMENT_CONTAINER_ID;
-    private FrameLayout mFlFilterSortContainer;
     private ImageView mIVBottomSlideToTop;
-    private ProductListFilterFragment filterFragment;
-    private ProductListSortFragment sortFragment;
     private FilterSortHelper filterSortHelper;
     private FilterSortBottomView filterSortBottomView;
     public final static int TABBAR_INDEX_NONE = -1;
@@ -134,8 +128,6 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
     private ImageLoader mImageLoader;
     public boolean isDoubleCol = true;
     private ImageView mTopViewToggleIV;
-    private LinearLayout mTopFilterLL;
-    private LinearLayout mTopSortLL;
     private RelativeLayout mTopFilterAndSortBarRL;
     private boolean mIsShowSwitchFilterBar;
 
@@ -393,7 +385,7 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
         mCurrentFilterSortTabIndex = TABBAR_INDEX_NONE;
         mCurationTitle = getIntent().getStringExtra(EXTRA_CURATION_TITLE);
         mCurationId = getIntent().getStringExtra(EXTRA_CURATION_ID);
-        mCategoryName = getIntent().getStringExtra(EXTRA_CATEGORY_NAME);
+        String mCategoryName = getIntent().getStringExtra(EXTRA_CATEGORY_NAME);
         JLogUtils.i(TAG, "mCategoryName:" + mCategoryName);
         dataHandler = new DataHandler(this);
         TAG = this.getClass().getSimpleName();
@@ -484,23 +476,23 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
         //filter&sort
         mTopFilterAndSortBarRL = (RelativeLayout) findViewById(R.id.top_switch_and_filter_bar);
         mTopViewToggleIV = (ImageView) findViewById(R.id.iv_view_toggle_top);
-        mTopFilterLL = (LinearLayout) findViewById(R.id.ll_filter_top);
-        mTopSortLL = (LinearLayout) findViewById(R.id.ll_sort_top);
+        LinearLayout mTopFilterLL = (LinearLayout) findViewById(R.id.ll_filter_top);
+        LinearLayout mTopSortLL = (LinearLayout) findViewById(R.id.ll_sort_top);
         mTopFilterLL.setOnClickListener(this);
         mTopSortLL.setOnClickListener(this);
         mTopViewToggleIV.setOnClickListener(this);
 
-        mFlFilterSortContainer = (FrameLayout) findViewById(R.id.flFilterSortContainer);
+        FrameLayout mFlFilterSortContainer = (FrameLayout) findViewById(R.id.flFilterSortContainer);
         mIVBottomSlideToTop = (ImageView) findViewById(R.id.iv_bottom_slideto_top);
 
 
-        FRAGMENT_CONTAINER_ID = R.id.flFilterSortContainer;
+        int FRAGMENT_CONTAINER_ID = R.id.flFilterSortContainer;
         mFlFilterSortContainer.setOnClickListener(this);
         filterSortBottomView = new FilterSortBottomView();
         filterSortBottomView.initView(mTopFilterAndSortBarRL, mIVBottomSlideToTop, this);
-        filterFragment = new ProductListFilterFragment();
+        ProductListFilterFragment filterFragment = new ProductListFilterFragment();
         filterFragment.setFragmentListener(this);
-        sortFragment = new ProductListSortFragment();
+        ProductListSortFragment sortFragment = new ProductListSortFragment();
         sortFragment.setFragmentListener(this);
         filterSortHelper = new FilterSortHelper(this, sortFragment, filterFragment, mFlFilterSortContainer, FRAGMENT_CONTAINER_ID);
     }

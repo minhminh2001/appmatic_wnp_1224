@@ -73,13 +73,10 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     private boolean isShowAppRatePopup = false;
     private PopupWindow popupWindow;
     private TextView rateNow, askMeLater, noThanks;
-    private View layout;
-    private DataHandler mHandler;
     private ProductDao productDao;
     private View rlHome;
     private View ll_error;
     public boolean firstloaded = false;
-    private RequestErrorHelper requestErrorHelper;
 
     @Override
     public void onAttach(Context activity) {
@@ -168,9 +165,9 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         super.onActivityCreated(savedInstanceState);
         mCommonCallback.switchMenu(HomeCommonCallback.MENU_HOME);
         TAG = this.getClass().getSimpleName();
-        mHandler = new DataHandler(getActivity(), this);
+        DataHandler mHandler = new DataHandler(getActivity(), this);
         productDao = new ProductDao(TAG, mHandler);
-        layout = mContainView.findViewById(R.id.rl_root);
+        View layout = mContainView.findViewById(R.id.rl_root);
         if (getArguments() != null) {
             categoryId = (String) getArguments().getSerializable("data");
         }
@@ -219,7 +216,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         if (getActivity() != null) {
             inflateIfNeeded();
             ll_error.setVisibility(View.VISIBLE);
-            requestErrorHelper = new RequestErrorHelper(getContext(), ll_error);
+            RequestErrorHelper requestErrorHelper = new RequestErrorHelper(getContext(), ll_error);
             requestErrorHelper.showConnectionBreaks(errorMessage);
             requestErrorHelper.setResponseListener(new View.OnClickListener() {
                 @Override
@@ -319,7 +316,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
                 //page change listener -- russell
                 ctpiCategoryList.setOnPageChangeListener(pageChangeListener);
                 everythingIndex = getCurrIndex(categoryId) == -1 ? everythingIndex : getCurrIndex(categoryId);
-                chvpContainer.setOffscreenPageLimit(1);
+                chvpContainer.setOffscreenPageLimit(categoryViewCount);
                 JLogUtils.i(TAG, "everythingIndex:" + everythingIndex);
                 new Handler().post(new Runnable() {
                     @Override

@@ -76,7 +76,7 @@ public class CustomTabCustomPageIndicator extends HorizontalScrollView {
     private int underlineHeight = 1;
     private int dividerPadding = 12;
     private int tabPadding = 18;
-    private int dividerWidth = 1;
+
     private int tabTextSize = 12;
     private int tabTextColor = Color.BLACK;
     private Typeface tabTypeface = Typeface.SANS_SERIF;
@@ -110,7 +110,7 @@ public class CustomTabCustomPageIndicator extends HorizontalScrollView {
         underlineHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, underlineHeight, dm);
         dividerPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerPadding, dm);
         tabPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tabPadding, dm);
-        dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, dm);
+        int dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, dm);
         tabTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, tabTextSize, dm);
 
         // get system attrs (android:textSize and android:textColor)

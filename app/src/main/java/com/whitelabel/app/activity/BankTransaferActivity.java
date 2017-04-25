@@ -85,7 +85,10 @@ import permissions.dispatcher.RuntimePermissions;
 public class BankTransaferActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener, View.OnFocusChangeListener {
     public static final int REQUESTCODE_STORAGE = 0;
     public static final int REQUESTCODE_CAMERA = 1;
-    private TextView tvTrasferFrom, tvDate, btnSubmit, btnChoose, tvDateHint, tvBankHint;
+    private TextView tvTrasferFrom;
+    private TextView tvDate;
+    private TextView tvDateHint;
+    private TextView tvBankHint;
     private View bottomBlack;
     private LinearLayout llSubmit;
     private CustomEdit etEmailAddress, etCustomer, etTransferAmount, etOrderNum;
@@ -127,7 +130,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
     }
 
     private void initData() {
-        mHandler = new DataHandler(this);
+        DataHandler mHandler = new DataHandler(this);
         try {
             GaTrackHelper.getInstance().googleAnalytics("Submit Bank Transfer Screen", BankTransaferActivity.this);
         } catch (Exception ex) {
@@ -202,8 +205,6 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
     }
 
     private String rankFrom, email, orderNumber, transferee, transferDate, transferred;
-
-    private DataHandler mHandler;
 
     private static class DataHandler extends Handler {
         private final WeakReference<BankTransaferActivity> mActivity;
@@ -759,8 +760,8 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
         etEmailAddress = (CustomEdit) findViewById(R.id.et_email);
         etOrderNum = (CustomEdit) findViewById(R.id.et_order_number);
         etCustomer = (CustomEdit) findViewById(R.id.et_customer);
-        btnChoose = (TextView) findViewById(R.id.btn_choose);
-        btnSubmit = (TextView) findViewById(R.id.tv_confirm);
+        TextView btnChoose = (TextView) findViewById(R.id.btn_choose);
+        TextView btnSubmit = (TextView) findViewById(R.id.tv_confirm);
         llSubmit = (LinearLayout) findViewById(R.id.ll_confirm);
         bottomBlack = (View) findViewById(R.id.bottom_black);
         ivImg = (ImageView) findViewById(R.id.iv_image);
@@ -808,7 +809,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
                 }
             }
         });
-        JViewUtils.setSoildButtonGlobalStyle(this,btnSubmit);
+        JViewUtils.setSoildButtonGlobalStyle(this, btnSubmit);
 //        btnSubmit.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
     }
 

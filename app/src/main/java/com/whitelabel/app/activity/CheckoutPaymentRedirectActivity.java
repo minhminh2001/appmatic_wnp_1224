@@ -32,7 +32,6 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
     private String grandTotal;
     private String shippingFee;
     private Serializable paymentSaveReturnEntity;
-    private CheckoutDao mDao;
     private String TAG=this.getClass().getSimpleName();
     private boolean isSuccess;
     private String payment_type;
@@ -96,7 +95,7 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
         setContentView(R.layout.activity_checkout_payment_redirect);
         initToolBar();
         initIntent();
-        mDao=new CheckoutDao(TAG,mHandler);
+        CheckoutDao mDao = new CheckoutDao(TAG, mHandler);
         if(paymentMethod==PAYMENT_CARD) {
             initWebVeiw();
         }else{

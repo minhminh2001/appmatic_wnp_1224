@@ -18,7 +18,6 @@ import com.whitelabel.app.R;
 public class CustomCircularImageView extends ImageView {
 	private int borderWidth;
 	private int canvasSize;
-	private Bitmap image;
 	private Paint paint;
 	private Paint paintBorder;
 
@@ -74,7 +73,7 @@ public class CustomCircularImageView extends ImageView {
 	@Override
 	public void onDraw(Canvas canvas) {
 		// load the bitmap
-		image = drawableToBitmap(getDrawable());
+		Bitmap image = drawableToBitmap(getDrawable());
 
 		// init shader
 		if (image != null) {

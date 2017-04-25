@@ -35,7 +35,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.MyAccountActivity;
@@ -80,20 +79,44 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
     private MyAccountActivity myAccountActivity;
     private View contentView;
     private EditText firstName, lastName, email, country, birthday, gender, monthlyIncome, zip, city, stateProvince, eg;
-    private TextView firstNameText, firstNameText2, lastNameText, lastNameText2, emailText, emailText2, countryText, countryText2, birthdayText, birthdayText2, genderText, genderText2, monthlyIncomeText, monthlyIncomeText2,
-            zipText, zipText2, cityText, cityText2, stateProvinceText, stateProvinceText2, egText, egText2, changePassword;
-    private RelativeLayout relative1;
+    private TextView firstNameText;
+    private TextView firstNameText2;
+    private TextView lastNameText;
+    private TextView lastNameText2;
+    private TextView emailText;
+    private TextView emailText2;
+    private TextView countryText;
+    private TextView countryText2;
+    private TextView birthdayText;
+    private TextView birthdayText2;
+    private TextView genderText;
+    private TextView genderText2;
+    private TextView monthlyIncomeText;
+    private TextView monthlyIncomeText2;
+    private TextView zipText;
+    private TextView zipText2;
+    private TextView cityText;
+    private TextView cityText2;
+    private TextView stateProvinceText;
+    private TextView stateProvinceText2;
+    private TextView egText;
+    private TextView egText2;
+
     private ImageView iv_country_arrow, iv_birther_arrow, iv_gender_arrow, iv_monthly_arrow, iv_state_arrow;
-    private ImageView photo, clearFirstName, clearLastName, clearMail, clearCode, clearCity, clearPhone;
-    private Button album, cancleButton, photograph;
-    private PopupWindow popupWindow;
+    private ImageView clearFirstName;
+    private ImageView clearLastName;
+    private ImageView clearMail;
+    private ImageView clearCode;
+    private ImageView clearCity;
+    private ImageView clearPhone;
     private CustomButtomLineRelativeLayout rl_editinfo_email, rl_editinfo_country, rl_editinfo_birthday, rl_editinfo_gender, rl_editinfo_monthly,
             rl_editinfo_postcode, rl_editinfo_city, rl_editinfo_state;
 
-    private View popupWindowView, view_firstname_line, view_lastname_line, v_editinfo_phone_line;
+    private View view_firstname_line;
+    private View view_lastname_line;
+    private View v_editinfo_phone_line;
     private TextView phoneNumber;
-    private SharedPreferences sharedIncome, sharedCountry, sharedStateProvince;
-    private String session_key;
+    private SharedPreferences sharedIncome, sharedCountry;
     private CustomerList customerList;
     private ArrayList<CountrySubclass> countryList;
     private TextView save_error;
@@ -106,27 +129,20 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
     private View relative14;
     private Dialog mDialog;
     private MyAccountDao mDao;
-    private final String TAG = "MyAccountEditInfoFragment";
-    private DataHandler handler;
     private SharedPreferences.Editor editorIncome;
     private int[] location = new int[2];
     private int height;
     private int currentItem3, currentItem2, currentItem1;
     private boolean first = false;
-
     public MyAccountEditInfoFragment() {
-
     }
-
     public void initChangePassword() {
         if (!WhiteLabelApplication.getAppConfiguration().getUser().isEmailLogin()) {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) relative14.getLayoutParams();
             params.height = 0;
             relative14.setLayoutParams(params);
-
         }
     }
-
     private static final class DataHandler extends Handler {
         private final WeakReference<MyAccountActivity> mActivity;
         private final WeakReference<MyAccountEditInfoFragment> mFragment;
@@ -460,7 +476,8 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        handler = new DataHandler(myAccountActivity, this);
+        DataHandler handler = new DataHandler(myAccountActivity, this);
+        String TAG = "MyAccountEditInfoFragment";
         mDao = new MyAccountDao(TAG, handler);
 
         mothMap = new HashMap<String, String>();//英文数字月份映射
@@ -484,9 +501,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         rl_editinfo_postcode = (CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_editinfo_postcode);
         rl_editinfo_city = (CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_editinfo_city);
         rl_editinfo_state = (CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_editinfo_state);
-
-
-        relative1 = (RelativeLayout) contentView.findViewById(R.id.relative1);
+//        relative1 = (RelativeLayout) contentView.findViewById(R.id.relative1);
         firstName = (EditText) contentView.findViewById(R.id.et_account_firstName);
         lastName = (EditText) contentView.findViewById(R.id.et_account_lastName);
         email = (EditText) contentView.findViewById(R.id.et_account_email);
@@ -579,11 +594,11 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         egText = (TextView) contentView.findViewById(R.id.ctv_account_eg_label_ani);
         egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         egText2 = (TextView) contentView.findViewById(R.id.ctv_account_eg_label);
-        changePassword = (TextView) contentView.findViewById(R.id.changePassword);
+        TextView changePassword = (TextView) contentView.findViewById(R.id.changePassword);
         changePassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         changePassword.setOnClickListener(this);
 
-        photo = (ImageView) contentView.findViewById(R.id.photo);
+        ImageView photo = (ImageView) contentView.findViewById(R.id.photo);
         photo.setOnClickListener(this);
         country.setOnClickListener(this);
         gender.setOnClickListener(this);
@@ -669,16 +684,16 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             case R.id.photo:
                 //调用popupWindow 显示布局
                 LayoutInflater inflater = (LayoutInflater) myAccountActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                popupWindowView = inflater.inflate(R.layout.fragment_myaccount_edit_info_photo, null);
-                popupWindow = new PopupWindow(popupWindowView, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, true);
+                View popupWindowView = inflater.inflate(R.layout.fragment_myaccount_edit_info_photo, null);
+                PopupWindow popupWindow = new PopupWindow(popupWindowView, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, true);
                 popupWindow.setBackgroundDrawable(new BitmapDrawable());
                 //设置PopupWindow的弹出和消失效果
                 popupWindow.setAnimationStyle(R.style.popupAnimation);
-                album = (Button) popupWindowView.findViewById(R.id.album);
+                Button album = (Button) popupWindowView.findViewById(R.id.album);
                 album.setOnClickListener(this);
-                photograph = (Button) popupWindowView.findViewById(R.id.photograph);
+                Button photograph = (Button) popupWindowView.findViewById(R.id.photograph);
                 photograph.setOnClickListener(this);
-                cancleButton = (Button) popupWindowView.findViewById(R.id.cancleButton);
+                Button cancleButton = (Button) popupWindowView.findViewById(R.id.cancleButton);
                 cancleButton.setOnClickListener(this);
                 popupWindow.showAtLocation(album, Gravity.CENTER, 0, 0);//显示并设置位置
                 break;

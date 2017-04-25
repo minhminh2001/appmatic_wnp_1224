@@ -22,7 +22,6 @@ import com.whitelabel.app.R;
  */
 public class CustomCountdown extends RelativeLayout {
 
-	private View view;
 	public Chronometer chronometer;
 	private TextView tv_dd_desc,tv_dd,tv_dd2,tv_hh,tv_hh2,tv_ss,tv_ss2,tv_mm,tv_mm2,tv_dd_temp,tv_hh_temp,tv_mm_temp,tv_ss_temp;
 	private OnCountDownListenter onCountDownListenter;
@@ -30,18 +29,18 @@ public class CustomCountdown extends RelativeLayout {
 	public CustomCountdown(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		view=inflater.inflate(R.layout.time_con, this);
+		View view = inflater.inflate(R.layout.time_con, this);
 		chronometer = (Chronometer) view.findViewById(R.id.curation_chronometer);
 
-		tv_dd_desc=(TextView)view.findViewById(R.id.tv_dd_desc);
-		tv_dd=(TextView)view.findViewById(R.id.tv_dd);
-		tv_hh=(TextView)view.findViewById(R.id.tv_hh);
-		tv_mm=(TextView)view.findViewById(R.id.tv_mm);
-		tv_ss=(TextView)view.findViewById(R.id.tv_ss);
-		tv_dd2=(TextView)view.findViewById(R.id.tv_dd2);
-		tv_hh2=(TextView)view.findViewById(R.id.tv_hh2);
-		tv_mm2=(TextView)view.findViewById(R.id.tv_mm2);
-		tv_ss2=(TextView)view.findViewById(R.id.tv_ss2);
+		tv_dd_desc=(TextView) view.findViewById(R.id.tv_dd_desc);
+		tv_dd=(TextView) view.findViewById(R.id.tv_dd);
+		tv_hh=(TextView) view.findViewById(R.id.tv_hh);
+		tv_mm=(TextView) view.findViewById(R.id.tv_mm);
+		tv_ss=(TextView) view.findViewById(R.id.tv_ss);
+		tv_dd2=(TextView) view.findViewById(R.id.tv_dd2);
+		tv_hh2=(TextView) view.findViewById(R.id.tv_hh2);
+		tv_mm2=(TextView) view.findViewById(R.id.tv_mm2);
+		tv_ss2=(TextView) view.findViewById(R.id.tv_ss2);
 
 	}
 	public interface OnCountDownListenter{

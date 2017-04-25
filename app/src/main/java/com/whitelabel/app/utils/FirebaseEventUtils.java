@@ -163,27 +163,16 @@ public class FirebaseEventUtils {
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SPEND_VIRTUAL_CURRENCY, bundle);
     }
 
-    private final String EVENT_SIGNIN="sign_in";
-    private final String EVENT_SIGNOUT="sign_out";
     private final  String EVENT_SIGNUP="sign_up";
-    private final String EVENT_VIEW_CURATION_DETAIL="view_curation_detail";
-    private final String EVENT_VIEW_CURATION_GROUP="view_curation_list";
-    private final  String EVENT_ADD_ADDRESS_INFO="add_address_info";
-    private final String EVENT_BEGIN_PLACE_ORDER="begin_place_order";
     private final String EVENT_NOTIFICATION_FOREDGROUND="notification_foreground";
     private final String EVENT_NOTIFICATION_BACKGROUND="notification_background";
-    private final String EVENT_PUSH_NOTIFICATION_RECEIVE="push_notification_receive";
-    private final String EVENT_PUSH_NOTIFICATION_OPEN="push_notification_open";
-    private final String EVENT_PUSH_NOTIFICATION_REDIRECT="push_notification_redirect";
-    private final String EVENT_PUSH_NOTIFICATION_DISMISS="push_notification_dismiss";
-    private final String EVENT_IN_APP_NOTIFICATION_OPEN="in_app_notification_open";
-    private final String EVENT_IN_APP_NOTIFICATION_REDIRECT="in_app_notification_redirect";
 
 
     public void customizedSignIn(Context context,String method){
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context.getApplicationContext());
         Bundle bundle=new Bundle();
         bundle.putString("method",method);
+        String EVENT_SIGNIN = "sign_in";
         mFirebaseAnalytics.logEvent(EVENT_SIGNIN, bundle);
     }
 
@@ -191,6 +180,7 @@ public class FirebaseEventUtils {
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context.getApplicationContext());
         Bundle bundle=new Bundle();
         bundle.putString("method",method);
+        String EVENT_SIGNOUT = "sign_out";
         mFirebaseAnalytics.logEvent(EVENT_SIGNOUT, bundle);
     }
 
@@ -199,6 +189,7 @@ public class FirebaseEventUtils {
         Bundle bundle=new Bundle();
         bundle.putString("cuation_titile",title);
         bundle.putString("curation_id",id);
+        String EVENT_VIEW_CURATION_DETAIL = "view_curation_detail";
         mFirebaseAnalytics.logEvent(EVENT_VIEW_CURATION_DETAIL, bundle);
     }
 
@@ -206,11 +197,13 @@ public class FirebaseEventUtils {
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context.getApplicationContext());
         Bundle bundle=new Bundle();
         bundle.putString("category_name",handlerStr(category));
+        String EVENT_VIEW_CURATION_GROUP = "view_curation_list";
         mFirebaseAnalytics.logEvent(EVENT_VIEW_CURATION_GROUP, bundle);
     }
     public void customizedAddAddressInfo(Context context){
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context.getApplicationContext());
         Bundle bundle=new Bundle();
+        String EVENT_ADD_ADDRESS_INFO = "add_address_info";
         mFirebaseAnalytics.logEvent(EVENT_ADD_ADDRESS_INFO, bundle);
     }
     public void customizedBeginCheck(Context context,String coupon,String value,String shipping){
@@ -220,6 +213,7 @@ public class FirebaseEventUtils {
         bundle.putString("currency","MYR");
         bundle.putString("value",value);
         bundle.putString("shipping",shipping);
+        String EVENT_BEGIN_PLACE_ORDER = "begin_place_order";
         mFirebaseAnalytics.logEvent(EVENT_BEGIN_PLACE_ORDER, bundle);
     }
 
@@ -241,6 +235,7 @@ public class FirebaseEventUtils {
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
         Bundle bundle=new Bundle();
         bundle.putString("notifiication_title",notificationTitle);
+        String EVENT_PUSH_NOTIFICATION_RECEIVE = "push_notification_receive";
         mFirebaseAnalytics.logEvent(EVENT_PUSH_NOTIFICATION_RECEIVE, bundle);
     }
 
@@ -248,6 +243,7 @@ public class FirebaseEventUtils {
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
         Bundle bundle=new Bundle();
         bundle.putString("notifiication_title",notificationTitle);
+        String EVENT_PUSH_NOTIFICATION_OPEN = "push_notification_open";
         mFirebaseAnalytics.logEvent(EVENT_PUSH_NOTIFICATION_OPEN, bundle);
     }
 
@@ -257,6 +253,7 @@ public class FirebaseEventUtils {
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context.getApplicationContext());
         Bundle bundle=new Bundle();
         bundle.putString("notifiication_title",notificationTitle);
+        String EVENT_PUSH_NOTIFICATION_REDIRECT = "push_notification_redirect";
         mFirebaseAnalytics.logEvent(EVENT_PUSH_NOTIFICATION_REDIRECT, bundle);
     }
 
@@ -265,6 +262,7 @@ public class FirebaseEventUtils {
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context.getApplicationContext());
         Bundle bundle=new Bundle();
         bundle.putString("notifiication_title",notificationTitle);
+        String EVENT_PUSH_NOTIFICATION_DISMISS = "push_notification_dismiss";
         mFirebaseAnalytics.logEvent(EVENT_PUSH_NOTIFICATION_DISMISS, bundle);
     }
 
@@ -273,6 +271,7 @@ public class FirebaseEventUtils {
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context.getApplicationContext());
         Bundle bundle=new Bundle();
         bundle.putString("notifiication_title",notificationTitle);
+        String EVENT_IN_APP_NOTIFICATION_OPEN = "in_app_notification_open";
         mFirebaseAnalytics.logEvent(EVENT_IN_APP_NOTIFICATION_OPEN, bundle);
     }
 
@@ -283,6 +282,7 @@ public class FirebaseEventUtils {
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context.getApplicationContext());
         Bundle bundle=new Bundle();
         bundle.putString("notifiication_title",notificationTitle);
+        String EVENT_IN_APP_NOTIFICATION_REDIRECT = "in_app_notification_redirect";
         mFirebaseAnalytics.logEvent(EVENT_IN_APP_NOTIFICATION_REDIRECT, bundle);
     }
 

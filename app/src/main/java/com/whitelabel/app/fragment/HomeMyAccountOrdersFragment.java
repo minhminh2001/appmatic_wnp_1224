@@ -44,20 +44,16 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
     private static final int pageSize = 10;
     private int pageIndex = 1;
     private ArrayList<MyAccountOrderOuter> list_outer_record;
-    private final int REQUESTCODE_LOGIN = 1000;
     private Dialog mDialog;
     private RequestErrorHelper requestErrorHelper;
     private View connectionBreaks;
     private ViewStub vsEmpty;
-    private LinearLayout tryAgain;
     private MyAccountOrderListEntityResult result;
     private RefreshLoadMoreRecyclerView recyclerView;
     private OrderListRecyclerViewAdapter mOrderListRecyclerViewAdapter;
     private SwipeRefreshLayout swipeRefrshLayout;
     private int first = 0;
     private MyAccountDao mMyAccountDao;
-    private String TAG;
-    private String networkerror = "";
     private ImageLoader mImageLoader;
     @Override
     public void onRefresh() {
@@ -105,7 +101,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         connectionBreaks=view.findViewById(R.id.connectionBreaks);
         requestErrorHelper=new RequestErrorHelper(getContext(),connectionBreaks);
         swipeRefrshLayout= (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
-        tryAgain= (LinearLayout) view.findViewById(R.id.try_again);
+        LinearLayout tryAgain = (LinearLayout) view.findViewById(R.id.try_again);
         tryAgain.setOnClickListener(this);
         swipeRefrshLayout.setOnRefreshListener(this);
 //        swipeRefrshLayout.setColorSchemeResources(R.color.colorAccent);
@@ -119,7 +115,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             mCommonCallback.switchMenu(HomeCommonCallback.MENU_ORDER);
         }
         dataHandler = new DataHandler(homeActivity, this);
-        TAG = this.getClass().getSimpleName();
+        String TAG = this.getClass().getSimpleName();
         mMyAccountDao = new MyAccountDao(TAG, dataHandler);
         init();
         initRecyclerView();
@@ -205,7 +201,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         } else {
             list_outer_record.clear();
         }
-        networkerror = getResources().getString(R.string.Global_Error_Internet);
+        String networkerror = getResources().getString(R.string.Global_Error_Internet);
 
     }
 
@@ -350,6 +346,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int REQUESTCODE_LOGIN = 1000;
         if (REQUESTCODE_LOGIN == requestCode) {
             if (WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)) {
                 showSwipeRefreshDialog();

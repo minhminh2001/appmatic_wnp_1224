@@ -59,30 +59,40 @@ import java.util.LinkedList;
  */
 public class AddAddressActivity extends com.whitelabel.app.BaseActivity implements View.OnFocusChangeListener,View.OnClickListener{
     private EditText firstName,lastName,country,address1,address2,postalcode,city,state,eg;
-    private TextView firstNameText,firstNameText2,lastNameText,lastNameText2,countryText
-            ,countryText2,address1Text,address1Text2,address2Text,address2Text2,postalcodeText,postalcodeText2,
-            cityText,cityText2,stateText,stateText2,egText,egText2,phoneNumber;
+    private TextView firstNameText;
+    private TextView firstNameText2;
+    private TextView lastNameText;
+    private TextView lastNameText2;
+    private TextView countryText;
+    private TextView countryText2;
+    private TextView address1Text;
+    private TextView address1Text2;
+    private TextView address2Text;
+    private TextView address2Text2;
+    private TextView postalcodeText;
+    private TextView postalcodeText2;
+    private TextView cityText;
+    private TextView cityText2;
+    private TextView stateText;
+    private TextView stateText2;
+    private TextView egText;
+    private TextView egText2;
     private ImageView clearAddressFirst,clearAddressLast,clearAddress1,clearAddress2,clearAddressCode,clearAddressCity,clearAddressPhone;
-    private RelativeLayout scrollView,CheckBox_RelativeLayout;
     private ImageView iv_country_arrow,iv_state_arrow;
     private CustomButtomLineRelativeLayout rl_addadd_country,rl_addadd_address1,rl_addadd_address2,rl_addadd_postcode,rl_addadd_city,rl_addadd_state;
     private View v_add_phone_line,view_firstname_line,view_lastname_line;
     private ArrayList<CountrySubclass> list_countries = new ArrayList<CountrySubclass>();
     private Handler mHandler = new Handler();
-    private String number;
     private int num;
     private TextView tvError;
     private CustomCheckBox addaddress_checkbox;
     private boolean addaddressIsCheckbox;
-    private TextView tvAddressWord;
     private ScrollView  mScrollView;
     private Dialog mDialog;
 //    private ProgressBar mProgressBar;
     private final String SESSION_EXPIRED = "session expired,login again please";
     private final int REQUESTCODE_LOGIN = 1000;
     private MyAccountDao dao;
-    private String TAG;
-    private DataHandler handler;
     private int height;
     private int[] location = new int[2];
     ArrayList<CountrySubclass> countryValue=null;
@@ -234,13 +244,13 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addaddress);
-        handler=new DataHandler(this);
-        TAG =this.getClass().getSimpleName();
-        dao=new MyAccountDao(TAG,handler);
+        DataHandler handler = new DataHandler(this);
+        String TAG = this.getClass().getSimpleName();
+        dao=new MyAccountDao(TAG, handler);
         initToolBar();
-        CheckBox_RelativeLayout= (RelativeLayout) findViewById(R.id.relative1);
+        RelativeLayout checkBox_RelativeLayout = (RelativeLayout) findViewById(R.id.relative1);
         Intent intent=this.getIntent();
-        number=intent.getStringExtra("listnum");
+        String number = intent.getStringExtra("listnum");
 
         v_add_phone_line=findViewById(R.id.v_add_phone_line);
         view_firstname_line=findViewById(R.id.view_firstname_line);
@@ -252,7 +262,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         rl_addadd_city= (CustomButtomLineRelativeLayout) findViewById(R.id.rl_addadd_city);
         rl_addadd_state= (CustomButtomLineRelativeLayout) findViewById(R.id.rl_addadd_state);
 
-        tvAddressWord=(TextView)findViewById(R.id.tv_user_address);
+        TextView tvAddressWord = (TextView) findViewById(R.id.tv_user_address);
         tvAddressWord.setOnClickListener(this);
         tvError=(TextView)findViewById(R.id.tv_error_hint);
         firstName= (EditText) findViewById(R.id.edit_addaddress_firstName);
@@ -435,7 +445,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         egText2= (TextView) findViewById(R.id.ctv_addaddresss_eg_text2);
-        phoneNumber= (TextView) findViewById(R.id.ctv_addaddress_number_value);
+        TextView phoneNumber = (TextView) findViewById(R.id.ctv_addaddress_number_value);
         phoneNumber.setOnClickListener(this);
 
         clearAddressFirst=(ImageView)findViewById(R.id.iv_addaddress_clear_first);
@@ -460,7 +470,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
 //        country.setOnClickListener(this);
         imm = (InputMethodManager)
         getSystemService(Context.INPUT_METHOD_SERVICE);
-        scrollView= (RelativeLayout) findViewById(R.id.addaddress_ScrollView);
+        RelativeLayout scrollView = (RelativeLayout) findViewById(R.id.addaddress_ScrollView);
         scrollView.setOnClickListener(this);
         addaddress_checkbox= (CustomCheckBox) findViewById(R.id.addaddress_checkbox);
         addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());

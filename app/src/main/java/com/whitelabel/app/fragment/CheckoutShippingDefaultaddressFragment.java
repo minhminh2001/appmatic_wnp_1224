@@ -30,7 +30,12 @@ public class CheckoutShippingDefaultaddressFragment extends Fragment {
 
     private Handler mHandler = new Handler();
 
-    private TextView tvFirstname,tvLastname,tvAddress1,tvAddress2,tvCityStatePostcode,tvCountry,tvTelephone;
+    private TextView tvFirstname;
+    private TextView tvLastname;
+    private TextView tvAddress1;
+    private TextView tvAddress2;
+    private TextView tvCityStatePostcode;
+    private TextView tvTelephone;
 
     public TextView tvErrorMsg;
 
@@ -172,7 +177,7 @@ public class CheckoutShippingDefaultaddressFragment extends Fragment {
         tvAddress1 = (TextView) view.findViewById(R.id.tv_address_select_address1);
         tvAddress2 = (TextView) view.findViewById(R.id.tv_address_select_address2);
         tvCityStatePostcode = (TextView) view.findViewById(R.id.tv_address_select_citystatepostcode);
-        tvCountry = (TextView) view.findViewById(R.id.tv_address_select_country);
+        TextView tvCountry = (TextView) view.findViewById(R.id.tv_address_select_country);
         tvTelephone = (TextView) view.findViewById(R.id.tv_address_select_telephone);
 
         Gson gson = new Gson();

@@ -97,6 +97,8 @@ public class CustomRangeSeekBar<T extends Number> extends ImageView {
     private int mScaledTouchSlop;
     private boolean mIsDragging;
 
+
+
     /**
      * Creates a new RangeSeekBar.
      *

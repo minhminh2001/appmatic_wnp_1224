@@ -33,8 +33,6 @@ public class CustomXHeaderView extends LinearLayout {
 	private Animation mRotateUpAnim;
 	private Animation mRotateDownAnim;
 
-	private final int ROTATE_ANIM_DURATION = 180;
-
 	public final static int STATE_NORMAL = 0;
 	public final static int STATE_READY = 1;
 	public final static int STATE_REFRESHING = 2;
@@ -68,6 +66,7 @@ public class CustomXHeaderView extends LinearLayout {
 		mProgressBar = (ProgressBar) findViewById(R.id.xlistview_header_progressbar);
 
 		mRotateUpAnim = new RotateAnimation(0.0f, -180.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+		int ROTATE_ANIM_DURATION = 180;
 		mRotateUpAnim.setDuration(ROTATE_ANIM_DURATION);
 		mRotateUpAnim.setFillAfter(true);
 		mRotateDownAnim = new RotateAnimation(-180.0f, 0.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);

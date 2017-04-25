@@ -24,18 +24,15 @@ import java.util.Set;
  */
 public class FavoriteActivity extends BaseActivity {
     private List<FavoriteSonEntity> list;
-    private GridView mGridView;
     private FavoriteAdapter favoriteAdapter;
     private TextView favoriteOk;
-    private boolean buttonClickPass;
-    private Dialog mDialog;
     private SharedPreferences shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
-        mDialog = JViewUtils.showProgressDialog(this);
+        Dialog mDialog = JViewUtils.showProgressDialog(this);
 
 //        SharedPreferences shared=getSharedPreferences("favorite", Activity.MODE_PRIVATE);
 //        SharedPreferences.Editor editor=shared.edit();
@@ -43,7 +40,7 @@ public class FavoriteActivity extends BaseActivity {
 //        editor.commit();
 
         list = new ArrayList<FavoriteSonEntity>();
-        mGridView = (GridView) findViewById(R.id.myGridView);
+        GridView mGridView = (GridView) findViewById(R.id.myGridView);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -95,7 +92,7 @@ public class FavoriteActivity extends BaseActivity {
     }
 
     public boolean clickPass() {
-        buttonClickPass = false;
+        boolean buttonClickPass = false;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isSelected()) {
                 buttonClickPass = true;

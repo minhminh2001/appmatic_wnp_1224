@@ -50,12 +50,9 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
     private String FB_ERROR_UNINSTALLED;
     private String FB_SHARED_OK;
     private ShoppingDiscountBean mDiscountBean;
-    private String orderNumber;
     private TextView tvShare;
-    private TextView tvCheckOrder;
-    private TextView tvContinueShopping;
-    private TextView codeNumber,tvContinueShopping3,tvContinueShopping4;
-//    private double grandTotal;
+    private TextView codeNumber;
+    //    private double grandTotal;
 //    private double shippingFee;
 //    private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
 //    private View myBoxGroup;
@@ -75,16 +72,14 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
     private View rlBackGroud;
     private int fromType=0;
     private View rlRoot;
-    private View layout;
     private ShareHandler shareHandler;
     private String mImageUrl="";
     private String mTitle="";
     private String  mDescription="";
     private String  mLink="";
-    private DataHandler dataHandler;
     private CheckoutDao mCheckoutDao;
-    private String TAG;
-//    private ImageView img1,img2,img3,img4,img5;
+
+    //    private ImageView img1,img2,img3,img4,img5;
 //    private ArrayList<ImageView> allImageVeiw;
 //    private AnimHandler myHandler;
 //    private boolean animStop=true;
@@ -174,9 +169,9 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TAG=getClass().getSimpleName();
-        dataHandler=new DataHandler((CheckoutPaymentStatusActivity) getActivity(),this);
-        mCheckoutDao=new CheckoutDao(TAG,dataHandler);
+        String TAG = getClass().getSimpleName();
+        DataHandler dataHandler = new DataHandler((CheckoutPaymentStatusActivity) getActivity(), this);
+        mCheckoutDao=new CheckoutDao(TAG, dataHandler);
         shareHandler=new ShareHandler(getActivity(),CheckoutPaymentStatusRightFragment.this);
         FB_ERROR_NOINTERNET = getResources().getString(R.string.facebook_error_nointernet);
         FB_ERROR_UNINSTALLED = getResources().getString(R.string.facebook_error_notinstalled);
@@ -442,7 +437,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checkout_payment_status_right, container, false);
-        layout=view.findViewById(R.id.rl_root);
+        View layout = view.findViewById(R.id.rl_root);
         TextView tvOrderNumber = (TextView) view.findViewById(R.id.tv_checkout_payment_status_ordernumber);
         TextView tvEmail = (TextView) view.findViewById(R.id.tv_checkout_payment_status_email);
         tvEmail.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
@@ -469,7 +464,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 //    ;
         /////////////////////set orderNumber////////////////////
         Bundle bundle = getArguments();
-        orderNumber = bundle.getString("orderNumber");
+        String orderNumber = bundle.getString("orderNumber");
 //        if (!JDataUtils.isEmpty(bundle.getString("grand_total"))){
 //            grandTotal = Double.parseDouble(bundle.getString("grand_total").replace(",", "").replace("RM",""));
 //        }
@@ -490,7 +485,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
             tvEmail.setText(user.getEmail());
         }
         tvOrderNumber.setText(orderNumber);
-        tvContinueShopping = (TextView) view.findViewById(R.id.tv_checkout_payment_status_right_continueshopping);
+        TextView tvContinueShopping = (TextView) view.findViewById(R.id.tv_checkout_payment_status_right_continueshopping);
         tvContinueShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -513,9 +508,9 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 //        myText3= (TextView) view.findViewById(R.id.my_text4);
 //        showCode=view.findViewById(R.id.showCode);
         codeNumber= (TextView) view.findViewById(R.id.my_text3);
-        tvContinueShopping3= (TextView) view.findViewById(R.id.tv_checkout_payment_status_right_continueshopping3);
+        TextView tvContinueShopping3 = (TextView) view.findViewById(R.id.tv_checkout_payment_status_right_continueshopping3);
         tvContinueShopping3.setOnClickListener(this);
-        tvContinueShopping4= (TextView) view.findViewById(R.id.tv_checkout_payment_status_right_continueshopping4);
+        TextView tvContinueShopping4 = (TextView) view.findViewById(R.id.tv_checkout_payment_status_right_continueshopping4);
         tvContinueShopping4.setOnClickListener(this);
 //        img1= (ImageView) view.findViewById(R.id.img1);
 //        img2= (ImageView) view.findViewById(R.id.img2);
@@ -598,7 +593,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 //            }
 //        };
 
-        tvCheckOrder = (TextView) view.findViewById(R.id.tv_checkout_payment_status_right_checkorder);
+        TextView tvCheckOrder = (TextView) view.findViewById(R.id.tv_checkout_payment_status_right_checkorder);
         tvCheckOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -619,11 +614,11 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 
             tvCheckOrder.setVisibility(View.VISIBLE);
             tvContinueShopping.setVisibility(View.VISIBLE);
-            JViewUtils.setStrokeButtonGlobalStyle(getActivity(),tvCheckOrder);
+            JViewUtils.setStrokeButtonGlobalStyle(getActivity(), tvCheckOrder);
 //            tvCheckOrder.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
 //            tvCheckOrder.setTextColor();
 
-        JViewUtils.setSoildButtonGlobalStyle(getActivity(),tvContinueShopping);
+        JViewUtils.setSoildButtonGlobalStyle(getActivity(), tvContinueShopping);
 //            tvContinueShopping.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(getActivity()));
         return view;
     }

@@ -72,9 +72,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
      * TextView and selector ImageView define;
      */
     private MyAccountDao mAccountDao;
-    private String TAG;
     private ImageView arrowSelectCountry, arrowSelectState,clearCheckFirst,clearCheckLast,clearCheckAddress1,clearCheckAddress2,clearCheckCode,clearCheckCity,clearCheckPhone;
-    private ScrollView scrollView;
     private CustomButtomLineRelativeLayout rl_checkaddadd_firstname,rl_checkaddadd_lastname,rl_checkaddadd_country,rl_checkaddadd_city,rl_checkaddadd_postcode,
             rl_checkaddadd_address1,rl_checkaddadd_address2,rl_checkout_shipping_state,rl_checkadd_phone;
     public TextView tvErrorMsg,tvPhone_otheruse ;
@@ -187,12 +185,11 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
         }
     }
 
-    private DataHandler dataHandler;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checkout_shipping_addaddress, container, false);
-        scrollView= (ScrollView) view.findViewById(R.id.my_scroll_view);
+        ScrollView scrollView = (ScrollView) view.findViewById(R.id.my_scroll_view);
         mProgressBar=(ProgressBar)view.findViewById(R.id.pb_shoppingcart);
         tvPhone_otheruse = (TextView) view.findViewById(R.id.tv_checkout_shipping_address_phone);
         // edit line
@@ -325,7 +322,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
         }
     }
     public void initData(){
-        TAG=this.getClass().getSimpleName();
+        String TAG = this.getClass().getSimpleName();
         if(mAddress!=null){
             if(mAddress.getRegion()==""){
                 tvStateAnim.setVisibility(View.GONE);
@@ -333,8 +330,8 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
             initEditDatas(mAddress);
             initAllHint();
         }
-        dataHandler=new DataHandler(checkoutActivity,this);
-        mAccountDao=new MyAccountDao(TAG,dataHandler);
+        DataHandler dataHandler = new DataHandler(checkoutActivity, this);
+        mAccountDao=new MyAccountDao(TAG, dataHandler);
         mRegions=new ArrayList<CountryRegions>();
         SharedPreferences sharedPreferences = checkoutActivity.getSharedPreferences("countries", Activity.MODE_PRIVATE);
         String  countryJson=sharedPreferences.getString("countries","");

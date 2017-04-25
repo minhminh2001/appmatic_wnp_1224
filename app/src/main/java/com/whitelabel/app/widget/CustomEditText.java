@@ -11,7 +11,6 @@ import com.whitelabel.app.R;
 
 
 public class CustomEditText extends EditText {
-    private int typefaceIndex;
 
     public CustomEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -28,7 +27,7 @@ public class CustomEditText extends EditText {
             return;
         }
 
-        typefaceIndex = types.getInt(R.styleable.CustomTextStyle_textFont, -1);
+        int typefaceIndex = types.getInt(R.styleable.CustomTextStyle_textFont, -1);
 
         types.recycle();
 

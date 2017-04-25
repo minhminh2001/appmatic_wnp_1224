@@ -60,9 +60,24 @@ import java.util.LinkedList;
  */
 public class EditAddressActivity extends com.whitelabel.app.BaseActivity implements OnFocusChangeListener,View.OnClickListener{
     private EditText firstName,lastName,country,address1,address2,postalcode,city,state,eg;
-    private TextView firstNameText,firstNameText2,lastNameText,lastNameText2,countryText
-            ,countryText2,address1Text,address1Text2,address2Text,address2Text2,postalcodeText,postalcodeText2,
-            cityText,cityText2,stateText,stateText2,egText,egText2,phoneNumber;
+    private TextView firstNameText;
+    private TextView firstNameText2;
+    private TextView lastNameText;
+    private TextView lastNameText2;
+    private TextView countryText;
+    private TextView countryText2;
+    private TextView address1Text;
+    private TextView address1Text2;
+    private TextView address2Text;
+    private TextView address2Text2;
+    private TextView postalcodeText;
+    private TextView postalcodeText2;
+    private TextView cityText;
+    private TextView cityText2;
+    private TextView stateText;
+    private TextView stateText2;
+    private TextView egText;
+    private TextView egText2;
     private CustomButtomLineRelativeLayout rl_edit_country,rl_edit_address1,rl_edit_address2,rl_edit_postcode,rl_edit_city,rl_edit_state;
     private ArrayList<CountrySubclass> list_countries = new ArrayList<CountrySubclass>();
     private View view_firstname_line,view_lastname_line,v_phone_line;
@@ -73,7 +88,6 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
 //    private String addeessId,firtname,lastname,county,address11,address22,postalcode1,city1,state1,phonenumber;
     private CustomCheckBox addaddress_checkbox;
     private AddressBook  mBean;
-    private View checkBoxView;
     private TextView tvError;
 //    private ProgressBar mProgressBar;
     private Dialog  mDialog;
@@ -83,7 +97,6 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
     private final int REQUESTCODE_LOGIN = 1000;
     private MyAccountDao dao;
     private String TAG;
-    private int index;
 
 
     private static final class DataHandler extends  Handler{
@@ -236,8 +249,6 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         }
     }
 
-    private DataHandler dataHandler;
-
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
@@ -248,10 +259,10 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editaddress);
         TAG =this.getClass().getSimpleName();
-        dataHandler=new DataHandler(this);
-        dao=new MyAccountDao(TAG,dataHandler);
+        DataHandler dataHandler = new DataHandler(this);
+        dao=new MyAccountDao(TAG, dataHandler);
 //        SharedPreferences sharedPreferences = getSharedPreferences("session_key", Activity.MODE_PRIVATE);
-        checkBoxView=findViewById(R.id.relative14);
+        View checkBoxView = findViewById(R.id.relative14);
         addaddress_checkbox= (CustomCheckBox) findViewById(R.id.addaddress_checkbox);
         addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         addaddress_checkbox.setChecked(false);
@@ -259,7 +270,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
 //        SESSION_KEY = sharedPreferences.getString("session_key", "");
         Intent intent=this.getIntent();
         Bundle bundle=intent.getExtras();
-        index=intent.getIntExtra("position",0);
+        int index = intent.getIntExtra("position", 0);
         if(bundle!=null ){
             mBean=(AddressBook)bundle.getSerializable("bean");
             if (mDialog != null) {
@@ -340,7 +351,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         egText= (TextView) findViewById(R.id.ctv_eg_text);
         egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         egText2= (TextView) findViewById(R.id.ctv_eg_text2);
-        phoneNumber= (TextView) findViewById(R.id.ctv_phone_number_value);
+        TextView phoneNumber = (TextView) findViewById(R.id.ctv_phone_number_value);
         phoneNumber.setOnClickListener(this);
 
         iv_country_arrow=(ImageView)findViewById(R.id.iv_country_arrow);
@@ -588,8 +599,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         JViewUtils.cleanCurrentViewFocus(EditAddressActivity.this);
         if (onblurAll(R.id.edit_firstName_EditText) && onblurAll(R.id.edit_lastName_EditText)  && onblurAll(R.id.edit_address1_EditText)
                 && onblurAll(R.id.edit_postalcode_EditText)
-                && onblurAll(R.id.edit_city_EditText) && onblurAll(R.id.edit_country_EditText) && onblurAll(R.id.edit_state_EditText) && onblurAll(R.id.edit_eg)) {
-
+                && onblurAll(R.id.edit_city_EditText) && onblurAll(R.id.edit_country_EditText)  && onblurAll(R.id.edit_eg)) {//&& onblurAll(R.id.edit_state_EditText)
             mDialog=JViewUtils.showProgressDialog(EditAddressActivity.this);
             String region="";
             String region_id="";
@@ -608,7 +618,6 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                     region=state.getText().toString().trim();
                 }
             }
-
             String address_id=mBean.getAddressId();
             String sessionKey= WhiteLabelApplication.getAppConfiguration().getUserInfo(EditAddressActivity.this).getSessionKey();
             String firstname =firstName.getText().toString().trim();

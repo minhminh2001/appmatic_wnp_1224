@@ -41,7 +41,6 @@ import java.util.ArrayList;
 public class CurationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ZoomImageContainer {
     private static final String TAG = "CurationAdapter";
     private final int TYPE_HEADER = 0;
-    private final int TYPE_ITEM = 1;
     private CurationAdapter.OnItemClickLitener mOnItemClickLitener;
     private ArrayList<SVRAppserviceLandingPagesListLandingPageItemReturnEntity> mCurationList;
     private int mDestWidth;
@@ -311,6 +310,7 @@ public class CurationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (isPositionHeader(position))
             return TYPE_HEADER;
 
+        int TYPE_ITEM = 1;
         return TYPE_ITEM;
     }
 

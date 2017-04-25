@@ -29,7 +29,6 @@ import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomButton;
 
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView {
-    private View mContentView ;
     protected T mPresenter;
     private Toolbar mToolbar;
     private RelativeLayout mHomeSearchBarRL;
@@ -173,7 +172,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     }
 
     public void setContentView(View mContentView) {
-        this.mContentView=mContentView;
+        View mContentView1 = mContentView;
         mToolbar= (Toolbar) mContentView.findViewById(R.id.toolbar);
         mHomeSearchBarRL = (RelativeLayout) mContentView.findViewById(R.id.rl_home_searchBar);
         mTitleRL = (RelativeLayout) mContentView.findViewById(R.id.rl_home_searchBar);

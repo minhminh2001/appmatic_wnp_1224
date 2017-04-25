@@ -331,8 +331,6 @@ public class LoginRegisterActivity extends com.whitelabel.app.BaseActivity imple
         return backToFragment;
     }
 
-    private Dialog dialog;
-
     public void InitMyDialog() {
         CustomMyDialog.Builder builder = new CustomMyDialog.Builder(this);
         builder.setMessage(getString(R.string.are_you_sure_you_want));
@@ -352,7 +350,7 @@ public class LoginRegisterActivity extends com.whitelabel.app.BaseActivity imple
                     }
                 });
 
-        dialog = builder.create();
+        Dialog dialog = builder.create();
     }
 
     public void switchFragment(int from, int to) {

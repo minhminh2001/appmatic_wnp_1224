@@ -20,8 +20,6 @@ public class CustomDialog  extends Dialog{
     private IndeterminateDrawable drawable;
     public static final String TOP="top";
     public static final String BOOTOM="bottom";
-    private String mLocation="";
-    private CircularProgressView mProgressView;
 
     public CustomDialog(Context context) {
          this(context, R.style.dialog2,"");
@@ -31,11 +29,11 @@ public class CustomDialog  extends Dialog{
     }
     public CustomDialog(Context context, int theme,String location) {
         super(context, theme);
-        this.mLocation=location;
+        String mLocation = location;
         if("bottom".equals(mLocation)){
             this.getWindow().getAttributes().gravity = Gravity.BOTTOM;
             setContentView(R.layout.dialog_progress);
-            mProgressView = (CircularProgressView) findViewById(R.id.progress_view);
+            CircularProgressView mProgressView = (CircularProgressView) findViewById(R.id.progress_view);
             LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(JDataUtils.dp2Px(50),JDataUtils.dp2Px(50));
             params.setMargins(0,JDataUtils.dp2Px(20),0,JDataUtils.dp2Px(40));
             mProgressView.setLayoutParams(params);

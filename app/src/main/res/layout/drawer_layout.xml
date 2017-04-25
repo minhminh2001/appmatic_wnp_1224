@@ -25,6 +25,7 @@
                 android:id="@+id/iv_user_img"
                 android:layout_width="@dimen/slingmenu_width"
                 android:layout_height="18dp"
+                android:visibility="gone"
                 android:scaleType="fitCenter"
                 android:layout_centerVertical="true"
                 android:background="@mipmap/user" />
@@ -33,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginLeft="16dp"
                 android:maxLines="2"
+                android:textStyle="bold"
                 style="@style/font_family_robot_regular"
                 android:ellipsize="end"
                 android:textColor="@color/white"

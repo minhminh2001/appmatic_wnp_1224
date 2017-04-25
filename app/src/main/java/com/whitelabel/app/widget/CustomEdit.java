@@ -30,11 +30,7 @@ public class CustomEdit extends LinearLayout implements View.OnFocusChangeListen
     private CustomEditText myEditText;
     private TextView myText1,myText2;
     private  String hint="Enter";
-    private boolean isPassword;
-    private boolean isNumber;
     private  boolean notNull;
-    private Context context;
-    private int translateX;
     private ImageView imageViewClear;
     private View view;
     public CustomEdit(Context context) {
@@ -43,15 +39,15 @@ public class CustomEdit extends LinearLayout implements View.OnFocusChangeListen
 
     public CustomEdit(Context context, AttributeSet attrs) {
         super(context,attrs);
-        this.context=context;
+        Context context1 = context;
         //获得属性设置
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ToolBar);
 //        int textColor = a.getColor(R.styleable.MyView_textColor,0XFFFFFFFF);
 //        float textSize = a.getDimension(R.styleable.MyView_textSize, 36);
         hint=a.getString(R.styleable.ToolBar_myHint);
         notNull=a.getBoolean(R.styleable.ToolBar_notNull, false);
-        isPassword=a.getBoolean(R.styleable.ToolBar_isPassword, false);
-        isNumber=a.getBoolean(R.styleable.ToolBar_isNumber, false);
+        boolean isPassword = a.getBoolean(R.styleable.ToolBar_isPassword, false);
+        boolean isNumber = a.getBoolean(R.styleable.ToolBar_isNumber, false);
         LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view=inflater.inflate(R.layout.custom_edit, this);
         imageViewClear=(ImageView)view.findViewById(R.id.imageViewClear);
@@ -150,7 +146,7 @@ public class CustomEdit extends LinearLayout implements View.OnFocusChangeListen
     public AnimationSet EditAnimation(){
         int parentHeight=view.getHeight();
         int text2Height=myText2.getHeight();
-        translateX=parentHeight-text2Height-JDataUtils.dp2Px(5);
+        int translateX = parentHeight - text2Height - JDataUtils.dp2Px(5);
 
         AnimationSet set = new AnimationSet(true);
         set.setFillAfter(true);

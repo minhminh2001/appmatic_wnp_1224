@@ -21,7 +21,6 @@ public class HomeNotificationDetailFragment extends Fragment implements View.OnC
 
     private HomeActivity homeActivity;
     private View view;
-    private ImageView ivBack;
     private CustomWebView webView;
     private CustomTextView tvTitle;
 
@@ -41,7 +40,7 @@ public class HomeNotificationDetailFragment extends Fragment implements View.OnC
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         webView = (CustomWebView) view.findViewById(R.id.webview_Detail);
-        ivBack = (ImageView) view.findViewById(R.id.ivHeaderBarMenu);
+        ImageView ivBack = (ImageView) view.findViewById(R.id.ivHeaderBarMenu);
         view.findViewById(R.id.rl_ivHeaderBarMenu).setOnClickListener(this);
 
         tvTitle = (CustomTextView) view.findViewById(R.id.ctvHeaderBarTitle);

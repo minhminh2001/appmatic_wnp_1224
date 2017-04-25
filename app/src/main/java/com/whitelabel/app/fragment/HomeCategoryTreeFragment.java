@@ -43,7 +43,6 @@ import java.util.ArrayList;
  */
 public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.OnClickListener {
     private Dialog mDialog;
-    private HomeCategoryTreeFragment.DataHandler mHandler;
     private ProductDao dao;
     public static String TAG;
     private HomeCommonCallback homeCommonCallback;
@@ -51,7 +50,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
     private RequestErrorHelper requestErrorHelper;
 
     private View view, connectionLayout;
-    private LinearLayout tryAgain, ll_category_tree_main;
+    private LinearLayout ll_category_tree_main;
     private RecyclerView rvRootCategory, rlCategoryTree;
 
     private CategoryTreeRootAdapter categoryTreeRootAdapter;
@@ -69,7 +68,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_category_tree_layout, null);
         TAG = this.getClass().getSimpleName();
-        mHandler = new DataHandler(getActivity(), this);
+        DataHandler mHandler = new DataHandler(getActivity(), this);
         dao = new ProductDao(TAG, mHandler);
         return view;
     }
@@ -81,7 +80,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
         mImageLoader = new ImageLoader(getContext());
         connectionLayout = view.findViewById(R.id.connectionBreaks);
         requestErrorHelper = new RequestErrorHelper(getContext(), connectionLayout);
-        tryAgain = (LinearLayout) connectionLayout.findViewById(R.id.try_again);
+        LinearLayout tryAgain = (LinearLayout) connectionLayout.findViewById(R.id.try_again);
         ll_category_tree_main = (LinearLayout) view.findViewById(R.id.ll_category_tree_main);
         ll_category_tree_main.setVisibility(View.GONE);
         tryAgain.setOnClickListener(this);

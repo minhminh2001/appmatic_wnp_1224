@@ -14,19 +14,17 @@ import com.whitelabel.app.activity.HideFunctionActivity;
  * Created by imaginato on 2015/10/28.
  */
 public class LoginNewServiceFragment extends BaseFragment {
-    private HideFunctionActivity activity;
-    private View contentView;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.activity= (HideFunctionActivity) activity;
+        HideFunctionActivity activity1 = (HideFunctionActivity) activity;
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        contentView=inflater.inflate(R.layout.fragment_login_new_service,null);
+        View contentView = inflater.inflate(R.layout.fragment_login_new_service, null);
         return contentView;
 
     }

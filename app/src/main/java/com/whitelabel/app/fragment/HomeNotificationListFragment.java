@@ -54,9 +54,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
     private NotificationDao mDao;
     private RequestErrorHelper requestErrorHelper;
     private View connectionLayout;
-    private LinearLayout tryAgain;
     private DataHandler mHandler;
-    private boolean isStop=false;
     private String mCurrTag;
     @Override
     public void onAttach(Activity activity) {
@@ -93,7 +91,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
         }
         connectionLayout=view.findViewById(R.id.connectionBreaks);
         requestErrorHelper=new RequestErrorHelper(getContext(),connectionLayout);
-        tryAgain= (LinearLayout) view.findViewById(R.id.try_again);
+        LinearLayout tryAgain = (LinearLayout) view.findViewById(R.id.try_again);
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -318,7 +316,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
     public void onStop() {
         super.onStop();
 //        page=1;
-        isStop=true;
+        boolean isStop = true;
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, false);
     }
     @Override

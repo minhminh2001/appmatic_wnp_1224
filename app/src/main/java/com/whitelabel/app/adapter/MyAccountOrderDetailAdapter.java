@@ -37,7 +37,6 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
 
     public LinkedList<MyAccountOrderMiddle> list;
     private Context context;
-    private MyAccountOrderDetailActivity activity;
     private String mStatusCode;
     private String mStatus;
     private static final String TAG = "MyAccountOrderDetailAda";
@@ -45,7 +44,7 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
     public MyAccountOrderDetailAdapter(Context context, ImageLoader imageLoader,String statusCode,String status) {
         this.context = context;
         this.list = new LinkedList<MyAccountOrderMiddle>();
-        activity = (MyAccountOrderDetailActivity) context;
+        MyAccountOrderDetailActivity activity = (MyAccountOrderDetailActivity) context;
         mImageLoader = imageLoader;
         mStatusCode=statusCode;
         mStatus=status;

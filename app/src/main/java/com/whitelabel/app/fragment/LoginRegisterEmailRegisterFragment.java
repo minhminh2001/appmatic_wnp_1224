@@ -61,6 +61,7 @@ import java.util.List;
  * Created by imaginato on 2015/6/10.
  */
 
+@SuppressWarnings("ALL")
 public class LoginRegisterEmailRegisterFragment extends Fragment implements View.OnFocusChangeListener,View.OnClickListener{
     private EditText firstName,lastName,email,password,re_password;
     private TextView firstNameText,lastNameText,emailText,passwordText,re_passwordText;
@@ -69,19 +70,17 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     private boolean isClickRegister=true;
     private CustomButtomLineRelativeLayout rl_register_email,rl_register_pwd,rl_register_repwd;
     private View view_firstname_line,view_lastname_line;
-    private Button signUp;
-    private TextView sign_in,error;
+    private TextView error;
     private CustomCheckBox checkBox;
-    private TextView checkBoxText1,t1,t3;
+    private TextView checkBoxText1;
     private View contentView;
     private boolean existVending=false;
     private LoginRegisterActivity loginRegisterActivity;
     private String TAG;
     private Dialog mDialog;
     private InputMethodManager inputMethodManager;
-    private String updateDiaHintmsg,updateDiaTitle;
+    private String updateDiaHintmsg;
     private  String updateDiaBtnMsg;
-    private boolean isStart;
     private  DataHandler dataHandler;
     private MyAccountDao mAccountDao;
     private ToolBarFragmentCallback toolBarFragmentCallback;
@@ -322,11 +321,11 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         email.setOnFocusChangeListener(this);
         password.setOnFocusChangeListener(this);
         re_password.setOnFocusChangeListener(this);
-        sign_in= (TextView) contentView.findViewById(R.id.sign_in);
+        TextView sign_in = (TextView) contentView.findViewById(R.id.sign_in);
         sign_in.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         sign_in.setOnClickListener(this);
-        signUp= (Button) contentView.findViewById(R.id.sign_up);
+        Button signUp = (Button) contentView.findViewById(R.id.sign_up);
         signUp.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         signUp.setOnClickListener(this);
@@ -336,8 +335,8 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         checkBoxText1= (TextView) contentView.findViewById(R.id.checkbox_text1);
         error= (TextView) contentView.findViewById(R.id.error);
         setMoreClickSpan();
-        t1= (TextView) contentView.findViewById(R.id.t1);
-        t3= (TextView) contentView.findViewById(R.id.t3);
+        TextView t1 = (TextView) contentView.findViewById(R.id.t1);
+        TextView t3 = (TextView) contentView.findViewById(R.id.t3);
         t1.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         t3.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         t1.setOnClickListener(this);
@@ -347,7 +346,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         if(loginRegisterActivity.getIntent()!=null&&loginRegisterActivity.getIntent().getExtras()!=null){
             String activityAata = loginRegisterActivity.getIntent().getExtras().getString("Activity");//读出数据
             if ("start".equals(activityAata)) {
-                isStart = true;
+                boolean isStart = true;
             }
         }
         if(isClickRegister){
@@ -356,7 +355,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         }
         dataHandler=new DataHandler(loginRegisterActivity,this);
         mAccountDao=new MyAccountDao(TAG,dataHandler);
-        updateDiaTitle = getActivity().getResources().getString(R.string.versionCheckTitle);
+        String updateDiaTitle = getActivity().getResources().getString(R.string.versionCheckTitle);
         updateDiaHintmsg = getActivity().getResources().getString(R.string.versionCheckMsg);
         updateDiaBtnMsg = getActivity().getResources().getString(R.string.update);
     }

@@ -19,14 +19,13 @@ import java.util.ArrayList;
  */
 
 public class CategoryTreeRootAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private Context context;
     public int currentRootPosition=1;
     private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> allData;
     public CategoryTreeRootAdapter(Context context,
                                    ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> allData,
                                    ItemClick itemClick) {
         super();
-        this.context=context;
+        Context context1 = context;
         this.allData=allData;
         this.itemClick=itemClick;
     }

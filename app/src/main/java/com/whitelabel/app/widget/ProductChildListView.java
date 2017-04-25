@@ -96,7 +96,6 @@ public class ProductChildListView extends LinearLayout{
          params.setMargins(0,JScreenUtils.dip2px(getContext(),15),0,0);
         view.setLayoutParams(params);
         view.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.v2_line));
-
         return view;
     }
     private  View getProductView(final SVRAppserviceProductDetailResultPropertyReturnEntity bean){

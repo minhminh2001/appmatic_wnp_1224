@@ -16,8 +16,6 @@ import com.whitelabel.app.utils.JFontUtils;
 
 public class CustomTextView extends TextView {
 
-    private int typefaceIndex;
-
     public CustomTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
 //		initTypeface(context, attrs);
@@ -37,7 +35,7 @@ public class CustomTextView extends TextView {
             return;
         }
 
-        typefaceIndex = types.getInt(R.styleable.CustomTextStyle_textFont, -1);
+        int typefaceIndex = types.getInt(R.styleable.CustomTextStyle_textFont, -1);
 
         types.recycle();
 

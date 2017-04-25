@@ -14,7 +14,6 @@ import com.whitelabel.app.utils.JToolUtils;
 
 public class CreditInstructionActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener{
     private String data;
-    private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class CreditInstructionActivity extends com.whitelabel.app.BaseActivity i
         data=getIntent().getStringExtra("data");
     }
     private void initWebView() {
-        mWebView= (WebView) findViewById(R.id.webView);
+        WebView mWebView = (WebView) findViewById(R.id.webView);
         mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.getSettings().setJavaScriptEnabled(true);

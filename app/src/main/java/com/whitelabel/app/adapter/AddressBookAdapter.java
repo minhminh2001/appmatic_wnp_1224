@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
     public ArrayList<AddressBook> list;
     private Context context;
-    private AddressBookAdapter adapter;
     private Context myAddressBookActivity;
 
     
@@ -34,7 +33,7 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
         this.context = context;
         myAddressBookActivity =context;
 
-        adapter=this;
+        AddressBookAdapter adapter = this;
     }
 
     @Override

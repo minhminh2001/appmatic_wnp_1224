@@ -40,12 +40,10 @@ public class AnimUtil {
             @Override
             public void onAnimationStart(Animation animation) {
             }
-
             @Override
             public void onAnimationEnd(Animation animation) {
                 ivWishIcon.setVisibility(View.GONE);
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
             }
@@ -71,7 +69,7 @@ public class AnimUtil {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                ivWishIcon2.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
+//                ivWishIcon2.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
 
             }
 

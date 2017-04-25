@@ -22,7 +22,6 @@ import java.lang.ref.WeakReference;
  */
 public class HelpCenterDetialActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener{
     private CustomWebView cwvCMS;
-    private String content;
     private ProgressBar wishlistPB;
     private HelpCenterDao dao;
     private String TAG;
@@ -68,7 +67,7 @@ public class HelpCenterDetialActivity extends com.whitelabel.app.BaseActivity im
         Intent intent=this.getIntent();
         Bundle bundle=intent.getExtras();
         String title=bundle.getString("title");
-        content=bundle.getString("content");
+        String content = bundle.getString("content");
 
         initToolBar(title);
         wishlistPB= (ProgressBar) findViewById(R.id.pb_address);

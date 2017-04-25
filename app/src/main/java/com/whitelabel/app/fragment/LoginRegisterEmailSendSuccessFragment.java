@@ -24,7 +24,6 @@ import com.whitelabel.app.utils.JViewUtils;
 public class LoginRegisterEmailSendSuccessFragment extends Fragment implements View.OnClickListener {
     private LoginRegisterActivity loginRegisterActivity;
     private View contentView;
-    private TextView successText;
     private ToolBarFragmentCallback toolBarFragmentCallback;
 
     @Override
@@ -88,7 +87,7 @@ public class LoginRegisterEmailSendSuccessFragment extends Fragment implements V
                 onClickLeftMenu(v);
             }
         });
-        successText= (TextView) contentView.findViewById(R.id.success_Text);
+        TextView successText = (TextView) contentView.findViewById(R.id.success_Text);
         String myEmail=loginRegisterActivity.getMyEmail();
         successText.setText(getResources().getString(R.string.account_associated)+myEmail+getResources().getString(R.string.reset_password));
     }

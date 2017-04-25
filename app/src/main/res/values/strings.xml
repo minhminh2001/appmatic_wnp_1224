@@ -381,7 +381,7 @@
     <!--reset password -->
     <string name="retrieve_password">RETRIEVE PASSWORD</string>
     <!--edit my Account info -->
-    <string name="save">SAVE</string>
+    <string name="save">Save</string>
     <string name="my_photo">My Photo</string>
     <string name="email">Email</string>
     <string name="malaysia">Malaysia</string>

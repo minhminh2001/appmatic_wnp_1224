@@ -52,11 +52,8 @@ public class LoginRegisterEmailSendFragment extends Fragment implements View.OnC
 
     private View view_send_email_line;
     private ImageView clearSubmit;
-    private Button s_submit;
     private EditText et_email;
     private TextView email_text,email_text2;
-    private DataHandler  dataHandler;
-    private String TAG;
     private MyAccountDao mAccountDao;
     private ToolBarFragmentCallback toolBarFragmentCallback;
 
@@ -93,7 +90,7 @@ public class LoginRegisterEmailSendFragment extends Fragment implements View.OnC
         });
         rl_send_email= (RelativeLayout) contentView.findViewById(R.id.rl_send_email);
         view_send_email_line= contentView.findViewById(R.id.view_send_email_line);
-        s_submit= (Button) contentView.findViewById(R.id.s_submit);
+        Button s_submit = (Button) contentView.findViewById(R.id.s_submit);
         s_submit.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         s_submit.setOnClickListener(this);
@@ -127,9 +124,9 @@ public class LoginRegisterEmailSendFragment extends Fragment implements View.OnC
         et_email.setText(loginRegisterActivity.getSubEmail());
         et_email.setFocusable(true);
         et_email.requestFocus();
-        TAG=this.getClass().getSimpleName();
-        dataHandler=new DataHandler(this,loginRegisterActivity);
-        mAccountDao=new MyAccountDao(TAG,dataHandler);
+        String TAG = this.getClass().getSimpleName();
+        DataHandler dataHandler = new DataHandler(this, loginRegisterActivity);
+        mAccountDao=new MyAccountDao(TAG, dataHandler);
 
     }
     public void onClickLeftMenu(View v) {

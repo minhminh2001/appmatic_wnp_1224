@@ -29,60 +29,51 @@ import com.whitelabel.app.widget.CustomCoordinatorLayout;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-
 /**
  * Created by Administrator on 2016/10/3.
  */
 public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
     private CustomCoordinatorLayout rootLayout;
     private AppBarLayout appbar_layout;
-    private View flContainer, llProfile;
+    private View flContainer;
     private DrawerLayout drawerLayout;
-    private ImageView ivUserImg, ivHome, ivCategoryTree, ivShoppingCart, ivNotification, ivMyWishList, ivMyOrder, ivAddress, ivStoreCredit;
+    private ImageView ivHome;
+    private ImageView ivCategoryTree;
+    private ImageView ivShoppingCart;
+    private ImageView ivNotification;
+    private ImageView ivMyWishList;
+    private ImageView ivMyOrder;
+    private ImageView ivAddress;
+    private ImageView ivStoreCredit;
     private TextView tvUserName, tvHome, tvCategoryTree, tvShoppingCart, tvNotification, tvWistlist, tvMyOrder, tvSetting, tvCustomerService, tvHelpCenter, tvOrderNum, tvMyOrderNum, tvShipping, tvShoppingNum, tvNotificationNum, tvWistNum, tvAddress, tvStoreCredit;
     private Handler baseHandler = new Handler();
-    private RelativeLayout rlDrawerHome,
-            rlDrawerCategoryTree, rlDrawerShoppingCart, rlDrawerNotification, rlDrawerWish, rlDrawerOrder, rlDrawerAddress, rlDrawerSotreCredit;
+    private RelativeLayout rlDrawerOrder;
+    private RelativeLayout rlDrawerAddress;
+    private RelativeLayout rlDrawerSotreCredit;
     private NotificationReceiver receiver;
-
     protected abstract boolean refreshNotification(int type, String id);
-
     protected abstract void jumpHomePage();
-
     public abstract void jumpHomePage(Serializable serializable);
-
     protected abstract void jumpCategoryTreePage();
-
     protected abstract void jumpShoppingCartPage();
-
     protected abstract void jumpNotificationPage();
-
     protected abstract void jumpWistListPage();
-
     protected abstract void jumpOrderPage();
-
     protected abstract void jumpSettingPage();
-
     protected abstract void jumpEditProfilePage();
-
     protected abstract void jumpCustomerServicePage();
-
     protected abstract void jumpHelpCenterServicePage();
-
     protected abstract void jumpShippingServicePage();
-
     protected abstract void jumpAddressPage();
-
     protected abstract void jumpStoreCreditPage();
-
-    private final int DELAY = 250;
-
     @Override
     public void onClick(View v) {
+        int DELAY = 250;
         switch (v.getId()) {
             case R.id.rl_drawer_home:
                 drawerLayout.closeDrawer(Gravity.LEFT);
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
+
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -103,7 +94,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 }, DELAY);
                 break;
             case R.id.rl_drawer_shoppingcart:
-
                 drawerLayout.closeDrawer(Gravity.LEFT);
                 baseHandler.postDelayed(new Runnable() {
                     @Override
@@ -239,7 +229,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
     }
     private void initLayout() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ivUserImg = (ImageView) findViewById(R.id.iv_user_img);
+        ImageView ivUserImg = (ImageView) findViewById(R.id.iv_user_img);
         ivHome = (ImageView) findViewById(R.id.iv_home);
         ivCategoryTree = (ImageView) findViewById(R.id.iv_category_tree);
         ivShoppingCart = (ImageView) findViewById(R.id.iv_shopping_cart);
@@ -247,7 +237,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         ivMyWishList = (ImageView) findViewById(R.id.iv_wishlist);
         ivMyOrder = (ImageView) findViewById(R.id.iv_orderlist);
         tvUserName = (TextView) findViewById(R.id.tv_user_name);
-        llProfile = findViewById(R.id.ll_profile);
+        View llProfile = findViewById(R.id.ll_profile);
         llProfile.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().
                 getThemeConfig().getSideMenuBackgroudColorDefault());
         tvHome = (TextView) findViewById(R.id.tv_home);
@@ -268,10 +258,10 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         tvStoreCredit = (TextView) findViewById(R.id.tv_store_credit);
         ivAddress = (ImageView) findViewById(R.id.iv_address);
         ivStoreCredit = (ImageView) findViewById(R.id.iv_store_credit);
-        rlDrawerHome = (RelativeLayout) findViewById(R.id.rl_drawer_home);
-        rlDrawerCategoryTree = (RelativeLayout) findViewById(R.id.rl_drawer_categorytree);
-        rlDrawerShoppingCart = (RelativeLayout) findViewById(R.id.rl_drawer_shoppingcart);
-        rlDrawerNotification = (RelativeLayout) findViewById(R.id.rl_drawer_notification);
+        RelativeLayout rlDrawerHome = (RelativeLayout) findViewById(R.id.rl_drawer_home);
+        RelativeLayout rlDrawerCategoryTree = (RelativeLayout) findViewById(R.id.rl_drawer_categorytree);
+        RelativeLayout rlDrawerShoppingCart = (RelativeLayout) findViewById(R.id.rl_drawer_shoppingcart);
+        RelativeLayout rlDrawerNotification = (RelativeLayout) findViewById(R.id.rl_drawer_notification);
 
         int black=ContextCompat.getColor(this,R.color.black000000);
 
@@ -313,7 +303,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 
 
 //        tvOrderNum= (TextView) findViewById(R.id.tv_order_num);
-        rlDrawerWish = (RelativeLayout) findViewById(R.id.rl_drawer_wishlist);
+        RelativeLayout rlDrawerWish = (RelativeLayout) findViewById(R.id.rl_drawer_wishlist);
         rlDrawerOrder = (RelativeLayout) findViewById(R.id.rl_drawer_order);
         rlDrawerAddress = (RelativeLayout) findViewById(R.id.rl_drawer_address);
         rlDrawerSotreCredit = (RelativeLayout) findViewById(R.id.rl_drawer_store_credit);
@@ -368,9 +358,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
             super.handleMessage(msg);
         }
     }
-
     ActionBarDrawerToggle mActionDrawableToggle;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -378,7 +366,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 //        receiver = new NotificationReceiver(callback);
 //        IntentFilter intentFilter = new IntentFilter(NotificationReceiver.ACTION);
 //        registerReceiver(receiver, intentFilter);
-        DataHandler dataHandler = new DataHandler(this);
+//        DataHandler dataHandler = new DataHandler(this);
 //        mDao = new NotificationDao("NotificationReceiver", dataHandler);
 //        String sessionKey = "";
 //        if (WhiteLabelApplication.getAppConfiguration().getUser() != null && WhiteLabelApplication.getAppConfiguration() != null) {
@@ -387,8 +375,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 //        mDao.getNotificationDetailCount(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
 //        SendBoardUtil.sendNotificationBoard(this, SendBoardUtil.READCODE, null);
         initLayout();
-
-
 //        mActionDrawableToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.openDrawer, R.string.closeDrawer) {
 //            @Override
 //            public void onDrawerOpened(View drawerView) {
@@ -403,8 +389,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 //        getDrawerLayout().addDrawerListener(mActionDrawableToggle);
 //        mActionDrawableToggle.syncState();
     }
-
-
 
     @Override
     protected void onDestroy() {
@@ -509,12 +493,11 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 }
                 username += WhiteLabelApplication.getAppConfiguration().getUser().getLastName();
                 tvUserName.setText(username);
-                ivUserImg.setVisibility(View.VISIBLE);
+                 //ivUserImg.setVisibility(View.VISIBLE);
                 //update  wishlist  orderlist  cart list  count
                 long wishtlistNum = WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getWishListItemCount();
                 long orderNum = WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getOrderCount();
                 cartItemCount += WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getCartItemCount();
-
                 if (wishtlistNum > 0 && wishtlistNum <= 99) {
                     tvWistNum.setVisibility(View.VISIBLE);
                     tvWistNum.setText(wishtlistNum + "");

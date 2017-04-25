@@ -52,7 +52,6 @@ import java.util.LinkedList;
 
 public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
     private String mOrderNumber;
-    private DataHandler dataHandler;
     private MyAccountOrderDetailAdapter adapter;
     private TextView tvOrderNumber;
     private TextView tvDate;
@@ -64,24 +63,19 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private TextView tvGrandTotal;
     private TextView tvUsername;
     private TextView tvAddress1;
-    private TextView tvAddress2;
     private TextView tvCityStatePostCode;
     private TextView tvCountry;
     private TextView tvPhone;
     private TextView mTvGst;
     private CustomWebView tvCreditCardTypeText;
-    private RelativeLayout rlBody;
     private ScrollView scrollView;
     private ListView listView;
-    private LinearLayout llWebView;
-    private ProgressBar progressBarLoading;
     private Dialog mDialog;
     private Handler mHandler = new Handler();
     private View rlStoreCredit;
     private String orderId;
     private final String SESSION_EXPIRED = "session expired,login again please";
     private final int REQUESTCODE_LOGIN = 1000;
-    private final int REQUESTCODE_TRANSAFER = 2000;
     private TextView tvConfirm;
     private MyAccountDao mDao;
     private String TAG;
@@ -205,8 +199,8 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
 //        tvConfirm.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
         findViewById(R.id.ll_sc_checkout).setOnClickListener(this);
         TAG =this.getClass().getSimpleName();
-        dataHandler=new DataHandler(this);
-        mDao=new MyAccountDao(TAG,dataHandler);
+        DataHandler dataHandler = new DataHandler(this);
+        mDao=new MyAccountDao(TAG, dataHandler);
         mCheckoutDao = new CheckoutDao(TAG, dataHandler);
         mPaypalHelper=new PaypalHelper();
         mPaypalHelper.startPaypalService(this);
@@ -240,16 +234,16 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         tvGrandTotal = (TextView) findViewById(R.id.tv_order_detail_grandtotal);
         tvUsername = (TextView) findViewById(R.id.tv_order_detail_username);
         tvAddress1 = (TextView) findViewById(R.id.tv_order_detail_address1);
-        tvAddress2 = (TextView) findViewById(R.id.tv_order_detail_address2);
+        TextView tvAddress2 = (TextView) findViewById(R.id.tv_order_detail_address2);
         tvCityStatePostCode = (TextView) findViewById(R.id.tv_order_detail_citystatepostcode);
         tvCountry = (TextView) findViewById(R.id.tv_order_detail_country);
         tvPhone = (TextView) findViewById(R.id.tv_order_detail_telephone);
         tvCreditCardTypeText = (CustomWebView) findViewById(R.id.tv_order_detail_paymentmethod_text);
-        rlBody = (RelativeLayout) findViewById(R.id.rl_orderdetail_body);
+        RelativeLayout rlBody = (RelativeLayout) findViewById(R.id.rl_orderdetail_body);
         scrollView = (ScrollView) findViewById(R.id.scollview_myorder_detail);
         listView = (ListView) findViewById(R.id.lv_myaccount_orderdetail);
-        llWebView = (LinearLayout) findViewById(R.id.ll_myaccount_orderdetail_paymentmethod_creditcard);
-        progressBarLoading = (ProgressBar) findViewById(R.id.pb_orderdetail_loading);
+        LinearLayout llWebView = (LinearLayout) findViewById(R.id.ll_myaccount_orderdetail_paymentmethod_creditcard);
+        ProgressBar progressBarLoading = (ProgressBar) findViewById(R.id.pb_orderdetail_loading);
         rlStoreCredit = findViewById(R.id.rl_order_detail_storecredit);
         tvStoreCreditTitle = (TextView) findViewById(R.id.tv_order_detail_storecredit_title);
         tvStoreCreditVlaue = (TextView) findViewById(R.id.tv_order_detail_storecredit);
@@ -286,6 +280,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bean", mBean.getBanktransfer());
                     intent.putExtras(bundle);
+                    int REQUESTCODE_TRANSAFER = 2000;
                     startActivityForResult(intent, REQUESTCODE_TRANSAFER);
                     overridePendingTransition(R.anim.enter_righttoleft,
                             R.anim.exit_righttoleft);

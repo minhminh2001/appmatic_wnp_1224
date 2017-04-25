@@ -104,7 +104,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     private TextView textView_num, oldprice, ctvAddToCart, price_textview,  ctvProductInStock, ctvProductOutOfStock, productUnavailable, productTrans, product_merchant;
     private Dialog mDialog;
     private TextView ctvProductName, ctvProductBrand;
-    private CustomCoordinatorLayout coordinatorLayout;
     private AppBarLayout appbar_layout;
     private RelativeLayout mRLAddToWishlistSmall, mRLAddToWishlistBig;
     private LinearLayout  llBottomBar, mLLAddToCart;
@@ -568,8 +567,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         clearUserSelectedProduct();
         Bundle bundle = getIntent().getExtras();
         productId = bundle.getString("productId");
-        destWidthColorSize = (WhiteLabelApplication.getPhoneConfiguration().getScreenWidth() - (JDataUtils.dp2Px(27))) / 2;
-        destHeightColorSize = JDataUtils.dp2Px(37);
         mAttributeEntity = new WheelPickerConfigEntity();
         mAttributeEntity.setArrayList(new ArrayList<WheelPickerEntity>());
         mAttributeEntity.setOldValue(new WheelPickerEntity());
@@ -578,7 +575,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     public void initView(){
 //        flSimpleConfig= (FrameLayout) findViewById(R.id.fl_simple_config);
         pcGroupConfig = (ProductChildListView) findViewById(R.id.pc_group_config);
-        coordinatorLayout = (CustomCoordinatorLayout) findViewById(R.id.cl_product);
+        CustomCoordinatorLayout coordinatorLayout = (CustomCoordinatorLayout) findViewById(R.id.cl_product);
         coordinatorLayout.setSwitchScroll(false);
         appbar_layout = ((AppBarLayout) findViewById(R.id.appbar_layout));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -636,6 +633,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         llBottomBar.setOnClickListener(this);
         textView_num = (TextView) findViewById(R.id.detail_quantity_textview2);
         rlProductQuantity = (RelativeLayout) findViewById(R.id.rlProductQuantity);
+        destWidthColorSize = (WhiteLabelApplication.getPhoneConfiguration().getScreenWidth() - (JDataUtils.dp2Px(27))) / 2;
+        destHeightColorSize = JDataUtils.dp2Px(37);
         if (rlProductQuantity.getLayoutParams() != null) {
             rlProductQuantity.getLayoutParams().width = destWidthColorSize;
             rlProductQuantity.getLayoutParams().height = destHeightColorSize;
@@ -1118,7 +1117,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         if (mProductDetailBean == null) {
             return;
         }
-        ctvProductBrand.setText(mProductDetailBean.getBrand().toUpperCase());
+        if(!TextUtils.isEmpty(mProductDetailBean.getBrand())) {
+            ctvProductBrand.setText(mProductDetailBean.getBrand().toUpperCase());
+        }
         ctvProductName.setText(mProductDetailBean.getName());//分享标题赋值
         if (!TextUtils.isEmpty(mProductDetailBean.getVendorDisplayName())) {
             String Sold_fulfilled_by = product_merchant.getContext().getResources().getString(R.string.soldfulby);
@@ -1314,6 +1315,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             if (mProductDetailBean.getImages() != null && mProductDetailBean.getImages().size() > 0) {
                 productImagesArrayList.addAll(mProductDetailBean.getImages());
             }
+            updateProductDetailUIProductImage(productImagesArrayList);
             updateProductDetailUIProductPriceStock("0", "0", mProductDetailBean.getInStock(),
                     mProductDetailBean.getStockQty(), mProductDetailBean.getMaxSaleQty(),
                     mProductDetailBean.getSaveRm(), mProductDetailBean.getItemsLeft());
@@ -1339,9 +1341,10 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 if (mProductDetailBean.getImages() != null && mProductDetailBean.getImages().size() > 0) {
                     productImagesArrayList.addAll(mProductDetailBean.getImages());
                 }
+                updateProductDetailUIProductImage(productImagesArrayList);
                 updateProductDetailUIProductPriceStock("0", "0", mProductDetailBean.getInStock(), mProductDetailBean.getStockQty(), mProductDetailBean.getMaxSaleQty(), "",
                         mProductDetailBean.getItemsLeft());
-            } else {
+            }else {
                 llAttribute.removeAllViews();
                 mAttributeViews.clear();
                 createAttributeView(0, mProductDetailBean.getProperty().get(0));
@@ -1368,8 +1371,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }else{
                 outOfStockToWishlist();
             }
+            updateProductDetailUIProductImage(productImagesArrayList);
         }
-        updateProductDetailUIProductImage(productImagesArrayList);
+
         initVisibleProduct();
     }
 
@@ -1422,7 +1426,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ivHeaderBarShare.getLayoutParams();
             params.width = 20;
             ivHeaderBarShare.setLayoutParams(params);
-
             ivHeaderBarWishlist.setVisibility(View.VISIBLE);
             mIVHeaderBarWishlist.setVisibility(View.VISIBLE);
             RelativeLayout.LayoutParams param1 = (RelativeLayout.LayoutParams) ivHeaderBarWishlist.getLayoutParams();
@@ -1719,13 +1722,13 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         } else if (1 == userSelectedProductInStock) { // in stock
             mRLAddToWishlistSmall.setVisibility(View.GONE);
             mRLAddToWishlistBig.setVisibility(View.VISIBLE);
-
             setAddCartButtonEnable(true);
+            RelativeLayout.LayoutParams bottomBarLp = (RelativeLayout.LayoutParams) llBottomBar.getLayoutParams();
 //            ctvAddToCart.setEnabled(true);
 //            mLLAddToCart.setEnabled(true);
 //            ctvAddToCart.setBackgroundResource(R.drawable.big_button_style_purple);
 //            mLLAddToCart.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
-            RelativeLayout.LayoutParams bottomBarLp = (RelativeLayout.LayoutParams) llBottomBar.getLayoutParams();
+
 //            List<SVRAppserviceProductDetailResultPropertyReturnEntity> attributeIds=new ArrayList<>();
 //            for(int i=0;i<mAttributeViews.size();i++){
 //                attributeIds.add((SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag());
@@ -1909,12 +1912,10 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             if(mProductDetailBean.getType().equals(ProductDetailModel.TYPE_GROUP)){
                 idQtys=pcGroupConfig.getChildIdAndQty();
             }else if(mProductDetailBean.getType().equals(ProductDetailModel.TYPE_CONFIGURABLE)){
-                idQtys=pcGroupConfig.getChildIdAndQty();
-                for (int i = 0; i < mAttributeViews.size(); i++) {
-                    SVRAppserviceProductDetailResultPropertyReturnEntity bean=
-                            (SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag();
-                    idQtys.put(bean.getId(),userSelectedProductQty+"");
-                }
+                idQtys=new HashMap<>();
+                SVRAppserviceProductDetailResultPropertyReturnEntity bean=
+                        (SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(mAttributeViews.size()-1).getTag();
+                idQtys.put(bean.getProductId(),userSelectedProductQty+"");
             }else if(mProductDetailBean.getType().equals(ProductDetailModel.getTypeSimple())){
                 idQtys=new HashMap<>();
                 idQtys.put(mProductDetailBean.getId(),userSelectedProductQty+"");

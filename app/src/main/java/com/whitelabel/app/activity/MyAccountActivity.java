@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.fragment.BaseFragment;
 import com.whitelabel.app.fragment.MyAccountEditInfoFragment;
-import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 
 import java.util.ArrayList;
@@ -78,9 +77,6 @@ public class MyAccountActivity extends com.whitelabel.app.BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
-
-
-
     public void redirectToAttachedFragment(int to, int type) {
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();

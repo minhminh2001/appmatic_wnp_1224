@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVRAppserviceCatalogSearchCategoryItemReturnEntity> {
     public static final int TYPE_CHILD = 1001;
-    private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> groupList;
     private Context context;
     private final ImageLoader mImageLoader;
     private int mViewType;
@@ -61,9 +60,9 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
                 tempList.add(groupList.get(i).getChildren().get(j));
             }
         }
-        this.groupList = tempList;
+        ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> groupList1 = tempList;
         //将数据更新到 ExpandableRecyclerAdapter
-        setItems(this.groupList);
+        setItems(groupList1);
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

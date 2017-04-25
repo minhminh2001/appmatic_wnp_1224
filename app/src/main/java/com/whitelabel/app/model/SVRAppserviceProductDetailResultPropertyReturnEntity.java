@@ -19,12 +19,21 @@ public class SVRAppserviceProductDetailResultPropertyReturnEntity implements Ser
     private long stockQty;
     private long qty;
     private int level;
+    private String productId;
     private long maxSaleQty;
     private int inStock;
     private ArrayList<String> images;
     private ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity> child;
     public String getName() {
         return name;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public void setName(String name) {

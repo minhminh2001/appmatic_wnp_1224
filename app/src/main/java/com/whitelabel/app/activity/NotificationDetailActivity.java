@@ -46,14 +46,9 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
     private boolean isUnRead;
     private View connectionLayout;
     private RequestErrorHelper requestErrorHelper;
-    private LinearLayout tryAgain;
-    private String mExpiryTime;
     private LinearLayout mLlBottomBar;
     public static final int RESPONSECODE = 1000;
     private ImageLoader mImageLoader;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,13 +66,13 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
         btnOpen.setOnClickListener(this);
 //        btnOpen.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
         JViewUtils.setSoildButtonGlobalStyle(this,btnOpen);
-        dataHandler = new DataHandler(this);
+        DataHandler dataHandler = new DataHandler(this);
         mDao = new NotificationDao(TAG, dataHandler);
         initData();
 
         connectionLayout = findViewById(R.id.connectionBreaks);
         requestErrorHelper=new RequestErrorHelper(this,connectionLayout);
-        tryAgain = (LinearLayout) findViewById(R.id.try_again);
+        LinearLayout tryAgain = (LinearLayout) findViewById(R.id.try_again);
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +117,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
         }
         webView_content.setText(notificationCell.getContent());
         attached_link = notificationCell.getAttached_link();
-        mExpiryTime = notificationCell.getExpiryTime();
+        String mExpiryTime = notificationCell.getExpiryTime();
         JLogUtils.d(TAG,"expiry_date="+ mExpiryTime);
         if (!TextUtils.isEmpty(mExpiryTime)) {
             long expiryDateLongValue = JTimeUtils.getLongOfTime(mExpiryTime);
@@ -185,16 +180,14 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
     }
 
     String itemId = "";
-    private NotificationReceivedEntity entity;
     private String notificationTitle;
-    private DataHandler dataHandler;
 
     private void initData() {
         Bundle bundle = getIntent().getExtras();
         mDialog = JViewUtils.showProgressDialog(NotificationDetailActivity.this);
         String device_token= WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken();
         if (bundle != null && !JDataUtils.isEmpty(bundle.getString("where"))) {
-            entity = (NotificationReceivedEntity) bundle.getSerializable("data");
+            NotificationReceivedEntity entity = (NotificationReceivedEntity) bundle.getSerializable("data");
 //            try {
 //                FirebaseEventUtils.getInstance().customizedNotificationOpen(NotificationDetailActivity.this, entity.getTitle());
 //            } catch (Exception ex) {

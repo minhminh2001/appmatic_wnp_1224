@@ -58,8 +58,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     //    public static final int FRAGMENT_TYPE_HOME_STORECREDITS=9;
     public static final int FRAGMENT_TYPE_HOME_CREDITCARD = 10;
     private final int TYPE_FRAGMENT_SWITCH_NONE = 0;
-    private final int TYPE_FRAGMENT_SWITCH_RIGHT2LEFT = 1;
-    private final int TYPE_FRAGMENT_SWITCH_LEFT2RIGHT = -1;
     public boolean mCanback = true;
     private final int TYPE_FRAGMENT_SWITCH = -2;
     //跳转到哪个Fragment上
@@ -87,10 +85,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 //    private CustomTextView tvMarketingLayers, tvMarketingLayersDesc;
 //    private PopupWindow mUserGuidePopWindow;
     public boolean showMarketLayers = true;
-//    private boolean marketLayerClosed;
-//    public static String BUNDLE_TO_START="toStart";
-    private final String DEEPLINK_TYPE_PRODUCTDETAIL = "product";
-    private final String DEEPLINK_TYPE_LANDINGPAGE = "landingpage";
     //跳转到哪个Fragment上
     public static final String BUNDLE_START_FRAGMENT = "startFragment";
     public static final String BUNDLE_FRAGMENT_STORECREDIT = "storeCredit";
@@ -98,7 +92,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     private RelativeLayout rlMarketLayer;
     //    private View vUserGuide;
     private UserGuideHelper mUserGuideHelper;
-    private ImageLoader mImageLoader;
 
 
     @Override
@@ -443,7 +436,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_home);
-        mImageLoader = new ImageLoader(this);
+        ImageLoader mImageLoader = new ImageLoader(this);
 //        setTitleImage(R.mipmap.homepage_logo_white);
 //        mUserGuideHelper = new UserGuideHelper(this, mImageLoader);
 //        mUserGuideAbove = findViewById(R.id.v_user_guide);
@@ -481,6 +474,8 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     private void redirectToInterfaceByDeepLink() {
         if (getIntent() != null && getIntent().getData() != null) {
             String host = getIntent().getData().getHost();
+            String DEEPLINK_TYPE_PRODUCTDETAIL = "product";
+            String DEEPLINK_TYPE_LANDINGPAGE = "landingpage";
             if (DEEPLINK_TYPE_LANDINGPAGE.equals(host)) {
                 String curationId = getIntent().getData().getPath().replace("/", "");
                 Intent intent = new Intent();
@@ -606,6 +601,8 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     }
 
     public void switchFragment(int from, int to, Serializable serializable) {
+        int TYPE_FRAGMENT_SWITCH_RIGHT2LEFT = 1;
+        int TYPE_FRAGMENT_SWITCH_LEFT2RIGHT = -1;
         if (-1 == from) {
             redirectToAttachedFragment(to, TYPE_FRAGMENT_SWITCH_NONE, serializable);
         } else if (HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERLIST == from && HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERDETAIL == to) {

@@ -45,15 +45,9 @@ import java.lang.ref.WeakReference;
 public class HomeSettingCotentFragment extends HomeBaseFragment implements View.OnClickListener{
     private Activity homeActivity;
     private View view;
-    private LinearLayout llSearch;
-    private RelativeLayout rlSettingRate,rlBack;
-    private TextView textView_cancle;
-    private TextView sign_out,mVersion;
     private Dialog mDialog;
     private  boolean signing=false;
     private OtherDao mOtherDao;
-    private String TAG;
-    private MultiSwitchButton sbClosedSound,switchButton;
 
     @Override
     public void onAttach(Activity activity) {
@@ -82,24 +76,24 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
             mCommonCallback.getToolBar().getMenu().clear();
             mCommonCallback.setTitle(getResources().getString(R.string.settings));
         }
-        llSearch = (LinearLayout)view.findViewById(R.id.home_search);
-        textView_cancle= (TextView) view.findViewById(R.id.home_search_cancel);
-        TAG=this.getClass().getSimpleName();
-        rlSettingRate=(RelativeLayout)view.findViewById(R.id.rl_setting_rate);
+        LinearLayout llSearch = (LinearLayout) view.findViewById(R.id.home_search);
+        TextView textView_cancle = (TextView) view.findViewById(R.id.home_search_cancel);
+        String TAG = this.getClass().getSimpleName();
+        RelativeLayout rlSettingRate = (RelativeLayout) view.findViewById(R.id.rl_setting_rate);
         rlSettingRate.setOnClickListener(this);
-        mVersion= (TextView) view.findViewById(R.id.tv_setting_version_name);
+        TextView mVersion = (TextView) view.findViewById(R.id.tv_setting_version_name);
         setAppVersionName(mVersion);
         view.findViewById(R.id.rl_sound).setVisibility(View.GONE);
         textView_cancle.setOnClickListener(this);
-        sign_out= (TextView) view.findViewById(R.id.sign_out);
-        JViewUtils.setStrokeButtonGlobalStyle(getActivity(),sign_out);
+        TextView sign_out = (TextView) view.findViewById(R.id.sign_out);
+        JViewUtils.setStrokeButtonGlobalStyle(getActivity(), sign_out);
 //
 //        sign_out.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
 //        sign_out.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         sign_out.setOnClickListener(this);
-        rlBack= (RelativeLayout) view.findViewById(R.id.rl_back);
+        RelativeLayout rlBack = (RelativeLayout) view.findViewById(R.id.rl_back);
         rlBack.setOnClickListener(this);
-        switchButton= (MultiSwitchButton) view.findViewById(R.id.swithch_button1);
+        MultiSwitchButton switchButton = (MultiSwitchButton) view.findViewById(R.id.swithch_button1);
         int kai=0;
         if(WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)){
             kai= WhiteLabelApplication.getAppConfiguration().getUser().getNewsletterSubscribed();
@@ -109,9 +103,9 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         }else{
             switchButton.setCheckedImmediately(false);
         }
-        dataHandler=new DataHandler(homeActivity,this);
-        mOtherDao=new OtherDao(TAG,dataHandler);
-        sbClosedSound= (MultiSwitchButton) view.findViewById(R.id.sb_close_sound);
+        DataHandler dataHandler = new DataHandler(homeActivity, this);
+        mOtherDao=new OtherDao(TAG, dataHandler);
+        MultiSwitchButton sbClosedSound = (MultiSwitchButton) view.findViewById(R.id.sb_close_sound);
         if(WhiteLabelApplication.getInstance().getAppConfiguration().isSignIn(getActivity())) {
             sbClosedSound.setCheckedImmediately(WhiteLabelApplication.getInstance().getAppConfiguration().getUser().isClosedSound());
         }
@@ -149,7 +143,6 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
 
     public static  final  int CODE=8000;
 
-    private DataHandler dataHandler;
     public  static final class DataHandler extends Handler{
         private final WeakReference<Activity> mActivity;
         private final WeakReference<HomeSettingCotentFragment> mFragment;

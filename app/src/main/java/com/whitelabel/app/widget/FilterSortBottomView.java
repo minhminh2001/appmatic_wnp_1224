@@ -27,7 +27,6 @@ public class FilterSortBottomView {
 
     private View bottomBar, iv_bottom_slideto_top;
     private FilterSortBottomViewCallBack filterSortBottomViewCallBack;
-    private boolean mShowSwitchFilterBar = true;
 
     public void initView(View bottomBar, View iv_bottom_slideto_top, FilterSortBottomViewCallBack filterSortBottomViewCallBack) {
         this.bottomBar = bottomBar;
@@ -44,7 +43,7 @@ public class FilterSortBottomView {
     }
 
     public void setIsShowSwitchFilterBar(boolean show) {
-        mShowSwitchFilterBar = show;
+        boolean mShowSwitchFilterBar = show;
         if (bottomBar == null || iv_bottom_slideto_top == null || filterHandler == null) {
             return;
         }

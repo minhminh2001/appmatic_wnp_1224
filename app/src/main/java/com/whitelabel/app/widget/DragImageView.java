@@ -29,20 +29,15 @@ public class DragImageView extends ImageView {
 
     private int screen_W, screen_H;// 可见屏幕的宽高度
 
-    private int bitmap_W, bitmap_H;// 当前图片宽高
-
-    private int MAX_W, MAX_H, MIN_W, MIN_H;// 极限值
-
-    private int current_Top, current_Right, current_Bottom, current_Left;// 当前图片上下左右坐标
+    private int MAX_W;
+    private int MIN_W;
 
     private int start_Top = -1, start_Right = -1, start_Bottom = -1,
             start_Left = -1;// 初始化默认位置.
 
     private int start_x, start_y, current_x, current_y;// 触摸位置
 
-    private float beforeLenght, afterLenght;// 两触点距离
-
-    private float scale_temp;// 缩放比例
+    private float beforeLenght;
 
     /**
      * 模式 NONE：无 DRAG：拖拽. ZOOM:缩放
@@ -64,8 +59,6 @@ public class DragImageView extends ImageView {
     private ScaleAnimation scaleAnimation;// 缩放动画
 
     private boolean isScaleAnim = false;// 缩放动画
-
-    private MyAsyncTask myAsyncTask;// 异步动画
 
     /** 构造方法 **/
     public DragImageView(Context context) {
@@ -97,14 +90,14 @@ public class DragImageView extends ImageView {
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
         /** 获取图片宽高 **/
-        bitmap_W = bm.getWidth();
-        bitmap_H = bm.getHeight();
+        int bitmap_W = bm.getWidth();
+        int bitmap_H = bm.getHeight();
 
         MAX_W = bitmap_W * 3;
-        MAX_H = bitmap_H * 3;
+        int MAX_H = bitmap_H * 3;
 
         MIN_W = bitmap_W / 2;
-        MIN_H = bitmap_H / 2;
+        int MIN_H = bitmap_H / 2;
 
     }
 
@@ -229,12 +222,12 @@ public class DragImageView extends ImageView {
         /** 处理缩放 **/
         else if (mode == MODE.ZOOM) {
 
-            afterLenght = getDistance(event);// 获取两点的距离
+            float afterLenght = getDistance(event);
 
             float gapLenght = afterLenght - beforeLenght;// 变化的长度
 
             if (Math.abs(gapLenght) > 5f) {
-                scale_temp = afterLenght / beforeLenght;// 求的缩放的比例
+                float scale_temp = afterLenght / beforeLenght;
 
                 this.setScale(scale_temp);
 
@@ -263,6 +256,10 @@ public class DragImageView extends ImageView {
         int disY = (int) (this.getHeight() * Math.abs(1 - scale)) / 4;// 获取缩放垂直距离
 
         // 放大
+        int current_Top;
+        int current_Right;
+        int current_Bottom;
+        int current_Left;
         if (scale > 1 && this.getWidth() <= MAX_W) {
             current_Left = this.getLeft() - disX;
             current_Top = this.getTop() - disY;
@@ -351,7 +348,7 @@ public class DragImageView extends ImageView {
      * 缩放动画处理
      */
     public void doScaleAnim() {
-        myAsyncTask = new MyAsyncTask(screen_W, this.getWidth(),
+        MyAsyncTask myAsyncTask = new MyAsyncTask(screen_W, this.getWidth(),
                 this.getHeight());
         myAsyncTask.setLTRB(this.getLeft(), this.getTop(), this.getRight(),
                 this.getBottom());

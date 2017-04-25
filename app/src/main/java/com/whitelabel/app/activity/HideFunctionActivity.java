@@ -30,15 +30,11 @@ public class HideFunctionActivity extends com.whitelabel.app.BaseActivity implem
     public ArrayList<String> downloadImageServerAddress;
     public ArrayList<String> UploadImageServerAddress;
     public String myUploadImageServerAddress;
-    private String myDownloadImageServerAddress;
     public String myServerAddress;
     private ArrayList<SelectServiceEntity> list;
     private GetServiceEntity entity;
-    private ListView myList;
     private SelectServiceAdapter adapter;
     private  int serviceNumbel;
-    private ImageView back;
-    private TextView save;
     private  boolean  clickList=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +53,7 @@ public class HideFunctionActivity extends com.whitelabel.app.BaseActivity implem
             JLogUtils.i("Allen", "service==" + myentity.getServerName());
         }
 
-        myList= (ListView) findViewById(R.id.myList);
+        ListView myList = (ListView) findViewById(R.id.myList);
         adapter=new SelectServiceAdapter(this,list);
         myList.setAdapter(adapter);
 
@@ -76,10 +72,10 @@ public class HideFunctionActivity extends com.whitelabel.app.BaseActivity implem
             }
         });
 
-        back= (ImageView) findViewById(R.id.vHeaderBarBack);
+        ImageView back = (ImageView) findViewById(R.id.vHeaderBarBack);
         findViewById(R.id.rl_vHeaderBarBack).setOnClickListener(this);
         back.setOnClickListener(this);
-        save= (TextView) findViewById(R.id.save);
+        TextView save = (TextView) findViewById(R.id.save);
         save.setOnClickListener(this);
 
         GetService();
@@ -117,7 +113,7 @@ public class HideFunctionActivity extends com.whitelabel.app.BaseActivity implem
                     if(clickList) {
                         WhiteLabelApplication.getAppConfiguration().signOut(this);
                         myServerAddress = serverAddress.get(serviceNumbel);
-                        myDownloadImageServerAddress = downloadImageServerAddress.get(serviceNumbel);
+                        String myDownloadImageServerAddress = downloadImageServerAddress.get(serviceNumbel);
                         myUploadImageServerAddress = UploadImageServerAddress.get(serviceNumbel);
                         String hashKey="123456";
                         JStorageUtils.clearLocalCartRepository(this);

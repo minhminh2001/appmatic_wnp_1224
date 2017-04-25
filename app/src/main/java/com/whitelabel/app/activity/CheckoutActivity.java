@@ -60,7 +60,6 @@ import com.whitelabel.app.model.ShoppingDiscountBean;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLocalMethod;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -68,15 +67,12 @@ import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CheckoutPaymentDialog;
 import com.whitelabel.app.widget.MaterialDialog;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
     public Long mGATrackCheckoutTimeStart = 0L;
     public boolean mGATrackCheckoutTimeEnable = false;
@@ -90,7 +86,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     private TextView tvSliderFirst;
     private TextView tvSliderSecond;
     private TextView tvSliderThird;
-    private ImageView ivArrow;
     public TextView btnContinue;
     public ScrollView scrollViewBody;
     public LinearLayout llBody, ll_btn;
@@ -100,9 +95,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     private Fragment checkoutPaymentFragment;
     private Fragment checkoutReviewFragment;
     public String TAG = CheckoutActivity.class.getSimpleName();
-    private String ONLINEBANK;
     public ArrayList<Fragment> list_fragment;
-    private boolean updateService = false;
     private Button updateVersion;
     private WebView mwebView;
     private boolean existVending = false;
@@ -133,10 +126,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
      */
     private int currentModule = 1;
     /**
-     * slider's animation
-     */
-    private AnimationSet animationSet;
-    /**
      * is "go back" operation or not
      */
     private DataHandler mHandler = new DataHandler(this);
@@ -148,7 +137,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     private Dialog mDialog;//common loading dialog
     private static final int REQUEST_CODE_MOLPAY = 1;
     private ShoppingDiscountBean mDiscountBean;
-    private String grandTotal;//add grand total to judge if it is 0 and then checkout to pay or not.--russell
     public int fromType;
     private int skipPayment;
     private MyAccountDao mAccountDao;
@@ -188,9 +176,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         if (mCheckoutPaymentDialog != null && mCheckoutPaymentDialog.isShowing()) {
             mCheckoutPaymentDialog.dismiss();
         }
-
     }
-
     /**
      * e
      * to record fragment(module) count
@@ -225,7 +211,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mDiscountBean = (ShoppingDiscountBean) bundle.getSerializable("discountBean");
-            grandTotal = bundle.getString("grandTotal");
+            String grandTotal = bundle.getString("grandTotal");
             fromType = bundle.getInt("fromType");
             productIds = bundle.getString("productIds");
             mGATrackCheckoutTimeStart = bundle.getLong("mGATrackTimeStart", 0L);
@@ -237,12 +223,11 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         bundle.putBoolean("expire", true);
         BottomtoTopActivity(bundle, LoginRegisterActivity.class, false);
     }
-
     private void initData() {
         mAccountDao = new MyAccountDao(TAG, mHandler);
         mCheckoutDao = new CheckoutDao(TAG, mHandler);
         mShoppingCarDao = new ShoppingCarDao(TAG, mHandler);
-        ONLINEBANK = getResources().getString(R.string.payment_method_ONLINE_BANKING);
+        String ONLINEBANK = getResources().getString(R.string.payment_method_ONLINE_BANKING);
         errorProductTitle = getResources().getString(R.string.checkout_product_error_title);
         list_fragment = new ArrayList<Fragment>();
         list_fragment_shipping = new ArrayList<Fragment>();
@@ -253,7 +238,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             expireStartLoginActivity();
         }
     }
-
     public void reInit() {
         checkoutShippingSelectaddressFragment = getFragmentManager().findFragmentByTag("selectAddressFragment");
         checkoutPaymentFragment = getFragmentManager().findFragmentByTag("paymentFragment");
@@ -270,7 +254,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             fragmentTransaction.hide(checkoutReviewFragment);
         }
     }
-
     public void openSelectFragment() {
         fragmentTransaction = getFragmentManager().beginTransaction();
         if (checkoutShippingSelectaddressFragment != null) {
@@ -287,14 +270,17 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 
     private void initView() {
         mImageLoader = new ImageLoader(this);
-        animationSet = new AnimationSet(true);
+        /*
+      slider's animation
+     */
+        AnimationSet animationSet = new AnimationSet(true);
         tvMenuPayment = (TextView) findViewById(R.id.tv_checkout_menu_payment);
         tvMenuReview = (TextView) findViewById(R.id.tv_checkout_menu_review);
         tvMenuShipping = (TextView) findViewById(R.id.tv_checkout_menu_shipping);
         tvSliderFirst = (TextView) findViewById(R.id.tv_checkout_slider_first);
         tvSliderSecond = (TextView) findViewById(R.id.tv_checkout_slider_second);
         tvSliderThird = (TextView) findViewById(R.id.tv_checkout_slider_third);
-        ivArrow = (ImageView) findViewById(R.id.iv_checkout_arrow);
+        ImageView ivArrow = (ImageView) findViewById(R.id.iv_checkout_arrow);
         btnContinue = (TextView) findViewById(R.id.btn_checkout_payment_continue);
         ll_btn = (LinearLayout) findViewById(R.id.ll_checkout_bottomBar);
         scrollViewBody = (ScrollView) findViewById(R.id.sv_checkout_body);
@@ -625,7 +611,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         final CheckoutPaymentFragment paymentFragment = (CheckoutPaymentFragment) getFragmentManager().findFragmentByTag("paymentFragment");
         paymentFragment.savePayment(null);
     }
-
     public void setButtonEnable(boolean enable) {
         btnContinue.setEnabled(enable);
         if (enable) {
@@ -1251,6 +1236,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        boolean updateService = false;
         if (keyCode == KeyEvent.KEYCODE_BACK && updateService) {
             Bundle mBundle = new Bundle();
             mBundle.putString("exitApp", "exitApp");//压入数据

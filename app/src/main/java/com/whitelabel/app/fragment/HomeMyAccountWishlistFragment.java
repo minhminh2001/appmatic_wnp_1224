@@ -44,7 +44,6 @@ import java.util.List;
  */
 
 public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements View.OnClickListener, MyAccountFragmentRefresh, SwipeRefreshLayout.OnRefreshListener {
-    private final int mMenuWidth = 50;
     private Activity homeActivity;
     private SwipeMenuListView lv;
     private MyAccountWishlistAdapter adapter;
@@ -349,6 +348,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
         SwipeMenuItem deleteItem = new SwipeMenuItem(
                 getActivity());
         deleteItem.setBackground(getResources().getDrawable(R.color.white));
+        int mMenuWidth = 50;
         deleteItem.setWidth(JToolUtils.dip2px(getActivity(), mMenuWidth));
         deleteItem.setIcon(getResources().getDrawable(R.drawable.draw_dele));
         return deleteItem;

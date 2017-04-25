@@ -27,7 +27,6 @@ public class FavoriteAdapter extends BaseAdapter {
     private Context context;
     private List<FavoriteSonEntity> list;
     private GridView mGridView;
-    private Animation animation;
     private final ImageLoader mImageLoader;
 
     public FavoriteAdapter(Context context, List<FavoriteSonEntity> list, GridView mGridView, ImageLoader imageLoader) {
@@ -138,6 +137,7 @@ public class FavoriteAdapter extends BaseAdapter {
             holder.heartImg = (ImageView) view.findViewById(R.id.heart);
 
             boolean selected = item.isSelected();
+            Animation animation;
             if (selected) {
                 animation = AnimationUtils.loadAnimation(context, R.anim.anim_favorite_alpha);
                 holder.favoriteLayer.startAnimation(animation);

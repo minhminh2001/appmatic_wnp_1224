@@ -26,10 +26,6 @@ public class HomeHelpCenterListFragment extends HomeBaseFragment implements View
     private HomeActivity homeActivity;
     private View contentView;
 
-    private CustomTextView ctvHeaderBarTitle;
-    private RelativeLayout rlAboutus, rlPrivacypolicy, rlTermsofuse, rlHowtobuy, rlPayments, rlShippingdelivery,
-            rlOrdertracking, rlCancellationsreturn, rlGemcashvoucher, rlCustomerservice,statement,rlHeaderBarMenu;
-    private View hideFunction;
     private Handler handler=null;
     private HideThread hideThread;
     private int hideCount=0;
@@ -49,7 +45,7 @@ public class HomeHelpCenterListFragment extends HomeBaseFragment implements View
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(mCommonCallback!=null)mCommonCallback.switchMenu(HomeCommonCallback.MENU_HELPCENTER);
-        hideFunction=contentView.findViewById(R.id.information_RelativeLayout);
+        View hideFunction = contentView.findViewById(R.id.information_RelativeLayout);
         hideFunction.setOnClickListener(this);
         handler=new Handler();
         hideThread=new HideThread();
@@ -58,19 +54,19 @@ public class HomeHelpCenterListFragment extends HomeBaseFragment implements View
             mCommonCallback.setTitle(getResources().getString(R.string.home_helpcenter_title));
             mCommonCallback.getToolBar().getMenu().clear();
         }
-        rlHeaderBarMenu=(RelativeLayout) contentView.findViewById(R.id.rlHeaderBarMenu);
-        ctvHeaderBarTitle = (CustomTextView) contentView.findViewById(R.id.ctvHeaderBarTitle);
-        rlAboutus = (RelativeLayout) contentView.findViewById(R.id.rlAboutus);
-        rlPrivacypolicy = (RelativeLayout) contentView.findViewById(R.id.rlPrivacypolicy);
-        rlTermsofuse = (RelativeLayout) contentView.findViewById(R.id.rlTermsofuse);
-        rlHowtobuy = (RelativeLayout) contentView.findViewById(R.id.rlHowtobuy);
-        rlPayments = (RelativeLayout) contentView.findViewById(R.id.rlPayments);
-        rlShippingdelivery = (RelativeLayout) contentView.findViewById(R.id.rlShippingdelivery);
-        rlOrdertracking = (RelativeLayout) contentView.findViewById(R.id.rlOrdertracking);
-        rlCancellationsreturn = (RelativeLayout) contentView.findViewById(R.id.rlCancellationsreturn);
-        rlGemcashvoucher = (RelativeLayout) contentView.findViewById(R.id.rlGemcashvoucher);
-        rlCustomerservice = (RelativeLayout) contentView.findViewById(R.id.rlCustomerservice);
-        statement= (RelativeLayout) contentView.findViewById(R.id.statement);
+        RelativeLayout rlHeaderBarMenu = (RelativeLayout) contentView.findViewById(R.id.rlHeaderBarMenu);
+        CustomTextView ctvHeaderBarTitle = (CustomTextView) contentView.findViewById(R.id.ctvHeaderBarTitle);
+        RelativeLayout rlAboutus = (RelativeLayout) contentView.findViewById(R.id.rlAboutus);
+        RelativeLayout rlPrivacypolicy = (RelativeLayout) contentView.findViewById(R.id.rlPrivacypolicy);
+        RelativeLayout rlTermsofuse = (RelativeLayout) contentView.findViewById(R.id.rlTermsofuse);
+        RelativeLayout rlHowtobuy = (RelativeLayout) contentView.findViewById(R.id.rlHowtobuy);
+        RelativeLayout rlPayments = (RelativeLayout) contentView.findViewById(R.id.rlPayments);
+        RelativeLayout rlShippingdelivery = (RelativeLayout) contentView.findViewById(R.id.rlShippingdelivery);
+        RelativeLayout rlOrdertracking = (RelativeLayout) contentView.findViewById(R.id.rlOrdertracking);
+        RelativeLayout rlCancellationsreturn = (RelativeLayout) contentView.findViewById(R.id.rlCancellationsreturn);
+        RelativeLayout rlGemcashvoucher = (RelativeLayout) contentView.findViewById(R.id.rlGemcashvoucher);
+        RelativeLayout rlCustomerservice = (RelativeLayout) contentView.findViewById(R.id.rlCustomerservice);
+        RelativeLayout statement = (RelativeLayout) contentView.findViewById(R.id.statement);
 
         rlHeaderBarMenu.setOnClickListener(this);
         rlAboutus.setOnClickListener(this);

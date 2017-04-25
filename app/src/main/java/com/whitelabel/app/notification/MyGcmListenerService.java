@@ -61,13 +61,6 @@ public class MyGcmListenerService extends GcmListenerService {
         return useWhiteIcon ? R.mipmap.notification_logo : R.mipmap.icon_v1;
     }
 
-    /**
-     * Create and show a simple notification containing the received GCM message.
-     *
-     * @param message GCM message received.
-     */
-    private int VIBRATE = 1;
-    private int SOUND = 2;
     private static int requestId = 1;
 
     public void createNotification(String message) {
@@ -133,6 +126,12 @@ public class MyGcmListenerService extends GcmListenerService {
         try {
             AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             final int ringerMode = am.getRingerMode();
+            /*
+      Create and show a simple notification containing the received GCM message.
+
+      */
+            int VIBRATE = 1;
+            int SOUND = 2;
             if (ringerMode == VIBRATE) {
                 long v1[] = {0, 100, 200, 300};
                 nb.setVibrate(v1);

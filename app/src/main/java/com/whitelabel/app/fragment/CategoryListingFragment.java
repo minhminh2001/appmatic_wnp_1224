@@ -29,12 +29,9 @@ import java.util.Map;
  */
 public class CategoryListingFragment extends BaseFragment implements View.OnClickListener,View.OnTouchListener{
     private View contentView,scrollViewX;
-    private GridView gridView;
-    private SimpleAdapter adapter;
     //所有的TextView顺序保持一致
     private int scrolls[]=new int[]{R.id.accessories, R.id.clothing, R.id.musim_wear, R.id.accessories2, R.id.accessories3, R.id.accessories4};
     private String scrolls2[]=new String[]{"accessories","clothing","musim_wear","accessories2","accessories3","accessories4"};
-    private TextView cancel,accessories,clothing,musim_wear,accessories2,accessories3,accessories4;
     private String strData[][]=new String[][]{
             {"Shrot Anarot with Furollar","Picuter Anorak","PM 339.0" },{"Shrot Anarot with Furollar","Picuter Anorak","PM 339.0"},{"Shrot Anarot with Furollar","Picuter Anorak","PM 339.0"},{"Shrot Anarot with Furollar","Picuter Anorak","PM 339.0"},{"Shrot Anarot with Furollar","Picuter Anorak","PM 339.0"},{"Shrot Anarot with Furollar","Picuter Anorak","PM 339.0"},{"Shrot Anarot with Furollar","Picuter Anorak","PM 339.0"},{"Shrot Anarot with Furollar","Picuter Anorak","PM 339.0"},{"Shrot Anarot with Furollar","Picuter Anorak","PM 339.0"}
     };
@@ -42,7 +39,6 @@ public class CategoryListingFragment extends BaseFragment implements View.OnClic
 
     private EditText seek;
     private int[] idData= null;
-   private List<Map<String,String>> list;
     private LoginRegisterActivity loginRegisterActivity;
     @Override
     public void onAttach(Activity activity) {
@@ -64,8 +60,8 @@ public class CategoryListingFragment extends BaseFragment implements View.OnClic
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //GridView
-        gridView= (GridView) contentView.findViewById(R.id.gridView);
-        list=new ArrayList<Map<String,String>>();
+        GridView gridView = (GridView) contentView.findViewById(R.id.gridView);
+        List<Map<String, String>> list = new ArrayList<Map<String, String>>();
         for (int i=0;i<idData.length;i++){
             Map<String,String> map=new HashMap<String,String>();
             map.put("str1",strData[i][0]);
@@ -74,25 +70,25 @@ public class CategoryListingFragment extends BaseFragment implements View.OnClic
             map.put("imgId", String.valueOf(idData[i]));
             list.add(map);
         }
-        adapter=new SimpleAdapter(
-                loginRegisterActivity,list, R.layout.template_category_listing2,
-                new String[]{"str1","str2","str3","imgId"},
+        SimpleAdapter adapter = new SimpleAdapter(
+                loginRegisterActivity, list, R.layout.template_category_listing2,
+                new String[]{"str1", "str2", "str3", "imgId"},
                 new int[]{R.id.src1, R.id.src2, R.id.src3, R.id.img}
         );
         gridView.setAdapter(adapter);
         //cancel
-        cancel= (TextView) contentView.findViewById(R.id.cancel);
+        TextView cancel = (TextView) contentView.findViewById(R.id.cancel);
         cancel.setOnClickListener(this);
         seek= (EditText) contentView.findViewById(R.id.seek);
         //horizontalScrollView
         scrollViewX=contentView.findViewById(R.id.scrollViewX);
 
-        accessories= (TextView) contentView.findViewById(R.id.accessories);
-        clothing= (TextView) contentView.findViewById(R.id.clothing);
-        musim_wear= (TextView) contentView.findViewById(R.id.musim_wear);
-        accessories2= (TextView) contentView.findViewById(R.id.accessories2);
-        accessories3= (TextView) contentView.findViewById(R.id.accessories3);
-        accessories4= (TextView) contentView.findViewById(R.id.accessories4);
+        TextView accessories = (TextView) contentView.findViewById(R.id.accessories);
+        TextView clothing = (TextView) contentView.findViewById(R.id.clothing);
+        TextView musim_wear = (TextView) contentView.findViewById(R.id.musim_wear);
+        TextView accessories2 = (TextView) contentView.findViewById(R.id.accessories2);
+        TextView accessories3 = (TextView) contentView.findViewById(R.id.accessories3);
+        TextView accessories4 = (TextView) contentView.findViewById(R.id.accessories4);
         accessories.setOnClickListener(this);
         clothing.setOnClickListener(this);
         musim_wear.setOnClickListener(this);

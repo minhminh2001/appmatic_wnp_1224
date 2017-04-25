@@ -125,7 +125,7 @@ public class HomeCategoryDetailFragment extends HomeBaseFragment<HomeCategoryDet
     }
     @Override
     public void onRefresh() {
-        if (!getActivity().isFinishing()&&isAdded()) {
+        if (getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
             String sessionKey = "";
             if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
                 sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();

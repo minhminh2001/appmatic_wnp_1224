@@ -35,7 +35,6 @@ import com.whitelabel.app.widget.CustomWebView;
 import java.util.ArrayList;
 
 public class CheckoutReviewFragment extends BaseFragment {
-    private String currTag = "CheckoutReviewFragment";
     private CheckoutActivity checkoutActivity;
     private ListView lvShoppingCart;
     private TextView tvSubtotal, tvVoucher, tvVoucherTitle;
@@ -47,7 +46,6 @@ public class CheckoutReviewFragment extends BaseFragment {
     private LinearLayout llAddress;
     private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
     public CheckoutPaymentReturnShippingAddress address;
-    private TextView tvWord;
     /**
      * ...
      * <p>
@@ -62,8 +60,6 @@ public class CheckoutReviewFragment extends BaseFragment {
      * used as param in molpay page
      */
     public String productName;
-    private String code;
-    private ImageLoader mImageLoader;
     private TextView mTvInstruction;
     private TextView mGst;
 
@@ -86,19 +82,18 @@ public class CheckoutReviewFragment extends BaseFragment {
     private View rlStoreCredit;
     private TextView tvStoreCreditTitle;
     private TextView tvStoreCreditValue;
-    private View llRoot;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checkout_review, container, false);
-        mImageLoader = new ImageLoader(checkoutActivity);
+        ImageLoader mImageLoader = new ImageLoader(checkoutActivity);
         tvCreditCartTitleOnly = (CustomWebView) view.findViewById(R.id.tv_checkout_review_pay_onlyCreditCard_title);
 //        tvCardType = (TextView) view.findViewById(R.id.tv_checkout_review_pay_cardtype);
 //        tvCardNumber = (TextView) view.findViewById(R.id.tv_checkout_review_pay_cardnubmer);
 //        tvCardBank = (TextView) view.findViewById(R.id.tv_checkout_review_pay_cardBank);
-        tvWord = (TextView) view.findViewById(R.id.tv_word);
-        llRoot = view.findViewById(R.id.ll_root);
+        TextView tvWord = (TextView) view.findViewById(R.id.tv_word);
+        View llRoot = view.findViewById(R.id.ll_root);
         tvSubtotal = (TextView) view.findViewById(R.id.tv_checkout_review_subtotal);
         tvShippingfee = (TextView) view.findViewById(R.id.tv_checkout_review_shippingfee);
         rlVoucherText = (RelativeLayout) view.findViewById(R.id.ll_checkout_review_voucher_text);
@@ -241,7 +236,7 @@ public class CheckoutReviewFragment extends BaseFragment {
 
             //Set Datas to Payment Method
             payment_type = getArguments().getString("payment[molpay_type]");
-            code = getArguments().getString("code");
+        String code = getArguments().getString("code");
 
             String paymentInfo = paymentSaveReturnEntity.getPaymentinfo();
             if (!TextUtils.isEmpty(paymentInfo)) {
@@ -411,6 +406,7 @@ public class CheckoutReviewFragment extends BaseFragment {
         for (int i = 0; i < checkoutReviewShoppingCartAdapter.getCount(); i++) {
             View listItem = checkoutReviewShoppingCartAdapter.getView(i, null, lvShoppingCart);
             listItem.measure(0, 0);
+            String currTag = "CheckoutReviewFragment";
             JLogUtils.i(currTag, "height : " + listItem.getMeasuredHeight() + ", heigh" + JDataUtils.dp2px(getActivity(), 130));
             totalHeight += listItem.getMeasuredHeight();
         }

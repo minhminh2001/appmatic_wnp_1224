@@ -23,7 +23,6 @@ import java.util.HashMap;
  * Created by Administrator on 2015/6/11.
  */
 public class CheckoutReviewShoppingCartAdapter extends BaseAdapter {
-    private String currTag = "CheckoutReviewShoppingCartAdapter";
     public ArrayList<ShoppingCartListEntityCell> list;
     private Context context;
     private final ImageLoader mImageLoader;
@@ -91,6 +90,7 @@ public class CheckoutReviewShoppingCartAdapter extends BaseAdapter {
         } else {
             tvColorsAndSize.setVisibility(View.INVISIBLE);
         }
+        String currTag = "CheckoutReviewShoppingCartAdapter";
         JLogUtils.i(currTag, "sc.getImage():" + sc.getImage());
         JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, image, sc.getImage(), JToolUtils.dip2px(context, 200), JToolUtils.dip2px(context, 200));
 
