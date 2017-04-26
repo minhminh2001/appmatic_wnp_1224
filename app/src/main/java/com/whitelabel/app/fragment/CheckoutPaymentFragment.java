@@ -176,16 +176,13 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         });
         mMaterialDialog.show();
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         currentYear = Calendar.getInstance().get(Calendar.YEAR);
     }
-
 //    private View vLine;
 //    private String brainTreeClientToken;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -209,38 +206,28 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
         tvPaymentMethod = (TextView) view.findViewById(R.id.tv_checkout_payment_method);
         tvPaymentMethodArrow = (ImageView) view.findViewById(R.id.tv_checkout_payment_method_arrow);
         llPaymentMethod = (LinearLayout) view.findViewById(R.id.ll_checkout_payment_method);
-
         tvOnlinebankingBlankbottom = (TextView) view.findViewById(R.id.tv_checkout_payment_onlinebanking_blankbottom);
-
         TextView tvForpopLoaction = (TextView) checkoutActivity.findViewById(R.id.tv_checkout_for_payment_pop_loaction);
         llPaymentMethodOnlineBanking = (LinearLayout) view.findViewById(R.id.ll_checkout_payment_onlinebanking);
         llPaymentMethodCreditCardBody = (LinearLayout) view.findViewById(R.id.ll_checkout_payment_creditcard_body);
-
-
         ImageView ivSelectI = (ImageView) view.findViewById(R.id.iv_checkout_payment_select_i);
         ivSelectI.setOnClickListener(this);
         tvCreditCardNumberAnim = (TextView) view.findViewById(R.id.tv_checkout_payment_creditcardnumber_anim);
         tvCreditCardNumberAnim.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-
         etCreditCardNumber = (EditText) view.findViewById(R.id.et_checkout_payment_creditcardnumber);
         etCreditCardNumber.setOnFocusChangeListener(this);
         etCreditCardNumber.addTextChangedListener(new CreditCartNumberTextWatcher());
-
         tvCVCAnim = (TextView) view.findViewById(R.id.tv_checkout_payment_CVC_anim);
         etCVC = (EditText) view.findViewById(R.id.et_checkout_payment_CVC);
         etCVC.setOnFocusChangeListener(this);
-
         tvNameoncardAnim = (TextView) view.findViewById(R.id.tv_checkout_payment_nameoncard_anim);
         tvNameoncardAnim.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-
         etNameoncard = (EditText) view.findViewById(R.id.et_checkout_payment_nameoncard);
         etNameoncard.setOnFocusChangeListener(this);
-
         tvCardtypeHint = (TextView) view.findViewById(R.id.tv_checkout_payment_cardtype_hint);
         tvCardType = (TextView) view.findViewById(R.id.tv_checkout_payment_cardtype);
         arrowCardType = (ImageView) view.findViewById(R.id.arrow_checkout_payment_select_cardtype);
         view.findViewById(R.id.ll_checkout_payment_cardtype).setOnClickListener(this);
-
         tvIssuerbankHint = (TextView) view.findViewById(R.id.tv_checkout_payment_issuerbank_hint);
         tvIssuerBank = (TextView) view.findViewById(R.id.tv_checkout_payment_issuerbank);
         arrowIssuerbank = (ImageView) view.findViewById(R.id.arrow_checkout_payment_select_issuerbank);

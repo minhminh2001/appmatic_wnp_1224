@@ -55,7 +55,6 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
             bundle.putInt("fromType",fromType);
 //            switch (msg.what){
 //                case CheckoutDao.REQUEST_GETLUCKDRAW:
-//
 //                        if(msg.arg1==CheckoutDao.RESPONSE_SUCCESS){
 //                            CustomAnimEntity entity= (CustomAnimEntity) msg.obj;
 //                            if(!"0".equals(entity.getCount())){
@@ -163,12 +162,10 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url != null) {
                     try {
-                        JLogUtils.i(TAG,"URL:"+url);
                         if(!isSuccess) {
                             if (url.indexOf(SUCCESS) != -1) {
                                 isSuccess=true;
                                 startPaymentStatusScreen();
-//                                mDao.getLuckdraw(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), lastrealorderid);
                                 return false;
                             } else if (url.indexOf(FAILD) != -1) {
                                 Bundle bundle = new Bundle();
@@ -216,17 +213,10 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
     @Override
     protected void onStart() {
         super.onStart();
-//        EasyTracker easyTracker = EasyTracker.getInstance(this);
-//        easyTracker.send(MapBuilder.createEvent("Payment", //Eventcategory(required)
-//                null, // Event action (required)
-//                null, // Event label
-//                null) // Event value
-//                .build());
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-    //    EasyTracker.getInstance(this).activityStop(this);
     }
 }

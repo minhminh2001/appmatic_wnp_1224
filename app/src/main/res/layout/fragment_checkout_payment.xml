@@ -417,9 +417,7 @@
                         android:layout_marginRight="10dp"
                         android:src="@mipmap/arrow_down_fill" />
                 </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
-
             </LinearLayout>
-
             <ImageView
                 android:id="@+id/paymentlist_image"
                 android:layout_marginRight="20dp"
