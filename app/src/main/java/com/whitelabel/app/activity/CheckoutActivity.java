@@ -64,6 +64,7 @@ import com.whitelabel.app.utils.JLocalMethod;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.PaypalHelper;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CheckoutPaymentDialog;
 import com.whitelabel.app.widget.MaterialDialog;
@@ -151,11 +152,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
      */
     private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
     private ImageLoader mImageLoader;
-    private static  final String CONFIG_CLIENT_ID="AbzokPpKiJUMsKciCC8I6n2tAqPjvdByz_WVbgQt_lyL5yD3v8HVCwctXmxyysPGGx6flc84eDcyinOg";
-    public static PayPalConfiguration payPalConfiguration=new
-            PayPalConfiguration().
-            environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
-            .clientId(CONFIG_CLIENT_ID);
+    private PaypalHelper mPaypalHelper;
 //    static {
 //        System.loadLibrary("gemfivelocal");
 //    }
@@ -177,6 +174,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             mCheckoutPaymentDialog.dismiss();
         }
     }
+    private PaypalHelper paypalHelper;
     /**
      * e
      * to record fragment(module) count
@@ -192,10 +190,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         initView();
         initData();
         initToolBar();
-        Intent intent=new Intent(this,PayPalService.class);
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,payPalConfiguration);
-        startService(intent);
+        mPaypalHelper=new PaypalHelper();
+        mPaypalHelper.startPaypalService(this);
     }
+
     private void initToolBar() {
         setTitle(getResources().getString(R.string.CHECKOUT));
         setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.action_back));
@@ -562,8 +560,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         bundle.putSerializable("paymentSaveReturnEntity", paymentSaveReturnEntity);
         startNextActivity(bundle, CheckoutPaymentStatusActivity.class, true);
     }
-
-
     public void gaTrackerPlaceOrder() {
         try {
             GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
@@ -1074,24 +1070,23 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         }
     }
 
-    private  final static  int REQUEST_CODE_PAYMENT=10000;
+//    private  final static  int REQUEST_CODE_PAYMENT=10000;
     public void payPalPayment(String orderNumber,String price,String unit,String productName,String shippingFee){
-//        if(productName.length()>8){
+        mPaypalHelper.startPaypalPayment(this,price,unit,productName,orderNumber);
+        //        if(productName.length()>8){
 //                productName=productName.substring(0,8);
 //        }
-        JLogUtils.i("ray","desc:"+productName+", Shipping Fee " + shippingFee);
-        PayPalPayment payPalPayment=new PayPalPayment(new BigDecimal(price),unit,productName,PayPalPayment.PAYMENT_INTENT_SALE);
-        payPalPayment.invoiceNumber(orderNumber);
+//        JLogUtils.i("ray","desc:"+productName+", Shipping Fee " + shippingFee);
+//        PayPalPayment payPalPayment=new PayPalPayment(new BigDecimal(price),unit,productName,PayPalPayment.PAYMENT_INTENT_SALE);
+//        payPalPayment.invoiceNumber(orderNumber);
 //        payPalPayment.softDescriptor(productName+", Shipping Fee " + shippingFee);
 //        ShippingAddress shippingAddress=null;
 //        payPalPayment.providedShippingAddress(shippingAddress);
 //        shippingAddress.city("qingdao").countryCode("HK").postalCode("").state("").line1("");
-
-        Intent intent=new Intent(this, PaymentActivity.class);
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, payPalConfiguration);
-        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
-        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
-
+//        Intent intent=new Intent(this, PaymentActivity.class);
+//        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, payPalConfiguration);
+//        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
+//        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
     }
 
     public void selectedAddressTrack() {
@@ -1525,9 +1520,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 ////        }          //bundle.putBoolean("IsSecure", true);
 ////
 //
-//
-//
-//
 ////        //Buyer Info
 ////        bundle.putString("OrderId", orderId);
 ////        bundle.putString("BillName", user.getFirstName() + " " + user.getLastName());
@@ -1606,8 +1598,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 //        intent.putExtras(bundle);
 //        startActivityForResult(intent, REQUEST_CODE_MOLPAY);
 //    }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1617,7 +1607,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                 startNextActivity(null, ShoppingCartActivity1.class, true);
             }
             return;
-        }else if(requestCode == REQUEST_CODE_PAYMENT){
+        }else if(requestCode == PaypalHelper.REQUEST_CODE_PAYMENT){
                 if (resultCode == Activity.RESULT_OK) {
                     PaymentConfirmation confirm =
                             data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
@@ -1651,7 +1641,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
                 }
             }
-
 //        String transaction_id = "";
 //        String transaction_status = "";
 //        String orderId = "";
@@ -1898,11 +1887,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 ////            }
 ////        });
 //    }
-
-
-    public void retryOrder(String orderId) {
-        mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this).getSessionKey(), orderId, "");
-    }
+//    public void retryOrder(String orderId) {
+//        mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this).getSessionKey(), orderId, "");
+//    }
 
     public void startShoppingActivity() {
         Intent intent = new Intent(CheckoutActivity.this, ShoppingCartActivity1.class);

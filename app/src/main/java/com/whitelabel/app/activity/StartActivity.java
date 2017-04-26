@@ -100,8 +100,6 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
             super.handleMessage(msg);
         }
     }
-
-
     static  class StartRunnable implements   Runnable{
         WeakReference<StartActivity> mActivity;
         public StartRunnable(StartActivity start){
@@ -113,12 +111,10 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
             mActivity.get().startNextActivity();
         }
     }
-
     private void postDelayed(long deploy) {
         StartRunnable  startRunnable=  new StartRunnable(StartActivity.this);
         mStartHandler.postDelayed(startRunnable, (DELAY_TIME -deploy));
     }
-
 //    private View.OnClickListener updateListener=new View.OnClickListener() {
 //        @Override
 //        public void onClick(View view) {
@@ -144,8 +140,6 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
 //            }
 //        }
 //    };
-
-
     private void gaTrackNotificationSwitch() {
         boolean isNotificationEnabled = JToolUtils.isNotificationEnabled(this);
         String trackLabel="";

@@ -24,7 +24,8 @@ public class ApplicationConfigurationEntity {
     private String ulImageServerAddress;
     private String ulImageServerGlobalParameter;
     private GOUserEntity user;
-    private ThemeConfigModel configModel;
+    private ThemeConfigModel themeConfigModel;
+    private ThirdPartyConfig thirdPartyConfig;
     private GOStoreViewEntity storeView;
     private GOCurrencyEntity currency;
     private SVRAppserviceCatalogSearchReturnEntity categoryArrayList;
@@ -41,22 +42,34 @@ public class ApplicationConfigurationEntity {
     private Object readResolve() {
         return getInstance();
     }
-
     public ThemeConfigModel getThemeConfig(){
-        return configModel;
+        return themeConfigModel;
     }
-    public void setConfigColor(ThemeConfigModel configModel){
-        if(configModel!=null) {
-            this.configModel=configModel;
+    public void initAppConfig( RemoteConfigResonseModel.RetomeConfig configModel){
+        if(configModel.getThirdParty()!=null) {
+            this.thirdPartyConfig=configModel.getThirdParty();
+        }
+        if(configModel.getUiStyle()!=null){
+            this.themeConfigModel =configModel.getUiStyle();
         }
     }
+
+    public ThirdPartyConfig getThirdPartyConfig() {
+        return thirdPartyConfig;
+    }
+
+    public void setThirdPartyConfig(ThirdPartyConfig thirdPartyConfig) {
+        this.thirdPartyConfig = thirdPartyConfig;
+    }
+
     public void init(Context context) {
         SVRAppserviceCatalogSearchReturnEntity entity = JStorageUtils.getCategoryArrayList(context);
         WhiteLabelApplication.getAppConfiguration().setCategoryArrayList(entity);
-        configModel=new ThemeConfigModel();
+        themeConfigModel =new ThemeConfigModel();
+        thirdPartyConfig=new ThirdPartyConfig();
         RemoteConfigResonseModel.RetomeConfig config=DataManager.getInstance().getPreferHelper().getLocalConfigModel();
         if(config!=null){
-          setConfigColor(config.getUiStyle());
+            initAppConfig(config);
         }
         httpServerAddress = GlobalData.serviceRequestUrl;
         JLogUtils.i("aaa", "init=" + httpServerAddress);

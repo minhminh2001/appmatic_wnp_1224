@@ -52,6 +52,13 @@ public class RemoteConfigResonseModel implements Serializable {
         private ThemeConfigModel uiStyle;
         private BaseUrlBean baseUrl;
         private String version;
+        private ThirdPartyConfig thirdParty;
+        public ThirdPartyConfig getThirdParty() {
+            return thirdParty;
+        }
+        public void setThirdParty(ThirdPartyConfig thirdParty) {
+            this.thirdParty = thirdParty;
+        }
 
         public ThemeConfigModel getUiStyle() {
             return uiStyle;
