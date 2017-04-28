@@ -15,6 +15,15 @@ public class OrderBody {
     private String orderStatusCode;
     private String merchantName;
     private String vendor_id;
+    private boolean isLast;
+
+    public boolean isLast() {
+        return isLast;
+    }
+
+    public void setLast(boolean last) {
+        isLast = last;
+    }
 
     public String getVendor_id() {
         return vendor_id;

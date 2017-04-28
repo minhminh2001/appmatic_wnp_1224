@@ -23,6 +23,13 @@ public class MyAccountOrderInner  implements Serializable {
     private String vendorDisplayName;
     private String vendor_id;
     private String brandId;
+    private boolean  isLast;
+    public boolean isLast() {
+        return isLast;
+    }
+    public void setLast(boolean last) {
+        isLast = last;
+    }
 
     public String getBrandId() {
         return brandId;

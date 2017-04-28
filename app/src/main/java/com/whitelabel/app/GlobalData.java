@@ -28,11 +28,13 @@ public class GlobalData {
     public static String mockUrl;
     public static  String  apiVersion;
     public static  String apiKey="";
+    public static String appKey="";
 
     // if true, all https connections are valid regardless of certificate validity
     public static boolean allowInvalidSSLTLS = false;
     private final static String pathSeparator = "/";
     public static String useHlb = "1";  //1  userHlb
+
     public static void init(Context context) {
         serviceVersion = context.getResources().getString(R.string.service_version);
         appName = context.getResources().getString(R.string.app_name);
@@ -46,6 +48,7 @@ public class GlobalData {
         gaTrackId = BuildConfig.GA_TRACK_ID;
         apiVersion=BuildConfig.API_VERSION;
         apiKey=BuildConfig.API_KEY;
+        appKey=BuildConfig.APP_KEY;
         facebookId = BuildConfig.FACEBOOK_ID;
         if (BuildConfig.REQUEST_URL.indexOf("www.") == -1) {
             serviceRequestUrl = getAuthorizationUrl(BuildConfig.REQUEST_URL);

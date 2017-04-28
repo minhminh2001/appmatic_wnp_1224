@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.activity.MyAccountOrderDetailActivity;
 import com.whitelabel.app.activity.TrackingInfoActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.bean.OrderBody;
@@ -34,7 +35,6 @@ import java.util.HashMap;
 /**
  * Created by Administrator on 2016/4/11.
  */
-
 public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 436874;
     private static final int TYPE_ITEM = 256478;
@@ -76,6 +76,9 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     if(trackingInfo!=null){
                         orderBody.setTrickingTitle(trackingInfo.getTitle());
                         orderBody.setTrickingUrl(trackingInfo.getUrl());
+                    }
+                    if(j==orderlist.length-1){
+                        orderBody.setLast(true);
                     }
                     arrayList.add(orderBody);
                 }
@@ -161,21 +164,16 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             subOrderHolder.orderImage.setTag(orderBody.getOrderImage());
             subOrderHolder.rmTop.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+"");
             subOrderHolder.orderName.setText(orderBody.getOrderName());
-            if (TextUtils.isEmpty(orderBody.getTrickingTitle()) && TextUtils.isEmpty(orderBody.getTrickingUrl())) {
-                subOrderHolder.trackingInfo.setVisibility(View.GONE);
+            if (!orderBody.isLast()) {
+                subOrderHolder.tvRepayment.setVisibility(View.GONE);
             } else {
-                subOrderHolder.trackingInfo.setVisibility(View.VISIBLE);
-                subOrderHolder.trackingInfo.setOnClickListener(new View.OnClickListener() {
+                subOrderHolder.tvRepayment.setVisibility(View.VISIBLE);
+                subOrderHolder.tvRepayment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, TrackingInfoActivity.class);
-                        Bundle bundle = new Bundle();
-
-                        bundle.putString(TrackingInfoActivity.BUNDLE_TITLE, orderBody.getTrickingTitle());
-                        bundle.putString(TrackingInfoActivity.BUNDLE_URL, orderBody.getTrickingUrl());
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
-                        ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                        if(onOrderViewItemClickListener!=null) {
+                            onOrderViewItemClickListener.onItemClick(v, position);
+                        }
                     }
                 });
             }
@@ -299,7 +297,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     public static class SubOrderHolder extends RecyclerView.ViewHolder {
         ImageView orderImage;
 
-        TextView orderName, orderCS, orderPrice, orderNum, orderStatus, orderNewStatus, orderMerName, trackingInfo;
+        TextView orderName, orderCS, orderPrice, orderNum, orderStatus, orderNewStatus, orderMerName, tvRepayment;
         TextView rmTop;
 
         public SubOrderHolder(View view) {
@@ -312,7 +310,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             orderStatus = (TextView) view.findViewById(R.id.order_status);
             orderNewStatus = (TextView) view.findViewById(R.id.tv_orderlist_new_status);
             orderMerName = (TextView) view.findViewById(R.id.tv_orderlist_new_mername);
-            trackingInfo = (TextView) view.findViewById(R.id.tv_orderlist_tracking);
+            tvRepayment = (TextView) view.findViewById(R.id.tv_order_repayment);
             rmTop= (TextView) view.findViewById(R.id.rm_top);
 
         }
