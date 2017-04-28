@@ -78,12 +78,10 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             tools:replace="android:theme" />
-
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider604176613049064"
             android:exported="true" />
-
         <activity
             android:name=".ui.start.StartActivityV2"
             android:screenOrientation="portrait"
@@ -197,9 +195,9 @@
             android:name=".activity.ProductListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BackgroundWhiteTheme" />
-        <activity
-            android:name=".activity.CheckoutPaymentRedirectActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".activity.CheckoutPaymentRedirectActivity"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".activity.FavoriteActivity"
             android:screenOrientation="portrait" />

@@ -14,10 +14,6 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
@@ -31,18 +27,13 @@ import com.whitelabel.app.fragment.HomeNotificationListFragment;
 import com.whitelabel.app.fragment.HomeSettingCotentFragment;
 import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
-import com.whitelabel.app.model.MarketingLayersEntity;
 import com.whitelabel.app.model.TMPHelpCenterListToDetailEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.ui.home.HomeHomeFragmentV3;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
-import com.whitelabel.app.utils.UserGuideHelper;
-
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-
 public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragment.HomeCommonCallback {
     public static final int FRAGMENT_TYPE_HOME_HOME = 0;    //Home;
     public static final int FRAGMENT_TYPE_HOME_MYACCOUNT = 1;   //Sign in;
@@ -56,7 +47,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     public static final String EXTRA_REDIRECTTO_TYPE_VALUE_CATEGORYTREE = "toCategoryTreeFragment";
     public static final int FRAGMENT_TYPE_HOME_GOBACK = 101;
     //    public static final int FRAGMENT_TYPE_HOME_STORECREDITS=9;
-    public static final int FRAGMENT_TYPE_HOME_CREDITCARD = 10;
+//    public static final int FRAGMENT_TYPE_HOME_CREDITCARD = 10;
     private final int TYPE_FRAGMENT_SWITCH_NONE = 0;
     public boolean mCanback = true;
     private final int TYPE_FRAGMENT_SWITCH = -2;
@@ -75,23 +66,19 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     public static final String EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART = "toShoppingCartFragment";
     public static final String EXTRA_REDIRECTTO_TYPE_VALUE_SETTING = "toSettingFragment";
     public static final String EXTRA_REDIRECTTO_TYPE_VALUE_EDITPROFILE = "toEditProfileActivity";
-//    private View mUserGuideAbove;
     private ArrayList<Fragment> mAttachedFragmentList;
-//    private OnNotificationCountListener onNotificationCountListener;
     protected Fragment mCurrentFragment;
     private Dialog mDialog;
     public Handler mHandler = new Handler();
     public int fragmentType;
-//    private CustomTextView tvMarketingLayers, tvMarketingLayersDesc;
-//    private PopupWindow mUserGuidePopWindow;
     public boolean showMarketLayers = true;
     //跳转到哪个Fragment上
     public static final String BUNDLE_START_FRAGMENT = "startFragment";
     public static final String BUNDLE_FRAGMENT_STORECREDIT = "storeCredit";
-    private ImageView ivMarketLayer, ivMarketLayerClose;
-    private RelativeLayout rlMarketLayer;
-    //    private View vUserGuide;
-    private UserGuideHelper mUserGuideHelper;
+//    private ImageView ivMarketLayer, ivMarketLayerClose;
+//    private RelativeLayout rlMarketLayer;
+//    //    private View vUserGuide;
+//    private UserGuideHelper mUserGuideHelper;
 
 
     @Override
@@ -355,39 +342,40 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             }
         });
     }
-    private Animation getFadeOutAnimation() {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_fade_out);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                rlMarketLayer.setClickable(false);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                rlMarketLayer.setVisibility(View.GONE);
-                rlMarketLayer.setClickable(true);
-            }
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        return animation;
-    }
+//    private Animation getFadeOutAnimation() {
+//        Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_fade_out);
+//        animation.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//                rlMarketLayer.setClickable(false);
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                rlMarketLayer.setVisibility(View.GONE);
+//                rlMarketLayer.setClickable(true);
+//            }
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//            }
+//        });
+//        return animation;
+//    }
     @Override
     public void setHomeSearchBarAndOnClick(View.OnClickListener onClickListener) {
         setHomeSearchBarClickListener(onClickListener);
     }
 
-    public ImageView getIvMarketLayer() {
-        return ivMarketLayer;
-    }
+//
+//    public ImageView getIvMarketLayer() {
+//        return ivMarketLayer;
+//    }
+//
+//    public RelativeLayout getRlMarketLayer() {
+//        return this.rlMarketLayer;
+//    }
 
-    public RelativeLayout getRlMarketLayer() {
-        return this.rlMarketLayer;
-    }
-
-    public void showMarketLayers() {
+//    public void showMarketLayers() {
 //        marketLayerClosed = false;
 //        rlMarketLayer.clearAnimation();
 //        AnimUtil.animateFadeIn(this, rlMarketLayer, new Animation.AnimationListener() {
@@ -414,23 +402,23 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 //                }
 //            }
 //        });
-    }
+//    }
 
-    public void closeMarketLayers() {
+//    public void closeMarketLayers() {
 //        if (rlMarketLayer.getVisibility() == View.VISIBLE) {
 //            rlMarketLayer.startAnimation(getFadeOutAnimation());
 //        }
 //        enableSlidingMenu();
-    }
+//    }
 
 
-    @Override
-    public void initMarketingLayers(MarketingLayersEntity entity) {
+//    @Override
+//    public void initMarketingLayers(MarketingLayersEntity entity) {
 //        if (entity != null) {
 //            tvMarketingLayers.setText(entity.getTitle());
 //            tvMarketingLayersDesc.setText(entity.getDescription());
 //        }
-    }
+//    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -457,11 +445,9 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                 updateLeftMenuNumber();
 
             }
-
             @Override
             public void onDrawerClosed(View drawerView) {
             }
-
             @Override
             public void onDrawerStateChanged(int newState) {
             }
@@ -581,13 +567,13 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     }
 
 
-    public void marketLayerClose() {
+//    public void marketLayerClose() {
 //        closeMarketLayers();
         //notify homehomeFragment to cancel Thread-closeMarketRun of homeCategoryFragment.
 //        if (mCurrentFragment instanceof HomeHomeFragment) {
 //            ((HomeHomeFragment) mCurrentFragment).notifyToCancelCloseMarketRun();
 //        }
-    }
+//    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -619,7 +605,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             redirectToAttachedFragment(to, TYPE_FRAGMENT_SWITCH_LEFT2RIGHT, serializable);
         }
     }
-
     private void redirectToAttachedFragment(int to, int type, Serializable serializable) {
         if (mAttachedFragmentList != null && mAttachedFragmentList.size() > to) {
             FragmentManager mFragmentManager = getSupportFragmentManager();
@@ -682,7 +667,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             mActivity.get().mCanback = true;
         }
     }
-
     @Override
     public void onBackPressed() {
         showExitDialog();
@@ -710,7 +694,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             }
         });
     }
-
     public boolean refreshNotification(int type, String id) {
 //        if (mCurrentFragment instanceof HomeNotificationListFragment) {
 //            ((HomeNotificationListFragment) mCurrentFragment).refresh(type, id);
@@ -730,7 +713,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                 WhiteLabelApplication.getAppConfiguration().isSignIn(HomeActivity.this)){
              if(mCurrentFragment instanceof  HomeHomeFragment){
                  HomeHomeFragment fragment= (HomeHomeFragment) mCurrentFragment;
-                 JLogUtils.i("ray","=========================================");
                  fragment.requestData();
              }
         }

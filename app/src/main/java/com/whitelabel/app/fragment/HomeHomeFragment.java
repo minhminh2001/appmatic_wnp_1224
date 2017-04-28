@@ -200,7 +200,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mCommonCallback.marketLayerClose();
+//        mCommonCallback.marketLayerClose();
         try {
             mFragment.clear();
             fragmentPagerAdapter = null;

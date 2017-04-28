@@ -28,6 +28,7 @@ public class GlobalData {
     public static String mockUrl;
     public static  String  apiVersion;
     public static  String apiKey="";
+    public static String  creditCardPaymentUrl="";
 
     // if true, all https connections are valid regardless of certificate validity
     public static boolean allowInvalidSSLTLS = false;
@@ -52,6 +53,7 @@ public class GlobalData {
         }else{
             serviceRequestUrl = BuildConfig.REQUEST_URL;
         }
+        creditCardPaymentUrl=serviceRequestUrl+context.getString(R.string.payment_creditcard_url);
         downloadImagePath = context.getString(R.string.download_image_path);
         uploadFilePath =context.getString(R.string.upload_file_path);
         downloadImageUrl = serviceRequestUrl + pathSeparator + downloadImagePath;

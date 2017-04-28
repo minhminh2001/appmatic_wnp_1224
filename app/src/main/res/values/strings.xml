@@ -1,6 +1,4 @@
 <resources>
-
-
     <!-- Global Data-->
     <string name="service_version">1.0.5</string>
     <string name="facebook_app_id_test">1586589871584877</string>
@@ -13,9 +11,9 @@
     <string name="checkout_hash_key_test">123456</string>
     <string name="checkout_hash_key_live">5d89We</string>
     <string name="download_image_path">appservice/image/index</string>
+    <string name="payment_creditcard_url">appservice/checkout/redirect?session_key=%1$s&amp;lastrealorderid=%2$s&amp;appid=1&amp;usehlb=%3$s</string>
     <string name="upload_file_path">appservice/order/uploadTransferProof</string>
     <string name="jump_market_uri">market://details?id=com.whitelabel.app</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string-array name="size_array">
         <item>S</item>
@@ -39,7 +37,6 @@
     <string name="Thursday">Thursday</string>
     <string name="Friday">Friday</string>
     <string name="Saturday">Saturday</string>
-
     <string-array name="WeekAbbr">
         <item name="Sun">Sun</item>
         <item name="Mon">Mon</item>
@@ -58,7 +55,6 @@
         <item name="Friday">Friday</item>
         <item name="Saturday">Saturday</item>
     </string-array>
-
     <string name="Jan">Jan</string>
     <string name="Feb">Feb</string>
     <string name="Mar">Mar</string>
@@ -80,7 +76,6 @@
     <string name="October">October</string>
     <string name="November">November</string>
     <string name="December">December</string>
-
     <string-array name="MonthAbbr">
         <item name="Jan">Jan</item>
         <item name="Feb">Feb</item>

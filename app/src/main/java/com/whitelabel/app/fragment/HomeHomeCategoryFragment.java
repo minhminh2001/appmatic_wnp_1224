@@ -54,9 +54,9 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
     private RecyclerView mRecyclerView;
     private int mIndex;
     private boolean mCurrDisplayed = true;
-    private int mIdentification;
-    private MarketingLayersEntity mCurationListReturnEntity;
-    private boolean firstCategory = false;
+//    private int mIdentification;
+//    private MarketingLayersEntity mCurationListReturnEntity;
+//    private boolean firstCategory = false;
     private RequestErrorHelper requestErrorHelper;
 
     private View connectionLayout;
@@ -218,7 +218,6 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
                 break;
         }
     }
-
     /**
      * when advertisement is requesting,
      * just right now user switch to current fragment,
@@ -271,14 +270,14 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
         mDao.getMainCategoryLocal(getActivity(), categoryEntity.getId());
     }
 
-    public void setmCurrDisplayedAndData(int position, SVRAppserviceCatalogSearchCategoryItemReturnEntity data) {
-        mCurrDisplayed = false;
-        categoryEntity = data;
-        this.mIndex = position;
-//        if(adapter != null) {
-//            adapter.notifyDataSetChanged();
-//        }
-    }
+//    public void setmCurrDisplayedAndData(int position, SVRAppserviceCatalogSearchCategoryItemReturnEntity data) {
+//        mCurrDisplayed = false;
+//        categoryEntity = data;
+//        this.mIndex = position;
+////        if(adapter != null) {
+////            adapter.notifyDataSetChanged();
+////        }
+//    }
 
     @Override
     public void onResume() {
@@ -291,12 +290,12 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
         super.onResume();
     }
 
-    public void initMaretingLayers() {
+//    public void initMaretingLayers() {
 //        if (!mCurrDisplayed) {
 //            mIdentification++;
 //            getMarketingLayers(mIdentification);
 //        }
-    }
+//    }
 
     @Override
     public void onPause() {
@@ -314,53 +313,53 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
 //        mDao.getMarketingLayers(categoryEntity.getId(), identification);
 //    }
 
-    public void saveMarketing(String id, String image, int count) {
-        SharedPreferences shared = homeActivity.getSharedPreferences("market", 0);
-        SharedPreferences.Editor editor = shared.edit();
-        editor.putInt(id + "count", count);
-        editor.putString(id + "image", image);
-        editor.commit();
-    }
+//    public void saveMarketing(String id, String image, int count) {
+//        SharedPreferences shared = homeActivity.getSharedPreferences("market", 0);
+//        SharedPreferences.Editor editor = shared.edit();
+//        editor.putInt(id + "count", count);
+//        editor.putString(id + "image", image);
+//        editor.commit();
+//    }
 
-    public int getMarketCount(String id) {
-        SharedPreferences shared = homeActivity.getSharedPreferences("market", 0);
-        int count = shared.getInt(id + "count", -1);
-        return count;
-    }
+//    public int getMarketCount(String id) {
+//        SharedPreferences shared = homeActivity.getSharedPreferences("market", 0);
+//        int count = shared.getInt(id + "count", -1);
+//        return count;
+//    }
+//
+//    public String getMarketImage(String id) {
+//        SharedPreferences shared = homeActivity.getSharedPreferences("market", 0);
+//        String image = shared.getString(id + "image", "");
+//        return image;
+//    }
 
-    public String getMarketImage(String id) {
-        SharedPreferences shared = homeActivity.getSharedPreferences("market", 0);
-        String image = shared.getString(id + "image", "");
-        return image;
-    }
-
-    private Runnable openMarketRun = new Runnable() {
-        @Override
-        public void run() {
-            JLogUtils.i("russell", "****" + mIndex + "******openMarketRun");
-            if (homeActivity.showMarketLayers) {
-                if (!mCurrDisplayed) {
-                    int count = getMarketCount(categoryEntity.getId());
-                    saveMarketing(categoryEntity.getId(), mCurationListReturnEntity.getImage(), count - 1);
-                    mCommonCallback.showMarketLayers();
-                    mCurrDisplayed = true;
-                    try {
-                        int duration = Integer.parseInt(mCurationListReturnEntity.getDuration()) * 1000;
-                        mHandler.postDelayed(closeMarketRun, duration);
-                    } catch (Exception ex) {
-                        ex.getStackTrace();
-                    }
-                }
-            }
-        }
-
-    };
-    private Runnable closeMarketRun = new Runnable() {
-        @Override
-        public void run() {
-            mCommonCallback.closeMarketLayers();
-        }
-    };
+//    private Runnable openMarketRun = new Runnable() {
+//        @Override
+//        public void run() {
+//            JLogUtils.i("russell", "****" + mIndex + "******openMarketRun");
+//            if (homeActivity.showMarketLayers) {
+//                if (!mCurrDisplayed) {
+//                    int count = getMarketCount(categoryEntity.getId());
+//                    saveMarketing(categoryEntity.getId(), mCurationListReturnEntity.getImage(), count - 1);
+////                    mCommonCallback.showMarketLayers();
+//                    mCurrDisplayed = true;
+//                    try {
+//                        int duration = Integer.parseInt(mCurationListReturnEntity.getDuration()) * 1000;
+//                        mHandler.postDelayed(closeMarketRun, duration);
+//                    } catch (Exception ex) {
+//                        ex.getStackTrace();
+//                    }
+//                }
+//            }
+//        }
+//
+//    };
+//    private Runnable closeMarketRun = new Runnable() {
+//        @Override
+//        public void run() {
+//            mCommonCallback.closeMarketLayers();
+//        }
+//    };
 
     private void showMarketLayers(final MarketingLayersEntity curationListReturnEntity) {
         if (!mMarketShow) {
@@ -370,45 +369,45 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
             HomeHomeFragment fragment = (HomeHomeFragment) getParentFragment();
             int currIndex = fragment.getCurrentFragmentIndex();
             if (currIndex == mIndex) {
-                mCommonCallback.initMarketingLayers(curationListReturnEntity);
+//                mCommonCallback.initMarketingLayers(curationListReturnEntity);
                 showItAfter = curationListReturnEntity.getShowItAfter() * 1000;
                 //loadImage
                 //String imageUrl = JImageUtils.getImageServerUrlByWidthHeight(homeActivity, curationListReturnEntity.getImage(), WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(homeActivity), WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth(homeActivity) - JDataUtils.dp2Px(170));
                 //JLogUtils.i("Allen","url== "+imageUrl);
                 //Add callback listener
-                int marketLayerWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(homeActivity);
-                int marketLayerHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth(homeActivity) - JDataUtils.dp2Px(170);
+//                int marketLayerWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(homeActivity);
+//                int marketLayerHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth(homeActivity) - JDataUtils.dp2Px(170);
 //                JImageUtils.downloadImageFromServerListener(homeActivity, curationListReturnEntity.getImage(), marketLayerWidth, marketLayerHeight, new CategoryLoadImageListener(this));
 //               JImageUtils.getInstance(homeActivity).display(((HomeHomeCallback)(getParentFragment())).getIvMarketLayer(), imageUrl, defaultBitmapLoadCallBack);
             }
         }
     }
 
-    private class CategoryLoadImageListener extends SimpleTarget<Bitmap> {
-        WeakReference<HomeHomeCategoryFragment> mFragment;
-
-        public CategoryLoadImageListener(HomeHomeCategoryFragment fragment) {
-            mFragment = new WeakReference<>(fragment);
-        }
-
-        @Override
-        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-            if (mFragment.get() == null) return;
-            if (homeActivity == null) return;
-            try {
-                homeActivity.getIvMarketLayer().setImageBitmap(resource);
-                mFragment.get().mHandler.postDelayed(mFragment.get().openMarketRun, mFragment.get().showItAfter);
-            } catch (Exception e) {
-                e.printStackTrace();
-                JLogUtils.e(TAG, e.getStackTrace()+"");
-            }
-        }
-
-        @Override
-        public void onLoadFailed(Exception ex, Drawable errorDrawable) {
-            JLogUtils.e(TAG, ex.getMessage()+"");
-        }
-    }
+//    private class CategoryLoadImageListener extends SimpleTarget<Bitmap> {
+//        WeakReference<HomeHomeCategoryFragment> mFragment;
+//
+//        public CategoryLoadImageListener(HomeHomeCategoryFragment fragment) {
+//            mFragment = new WeakReference<>(fragment);
+//        }
+//
+//        @Override
+//        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+//            if (mFragment.get() == null) return;
+//            if (homeActivity == null) return;
+//            try {
+//                homeActivity.getIvMarketLayer().setImageBitmap(resource);
+//                mFragment.get().mHandler.postDelayed(mFragment.get().openMarketRun, mFragment.get().showItAfter);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                JLogUtils.e(TAG, e.getStackTrace()+"");
+//            }
+//        }
+//
+//        @Override
+//        public void onLoadFailed(Exception ex, Drawable errorDrawable) {
+//            JLogUtils.e(TAG, ex.getMessage()+"");
+//        }
+//    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -440,17 +439,17 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
     }
 
 
-    public void removeOpenMarketRun() {
-        if (mHandler != null) {
-            mHandler.removeCallbacks(openMarketRun);
-        }
-    }
+//    public void removeOpenMarketRun() {
+//        if (mHandler != null) {
+//            mHandler.removeCallbacks(openMarketRun);
+//        }
+//    }
 
-    public void removeCloseMarketRun() {
-        if (isAdded() && mHandler != null) {
-            mHandler.removeCallbacks(closeMarketRun);
-        }
-    }
+//    public void removeCloseMarketRun() {
+//        if (isAdded() && mHandler != null) {
+//            mHandler.removeCallbacks(closeMarketRun);
+//        }
+//    }
 
     @Override
     public void onDestroyView() {

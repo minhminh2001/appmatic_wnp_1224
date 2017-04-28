@@ -63,17 +63,17 @@ public class HomeBaseFragment<T extends BasePresenter> extends BaseFragmentSearc
         void setCoordinatorLayoutSwitch(boolean toolbarSwitchScroll);
 
         //iaml
-        void showMarketLayers();
+//        void showMarketLayers();
 
-        ImageView getIvMarketLayer();
+//        ImageView getIvMarketLayer();
+//
+//        RelativeLayout getRlMarketLayer();
 
-        RelativeLayout getRlMarketLayer();
+//        void closeMarketLayers();
 
-        void closeMarketLayers();
+//        void marketLayerClose();
 
-        void marketLayerClose();
-
-        void initMarketingLayers(MarketingLayersEntity entity);
+//        void initMarketingLayers(MarketingLayersEntity entity);
 
     }
 
