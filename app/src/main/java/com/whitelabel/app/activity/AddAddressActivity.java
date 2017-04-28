@@ -27,7 +27,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.whitelabel.app.R;
 import com.google.gson.Gson;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -49,11 +48,9 @@ import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
 import com.whitelabel.app.widget.CustomCheckBox;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 /**
  * Created by imaginato on 2015/6/29.
  */
@@ -149,7 +146,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                         activity.city.setEnabled(true);
                         if (!JDataUtils.errorMsgHandler(activity, msg.obj.toString())) {
                             if ((!JDataUtils.isEmpty(msg.obj.toString())) && (msg.obj.toString().contains(activity.SESSION_EXPIRED))) {
-
                                 Intent intent = new Intent();
                                 intent.setClass(activity, LoginRegisterActivity.class);
                                 Bundle bundle = new Bundle();
@@ -187,7 +183,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                         list.add(ab);
                         activity.setResult(1000);
                         activity.finish();
-
                     }else{
                         activity.menuItemClicking=false;
                         if (!activity.checkIsFinished() && !activity.checkIsInvisible()) {

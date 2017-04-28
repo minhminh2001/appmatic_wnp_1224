@@ -664,7 +664,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="myorder_tricking_info">Tracking Info</string>
-    <string name="myorder_btn_tricking_info">TRACK</string>
+    <string name="myorder_btn_repayment">Pay Now</string>
     <string name="openDrawer">Open Drawer</string>
     <string name="closeDrawer">Close Drawer</string>
 

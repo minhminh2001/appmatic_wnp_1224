@@ -119,13 +119,13 @@ public abstract class BaseHttp {
                 Map<String,String> params=new HashMap<>();
                 params.put("API-VERSION",GlobalData.apiVersion);
                 params.put("API-KEY",GlobalData.apiKey);
+                params.put("APP-KEY",GlobalData.appKey);
                 return params;
             }
         };
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 0, 1.0f));
         WhiteLabelApplication.getInstance().addToRequestQueue(jsonObjReq, TAG);
     }
-
     //处理get 请求中的空格
     private String formatBlack(String value) {
         String[] values = value.split(" ");

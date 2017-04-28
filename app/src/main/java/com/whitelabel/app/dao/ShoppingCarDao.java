@@ -74,23 +74,20 @@ public class ShoppingCarDao extends BaseHttp {
         params.put("remove", remove);
         requestHttp(HTTP_METHOD.POST, "appservice/cart/storeCredit", params, REQUEST_STORECREDIT);
     }
-
     public void deleteProductFromShoppingCart(String session, String itemId, String position) {
         params = new TreeMap<>();
         params.put("session_key", session);
         params.put("id", itemId + "");
         requestHttp(HTTP_METHOD.POST, "appservice/cart/delete", params, REQUEST_DELETEFROMSHOPPINGCART, position);
     }
-
     public void saveShoppingCartCount(Context context, int num) {
         GOUserEntity userEntity = WhiteLabelApplication.getAppConfiguration().getUserInfo(context);
         WhiteLabelApplication.getAppConfiguration().updateDate(context, userEntity);
     }
-
     public void addProductToShoppingCart(String sessionKey, String productId, Map<String,String> idQtys) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
-        params.put("store_id","1");
+//        params.put("store_id","3");
         params.put("product_id", productId);
         int index=0;
         for(String  id: idQtys.keySet()){
@@ -100,7 +97,6 @@ public class ShoppingCarDao extends BaseHttp {
         }
         requestHttp(HTTP_METHOD.POST, "appservice/cart/add", params, REQUEST_ADDPRODUCT);
     }
-
     public void addBatch(String sessionkey, ShoppingCartListEntityCell[] shoppingCart) {
         params = new TreeMap<>();
         params.put("session_key", sessionkey);

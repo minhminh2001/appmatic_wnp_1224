@@ -47,6 +47,7 @@ android {
             buildConfigField('String', 'MOCK_URL', '"http://192.168.1.233:8088/"')
             buildConfigField('String', 'API_VERSION', '"v1"')
             buildConfigField('String', 'API_KEY', '"L5M7aUpZRr2ChzDx"')
+            buildConfigField('String', 'APP_KEY', '"APP-83410052732170428"')
         }
         evisu {
             resValue("string", "app_name", "evisu")
@@ -58,6 +59,7 @@ android {
             buildConfigField('String', 'MOCK_URL', '"http://192.168.1.233:8088/"')
             buildConfigField('String', 'API_VERSION', '"v1"')
             buildConfigField('String', 'API_KEY', '"L5M7aUpZRr2ChzDx"')
+            buildConfigField('String', 'APP_KEY', '"APP-83410052732170428"')
         }
 //        uat{
 //            manifestPlaceholders = [ fabricApiKey: "be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8" ]
@@ -92,7 +94,6 @@ android {
     signingConfigs {
         sign
     }
-
     buildTypes {
         release {
             signingConfig signingConfigs.sign

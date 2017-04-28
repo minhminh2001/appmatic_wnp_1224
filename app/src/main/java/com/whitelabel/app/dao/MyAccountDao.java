@@ -133,7 +133,6 @@ public class MyAccountDao extends BaseHttp {
                 data = JStorageUtils.getOrderListData(mContext.get(), mUserId);
             } else if (mType == DATA_ORDER_SAVE) {
                 JStorageUtils.saveOrderListData(mContext.get(), mUserId, (List<MyAccountOrderOuter>) data);
-
             } else if (mType == DATA_ADDRESS_GET) {
                 data = JStorageUtils.getAddressData(mContext.get(), mUserId);
 
@@ -323,8 +322,12 @@ public class MyAccountDao extends BaseHttp {
         params.put("street[1]", street1);
         params.put("postcode", postcode);
         params.put("city", city);
-        params.put("region", region);
-        params.put("region_id", region_id);
+        if(!TextUtils.isEmpty(region)) {
+            params.put("region", region);
+        }
+        if(!TextUtils.isEmpty(region_id)){
+            params.put("region_id", region_id);
+        }
         params.put("default_shipping", default_shipping);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/customer/createCustomerAddress", params, REQUEST_ADDRESS_SAVE);
     }

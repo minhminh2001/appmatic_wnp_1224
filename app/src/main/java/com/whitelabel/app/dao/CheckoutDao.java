@@ -70,7 +70,6 @@ public class CheckoutDao extends BaseHttp {
         }
 
         if (!TextUtils.isEmpty(addressParameter.getFirstname())) {
-
             params.put("shipping[firstname]", addressParameter.getFirstname());
         }
 
@@ -101,23 +100,18 @@ public class CheckoutDao extends BaseHttp {
         if (!TextUtils.isEmpty(addressParameter.getRegionId())) {
             params.put("shipping[region_id]", addressParameter.getRegionId());
         }
-
         if (!TextUtils.isEmpty(addressParameter.getRegion())) {
             params.put("shipping[region]", addressParameter.getRegion());
         }
-
         if (!TextUtils.isEmpty(addressParameter.getTelephone())) {
             params.put("shipping[telephone]", addressParameter.getTelephone());
         }
         params.put("shipping[save_in_address_book]", "1");
-
         params.put("shipping[same_as_billing]", "1");
 
         if (!TextUtils.isEmpty(addressParameter.getAddressId())) {
             params.put("billing_address_id", addressParameter.getAddressId());
         }
-
-
         if (!TextUtils.isEmpty(addressParameter.getFirstname())) {
             params.put("billing[firstname]", addressParameter.getFirstname());
         }
@@ -152,6 +146,7 @@ public class CheckoutDao extends BaseHttp {
         if (!TextUtils.isEmpty(addressParameter.getTelephone())) {
             params.put("billing[telephone]", addressParameter.getTelephone());
         }
+//        params.put("store_id","3");
         params.put("billing[save_in_address_book]", "1");
         params.put("billing[use_for_shipping]", "1");
         requestHttp(HTTP_METHOD.POST, "appservice/checkout/saveBilling", params, REQUEST_SAVEBILLING);

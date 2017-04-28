@@ -45,14 +45,14 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
     private int pageIndex = 1;
     private ArrayList<MyAccountOrderOuter> list_outer_record;
     private Dialog mDialog;
+    private int first = 0;
+    private MyAccountOrderListEntityResult result;
     private RequestErrorHelper requestErrorHelper;
     private View connectionBreaks;
     private ViewStub vsEmpty;
-    private MyAccountOrderListEntityResult result;
     private RefreshLoadMoreRecyclerView recyclerView;
     private OrderListRecyclerViewAdapter mOrderListRecyclerViewAdapter;
     private SwipeRefreshLayout swipeRefrshLayout;
-    private int first = 0;
     private MyAccountDao mMyAccountDao;
     private ImageLoader mImageLoader;
     @Override
@@ -60,7 +60,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         pageIndex = 1;
         sendRequest();
     }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -70,7 +69,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             e.printStackTrace();
         }
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -90,7 +88,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             }
         });
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_myaccount_order_list_new, null);
@@ -202,19 +199,15 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             list_outer_record.clear();
         }
         String networkerror = getResources().getString(R.string.Global_Error_Internet);
-
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
-
     @Override
     public void onResume() {
         super.onResume();
     }
-
     private static final class DataHandler extends Handler {
         private final WeakReference<Activity> mActivity;
         private final WeakReference<HomeMyAccountOrdersFragment> mFragment;
@@ -223,7 +216,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             mActivity = new WeakReference<Activity>(activity);
             mFragment = new WeakReference<HomeMyAccountOrdersFragment>(fragment);
         }
-
         @Override
         public void handleMessage(Message msg) {
             if (mActivity.get() == null || mFragment.get() == null) {
@@ -236,7 +228,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                         return;
                     }
                     if (results != null && results.size() > 0) {
-
                         mFragment.get().list_outer_record.addAll(mFragment.get().initArray(results));
                         mFragment.get().mOrderListRecyclerViewAdapter.notifyDataSetChanged();
                         mFragment.get().recyclerView.setVisibility(View.VISIBLE);
@@ -342,7 +333,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         super.onCreate(savedInstanceState);
 //        onAccountFragment(getParentFragment());
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -354,7 +344,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             }
         }
     }
-
     @Override
     public void refresh(boolean bool) {
         if (getActivity() != null && bool) {

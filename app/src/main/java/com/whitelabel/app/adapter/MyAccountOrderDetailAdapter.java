@@ -119,34 +119,34 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
             TextView tvColorsAndSize = (TextView) view_inner.findViewById(R.id.tv_orderlist_new_det);
             TextView orderNewStatus=(TextView)view_inner.findViewById(R.id.tv_orderlist_new_status);
             TextView orderStatus=(TextView)view_inner.findViewById(R.id.order_status);
-            TextView tvTrickingInfo=(TextView)view_inner.findViewById(R.id.tv_orderlist_tracking);
+//            TextView tvTrickingInfo=(TextView)view_inner.findViewById(R.id.tv_orderlist_tracking);
             TextView unavailable=(TextView)view_inner.findViewById(R.id.order_detail_unavailable);
             TextView orderDetailTrans=(TextView)view_inner.findViewById(R.id.order_detail_trans);
             TextView orderMerchantName=(TextView)view_inner.findViewById(R.id.tv_orderlist_new_mername);
             final MyAccountOrderTrackingInfo  trackingInfo = orderMiddle.getTrackingInfo();;
             tvCurreny.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+"");
-            if (trackingInfo!=null) {
-                tvTrickingInfo.setVisibility(View.VISIBLE);
-                tvTrickingInfo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent=new Intent(context, TrackingInfoActivity.class);
-                        Bundle bundle=new Bundle();
-                        bundle.putString(TrackingInfoActivity.BUNDLE_TITLE, trackingInfo.getTitle());
-                        bundle.putString(TrackingInfoActivity.BUNDLE_URL, trackingInfo.getUrl());
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
-                        ((Activity)context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-                    }
-                });
-            } else{
-                tvTrickingInfo.setVisibility(View.GONE);
-            }
-            if(list.size()-1==position&&orderInners.length-1==i){
-                line.setVisibility(View.INVISIBLE);
-            }else{
-                line.setVisibility(View.VISIBLE);
-            }
+//            if (trackingInfo!=null) {
+//                tvTrickingInfo.setVisibility(View.VISIBLE);
+//                tvTrickingInfo.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent=new Intent(context, TrackingInfoActivity.class);
+//                        Bundle bundle=new Bundle();
+//                        bundle.putString(TrackingInfoActivity.BUNDLE_TITLE, trackingInfo.getTitle());
+//                        bundle.putString(TrackingInfoActivity.BUNDLE_URL, trackingInfo.getUrl());
+//                        intent.putExtras(bundle);
+//                        context.startActivity(intent);
+//                        ((Activity)context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                    }
+//                });
+//            } else{
+//                tvTrickingInfo.setVisibility(View.GONE);
+//            }
+//            if(list.size()-1==position&&orderInners.length-1==i){
+//                line.setVisibility(View.INVISIBLE);
+//            }else{
+//                line.setVisibility(View.VISIBLE);
+//            }
             productBrand.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -188,7 +188,6 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
                     orderMerchantName.setText(soldBy+ " " + orderInner.getVendorDisplayName());
                     orderMerchantName.setTextColor(context.getResources().getColor(R.color.black));
 //                }
-
             }else{
                 orderMerchantName.setText("");
             }
