@@ -47,7 +47,8 @@ public class RetrofitHelper {
                     Request original = chain.request();
                     Request.Builder  builder1=original.newBuilder()
                             .header("API-VERSION", GlobalData.apiVersion)
-                            .header("API-KEY", GlobalData.apiKey);
+                            .header("API-KEY", GlobalData.apiKey)
+                            .header("APP-KEY",GlobalData.appKey);
                     Request request1=builder1.method(original.method(), original.body()).build();
                     return chain.proceed(request1);
                 }
