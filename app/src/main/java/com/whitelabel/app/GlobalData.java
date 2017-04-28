@@ -1,6 +1,7 @@
 package com.whitelabel.app;
 
 import android.content.Context;
+import android.provider.Settings;
 
 import com.whitelabel.app.utils.JToolUtils;
 
@@ -28,6 +29,7 @@ public class GlobalData {
     public static String mockUrl;
     public static  String  apiVersion;
     public static  String apiKey="";
+    public static String appKey="";
     public static String  creditCardPaymentUrl="";
 
     // if true, all https connections are valid regardless of certificate validity
@@ -41,6 +43,7 @@ public class GlobalData {
         authName = context.getResources().getString(R.string.auth_name);
         authPwd = context.getResources().getString(R.string.auth_pwd);
         gcmSendId = context.getResources().getString(R.string.gcm_sender_id);
+        appKey= BuildConfig.APP_KEY;
         appVersion = JToolUtils.getAppVersion();
         mockUrl=BuildConfig.MOCK_URL;
         checkoutHashKey = BuildConfig.HASH_KEY;

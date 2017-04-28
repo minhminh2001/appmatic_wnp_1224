@@ -33,7 +33,7 @@ public class PreferHelper {
         JLogUtils.i("ray","configStr:"+configStr);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TABLE_CONFIG,configStr);
-        editor.apply();
+        editor.commit();
     }
 
 

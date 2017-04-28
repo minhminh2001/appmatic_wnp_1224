@@ -13,6 +13,7 @@ public class StartContract {
 
       interface  View extends BaseView{
             void delayStart();
+            void showErrorMessage(String errorMsg);
       }
      interface  Presenter extends BasePresenter<View>{
          void getConfigInfo();

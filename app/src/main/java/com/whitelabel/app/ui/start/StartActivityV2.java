@@ -14,6 +14,8 @@ import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.handler.INITApp;
 import com.whitelabel.app.task.INITExecutor;
+import com.whitelabel.app.utils.JViewUtils;
+
 import java.lang.ref.WeakReference;
 /**
  * Created by imaginato on 2015/6/10.
@@ -164,6 +166,11 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
             INITExecutor.getInstance().clearTask(mCallback);
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void showErrorMessage(String errorMsg) {
+        JViewUtils.showErrorToast(this,errorMsg);
     }
 }
 

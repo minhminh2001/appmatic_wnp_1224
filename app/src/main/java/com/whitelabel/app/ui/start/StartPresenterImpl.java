@@ -58,7 +58,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
     @Override
     public void getConfigInfo() {
        String currentVersionNumber= DataManager.getInstance().getPreferHelper().getVersionNumber();
-        JLogUtils.i("ray","currentVersionNumber:"+currentVersionNumber);
+
         DataManager.getInstance().
                 getAppApi().getConfigInfo(currentVersionNumber).
                 compose(RxUtil.<RemoteConfigResonseModel>rxSchedulerHelper())
@@ -75,7 +75,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                 }, new ErrorHandlerAction() {
                     @Override
                     protected void requestError(ApiFaildException ex) {
-                        mView.delayStart();
+                        mView.showErrorMessage(ex.getMessage()+"");
                     }
                 });
     }
