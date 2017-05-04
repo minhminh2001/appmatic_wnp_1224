@@ -24,9 +24,6 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
 //    private Dialog mDialog;
     private WebView webView;
     private ShoppingDiscountBean mDiscountBean;
-//    private   String REDIRECT_PAYMENT_URL= GlobalData.serviceRequestUrl+ "appservice/checkout/redirect"; ;
-//    private String payment_type;
-//    private String TAG=this.getClass().getSimpleName();
     private   String lastrealorderid;
     private String grandTotal;
     private String shippingFee;
@@ -38,22 +35,6 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
     public int paymentMethod;
     private int fromType;
     private boolean DISABLE_SSL_CHECK_FOR_TESTING=false;
-//    private Handler mHandler=new Handler(){
-//        @Override
-//        public void handleMessage(Message msg) {
-//            closeDialog();
-//            Bundle bundle = new Bundle();
-//            bundle.putString("payment_status", "1");
-//            bundle.putString("orderNumber", lastrealorderid);
-//            bundle.putString("grand_total", grandTotal);
-//            bundle.putString("shipping_fee", shippingFee);
-//            bundle.putSerializable("discountBean", mDiscountBean);
-//            bundle.putSerializable("paymentSaveReturnEntity", paymentSaveReturnEntity);
-//            bundle.putInt("fromType",fromType);
-//            startNextActivity(bundle, CheckoutPaymentStatusActivity.class, true);
-//            super.handleMessage(msg);
-//        }
-//    };
     private  void  startPaymentStatusScreen(){
         Bundle bundle = new Bundle();
         bundle.putString("payment_status", "1");
@@ -65,22 +46,13 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
         bundle.putInt("fromType",fromType);
         startNextActivity(bundle, CheckoutPaymentStatusActivity.class, true);
     }
-//    public void closeDialog(){
-//        if(mDialog!=null) {
-//            mDialog.cancel();
-//        }
-//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_payment_redirect);
         initToolBar();
         initIntent();
-//        if(paymentMethod==PAYMENT_CARD) {
-            initWebVeiw();
-//        }else{
-//            startPaymentStatusScreen();
-//        }
+        initWebVeiw();
     }
     private void initToolBar() {
         setTitle(getResources().getString(R.string.CHECKOUT));
@@ -89,10 +61,6 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
     private void initWebVeiw() {
         webView = (WebView) findViewById(R.id.wv_checkout_payment_redirect);
         String url=String.format(GlobalData.creditCardPaymentUrl,session_key,lastrealorderid, GlobalData.useHlb);
-//        JLogUtils.i("ray","paymentUrl:"+url);
-//        String url = REDIRECT_PAYMENT_URL + url_suffix +
-// "?session_key=" + session_key + "&lastrealorderid="
-// + lastrealorderid + "&appid=1&usehlb=" + GlobalData.useHlb;
         WebSettings settings=webView.getSettings();
         settings.setJavaScriptEnabled(true);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
@@ -101,17 +69,10 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
             cookieManager.setAcceptCookie(true);
             cookieManager.setAcceptThirdPartyCookies(webView, true);
         }
-        //webView.loadUrl(REDIRECT_PAYMENT_URL + url_suffix + "?session_key=" + session_key + "&lastrealorderid=" + lastrealorderid);
-        //Permit javascript using AndroidInterfaceForJs.returnAndroid(param)
-        //extraHeaders.put("Referer", "http-equiv=Content-Type content=application/x-www-form-urlencoded;charset=iso-8859-1");
-        //webView.loadUrl(url, extraHeaders);
         webView.setWebViewClient(new WebViewClient() {
             private final String SUCCESS = "checkout/onepage/success/";
             private final String FAILD = "checkout/onepage/failure/";
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                super.onReceivedError(view, errorCode, description, failingUrl);
-            }
+
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                 if (DISABLE_SSL_CHECK_FOR_TESTING) {
@@ -155,7 +116,6 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
             fromType = getIntent().getIntExtra("fromType", 0);
             paymentMethod = bundle.getInt("paymentMethod", PAYMENT_CARD);
             session_key = bundle.getString("session_key");
-//         payment_type = bundle.getString("payment_type");
             grandTotal = bundle.getString("grand_total");
             shippingFee = bundle.getString("shipping_fee");
             lastrealorderid = bundle.getString("lastrealorderid");

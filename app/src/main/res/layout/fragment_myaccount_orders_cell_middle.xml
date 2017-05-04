@@ -27,7 +27,6 @@
             android:textSize="14sp"
             android:textColor="@color/black000000"/>
     </RelativeLayout>
-
     <LinearLayout
         android:id="@+id/ll_myaccount_order_cellmiddle_body"
         android:layout_width="match_parent"
@@ -38,7 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/whiteFFFFFF"/>
-
     <com.whitelabel.app.widget.CustomTextView
         android:id="@+id/order_line"
         style="@style/font_family_robot_regular"

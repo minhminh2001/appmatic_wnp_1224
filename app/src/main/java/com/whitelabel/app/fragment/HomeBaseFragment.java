@@ -20,7 +20,7 @@ public class HomeBaseFragment<T extends BasePresenter> extends BaseFragmentSearc
     //todo remove this and in base activity somewhere else
     protected static final int REQUEST_SHOPPINGCART = 10001;
     protected static final int REQUEST_SEARCH = 10002;
-
+    private boolean scrollToolBarEnable = false;
     public interface HomeCommonCallback {
         int MENU_HOME = 1;
         int MENU_CATEGORYTREE = 12;
@@ -34,19 +34,12 @@ public class HomeBaseFragment<T extends BasePresenter> extends BaseFragmentSearc
         int MENU_HELPCENTER = 9;
         int MENU_SETTING = 10;
         int MENU_SHIPPING = 11;
-
         void setTitle(String titleText);
-
         void setTitleImage(int resource);
-
-        void setTitleNum(int num);
-
         void showUserGuide(HomeBaseFragment.UserGuideType userGuideType);
-
+        void setTitleNum(int num);
         void switchMenu(int type);
-
         void updateRightIconNum(int itemId, long number);
-
         void setLeftMenuIcon(Drawable drawable);
 
         Toolbar getToolBar();
@@ -89,7 +82,7 @@ public class HomeBaseFragment<T extends BasePresenter> extends BaseFragmentSearc
         }
     }
 
-    private boolean scrollToolBarEnable = false;
+
 
     public void setScrollToolBarEnable(boolean scrollToolBarEnable) {
         //可滑动toolbar的,需要手动在onActivityCreated前调一下,改变当前 (父)fragment 的paddingBottom

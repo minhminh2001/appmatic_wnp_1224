@@ -53,8 +53,6 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             mPresenter.attachView(this);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-//            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor());
@@ -146,15 +144,12 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             mHomeSearchBarRL.setVisibility(View.GONE);
         }
     }
-
     public void setLeftMenuIcon(int icon) {
         getToolbar().setNavigationIcon(icon);
     }
-
     public void setLeftMenuIcon(Drawable drawable) {
         getToolbar().setNavigationIcon(drawable);
     }
-
     public void setLeftMenuClickListener(final View.OnClickListener onClickListener) {
         getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,9 +160,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             }
         });
     }
-
     public View setRightTextMenuClickListener(MenuInflater menuInflater, int menuRes, Menu menu, int menuItemId, int actionViewRes, View.OnClickListener onClickListener) {
-
         menuInflater.inflate(menuRes, menu);
         MenuItem menuItem = menu.findItem(menuItemId);
         MenuItemCompat.setActionView(menuItem, actionViewRes);
@@ -236,21 +229,17 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             getToolbar().setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor());
         }
     }
-
     public Toolbar getToolbar() {
         return mToolbar;
     }
-
     @Override
     public void onBackPressed() {
         finish();
         overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
     }
-
     public void transitionOnBackPressed() {
         super.onBackPressed();
     }
-
     public void startNextActivity(Bundle bundle, Class<?> pClass, boolean finishFlag) {
         Intent intent = new Intent(this, pClass);
         if (bundle != null) {
@@ -263,8 +252,6 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             super.finish();
         }
     }
-
-
     public void startNextActivityForResult(Bundle bundle, Class<?> pClass, int requestCode, boolean finishFlag) {
         Intent intent = new Intent(this, pClass);
         if (bundle != null) {
@@ -277,7 +264,6 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             super.finish();
         }
     }
-
     @Override
     protected void onStart() {
         super.onStart();

@@ -28,6 +28,10 @@ public class ApplicationConfigurationEntity {
     private ThirdPartyConfig thirdPartyConfig;
     private GOStoreViewEntity storeView;
     private GOCurrencyEntity currency;
+    private LayoutStyleModel  mLayoutStyle;
+    public LayoutStyleModel getLayoutStyle() {
+        return mLayoutStyle;
+    }
     private SVRAppserviceCatalogSearchReturnEntity categoryArrayList;
     private ApplicationConfigurationEntity() {
         user = null;
@@ -52,6 +56,9 @@ public class ApplicationConfigurationEntity {
         if(configModel.getUiStyle()!=null){
             this.themeConfigModel =configModel.getUiStyle();
         }
+        if(configModel.getLayoutStyle()!=null){
+            this.mLayoutStyle=configModel.getLayoutStyle();
+        }
     }
 
     public ThirdPartyConfig getThirdPartyConfig() {
@@ -61,7 +68,6 @@ public class ApplicationConfigurationEntity {
     public void setThirdPartyConfig(ThirdPartyConfig thirdPartyConfig) {
         this.thirdPartyConfig = thirdPartyConfig;
     }
-
     public void init(Context context) {
         SVRAppserviceCatalogSearchReturnEntity entity = JStorageUtils.getCategoryArrayList(context);
         WhiteLabelApplication.getAppConfiguration().setCategoryArrayList(entity);

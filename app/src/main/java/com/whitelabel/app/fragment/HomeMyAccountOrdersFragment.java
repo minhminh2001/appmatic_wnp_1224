@@ -181,7 +181,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             @Override
             public void run() {
                 if (getActivity() != null) {
-//                    mDialog = JViewUtils.showProgressDialog(homeActivity);
                     showSwipeRefreshDialog();
                     pageIndex = 1;
                     sendRequest();

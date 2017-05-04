@@ -125,8 +125,6 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         JViewUtils.updateCartCount(textView, getCartItemCount());
     }
 
-
-
     public long getCartItemCount() {
         long cartItemCount = 0;
         try {
@@ -152,7 +150,6 @@ public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickLi
         }
         return cartItemCount;
     }
-
     @Override
     public void onStop() {
         super.onStop();

@@ -175,7 +175,6 @@ def ksFile = rootProject.file('keystore.properties')
 def props = new Properties();
 if (ksFile.canRead()) {
     props.load(new FileInputStream(ksFile))
-
     if (props != null) {
         android.signingConfigs.sign.storeFile file(props['KEYSTORE_FILE'])
         android.signingConfigs.sign.storePassword props['KEYSTORE_PASSWORD']

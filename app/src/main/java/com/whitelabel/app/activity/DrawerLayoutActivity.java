@@ -45,7 +45,10 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
     private ImageView ivMyOrder;
     private ImageView ivAddress;
     private ImageView ivStoreCredit;
-    private TextView tvUserName, tvHome, tvCategoryTree, tvShoppingCart, tvNotification, tvWistlist, tvMyOrder, tvSetting, tvCustomerService, tvHelpCenter, tvOrderNum, tvMyOrderNum, tvShipping, tvShoppingNum, tvNotificationNum, tvWistNum, tvAddress, tvStoreCredit;
+    private TextView tvUserName, tvHome, tvCategoryTree, tvShoppingCart, tvNotification, tvWistlist,
+            tvMyOrder, tvSetting, tvCustomerService, tvHelpCenter, tvOrderNum, tvMyOrderNum,
+            tvShipping, tvShoppingNum, tvNotificationNum, tvWistNum,
+            tvAddress, tvStoreCredit;
     private Handler baseHandler = new Handler();
     private RelativeLayout rlDrawerOrder;
     private RelativeLayout rlDrawerAddress;
@@ -77,7 +80,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-//                        getToolbar().getMenu().clear();
                         jumpHomePage();
                     }
                 }, DELAY);
@@ -88,7 +90,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-//                        getToolbar().getMenu().clear();
                         jumpCategoryTreePage();
                     }
                 }, DELAY);
@@ -98,7 +99,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-//                        getToolbar().getMenu().clear();
                         jumpShoppingCartPage();
                     }
                 }, DELAY);
@@ -110,7 +110,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-//                        getToolbar().getMenu().clear();
                         jumpNotificationPage();
                     }
                 }, DELAY);
@@ -123,11 +122,9 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-//                        getToolbar().getMenu().clear();
                         jumpWistListPage();
                     }
                 }, DELAY);
-
                 break;
             case R.id.rl_drawer_order:
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_ORDER);
@@ -136,11 +133,9 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                     @Override
                     public void run() {
                         if (WhiteLabelApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
-//                              getToolbar().getMenu().clear();
                             jumpOrderPage();
                     }
                 }, DELAY);
-
                 break;
             case R.id.tv_setting:
                 if (WhiteLabelApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this)) {
@@ -150,7 +145,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-//                        getToolbar().getMenu().clear();
                         jumpSettingPage();
                     }
                 }, DELAY);
@@ -161,7 +155,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-//                        getToolbar().getMenu().clear();
                         jumpCustomerServicePage();
                     }
                 }, DELAY);
@@ -172,11 +165,9 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-//                        getToolbar().getMenu().clear();
                         jumpHelpCenterServicePage();
                     }
                 }, DELAY);
-
                 break;
             case R.id.tv_shipping:
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SHIPPING);
@@ -184,7 +175,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-//                        getToolbar().getMenu().clear();
                         jumpShippingServicePage();
                     }
                 }, DELAY);
@@ -196,22 +186,11 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                     @Override
                     public void run() {
                         if (WhiteLabelApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
-//                        getToolbar().getMenu().clear();
                             jumpAddressPage();
                     }
                 }, DELAY);
                 break;
             case R.id.rl_drawer_store_credit:
-//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_STORECREDITS);
-//                drawerLayout.closeDrawer(Gravity.LEFT);
-//                baseHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (WhiteLabelApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
-////                        getToolbar().getMenu().clear();
-//                            jumpStoreCreditPage();
-//                    }
-//                }, DELAY);
                 break;
             case R.id.ll_profile:
                 if (WhiteLabelApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this))
@@ -220,7 +199,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-//                            getToolbar().getMenu().clear();
                         jumpEditProfilePage();
                     }
                 }, DELAY);
@@ -229,7 +207,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
     }
     private void initLayout() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ImageView ivUserImg = (ImageView) findViewById(R.id.iv_user_img);
         ivHome = (ImageView) findViewById(R.id.iv_home);
         ivCategoryTree = (ImageView) findViewById(R.id.iv_category_tree);
         ivShoppingCart = (ImageView) findViewById(R.id.iv_shopping_cart);
@@ -262,9 +239,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         RelativeLayout rlDrawerCategoryTree = (RelativeLayout) findViewById(R.id.rl_drawer_categorytree);
         RelativeLayout rlDrawerShoppingCart = (RelativeLayout) findViewById(R.id.rl_drawer_shoppingcart);
         RelativeLayout rlDrawerNotification = (RelativeLayout) findViewById(R.id.rl_drawer_notification);
-
-        int black=ContextCompat.getColor(this,R.color.black000000);
-
+//        int black=ContextCompat.getColor(this,R.color.black000000);
         JViewUtils.setSlideMenuTextStyle(tvHome,false);
         JViewUtils.setSlideMenuTextStyle(tvShoppingCart,false);
         JViewUtils.setSlideMenuTextStyle(tvNotification,false);
@@ -272,13 +247,10 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         JViewUtils.setSlideMenuTextStyle(tvMyOrder,false);
         JViewUtils.setSlideMenuTextStyle(tvAddress,false);
         JViewUtils.setSlideMenuTextStyle(tvCategoryTree,false);
-
         JViewUtils.setSlideMenuTextStyle(tvSetting,true);
         JViewUtils.setSlideMenuTextStyle(tvCustomerService,true);
         JViewUtils.setSlideMenuTextStyle(tvHelpCenter,true);
         JViewUtils.setSlideMenuTextStyle(tvShipping,true);
-
-
 //        tvHome.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
 //        tvShoppingCart.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
 //        tvNotification.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
@@ -291,7 +263,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 //        tvHelpCenter.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
 //        tvShipping.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
 //        tvCategoryTree.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-
+//        tvOrderNum= (TextView) findViewById(R.id.tv_order_num);
         int iconDefaultColor=ContextCompat.getColor(this,R.color.blackD0);
         ivHome.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_default),iconDefaultColor));
         ivShoppingCart.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_shoppingcart_default),iconDefaultColor));
@@ -301,8 +273,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         ivAddress.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_address_default),iconDefaultColor));
         ivCategoryTree.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_categorytree_default),iconDefaultColor));
 
-
-//        tvOrderNum= (TextView) findViewById(R.id.tv_order_num);
         RelativeLayout rlDrawerWish = (RelativeLayout) findViewById(R.id.rl_drawer_wishlist);
         rlDrawerOrder = (RelativeLayout) findViewById(R.id.rl_drawer_order);
         rlDrawerAddress = (RelativeLayout) findViewById(R.id.rl_drawer_address);
@@ -323,7 +293,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         tvShoppingNum.setBackground(JImageUtils.getThemeCircle(this));
         tvNotificationNum.setBackground(JImageUtils.getThemeCircle(this));
         tvWistNum.setBackground(JImageUtils.getThemeCircle(this));
-
     }
     private static final class DataHandler extends Handler {
         private WeakReference<DrawerLayoutActivity> mActivity;

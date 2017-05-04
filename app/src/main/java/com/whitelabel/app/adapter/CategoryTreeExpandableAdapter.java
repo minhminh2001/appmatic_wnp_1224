@@ -31,11 +31,9 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
     public final  static   int VIEW_HORIZONTAL=1;
     public final static  int VIEW_VERTICAL=2;
     private ChildOnClick childOnClick;
-
     public interface ChildOnClick {
         void childOnClick(int position, Object ob, String parentId);
     }
-
     public void setViewType(int viewType){
         mViewType=viewType;
     }
@@ -64,6 +62,7 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
         //将数据更新到 ExpandableRecyclerAdapter
         setItems(groupList1);
     }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
@@ -89,13 +88,14 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
             SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) getItem(position);
             groupViewHolder.tvCategoryTreeGroupName.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
             groupViewHolder.tvCategoryTreeGroupName.setText(entity.getName());
-            if (groupViewHolder.ivCategoryTreeGroup.getTag() != null && groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage())) {
+            if (groupViewHolder.ivCategoryTreeGroup.getTag() != null && groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage()))
+            {
             } else {
                 JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, groupViewHolder.ivCategoryTreeGroup, entity.getImage());
                 groupViewHolder.ivCategoryTreeGroup.setTag(entity.getImage());
             }
 
-            groupViewHolder.ivCategoryTreeGroup.setImageResource(R.mipmap.checkout_success_facebook_share);
+//            groupViewHolder.ivCategoryTreeGroup.setImageResource(R.mipmap.checkout_success_facebook_share);
 
 //            if (position == 0) {
                 groupViewHolder.tv_category_tree_divi.setVisibility(View.GONE);

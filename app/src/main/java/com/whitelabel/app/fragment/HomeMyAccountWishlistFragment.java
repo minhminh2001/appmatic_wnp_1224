@@ -57,14 +57,12 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
     private RequestErrorHelper requestErrorHelper;
     private View connectionLayout;
     private LinearLayout tryAgain;
-    //    private  OnMyAccountUserGuide MyAccountUserGuide;
     private MyAccountDao mAccountDao;
     private DataHandler dataHandler;
     private SwipeRefreshLayout swipeLayout;
     private String TAG = this.getClass().getSimpleName();
     private boolean isAddFoot;
     private boolean Loading = true;
-
     private ImageLoader mImageLoader;
 
     @Override
@@ -104,15 +102,9 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
         }
     }
 
-    //
-//    public void onAttachFragment(Fragment fragment){
-//        //强转接口
-//        MyAccountUserGuide= (OnMyAccountUserGuide) fragment;
-//    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        this.onAttachFragment(getParentFragment());
     }
 
     private final static class DataHandler extends Handler {
@@ -305,11 +297,8 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                String availability = list.get(position).getAvailability();
                 String visibility = list.get(position).getVisibility();
                 if ((("1").equals(visibility))) {
-
                     Intent it = new Intent(getActivity(), ProductActivity.class);
                     it.putExtra("productId", list.get(position).getProductId());
                     homeActivity.startActivity(it);
@@ -343,7 +332,6 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
         mDialog = JViewUtils.showProgressDialog(homeActivity);
         mAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUserInfo(homeActivity).getSessionKey(), itemId, position);
     }
-
     public final SwipeMenuItem createDeleteSwipeItem() {
         SwipeMenuItem deleteItem = new SwipeMenuItem(
                 getActivity());
@@ -369,27 +357,6 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
         swipeLayout.setOnRefreshListener(this);
         return contentView;
     }
-
-//    private void initWithWebServiceDatas(LinkedList<Wishlist> results) {
-//        if(list!=null){
-//            list.clear();
-//        }
-//        if(results!=null&&results.size()>0) {
-//            lv.setVisibility(View.VISIBLE);
-//            nogoods.setVisibility(View.GONE);
-//            list.addAll(results);
-//            adapter.notifyDataSetChanged();
-//        }else{
-//            lv.setVisibility(View.GONE);
-//            nogoods.setVisibility(View.VISIBLE);
-//        }
-//    }
-//
-//    private void datasPage(LinkedList<Wishlist> results) {
-//        list.addAll(results);//追加数据
-//        adapter.notifyDataSetChanged();
-//    }
-
     public void addMFooterView() {
         //获得布局设置页脚
         LayoutInflater inflater = LayoutInflater.from(homeActivity);

@@ -680,7 +680,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
         });
         //toolBar变色回调
-        toolBarAlphaBehavior = new ToolBarAlphaBehavior(getBaseContext(), getToolbar(), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor(), new ToolBarAlphaBehavior.CallBack() {
+        toolBarAlphaBehavior = new
+                ToolBarAlphaBehavior(getBaseContext(), getToolbar(), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor(), new ToolBarAlphaBehavior.CallBack() {
             @Override
             public void callBack(int color) {
                 //状态bar颜色

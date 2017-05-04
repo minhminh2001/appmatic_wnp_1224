@@ -63,6 +63,9 @@ public class WhiteLabelApplication extends MultiDexApplication {
         return appConfiguration;
     }
 
+
+
+
     public static void InitappConfigurationEntity() {
         appConfiguration = null;
     }

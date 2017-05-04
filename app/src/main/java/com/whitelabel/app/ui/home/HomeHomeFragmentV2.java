@@ -1,5 +1,6 @@
 package com.whitelabel.app.ui.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.CategoryTreeExpandableAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
+import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.network.ImageLoader;
@@ -40,11 +42,10 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
 
     @BindView(R.id.rl_category_tree)
     RecyclerView rlCategoryTree;
-
+    private CategoryTreeExpandableAdapter  mAdapter;
     public HomeHomeFragmentV2() {
         // Required empty public constructor
     }
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -58,19 +59,17 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public HomeHomeContract.Presenter getPresenter() {
         return new HomeHomePresenterImpl();
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
     }
-    CategoryTreeExpandableAdapter  mAdapter;
+
     public void initRecyclerView() {
         CustomSpeedLayoutManager linearLayoutManager = new CustomSpeedLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -84,8 +83,6 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
         ButterKnife.bind(this, view);
         return view;
     }
-
-
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         mCommonCallback.setHomeSearchBarAndOnClick(new View.OnClickListener() {
@@ -169,7 +166,6 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
         mHomePresenter.getSearchCategory();
         setHasOptionsMenu(true);
     }
-
     @Override
     public void loadRecyclerViewData(SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity) {
         mAdapter = new CategoryTreeExpandableAdapter(getActivity(), getContext(),
@@ -184,22 +180,20 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
     private CategoryTreeExpandableAdapter.ChildOnClick childOnClick = new CategoryTreeExpandableAdapter.ChildOnClick() {
         @Override
         public void childOnClick(int position, Object ob, String parentId) {
-            //   GO TO  ProductListActivity
-//            SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) ob;
-//            Intent intent = new Intent(getContext(), ProductListActivity.class);
-//            intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_MAINCATEGOTY);
-//            intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY);
-//            // Get Parent data
-//            for (SVRAppserviceCatalogSearchCategoryItemReturnEntity en : categoryList) {
-//                if (en.getId() != null && en.getId().equals(parentId)) {
-//                    intent.putExtra(ProductListActivity.INTENT_DATA_CATEGORYID, en);
-//                    continue;
-//                }
-//            }
-//            //第三级bran选择的位置
-//            intent.putExtra("categoryId", entity.getId());
-//            getContext().startActivity(intent);
-//            ((Activity) getContext()).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+            SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) ob;
+            Intent intent = new Intent(getContext(), ProductListActivity.class);
+            intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_MAINCATEGOTY);
+            intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY);
+            // Get Parent data
+            for (SVRAppserviceCatalogSearchCategoryItemReturnEntity en : mAdapter.getVisibleData()) {
+                if (en.getId() != null && en.getId().equals(parentId)) {
+                    intent.putExtra(ProductListActivity.INTENT_DATA_CATEGORYID, en);
+                    continue;
+                }
+            }
+            intent.putExtra("categoryId", entity.getId());
+            getContext().startActivity(intent);
+            ((Activity) getContext()).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
         }
     };
 

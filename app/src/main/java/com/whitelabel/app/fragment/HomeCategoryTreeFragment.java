@@ -59,11 +59,9 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
     private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> allData = new ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity>();
     private ImageLoader mImageLoader;
     DrawerLayoutActivity drawerLayoutActivity;
-
     public HomeCategoryTreeFragment() {
 
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_category_tree_layout, null);

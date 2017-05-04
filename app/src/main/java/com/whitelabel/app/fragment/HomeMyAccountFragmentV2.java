@@ -28,32 +28,20 @@ import java.util.List;
  * Created by Administrator on 2016/4/5.
  */
 public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
-    //    private ImageView ivHeaderBarEdit;
-//    private RelativeLayout rlHeaderBarMenu;
-//    private CustomTextView ctvHeaderBarTitle;
-//    private View vFragmentIndicator;
     private HomeActivity homeActivity;
-    //    private int screenWidth;
-//    private int fromX = 0;
-//    private int blue,black;
     public static final String SWITCH_WISHLISTFRAGMENT = "from_checkout_to_wishlist";
     public static final String SWITCH_ORDERFRAGMENT = "from_checkout_to_orders";
     public static final String SWITCH_ADDRESSFRAGMENT = "from_checkout_to_address";
-    public static final String SWITCH_STORECREDITFRAGMENT = "storeCredit";
     private final static String TAG = "HomeMyAccountFragmentV2";
     public static final String TAG_WISHLIST = "wishlist";
     public static final String TAG_ORDERLIST = "orderlist";
     public static final String TAG_ADDRESSLIST = "addresslist";
-    public static final String TAG_STORECREDIT = "storecredit";
     private Fragment mFragmentWishlist;
     private Fragment mFragmentAddresslist;
     private Fragment mFragmentOrderlist;
-    private Fragment mFragmentStorecredit;
     public String mCurrTag;
     public boolean isShowGuide4 = true;
-    private boolean switchFramentEnabled = true;
     private MyAccountTopMenuView ctpiCategoryList;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,8 +49,6 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         ctpiCategoryList = (MyAccountTopMenuView) contentView.findViewById(R.id.ctpiCategoryList);
         return contentView;
     }
-
-
     public static HomeMyAccountFragmentV2 newInstance(Serializable param1) {
         HomeMyAccountFragmentV2 fragment = new HomeMyAccountFragmentV2();
         Bundle args = new Bundle();
@@ -72,13 +58,11 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onAttach(Activity context) {
         super.onAttach(context);
         homeActivity = (HomeActivity) context;
     }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -92,7 +76,6 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
             removeExpiredFragment();
         }
     }
-
     private void removeExpiredFragment() {
         try {
             Fragment wishFragment = getFragmentManager().findFragmentByTag(TAG_WISHLIST);
@@ -112,7 +95,6 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
             ex.getStackTrace();
         }
     }
-
     public void startFragmentByType(String type, boolean refresh) {
         if(!isAdded())return;
         //setCurrentPosition 会触发changePageListener，会调用两遍onActivityCreated,需要注意
@@ -127,12 +109,7 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
             switchChildFragment(TAG_WISHLIST, refresh);
         }
     }
-
     public void switchChildFragment(String tag, boolean refresh) {
-        //切换fragment的开关
-//        if(!switchFramentEnabled){
-//            return;
-//        }
         mCurrTag = tag;
         FragmentManager fragmentManager = getChildFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -157,16 +134,12 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         }
         //如果是addressFragment,则手动判断是否需要guide
         if (mCurrTag.equals(TAG_ADDRESSLIST) && getActivity() != null) {
-
         } else if (!mCurrTag.equals(TAG_ADDRESSLIST)) {
             isShowGuide4 = true;
         }
-
         transaction.show(currFragment);
         transaction.commitAllowingStateLoss();
-
     }
-
     public void hideFragment(FragmentTransaction transaction) {
         if (mFragmentWishlist != null) {
             transaction.hide(mFragmentWishlist);
@@ -178,17 +151,7 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
             transaction.hide(mFragmentAddresslist);
         }
     }
-
-
-    public void setMenuEnable(boolean enable) {
-        if (ctpiCategoryList != null && isAdded()) {
-            ctpiCategoryList.setEnabled(enable);
-        }
-
-    }
-
     private void initData() {
-//        fromX = 0;
         List<String> myAccountMenuTitle = new ArrayList<>();
         myAccountMenuTitle.add(getResources().getString(R.string.home_myaccount_header_wishlist));
         myAccountMenuTitle.add(getResources().getString(R.string.home_myaccount_header_orders));
@@ -199,10 +162,8 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
-
             @Override
             public void onPageSelected(int position) {
-
                 if (position == 0) {
                     homeActivity.switchMenu(HomeCommonCallback.MENU_WISHLIST);
                     switchChildFragment(TAG_WISHLIST, false);
@@ -213,23 +174,17 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
                     homeActivity.switchMenu(HomeCommonCallback.MENU_ADDRESS);
                     switchChildFragment(TAG_ADDRESSLIST, false);
                 }
-
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }
-
-
     @Override
     public void onResume() {
         super.onResume();
         updateProfileUI();
     }
-
     private void updateProfileUI() {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)) {
             String username = "";
@@ -239,17 +194,14 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
                 username = username + firstname + " ";
             }
             username += lastname;
-//            username = username.toUpperCase();
             mCommonCallback.setTitle(setFirstLetterToUpperCase(username));
         } else {
             homeActivity.switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_HOME, null);
         }
     }
-
     private static String setFirstLetterToUpperCase(String title) {
         if (!TextUtils.isEmpty(title)) {
             title = title.toLowerCase();
-
             String[] split = title.trim().split(" ");
             String newTitle = "";
             if (split.length != 0) {
@@ -265,12 +217,10 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         }
         return "";
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == 1000) {
             FragmentManager fragmentManager = getChildFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
             Fragment currFragment = fragmentManager.findFragmentByTag(mCurrTag);
             if (currFragment instanceof HomeMyAccountAddressBookFragment) {
                 ((HomeMyAccountAddressBookFragment) currFragment).refresh(true);
@@ -279,6 +229,5 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 }
 

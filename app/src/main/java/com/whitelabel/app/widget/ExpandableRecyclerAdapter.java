@@ -29,6 +29,12 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
     private SparseIntArray expandMap = new SparseIntArray();
     private int mode;
 
+
+
+
+    public List<T> getVisibleData(){
+        return visibleItems;
+    }
     private RecyclerView recyclerView;
 
     protected static final int TYPE_HEADER = 1000;
@@ -219,18 +225,14 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
         int count = 0;
         int index = indexList.get(position);
         int insert = position;
-
         visibleItems.get(position).setExpaned(true);
-
         for (int i=index+1; i<allItems.size() && allItems.get(i).ItemType != TYPE_HEADER; i++) {
             insert++;
             count++;
             visibleItems.add(insert, allItems.get(i));
             indexList.add(insert, i);
         }
-
         notifyItemRangeInserted(position + 1, count);
-
         int allItemsPosition = indexList.get(position);
         expandMap.put(allItemsPosition, 1);
 

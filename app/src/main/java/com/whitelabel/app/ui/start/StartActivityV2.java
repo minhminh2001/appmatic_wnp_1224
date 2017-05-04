@@ -88,15 +88,15 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
         mStartTimeLong = System.currentTimeMillis();
         ImageView imageView= (ImageView) findViewById(R.id.start_logo_imageview);
         imageView.setImageResource(R.mipmap.icon_v1);
-//        mSplashScreen = JStorageUtils.getToSplashScreenMark(StartActivity.this);
         mStartHandler=new StartHandler(this);
         if(WhiteLabelApplication.getAppConfiguration().isSignIn(StartActivityV2.this)) {
             mSessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
         }
         mCallback=new INITApp(StartActivityV2.this, new MeInitCallBack(this));
         INITExecutor.getInstance().execute(mCallback);
-        mPresenter.getConfigInfo();
-        mPresenter.openApp(mSessionKey,"");
+        mPresenter.getConfigInfo("","");
+
+//        mPresenter.openApp(mSessionKey,"");
     }
     static class MeInitCallBack extends   INITCallback{
         WeakReference<StartActivityV2> mStartActivity;
@@ -135,7 +135,6 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
     @Override
     protected void onPause() {
         super.onPause();
-
     }
 //    private boolean checkInstallationPlayServices() {
 //        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();

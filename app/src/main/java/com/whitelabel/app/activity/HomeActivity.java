@@ -29,6 +29,7 @@ import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
 import com.whitelabel.app.model.TMPHelpCenterListToDetailEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.utils.FragmentFactory;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import java.io.Serializable;
@@ -46,12 +47,9 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     public static final int FRAGMENT_TYPE_HOME_SHOPPINGCART = 8;//Setting
     public static final String EXTRA_REDIRECTTO_TYPE_VALUE_CATEGORYTREE = "toCategoryTreeFragment";
     public static final int FRAGMENT_TYPE_HOME_GOBACK = 101;
-    //    public static final int FRAGMENT_TYPE_HOME_STORECREDITS=9;
-//    public static final int FRAGMENT_TYPE_HOME_CREDITCARD = 10;
     private final int TYPE_FRAGMENT_SWITCH_NONE = 0;
     public boolean mCanback = true;
     private final int TYPE_FRAGMENT_SWITCH = -2;
-    //跳转到哪个Fragment上
     public final static String EXTRA_REDIRECTTO_TYPE_VALUE_EXITAPP = "exitApp";
     public final static String EXTRA_REDIRECTTO_TYPE_VALUE_WISHLIST = "from_checkout_to_wishlist";
     public final static String EXTRA_REDIRECTTO_TYPE_VALUE_ORDER = "from_checkout_to_orders";
@@ -71,34 +69,17 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     private Dialog mDialog;
     public Handler mHandler = new Handler();
     public int fragmentType;
-    public boolean showMarketLayers = true;
     //跳转到哪个Fragment上
     public static final String BUNDLE_START_FRAGMENT = "startFragment";
     public static final String BUNDLE_FRAGMENT_STORECREDIT = "storeCredit";
-//    private ImageView ivMarketLayer, ivMarketLayerClose;
-//    private RelativeLayout rlMarketLayer;
-//    //    private View vUserGuide;
-//    private UserGuideHelper mUserGuideHelper;
-
-
     @Override
     protected void onStart() {
         super.onStart();
-//        try {
-//            AppEventsLogger.activateApp(this);
-//        } catch (Exception ex) {
-//            ex.getMessage();
-//        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        try {
-//            AppEventsLogger.deactivateApp(this);
-//        } catch (Exception ex) {
-//            ex.getMessage();
-//        }
     }
 
     @Override
@@ -108,72 +89,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     public void showUserGuide(HomeBaseFragment.UserGuideType userGuideType) {
-//        if (mUserGuidePopWindow != null && mUserGuidePopWindow.isShowing()) {
-//            return;
-//        }
-//        if (userGuideType == HomeBaseFragment.UserGuideType.LEFTMENU) {
-//            getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-//            mUserGuidePopWindow = mUserGuideHelper.showLeftMenuUserGuide(mUserGuideAbove);
-//            mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//                @Override
-//                public void onDismiss() {
-//                    JStorageUtils.notShowGuide3(HomeActivity.this);
-//                    showMarketLayers = true;
-//                    getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//                }
-//            });
-//        } else if (userGuideType == HomeBaseFragment.UserGuideType.HOMELEFTICON) {
-//            if (!getDrawerLayout().isDrawerOpen(Gravity.LEFT)) {
-//                getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//                mUserGuidePopWindow = mUserGuideHelper.showHomeLeftIconUserGuide(mUserGuideAbove);
-//                mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//                    @Override
-//                    public void onDismiss() {
-//                        JStorageUtils.notShowGuide1(HomeActivity.this);
-//                        showMarketLayers = true;
-//                        getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//                    }
-//                });
-//            }
-//        } else if (userGuideType == HomeBaseFragment.UserGuideType.HOMESECONDPAGE) {
-//            if (!getDrawerLayout().isDrawerOpen(Gravity.LEFT)) {
-//                getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//                mUserGuidePopWindow = mUserGuideHelper.showHomeSecondUserGuide(mUserGuideAbove);
-//                mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//                    @Override
-//                    public void onDismiss() {
-//                        JStorageUtils.notShowGuide2(HomeActivity.this);
-//                        getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//                    }
-//                });
-//            }
-//        }
-////        else if (userGuideType == HomeBaseFragment.UserGuideType.MYACCOUNTEDIT) {
-////            if (!getDrawerLayout().isDrawerOpen(Gravity.LEFT)) {
-////                getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-////                mUserGuidePopWindow = mUserGuideHelper.showMyAccountEditUserGuide(mUserGuideAbove);
-////                mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-////                    @Override
-////                    public void onDismiss() {
-////                        JStorageUtils.notShowGuide4(HomeActivity.this);
-////                        getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-////                    }
-////                });
-////            }
-////        }
-//        else if (userGuideType == HomeBaseFragment.UserGuideType.ADDRESS) {
-//            if(!getDrawerLayout().isDrawerOpen(Gravity.LEFT)){
-//                mUserGuidePopWindow=mUserGuideHelper.showMyAccountAddressUserGuide(mUserGuideAbove);
-//                getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//                mUserGuidePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//                    @Override
-//                    public void onDismiss() {
-//                        JStorageUtils.notShowGuide5(HomeActivity.this);
-//                        getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//                    }
-//                });
-//            }
-//        }
+
     }
 
     @Override
@@ -216,11 +132,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     }
     @Override
     protected void jumpStoreCreditPage() {
-//        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
-//            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_MYACCOUNT, HomeMyAccountFragmentV2.SWITCH_STORECREDITFRAGMENT);
-//        } else {
-//            jumpLoginActivity();
-//        }
     }
     @Override
     protected void jumpNotificationPage() {
@@ -319,7 +230,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     public void onSaveInstanceState(Bundle outState) {
     }
     private void initFragment(Bundle savedInstanceState) {
-        addFragment(FRAGMENT_TYPE_HOME_HOME, new HomeHomeFragment());
+        addFragment(FRAGMENT_TYPE_HOME_HOME, FragmentFactory.newInstance().getHomeFragment());
         addFragment(FRAGMENT_TYPE_HOME_MYACCOUNT, new HomeMyAccountFragmentV2());
         addFragment(FRAGMENT_TYPE_HOME_HELPCENTERLIST, new HomeHelpCenterListFragment());
         addFragment(FRAGMENT_TYPE_HOME_HELPCENTERDETAIL, new HomeHelpCenterDetailFragment());
@@ -342,99 +253,16 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             }
         });
     }
-//    private Animation getFadeOutAnimation() {
-//        Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_fade_out);
-//        animation.setAnimationListener(new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//                rlMarketLayer.setClickable(false);
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//                rlMarketLayer.setVisibility(View.GONE);
-//                rlMarketLayer.setClickable(true);
-//            }
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//            }
-//        });
-//        return animation;
-//    }
+
     @Override
     public void setHomeSearchBarAndOnClick(View.OnClickListener onClickListener) {
         setHomeSearchBarClickListener(onClickListener);
     }
-
-//
-//    public ImageView getIvMarketLayer() {
-//        return ivMarketLayer;
-//    }
-//
-//    public RelativeLayout getRlMarketLayer() {
-//        return this.rlMarketLayer;
-//    }
-
-//    public void showMarketLayers() {
-//        marketLayerClosed = false;
-//        rlMarketLayer.clearAnimation();
-//        AnimUtil.animateFadeIn(this, rlMarketLayer, new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//                rlMarketLayer.setVisibility(View.VISIBLE);
-//            }
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//
-//            }
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//
-//            }
-//        });
-//        ivMarketLayerClose.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                JLogUtils.i("advertisement-click", "only permit to click advertisement close button.");
-//                if (!marketLayerClosed) {
-//                    marketLayerClosed = true;
-//                    marketLayerClose();
-//                }
-//            }
-//        });
-//    }
-
-//    public void closeMarketLayers() {
-//        if (rlMarketLayer.getVisibility() == View.VISIBLE) {
-//            rlMarketLayer.startAnimation(getFadeOutAnimation());
-//        }
-//        enableSlidingMenu();
-//    }
-
-
-//    @Override
-//    public void initMarketingLayers(MarketingLayersEntity entity) {
-//        if (entity != null) {
-//            tvMarketingLayers.setText(entity.getTitle());
-//            tvMarketingLayersDesc.setText(entity.getDescription());
-//        }
-//    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_home);
-        ImageLoader mImageLoader = new ImageLoader(this);
-//        setTitleImage(R.mipmap.homepage_logo_white);
-//        mUserGuideHelper = new UserGuideHelper(this, mImageLoader);
-//        mUserGuideAbove = findViewById(R.id.v_user_guide);
-        //iaml
-//        ivMarketLayer = (ImageView) findViewById(R.id.iv_marketing_layers);
-//        ivMarketLayerClose = (ImageView) findViewById(R.id.iv_marketing_layers_close);
-//        rlMarketLayer = (RelativeLayout) findViewById(R.id.rl_marketing_layers);
-//        tvMarketingLayers = (CustomTextView) findViewById(R.id.tv_marketing_layers);
-//        tvMarketingLayersDesc = (CustomTextView) findViewById(R.id.tv_marketing_layers_desc);
-
         resetMenuAndListenter();
         getDrawerLayout().addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -443,7 +271,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             @Override
             public void onDrawerOpened(View drawerView) {
                 updateLeftMenuNumber();
-
             }
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -456,7 +283,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         redirectToFragmentByIntent(getIntent());
         redirectToInterfaceByDeepLink();
     }
-
     private void redirectToInterfaceByDeepLink() {
         if (getIntent() != null && getIntent().getData() != null) {
             String host = getIntent().getData().getHost();
@@ -475,13 +301,10 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                 Bundle bundle = new Bundle();
                 bundle.putString("productId", productId);
                 intent.putExtras(bundle);
-
                 startActivity(intent);
             }
         }
     }
-
-
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -489,7 +312,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         redirectToInterfaceByDeepLink();
         redirectToFragmentByIntent(intent);
     }
-
     public void redirectToFragmentByIntent(Intent intent) {
         Serializable serializable = null;
         Bundle bundle = intent.getExtras();
@@ -525,20 +347,13 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                 dataentity.setHelpCenterType(5);
                 redirectToAttachedFragment(HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERDETAIL, TYPE_FRAGMENT_SWITCH_NONE, dataentity);
                 return;
-            }
-            else if (EXTRA_REDIRECTTO_TYPE_VALUE_NOTIFICATION.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
+            } else if (EXTRA_REDIRECTTO_TYPE_VALUE_NOTIFICATION.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_NOTIFICATION);
                 fragmentType = FRAGMENT_TYPE_HOME_NOTIFICATIONLIST;
-            }
-            else if (EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
+            } else if (EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SHOPPINGCART);
                 fragmentType = FRAGMENT_TYPE_HOME_SHOPPINGCART;
-            }
-//            else if (EXTRA_REDIRECTTO_TYPE_VALUE_CATEGORYTREE.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
-//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_CATEGORYTREE);
-//                fragmentType = FRAGMENT_TYPE_HOME_CATEGORY;
-//            }
-            else if (EXTRA_REDIRECTTO_TYPE_VALUE_SETTING.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
+            } else if (EXTRA_REDIRECTTO_TYPE_VALUE_SETTING.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SETTING);
                 fragmentType = FRAGMENT_TYPE_HOME_SETTING;
             } else if (EXTRA_REDIRECTTO_TYPE_VALUE_START.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
@@ -546,18 +361,11 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                 startActivity(startIntent);
                 finish();
                 return;
-            }
-//            else if (EXTRA_REDIRECTTO_TYPE_VALUE_STORECREDIT.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
-//                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_STORECREDITS);
-//                serializable = HomeMyAccountFragmentV2.SWITCH_STORECREDITFRAGMENT;
-//                fragmentType = FRAGMENT_TYPE_HOME_MYACCOUNT;
-//            }
-            else if (EXTRA_REDIRECTTO_TYPE_VALUE_EDITPROFILE.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
+            }else if (EXTRA_REDIRECTTO_TYPE_VALUE_EDITPROFILE.equals(bundle.getString(EXTRA_REDIRECTTO_TYPE))) {
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
                 jumpEditProfileActivity();
                 fragmentType = FRAGMENT_TYPE_HOME_HOME;
-            }
-            else {
+            } else {
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
                 serializable = intent.getStringExtra("categoryId");
                 fragmentType = FRAGMENT_TYPE_HOME_HOME;
@@ -565,22 +373,9 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         }
         switchFragment(-1, fragmentType, serializable);
     }
-
-
-//    public void marketLayerClose() {
-//        closeMarketLayers();
-        //notify homehomeFragment to cancel Thread-closeMarketRun of homeCategoryFragment.
-//        if (mCurrentFragment instanceof HomeHomeFragment) {
-//            ((HomeHomeFragment) mCurrentFragment).notifyToCancelCloseMarketRun();
-//        }
-//    }
     @Override
     protected void onResume() {
         super.onResume();
-//        if (rlMarketLayer.getVisibility() == View.VISIBLE) {//返回界面是如果显示动画就关闭
-//            // closeMarketLayers();
-//            marketLayerClose();
-//        }
         if (mCurrentFragment != null && mCurrentFragment instanceof HomeHomeFragment) {
             ((HomeHomeFragment) mCurrentFragment).updateShoppingCartItemCount();
         }
@@ -635,7 +430,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                 if (serializable != null) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("data", serializable);
-                    JLogUtils.i(currTag,"---------------subFragment.getArguments():--------------"+subFragment.getArguments());
                     if(subFragment.getArguments()==null){
                          subFragment.setArguments(bundle);
                     }else{
@@ -654,13 +448,11 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             fragmentType = to;
         }
     }
-
     class BackRunnble implements Runnable {
         public WeakReference<HomeActivity> mActivity;
         public BackRunnble(HomeActivity activity) {
             mActivity = new WeakReference<HomeActivity>(activity);
         }
-
         @Override
         public void run() {
             if (mActivity.get() == null) return;
@@ -695,10 +487,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         });
     }
     public boolean refreshNotification(int type, String id) {
-//        if (mCurrentFragment instanceof HomeNotificationListFragment) {
-//            ((HomeNotificationListFragment) mCurrentFragment).refresh(type, id);
-//            return true;
-//        }
         return false;
     }
 
@@ -719,10 +507,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     }
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-//            if (rlMarketLayer.getVisibility() == View.VISIBLE) {
-//                closeMarketLayers();
-//                return true;
-//            }
+
             if (mCurrentFragment instanceof HomeHomeFragment) {
                 boolean isShowRateApp = ((HomeHomeFragment) mCurrentFragment).onKeyDown(keyCode, event);
                 if (isShowRateApp) {

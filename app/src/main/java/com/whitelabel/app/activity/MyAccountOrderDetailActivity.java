@@ -67,11 +67,12 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private TextView tvCountry;
     private TextView tvPhone;
     private TextView mTvGst;
+    private TextView tvStoreCreditTitle;
+    private TextView tvStoreCreditVlaue;
     private CustomWebView tvCreditCardTypeText;
     private ScrollView scrollView;
     private ListView listView;
     private Dialog mDialog;
-    private Handler mHandler = new Handler();
     private View rlStoreCredit;
     private String orderId;
     private final String SESSION_EXPIRED = "session expired,login again please";
@@ -80,14 +81,11 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private MyAccountDao mDao;
     private String TAG;
     private ImageLoader mImageLoader;
-
     private static final class DataHandler extends Handler {
         private final WeakReference<MyAccountOrderDetailActivity> mActivity;
-
         public DataHandler(MyAccountOrderDetailActivity activity) {
             mActivity = new WeakReference<MyAccountOrderDetailActivity>(activity);
         }
-
         @Override
         public void handleMessage(final Message msg) {
             if (mActivity.get() == null) {
@@ -139,7 +137,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                     }else{
                         String errorMsg = msg.obj.toString();
                         if (!JDataUtils.errorMsgHandler(mActivity.get(), errorMsg)) {
-
                         }
                     }
                     break;
@@ -217,9 +214,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         });
     }
 
-
-    private TextView tvStoreCreditTitle;
-    private TextView tvStoreCreditVlaue;
 
     public void initView() {
         mImageLoader = new ImageLoader(this);
