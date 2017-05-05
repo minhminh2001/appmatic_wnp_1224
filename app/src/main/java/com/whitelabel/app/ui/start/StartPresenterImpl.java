@@ -52,7 +52,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
     public void getConfigInfo(String sessionKey,String deviceToken) {
         Observable openConfig= DataManager.getInstance().getAppApi().openApp(sessionKey,deviceToken);
         String currentVersionNumber= DataManager.getInstance().getPreferHelper().getVersionNumber();
-        Observable<RemoteConfigResonseModel> configObservable=DataManager.getInstance().getAppApi().getConfigInfo((currentVersionNumber));
+        Observable<RemoteConfigResonseModel> configObservable=DataManager.getInstance().getMockApi().getConfigInfo((currentVersionNumber));
         Observable.merge(openConfig,configObservable).compose(RxUtil.rxSchedulerHelper()).subscribe(new Action1() {
             @Override
             public void call(Object o) {
@@ -82,7 +82,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
     public void getConfigInfo() {
        String currentVersionNumber= DataManager.getInstance().getPreferHelper().getVersionNumber();
        Subscription subscription= DataManager.getInstance().
-                getAppApi().getConfigInfo(currentVersionNumber).
+                getMockApi().getConfigInfo(currentVersionNumber).
                 compose(RxUtil.<RemoteConfigResonseModel>rxSchedulerHelper())
                 .subscribe(new Action1<RemoteConfigResonseModel>() {
                     @Override

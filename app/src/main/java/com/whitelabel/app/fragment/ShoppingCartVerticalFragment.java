@@ -710,17 +710,12 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                                 ShoppingCartErrorMsgBean errorMsg = (ShoppingCartErrorMsgBean) msg.obj;
                                 if (!JToolUtils.expireHandler(activity, errorMsg.getErrorMessage(), 2000)) {
                                     try {
-                                        //oos 提示，可点击ok按钮刷新数据
                                         JViewUtils.showMaterialDialogV2(activity, null, errorMsg.getErrorMessage() + "", new MaterialDialogCallback() {
                                             @Override
                                             public void callBack() {
                                                 fragment.sendRequest();
                                             }
                                         });
-                                        //如果有错误，在点击ok后重新调接口刷新
-//                                    if(errorMsg.getErrorItems()!=null) {
-//                                        outofstockHandler(errorMsg.getErrorItems());
-//                                    }
                                     } catch (Exception ex) {
                                         ex.getStackTrace();
                                     }

@@ -222,7 +222,7 @@ public class JViewUtils {
             }
         });
         mMaterialDialog.show();
-        mMaterialDialog.getPositiveButton().setTextColor(context.getResources().getColor(R.color.purple92018d));
+//        mMaterialDialog.getPositiveButton().setTextColor(context.getResources().getColor(R.color.purple92018d));
         return mMaterialDialog;
     }
 

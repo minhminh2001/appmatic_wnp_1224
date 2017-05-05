@@ -110,7 +110,6 @@ public class OkHttpStack implements HttpStack {
 
         setConnectionParametersForRequest(okHttpRequestBuilder, request);
         int timeoutMs = request.getTimeoutMs();
-
         OkHttpClient client = OkHttpClientManager.getClient()
                 .newBuilder()
                 .connectTimeout(timeoutMs, TimeUnit.MILLISECONDS)
@@ -120,11 +119,10 @@ public class OkHttpStack implements HttpStack {
         okhttp3.Request okHttpRequest = okHttpRequestBuilder.build();
         Call okHttpCall = client.newCall(okHttpRequest);
         Response okHttpResponse = okHttpCall.execute();
-
-        StatusLine responseStatus = new BasicStatusLine(parseProtocol(okHttpResponse.protocol()), okHttpResponse.code(), okHttpResponse.message());
+        StatusLine responseStatus = new BasicStatusLine(parseProtocol(okHttpResponse.protocol()),
+                okHttpResponse.code(), okHttpResponse.message());
         BasicHttpResponse response = new BasicHttpResponse(responseStatus);
         response.setEntity(entityFromOkHttpResponse(okHttpResponse));
-
         Headers responseHeaders = okHttpResponse.headers();
         for (int i = 0, len = responseHeaders.size(); i < len; i++) {
             final String name = responseHeaders.name(i), value = responseHeaders.value(i);
@@ -132,14 +130,12 @@ public class OkHttpStack implements HttpStack {
                 response.addHeader(new BasicHeader(name, value));
             }
         }
-
         return response;
     }
 
     private static HttpEntity entityFromOkHttpResponse(Response r) throws IOException {
         BasicHttpEntity entity = new BasicHttpEntity();
         ResponseBody body = r.body();
-
         entity.setContent(body.byteStream());
         entity.setContentLength(body.contentLength());
         entity.setContentEncoding(r.header("Content-Encoding"));

@@ -14,9 +14,13 @@ import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.handler.INITApp;
 import com.whitelabel.app.task.INITExecutor;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by imaginato on 2015/6/10.
  */
@@ -96,6 +100,18 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
         INITExecutor.getInstance().execute(mCallback);
         mPresenter.getConfigInfo("","");
 
+//        List<String> strs=new ArrayList<>();
+//        strs.add("1");
+//        strs.add("1");
+//        strs.add("1");
+//        strs.add("1");
+//        strs.add("1");
+//        strs.add("1");
+//
+//        for(String str: strs){
+//             strs.remove(str);
+//        }
+//        JLogUtils.i("ray","strs:"+strs.size());
 //        mPresenter.openApp(mSessionKey,"");
     }
     static class MeInitCallBack extends   INITCallback{

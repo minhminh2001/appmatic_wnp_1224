@@ -99,9 +99,13 @@ public class CheckoutDao extends BaseHttp {
 
         if (!TextUtils.isEmpty(addressParameter.getRegionId())) {
             params.put("shipping[region_id]", addressParameter.getRegionId());
+        }else{
+            params.put("shipping[region_id]", "0");
         }
         if (!TextUtils.isEmpty(addressParameter.getRegion())) {
             params.put("shipping[region]", addressParameter.getRegion());
+        }else{
+            params.put("shipping[region]", "-");
         }
         if (!TextUtils.isEmpty(addressParameter.getTelephone())) {
             params.put("shipping[telephone]", addressParameter.getTelephone());
@@ -139,9 +143,13 @@ public class CheckoutDao extends BaseHttp {
 
         if (!TextUtils.isEmpty(addressParameter.getRegionId())) {
             params.put("billing[region_id]", addressParameter.getRegionId());
+        }else{
+            params.put("billing[region_id]", "0");
         }
         if (!TextUtils.isEmpty(addressParameter.getRegion())) {
             params.put("billing[region]", addressParameter.getRegion());
+        }else {
+            params.put("billing[region]", "-");
         }
         if (!TextUtils.isEmpty(addressParameter.getTelephone())) {
             params.put("billing[telephone]", addressParameter.getTelephone());

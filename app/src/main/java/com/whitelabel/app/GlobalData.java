@@ -40,8 +40,8 @@ public class GlobalData {
         serviceVersion = context.getResources().getString(R.string.service_version);
         appName = context.getResources().getString(R.string.app_name);
         jumpMarketUrl = context.getResources().getString(R.string.jump_market_uri);
-        authName = context.getResources().getString(R.string.auth_name);
-        authPwd = context.getResources().getString(R.string.auth_pwd);
+//        authName = context.getResources().getString(R.string.auth_name);
+//        authPwd = context.getResources().getString(R.string.auth_pwd);
         gcmSendId = context.getResources().getString(R.string.gcm_sender_id);
         appKey= BuildConfig.APP_KEY;
         appVersion = JToolUtils.getAppVersion();

@@ -1,5 +1,6 @@
 package com.whitelabel.app.data.retrofit;
 
+import com.google.gson.JsonObject;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.CategoryDetailModel;
@@ -26,6 +27,8 @@ public interface ProductApi {
             , @Query("order") String order
             , @Query("dir") String dir
             , @Query("model_type") String model_type);
+
+
     @FormUrlEncoded
     @POST("appservice/wishlist/remove")
     public  Observable<WishDelEntityResult>   deleteWistListById(@Field("session_key") String sessionKey, @Field("item_id") String itemId);

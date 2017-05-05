@@ -15,13 +15,9 @@ import rx.Observable;
  */
 
 public interface AppApi {
-    @GET("appservice/config/getConfig")
-    public Observable<RemoteConfigResonseModel> getConfigInfo(@Query("version") String version);
-
 
     @GET("appservice/app/open")
     public Observable<JsonObject>  openApp(@Query("session_key") String sessionKey,
                                            @Query("device_token") String  deviceToken);
-
 
 }

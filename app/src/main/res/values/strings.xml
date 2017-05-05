@@ -1,17 +1,12 @@
 <resources>
     <!-- Global Data-->
     <string name="service_version">1.0.5</string>
-    <string name="facebook_app_id_test">1586589871584877</string>
-    <string name="facebook_app_id_live">604176613049064</string>
-    <string name="gcm_sender_id">364318508430</string>
-    <string name="auth_name">gemfive</string>
-    <string name="auth_pwd">gogogo</string>
-    <string name="ga_tracking_id_test">UA-72586399-2</string>
-    <string name="ga_tracking_id_live">UA-62438602-3</string>
+    <string name="auth_name"></string>
+    <string name="auth_pwd"></string>
     <string name="checkout_hash_key_test">123456</string>
     <string name="checkout_hash_key_live">5d89We</string>
     <string name="download_image_path">appservice/image/index</string>
-    <string name="payment_creditcard_url">appservice/checkout/redirect?session_key=%1$s&amp;lastrealorderid=%2$s&amp;appid=1&amp;usehlb=%3$s</string>
+    <string name="payment_creditcard_url">appservice/checkout/ccpayjump?session_key=%1$s&amp;orderId=%2$s&amp;appid=1&amp;</string>
     <string name="upload_file_path">appservice/order/uploadTransferProof</string>
     <string name="jump_market_uri">market://details?id=com.whitelabel.app</string>
     <!-- TODO: Remove or change this placeholder text -->

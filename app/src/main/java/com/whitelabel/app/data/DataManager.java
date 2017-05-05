@@ -3,6 +3,7 @@ package com.whitelabel.app.data;
 import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.data.retrofit.AppApi;
 import com.whitelabel.app.data.retrofit.CheckoutApi;
+import com.whitelabel.app.data.retrofit.MockApi;
 import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.data.retrofit.RetrofitHelper;
 
@@ -60,12 +61,22 @@ public class DataManager {
     public AppApi  getAppApi(){
         if(mAppApi==null){
             synchronized (DataManager.class){
-                mAppApi= RetrofitHelper.getMockRetrofit().create(AppApi.class);
+                mAppApi= RetrofitHelper.getDefaultRetrofit().create(AppApi.class);
             }
         }
         return mAppApi;
     }
 
+    private MockApi mMockApi;
+
+    public MockApi getMockApi(){
+        if(mMockApi==null){
+            synchronized (DataManager.class){
+                mMockApi= RetrofitHelper.getMockRetrofit().create(MockApi.class);
+            }
+        }
+        return mMockApi;
+    }
 
 
 

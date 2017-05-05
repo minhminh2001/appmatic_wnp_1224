@@ -60,8 +60,9 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
     }
     private void initWebVeiw() {
         webView = (WebView) findViewById(R.id.wv_checkout_payment_redirect);
-        String url=String.format(GlobalData.creditCardPaymentUrl,session_key,lastrealorderid, GlobalData.useHlb);
+        String url=String.format(GlobalData.creditCardPaymentUrl,session_key,lastrealorderid);
         WebSettings settings=webView.getSettings();
+        JLogUtils.i("CheckoutPayment","url:"+url);
         settings.setJavaScriptEnabled(true);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
@@ -70,8 +71,8 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
             cookieManager.setAcceptThirdPartyCookies(webView, true);
         }
         webView.setWebViewClient(new WebViewClient() {
-            private final String SUCCESS = "checkout/onepage/success/";
-            private final String FAILD = "checkout/onepage/failure/";
+            private final String SUCCESS = "checkout/onepage/success";
+            private final String FAILD = "checkout/onepage/failure";
 
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -84,6 +85,7 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
             }
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                JLogUtils.i("CheckoutPayment","url:"+url);
                 if (url != null) {
                     try {
                         if(!isSuccess) {

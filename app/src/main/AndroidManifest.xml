@@ -195,9 +195,9 @@
             android:name=".activity.ProductListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BackgroundWhiteTheme" />
-        <!--<activity-->
-            <!--android:name=".activity.CheckoutPaymentRedirectActivity"-->
-            <!--android:screenOrientation="portrait" />-->
+        <activity
+            android:name=".activity.CheckoutPaymentRedirectActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FavoriteActivity"
             android:screenOrientation="portrait" />
