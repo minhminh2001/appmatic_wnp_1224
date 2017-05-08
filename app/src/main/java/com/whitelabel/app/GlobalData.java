@@ -43,19 +43,26 @@ public class GlobalData {
 //        authName = context.getResources().getString(R.string.auth_name);
 //        authPwd = context.getResources().getString(R.string.auth_pwd);
         gcmSendId = context.getResources().getString(R.string.gcm_sender_id);
-        appKey= BuildConfig.APP_KEY;
         appVersion = JToolUtils.getAppVersion();
-        mockUrl=BuildConfig.MOCK_URL;
-        checkoutHashKey = BuildConfig.HASH_KEY;
-        gaTrackId = BuildConfig.GA_TRACK_ID;
-        apiVersion=BuildConfig.API_VERSION;
-        apiKey=BuildConfig.API_KEY;
-        facebookId = BuildConfig.FACEBOOK_ID;
-        if (BuildConfig.REQUEST_URL.indexOf("www.") == -1) {
-            serviceRequestUrl = getAuthorizationUrl(BuildConfig.REQUEST_URL);
-        }else{
-            serviceRequestUrl = BuildConfig.REQUEST_URL;
-        }
+        appKey=context.getResources().getString(R.string.app_key);
+        gaTrackId=context.getResources().getString(R.string.ga_track_id);
+        apiVersion=context.getResources().getString(R.string.api_version);
+        apiKey=context.getResources().getString(R.string.api_key);
+        facebookId=context.getResources().getString(R.string.facebook_id);
+        mockUrl=context.getResources().getString(R.string.mock_url);
+        serviceRequestUrl=context.getResources().getString(R.string.request_url);
+//        appKey= BuildConfig.APP_KEY;
+//        mockUrl=BuildConfig.MOCK_URL;
+//        checkoutHashKey = BuildConfig.HASH_KEY;
+//        gaTrackId = BuildConfig.GA_TRACK_ID;
+//        apiVersion=BuildConfig.API_VERSION;
+//        apiKey=BuildConfig.API_KEY;
+//        facebookId = BuildConfig.FACEBOOK_ID;
+//        if (BuildConfig.REQUEST_URL.indexOf("www.") == -1) {
+//            serviceRequestUrl = getAuthorizationUrl(BuildConfig.REQUEST_URL);
+//        }else{
+//            serviceRequestUrl = BuildConfig.REQUEST_URL;
+//        }
         creditCardPaymentUrl=serviceRequestUrl+context.getString(R.string.payment_creditcard_url);
         downloadImagePath = context.getString(R.string.download_image_path);
         uploadFilePath =context.getString(R.string.upload_file_path);

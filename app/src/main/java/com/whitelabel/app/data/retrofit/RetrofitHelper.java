@@ -1,6 +1,8 @@
 package com.whitelabel.app.data.retrofit;
 import android.text.TextUtils;
 import com.whitelabel.app.GlobalData;
+import com.whitelabel.app.utils.JLogUtils;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Credentials;
@@ -63,7 +65,6 @@ public class RetrofitHelper {
                 }
             });
         }
-
         builder.connectTimeout(60, TimeUnit.SECONDS);
         builder.readTimeout(60, TimeUnit.SECONDS);
         builder.writeTimeout(60, TimeUnit.SECONDS);

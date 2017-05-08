@@ -22,7 +22,7 @@
     <application
         android:name=".application.WhiteLabelApplication"
         android:allowBackup="true"
-        android:icon="${app_icon}"
+        android:icon="@mipmap/icon_v1"
         android:theme="@style/AppTheme">
 
         <!-- tools:replace="android:name" -->
@@ -281,8 +281,7 @@
             android:exported="true" />
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="${fabricApiKey}" />
-
+            android:value="@string/fabricApiKey" />
         <!-- <activity -->
         <!-- android:name="com.whitelabel.app.qrscan.QrScanActivity" -->
         <!-- android:screenOrientation="fullSensor" -->
