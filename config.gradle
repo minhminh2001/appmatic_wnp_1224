@@ -1,44 +1,7 @@
 ext {
     android = [
-               compileSdkVersion: 25,
-               buildToolsVersion: "25.0.2",
                applicationId    : "com.whitelabel.app",
-               minSdkVersion    : 16,
-               targetSdkVersion : 25,
-               versionCode      : 44,
-               versionName      : "2.0.8"
-
-    ]
-    ext.supportLibVersion = '24.1.0'
-    dependencies = [
-            "httpcore"              : "org.apache.httpcomponents:httpcore:4.4.4",
-            "support-v4"            : "com.android.support:support-v4:${supportLibVersion}",
-            "appcompat"             : "com.android.support:appcompat-v7:${supportLibVersion}",
-            "recyclerview-v7"       : "com.android.support:recyclerview-v7:${supportLibVersion}",
-            "design"                : "com.android.support:design:${supportLibVersion}",
-            "gson"                  : "com.google.code.gson:gson:2.3.1",
-            "molpay-xdk"            : "com.molpay:molpay-mobile-xdk-android:3.3.0",
-            "okhttp-urlconnection"  : "com.squareup.okhttp3:okhttp-urlconnection:3.5.0",
-            "okhttp-okio"           : "com.squareup.okio:okio:1.11.0",
-            "play-service-gcm"      : "com.google.android.gms:play-services-gcm:9.4.0",
-            "play-service-analytics": "com.google.android.gms:play-services-analytics:9.4.0",
-            "facebook"              : "com.facebook.android:facebook-android-sdk:4.17.0",
-            "play_service_auth"     : "com.google.android.gms:play-services-auth:9.4.0",
-            "firebase_code"         : "com.google.firebase:firebase-core:9.4.0",
-            "leak_canary_bug"       : "com.squareup.leakcanary:leakcanary-android:1.5",
-            "leak_canary_release"   : "com.squareup.leakcanary:leakcanary-android-no-op:1.5",
-            "leak_canary_test"      : "com.squareup.leakcanary:leakcanary-android-no-op:1.5",
-            "glide"                 : "com.github.bumptech.glide:glide:3.7.0",
-            "glide-okhttp"          : "com.github.bumptech.glide:okhttp3-integration:1.4.0@aar",
-            "zxing"                 : "com.journeyapps:zxing-android-embedded:3.4.0",
-            "fabric-crashlytics"    : "com.crashlytics.sdk.android:crashlytics:2.6.2@aar",
-            "rxjava" :  "io.reactivex:rxjava:1.1.6",
-            "rxandroid" : "io.reactivex:rxandroid:1.2.1",
-            "retrofit" :            "com.squareup.retrofit2:retrofit:2.1.0",
-            "retrofit-gson" :      "com.squareup.retrofit2:converter-gson:2.1.0",
-            "retrofit-rxjava" :    "com.squareup.retrofit2:adapter-rxjava:2.1.0",
-            "retrofit-logging" :  "com.squareup.okhttp3:logging-interceptor:3.5.0",
-            "butterknife" :         "com.jakewharton:butterknife:8.4.0",
-            "butterknife-compiler" : "com.jakewharton:butterknife-compiler:8.4.0",
+               versionCode      : 1,
+               versionName      : "1.0.1"
     ]
 }
