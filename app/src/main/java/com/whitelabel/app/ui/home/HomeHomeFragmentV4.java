@@ -2,13 +2,27 @@ package com.whitelabel.app.ui.home;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
-
+import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.fragment.HomeBaseFragment;
+import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.widget.CustomButton;
+import com.whitelabel.app.widget.CustomSwipefreshLayout;
+import com.whitelabel.app.widget.CustomTextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -16,42 +30,131 @@ import com.whitelabel.app.activity.HomeActivity;
  * Use the {@link HomeHomeFragmentV4#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeHomeFragmentV4 extends Fragment  implements HomeActivity.HomeFragmentCallback{
+public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContract.Presenter> implements HomeActivity.HomeFragmentCallback,SwipeRefreshLayout.OnRefreshListener,HomeCategoryDetailContract.View {
+    public final static String ARG_CATEGORY_ID = "category_id";
+    public final static String ARG_CATEGORY_INDEX = "category_index";
+    @BindView(R.id.recyclerView1)
+    RecyclerView recyclerView1;
+    @BindView(R.id.v_view)
+    View vView;
+    @BindView(R.id.swipe_container)
+    CustomSwipefreshLayout swipeContainer;
+    @BindView(R.id.iv_error)
+    ImageButton ivError;
+    @BindView(R.id.ctv_error_header)
+    CustomTextView ctvErrorHeader;
+    @BindView(R.id.ctv_error_subheader)
+    CustomTextView ctvErrorSubheader;
+    @BindView(R.id.ll_error_message)
+    LinearLayout llErrorMessage;
+    @BindView(R.id.imageButtonServer)
+    ImageButton imageButtonServer;
+    @BindView(R.id.customTextViewServer)
+    CustomTextView customTextViewServer;
+    @BindView(R.id.iv_try_again)
+    ImageView ivTryAgain;
+    @BindView(R.id.btn_try_again)
+    CustomButton btnTryAgain;
+    @BindView(R.id.try_again)
+    LinearLayout tryAgain;
+    @BindView(R.id.iv_close)
+    ImageView ivClose;
+    private String mCategoryId;
+    private int mIndex;
+    private ImageLoader mImageLoader;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public HomeHomeFragmentV4() {
-        // Required empty public constructor
     }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment HomeHomeFragmentV4.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeHomeFragmentV4 newInstance(String param1, String param2) {
+    public static HomeHomeFragmentV4 newInstance(int index, String id) {
         HomeHomeFragmentV4 fragment = new HomeHomeFragmentV4();
         Bundle args = new Bundle();
+        args.putString(ARG_CATEGORY_ID, id);
+        args.putInt(ARG_CATEGORY_INDEX, index);
         fragment.setArguments(args);
         return fragment;
     }
     @Override
+    public HomeCategoryDetailContract.Presenter getPresenter() {
+        return new HomeCategoryDetailPresenterImpl();
+    }
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mCategoryId = (String) getArguments().get(ARG_CATEGORY_ID);
+            mIndex = getArguments().getInt(ARG_CATEGORY_INDEX);
+
+        }
+    }
+    @Override
+    public void onRefresh() {
+        if (getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
+            String sessionKey = "";
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+            }
+            mPresenter.getCategoryDetail(mCategoryId, sessionKey);
+        }
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mImageLoader=new ImageLoader(getActivity());
+        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        swipeContainer.setOnRefreshListener(this);
+        requestData();
     }
     @Override
     public void requestData() {
-
+        if(mIndex==0) {
+            showProgressDialog();
+        }
+        String sessionKey="";
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
+            sessionKey=WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+        }
+        mPresenter.getCategoryDetail(mCategoryId,sessionKey);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_home_fragment_v4, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_home_fragment_v4, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
+    @Override
+    public void showErrorMsg(String errorMsg) {
+        if(getActivity()!=null)
+            JViewUtils.showErrorToast(getActivity(),errorMsg);
+    }
+
+
+    @Override
+    public void loadData(CategoryDetailModel categoryDetailModel) {
+         if(getActivity()!=null){
+             CategoryDetailHorizontalAdapter mAdapter=
+                     new CategoryDetailHorizontalAdapter(categoryDetailModel,mImageLoader);
+             LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
+             recyclerView1.setLayoutManager(linearLayoutManager);
+             recyclerView1.setAdapter(mAdapter);
+         }
+    }
+    @Override
+    public void closeRefreshLaout() {
+        if(swipeContainer!=null){
+            swipeContainer.setRefreshing(false);
+        }
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();

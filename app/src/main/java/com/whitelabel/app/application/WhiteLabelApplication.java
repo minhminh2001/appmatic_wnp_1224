@@ -17,32 +17,25 @@ import com.whitelabel.app.model.ApplicationConfigurationEntity;
 import com.whitelabel.app.model.PhoneConfigurationEntity;
 import com.whitelabel.app.network.HttpClientRequest;
 import com.whitelabel.app.utils.JToolUtils;
-
-
 /**
  * Created by imaginato on 2015/6/10.
  */
 public class WhiteLabelApplication extends MultiDexApplication {
-
     private static WhiteLabelApplication mInstance;
     public static boolean delayShowAppRate = false;
     private static PhoneConfigurationEntity phoneConfiguration;
     private static ApplicationConfigurationEntity appConfiguration;
-
     private Tracker mTracker;
     private GoogleAnalytics analytics;
-
     public static PhoneConfigurationEntity getPhoneConfiguration() {
         if (phoneConfiguration == null) {
             phoneConfiguration = PhoneConfigurationEntity.getInstance();
         }
         return phoneConfiguration;
     }
-
     public static WhiteLabelApplication getInstance() {
         return mInstance;
     }
-
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -62,14 +55,9 @@ public class WhiteLabelApplication extends MultiDexApplication {
         }
         return appConfiguration;
     }
-
-
-
-
     public static void InitappConfigurationEntity() {
         appConfiguration = null;
     }
-
     @Override
     public void onCreate() {
         MultiDex.install(this);
@@ -81,7 +69,6 @@ public class WhiteLabelApplication extends MultiDexApplication {
             FacebookSdk.setApplicationId(GlobalData.facebookId);
             WhiteLabelApplication.getAppConfiguration().isSignIn(getApplicationContext());
             WhiteLabelApplication.getAppConfiguration().init(getApplicationContext());
-//            getAnalyticTracherInstance(this);
             ViewTarget.setTagId(R.id.glide_tag);
         } catch (Exception ex) {
             ex.getStackTrace();
@@ -90,11 +77,6 @@ public class WhiteLabelApplication extends MultiDexApplication {
         crashHandler.init(getApplicationContext());
     }
 
-    //    public  static RefWatcher getRefWatcher(Context context){
-//        WhiteLabelApplication application = (WhiteLabelApplication) context.getApplicationContext();
-//        return application.refWatcher;
-//    }
-//    private RefWatcher refWatcher;
     public  GoogleAnalytics getAnalyticInstance() {
         if (analytics == null) {
             analytics = GoogleAnalytics.getInstance(this);

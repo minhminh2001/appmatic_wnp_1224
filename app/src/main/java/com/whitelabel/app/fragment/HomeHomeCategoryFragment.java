@@ -238,7 +238,6 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
         fragment.setArguments(bundle);
         return fragment;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mGATrackTimeEnable = true;
@@ -250,7 +249,6 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
         LinearLayout tryAgain = (LinearLayout) mContentView.findViewById(R.id.try_again);
         mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.recyclerView1);
         refreshLayout = (SwipeRefreshLayout) mContentView.findViewById(R.id.swipe_container);
-//        refreshLayout.setColorSchemeResources(R.color.colorAccent);
         refreshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         refreshLayout.setOnRefreshListener(this);
         tryAgain.setOnClickListener(this);

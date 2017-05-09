@@ -450,9 +450,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                     if (subFragment instanceof HomeMyAccountFragmentV2) {
                         ((HomeMyAccountFragmentV2) subFragment).startFragmentByType((String) serializable, true);
                     }
-//                    else if (subFragment instanceof HomeHomeFragment) {
-//                        ((HomeHomeFragment) subFragment).switchTab((String) serializable);
-//                    }
                     else if (subFragment instanceof HomeHelpCenterDetailFragment) {
                         ((HomeHelpCenterDetailFragment) subFragment).refresh((TMPHelpCenterListToDetailEntity) serializable);
                     } else if (subFragment instanceof ShoppingCartBaseFragment) {

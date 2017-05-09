@@ -5,12 +5,13 @@
     android:paddingBottom="10dp"
     android:layout_width="match_parent">
 
-<com.whitelabel.app.widget.CustomRecyclerView
+
+    <!--imaginato:isDisallowParentTouch="true"-->
+    <!--imaginato:isStopHorizontalScroll="false"-->
+<android.support.v7.widget.RecyclerView
     android:id="@+id/rvCategory"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    imaginato:isDisallowParentTouch="true"
-    imaginato:isStopHorizontalScroll="false"
     android:visibility="invisible"
     android:scrollbars="none" />
 </RelativeLayout>

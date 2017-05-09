@@ -1,213 +1,196 @@
 package com.whitelabel.app.ui.home;
 
-import android.content.Context;
 import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.activity.ProductListActivity;
-import com.whitelabel.app.adapter.CategoryTreeExpandableAdapter;
+import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
-import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
-import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
+import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
-import com.whitelabel.app.widget.CustomSpeedLayoutManager;
-import com.whitelabel.app.widget.ExpandableRecyclerAdapter;
-
-import java.util.ArrayList;
+import com.whitelabel.app.widget.CustomButton;
+import com.whitelabel.app.widget.CustomSwipefreshLayout;
+import com.whitelabel.app.widget.CustomTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-
-public class HomeHomeFragmentV3 extends HomeBaseFragment implements HomeHomeContract.View ,HomeActivity.HomeFragmentCallback{
-
-    @BindView(R.id.rl_category_tree)
-    RecyclerView rlCategoryTree;
-
-    public HomeHomeFragmentV3() {
-        // Required empty public constructor
-    }
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * to handle interaction events.
+ * Use the {@link HomeHomeFragmentV3#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContract.Presenter>implements HomeCategoryDetailContract.View,SwipeRefreshLayout.OnRefreshListener {
+    @BindView(R.id.recyclerView1)
+    RecyclerView recyclerView1;
+    @BindView(R.id.v_view)
+    View vView;
+    @BindView(R.id.swipe_container)
+    CustomSwipefreshLayout swipeContainer;
+    @BindView(R.id.iv_error)
+    ImageButton ivError;
+    @BindView(R.id.ctv_error_header)
+    CustomTextView ctvErrorHeader;
+    @BindView(R.id.ctv_error_subheader)
+    CustomTextView ctvErrorSubheader;
+    @BindView(R.id.ll_error_message)
+    LinearLayout llErrorMessage;
+    @BindView(R.id.imageButtonServer)
+    ImageButton imageButtonServer;
+    @BindView(R.id.customTextViewServer)
+    CustomTextView customTextViewServer;
+    @BindView(R.id.iv_try_again)
+    ImageView ivTryAgain;
+    @BindView(R.id.btn_try_again)
+    CustomButton btnTryAgain;
+    @BindView(R.id.try_again)
+    LinearLayout tryAgain;
+    @BindView(R.id.iv_close)
+    ImageView ivClose;
+    @BindView(R.id.connectionBreaks)
+    RelativeLayout connectionBreaks;
+    private ImageLoader mImageLoader;
+    private CategoryDetailVerticalAdapter mAdapter;
+    private String mCategoryId;
+    public final static  String ARG_CATEGORY_ID="category_id";
+    public final static  String ARG_CATEGORY_INDEX="category_index";
+    private int mIndex;
     /**
-     * Use this factory method to create a new instance of
+     * Use this factory method to creaøte a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment HomeHomeFragmentV2.
+     * @return A new instance of fragment HomeHomeFragmentV3.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeHomeFragmentV2 newInstance() {
-        HomeHomeFragmentV2 fragment = new HomeHomeFragmentV2();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+    public static HomeHomeFragmentV3 newInstance(int index, String id) {
+        HomeHomeFragmentV3 fragment = new HomeHomeFragmentV3();
+        Bundle bundle=new Bundle();
+        bundle.putString(ARG_CATEGORY_ID,id);
+        bundle.putInt(ARG_CATEGORY_INDEX,index);
+        fragment.setArguments(bundle);
         return fragment;
     }
-
-    @Override
-    public HomeHomeContract.Presenter getPresenter() {
-        return new HomeHomePresenterImpl();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if(getArguments()!=null){
+            mCategoryId= (String) getArguments().get(ARG_CATEGORY_ID);
+            mIndex=getArguments().getInt(ARG_CATEGORY_INDEX);
         }
     }
-
-    @Override
-    public void requestData() {
-        showProgressDialog();
-        mHomePresenter.attachView(this);
-        mHomePresenter.getSearchCategory();
-    }
-
-    CategoryTreeExpandableAdapter mAdapter;
-    public void initRecyclerView() {
-        CustomSpeedLayoutManager linearLayoutManager = new CustomSpeedLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rlCategoryTree.setLayoutManager(linearLayoutManager);
-    }
-    private ImageLoader mImageLoader;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_home_fragment_v3, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_category, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        mCommonCallback.setHomeSearchBarAndOnClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), ProductListActivity.class);
-                intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_HOME);
-                intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS);
-                getActivity().startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-            }
-        });
-        inflater.inflate(R.menu.menu_home, menu);
-        MenuItem cartItem = menu.findItem(R.id.action_shopping_cart);
-        MenuItemCompat.setActionView(cartItem, R.layout.item_count);
-        View view = cartItem.getActionView();
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), HomeActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-        TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
-        textView.setBackground(JImageUtils.getThemeCircle(getActivity()));
-        JViewUtils.updateCartCount(textView, getCartItemCount());
-    }
-    public long getCartItemCount() {
-        long cartItemCount = 0;
-        try {
-            if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-                cartItemCount = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getCartItemCount();
-                ArrayList<TMPLocalCartRepositoryProductEntity> list = JStorageUtils.getProductListFromLocalCartRepository(getActivity());
-                if (list.size() > 0) {
-                    for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
-                        cartItemCount += localCartRepositoryProductEntity.getSelectedQty();
-                    }
-                }
-            } else {
-                ArrayList<TMPLocalCartRepositoryProductEntity> list = JStorageUtils.getProductListFromLocalCartRepository(getActivity());
-                if (list.size() > 0) {
-                    for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
-                        cartItemCount += localCartRepositoryProductEntity.getSelectedQty();
-                    }
-                } else {
-                }
-            }
-        } catch (Exception ex) {
-            ex.getStackTrace();
+    @Override
+    public void closeRefreshLaout() {
+        if(swipeContainer!=null){
+            swipeContainer.setRefreshing(false);
         }
-        return cartItemCount;
     }
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
-    public void showErrorMsg(String errormsg) {
-        Toast.makeText(getActivity(), errormsg, Toast.LENGTH_SHORT).show();
-    }
-    HomeHomeContract.Presenter mHomePresenter;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mCommonCallback.switchMenu(HomeCommonCallback.MENU_HOME);
         mImageLoader=new ImageLoader(getActivity());
-        initRecyclerView();
-        mHomePresenter = getPresenter();
-        requestData();
-        setHasOptionsMenu(true);
+        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        swipeContainer.setOnRefreshListener(this);
+        if(mIndex==0) {
+            showProgressDialog();
+        }
+        String sessionKey="";
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
+            sessionKey=WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+        }
+        mPresenter.getCategoryDetail(mCategoryId,sessionKey);
     }
-
     @Override
-    public void loadRecyclerViewData(SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity) {
-        mAdapter = new CategoryTreeExpandableAdapter(getActivity(), getContext(),
-                svrAppserviceCatalogSearchReturnEntity.getCategory(),
-                mImageLoader, childOnClick);
-        //点击一个，关闭其他所有item
-        mAdapter.setMode(ExpandableRecyclerAdapter.MODE_ACCORDION);
-        mAdapter.setViewType(CategoryTreeExpandableAdapter.VIEW_HORIZONTAL);
-        rlCategoryTree.setAdapter(mAdapter);
-        mAdapter.setRecycleView(rlCategoryTree);
+    public void onRefresh() {
+        if (getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
+            String sessionKey = "";
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+            }
+            mPresenter.getCategoryDetail(mCategoryId, sessionKey);
+        }
     }
-
-    private CategoryTreeExpandableAdapter.ChildOnClick childOnClick = new CategoryTreeExpandableAdapter.ChildOnClick() {
+    private final GridLayoutManager.SpanSizeLookup mTwoRowSpan = new GridLayoutManager.SpanSizeLookup() {
         @Override
-        public void childOnClick(int position, Object ob, String parentId) {
-            //   GO TO  ProductListActivity
-//            SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) ob;
-//            Intent intent = new Intent(getContext(), ProductListActivity.class);
-//            intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_MAINCATEGOTY);
-//            intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY);
-//            // Get Parent data
-//            for (SVRAppserviceCatalogSearchCategoryItemReturnEntity en : categoryList) {
-//                if (en.getId() != null && en.getId().equals(parentId)) {
-//                    intent.putExtra(ProductListActivity.INTENT_DATA_CATEGORYID, en);
-//                    continue;
-//                }
-//            }
-//            //第三级bran选择的位置
-//            intent.putExtra("categoryId", entity.getId());
-//            getContext().startActivity(intent);
-//            ((Activity) getContext()).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+        public int getSpanSize(int position) {
+            if (position == 0 ||position==mAdapter.getNewArrivalProductSize()+1) {
+                return 2;
+            }
+            return 1;
         }
     };
-
-
-
+    @Override
+    public void showErrorMsg(String errorMsg) {
+        if(getActivity()!=null)
+        JViewUtils.showErrorToast(getActivity(),errorMsg);
+    }
+    @Override
+    public void loadData(CategoryDetailModel categoryDetailModel) {
+        if(getActivity()!=null) {
+            mAdapter = new CategoryDetailVerticalAdapter(getActivity(), categoryDetailModel, mImageLoader);
+            mAdapter.setOnItemClickLitener(new CategoryDetailVerticalAdapter.OnItemClickLitener() {
+                @Override
+                public void onItemClick(CategoryDetailVerticalAdapter.ItemViewHolder itemViewHolder, int position) {
+                    SVRAppserviceProductSearchResultsItemReturnEntity productEntity =null;
+                    if(position>mAdapter.getData().getNewArrivalProducts().size()){
+                        productEntity=mAdapter.getData().getBestSellerProducts().get((position-mAdapter.getData().getNewArrivalProducts().size()-2));
+                    }else{
+                        productEntity=mAdapter.getData().getNewArrivalProducts().get((position-1));
+                    }
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), ProductActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("productId",productEntity.getProductId());
+                    bundle.putString("from", "from_product_list");
+                    bundle.putSerializable("product_info", getProductListItemToProductDetailsEntity(productEntity));
+                    bundle.putString("imageurl", productEntity.getSmallImage());
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent,1000);
+                }
+            });
+            GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+            recyclerView1.setLayoutManager(layoutManager);
+            layoutManager.setSpanSizeLookup(mTwoRowSpan);
+            recyclerView1.setAdapter(mAdapter);
+        }
+    }
+    private ProductListItemToProductDetailsEntity getProductListItemToProductDetailsEntity(SVRAppserviceProductSearchResultsItemReturnEntity e) {
+        ProductListItemToProductDetailsEntity entity = new ProductListItemToProductDetailsEntity();
+        entity.setBrand(e.getBrand());
+        entity.setCategory(e.getCategory());
+        entity.setFinalPrice(e.getFinal_price());
+        entity.setInStock(Integer.parseInt(e.getInStock()));
+        entity.setName(e.getName());
+        entity.setPrice(e.getPrice());
+        entity.setVendorDisplayName(e.getVendorDisplayName());
+        return entity;
+    }
+    @Override
+    public HomeCategoryDetailContract.Presenter getPresenter() {
+        return  new HomeCategoryDetailPresenterImpl();
+    }
 }
+

@@ -61,7 +61,8 @@ public class CustomRecyclerView extends RecyclerView {
             }
         });
     }
-
+    private boolean isStopHorizontalScroll = false;
+    private boolean isDisallowParentTouch = false;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (isStopHorizontalScroll) {
@@ -104,8 +105,7 @@ public class CustomRecyclerView extends RecyclerView {
             return super.onInterceptTouchEvent(event);
         }
     }
-    private boolean isStopHorizontalScroll = false;
-    private boolean isDisallowParentTouch = false;
+
     private void initTypeface(Context context, AttributeSet attrs) {
         if (attrs == null) {
             return;

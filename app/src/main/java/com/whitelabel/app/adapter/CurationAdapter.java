@@ -122,7 +122,6 @@ public class CurationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return itemHolder;
         }
     }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof HeadViewHolder) {

@@ -29,7 +29,6 @@ import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.adapter.FlowViewAdapter;
-import com.whitelabel.app.adapter.ProductListAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
@@ -59,7 +58,7 @@ import butterknife.ButterKnife;
 import static com.whitelabel.app.utils.AnimUtil.setWishIconColorToPurple;
 
 
-public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_TWOROW_ITEM = 256478;
     private static final int TYPE_SINGLEROW_ITEM = 256123;
@@ -75,10 +74,10 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         void onSortClick();
     }
     private static final class DataHandler extends Handler {
-        private final WeakReference<CategoryDetailAdapter> mAdapter;
+        private final WeakReference<CategoryDetailVerticalAdapter> mAdapter;
         private final WeakReference<Context> mContext;
-        public DataHandler(Context context, CategoryDetailAdapter productListAdapter) {
-            mAdapter = new WeakReference<CategoryDetailAdapter>(productListAdapter);
+        public DataHandler(Context context, CategoryDetailVerticalAdapter productListAdapter) {
+            mAdapter = new WeakReference<CategoryDetailVerticalAdapter>(productListAdapter);
             mContext = new WeakReference<Context>(context);
         }
         @Override
@@ -142,7 +141,7 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     MyAccountDao  myAccountDao;
     ProductDao mProductDao;
-    public CategoryDetailAdapter(Context context,CategoryDetailModel categoryDetailModel, ImageLoader loader) {
+    public CategoryDetailVerticalAdapter(Context context, CategoryDetailModel categoryDetailModel, ImageLoader loader) {
         this.categoryDetailModel = categoryDetailModel;
         mImageLoader = loader;
         DataHandler dataHandler = new DataHandler(context, this);
@@ -329,7 +328,6 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private void setWishIconColorToPurpleNoAnim(ImageView ivWishIcon) {
         ivWishIcon.setVisibility(View.VISIBLE);
-//        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
         ivWishIcon.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
         boolean repeatAnim = false;
         ivWishIcon.setTag(repeatAnim);
