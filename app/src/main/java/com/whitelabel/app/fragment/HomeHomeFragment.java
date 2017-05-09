@@ -54,7 +54,7 @@ import java.util.ArrayList;
 /**
  * Created by imaginato on 2015/7/17.
  */
-public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickListener {
+public class HomeHomeFragment extends HomeBaseFragment implements View.OnClickListener , HomeActivity.HomeFragmentCallback{
     public Long mGATrackTimeStart = 0L;
     public boolean mGATrackTimeEnable = false;
     private HomeActivity homeActivity;

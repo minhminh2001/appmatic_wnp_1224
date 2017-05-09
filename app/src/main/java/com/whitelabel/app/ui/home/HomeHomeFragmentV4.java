@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.activity.HomeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,7 +16,7 @@ import com.whitelabel.app.R;
  * Use the {@link HomeHomeFragmentV4#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeHomeFragmentV4 extends Fragment {
+public class HomeHomeFragmentV4 extends Fragment  implements HomeActivity.HomeFragmentCallback{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public HomeHomeFragmentV4() {
@@ -39,6 +40,10 @@ public class HomeHomeFragmentV4 extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void requestData() {
+
     }
 
     @Override

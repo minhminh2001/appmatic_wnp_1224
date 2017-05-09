@@ -28,9 +28,11 @@ import com.whitelabel.app.fragment.HomeSettingCotentFragment;
 import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
 import com.whitelabel.app.model.TMPHelpCenterListToDetailEntity;
+import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.FragmentFactory;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
@@ -91,7 +93,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     public void showUserGuide(HomeBaseFragment.UserGuideType userGuideType) {
 
     }
-
     @Override
     public void jumpHomePage(Serializable serializable) {
         if (!(mCurrentFragment instanceof HomeHomeFragment)) {
@@ -376,11 +377,41 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     @Override
     protected void onResume() {
         super.onResume();
-        if (mCurrentFragment != null && mCurrentFragment instanceof HomeHomeFragment) {
-            ((HomeHomeFragment) mCurrentFragment).updateShoppingCartItemCount();
+        if (mCurrentFragment != null && mCurrentFragment instanceof HomeFragmentCallback) {
+            long cartItemcount = getCartItemCount();
+             updateRightIconNum(R.id.action_shopping_cart, cartItemcount);
         }
     }
 
+
+    public long getCartItemCount() {
+        long cartItemCount = 0;
+        try {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
+                cartItemCount = WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getCartItemCount();
+                ArrayList<TMPLocalCartRepositoryProductEntity> list = JStorageUtils.getProductListFromLocalCartRepository(this);
+                if (list.size() > 0) {
+                    for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
+                        cartItemCount += localCartRepositoryProductEntity.getSelectedQty();
+                    }
+                }
+            } else {
+                ArrayList<TMPLocalCartRepositoryProductEntity> list = JStorageUtils.getProductListFromLocalCartRepository(this);
+                if (list.size() > 0) {
+                    for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
+                        cartItemCount += localCartRepositoryProductEntity.getSelectedQty();
+                    }
+                } else {
+                }
+            }
+        } catch (Exception ex) {
+            ex.getStackTrace();
+        }
+        return cartItemCount;
+    }
+    public   interface   HomeFragmentCallback{
+        void  requestData();
+    }
     public void switchFragment(int from, int to, Serializable serializable) {
         int TYPE_FRAGMENT_SWITCH_RIGHT2LEFT = 1;
         int TYPE_FRAGMENT_SWITCH_LEFT2RIGHT = -1;
@@ -418,9 +449,11 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                     }
                     if (subFragment instanceof HomeMyAccountFragmentV2) {
                         ((HomeMyAccountFragmentV2) subFragment).startFragmentByType((String) serializable, true);
-                    } else if (subFragment instanceof HomeHomeFragment) {
-                        ((HomeHomeFragment) subFragment).switchTab((String) serializable);
-                    } else if (subFragment instanceof HomeHelpCenterDetailFragment) {
+                    }
+//                    else if (subFragment instanceof HomeHomeFragment) {
+//                        ((HomeHomeFragment) subFragment).switchTab((String) serializable);
+//                    }
+                    else if (subFragment instanceof HomeHelpCenterDetailFragment) {
                         ((HomeHelpCenterDetailFragment) subFragment).refresh((TMPHelpCenterListToDetailEntity) serializable);
                     } else if (subFragment instanceof ShoppingCartBaseFragment) {
                         ((ShoppingCartBaseFragment) subFragment).refresh();
@@ -489,7 +522,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     public boolean refreshNotification(int type, String id) {
         return false;
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -499,33 +531,25 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             }
         }else if(requestCode==LoginRegisterActivity.REQUESTCODE_LOGIN&&
                 WhiteLabelApplication.getAppConfiguration().isSignIn(HomeActivity.this)){
-             if(mCurrentFragment instanceof  HomeHomeFragment){
-                 HomeHomeFragment fragment= (HomeHomeFragment) mCurrentFragment;
+             if(mCurrentFragment instanceof  HomeFragmentCallback){
+                 HomeFragmentCallback fragment= (HomeFragmentCallback) mCurrentFragment;
                  fragment.requestData();
              }
         }
     }
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-
-            if (mCurrentFragment instanceof HomeHomeFragment) {
-                boolean isShowRateApp = ((HomeHomeFragment) mCurrentFragment).onKeyDown(keyCode, event);
-                if (isShowRateApp) {
-                    return true;
-                }
-            }
             if (mCurrentFragment instanceof HomeHelpCenterDetailFragment && ((HomeHelpCenterDetailFragment) mCurrentFragment).onBackPressed()) {
                 if (mCanback) {
                     switchFragment(HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERDETAIL, HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERLIST, null);
                 }
                 return true;
-            } else if (!(mCurrentFragment instanceof HomeHomeFragment)) {
+            } else if (!(mCurrentFragment instanceof HomeFragmentCallback)) {
                 switchFragment(HomeActivity.FRAGMENT_TYPE_HOME_GOBACK, FRAGMENT_TYPE_HOME_HOME, null);
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
                 return true;
             }
         }
-
         if (keyCode == KeyEvent.KEYCODE_BACK && mDialog != null && mDialog.isShowing()) {
             return true;
         }

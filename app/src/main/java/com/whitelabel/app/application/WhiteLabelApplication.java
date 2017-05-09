@@ -95,7 +95,7 @@ public class WhiteLabelApplication extends MultiDexApplication {
 //        return application.refWatcher;
 //    }
 //    private RefWatcher refWatcher;
-    public GoogleAnalytics getAnalyticInstance() {
+    public  GoogleAnalytics getAnalyticInstance() {
         if (analytics == null) {
             analytics = GoogleAnalytics.getInstance(this);
         }

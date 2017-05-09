@@ -83,7 +83,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     private int num;
     private TextView tvError;
     private CustomCheckBox addaddress_checkbox;
-    private boolean addaddressIsCheckbox;
     private ScrollView  mScrollView;
     private Dialog mDialog;
 //    private ProgressBar mProgressBar;

@@ -1,15 +1,11 @@
 package com.whitelabel.app;
 
 import android.content.Context;
-import android.provider.Settings;
 
 import com.whitelabel.app.utils.JToolUtils;
-
-
 /**
  * Created by Administrator on 2016/12/20.
  */
-
 public class GlobalData {
     public static String appVersion = "";
     public static String serviceVersion = "";

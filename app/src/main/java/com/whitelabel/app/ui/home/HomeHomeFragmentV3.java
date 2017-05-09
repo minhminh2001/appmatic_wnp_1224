@@ -37,7 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class HomeHomeFragmentV3 extends HomeBaseFragment implements HomeHomeContract.View {
+public class HomeHomeFragmentV3 extends HomeBaseFragment implements HomeHomeContract.View ,HomeActivity.HomeFragmentCallback{
 
     @BindView(R.id.rl_category_tree)
     RecyclerView rlCategoryTree;
@@ -71,6 +71,14 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment implements HomeHomeCont
         if (getArguments() != null) {
         }
     }
+
+    @Override
+    public void requestData() {
+        showProgressDialog();
+        mHomePresenter.attachView(this);
+        mHomePresenter.getSearchCategory();
+    }
+
     CategoryTreeExpandableAdapter mAdapter;
     public void initRecyclerView() {
         CustomSpeedLayoutManager linearLayoutManager = new CustomSpeedLayoutManager(getContext());
@@ -154,17 +162,15 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment implements HomeHomeCont
     public void showErrorMsg(String errormsg) {
         Toast.makeText(getActivity(), errormsg, Toast.LENGTH_SHORT).show();
     }
-
+    HomeHomeContract.Presenter mHomePresenter;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mCommonCallback.switchMenu(HomeCommonCallback.MENU_HOME);
         mImageLoader=new ImageLoader(getActivity());
         initRecyclerView();
-        showProgressDialog();
-        HomeHomeContract.Presenter mHomePresenter = getPresenter();
-        mHomePresenter.attachView(this);
-        mHomePresenter.getSearchCategory();
+        mHomePresenter = getPresenter();
+        requestData();
         setHasOptionsMenu(true);
     }
 
