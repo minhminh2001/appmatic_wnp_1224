@@ -130,7 +130,11 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_curation_productlist_item, null);
         return new ItemViewHolder(view);
     }
+    private CategoryDetailHorizontalAdapter.OnItemClickListener   onItemClickLitener;
 
+    public  void setOnItemClickLitener(CategoryDetailHorizontalAdapter.OnItemClickListener  onItemClickLitener){
+        this.onItemClickLitener=onItemClickLitener;
+    }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         SVRAppserviceProductSearchResultsItemReturnEntity leftProductEntity=mBeans.get(position);
@@ -164,9 +168,9 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
         itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(onItemClickLitener!=null){
-//                    onItemClickLitener.onItemClick(itemViewHolder,position);
-//                }
+                if(onItemClickLitener!=null){
+                    onItemClickLitener.onItemClick(itemViewHolder,position);
+                }
             }
         });
         String leftProductName = leftProductEntity.getName();

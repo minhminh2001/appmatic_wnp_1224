@@ -1,5 +1,6 @@
 package com.whitelabel.app.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,9 +14,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
+import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomButton;
@@ -139,14 +143,48 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
 
 
     @Override
-    public void loadData(CategoryDetailModel categoryDetailModel) {
+    public void loadData(final CategoryDetailModel categoryDetailModel) {
          if(getActivity()!=null){
              CategoryDetailHorizontalAdapter mAdapter=
                      new CategoryDetailHorizontalAdapter(categoryDetailModel,mImageLoader);
+             mAdapter.setOnBestProductionItemClickListener(new CategoryDetailHorizontalAdapter.OnItemClickListener() {
+                 @Override
+                 public void onItemClick(RecyclerView.ViewHolder itemViewHolder, int position) {
+                     startProductDetailActivity(categoryDetailModel.getBestSellerProducts().get(position));
+                 }
+             });
+             mAdapter.setOnNewArrivalsItemClickListener(new CategoryDetailHorizontalAdapter.OnItemClickListener() {
+                 @Override
+                 public void onItemClick(RecyclerView.ViewHolder itemViewHolder, int position) {
+                     startProductDetailActivity(categoryDetailModel.getNewArrivalProducts().get(position));
+                 }
+             });
              LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
              recyclerView1.setLayoutManager(linearLayoutManager);
              recyclerView1.setAdapter(mAdapter);
          }
+    }
+    private ProductListItemToProductDetailsEntity getProductListItemToProductDetailsEntity(SVRAppserviceProductSearchResultsItemReturnEntity e) {
+        ProductListItemToProductDetailsEntity entity = new ProductListItemToProductDetailsEntity();
+        entity.setBrand(e.getBrand());
+        entity.setCategory(e.getCategory());
+        entity.setFinalPrice(e.getFinal_price());
+        entity.setInStock(Integer.parseInt(e.getInStock()));
+        entity.setName(e.getName());
+        entity.setPrice(e.getPrice());
+        entity.setVendorDisplayName(e.getVendorDisplayName());
+        return entity;
+    }
+    public void startProductDetailActivity( SVRAppserviceProductSearchResultsItemReturnEntity productEntity){
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), ProductActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("productId",productEntity.getProductId());
+        bundle.putString("from", "from_product_list");
+        bundle.putSerializable("product_info", getProductListItemToProductDetailsEntity(productEntity));
+        bundle.putString("imageurl", productEntity.getSmallImage());
+        intent.putExtras(bundle);
+        startActivityForResult(intent,1000);
     }
     @Override
     public void closeRefreshLaout() {

@@ -52,7 +52,15 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
             ButterKnife.bind(this, view);
         }
     }
+    private   OnItemClickListener bestSellersClickListener;
+    private OnItemClickListener newArrivalsClickListener;
+    public void setOnBestProductionItemClickListener(OnItemClickListener bestSellersClickListener){
+        this.bestSellersClickListener=bestSellersClickListener;
+    }
 
+    public void setOnNewArrivalsItemClickListener(OnItemClickListener  newArrivalsClickListener){
+        this.newArrivalsClickListener=newArrivalsClickListener;
+    }
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
@@ -62,6 +70,9 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         } else {
             return ITEM;
         }
+    }
+    public interface OnItemClickListener {
+        void onItemClick(RecyclerView.ViewHolder itemViewHolder, int position);
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -101,18 +112,20 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
                 viewHolder.tvTxt.setText(viewHolder.itemView.getContext().getResources().getString(R.string.home_new_arrivals));
             }
         }else if(holder instanceof ItemViewHolder){
-            CategoryDetailItemAdapter mCategoryDetail=null;
+            CategoryDetailItemAdapter mCategoryDetailAdapater=null;
             if(position==1){
-                mCategoryDetail=new CategoryDetailItemAdapter(holder.itemView.getContext(),mCategoryDetailModel.getBestSellerProducts(),mImageLoader);
+                mCategoryDetailAdapater=new CategoryDetailItemAdapter(holder.itemView.getContext(),mCategoryDetailModel.getBestSellerProducts(),mImageLoader);
+                mCategoryDetailAdapater.setOnItemClickLitener(bestSellersClickListener);
             }else{
-                mCategoryDetail=new CategoryDetailItemAdapter(holder.itemView.getContext(),mCategoryDetailModel.getNewArrivalProducts(),mImageLoader);
+                mCategoryDetailAdapater=new CategoryDetailItemAdapter(holder.itemView.getContext(),mCategoryDetailModel.getNewArrivalProducts(),mImageLoader);
+                mCategoryDetailAdapater.setOnItemClickLitener(newArrivalsClickListener);
             }
-           ItemViewHolder  itemViewHolder= (ItemViewHolder) holder;
+            ItemViewHolder  itemViewHolder= (ItemViewHolder) holder;
             itemViewHolder.rvCategory.setVisibility(View.VISIBLE);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(itemViewHolder.itemView.getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             itemViewHolder.rvCategory.setLayoutManager(linearLayoutManager);
-           itemViewHolder.rvCategory.setAdapter(mCategoryDetail);
+            itemViewHolder.rvCategory.setAdapter(mCategoryDetailAdapater);
         }
     }
     @Override

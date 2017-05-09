@@ -28,7 +28,7 @@
         android:layout_marginTop="15dp"
         android:layout_below="@+id/rl_switch_img"
         android:layout_height="wrap_content">
-       <include layout="@layout/layout_base_sellers"></include>
+       <include layout="@layout/layout_base_sellers" />
     </LinearLayout>
 
 </RelativeLayout>
