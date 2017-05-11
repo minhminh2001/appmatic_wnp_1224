@@ -235,6 +235,7 @@ public abstract class BaseHttp {
                 Map<String,String> params=new HashMap<>();
                 params.put("API-VERSION",GlobalData.apiVersion);
                 params.put("API-KEY",GlobalData.apiKey);
+                params.put("APP-KEY",GlobalData.appKey);
                 return params;
             }
         };

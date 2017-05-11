@@ -159,7 +159,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
             }
         }
     }
-
     public Toolbar getToolbar(){
         return mToolbar;
     }
@@ -191,18 +190,21 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
             mToolbar.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor());
         }
     }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ImageView ivTryAgain= (ImageView) getView().findViewById(R.id.iv_try_again);
-        CustomButton btnAgain= (CustomButton)  getView().findViewById(R.id.btn_try_again);
+
+    }
+
+
+    public void  setRetryTheme(View view){
+        ImageView ivTryAgain= (ImageView) view.findViewById(R.id.iv_try_again);
+        CustomButton btnAgain= (CustomButton)  view.findViewById(R.id.btn_try_again);
         if(ivTryAgain!=null&&btnAgain!=null){
             ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(getActivity(),R.mipmap.connection_break_loading));
             btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         }
     }
-
     protected void onAnimationStarted () {}
 
     protected void onAnimationEnded () {}

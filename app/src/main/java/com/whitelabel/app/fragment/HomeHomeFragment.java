@@ -100,7 +100,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
         setScrollToolBarEnable(true);
         mContainView = inflater.inflate(R.layout.fragment_home_home, null);
         mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-//        mGATrackTimeEnable = true;
+        setRetryTheme(mContainView);
         return mContainView;
     }
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

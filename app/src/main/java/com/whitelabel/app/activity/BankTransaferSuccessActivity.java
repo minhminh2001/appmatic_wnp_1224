@@ -56,7 +56,6 @@ public class BankTransaferSuccessActivity extends com.whitelabel.app.BaseActivit
             }
         });
     }
-
     private void initData() {
         String desc=getIntent().getStringExtra("desc");
         if(!TextUtils.isEmpty(desc)) {
@@ -65,7 +64,6 @@ public class BankTransaferSuccessActivity extends com.whitelabel.app.BaseActivit
             wvDesc.setText(content);
         }
     }
-
     private void initView() {
         wvDesc= (CustomWebView) findViewById(R.id.tv_desc);
         tvConfirm= (TextView) findViewById(R.id.tv_confirm);

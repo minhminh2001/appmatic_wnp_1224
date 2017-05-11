@@ -1,11 +1,14 @@
 package com.whitelabel.app.ui.start;
-
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
@@ -13,14 +16,10 @@ import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.handler.INITApp;
+import com.whitelabel.app.notification.RegistrationIntentService;
 import com.whitelabel.app.task.INITExecutor;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
-
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by imaginato on 2015/6/10.
  */
@@ -30,6 +29,7 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
     private String mSessionKey;
     private INITApp mCallback;
     private StartHandler mStartHandler;
+    private Dialog mProgressDialog;
     public void startNextActivity(){
         if (mSessionKey != null && mSessionKey.length() != 0) {
                 Intent intent = new Intent(StartActivityV2.this,HomeActivity.class);
@@ -98,8 +98,8 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
         }
         mCallback=new INITApp(StartActivityV2.this, new MeInitCallBack(this));
         INITExecutor.getInstance().execute(mCallback);
-        mPresenter.getConfigInfo("","");
-
+//        mPresenter.getConfigInfo("","");
+        mPresenter.getConfigInfo();
 //        List<String> strs=new ArrayList<>();
 //        strs.add("1");
 //        strs.add("1");
@@ -117,7 +117,7 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
     static class MeInitCallBack extends   INITCallback{
         WeakReference<StartActivityV2> mStartActivity;
         public MeInitCallBack(StartActivityV2 startActivity){
-                mStartActivity=new WeakReference<StartActivityV2>(startActivity);
+                mStartActivity=new WeakReference<>(startActivity);
         }
         @Override
         public void onSuccess(int resultCode, Object object) {
@@ -147,6 +147,29 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
     @Override
     protected void onResume() {
         super.onResume();
+        if (checkInstallationPlayServices()) {
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+    }
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    private boolean checkInstallationPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                if(mProgressDialog ==null||!mProgressDialog.isShowing()) {
+                    mProgressDialog = apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST);
+                    mProgressDialog.show();
+                }
+            } else {
+                Toast.makeText(this, "This device is not supported.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
     @Override
     protected void onPause() {

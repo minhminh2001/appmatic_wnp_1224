@@ -2,8 +2,6 @@ package com.whitelabel.app.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,10 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.MyAccountOrderDetailActivity;
-import com.whitelabel.app.activity.TrackingInfoActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.bean.OrderBody;
 import com.whitelabel.app.bean.OrderTip;
@@ -168,6 +163,8 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 subOrderHolder.tvRepayment.setVisibility(View.GONE);
             } else {
                 subOrderHolder.tvRepayment.setVisibility(View.VISIBLE);
+                JViewUtils.setSoildButtonGlobalStyle(subOrderHolder.itemView.getContext(),subOrderHolder.tvRepayment);
+
                 subOrderHolder.tvRepayment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

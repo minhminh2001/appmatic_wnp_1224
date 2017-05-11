@@ -14,4 +14,5 @@
     <string name="app_name">Evisu</string>
     <string name="request_url">http://192.168.1.233:8899/</string>
     <string name="mock_url">http://192.168.1.233:8088/</string>
+    <string name="image_base_url">http://192.168.1.233/</string>
 </resources>

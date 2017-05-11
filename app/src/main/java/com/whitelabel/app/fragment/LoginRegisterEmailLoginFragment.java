@@ -48,10 +48,10 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.google.android.gms.auth.api.Auth;
+//import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+//import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.whitelabel.app.R;
@@ -602,10 +602,10 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
          .build();
-         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                .enableAutoManage(getActivity(), this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+//         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+//                .enableAutoManage(getActivity(), this)
+//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+//                .build();
     }
 
     private void setResendEmailClickSpan(){
@@ -681,8 +681,8 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
             case R.id.ll_googleLogin:
                 if(mGoogleApiClient.isConnected()) {
                     mGoogleApiClient.clearDefaultAccountAndReconnect();
-                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-                    getActivity().startActivityForResult(signInIntent, RC_SIGN_IN);
+//                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+//                    getActivity().startActivityForResult(signInIntent, RC_SIGN_IN);
                 }
                 break;
         }
@@ -694,8 +694,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     public void onConnectionFailed(ConnectionResult connectionResult) {
         JLogUtils.i("ray","connectionResult:"+connectionResult.getErrorMessage());
     }
-
-
 
     private void closeCurrActivity(){
         if(getActivity()!=null) {
@@ -1108,14 +1106,15 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         JLogUtils.i(mCurrTag,"result:"+resultCode);
         if(getActivity()==null)return;
         if (requestCode == RC_SIGN_IN&&resultCode==getActivity().RESULT_OK) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                GoogleSignInAccount acct = result.getSignInAccount();
-                String mEmail = acct.getEmail();
-                ggUseInfoToLoginRemoteServer(mEmail, acct.getGivenName(), acct.getFamilyName(), acct.getId());
-            }else{
-                JViewUtils.showToast(loginRegisterActivity, null, getString(R.string.Global_Error_Internet));
-            }
+//            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+//            if (result.isSuccess()) {
+//                GoogleSignInAccount acct = result.getSignInAccount();
+//                String mEmail = acct.getEmail();
+//                ggUseInfoToLoginRemoteServer(mEmail, acct.getGivenName(), acct.getFamilyName(), acct.getId());
+//            }else{
+//                JViewUtils.showToast(loginRegisterActivity, null, getString(R.string.Global_Error_Internet));
+//            }
+//        }
         }
     }
 

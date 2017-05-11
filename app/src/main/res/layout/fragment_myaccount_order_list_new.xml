@@ -20,7 +20,6 @@
         android:scrollbars="none"
         android:divider="#FFFFFFFF"
         android:layout_below="@+id/addressbook_add_RelativeLayout"/>-->
-
     <com.whitelabel.app.widget.CustomSwipefreshLayout
         android:id="@+id/swipe_container"
         android:layout_width="match_parent"
@@ -32,8 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            android:scrollbars="none"
-            />
+            android:scrollbars="none" />
     </com.whitelabel.app.widget.CustomSwipefreshLayout>
     <RelativeLayout
         android:id="@+id/order_tab"
@@ -41,7 +39,6 @@
         android:layout_height="wrap_content"
         android:gravity="top"
         android:visibility="gone">
-
         <include
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

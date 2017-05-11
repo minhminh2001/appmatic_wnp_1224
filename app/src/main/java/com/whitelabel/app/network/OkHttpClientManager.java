@@ -61,6 +61,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.Route;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Created by zhy on 15/8/17.
@@ -98,10 +99,12 @@ public class OkHttpClientManager {
 
     //The only place where OkHttpClient is created in the application
     private OkHttpClient getOkHTTPClient() {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient()
                 .newBuilder()
                 .cookieJar(new JavaNetCookieJar(new CookieManager(null, CookiePolicy.ACCEPT_ORIGINAL_SERVER)))
-                .addInterceptor(new LoggingInterceptor());
+                .addInterceptor(loggingInterceptor);
         if (!TextUtils.isEmpty(GlobalData.authName) && !TextUtils.isEmpty(GlobalData.authPwd)) {
             okHttpClientBuilder.authenticator(new Authenticator() {
                 @Override
@@ -115,7 +118,6 @@ public class OkHttpClientManager {
         if (GlobalData.allowInvalidSSLTLS) {
             okHttpClientBuilder = ignoreCertificate(okHttpClientBuilder);
         }
-
         return okHttpClientBuilder.build();
     }
 

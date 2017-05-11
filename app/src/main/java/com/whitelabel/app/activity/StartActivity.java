@@ -47,16 +47,12 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
             startActivity(intent);
             finish();
         }else{
-//            if(mSplashScreen){
                 Intent intent = new Intent(StartActivity.this, LoginRegisterActivity.class);
                 Bundle mBundle = new Bundle();
                 mBundle.putString("Activity", "start");//压入数据
                 intent.putExtras(mBundle);
                 startActivity(intent);
                 finish();
-//            }else{
-//                startNextActivity(null, SplashScreenActivity.class, true);
-//            }
         }
     }
 
@@ -73,28 +69,9 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
             switch (msg.what){
                 case ProductDao.REQUEST_CHECKVERSION:
                     if(msg.arg1 == ProductDao.RESPONSE_SUCCESS){
-//                        long deploy=System.currentTimeMillis()-activity.get().mStartTimeLong;
-//                        if(deploy<3000){
-//                            activity.get(). postDelayed(deploy);
-//                        }else{
-//                            activity.get().startNextActivity();
-//                        }
-//                    }else{
-//                        String title=activity.get().getResources().getString(R.string.versionCheckTitle);
-//                        String hintmsg=activity.get().getResources().getString(R.string.versionCheckMsg);
-//                        String btnMsg=activity.get().getResources().getString(R.string.update);
-//                        JViewUtils.showMaterialDialog(activity.get(), title, hintmsg, btnMsg,activity.get().updateListener,false);
                     }
                     break;
                 case ProductDao.REQUEST_ERROR:
-//                    RequestErrorHelper requestErrorHelper = new RequestErrorHelper(activity.get());
-//                    requestErrorHelper.showNetWorkErrorToast(msg);
-//                    long deploy=System.currentTimeMillis()-activity.get().mStartTimeLong;
-//                    if(deploy<3000) {
-//                        activity.get(). postDelayed(deploy);
-//                    }else{
-//                        activity.get(). startNextActivity();
-//                    }
                     break;
             }
             super.handleMessage(msg);
@@ -115,31 +92,7 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
         StartRunnable  startRunnable=  new StartRunnable(StartActivity.this);
         mStartHandler.postDelayed(startRunnable, (DELAY_TIME -deploy));
     }
-//    private View.OnClickListener updateListener=new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//            List<PackageInfo> packages = getPackageManager().getInstalledPackages(0);
-//            for(int i=0;i<packages.size();i++) {
-//                PackageInfo packageInfo = packages.get(i);
-//                String packgeName="";
-//                packgeName=packageInfo.packageName;
-//                JLogUtils.i("Allen","packge="+packgeName);
-//                if(packgeName.contains("vending")){
-//                    //跳转进市场搜索的代码
-//                    Intent intent = new Intent(Intent.ACTION_VIEW);
-//                    intent.setData(Uri.parse(GlobalData.jumpMarketUrl));
-//                    startActivity(intent);
-//                    existVending=true;
-//                }
-//            }
-//            if(!existVending){
-//                Uri uri = Uri.parse("http://play.google.com/store/apps/details?id=com.whitelabel.app");
-//                Intent it = new Intent(Intent.ACTION_VIEW, uri);
-//                startActivity(it);
-//                existVending=false;
-//            }
-//        }
-//    };
+
     private void gaTrackNotificationSwitch() {
         boolean isNotificationEnabled = JToolUtils.isNotificationEnabled(this);
         String trackLabel="";
@@ -221,14 +174,10 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
 //            startService(intent);
 //        }
     }
-
-
     @Override
     protected void onPause() {
         super.onPause();
-
     }
-
     private boolean checkInstallationPlayServices() {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);

@@ -2,6 +2,7 @@ package com.whitelabel.app;
 
 import android.content.Context;
 
+import com.bumptech.glide.Glide;
 import com.whitelabel.app.utils.JToolUtils;
 /**
  * Created by Administrator on 2016/12/20.
@@ -27,7 +28,7 @@ public class GlobalData {
     public static  String apiKey="";
     public static String appKey="";
     public static String  creditCardPaymentUrl="";
-
+    public static  String  imageBaseUrl;
     // if true, all https connections are valid regardless of certificate validity
     public static boolean allowInvalidSSLTLS = false;
     private final static String pathSeparator = "/";
@@ -59,11 +60,13 @@ public class GlobalData {
 //        }else{
 //            serviceRequestUrl = BuildConfig.REQUEST_URL;
 //        }
+        imageBaseUrl=context.getString(R.string.image_base_url);
         creditCardPaymentUrl=serviceRequestUrl+context.getString(R.string.payment_creditcard_url);
         downloadImagePath = context.getString(R.string.download_image_path);
         uploadFilePath =context.getString(R.string.upload_file_path);
-        downloadImageUrl = serviceRequestUrl + pathSeparator + downloadImagePath;
+        downloadImageUrl = imageBaseUrl + pathSeparator + downloadImagePath;
         upLoadFileUrl = serviceRequestUrl + pathSeparator + uploadFilePath;
+
     }
 
     /**

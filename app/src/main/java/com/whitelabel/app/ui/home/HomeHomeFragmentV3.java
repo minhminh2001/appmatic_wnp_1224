@@ -23,11 +23,11 @@ import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomTextView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 /**
@@ -100,6 +100,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_category, container, false);
         ButterKnife.bind(this, view);
+        setRetryTheme(view);
         return view;
     }
     @Override
@@ -112,6 +113,10 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mImageLoader=new ImageLoader(getActivity());
+        if(ivTryAgain!=null&&btnTryAgain!=null){
+            ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(getActivity(),R.mipmap.connection_break_loading));
+            btnTryAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        }
         swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         swipeContainer.setOnRefreshListener(this);
         if(mIndex==0) {
@@ -193,4 +198,3 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         return  new HomeCategoryDetailPresenterImpl();
     }
 }
-

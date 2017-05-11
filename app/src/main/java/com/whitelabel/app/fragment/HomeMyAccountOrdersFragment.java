@@ -1,6 +1,4 @@
 package com.whitelabel.app.fragment;
-
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -14,7 +12,6 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.MyAccountOrderDetailActivity;
 import com.whitelabel.app.adapter.OrderListRecyclerViewAdapter;
@@ -30,7 +27,6 @@ import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.RefreshLoadMoreRecyclerView;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +75,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                 break;
         }
     }
-
     public void showSwipeRefreshDialog() {
         dataHandler.post(new Runnable() {
             @Override
@@ -124,7 +119,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         showSwipeRefreshDialog();
         setHasOptionsMenu(true);
     }
-
     public void initRecyclerView() {
         recyclerView.setPullLoadEnable(false);
         mOrderListRecyclerViewAdapter = new OrderListRecyclerViewAdapter(homeActivity, list_outer_record, true, mImageLoader);
@@ -164,7 +158,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                             break;
                         }
                     }
-
                 }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("orderOuter", orderOuter_param);
@@ -175,7 +168,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             }
         });
     }
-
     public void initData() {
         mHandler.post(new Runnable() {
             @Override
@@ -188,8 +180,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             }
         });
     }
-
-
     private void init() {
         recyclerView.setVisibility(View.GONE);
         if (list_outer_record == null) {

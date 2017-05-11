@@ -65,17 +65,14 @@ android {
     }
     dexOptions {
         javaMaxHeapSize "4g"
-
     }
 }
-
 ext{
     SUPPORT_LIB_VERSION = '24.1.0'
     BUTTERKNIFE_VERSION='8.4.0'
     PLAY_SERVICE_VERSION='9.4.0'
     RETROFIT2_VERSION='2.1.0'
     PERMISSION_VERSION='2.3.1'
-
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -91,7 +88,7 @@ dependencies {
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:${PERMISSION_VERSION}"
     compile "com.google.android.gms:play-services-gcm:${PLAY_SERVICE_VERSION}"
     compile "com.google.android.gms:play-services-analytics:${PLAY_SERVICE_VERSION}"
-    compile "com.google.android.gms:play-services-auth:${PLAY_SERVICE_VERSION}"
+//    compile "com.google.android.gms:play-services-auth:${PLAY_SERVICE_VERSION}"
     compile "com.google.firebase:firebase-core:${PLAY_SERVICE_VERSION}"
 //    compile rootProject.ext.dependencies["gson"]
     compile "com.squareup.okhttp3:okhttp-urlconnection:3.5.0"
@@ -103,7 +100,7 @@ dependencies {
     compile "com.molpay:molpay-mobile-xdk-android:3.3.0"
     compile "io.reactivex:rxjava:1.1.6"
     compile "io.reactivex:rxandroid:1.2.1"
-    compile "com.journeyapps:zxing-android-embedded:3.4.0"
+//    compile "com.journeyapps:zxing-android-embedded:3.4.0"
     compile "com.squareup.okhttp3:logging-interceptor:3.5.0"
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.paypal.sdk:paypal-android-sdk:2.15.3'

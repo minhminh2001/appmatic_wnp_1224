@@ -10,15 +10,16 @@
         android:id="@+id/zxing_viewfinder_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
+    <!--android:background="@color/zxing_transparent"-->
+    <!--android:textColor="@color/zxing_status_text"-->
     <TextView
         android:id="@+id/zxing_status_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="50dp"
-        android:background="@color/zxing_transparent"
+
         android:text="@string/qr_instructions"
-        android:textColor="@color/zxing_status_text"
+
         style="@style/font_family_roboto_medium"/>
 </merge>

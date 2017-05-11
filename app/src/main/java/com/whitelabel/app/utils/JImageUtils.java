@@ -67,7 +67,6 @@ public class JImageUtils {
 
         return bitmap;
     }
-
     public static  Drawable getButtonBackgroudSolidDrawable(Context context){
         StateListDrawable drawable=new StateListDrawable();
         GradientDrawable  normal= new GradientDrawable();
@@ -81,7 +80,6 @@ public class JImageUtils {
         drawable.addState(new int[]{},normal);
         return drawable;
     }
-
     public static  Drawable  getbuttonBakcgroundStrokeDrawable(Context context){
         StateListDrawable drawable=new StateListDrawable();
         GradientDrawable  normal= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
@@ -93,8 +91,6 @@ public class JImageUtils {
 //        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
         return drawable;
     }
-
-
     public static ColorStateList getThemeTextColorDrawable(int defaultColor){
         int[] colors = new int[] { WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(), defaultColor,defaultColor};
         int[][] states = new int[3][];
@@ -158,7 +154,7 @@ public class JImageUtils {
             if (imageUrl.contains("http") || imageUrl.contains("https")) {
                 url = HttpUrl.parse(imageUrl).newBuilder().build().toString();
             } else {
-                HttpUrl.Builder urlBuilder = HttpUrl.parse(GlobalData.serviceRequestUrl).newBuilder()
+                HttpUrl.Builder urlBuilder = HttpUrl.parse(GlobalData.imageBaseUrl).newBuilder()
                         .addPathSegments(GlobalData.downloadImagePath)
                         .addQueryParameter("name", imageUrl);
 

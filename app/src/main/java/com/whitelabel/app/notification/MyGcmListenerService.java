@@ -20,6 +20,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 import com.google.gson.Gson;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.NotificationDetailActivity;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.NotificationReceivedEntity;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
@@ -48,17 +49,18 @@ public class MyGcmListenerService extends GcmListenerService {
      */
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        String message = data.getString("img_message");
+
+        String message = data.getString("message");
 
         JLogUtils.d(TAG, "From: " + from);
-        JLogUtils.d(TAG, "Message: " + message);
+        JLogUtils.d(TAG, "Message: " + data);
 
         createNotification(message);
     }
 
     private int getNotificationIcon() {
         boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
-        return useWhiteIcon ? R.mipmap.notification_logo : R.mipmap.icon_v1;
+        return useWhiteIcon ? R.mipmap.icon_v1 : R.mipmap.icon_v1;
     }
 
     private static int requestId = 1;
@@ -74,7 +76,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
         final NotificationCompat.Builder nb = new NotificationCompat.Builder(this);
         nb.setSmallIcon(getNotificationIcon())
-                .setColor(getResources().getColor(R.color.tranPurple))
+                .setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor())
                 .setSmallIcon(getNotificationIcon())
                 .setContentTitle(entity.getTitle())
                 .setContentText(entity.getMessage())
