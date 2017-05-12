@@ -4,11 +4,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,10 +23,12 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.NotificationCallback;
 import com.whitelabel.app.dao.NotificationDao;
+import com.whitelabel.app.fragment.CategoryListingFragment;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.BadgeUtils;
 import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
@@ -69,6 +76,43 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
     protected abstract void jumpShippingServicePage();
     protected abstract void jumpAddressPage();
     protected abstract void jumpStoreCreditPage();
+
+
+    private void setAppBarLayoutBehaviour() {
+        AppBarLayout.Behavior behavior = new AppBarLayout.Behavior() {
+
+            @Override
+            public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View directTargetChild, View target, int nestedScrollAxes) {
+                // Trigger the following events if it is a vertical scrolling
+                return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL || super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
+            }
+
+            @Override
+            public void onNestedScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+                super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+
+                // If I slowly reach the top, without fling, show the RecyclerView
+                int[] firstVisiblePositions = ((StaggeredGridLayoutManager) ((RecyclerView) target).getLayoutManager()).findFirstCompletelyVisibleItemPositions(null);
+                for (int position : firstVisiblePositions) {
+                    if (position == 0) {
+//                        showRelatedTerms();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public boolean onNestedFling(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, float velocityX, float velocityY, boolean consumed) {
+                if (velocityY > 500) {
+                    // Hide the RecyclerView
+                } else if (velocityY < -500) {
+                    // Show the recyclerView
+                }
+                return true;
+            }
+        };
+        ((CoordinatorLayout.LayoutParams) appbar_layout.getLayoutParams()).setBehavior(behavior);
+    }
     @Override
     public void onClick(View v) {
         int DELAY = 250;
@@ -344,6 +388,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 //        mDao.getNotificationDetailCount(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
 //        SendBoardUtil.sendNotificationBoard(this, SendBoardUtil.READCODE, null);
         initLayout();
+//        setAppBarLayoutBehaviour();
 //        mActionDrawableToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.openDrawer, R.string.closeDrawer) {
 //            @Override
 //            public void onDrawerOpened(View drawerView) {

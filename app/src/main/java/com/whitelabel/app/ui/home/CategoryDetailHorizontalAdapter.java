@@ -8,20 +8,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.FlowViewAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.widget.CustomRecyclerView;
+import com.whitelabel.app.utils.JLogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,6 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
     public void setOnBestProductionItemClickListener(OnItemClickListener bestSellersClickListener){
         this.bestSellersClickListener=bestSellersClickListener;
     }
-
     public void setOnNewArrivalsItemClickListener(OnItemClickListener  newArrivalsClickListener){
         this.newArrivalsClickListener=newArrivalsClickListener;
     }
@@ -122,6 +121,13 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
             }
             ItemViewHolder  itemViewHolder= (ItemViewHolder) holder;
             itemViewHolder.rvCategory.setVisibility(View.VISIBLE);
+            itemViewHolder.rvCategory.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    JLogUtils.i("ray1","montionEvent:"+event.getAction());
+                    return false;
+                }
+            });
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(itemViewHolder.itemView.getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             itemViewHolder.rvCategory.setLayoutManager(linearLayoutManager);

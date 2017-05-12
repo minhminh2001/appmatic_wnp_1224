@@ -35,7 +35,6 @@ import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.FileUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -148,7 +147,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                         Bundle bundle_success = new Bundle();
                         bundle_success.putString("payment_status", "1");
                         bundle_success.putString("lastrealorderid", mActivity.get().mOrderNumber);
-                        bundle_success.putInt("paymentMethod", CheckoutPaymentRedirectActivity.PAYMENT_ONLINE);
+                        bundle_success.putInt("paymentMethod", CheckoutPaymentRedirectActivity.PAYMENT_PALPAY);
                         mActivity.get().startNextActivity(bundle_success, CheckoutPaymentRedirectActivity.class, true);
                     } else {
                         String errorMsg = (String) msg.obj;

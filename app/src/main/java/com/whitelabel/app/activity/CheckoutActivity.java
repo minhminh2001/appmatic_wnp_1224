@@ -31,8 +31,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.molpay.molpayxdk.MOLPayActivity;
-import com.paypal.android.sdk.payments.PayPalConfiguration;
-import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
@@ -71,7 +69,6 @@ import com.whitelabel.app.widget.MaterialDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.lang.ref.WeakReference;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
@@ -1016,7 +1013,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         bundle_success.putString("shipping_fee", mActivity.get().shippingFee);
                         bundle_success.putSerializable("paymentSaveReturnEntity", mActivity.get().paymentSaveReturnEntity);
                         bundle_success.putInt("fromType", mActivity.get().fromType);
-                        bundle_success.putInt("paymentMethod", CheckoutPaymentRedirectActivity.PAYMENT_ONLINE);
+                        bundle_success.putInt("paymentMethod", CheckoutPaymentRedirectActivity.PAYMENT_PALPAY);
                         if (mActivity.get().mDiscountBean != null) {
                             bundle_success.putSerializable("discountBean", mActivity.get().mDiscountBean);
                         }
@@ -1851,7 +1848,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 ////                bundle_success.putString("shipping_fee", shippingFee);
 ////                bundle_success.putSerializable("paymentSaveReturnEntity", paymentSaveReturnEntity);
 ////                bundle_success.putInt("fromType", fromType);
-////                bundle_success.putInt("paymentMethod",CheckoutPaymentRedirectActivity.PAYMENT_ONLINE);
+////                bundle_success.putInt("paymentMethod",CheckoutPaymentRedirectActivity.PAYMENT_PALPAY);
 ////                if(mDiscountBean!=null){
 ////                    bundle_success.putSerializable("discountBean",mDiscountBean);
 ////                }

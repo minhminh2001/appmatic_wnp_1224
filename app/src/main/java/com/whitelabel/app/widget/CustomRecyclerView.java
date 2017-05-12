@@ -8,12 +8,15 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.widget.photoview.gestures.GestureDetector;
+import com.whitelabel.app.widget.photoview.gestures.OnGestureListener;
 
 /**
  * Created by ray on 2015/9/1.
  */
 public class CustomRecyclerView extends RecyclerView {
-
+    private boolean isStopHorizontalScroll = false;
+    private boolean isDisallowParentTouch = false;
     /**
      * 记录当前第一个View
      */
@@ -27,14 +30,53 @@ public class CustomRecyclerView extends RecyclerView {
         this.mItemScrollChangeListener = mItemScrollChangeListener;
     }
 
-    public interface OnItemScrollChangeListener
-    {
+    public interface OnItemScrollChangeListener {
         void onChange(View view, int position);
     }
 
-    public CustomRecyclerView(Context context, AttributeSet attrs)
-    {
+    private static  final  int  FLING_MIN_DISTANCE = 50;
+    private static  final  int  FLING_MIN_VELOCITY = 0;
+    private android.view.GestureDetector   gesture=new android.view.GestureDetector(getContext(), new android.view.GestureDetector.OnGestureListener() {
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return false;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent e) {
+
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            return false;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            return false;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if(e1.getX()-e2.getX()>FLING_MIN_DISTANCE&&Math.abs(velocityX)>FLING_MIN_VELOCITY&&e2.getX()-e1.getX() > FLING_MIN_DISTANCE
+                    && Math.abs(velocityX) > FLING_MIN_VELOCITY){
+                return true;
+            }
+            return false;
+        }
+    });
+
+    public CustomRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+
+
         // TODO Auto-generated constructor stub
 
         initTypeface(context,attrs);
@@ -61,14 +103,14 @@ public class CustomRecyclerView extends RecyclerView {
             }
         });
     }
-    private boolean isStopHorizontalScroll = false;
-    private boolean isDisallowParentTouch = false;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (isStopHorizontalScroll) {
-            return false;
-        } else {
+        if (gesture.onTouchEvent(event)) {
             return super.onTouchEvent(event);
+
+        } else {
+            return false;
         }
     }
     public void setIsStopHorizontalScroll(boolean isStopHorizontalScroll) {
@@ -78,6 +120,8 @@ public class CustomRecyclerView extends RecyclerView {
     private void setParentScrollAble(boolean flag) {
         getParent().requestDisallowInterceptTouchEvent(!flag);
     }
+
+
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
@@ -115,10 +159,8 @@ public class CustomRecyclerView extends RecyclerView {
         if (types == null) {
             return;
         }
-
         isStopHorizontalScroll = types.getBoolean(R.styleable.CustomViewPagerStyle_isStopHorizontalScroll, false);
         isDisallowParentTouch = types.getBoolean(R.styleable.CustomViewPagerStyle_isDisallowParentTouch, false);
-
         types.recycle();
     }
 
@@ -136,6 +178,7 @@ public class CustomRecyclerView extends RecyclerView {
                     getChildPosition(mCurrentView));
         }
     }
+
     @Override
     public void onScrollStateChanged(int arg0)
     {

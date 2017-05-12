@@ -30,7 +30,7 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
     private Serializable paymentSaveReturnEntity;
     private boolean isSuccess;
     private String session_key;
-    public  static final int PAYMENT_ONLINE=1;
+    public  static final int PAYMENT_PALPAY =1;
     public  static final int PAYMENT_CARD=2;
     public int paymentMethod;
     private int fromType;
@@ -51,8 +51,23 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_payment_redirect);
         initToolBar();
-        initIntent();
-        initWebVeiw();
+//        initIntent();
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null) {
+            fromType = getIntent().getIntExtra("fromType", 0);
+            paymentMethod = bundle.getInt("paymentMethod", PAYMENT_CARD);
+            session_key = bundle.getString("session_key");
+            grandTotal = bundle.getString("grand_total");
+            shippingFee = bundle.getString("shipping_fee");
+            lastrealorderid = bundle.getString("lastrealorderid");
+            paymentSaveReturnEntity = bundle.getSerializable("paymentSaveReturnEntity");
+            mDiscountBean = (ShoppingDiscountBean) bundle.getSerializable("discountBean");
+        }
+        if(paymentMethod==PAYMENT_PALPAY){
+            startPaymentStatusScreen();
+        }else {
+            initWebVeiw();
+        }
     }
     private void initToolBar() {
         setTitle(getResources().getString(R.string.CHECKOUT));
@@ -113,17 +128,7 @@ public class CheckoutPaymentRedirectActivity extends com.whitelabel.app.BaseActi
         webView.postUrl(url, null/*EncodingUtils.getBytes(params, "BASE64")*/);
     }
     private void initIntent() {
-        Bundle bundle = getIntent().getExtras();
-        if(bundle!=null) {
-            fromType = getIntent().getIntExtra("fromType", 0);
-            paymentMethod = bundle.getInt("paymentMethod", PAYMENT_CARD);
-            session_key = bundle.getString("session_key");
-            grandTotal = bundle.getString("grand_total");
-            shippingFee = bundle.getString("shipping_fee");
-            lastrealorderid = bundle.getString("lastrealorderid");
-            paymentSaveReturnEntity = bundle.getSerializable("paymentSaveReturnEntity");
-            mDiscountBean = (ShoppingDiscountBean) bundle.getSerializable("discountBean");
-        }
+
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

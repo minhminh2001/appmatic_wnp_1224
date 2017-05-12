@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -42,10 +43,10 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     public final static String ARG_CATEGORY_INDEX = "category_index";
     @BindView(R.id.recyclerView1)
     RecyclerView recyclerView1;
-    @BindView(R.id.v_view)
-    View vView;
-    @BindView(R.id.swipe_container)
-    CustomSwipefreshLayout swipeContainer;
+//    @BindView(R.id.v_view)
+//    View vView;
+//    @BindView(R.id.swipe_container)
+//    CustomSwipefreshLayout swipeContainer;
     @BindView(R.id.iv_error)
     ImageButton ivError;
     @BindView(R.id.ctv_error_header)
@@ -113,11 +114,11 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
+        super.onActivityCreated(savedInstanceState);
         mImageLoader=new ImageLoader(getActivity());
-        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-        swipeContainer.setOnRefreshListener(this);
+//        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+//        swipeContainer.setOnRefreshListener(this);
         requestData();
     }
     @Override
@@ -134,6 +135,7 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setScrollToolBarEnable(true);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_home_fragment_v4, container, false);
         ButterKnife.bind(this, view);
@@ -167,6 +169,13 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
              LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
              recyclerView1.setLayoutManager(linearLayoutManager);
              recyclerView1.setAdapter(mAdapter);
+             recyclerView1.setOnTouchListener(new View.OnTouchListener() {
+                 @Override
+                 public boolean onTouch(View v, MotionEvent event) {
+                     JLogUtils.i("ray","MotionEvent:"+event);
+                     return false;
+                 }
+             });
          }
     }
     private ProductListItemToProductDetailsEntity getProductListItemToProductDetailsEntity(SVRAppserviceProductSearchResultsItemReturnEntity e) {
@@ -193,9 +202,9 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     }
     @Override
     public void closeRefreshLaout() {
-        if(swipeContainer!=null){
-            swipeContainer.setRefreshing(false);
-        }
+//        if(swipeContainer!=null){
+//            swipeContainer.setRefreshing(false);
+//        }
     }
 
     @Override

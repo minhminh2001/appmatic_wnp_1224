@@ -418,7 +418,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             }
         });
 
-        productItemEntityArrayList = new ArrayList<SVRAppserviceProductSearchResultsItemReturnEntity>();
+        productItemEntityArrayList = new ArrayList<>();
         productListAdapter = new ProductListAdapter(productListActivity, productItemEntityArrayList, mImageLoader,this, this);
         cxlvProductList.setAdapter(productListAdapter);
 
