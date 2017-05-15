@@ -160,9 +160,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
 
             super.handleMessage(msg);
         }
-
     }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -172,11 +170,11 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
             ex.printStackTrace();
         }
     }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView = inflater.inflate(R.layout.fragment_addressbook, null);
+        setRetryTheme(contentView);
         return contentView;
     }
 

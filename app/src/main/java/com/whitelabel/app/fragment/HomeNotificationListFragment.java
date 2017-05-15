@@ -66,6 +66,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
                              Bundle savedInstanceState) {
         JLogUtils.d(TAG, "onCreateView: ");
         view = inflater.inflate(R.layout.fragment_home_notification_list, null);
+        setRetryTheme(view);
         clistView = (CustomXListView) view.findViewById(R.id.lv_notification);
         rlEmpty = (LinearLayout) view.findViewById(R.id.rl_notification_empty);
         swipeContainer= (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);

@@ -345,6 +345,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View contentView = inflater.inflate(R.layout.fragment_wishlist, null);
+        setRetryTheme(contentView);
         mImageLoader = new ImageLoader(homeActivity);
         connectionLayout = contentView.findViewById(R.id.connectionBreaks);
         requestErrorHelper = new RequestErrorHelper(getContext(), connectionLayout);

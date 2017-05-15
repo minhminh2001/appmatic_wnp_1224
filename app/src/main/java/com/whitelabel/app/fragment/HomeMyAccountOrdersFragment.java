@@ -86,6 +86,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_myaccount_order_list_new, null);
+        setRetryTheme(view);
         mImageLoader = new ImageLoader(homeActivity);
         recyclerView = (RefreshLoadMoreRecyclerView) view.findViewById(R.id.list);
         vsEmpty = (ViewStub) view.findViewById(R.id.tv_myaccount_orderlist_empty_new);

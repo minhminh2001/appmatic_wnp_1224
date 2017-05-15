@@ -40,8 +40,8 @@
 
 
 
--keep class com.imaginato.gemfive.model.** { *; }
--dontwarn com.imaginato.gemfive.model.**
+-keep class com.whitelabel.app.model.** { *; }
+-dontwarn com.whitelabel.app.model.**
 
 -keep class javax.annotation.**{*;}
 -dontwarn javax.annotation.**
