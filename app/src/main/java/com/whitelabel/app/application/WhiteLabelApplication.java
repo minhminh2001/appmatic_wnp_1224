@@ -6,6 +6,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.android.volley.Request;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
@@ -17,6 +18,7 @@ import com.whitelabel.app.model.ApplicationConfigurationEntity;
 import com.whitelabel.app.model.PhoneConfigurationEntity;
 import com.whitelabel.app.network.HttpClientRequest;
 import com.whitelabel.app.utils.JToolUtils;
+import io.fabric.sdk.android.Fabric;
 /**
  * Created by imaginato on 2015/6/10.
  */
@@ -62,6 +64,7 @@ public class WhiteLabelApplication extends MultiDexApplication {
     public void onCreate() {
         MultiDex.install(this);
         super.onCreate();
+
         try {
             mInstance = this;
             GlobalData.init(this);

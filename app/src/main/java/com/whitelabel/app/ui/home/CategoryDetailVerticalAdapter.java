@@ -164,13 +164,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         if (viewType == TYPE_HEADER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_category_detail_header, null);
             return new HeaderViewHolder(view);
-        }
-//        else if (viewType == TYPE_FOOTER) {
-//            RefreshLoadMoreRecyclerViewV2.CustomDragRecyclerFooterView footerView = new RefreshLoadMoreRecyclerViewV2.CustomDragRecyclerFooterView(parent.getContext());
-//            return new FooterHolder(footerView);
-//        }
-//
-        else if (viewType == TYPE_MIDDLE) {
+        }else if (viewType == TYPE_MIDDLE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_base_sellers, null);
             return new ViewHolder(view);
         } else {
@@ -178,7 +172,6 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
             return new ItemViewHolder(view);
         }
     }
-
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
@@ -198,6 +191,11 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                     headerViewHolder.detailViewpager.getContext());
             int imageHeight = width * 240 / 490;
             headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
+            if(categoryDetailModel.getNewArrivalProducts()==null||categoryDetailModel.getNewArrivalProducts().size()==0){
+                headerViewHolder.llNewArrivals.setVisibility(View.GONE);
+            }else{
+                headerViewHolder.llNewArrivals.setVisibility(View.VISIBLE);
+            }
             if (TextUtils.isEmpty(categoryDetailModel.getCategory_img())) {
                 headerViewHolder.detailViewpager.setVisibility(View.VISIBLE);
             } else {
@@ -312,11 +310,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
             setMerchantName(leftProductEntity.getVendorDisplayName(), leftProductEntity.getVendor_id(), itemViewHolder.ctvCurationProductMerchant);
         }else if(holder instanceof ViewHolder){
             ViewHolder viewHolder= (ViewHolder) holder;
-            if(position==0){
-                viewHolder.tvTxt.setText(viewHolder.itemView.getContext().getResources().getString(R.string.home_new_arrivals));
-            }else{
                 viewHolder.tvTxt.setText(viewHolder.itemView.getContext().getResources().getString(R.string.home_best_sellers));
-            }
         }
     }
     private void setWishIconColorToBlankNoAnim(ImageView ivWishIcon) {
@@ -325,39 +319,12 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         ivWishIcon.setTag(repeatAnim);
         ivWishIcon.setImageResource(R.mipmap.wishlist_purple_normal_v2);
     }
-
     private void setWishIconColorToPurpleNoAnim(ImageView ivWishIcon) {
         ivWishIcon.setVisibility(View.VISIBLE);
         ivWishIcon.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
         boolean repeatAnim = false;
         ivWishIcon.setTag(repeatAnim);
     }
-
-//    private final ViewPager.OnPageChangeListener mPageChangeListener = new ViewPager.OnPageChangeListener() {
-//        @Override
-//        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//        }
-//
-//        @Override
-//        public void onPageSelected(int position) {
-//            for (int index = 0; index < mImageViewTips.size(); index++) {
-//                if (index == position) {
-//                    mImageViewTips.get(index).setBackground(JImageUtils.getThemeCircle( mImageViewTips.get(index).getContext()));
-//                } else {
-//                    mImageViewTips.get(index).setBackgroundResource(R.mipmap.dot_unchecked);
-//                }
-//            }
-//        }
-//
-//        @Override
-//        public void onPageScrollStateChanged(int state) {
-//
-//        }
-//    };
-
-
-
     private void addtoWishlistsendRequest(Context context,SVRAppserviceProductSearchResultsItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(ivWwishIcon.getContext())) {
             entity.setIsLike(1);
@@ -384,7 +351,6 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
             @Override
             public void onAnimationStart(Animation animation) {
             }
-
             @Override
             public void onAnimationEnd(Animation animation) {
                 ivWishIcon.setVisibility(View.GONE);
@@ -458,7 +424,11 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     }
     @Override
     public int getItemCount() {
-        return categoryDetailModel.getBestSellerProducts().size() + categoryDetailModel.getNewArrivalProducts().size() + 2;
+        int offset=1;
+        if(categoryDetailModel.getBestSellerProducts().size()!=0){
+            offset+=1;
+        }
+        return categoryDetailModel.getBestSellerProducts().size() + categoryDetailModel.getNewArrivalProducts().size()+offset;
     }
 //
 //    static class HeaderViewHolder extends RecyclerView.ViewHolder {
@@ -582,6 +552,8 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         View line;
         @BindView(R.id.tv_txt)
         TextView tvTxt;
+        @BindView(R.id.ll_new_arrivals)
+        LinearLayout  llNewArrivals;
 
         HeaderViewHolder(View view) {
             super(view);

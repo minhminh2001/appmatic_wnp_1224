@@ -45,8 +45,8 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     RecyclerView recyclerView1;
 //    @BindView(R.id.v_view)
 //    View vView;
-//    @BindView(R.id.swipe_container)
-//    CustomSwipefreshLayout swipeContainer;
+    @BindView(R.id.swipe_container)
+    CustomSwipefreshLayout swipeContainer;
     @BindView(R.id.iv_error)
     ImageButton ivError;
     @BindView(R.id.ctv_error_header)
@@ -70,10 +70,6 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     private String mCategoryId;
     private int mIndex;
     private ImageLoader mImageLoader;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    public HomeHomeFragmentV4() {
-    }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -114,11 +110,11 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-
         super.onActivityCreated(savedInstanceState);
-        mImageLoader=new ImageLoader(getActivity());
 //        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-//        swipeContainer.setOnRefreshListener(this);
+        mImageLoader=new ImageLoader(getActivity());
+        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        swipeContainer.setOnRefreshListener(this);
         requestData();
     }
     @Override
@@ -147,8 +143,6 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
         if(getActivity()!=null)
             JViewUtils.showErrorToast(getActivity(),errorMsg);
     }
-
-
     @Override
     public void loadData(final CategoryDetailModel categoryDetailModel) {
          if(getActivity()!=null){
@@ -202,11 +196,10 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     }
     @Override
     public void closeRefreshLaout() {
-//        if(swipeContainer!=null){
-//            swipeContainer.setRefreshing(false);
-//        }
+        if(swipeContainer!=null){
+            swipeContainer.setRefreshing(false);
+        }
     }
-
     @Override
     public void onDetach() {
         super.onDetach();

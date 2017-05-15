@@ -68,7 +68,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
  */
 public class OkHttpClientManager {
     private static final String TAG = "OkHttpClientManager";
-
     private static OkHttpClientManager mInstance;
     private OkHttpClient mOkHttpClient;
     private Handler mDelivery;
@@ -79,13 +78,11 @@ public class OkHttpClientManager {
     private GetDelegate mGetDelegate = new GetDelegate();
     private UploadDelegate mUploadDelegate = new UploadDelegate();
     private PostDelegate mPostDelegate = new PostDelegate();
-
     private OkHttpClientManager() {
         mDelivery = new Handler(Looper.getMainLooper());
         mGson = new Gson();
         mOkHttpClient = getOkHTTPClient();
     }
-
     public static OkHttpClientManager getInstance() {
         if (mInstance == null) {
             synchronized (OkHttpClientManager.class) {

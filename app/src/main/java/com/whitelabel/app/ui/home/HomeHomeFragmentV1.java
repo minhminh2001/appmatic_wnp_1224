@@ -167,9 +167,8 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeCont
         mCommonCallback.switchMenu(HomeCommonCallback.MENU_HOME);
         mImageLoader=new ImageLoader(getActivity());
         initRecyclerView();
-
         mHomePresenter = getPresenter();
-       requestData();
+        requestData();
         setHasOptionsMenu(true);
     }
     @Override

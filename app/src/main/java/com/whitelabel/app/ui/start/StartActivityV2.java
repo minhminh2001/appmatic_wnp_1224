@@ -7,6 +7,8 @@ import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.whitelabel.app.R;
@@ -18,8 +20,12 @@ import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.handler.INITApp;
 import com.whitelabel.app.notification.RegistrationIntentService;
 import com.whitelabel.app.task.INITExecutor;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import java.lang.ref.WeakReference;
+
+import io.fabric.sdk.android.Fabric;
+
 /**
  * Created by imaginato on 2015/6/10.
  */
@@ -88,7 +94,7 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-//        gaTrackNotificationSwitch();
+        Fabric.with(this, new Crashlytics());
         mStartTimeLong = System.currentTimeMillis();
         ImageView imageView= (ImageView) findViewById(R.id.start_logo_imageview);
         imageView.setImageResource(R.mipmap.icon_v1);
@@ -98,21 +104,8 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
         }
         mCallback=new INITApp(StartActivityV2.this, new MeInitCallBack(this));
         INITExecutor.getInstance().execute(mCallback);
-//        mPresenter.getConfigInfo("","");
-        mPresenter.getConfigInfo();
-//        List<String> strs=new ArrayList<>();
-//        strs.add("1");
-//        strs.add("1");
-//        strs.add("1");
-//        strs.add("1");
-//        strs.add("1");
-//        strs.add("1");
-//
-//        for(String str: strs){
-//             strs.remove(str);
-//        }
-//        JLogUtils.i("ray","strs:"+strs.size());
-//        mPresenter.openApp(mSessionKey,"");
+        mPresenter.getConfigInfo("","");
+//        mPresenter.getConfigInfo();
     }
     static class MeInitCallBack extends   INITCallback{
         WeakReference<StartActivityV2> mStartActivity;
@@ -130,6 +123,7 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
     }
     public  void delayStart() {
         long deploy=System.currentTimeMillis()-mStartTimeLong;
+        JLogUtils.i("ray","deploy:"+deploy);
         if(deploy<DELAY_TIME){
            postDelayed(deploy);
         }else{
@@ -171,28 +165,6 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
         }
         return true;
     }
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-//    private boolean checkInstallationPlayServices() {
-//        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-//        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-//        if (resultCode != ConnectionResult.SUCCESS) {
-//            if (apiAvailability.isUserResolvableError(resultCode)) {
-//                if(mProgressDialog ==null||!mProgressDialog.isShowing()) {
-//                    mProgressDialog = apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST);
-//                    mProgressDialog.show();
-//                }
-//            } else {
-//                JLogUtils.i(TAG, "This device is not supported.");
-//                Toast.makeText(this, "This device is not supported.", Toast.LENGTH_SHORT).show();
-//                finish();
-//            }
-//            return false;
-//        }
-//        return true;
-//    }
     @Override
     protected void onStop() {
         super.onStop();

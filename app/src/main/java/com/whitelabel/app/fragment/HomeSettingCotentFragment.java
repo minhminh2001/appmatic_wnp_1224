@@ -1,5 +1,4 @@
 package com.whitelabel.app.fragment;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -16,11 +15,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.whitelabel.app.BuildConfig;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -28,7 +26,6 @@ import com.whitelabel.app.dao.OtherDao;
 import com.whitelabel.app.utils.AppUtils;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
-import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -36,7 +33,6 @@ import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomMyDialog;
 import com.whitelabel.app.widget.MultiSwitchButton;
-
 import java.lang.ref.WeakReference;
 
 /**
@@ -48,7 +44,7 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
     private Dialog mDialog;
     private  boolean signing=false;
     private OtherDao mOtherDao;
-
+    public static  final  int CODE=8000;
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -60,14 +56,11 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         view=inflater.inflate(R.layout.fragment_settingscontent,null);
         return view;
     }
-
     private void setAppVersionName(TextView version) {
         if(!TextUtils.isEmpty(AppUtils.getAppVersionName(homeActivity))){
             version.setText(" "+ AppUtils.getAppVersionName(homeActivity));
         }
     }
-
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -76,7 +69,6 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
             mCommonCallback.getToolBar().getMenu().clear();
             mCommonCallback.setTitle(getResources().getString(R.string.settings));
         }
-        LinearLayout llSearch = (LinearLayout) view.findViewById(R.id.home_search);
         TextView textView_cancle = (TextView) view.findViewById(R.id.home_search_cancel);
         String TAG = this.getClass().getSimpleName();
         RelativeLayout rlSettingRate = (RelativeLayout) view.findViewById(R.id.rl_setting_rate);
@@ -87,9 +79,6 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         textView_cancle.setOnClickListener(this);
         TextView sign_out = (TextView) view.findViewById(R.id.sign_out);
         JViewUtils.setStrokeButtonGlobalStyle(getActivity(), sign_out);
-//
-//        sign_out.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(getActivity()));
-//        sign_out.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         sign_out.setOnClickListener(this);
         RelativeLayout rlBack = (RelativeLayout) view.findViewById(R.id.rl_back);
         rlBack.setOnClickListener(this);
@@ -109,7 +98,6 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         if(WhiteLabelApplication.getInstance().getAppConfiguration().isSignIn(getActivity())) {
             sbClosedSound.setCheckedImmediately(WhiteLabelApplication.getInstance().getAppConfiguration().getUser().isClosedSound());
         }
-
         sbClosedSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -119,37 +107,13 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
                 }
             }
         });
-//        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                String newsletterSubscribed;
-//                if(WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)) {
-//                    String session_key = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-//                    if (isChecked) {
-//                        WhiteLabelApplication.getAppConfiguration().getUser().setNewsletterSubscribed(1);
-//                        WhiteLabelApplication.getAppConfiguration().updateDate(homeActivity, WhiteLabelApplication.getAppConfiguration().getUser());
-//                        newsletterSubscribed = "1";
-//                    } else {
-//                        WhiteLabelApplication.getAppConfiguration().getUser().setNewsletterSubscribed(0);
-//                        newsletterSubscribed = "0";
-//                        WhiteLabelApplication.getAppConfiguration().updateDate(homeActivity, WhiteLabelApplication.getAppConfiguration().getUser());
-//                    }
-//                    mOtherDao.changeSubscribed(session_key,newsletterSubscribed);
-//                }
-//            }
-//        });
-    //    SharedPreferences share=settingsActivity.getSharedPreferences("session_key",Activity.MODE_PRIVATE);
     }
-
-    public static  final  int CODE=8000;
-
     public  static final class DataHandler extends Handler{
         private final WeakReference<Activity> mActivity;
         private final WeakReference<HomeSettingCotentFragment> mFragment;
-
         public DataHandler(Activity activity,HomeSettingCotentFragment fragment){
-                mActivity=new WeakReference<Activity>(activity);
-                mFragment=new WeakReference<HomeSettingCotentFragment>(fragment);
+                mActivity=new WeakReference<>(activity);
+                mFragment=new WeakReference<>(fragment);
         }
         @Override
         public void handleMessage(Message msg) {
@@ -158,13 +122,6 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
             }
             switch (msg.what){
                 case OtherDao.REQUEST_SUBSCRIBER:
-//                    if(msg.arg1==OtherDao.RESPONSE_SUCCESS){
-//                    }else{
-//                        String errorMsg= (String) msg.obj;
-//                        if(!JToolUtils.expireHandler(mActivity.get(),errorMsg,1000)){
-//                            Toast.makeText(mActivity.get(),errorMsg+"",Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
                     break;
                 case OtherDao.REQUEST_LOGOUT:
                     if (mFragment.get().mDialog != null) {
@@ -187,7 +144,6 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
                             ex.getMessage();
                         }
                         WhiteLabelApplication.getAppConfiguration().signOut(mActivity.get());
-//                        SVRAppServiceCustomerSignOut signOutEntity = (SVRAppServiceCustomerSignOut) result;
                         Intent intent = new Intent(mActivity.get(), LoginRegisterActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("Activity", "start");
@@ -196,14 +152,13 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
                         mActivity.get().overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
                         mFragment.get().signing = false;
                         mActivity.get().finish();
-
                         JLogUtils.i("googleGA", "Sign Out");
                     }else{
-                              String errorMsg= (String) msg.obj;
-                              mFragment.get().signing = false;
-                              if ((!JToolUtils.expireHandler(mActivity.get(),errorMsg,1000))) {
-                                  Toast.makeText(mActivity.get(),errorMsg+"",Toast.LENGTH_LONG).show();
-                              }
+                        String errorMsg= (String) msg.obj;
+                        mFragment.get().signing = false;
+                        if ((!JToolUtils.expireHandler(mActivity.get(),errorMsg,1000))) {
+                          Toast.makeText(mActivity.get(),errorMsg+"",Toast.LENGTH_LONG).show();
+                         }
                     }
                     break;
                 case OtherDao.REQUEST_ERROR:
@@ -216,11 +171,9 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
                     break;
 
             }
-
             super.handleMessage(msg);
         }
     }
-
     private void showSignOutDialogPrompt(){
         CustomMyDialog.Builder builder = new CustomMyDialog.Builder(getActivity());
         builder.setMessage(getString(R.string.are_you_sure_you_want_signout));
@@ -256,7 +209,7 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         switch (v.getId()){
             case R.id.rl_setting_rate:
                 Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(getString(R.string.play_store_url)));
+                i.setData(Uri.parse(String.format(getString(R.string.play_store_url), BuildConfig.APPLICATION_ID)));
                 startActivity(i);
                 break;
             case R.id.sign_out:
@@ -266,43 +219,13 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
                 break;
         }
     }
-
     @Override
     public void onResume() {
         super.onResume();
-//        int kai= 0;
-//        if(WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)) {
-//            kai = WhiteLabelApplication.getAppConfiguration().getUser().getNewsletterSubscribed();
-//        }
-//        if(kai == 1) {
-//            switchButton.setChecked(true);
-//        } else {
-//            switchButton.setChecked(false);
-//        }
-              //   WhiteLabelApplication.getAppConfiguration().getUser().setNewsletterSubscribed(0);
-
-//        if(!WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)){
-//            new Handler().postDelayed(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    homeActivity.switchHomeFragment(null);//切换到Home
-//
-//                                }
-//                            },300);
-//        }
-
     }
     @Override
     public void onStart() {
         super.onStart();
-
-//        EasyTracker easyTracker = EasyTracker.getInstance(homeActivity);
-//        easyTracker.send(MapBuilder.createEvent("Screen View", // Event category (required)
-//                "Settings Screen", // Event action (required)
-//                null, // Event label
-//                null) // Event value
-//                .build());
         GaTrackHelper.getInstance().googleAnalytics("Settings Screen", homeActivity);
-//        JLogUtils.i("googleGA_screen", "Settings Screen");
     }
 }

@@ -9,8 +9,7 @@ import java.io.Serializable;
 public class ThirdPartyConfig implements Serializable {
     private  String facebookId;
     private String gcmSendId;
-    private String  paypalClientId;
-
+    private PaypalModel  paypalClientId;
     public String getFacebookId() {
         return facebookId;
     }
@@ -27,11 +26,11 @@ public class ThirdPartyConfig implements Serializable {
         this.gcmSendId = gcmSendId;
     }
 
-    public String getPaypalClientId() {
+    public PaypalModel getPaypalClientId() {
         return paypalClientId;
     }
 
-    public void setPaypalClientId(String paypalClientId) {
+    public void setPaypalClientId(PaypalModel paypalClientId) {
         this.paypalClientId = paypalClientId;
     }
 }

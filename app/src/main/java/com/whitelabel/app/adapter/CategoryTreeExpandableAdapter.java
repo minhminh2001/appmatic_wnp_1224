@@ -2,6 +2,7 @@ package com.whitelabel.app.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,6 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
         //将数据更新到 ExpandableRecyclerAdapter
         setItems(groupList1);
     }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
@@ -88,20 +88,14 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
             SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) getItem(position);
             groupViewHolder.tvCategoryTreeGroupName.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
             groupViewHolder.tvCategoryTreeGroupName.setText(entity.getName());
-            if (groupViewHolder.ivCategoryTreeGroup.getTag() != null && groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage()))
-            {
-            } else {
+            if(TextUtils.isEmpty(entity.getImage())) {
+                groupViewHolder.ivCategoryTreeGroup.setVisibility(View.GONE);
+            }else if (groupViewHolder.ivCategoryTreeGroup.getTag()== null || !groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage())) {
+                groupViewHolder.ivCategoryTreeGroup.setVisibility(View.VISIBLE);
                 JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, groupViewHolder.ivCategoryTreeGroup, entity.getImage());
                 groupViewHolder.ivCategoryTreeGroup.setTag(entity.getImage());
             }
-
-//            groupViewHolder.ivCategoryTreeGroup.setImageResource(R.mipmap.checkout_success_facebook_share);
-
-//            if (position == 0) {
-                groupViewHolder.tv_category_tree_divi.setVisibility(View.GONE);
-//            } else {
-//                groupViewHolder.tv_category_tree_divi.setVisibility(View.VISIBLE);
-//            }
+               groupViewHolder.tv_category_tree_divi.setVisibility(View.GONE);
             if (entity.isExpaned()) {
                 groupViewHolder.tvCategoryTreeLine.setVisibility(View.GONE);
             } else {
@@ -109,7 +103,7 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
             }
         } else {
             ChildViewHolder childViewHolder = (ChildViewHolder) holder;
-            final SVRAppserviceCatalogSearchCategoryItemReturnEntity child = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) getItem(position);
+            final SVRAppserviceCatalogSearchCategoryItemReturnEntity child = getItem(position);
             childViewHolder.tvCategoryTreeChildName.setText(child.getName());
             childViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,8 +120,6 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
         public GroupViewHolder(View view) {
             super(view);
             tvCategoryTreeGroupName = (TextView) view.findViewById(R.id.tv_category_tree_group_name);
-
-
             ivCategoryTreeGroup = (ImageView) view.findViewById(R.id.iv_category_tree_group);
             tvCategoryTreeLine = (TextView) view.findViewById(R.id.tv_category_tree_line);
             tv_category_tree_divi = (TextView) view.findViewById(R.id.tv_category_tree_divi);
@@ -146,7 +138,6 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
                             public void onAnimationEnd(Animation animation) {
                                 arrow.setVisibility(View.GONE);
                             }
-
                             @Override
                             public void onAnimationRepeat(Animation animation) {
                             }

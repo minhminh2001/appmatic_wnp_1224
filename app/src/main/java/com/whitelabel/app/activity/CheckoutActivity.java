@@ -94,9 +94,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     private Fragment checkoutReviewFragment;
     public String TAG = CheckoutActivity.class.getSimpleName();
     public ArrayList<Fragment> list_fragment;
-    private Button updateVersion;
-    private WebView mwebView;
-    private boolean existVending = false;
     private String order_id;
     String amount = "";
     String shippingFee = "";
@@ -504,14 +501,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mwebView != null) {
-            mwebView.setVisibility(View.GONE);
-        }
-    }
-
     /**
      * Go to next payment redirect activity ,then open a webview and send Request Of Payment Redirect
      *
@@ -916,20 +905,20 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         mActivity.get().setButtonEnable(true);
                         if (faildStr != null && !JToolUtils.expireHandler(mActivity.get(), faildStr, mActivity.get().REQUESTCODE_LOGIN)) {
                             CheckoutShippingAddaddressFragment addNewAddressFragment = (CheckoutShippingAddaddressFragment) mActivity.get().getFragmentManager().findFragmentByTag("addNewAddressFragment");
-                            if (addNewAddressFragment != null) {
-                                addNewAddressFragment.tvErrorMsg.setText(faildStr);
-                                addNewAddressFragment.tvErrorMsg.setVisibility(View.VISIBLE);
-                                addNewAddressFragment.tvErrorMsg.setFocusable(true);
-                                addNewAddressFragment.tvErrorMsg.setFocusableInTouchMode(true);
-                                addNewAddressFragment.tvErrorMsg.requestFocus();
-                            } else {
-                                CheckoutShippingSelectaddressFragment selectFragment = (CheckoutShippingSelectaddressFragment) mActivity.get().getFragmentManager().findFragmentByTag("selectAddressFragment");
-                                selectFragment.tvErrorMsg.setText(faildStr);
-                                selectFragment.tvErrorMsg.setVisibility(View.VISIBLE);
-                                selectFragment.tvErrorMsg.setFocusable(true);
-                                selectFragment.tvErrorMsg.setFocusableInTouchMode(true);
-                                selectFragment.tvErrorMsg.requestFocus();
-                            }
+                                if (addNewAddressFragment != null) {
+                                    addNewAddressFragment.tvErrorMsg.setText(faildStr);
+                                    addNewAddressFragment.tvErrorMsg.setVisibility(View.VISIBLE);
+                                    addNewAddressFragment.tvErrorMsg.setFocusable(true);
+                                    addNewAddressFragment.tvErrorMsg.setFocusableInTouchMode(true);
+                                    addNewAddressFragment.tvErrorMsg.requestFocus();
+                                } else {
+                                    CheckoutShippingSelectaddressFragment selectFragment = (CheckoutShippingSelectaddressFragment) mActivity.get().getFragmentManager().findFragmentByTag("selectAddressFragment");
+                                    selectFragment.tvErrorMsg.setText(faildStr);
+                                    selectFragment.tvErrorMsg.setVisibility(View.VISIBLE);
+                                    selectFragment.tvErrorMsg.setFocusable(true);
+                                    selectFragment.tvErrorMsg.setFocusableInTouchMode(true);
+                                    selectFragment.tvErrorMsg.requestFocus();
+                                }
                         }
                     }
                     break;

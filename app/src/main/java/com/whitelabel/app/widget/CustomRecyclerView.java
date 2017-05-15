@@ -34,51 +34,11 @@ public class CustomRecyclerView extends RecyclerView {
         void onChange(View view, int position);
     }
 
-    private static  final  int  FLING_MIN_DISTANCE = 50;
-    private static  final  int  FLING_MIN_VELOCITY = 0;
-    private android.view.GestureDetector   gesture=new android.view.GestureDetector(getContext(), new android.view.GestureDetector.OnGestureListener() {
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return false;
-        }
 
-        @Override
-        public void onShowPress(MotionEvent e) {
-
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            return false;
-        }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            return false;
-        }
-
-        @Override
-        public void onLongPress(MotionEvent e) {
-
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if(e1.getX()-e2.getX()>FLING_MIN_DISTANCE&&Math.abs(velocityX)>FLING_MIN_VELOCITY&&e2.getX()-e1.getX() > FLING_MIN_DISTANCE
-                    && Math.abs(velocityX) > FLING_MIN_VELOCITY){
-                return true;
-            }
-            return false;
-        }
-    });
 
     public CustomRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-
-
         // TODO Auto-generated constructor stub
-
         initTypeface(context,attrs);
         this.setOnScrollListener(new OnScrollListener() {
             @Override
@@ -106,21 +66,18 @@ public class CustomRecyclerView extends RecyclerView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (gesture.onTouchEvent(event)) {
-            return super.onTouchEvent(event);
-
-        } else {
+        if (isStopHorizontalScroll) {
             return false;
+        } else {
+            return super.onTouchEvent(event);
         }
     }
     public void setIsStopHorizontalScroll(boolean isStopHorizontalScroll) {
         this.isStopHorizontalScroll = isStopHorizontalScroll;
     }
-
     private void setParentScrollAble(boolean flag) {
         getParent().requestDisallowInterceptTouchEvent(!flag);
     }
-
 
 
     @Override
@@ -178,6 +135,10 @@ public class CustomRecyclerView extends RecyclerView {
                     getChildPosition(mCurrentView));
         }
     }
+
+
+
+
 
     @Override
     public void onScrollStateChanged(int arg0)

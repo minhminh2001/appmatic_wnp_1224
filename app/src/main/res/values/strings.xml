@@ -6,7 +6,7 @@
     <string name="checkout_hash_key_test">123456</string>
     <string name="checkout_hash_key_live">5d89We</string>
     <string name="download_image_path">appservice/image/index</string>
-    <string name="payment_creditcard_url">appservice/checkout/ccpayjump?session_key=%1$s&amp;orderId=%2$s&amp;appid=1&amp;</string>
+    <string name="payment_creditcard_url">appservice/checkout/ccpayjump?session_key=%1$s&amp;orderId=%2$s&amp;appid=1</string>
     <string name="upload_file_path">appservice/order/uploadTransferProof</string>
     <string name="jump_market_uri">market://details?id=com.whitelabel.app</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -489,7 +489,7 @@
 
     <string name="app_rate_text1">Love using GEMFIVE?</string>
     <string name="app_rate_text2">Please rate us in the Google Play.</string>
-    <string name="play_store_url">http://play.google.com/store/apps/details?id=com.whitelabel.app</string>
+    <string name="play_store_url">http://play.google.com/store/apps/details?id=%1$s</string>
 
 
     <string name="prices_shown">* Prices shown are before discount.</string>

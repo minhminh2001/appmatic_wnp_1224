@@ -281,7 +281,7 @@
             android:exported="true" />
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="@string/fabricApiKey" />
+            android:value="967ab5d94c3f9fda9e3bbf9adef59d05e74bcc41" />
         <!-- <activity -->
         <!-- android:name="com.whitelabel.app.qrscan.QrScanActivity" -->
         <!-- android:screenOrientation="fullSensor" -->

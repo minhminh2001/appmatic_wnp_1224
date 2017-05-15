@@ -11,7 +11,7 @@ public class LayoutStyleModel implements Serializable {
     private int ProductDetailType;
 
     public int getHomeType() {
-        return 4;
+        return 3;
     }
 
     public void setHomeType(int homeType) {

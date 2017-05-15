@@ -18,17 +18,6 @@
     android:layout_width="fill_parent"
     android:paddingLeft="15dp"
     android:layout_height="wrap_content">
-    <!--<ImageView-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:id="@+id/iv_category_tree_group"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:layout_width="150dp"-->
-        <!--android:visibility="gone"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginTop="-1.5dp"-->
-        <!--android:layout_marginBottom="-1.5dp"/>-->
-
     <RelativeLayout
         android:id="@+id/rl_category_tree_group_tag"
         android:layout_centerVertical="true"
@@ -48,11 +37,10 @@
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
     <com.whitelabel.app.widget.CustomTextView
-        android:layout_marginLeft="8dp"
         android:layout_toRightOf="@+id/rl_category_tree_group_tag"
         imagianto:textFont="LatoRegular"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:id="@+id/tv_category_tree_group_name"
         android:layout_centerVertical="true"
         android:layout_width="fill_parent"

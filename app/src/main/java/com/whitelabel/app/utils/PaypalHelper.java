@@ -19,11 +19,13 @@ import java.math.BigDecimal;
 public class PaypalHelper{
     private  static String  CONFIG_CLIENT_ID;
     private  PayPalConfiguration payPalConfiguration=null;
+    public static  final   int REQUEST_CODE_PAYMENT=10000;
     public PaypalHelper(){
-        CONFIG_CLIENT_ID= WhiteLabelApplication.getAppConfiguration().getThirdPartyConfig().getPaypalClientId();
+        CONFIG_CLIENT_ID= WhiteLabelApplication.getAppConfiguration().getThirdPartyConfig().getPaypalClientId().getSandbox();
+//        CONFIG_CLIENT_ID="Aas9UBfT7TVygV7BXM9CFGZTHKNgMSy70gx7YVXcSvn-6QCgb-kjlAj38t_JzCy1MCvw8eoZqpSkBOhX";
         payPalConfiguration=new
-                PayPalConfiguration().
-                environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+                PayPalConfiguration()
+                .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
                 .clientId(CONFIG_CLIENT_ID);
     }
     public void startPaypalService(Context context){
@@ -31,7 +33,6 @@ public class PaypalHelper{
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,payPalConfiguration);
         context.startService(intent);
     }
-    public static  final   int REQUEST_CODE_PAYMENT=10000;
     public void startPaypalPayment(Activity activity,String price, String unit, String productName, String orderNumber){
         PayPalPayment payPalPayment=new PayPalPayment(new BigDecimal(price),unit,productName,PayPalPayment.PAYMENT_INTENT_SALE);
         payPalPayment.invoiceNumber(orderNumber);
