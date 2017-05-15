@@ -547,6 +547,7 @@
 
             <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
                 android:id="@+id/rl_editinfo_postcode"
+                android:visibility="gone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rl_editinfo_monthly">
@@ -614,6 +615,7 @@
             <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
                 android:id="@+id/rl_editinfo_city"
                 android:layout_width="fill_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rl_editinfo_postcode">
 
@@ -681,6 +683,7 @@
                 android:id="@+id/rl_editinfo_state"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_below="@+id/rl_editinfo_city">
 
                 <RelativeLayout
@@ -740,6 +743,7 @@
 
             <RelativeLayout
                 android:id="@+id/relative13"
+                android:visibility="gone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rl_editinfo_state">

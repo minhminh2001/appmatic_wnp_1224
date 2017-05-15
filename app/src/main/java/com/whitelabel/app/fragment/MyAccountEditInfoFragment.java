@@ -101,7 +101,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
     private TextView stateProvinceText2;
     private TextView egText;
     private TextView egText2;
-
+    public boolean saving = false;
     private ImageView iv_country_arrow, iv_birther_arrow, iv_gender_arrow, iv_monthly_arrow, iv_state_arrow;
     private ImageView clearFirstName;
     private ImageView clearLastName;
@@ -111,7 +111,6 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
     private ImageView clearPhone;
     private CustomButtomLineRelativeLayout rl_editinfo_email, rl_editinfo_country, rl_editinfo_birthday, rl_editinfo_gender, rl_editinfo_monthly,
             rl_editinfo_postcode, rl_editinfo_city, rl_editinfo_state;
-
     private View view_firstname_line;
     private View view_lastname_line;
     private View v_editinfo_phone_line;
@@ -369,21 +368,18 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         }
 
     }
-
-    public boolean saving = false;
+//    && onblurAll(R.id.et_account_monthlyIncome) &&
+//    onblurAll(R.id.et_account_zip) && onblurAll(R.id.et_account_city) && onblurAll(R.id.et_account_eg)
 
     public void save() {
         if (!saving && onblurAll(R.id.et_account_firstName) && onblurAll(R.id.et_account_lastName) && onblurAll(R.id.et_account_email) &&
-                onblurAll(R.id.et_account_country) && onblurAll(R.id.et_account_birthday) && onblurAll(R.id.et_account_monthlyIncome) &&
-                onblurAll(R.id.et_account_zip) && onblurAll(R.id.et_account_city) && onblurAll(R.id.et_account_eg)) {
+                onblurAll(R.id.et_account_country) && onblurAll(R.id.et_account_birthday) ) {
             saving = true;
             if (mDialog != null) {
                 mDialog.show();
             } else {
                 mDialog = JViewUtils.showProgressDialog(myAccountActivity);
             }
-
-
             String session_key = WhiteLabelApplication.getAppConfiguration().getUserInfo(myAccountActivity).getSessionKey();
             String emailStr = email.getText().toString().trim();
             String firstNameStr = firstName.getText().toString().trim();
