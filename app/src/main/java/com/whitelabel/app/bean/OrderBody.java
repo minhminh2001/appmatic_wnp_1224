@@ -15,7 +15,17 @@ public class OrderBody {
     private String orderStatusCode;
     private String merchantName;
     private String vendor_id;
+    private int isRPayment;
     private boolean isLast;
+
+
+    public int getIsRPayment() {
+        return isRPayment;
+    }
+
+    public void setIsRPayment(int isRPayment) {
+        this.isRPayment = isRPayment;
+    }
 
     public boolean isLast() {
         return isLast;

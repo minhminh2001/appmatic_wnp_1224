@@ -61,6 +61,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     orderBody.setOrderNumber(myAccountOrderOuter.getOrderSn());
                     orderBody.setOrderCs(setCS(orderInners));
                     orderBody.setOrderImage(orderInners.getImage());
+                    orderBody.setIsRPayment(myAccountOrderOuter.getIsRPayment());
                     orderBody.setOrderName(orderInners.getName());
                     orderBody.setOrderPrice(orderInners.getPrice());
                     orderBody.setOrderQuantity(orderInners.getQty());
@@ -159,12 +160,12 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             subOrderHolder.orderImage.setTag(orderBody.getOrderImage());
             subOrderHolder.rmTop.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+"");
             subOrderHolder.orderName.setText(orderBody.getOrderName());
-            if (!orderBody.isLast()) {
+
+            if (orderBody.getIsRPayment()==0||!orderBody.isLast()) {
                 subOrderHolder.tvRepayment.setVisibility(View.GONE);
             } else {
                 subOrderHolder.tvRepayment.setVisibility(View.VISIBLE);
                 JViewUtils.setSoildButtonGlobalStyle(subOrderHolder.itemView.getContext(),subOrderHolder.tvRepayment);
-
                 subOrderHolder.tvRepayment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
