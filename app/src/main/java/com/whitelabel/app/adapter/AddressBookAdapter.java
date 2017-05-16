@@ -44,7 +44,6 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
             view=LayoutInflater.from(context).inflate(R.layout.fragment_addressbook_item,null);
             holder=new AddressViewHolder(view);
             view.setTag(holder);
-
         }else{
             holder= (AddressViewHolder) view.getTag();
         }

@@ -1,5 +1,4 @@
 package com.whitelabel.app.fragment;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -77,6 +76,7 @@ import java.util.Set;
  */
 public class MyAccountEditInfoFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener {
     private MyAccountActivity myAccountActivity;
+    private SharedPreferences.Editor editor;
     private View contentView;
     private EditText firstName, lastName, email, country, birthday, gender, monthlyIncome, zip, city, stateProvince, eg;
     private TextView firstNameText;
@@ -122,7 +122,6 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
     private ScrollView myScrollView;
     private String brithdayMonth[] = new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     private Map<String, String> mothMap;
-
     private final String SESSION_EXPIRED = "session expired,login again please";
     private final int REQUESTCODE_LOGIN = 1000;
     private View relative14;
@@ -145,12 +144,10 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
     private static final class DataHandler extends Handler {
         private final WeakReference<MyAccountActivity> mActivity;
         private final WeakReference<MyAccountEditInfoFragment> mFragment;
-
         public DataHandler(MyAccountActivity activity, MyAccountEditInfoFragment fragment) {
             mActivity = new WeakReference<MyAccountActivity>(activity);
             mFragment = new WeakReference<MyAccountEditInfoFragment>(fragment);
         }
-
         @Override
         public void handleMessage(Message msg) {
             if (mActivity.get() == null || mFragment.get() == null || !mFragment.get().isAdded()) {
@@ -224,9 +221,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                                 bundle.putBoolean("expire", true);
                                 intent.putExtras(bundle);
                                 mActivity.get().startActivityForResult(intent, mFragment.get().REQUESTCODE_LOGIN);
-
                             } else {
-
                                 mFragment.get().save_error.setText(msg.obj.toString());
                                 mFragment.get().save_error.setVisibility(View.VISIBLE);
                                 mFragment.get().myScrollView.scrollTo(0, 5000);
@@ -316,7 +311,6 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                         mFragment.get().zip.setText(mFragment.get().customerList.getPostcode());
                         mFragment.get().city.setText(mFragment.get().customerList.getCity());
                         mFragment.get().eg.setText(mFragment.get().customerList.getTelephone());
-
                         //mothleIncome数据存取
 //                        mFragment.get().sharedIncome = mFragment.get().myAccountActivity.getSharedPreferences("mothleIncome", Activity.MODE_PRIVATE);
 //                        if (!mFragment.get().sharedIncome.getBoolean("exits", false)) {
@@ -332,9 +326,6 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                         //Country数据存取
                         mFragment.get().sharedCountry = mActivity.get().getSharedPreferences("country", Activity.MODE_PRIVATE);
                         mFragment.get().getCountryAndstateProvince();
-//                        if (!mFragment.get().sharedCountry.getBoolean("exits", false)) {
-//
-//                        }
                         if (!"".equals(mFragment.get().sharedCountry.getString(mFragment.get().customerList.getCountry_id(), ""))) {
                             mFragment.get().country.setText(mFragment.get().sharedCountry.getString(mFragment.get().customerList.getCountry_id(), ""));
                         }
@@ -366,11 +357,9 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             }
             super.handleMessage(msg);
         }
-
     }
 //    && onblurAll(R.id.et_account_monthlyIncome) &&
 //    onblurAll(R.id.et_account_zip) && onblurAll(R.id.et_account_city) && onblurAll(R.id.et_account_eg)
-
     public void save() {
         if (!saving && onblurAll(R.id.et_account_firstName) && onblurAll(R.id.et_account_lastName) && onblurAll(R.id.et_account_email) &&
                 onblurAll(R.id.et_account_country) && onblurAll(R.id.et_account_birthday) ) {
@@ -439,7 +428,6 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         }
         return "";
     }
-
     /***
      * 使用照相机拍照获取图片
      */
@@ -450,8 +438,6 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
     public static final int SELECT_PIC_BY_PICK_PHOTO = 2;
     private Uri photoUri = null;
     private String picPath;// 图片路径
-
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -461,14 +447,12 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             e.printStackTrace();
         }
     }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView = inflater.inflate(R.layout.fragment_myaccount_edit_info, null);
         return contentView;
     }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -483,7 +467,6 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             } else {
                 mothMap.put("" + (i + 1), brithdayMonth[i]);
             }
-            JLogUtils.i("Allen", "!" + mothMap.get("" + (i + 1)) + "!");
         }
         mDialog = JViewUtils.showProgressDialog(myAccountActivity);
         view_firstname_line = contentView.findViewById(R.id.view_firstname_line);
@@ -593,7 +576,6 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         TextView changePassword = (TextView) contentView.findViewById(R.id.changePassword);
         changePassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         changePassword.setOnClickListener(this);
-
         ImageView photo = (ImageView) contentView.findViewById(R.id.photo);
         photo.setOnClickListener(this);
         country.setOnClickListener(this);
@@ -626,15 +608,11 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         mDao.CustomerInfo(WhiteLabelApplication.getAppConfiguration().getUserInfo(myAccountActivity).getSessionKey());
     }
 
-    private SharedPreferences.Editor editor;
-
     public void getCountryAndstateProvince() {
         editor = sharedCountry.edit();
         editor.putBoolean("exits", true);
         mDao.getCountryAndRegions(WhiteLabelApplication.getAppConfiguration().getUserInfo(myAccountActivity).getSessionKey());
-
     }
-
     //获取数据并在view中显示后,需要调此方法来处理label
     public void initAllHint() {
         if (!firstName.getText().toString().equals("")) {
