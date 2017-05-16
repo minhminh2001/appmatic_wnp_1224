@@ -374,9 +374,9 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
         etShippingState.setText(address.getRegion());
         etShippingState.setTag(address.getRegionId());
         if(!TextUtils.isEmpty(etShippingState.getText().toString())){
-            etShippingState.setTextColor(JToolUtils.getColor(R.color.label_saved));
-            etShippingState.setEnabled(false);
-            arrowSelectState.setEnabled(false);
+//            etShippingState.setTextColor(JToolUtils.getColor(R.color.label_saved));
+//            etShippingState.setEnabled(false);
+//            arrowSelectState.setEnabled(false);
         }
         etShippingCountry.setText(address.getCountry());
         etShippingCountry.setTag(address.getCountryId());

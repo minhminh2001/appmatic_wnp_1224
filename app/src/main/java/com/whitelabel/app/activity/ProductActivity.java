@@ -1687,7 +1687,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
 
         if (JDataUtils.compare(userSelectedProductFinalPriceFloat, userSelectedProductPriceFloat) < 0) {
-            oldprice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble((userSelectedProductPriceFloat ) + ""));
+            oldprice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble((userSelectedProductPriceFloat+"")));
             rlProductPrice.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
         } else {
             oldprice.setText("");

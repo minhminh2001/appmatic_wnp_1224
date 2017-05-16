@@ -86,12 +86,15 @@ public class BaseFragmentSearchCart<T extends BasePresenter> extends com.whitela
                 launchShoppingCart();
             }
         });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchSearch();
 
-        //
+            }
+        });
         ImageView searchIcon= (ImageView) search.findViewById(R.id.iv_img1);
-        JViewUtils.setNavBarIconColor(getActivity(),searchIcon,R.drawable.ic_action_search_pressed);
-
-        //
+        JViewUtils.setNavBarIconColor(getActivity(),searchIcon,R.drawable.ic_action_search);
         TextView textView = (TextView) cart.findViewById(R.id.ctv_home_shoppingcart_num);
         ImageView  imageView= (ImageView) cart.findViewById(R.id.iv_img);
         JViewUtils.setNavBarIconColor(getActivity(),imageView,R.drawable.ic_action_cart);

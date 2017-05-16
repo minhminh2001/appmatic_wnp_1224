@@ -71,7 +71,7 @@ public class ProductChildListView extends LinearLayout{
     public Map<String,String>  getChildIdAndQty(){
         Map<String,String> hashMap=new HashMap<>();
         for(int i=0;i<mBeans.size();i++){
-            JLogUtils.i("ray","mBeans.get(i).getInStock():"+mBeans.get(i).getInStock() +"==============tvNumbers.get(i).getText().toString():"+tvNumbers.get(i).getText().toString());
+//            JLogUtils.i("ray","mBeans.get(i).getInStock():"+mBeans.get(i).getInStock() +"==============tvNumbers.get(i).getText().toString():"+tvNumbers.get(i).getText().toString());
              if(mBeans.get(i).getInStock()==1&&!"0".equals(tvNumbers.get(i).getText().toString())){
                  hashMap.put(mBeans.get(i).getId(),tvNumbers.get(i).getText().toString());
              }
@@ -86,7 +86,7 @@ public class ProductChildListView extends LinearLayout{
              }
          }
          String  totalStr=getContext().getResources().getString(R.string.product_detail_total);
-         tvTotal.setText(totalStr+WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+totalPrice);
+         tvTotal.setText(totalStr+WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+JDataUtils.formatDouble(totalPrice+""));
     }
     public View getLine(){
         View view=new View(getContext());
@@ -110,8 +110,8 @@ public class ProductChildListView extends LinearLayout{
         ImageView ivChildPricePlus = (ImageView) view.findViewById(R.id.ivChildPricePlus);
         textView.setText(bean.getName());
         tvChildPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-        tvChildPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+bean.getPrice());
-        tvChildFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+bean.getFinalPrice());
+        tvChildPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+JDataUtils.formatDouble(bean.getPrice()));
+        tvChildFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+JDataUtils.formatDouble(bean.getFinalPrice()));
         if(Double.parseDouble(bean.getFinalPrice())>=Double.parseDouble(bean.getPrice())){
                 tvChildPrice.setVisibility(View.GONE);
         }

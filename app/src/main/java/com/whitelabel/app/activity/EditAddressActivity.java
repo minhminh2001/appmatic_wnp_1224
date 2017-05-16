@@ -365,22 +365,22 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         ivClearEditCity=(ImageView)findViewById(R.id.ic_clear_city);
         ivClearEditPhone=(ImageView)findViewById(R.id.ic_clear_phone);
 
-        postalcode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (!state.isEnabled()) {
-                    state.setEnabled(true);
-                    stateText.setEnabled(true);
-                    stateText.setTextColor(getResources().getColor(R.color.black000000));
-                }
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+//        postalcode.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                if (!state.isEnabled()) {
+//                    state.setEnabled(true);
+//                    stateText.setEnabled(true);
+//                    stateText.setTextColor(getResources().getColor(R.color.black000000));
+//                }
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
         firstName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -525,9 +525,9 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             stateText.setTextSize(state.getTextSize()/value);
         }
         if(!TextUtils.isEmpty(mBean.getRegion())){
-            state.setEnabled(false);
-            stateText.setEnabled(false);
-            stateText.setTextColor(getResources().getColor(R.color.hint));
+//            state.setEnabled(false);
+//            stateText.setEnabled(false);
+//            stateText.setTextColor(getResources().getColor(R.color.hint));
             state.setText(mBean.getRegion());
         }
         initAllHint();

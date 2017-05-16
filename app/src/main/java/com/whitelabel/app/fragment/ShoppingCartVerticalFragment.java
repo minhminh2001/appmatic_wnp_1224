@@ -1148,19 +1148,19 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 
 
     public void setButtonQty(int sunQty) {
-        if (getActivity() != null) {
-            if (sunQty == 1) {
-                String checkoutStr = getResources().getString(R.string.check_out_num_product).replace("{num}", sunQty + "");
-                if (!checkoutStr.equals(tvCheckout.getText().toString())) {
-                    tvCheckout.setText(checkoutStr);
-                }
-            } else {
-                String checkoutStr = getResources().getString(R.string.check_out_num_products).replace("{num}", sunQty + "");
-                if (!checkoutStr.equals(tvCheckout.getText().toString())) {
-                    tvCheckout.setText(checkoutStr);
-                }
-            }
-        }
+//        if (getActivity() != null) {
+//            if (sunQty == 1) {
+//                String checkoutStr = getResources().getString(R.string.check_out_num_product).replace("{num}", sunQty + "");
+//                if (!checkoutStr.equals(tvCheckout.getText().toString())) {
+//                    tvCheckout.setText(checkoutStr);
+//                }
+//            } else {
+//                String checkoutStr = getResources().getString(R.string.check_out_num_products).replace("{num}", sunQty + "");
+//                if (!checkoutStr.equals(tvCheckout.getText().toString())) {
+//                    tvCheckout.setText(checkoutStr);
+//                }
+//            }
+//        }
     }
 
     public void synShoppingCart() {

@@ -184,8 +184,8 @@
     <string name="Malaysia">Malaysia</string>
 
     <!-- email bound -->
-    <string name="loginregister_emailbound_header_title">Welcome To Gemfive</string>
-    <string name="loginregister_emailbound_message">You\'re almost there!\nTo complete your GEMFIVE registration, please enter your email address: (Don\'t worry, we will never share your private information with others)</string>
+    <string name="loginregister_emailbound_header_title">Welcome To Whitelabel</string>
+    <string name="loginregister_emailbound_message">You\'re almost there!\nTo complete your Whitelabel registration, please enter your email address: (Don\'t worry, we will never share your private information with others)</string>
     <string name="loginregister_emailbound_email_hint">Email</string>
     <string name="loginregister_emailbound_createaccount">CREATE ACCOUNT</string>
     <string name="loginregister_emailbound_tips_error_email_empty">This is a required field.</string>
@@ -235,7 +235,7 @@
     <string name="TermsOfUserPrivacyPolicy1"><u>Terms of Use</u> </string>
     <string name="TermsOfUserPrivacyPolicy2"> <u>Privacy Policy.</u></string>
 
-    <string name="checkBox1"> I agree to receiving direct marketing&#160;materials from gemfive.com/my&#160;</string>
+    <string name="checkBox1"> I agree to receiving direct marketing&#160;materials from whitelabel.com/my&#160;</string>
     <string name="checkBox3"><u>More.</u></string>
     <string name="rigisterSuccess2">REGISTERED SUCCESSFULLY</string>
 
@@ -358,7 +358,7 @@
     <string name="last_name">Last Name</string>
     <string name="enter_email_address">Email</string>
     <string name="retype_password">Re-type Password</string>
-    <string name="by_creating">By creating an account, you agree to GEMFIVE</string>
+    <string name="by_creating">By creating an account, you agree to Whitelabel</string>
     <string name="and">  and  </string>
     <string name="already_have_an_account">Already have an account? </string>
     <!--login send email-->
@@ -395,7 +395,7 @@
     <!-- settings-->
     <string name="settings">Settings</string>
     <string name="menu">MENU</string>
-    <string name="receive_newsletter">Receive newsletters from GEMFIVE</string>
+    <string name="receive_newsletter">Receive newsletters from Whitelabel</string>
     <string name="setting_rate">Rate us in Google Play store</string>
     <string name="setting_version">Version</string>
     <string name="sign_out">SIGN OUT</string>
@@ -428,7 +428,7 @@
 
     <string name="order_detail_confirm">BANK TRANSFER CONFIRMATION</string>
     <string name="bank_transafer_confirm">Bank Transfer Confirmation</string>
-    <string name="bank_transafer_thank">Thank you for shopping at GEMFIVE</string>
+    <string name="bank_transafer_thank">Thank you for shopping at Whitelabel</string>
     <string name="bank_transafer_world">When you have successfully made your Bank Transfer, please provide your payment confirmation details here so that we can process your order immediately.</string>
     <string name="bank_from">Bank Transferred From</string>
     <string name="order_detail_order_number">Order Number</string>
@@ -464,13 +464,13 @@
 
     <string name="Oops_Sorry">Oops,Sorry!</string>
     <string name="This_promotion_has_been_fully_redeemed">This promotion has been \n fully redeemed.</string>
-    <string name="Stay_tuned_for_more_exciting">Stay tuned for more exciting \n offers on GEMFIVE.</string>
+    <string name="Stay_tuned_for_more_exciting">Stay tuned for more exciting \n offers on Whitelabel.</string>
 
     <string name="added_to_wishlist">Added to wishlist.</string>
     <string name="added_error">Add failure.</string>
     <string name="are_you_sure_you_want">Are you sure you want to quit this app?</string>
     <string name="are_you_sure_you_want_signout">Are you sure you want to sign out?</string>
-    <string name="transfer_amount">GEMFIVE Amount</string>
+    <string name="transfer_amount">Whitelabel Amount</string>
     <string name="transfer_date">Date Of Transfer</string>
 
 
@@ -484,10 +484,10 @@
     <string name="dialog_cod_hint">Kindly update your cart</string>
 
     <!-- <string name="please_check">Please check the network connection</string>-->
-    <string name="cod_error_address">This payment option is not available for the selected delivery address. Kindly refer to the GEMFIVE\'s Payment FAQ for more info. </string>
+    <string name="cod_error_address">This payment option is not available for the selected delivery address. Kindly refer to the Whitelabel\'s Payment FAQ for more info. </string>
     <string name="shipping_returns">Shipping &amp; Delivery</string>
 
-    <string name="app_rate_text1">Love using GEMFIVE?</string>
+    <string name="app_rate_text1">Love using Whitelabel?</string>
     <string name="app_rate_text2">Please rate us in the Google Play.</string>
     <string name="play_store_url">http://play.google.com/store/apps/details?id=%1$s</string>
 
@@ -555,7 +555,7 @@
     <string name="password_match">Please make sure your passwords match.</string>
     <string name="account_associated">If there is an account associated with&#160;</string>
     <string name="reset_password">, you will receive an email with a link to reset your password.</string>
-    <string name="process_email">Thank you for registering on GEMFIVE. To complete your registration process, please check your email&#160;</string>
+    <string name="process_email">Thank you for registering on Whitelabel. To complete your registration process, please check your email&#160;</string>
     <string name="to_confirm">to confirm.</string>
     <string name="register_whitelabel">Thank you for registering on</string>
     <string name="current_password">Invalid current password.</string>
@@ -665,10 +665,10 @@
 
     <!-- permission text -->
     <string name="permission_error_title">Permission Denied</string>
-    <string name="permission_error_camera_content">Please allow GEMFIVE to access your device\'s camera in SETTINGS</string>
-    <string name="permission_error_storage_content">Please allow GEMFIVE to access your device\'s storage in SETTINGS</string>
-    <string name="banktransfer_permission_camera_rationale">GEMFIVE needs to access your device\'s camera</string>
-    <string name="banktransfer_permission_album_rationale">GEMFIVE needs to access your device\'s storage</string>
+    <string name="permission_error_camera_content">Please allow Whitelabel to access your device\'s camera in SETTINGS</string>
+    <string name="permission_error_storage_content">Please allow Whitelabel to access your device\'s storage in SETTINGS</string>
+    <string name="banktransfer_permission_camera_rationale">Whitelabel needs to access your device\'s camera</string>
+    <string name="banktransfer_permission_album_rationale">Whitelabel needs to access your device\'s storage</string>
     <string name="switch_view_bar_results">&#160;results</string>
 
     <string name="product_detail_total">Total:</string>

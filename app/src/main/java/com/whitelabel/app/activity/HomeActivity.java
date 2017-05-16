@@ -89,10 +89,10 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         return getToolbar();
     }
 
-    @Override
-    public void showUserGuide(HomeBaseFragment.UserGuideType userGuideType) {
-
-    }
+//    @Override
+//    public void showUserGuide(HomeBaseFragment.UserGuideType userGuideType) {
+//
+//    }
     @Override
     public void jumpHomePage(Serializable serializable) {
         if (!(mCurrentFragment instanceof HomeHomeFragment)) {

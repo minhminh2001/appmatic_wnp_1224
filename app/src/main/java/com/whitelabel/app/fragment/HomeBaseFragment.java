@@ -35,8 +35,6 @@ public class HomeBaseFragment<T extends BasePresenter> extends BaseFragmentSearc
         int MENU_SETTING = 10;
         int MENU_SHIPPING = 11;
         void setTitle(String titleText);
-        void setTitleImage(int resource);
-        void showUserGuide(HomeBaseFragment.UserGuideType userGuideType);
         void setTitleNum(int num);
         void switchMenu(int type);
         void updateRightIconNum(int itemId, long number);

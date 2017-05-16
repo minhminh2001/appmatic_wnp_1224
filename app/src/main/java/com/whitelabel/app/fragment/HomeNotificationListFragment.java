@@ -338,20 +338,6 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
 //        }
     }
     public void newSendRequestToGetList(){
-//        if(allowSendRequest()){
             sendRequestToGetList();
-//        }else{
-//            if (mDialog != null) {
-//                mDialog.cancel();
-//            }
-////            mHandler.post(new Runnable() {
-////                @Override
-////                public void run() {
-////                    swipeContainer.setRefreshing(false);
-////                }
-////            });
-//            rlEmpty.setVisibility(View.VISIBLE);
-//            clistView.stopLoadMore();
-//        }
     }
 }
