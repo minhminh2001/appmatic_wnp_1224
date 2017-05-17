@@ -320,13 +320,21 @@ public class MyAccountDao extends BaseHttp {
         params.put("telephone", telephone);
         params.put("street[0]", street0);
         params.put("street[1]", street1);
-        params.put("postcode", postcode);
+        if(TextUtils.isEmpty(postcode)){
+            params.put("postcode", "");
+        }else {
+            params.put("postcode", postcode);
+        }
         params.put("city", city);
         if(!TextUtils.isEmpty(region)) {
             params.put("region", region);
+        }else{
+            params.put("region", "");
         }
         if(!TextUtils.isEmpty(region_id)){
             params.put("region_id", region_id);
+        }else{
+            params.put("region_id", "");
         }
         params.put("default_shipping", default_shipping);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/customer/createCustomerAddress", params, REQUEST_ADDRESS_SAVE);
@@ -343,7 +351,11 @@ public class MyAccountDao extends BaseHttp {
         params.put("telephone", telephone);
         params.put("street[0]", street0);
         params.put("street[1]", street1);
-        params.put("postcode", postcode);
+        if(TextUtils.isEmpty(postcode)){
+            params.put("postcode", "");
+        }else{
+            params.put("postcode", postcode);
+        }
         params.put("city", city);
         params.put("region", region);
         params.put("region_id", region_id);

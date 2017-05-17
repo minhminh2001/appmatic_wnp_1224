@@ -32,7 +32,6 @@ public class BaseFragmentSearchCart<T extends BasePresenter> extends com.whitela
     protected String TAG = "BaseFragmentSearchCart";
     protected boolean showSearch = true;
     protected boolean showCart = true;
-
     MenuItem cartItem;
     MenuItem searchItem;
 
@@ -54,6 +53,8 @@ public class BaseFragmentSearchCart<T extends BasePresenter> extends com.whitela
         }
         JLogUtils.e(TAG, showSearch + "");
     }
+
+    
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

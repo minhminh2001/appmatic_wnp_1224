@@ -37,7 +37,6 @@ public class BaseActivitySearchCart<T extends BasePresenter> extends com.whitela
         initCartMenu(menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);

@@ -1151,20 +1151,20 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         Editable etAddressLine2 = addNewAddressFragment.etAddressLine2.getText();
 //        svrParameters.put("street[1]", etAddressLine2.toString());
         params.setStreet1(etAddressLine2.toString());
-        Editable etPostCode = addNewAddressFragment.etPostCode.getText();
-        if (null == etFirstname || JDataUtils.isEmpty(etPostCode.toString().trim())) {
-            addNewAddressFragment.tvPostCode.setText(getResources().getString(R.string.This_is_a_required_field));
-            addNewAddressFragment.tvPostCode.setTextColor(getResources().getColor(R.color.red_common));
-//            svrParameters.put("validation_notpass_reason", "postcode is required!");
-            return null;
-        } else if (etPostCode.toString().trim().length() < 4) {
-            addNewAddressFragment.tvPostCode.setText(getResources().getString(R.string.blur_postalcode));
-            addNewAddressFragment.tvPostCode.setTextColor(getResources().getColor(R.color.red_common));
-            return null;
-        } else {
-            params.setPostcode(etPostCode.toString());
-//            svrParameters.put("postcode", etPostCode.toString());
-        }
+//        Editable etPostCode = addNewAddressFragment.etPostCode.getText();
+//        if (null == etFirstname || JDataUtils.isEmpty(etPostCode.toString().trim())) {
+//            addNewAddressFragment.tvPostCode.setText(getResources().getString(R.string.This_is_a_required_field));
+//            addNewAddressFragment.tvPostCode.setTextColor(getResources().getColor(R.color.red_common));
+////            svrParameters.put("validation_notpass_reason", "postcode is required!");
+//            return null;
+//        } else if (etPostCode.toString().trim().length() < 4) {
+//            addNewAddressFragment.tvPostCode.setText(getResources().getString(R.string.blur_postalcode));
+//            addNewAddressFragment.tvPostCode.setTextColor(getResources().getColor(R.color.red_common));
+//            return null;
+//        } else {
+//            params.setPostcode(etPostCode.toString());
+////            svrParameters.put("postcode", etPostCode.toString());
+//        }
 
         Editable etShippingCity = addNewAddressFragment.etShippingCity.getText();
         if (null == etShippingCity || JDataUtils.isEmpty(etShippingCity.toString().trim())) {

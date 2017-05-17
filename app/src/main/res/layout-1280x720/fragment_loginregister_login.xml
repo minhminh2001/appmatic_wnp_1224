@@ -71,6 +71,7 @@
                     android:id="@+id/ll_googleLogin"
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:gravity="center_vertical"
                     android:layout_height="48dp"
                     android:background="@drawable/btn_google_normal"

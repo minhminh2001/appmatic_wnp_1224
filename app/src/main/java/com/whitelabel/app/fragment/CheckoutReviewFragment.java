@@ -221,14 +221,22 @@ public class CheckoutReviewFragment extends BaseFragment {
             /**
              * Constructor city,state,postcode
              */
-            String cityStatePostcode = address.getCity() + ", ";
-            if (!JDataUtils.isEmpty(address.getRegion()) && !address.getRegion().equalsIgnoreCase("null")) {
 
-                cityStatePostcode += address.getRegion() + ", ";
+            StringBuilder stringBuilder=new StringBuilder();
+            stringBuilder=stringBuilder.append(address.getCity()).append(",");
+            if(!JDataUtils.isEmpty(address.getRegion()) && !address.getRegion().equalsIgnoreCase("null")){
+                stringBuilder=stringBuilder.append(address.getRegion());
             }
-            cityStatePostcode += address.getPostcode();
-            tvCityStatePostcode.setText(cityStatePostcode);
+            if(!TextUtils.isEmpty(address.getPostcode())){
+                stringBuilder=stringBuilder.append(",").append(address.getPostcode());
+            }
 
+//            String cityStatePostcode = address.getCity() + ", ";
+//            if (!JDataUtils.isEmpty(address.getRegion()) && !address.getRegion().equalsIgnoreCase("null")) {
+//                cityStatePostcode += address.getRegion() + ", ";
+//            }
+//            cityStatePostcode += address.getPostcode();
+            tvCityStatePostcode.setText(stringBuilder.toString());
             tvCountry.setText(address.getCountry());
             tvTelephone.setText(getResources().getString(R.string.t) + address.getTelephone());
 

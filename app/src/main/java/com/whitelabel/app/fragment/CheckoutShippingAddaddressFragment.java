@@ -161,8 +161,8 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                                 fragment.tvStateAnim.setVisibility(View.VISIBLE);
                                 fragment.tvStateAnim.setText("State");
                                 fragment.tvStateAnim.setTextColor(JToolUtils.getColor(R.color.label_saved));
-                                fragment.etShippingState.setEnabled(false);
-                                fragment.etShippingState.setTextColor(JToolUtils.getColor(R.color.label_saved));
+//                                fragment.etShippingState.setEnabled(false);
+//                                fragment.etShippingState.setTextColor(JToolUtils.getColor(R.color.label_saved));
                                 //"state" 将item 标题显示出来
                             }
                         }
@@ -373,11 +373,11 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
         etShippingState.setTag(address.getRegionId());
         etShippingState.setText(address.getRegion());
         etShippingState.setTag(address.getRegionId());
-        if(!TextUtils.isEmpty(etShippingState.getText().toString())){
+//        if(!TextUtils.isEmpty(etShippingState.getText().toString())){
 //            etShippingState.setTextColor(JToolUtils.getColor(R.color.label_saved));
 //            etShippingState.setEnabled(false);
 //            arrowSelectState.setEnabled(false);
-        }
+//        }
         etShippingCountry.setText(address.getCountry());
         etShippingCountry.setTag(address.getCountryId());
     }
@@ -390,8 +390,8 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
             tvAddressLine1Anim.setTextColor(JToolUtils.getColor(R.color.label_saved));}
         if(!etAddressLine2.getText().toString().equals("")){tvAddressLine2Anim.setText(getResources().getString(R.string.address2));
             tvAddressLine2Anim.setTextColor(JToolUtils.getColor(R.color.label_saved));}
-        if(!etPostCode.getText().toString().equals("")){tvPostCode.setText(getResources().getString(R.string.postal_code));
-            tvPostCode.setTextColor(JToolUtils.getColor(R.color.label_saved));}
+//        if(!etPostCode.getText().toString().equals("")){tvPostCode.setText(getResources().getString(R.string.postal_code));
+//            tvPostCode.setTextColor(JToolUtils.getColor(R.color.label_saved));}
         if(!etShippingCity.getText().toString().equals("")){tvCityAnim.setText(getResources().getString(R.string.city));
             tvCityAnim.setTextColor(JToolUtils.getColor(R.color.label_saved));}
         if(!etPhone.getText().toString().equals("")){tvPhone.setText(getResources().getString(R.string.eg123));
@@ -570,34 +570,34 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                     }
                 }
                 break;
-            case R.id.et_checkout_shipping_postcode:
-                if (hasFocus) {
-                    rl_checkaddadd_postcode.setBottomLineActive(true);
-                    if (etPostCode.getText().length()!=0) {
-                        clearCheckCode.setVisibility(View.VISIBLE);
-                    }else {
-                        clearCheckCode.setVisibility(View.INVISIBLE);
-                    }
-                    tvPostCode.setTextColor(getResources().getColor(R.color.colorAccent));
-                    tvPostCode.startAnimation(getHintAnimation(tvPostCode, "Postal Code"));
-                } else {
-                    rl_checkaddadd_postcode.setBottomLineActive(false);
-                    clearCheckCode.setVisibility(View.INVISIBLE);
-                    if (JDataUtils.isStringBlank(etPostCode.getText())) {
-                        tvPostCode.setText(getResources().getString(R.string.This_is_a_required_field));
-                        tvPostCode.setTextColor(getResources().getColor(R.color.red_common));
-                    }else if(etPostCode!=null&&etPostCode.getText().toString().trim().length()<4){
-                        tvPostCode.setText(getResources().getString(R.string.blur_postalcode));
-                        tvPostCode.setTextColor(getResources().getColor(R.color.red_common));
-                    }else{
-                        /**
-                         * We need to send request to get city and state by postcode.
-                         */
-//                        sendRequestToGetCityAndStateByPostcode(etPostCode.getText().toString());
-                        tvPostCode.setTextColor(getResources().getColor(R.color.label_saved));
-                    }
-                }
-                break;
+//            case R.id.et_checkout_shipping_postcode:
+//                if (hasFocus) {
+//                    rl_checkaddadd_postcode.setBottomLineActive(true);
+//                    if (etPostCode.getText().length()!=0) {
+//                        clearCheckCode.setVisibility(View.VISIBLE);
+//                    }else {
+//                        clearCheckCode.setVisibility(View.INVISIBLE);
+//                    }
+//                    tvPostCode.setTextColor(getResources().getColor(R.color.colorAccent));
+//                    tvPostCode.startAnimation(getHintAnimation(tvPostCode, "Postal Code"));
+//                } else {
+//                    rl_checkaddadd_postcode.setBottomLineActive(false);
+//                    clearCheckCode.setVisibility(View.INVISIBLE);
+//                    if (JDataUtils.isStringBlank(etPostCode.getText())) {
+//                        tvPostCode.setText(getResources().getString(R.string.This_is_a_required_field));
+//                        tvPostCode.setTextColor(getResources().getColor(R.color.red_common));
+//                    }else if(etPostCode!=null&&etPostCode.getText().toString().trim().length()<4){
+//                        tvPostCode.setText(getResources().getString(R.string.blur_postalcode));
+//                        tvPostCode.setTextColor(getResources().getColor(R.color.red_common));
+//                    }else{
+//                        /**
+//                         * We need to send request to get city and state by postcode.
+//                         */
+////                        sendRequestToGetCityAndStateByPostcode(etPostCode.getText().toString());
+//                        tvPostCode.setTextColor(getResources().getColor(R.color.label_saved));
+//                    }
+//                }
+//                break;
             case R.id.et_checkout_shipping_city:
                 if (hasFocus) {
                     rl_checkaddadd_city.setBottomLineActive(true);
@@ -730,10 +730,6 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
         switch (v.getId()) {
             case R.id.arrow_checkout_shipping_select_state:
             case R.id.et_checkout_shipping_state:
-//                tvStateAnim.setTextColor(getResources().getColor(R.color.colorAccent));
-//                tvStateAnim.startAnimation(getHintAnimation(tvStateAnim, "State"));
-//                etShippingState.setFocusable(true);
-//                etShippingState.requestFocus();
                 openState();
                 break;
             case R.id.arrow_checkout_shipping_select_country:
@@ -742,10 +738,8 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                 tv_country_anim.startAnimation(getHintAnimation(tv_country_anim, "Country"));
                 etShippingCountry.setFocusable(true);
                 etShippingCountry.requestFocus();
-
                 ArrayList<WheelPickerEntity> wheelBeans = new ArrayList<WheelPickerEntity>();
                 WheelPickerEntity oldBean=new WheelPickerEntity();
-                System.out.println(String.valueOf(etShippingCountry.getTag())+"==============================tag");
                 for (int i=0;i<list_countries.size();i++) {
                     WheelPickerEntity ww = new WheelPickerEntity();
                     ww.setDisplay(list_countries.get(i).getName());
@@ -866,7 +860,6 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
         WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
         configEntity.setArrayList(list);
         configEntity.setOldValue(oldEntity);
-        System.out.println("====================="+oldEntity.getIndex());
         configEntity.setIndex(oldEntity.getIndex());
         configEntity.setCallBack(new WheelPickerCallback() {
             @Override

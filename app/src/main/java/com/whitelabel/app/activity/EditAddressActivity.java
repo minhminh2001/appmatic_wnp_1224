@@ -577,7 +577,6 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                         clickSave();
                     }
                 });
-
         TextView tvMenuSave= (TextView) view.findViewById(R.id.tv_menu_item_save);
         JViewUtils.setNavBarTextColor(tvMenuSave);
         return super.onCreateOptionsMenu(menu);
@@ -591,6 +590,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         }
         return super.onOptionsItemSelected(item);
     }
+    //onblurAll(R.id.edit_postalcode_EditText) &&
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -598,7 +598,6 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
     private void clickSave(){
         JViewUtils.cleanCurrentViewFocus(EditAddressActivity.this);
         if (onblurAll(R.id.edit_firstName_EditText) && onblurAll(R.id.edit_lastName_EditText)  && onblurAll(R.id.edit_address1_EditText)
-                && onblurAll(R.id.edit_postalcode_EditText)
                 && onblurAll(R.id.edit_city_EditText) && onblurAll(R.id.edit_country_EditText)  && onblurAll(R.id.edit_eg)) {//&& onblurAll(R.id.edit_state_EditText)
             mDialog=JViewUtils.showProgressDialog(EditAddressActivity.this);
             String region="";
@@ -759,7 +758,6 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
         configEntity.setArrayList(list);
         configEntity.setOldValue(oldEntity);
-        System.out.println("=====================" + oldEntity.getIndex());
         configEntity.setIndex(oldEntity.getIndex());
         configEntity.setCallBack(new WheelPickerCallback() {
             @Override
@@ -863,13 +861,13 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                     else
                         ivClearEditAddress2.setVisibility(View.GONE);
                     break;
-                case R.id.edit_postalcode_EditText:
-                    onFocus(postalcode, postalcodeText, postalcodeText2, "Postal Code",rl_edit_postcode);
-                    if (postalcode.getText().length()!=0)
-                        ivClearEditCode.setVisibility(View.VISIBLE);
-                    else
-                        ivClearEditCode.setVisibility(View.GONE);
-                    break;
+//                case R.id.edit_postalcode_EditText:
+//                    onFocus(postalcode, postalcodeText, postalcodeText2, "Postal Code",rl_edit_postcode);
+//                    if (postalcode.getText().length()!=0)
+//                        ivClearEditCode.setVisibility(View.VISIBLE);
+//                    else
+//                        ivClearEditCode.setVisibility(View.GONE);
+//                    break;
                 case R.id.edit_city_EditText:
                     onFocus(city, cityText, cityText2, "City",rl_edit_city);
                     if (city.getText().length()!=0)

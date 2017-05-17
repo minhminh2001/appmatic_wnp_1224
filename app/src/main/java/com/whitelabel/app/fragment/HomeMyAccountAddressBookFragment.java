@@ -62,6 +62,8 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
     private String TAG;
     private SwipeRefreshLayout refreshLayout;
     private int index;
+    private RequestErrorHelper requestErrorHelper;
+    private View connectionLayout;
 
     private final static class DataHandler extends Handler {
         private final WeakReference<HomeActivity> mActivity;
@@ -178,8 +180,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
         return contentView;
     }
 
-    private RequestErrorHelper requestErrorHelper;
-    private View connectionLayout;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

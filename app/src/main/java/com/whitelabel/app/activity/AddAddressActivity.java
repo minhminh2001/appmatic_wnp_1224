@@ -81,6 +81,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     private ArrayList<CountrySubclass> list_countries = new ArrayList<CountrySubclass>();
     private Handler mHandler = new Handler();
     private int num;
+    private InputMethodManager imm ;
     private TextView tvError;
     private CustomCheckBox addaddress_checkbox;
     private ScrollView  mScrollView;
@@ -245,7 +246,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         RelativeLayout checkBox_RelativeLayout = (RelativeLayout) findViewById(R.id.relative1);
         Intent intent=this.getIntent();
         String number = intent.getStringExtra("listnum");
-
         v_add_phone_line=findViewById(R.id.v_add_phone_line);
         view_firstname_line=findViewById(R.id.view_firstname_line);
         view_lastname_line=findViewById(R.id.view_lastname_line);
@@ -255,7 +255,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         rl_addadd_postcode= (CustomButtomLineRelativeLayout) findViewById(R.id.rl_addadd_postcode);
         rl_addadd_city= (CustomButtomLineRelativeLayout) findViewById(R.id.rl_addadd_city);
         rl_addadd_state= (CustomButtomLineRelativeLayout) findViewById(R.id.rl_addadd_state);
-
         TextView tvAddressWord = (TextView) findViewById(R.id.tv_user_address);
         tvAddressWord.setOnClickListener(this);
         tvError=(TextView)findViewById(R.id.tv_error_hint);
@@ -680,7 +679,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         });
         JViewUtils.showWheelPickerOneDialog(AddAddressActivity.this, configEntity);
     }
-
+    // && onblurAll(R.id.edit_addaddresss_postalcode)
     private boolean menuItemClicking=false;
     private void saveAddressOption() {
         if(menuItemClicking){
@@ -689,7 +688,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         JViewUtils.cleanCurrentViewFocus(AddAddressActivity.this);
         if (onblurAll(R.id.edit_addaddress_firstName) && onblurAll(R.id.edit_addaddress_lastName)  && onblurAll(R.id.edit_addaddresss_country)
                 && onblurAll(R.id.edit_addaddresss_address1)
-                && onblurAll(R.id.edit_addaddresss_postalcode) && onblurAll(R.id.edit_addaddresss_city)  && onblurAll(R.id.edit_addaddresss_eg)) {
+                && onblurAll(R.id.edit_addaddresss_city)  && onblurAll(R.id.edit_addaddresss_eg)) {
 
             mDialog=JViewUtils.showProgressDialog(AddAddressActivity.this);
             String region="";
@@ -750,11 +749,10 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
              entity.setIndex(selectIndex);
             createStatueDialogPicker(list, entity, stateText);
     }
-    private InputMethodManager imm ;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
             case R.id.tv_user_address:
                 addaddress_checkbox.setChecked(!addaddress_checkbox.isChecked(),true);
                 break;
@@ -875,14 +873,14 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                         clearAddress2.setVisibility(View.GONE);
                     }
                     break;
-                case R.id.edit_addaddresss_postalcode:
-                    onFocus(postalcode, postalcodeText, postalcodeText2, "Postal Code",rl_addadd_postcode);
-                    if (postalcode.getText().length()!=0) {
-                        clearAddressCode.setVisibility(View.VISIBLE);
-                    }else {
-                        clearAddressCode.setVisibility(View.GONE);
-                    }
-                    break;
+//                case R.id.edit_addaddresss_postalcode:
+//                    onFocus(postalcode, postalcodeText, postalcodeText2, "Postal Code",rl_addadd_postcode);
+//                    if (postalcode.getText().length()!=0) {
+//                        clearAddressCode.setVisibility(View.VISIBLE);
+//                    }else {
+//                        clearAddressCode.setVisibility(View.GONE);
+//                    }
+//                    break;
                 case R.id.edit_addaddresss_state:
                     onFocus(state, stateText, stateText2, "State",rl_addadd_state);
                     clickState();

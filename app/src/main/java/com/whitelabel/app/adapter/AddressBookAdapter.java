@@ -57,16 +57,18 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
             holder.tvthird.setText(addreddBean.getStreet().get(1));
             holder.tvthird.setVisibility(View.VISIBLE);
         }
-        String stateStr="";
-        if(TextUtils.isEmpty(addreddBean.getRegion())){
-        }else{
-            stateStr=addreddBean.getRegion()+", ";
+        StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder= stringBuilder.append(addreddBean.getCity());
+        if(!TextUtils.isEmpty(addreddBean.getRegion())){
+            stringBuilder=stringBuilder.append(", ").append(addreddBean.getRegion());
         }
-        holder.tvaddress.setText(addreddBean.getCity()+", "+stateStr+addreddBean.getPostcode());
+        if(!TextUtils.isEmpty(addreddBean.getPostcode())){
+            stringBuilder=stringBuilder.append(", ").append(addreddBean.getPostcode());
+        }
+        holder.tvaddress.setText(stringBuilder.toString());
         holder.tvmalaysia.setText(addreddBean.getCountry());
         holder.tvtel.setText(context.getResources().getString(R.string.t) + addreddBean.getTelephone());
         boolean defaultAddress=addreddBean.getPrimaryShipping().toString().trim().equals("1") ? true : false;
-        JLogUtils.d("default", defaultAddress + " " + position);
         if(defaultAddress){
             holder.ivDefault.setVisibility(View.VISIBLE);
 //            holder.ivDelete.setVisibility(View.GONE);

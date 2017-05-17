@@ -125,7 +125,7 @@
     <!--SHOPPINGCART MODULE-->
     <string name="shoppingcart_shippingfeehint">*Shipping fees may apply</string>
     <string name="SHOPPINGCART">Shopping Cart</string>
-    <string name="hint_GEMCash_voucher">Enter your GEMCash voucher code</string>
+    <string name="hint_GEMCash_voucher">Enter your voucher code</string>
     <string name="APPLY">APPLY</string>
     <string name="Subtotal">Subtotal</string>
     <string name="Voucher">Voucher</string>
@@ -344,7 +344,7 @@
     <string name="name_password_error"> User name or password error</string>
     <string name="account_not_confirm">This account has not been confirmed yet. </string>
     <string name="sign_in">Sign In</string>
-    <string name="connect_with_Facebook">Facebook</string>
+    <string name="connect_with_Facebook">Facebook(Coming soon)</string>
     <string name="or">or</string>
     <string name="user_mail_com">Email</string>
     <string name="enter_password">Password</string>

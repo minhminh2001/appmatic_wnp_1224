@@ -74,13 +74,15 @@ public class CheckoutShippingAddressAdapter extends BaseAdapter{
             viewHolder.tvAddress2.setVisibility(View.VISIBLE);
             viewHolder.tvAddress2.setText(address.getStreet().get(1));
         }
-
-        String str="";
+        StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder=stringBuilder.append(address.getCity());
         if(!TextUtils.isEmpty(address.getRegion())) {
-            str=address.getRegion() + ", ";
-
+            stringBuilder= stringBuilder .append(", ").append( address.getRegion());
         }
-        viewHolder.tvCityStatePostcode.setText(address.getCity()+", " +str+address.getPostcode());
+        if(!TextUtils.isEmpty(address.getPostcode())){
+           stringBuilder=stringBuilder.append(", ").append(address.getPostcode());
+        }
+        viewHolder.tvCityStatePostcode.setText(stringBuilder.toString());
         viewHolder. tvCountry.setText(address.getCountry());
         viewHolder.tvTelephone.setText(context.getResources().getString(R.string.t)+address.getTelephone());
         if ("1".equals(address.getPrimaryShipping())) {
@@ -92,13 +94,11 @@ public class CheckoutShippingAddressAdapter extends BaseAdapter{
         }
         return convertView;
     }
-
     private static class ViewHolder {
         TextView tvFirstname, tvLastname, tvAddress1, tvAddress2, tvCityStatePostcode, tvCountry, tvTelephone;
         ImageView imageDot;
         View vSelected,mParent;
     }
-
 //    //局部刷新ListView
     public void updateView(int itemIndex) {
         //得到第一个可显示控件的位置，
