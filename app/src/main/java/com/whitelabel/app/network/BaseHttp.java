@@ -258,6 +258,23 @@ public abstract class BaseHttp {
         }
     }
 
+
+    protected  boolean isOkByCode(String json){
+        int state=0;
+        try {
+            JSONObject obj = new JSONObject(json);
+            state = obj.getInt("code");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(state==RESPONSE_SUCCESS){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
     public void cancelHttpByTag(String tag) {
         WhiteLabelApplication.getInstance().cancelPendingRequests(tag);
     }

@@ -494,6 +494,7 @@
 
         <com.whitelabel.app.widget.CustomTextView
             style="@style/font_family_robot_regular"
+            android:id="@+id/tv_register_hint"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

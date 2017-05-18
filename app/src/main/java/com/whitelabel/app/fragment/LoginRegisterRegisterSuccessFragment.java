@@ -124,7 +124,14 @@ public class LoginRegisterRegisterSuccessFragment extends Fragment implements Vi
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.goshopping:
-                loginRegisterActivity.startNextActivity(null,HomeActivity.class,true);
+                if(loginRegisterActivity.fromStart){
+                    loginRegisterActivity.startNextActivity(null, HomeActivity.class, true);
+                }else {
+                    loginRegisterActivity.setResult(LoginRegisterEmailLoginFragment.RESULTCODE);
+                    loginRegisterActivity.finish();
+                    loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
+
+                }
                 break;
         }
     }

@@ -5,14 +5,18 @@ package com.whitelabel.app.model;
  */
 public class SVRAppserviceNotificationListReturnEntity extends SVRReturnEntity {
 
-    private int status;
+    private int code;
     private int page;
-    private NotificationCell [] notification_items;
+    private NotificationCell [] data;
 
     private int notification_unread_count;
 
-    public int getStatus() {
-        return status;
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public int getPage() {
@@ -23,16 +27,13 @@ public class SVRAppserviceNotificationListReturnEntity extends SVRReturnEntity {
         this.page = page;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+
+    public NotificationCell[] getData() {
+        return data;
     }
 
-    public NotificationCell[] getNotification_items() {
-        return notification_items;
-    }
-
-    public void setNotification_items(NotificationCell[] notification_items) {
-        this.notification_items = notification_items;
+    public void setData(NotificationCell[] data) {
+        this.data = data;
     }
 
     public int getNotification_unread_count() {

@@ -492,7 +492,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                     clearMail.setVisibility(View.INVISIBLE);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -511,7 +510,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                     clearPassword.setVisibility(View.GONE);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
             }

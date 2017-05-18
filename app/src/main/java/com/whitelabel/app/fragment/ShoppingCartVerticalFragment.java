@@ -890,7 +890,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 
     public void setDiscountPrice(double disCount, String title) {
         llVoucherPrice.setVisibility(View.VISIBLE);
-        tvVoucher.setText("-RM " + JDataUtils.formatDouble((Math.abs(disCount)) + ""));
+        tvVoucher.setText("-"+WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble((Math.abs(disCount)) + ""));
         tvVoucherWorld.setText(title);
     }
 

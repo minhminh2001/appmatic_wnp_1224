@@ -269,6 +269,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         }
         return super.onOptionsItemSelected(item);
     }
+    private TextView tvRegisterHint;
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -284,7 +285,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         rl_register_repwd= (CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_register_repwd);
         view_firstname_line= (View) contentView.findViewById(R.id.view_firstname_line);
         view_lastname_line= (View) contentView.findViewById(R.id.view_lastname_line);
-
+        tvRegisterHint= (TextView) contentView.findViewById(R.id.tv_register_hint);
         firstNameText= (TextView) contentView.findViewById(R.id.firstName_text);
         lastNameText= (TextView) contentView.findViewById(R.id.lastName_text);
         emailText= (TextView) contentView.findViewById(R.id.email_text);
@@ -323,7 +324,11 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         re_password.setOnFocusChangeListener(this);
         TextView sign_in = (TextView) contentView.findViewById(R.id.sign_in);
         sign_in.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-
+        StringBuilder stringBuilder=new StringBuilder();
+         stringBuilder=stringBuilder.append(getActivity().getResources().getString(R.string.by_creating));
+         stringBuilder=stringBuilder.append(" ");
+         stringBuilder=stringBuilder.append(GlobalData.appName);
+         tvRegisterHint.setText(stringBuilder.toString());
         sign_in.setOnClickListener(this);
         Button signUp = (Button) contentView.findViewById(R.id.sign_up);
         signUp.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
@@ -337,10 +342,13 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         setMoreClickSpan();
         TextView t1 = (TextView) contentView.findViewById(R.id.t1);
         TextView t3 = (TextView) contentView.findViewById(R.id.t3);
-        t1.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-        t3.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-        t1.setOnClickListener(this);
-        t3.setOnClickListener(this);
+        t1.setText(getResources().getString(R.string.TermsOfUserPrivacyPolicy1));
+        t3.setText(getResources().getString(R.string.TermsOfUserPrivacyPolicy2));
+
+//        t1.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+//        t3.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+//        t1.setOnClickListener(this);
+//        t3.setOnClickListener(this);
         TAG=this.getClass().getSimpleName();
         email.setInputType(EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         if(loginRegisterActivity.getIntent()!=null&&loginRegisterActivity.getIntent().getExtras()!=null){
@@ -360,43 +368,45 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         updateDiaBtnMsg = getActivity().getResources().getString(R.string.update);
     }
     private void setMoreClickSpan(){
-        try {
-            String  firstStr=getResources().getString(R.string.checkBox1);
-            String  sendStr=getResources().getString(R.string.checkBox3);
-            int firstTextLength=firstStr.length();
-            int sendTextLength=sendStr.length();
-            if(firstTextLength==0||sendTextLength==0){
-                return;
-            }
-            checkBoxText1.setText(firstStr + sendStr+"      ");
-            SpannableStringBuilder builder = new SpannableStringBuilder(checkBoxText1.getText().toString());
-            checkBoxText1.setClickable(true);
-            checkBoxText1.setMovementMethod(LinkMovementMethod.getInstance());
-            NoUnderLineClickSpan greyNoLineClickableSpan=new NoUnderLineClickSpan(JToolUtils.getColor(R.color.grayText),false);
-            NoUnderLineClickSpan purpleNoLineClickableSpan=new NoUnderLineClickSpan(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(),true);
-            greyNoLineClickableSpan.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(checkBox.isChecked()){
-                        checkBox.setChecked(false,true);
-                    }else {
-                        checkBox.setChecked(true,true);
-                    }
-                }
-            });
-            purpleNoLineClickableSpan.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle2=new Bundle();
-                    bundle2.putInt("helpCenter", 2);
-                    startActivitysForResult(bundle2, RegisterToHelpCenter.class, false);
-                }
-            });
-            builder.setSpan(purpleNoLineClickableSpan, firstTextLength, firstTextLength + sendTextLength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            builder.setSpan(greyNoLineClickableSpan,  0,firstTextLength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            checkBoxText1.setText(builder);
-        }catch(Exception e){
-        }
+//        try {
+
+            StringBuilder stringBuilder=new StringBuilder();
+              stringBuilder=stringBuilder.append(getResources().getString(R.string.checkBox1)).append(" "+GlobalData.appName);
+             checkBoxText1.setText(stringBuilder.toString());
+//            String  sendStr=getResources().getString(R.string.checkBox3);
+//            int firstTextLength=firstStr.length();
+//            int sendTextLength=sendStr.length();
+//            if(firstTextLength==0||sendTextLength==0){
+//                return;
+//            }
+//            SpannableStringBuilder builder = new SpannableStringBuilder(checkBoxText1.getText().toString());
+//            checkBoxText1.setClickable(true);
+//            checkBoxText1.setMovementMethod(LinkMovementMethod.getInstance());
+//            NoUnderLineClickSpan greyNoLineClickableSpan=new NoUnderLineClickSpan(JToolUtils.getColor(R.color.grayText),false);
+//            NoUnderLineClickSpan purpleNoLineClickableSpan=new NoUnderLineClickSpan(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(),true);
+//            greyNoLineClickableSpan.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if(checkBox.isChecked()){
+//                        checkBox.setChecked(false,true);
+//                    }else {
+//                        checkBox.setChecked(true,true);
+//                    }
+//                }
+//            });
+//            purpleNoLineClickableSpan.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Bundle bundle2=new Bundle();
+//                    bundle2.putInt("helpCenter", 2);
+//                    startActivitysForResult(bundle2, RegisterToHelpCenter.class, false);
+//                }
+//            });
+//            builder.setSpan(purpleNoLineClickableSpan, firstTextLength, firstTextLength + sendTextLength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//            builder.setSpan(greyNoLineClickableSpan,  0,firstTextLength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//            checkBoxText1.setText(builder);
+//        }catch(Exception e){
+//        }
     }
 
     @Override

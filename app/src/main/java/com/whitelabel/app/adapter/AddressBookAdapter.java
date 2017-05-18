@@ -25,17 +25,13 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
     public ArrayList<AddressBook> list;
     private Context context;
     private Context myAddressBookActivity;
-
-    
     public AddressBookAdapter(Context context,ArrayList<AddressBook> list) {
         super(context,0,list);
         this.list=list;
         this.context = context;
         myAddressBookActivity =context;
-
         AddressBookAdapter adapter = this;
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view=convertView;
@@ -80,17 +76,11 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
         }
         return view;
     }
-
-
-
-
-
     private static class AddressViewHolder extends RecyclerView.ViewHolder{
         TextView tvname;
         TextView tvsecond;
         TextView tvthird;
         TextView tvaddress ;
-
         TextView tvmalaysia ;
         TextView tvtel ;
         TextView tvLine;

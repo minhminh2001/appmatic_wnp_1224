@@ -8,9 +8,10 @@ import java.io.Serializable;
  * 购物车实体类
  */
 public class NotificationCell implements Serializable{
+    private String id;
+    private String  created_at;
     private int unread;
     private String sent_at;
-    private String items_id;
     private String notification_id;
     private String title;
     private String content;
@@ -23,6 +24,22 @@ public class NotificationCell implements Serializable{
     private String active;
     private String banner;
     private String expiryTime;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
 
     public String getExpiryTime() {
         return expiryTime;
@@ -127,13 +144,7 @@ public class NotificationCell implements Serializable{
         this.content = content;
     }
 
-    public String getItems_id() {
-        return items_id;
-    }
 
-    public void setItems_id(String items_id) {
-        this.items_id = items_id;
-    }
 
     public String getAttached_link() {
         return attached_link;

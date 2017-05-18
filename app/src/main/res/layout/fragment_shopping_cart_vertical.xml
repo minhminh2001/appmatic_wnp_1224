@@ -14,19 +14,15 @@
             android:id="@+id/swipe_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <RelativeLayout
                 android:id="@+id/ll_body"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/hlv_shoppingcart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="visible" />
-
-
             </RelativeLayout>
         </com.whitelabel.app.widget.CustomSwipefreshLayout>
 

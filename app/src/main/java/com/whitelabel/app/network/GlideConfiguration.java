@@ -27,7 +27,6 @@ public class GlideConfiguration implements GlideModule {
     public void registerComponents(Context context, Glide glide) {
         //configure okhttp with glide
         OkHttpClient  okHttpClient= OkHttpClientManager.getClient();
-
         OkHttpUrlLoader.Factory factory = new OkHttpUrlLoader.Factory(OkHttpClientManager.getClient());
         glide.register(GlideUrl.class, InputStream.class, factory);
     }

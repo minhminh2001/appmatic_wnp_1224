@@ -344,12 +344,14 @@
                     android:textSize="12sp"
                     android:textColor="@drawable/text_grey_color_selected"
                     android:text="@string/customer_service"
+                    android:visibility="gone"
                     />
 
 
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_help_center"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     style="@style/font_family_robot_regular"
                     android:textSize="12sp"
                     android:textColor="@drawable/text_grey_color_selected"
@@ -360,6 +362,7 @@
                     android:layout_height="40dp"/>
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_shipping"
+                    android:visibility="gone"
                     android:layout_marginBottom="15dp"
                     android:layout_width="match_parent"
                     style="@style/font_family_robot_regular"

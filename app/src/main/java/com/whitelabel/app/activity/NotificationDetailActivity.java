@@ -163,7 +163,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
                     if (msg.arg1 == NotificationDao.RESPONSE_SUCCESS) {
                         mActivity.get().mBean = (NotificationCell) msg.obj;
                         if (mActivity.get().isUnRead) {
-                            SendBoardUtil.sendNotificationBoard(mActivity.get(), SendBoardUtil.READFLAG, mActivity.get().mBean.getItems_id());
+                            SendBoardUtil.sendNotificationBoard(mActivity.get(), SendBoardUtil.READFLAG, mActivity.get().mBean.getId());
                         }
                         mActivity.get().setUiData(mActivity.get().mBean);
                     } else {
@@ -214,7 +214,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
                 setTitle(notificationCell.getTitle());
                 notificationTitle = notificationCell.getTitle();
             }
-            itemId = notificationCell.getItems_id();
+            itemId = notificationCell.getId();
             mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), itemId, "1","");
         }
 

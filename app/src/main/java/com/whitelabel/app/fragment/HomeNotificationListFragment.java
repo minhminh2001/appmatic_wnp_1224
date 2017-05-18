@@ -29,11 +29,9 @@ import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.SendBoardUtil;
 import com.whitelabel.app.widget.CustomXListView;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 public class HomeNotificationListFragment extends HomeBaseFragment implements CustomXListView.IXListViewListener,SwipeRefreshLayout.OnRefreshListener {
     private HomeActivity homeActivity;
     private HomeNotificationListAdapter adapter;
@@ -79,7 +77,6 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
         JLogUtils.d(TAG, "onResume: ");
         super.onResume();
     }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -105,7 +102,6 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
         mHandler=new DataHandler(homeActivity,this);
         list = new ArrayList<NotificationCell>();
         mDialog = JViewUtils.showProgressDialog(homeActivity);
-
         mDao=new NotificationDao(TAG,mHandler);
         page=1;
         newSendRequestToGetList();
@@ -183,25 +179,26 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
                     if(msg.arg1==NotificationDao.RESPONSE_SUCCESS){
                         fragment.connectionLayout.setVisibility(View.GONE);
                         SVRAppserviceNotificationListReturnEntity notificationListReturnEntity = (SVRAppserviceNotificationListReturnEntity)  msg.obj;
-                        if (notificationListReturnEntity.getStatus() == 1&&notificationListReturnEntity.getPage()==fragment.page) {
+                        if (notificationListReturnEntity.getCode() == 1&&notificationListReturnEntity.getPage()==fragment.page) {
                             fragment.clistView.stopLoadMore();
                             if (fragment.page == 1) {
                                 fragment.list.clear();
                                 fragment.currType = fragment.SUCCESS;
-                                if (notificationListReturnEntity == null || notificationListReturnEntity.getNotification_items() == null || notificationListReturnEntity.getNotification_items().length == 0) {
+                                if (notificationListReturnEntity == null || notificationListReturnEntity.getData() == null ||
+                                        notificationListReturnEntity.getData().length == 0) {
                                     fragment.rlEmpty.setVisibility(View.VISIBLE);
                                 }
                             }
                             fragment.unReadCount = notificationListReturnEntity.getNotification_unread_count();
                              mActivity.get().setTitleNum(fragment.unReadCount);
                             JLogUtils.d("jay","page="+fragment.page);
-                            JLogUtils.d("jay","length="+notificationListReturnEntity.getNotification_items().length);
-                            if (notificationListReturnEntity.getNotification_items().length > 0) {
+                            JLogUtils.d("jay","length="+notificationListReturnEntity.getData().length);
+                            if (notificationListReturnEntity.getData().length > 0) {
                                 fragment.clistView.setPullLoadEnable(true);
                                 fragment.page++;
                                 fragment.rlEmpty.setVisibility(View.INVISIBLE);
                                 //update adapter
-                                fragment.list.addAll(Arrays.asList(notificationListReturnEntity.getNotification_items()));
+                                fragment.list.addAll(Arrays.asList(notificationListReturnEntity.getData()));
                                 fragment. adapter.notifyDataSetChanged();
                             } else {
                                 fragment.clistView.setPullLoadEnable(false);
@@ -222,7 +219,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
                             boolean isexist=false;
                             if(fragment.list!=null&&cell!=null){
                                 for(int i=0;i<fragment.list.size();i++){
-                                    if(cell.getItems_id().equals(fragment.list.get(i).getItems_id())){
+                                    if(cell.getId().equals(fragment.list.get(i).getId())){
                                         isexist=true;
                                         break;
                                     }
@@ -279,8 +276,8 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
         JLogUtils.i(TAG,"notificationId:"+id);
         if(list!=null&&!TextUtils.isEmpty(id)) {
             for (int i = 0; i < list.size(); i++) {
-                JLogUtils.i(TAG,"getItems_id:"+list.get(i).getItems_id());
-                if(id.equals(list.get(i).getItems_id())){
+                JLogUtils.i(TAG,"getItems_id:"+list.get(i).getId());
+                if(id.equals(list.get(i).getId())){
                     JLogUtils.i(TAG,"right");
                     unReadCount--;
                     mCommonCallback.setTitleNum(unReadCount);

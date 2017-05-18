@@ -488,8 +488,8 @@
                 android:layout_marginTop="22dp"
                 android:orientation="vertical"
                 android:id="@+id/linear2">
-
                 <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_register_hint"
                     style="@style/font_family_robot_regular"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

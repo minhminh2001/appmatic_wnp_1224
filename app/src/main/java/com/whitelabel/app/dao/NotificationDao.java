@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.NotificationAppOpenReturnEntity;
 import com.whitelabel.app.model.NotificationCell;
@@ -75,10 +76,15 @@ public class NotificationDao extends BaseHttp {
         if (!TextUtils.isEmpty(session_key)) {
             params.put("session_key", session_key);
         }
+        String userId="";
+        if(WhiteLabelApplication.getAppConfiguration().getUser()!=null) {
+            userId = WhiteLabelApplication.getAppConfiguration().getUser().getId();
+        }
+
         params.put("page", page);
         params.put("pagesize", pagesize);
         params.put("device_token", device_token);
-        requestHttp(HTTP_METHOD.GET, "appsnotification/notification/list", params, REQUEST_GETLIST, page);
+        requestHttp(HTTP_METHOD.GET, "appservice/notification/list/"+userId, params, REQUEST_GETLIST, page);
     }
 
     @Override
@@ -86,7 +92,7 @@ public class NotificationDao extends BaseHttp {
         JLogUtils.d("response", response);
         switch (requestCode) {
             case REQUEST_GETLIST:
-                if (isOk(response)) {
+                if (isOkByCode(response)) {
                     SVRAppserviceNotificationListReturnEntity entity = JJsonUtils.parseJsonObj(response, SVRAppserviceNotificationListReturnEntity.class);
                     entity.setPage(Integer.parseInt((String) object));
                     postHandler(REQUEST_GETLIST, entity, RESPONSE_SUCCESS);

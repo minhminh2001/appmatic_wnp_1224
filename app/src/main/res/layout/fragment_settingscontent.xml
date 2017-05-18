@@ -138,6 +138,7 @@
         android:id="@+id/rl_setting_rate"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
+        android:visibility="gone"
         android:layout_below="@+id/rl_sound">
 
         <com.whitelabel.app.widget.CustomTextView

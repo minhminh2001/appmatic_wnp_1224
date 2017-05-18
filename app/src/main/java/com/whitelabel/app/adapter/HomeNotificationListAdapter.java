@@ -46,12 +46,10 @@ public class HomeNotificationListAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.adapter_home_notification_list, null);
-
             viewHolder = new ViewHolder();
             viewHolder.ivDot = (ImageView) convertView.findViewById(R.id.iv_notification_dot);
             viewHolder.tvTile = (TextView) convertView.findViewById(R.id.tv_notification_title);
             viewHolder.tvTime = (TextView) convertView.findViewById(R.id.tv_notification_time);
-
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -61,7 +59,7 @@ public class HomeNotificationListAdapter extends BaseAdapter {
         String title = notificationCell.getTitle();
         title = title.trim();
         viewHolder.tvTile.setText(title);
-        viewHolder.tvTime.setText(notificationCell.getSent_at());
+        viewHolder.tvTime.setText(notificationCell.getCreated_at());
 
         if (notificationCell.getUnread() == 1) {//unRead
 //            convertView.setBackgroundColor(context.getResources().getColor(R.color.white));

@@ -235,7 +235,7 @@
     <string name="TermsOfUserPrivacyPolicy1"><u>Terms of Use</u> </string>
     <string name="TermsOfUserPrivacyPolicy2"> <u>Privacy Policy.</u></string>
 
-    <string name="checkBox1"> I agree to receiving direct marketing&#160;materials from whitelabel.com/my&#160;</string>
+    <string name="checkBox1"> I agree to receiving direct marketing&#160;materials from </string>
     <string name="checkBox3"><u>More.</u></string>
     <string name="rigisterSuccess2">REGISTERED SUCCESSFULLY</string>
 
@@ -267,7 +267,7 @@
     <!-- Home -->
 
 
-    <string name="home_home_category_gempicks">GEM PICKS</string>
+    <string name="home_home_category_gempicks"> PICKS</string>
 
     <!-- Curation -->
     <string name="curation_title">Curation</string>
@@ -358,7 +358,7 @@
     <string name="last_name">Last Name</string>
     <string name="enter_email_address">Email</string>
     <string name="retype_password">Re-type Password</string>
-    <string name="by_creating">By creating an account, you agree to Whitelabel</string>
+    <string name="by_creating">By creating an account, you agree to </string>
     <string name="and">  and  </string>
     <string name="already_have_an_account">Already have an account? </string>
     <!--login send email-->
@@ -451,7 +451,7 @@
     <string name="congratulations">CONGRATULATIONS!</string>
     <string name="select_one_of_the_bixes">Select one of boxes below for surprise gift!</string>
     <string name="congratulations2">CONGRATULATIONS!</string>
-    <string name="youve_won_gemcash">You are taking home a \n GEMCash Voucher.</string>
+    <string name="youve_won_gemcash">You are taking home a \n Voucher.</string>
     <string name="an_email_with_prize">The voucher code will be emailed to \n you soon!</string>
 
     <string name="notification_detail_open">OPEN</string>
