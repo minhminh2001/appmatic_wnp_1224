@@ -43,7 +43,6 @@ public class ToolBarAlphaBehavior {
         this.context = context;
         this.toolbar=toolbar;
         String colorStr=String.format("#%06X", 0xFFFFFF & defaultColor);
-        JLogUtils.i("ray","colorStr:"+colorStr);
         this.defaultColor=colorStr.substring(1);
         this.callBack=callBack;
         //  渐变色最大差距值变化滑动距离

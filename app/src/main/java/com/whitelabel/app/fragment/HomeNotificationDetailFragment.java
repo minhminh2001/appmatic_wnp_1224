@@ -51,7 +51,7 @@ public class HomeNotificationDetailFragment extends Fragment implements View.OnC
     private void initData() {
         NotificationCell notificationCell = (NotificationCell) getArguments().getSerializable("data");
         tvTitle.setText(notificationCell.getTitle());
-        webView.setText(notificationCell.getContent());
+        webView.setText(notificationCell.getBody());
     }
 
 

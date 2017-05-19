@@ -11,10 +11,10 @@ public class NotificationCell implements Serializable{
     private String id;
     private String  created_at;
     private int unread;
-    private String sent_at;
+//    private String sent_at;
     private String notification_id;
     private String title;
-    private String content;
+    private String body;
     private String attached_link;
     private int internal_type;
     private int attached_link_type; //1External Link   2为Internal Link
@@ -112,13 +112,7 @@ public class NotificationCell implements Serializable{
         this.unread = unread;
     }
 
-    public String getSent_at() {
-        return sent_at;
-    }
 
-    public void setSent_at(String sent_at) {
-        this.sent_at = sent_at;
-    }
 
     public String getNotification_id() {
         return notification_id;
@@ -136,15 +130,13 @@ public class NotificationCell implements Serializable{
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
+    public String getBody() {
+        return body;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setBody(String body) {
+        this.body = body;
     }
-
-
 
     public String getAttached_link() {
         return attached_link;

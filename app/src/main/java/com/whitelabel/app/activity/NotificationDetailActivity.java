@@ -61,7 +61,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
         tvNotiTitle = (TextView) findViewById(R.id.tv_nitititle);
         tvTime = (TextView) findViewById(R.id.tv_notification_time);
         mLlBottomBar = (LinearLayout) findViewById(R.id.llBottomBar);
-        mLlBottomBar.setOnClickListener(this);
+//        mLlBottomBar.setOnClickListener(this);
 //        ivBack.setOnClickListener(this);
         btnOpen.setOnClickListener(this);
 //        btnOpen.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
@@ -94,11 +94,9 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
             }
         });
     }
-
-
     public  void setUiData(NotificationCell notificationCell){
-        mLlBottomBar.setVisibility(View.VISIBLE);
-        tvTime.setText(notificationCell.getSent_at());
+//        mLlBottomBar.setVisibility(View.VISIBLE);
+        tvTime.setText(notificationCell.getCreated_at());
         tvNotiTitle.setText(notificationCell.getTitle());
         if (!TextUtils.isEmpty(notificationCell.getTitle())) {
             setTitle(notificationCell.getTitle());
@@ -115,7 +113,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
             ivNotificationImage.setLayoutParams(params);
             JImageUtils.downloadImageFromServerByUrl(NotificationDetailActivity.this, mImageLoader, ivNotificationImage, notificationCell.getBanner(), width, height);
         }
-        webView_content.setText(notificationCell.getContent());
+        webView_content.setText(notificationCell.getBody());
         attached_link = notificationCell.getAttached_link();
         String mExpiryTime = notificationCell.getExpiryTime();
         JLogUtils.d(TAG,"expiry_date="+ mExpiryTime);
@@ -188,11 +186,6 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
         String device_token= WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken();
         if (bundle != null && !JDataUtils.isEmpty(bundle.getString("where"))) {
             NotificationReceivedEntity entity = (NotificationReceivedEntity) bundle.getSerializable("data");
-//            try {
-//                FirebaseEventUtils.getInstance().customizedNotificationOpen(NotificationDetailActivity.this, entity.getTitle());
-//            } catch (Exception ex) {
-//                ex.getStackTrace();
-//            }
             if (entity != null) {
                 notificationTitle = entity.getTitle();
             }

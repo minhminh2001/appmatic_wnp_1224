@@ -13,6 +13,7 @@ import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,7 +59,7 @@ public class NotificationDao extends BaseHttp {
         if(!TextUtils.isEmpty(device_token)) {
             params.put("device_token", device_token);
         }
-        requestHttp(HTTP_METHOD.GET,"appsnotification/notification/details",params,REQUEST_NOTIFICATIONDETAIL);
+        requestHttp(HTTP_METHOD.GET,"appservice/notification/"+id,params,REQUEST_NOTIFICATIONDETAIL);
     }
 
     public void getNotificationDetailCount(String session_key, String device_token) {
@@ -80,7 +81,6 @@ public class NotificationDao extends BaseHttp {
         if(WhiteLabelApplication.getAppConfiguration().getUser()!=null) {
             userId = WhiteLabelApplication.getAppConfiguration().getUser().getId();
         }
-
         params.put("page", page);
         params.put("pagesize", pagesize);
         params.put("device_token", device_token);
@@ -111,11 +111,12 @@ public class NotificationDao extends BaseHttp {
                 }
                 break;
             case REQUEST_NOTIFICATIONDETAIL:
-                if (isOk(response)) {
+                if (isOkByCode(response)) {
                     try {
                         JSONObject obj = new JSONObject(response);
-                        JSONObject detailObj = obj.getJSONObject("details");
-                        NotificationCell cell = JJsonUtils.parseJsonObj(detailObj.toString(), NotificationCell.class);
+                        JSONArray detailArray = obj.getJSONArray("data");
+                       JSONObject jsonObject= detailArray.getJSONObject(0);
+                        NotificationCell cell = JJsonUtils.parseJsonObj(jsonObject.toString(), NotificationCell.class);
                         postHandler(REQUEST_NOTIFICATIONDETAIL, cell, RESPONSE_SUCCESS);
                     } catch (JSONException e) {
                         e.printStackTrace();

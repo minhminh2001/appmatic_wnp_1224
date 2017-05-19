@@ -136,7 +136,11 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     }
     @Override
     protected void jumpNotificationPage() {
-        switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_NOTIFICATIONLIST, null);
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
+            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_NOTIFICATIONLIST, null);
+        }else{
+            jumpLoginActivity();
+        }
     }
 
     @Override
@@ -178,7 +182,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
 
     @Override
     protected void jumpCustomerServicePage() {
-
         TMPHelpCenterListToDetailEntity dataentity = new TMPHelpCenterListToDetailEntity();
         dataentity.setHelpCenterType(9);
         dataentity.setType(HomeHelpCenterDetailFragment.FIREST_MENU);
@@ -382,8 +385,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
              updateRightIconNum(R.id.action_shopping_cart, cartItemcount);
         }
     }
-
-
     public long getCartItemCount() {
         long cartItemCount = 0;
         try {

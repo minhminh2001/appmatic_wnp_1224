@@ -80,7 +80,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 
     private void setAppBarLayoutBehaviour() {
         AppBarLayout.Behavior behavior = new AppBarLayout.Behavior() {
-
             @Override
             public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View directTargetChild, View target, int nestedScrollAxes) {
                 // Trigger the following events if it is a vertical scrolling
@@ -149,7 +148,9 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 
                 break;
             case R.id.rl_drawer_notification:
-                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_NOTIFICATION);
+                if (WhiteLabelApplication.getAppConfiguration().isSignIn(DrawerLayoutActivity.this)) {
+                    switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_NOTIFICATION);
+                }
                 drawerLayout.closeDrawer(Gravity.LEFT);
                 baseHandler.postDelayed(new Runnable() {
                     @Override
@@ -371,7 +372,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
             super.handleMessage(msg);
         }
     }
-    ActionBarDrawerToggle mActionDrawableToggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -574,9 +574,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         } else {
             flContainer.setPadding(flContainer.getPaddingLeft(), flContainer.getPaddingTop(), flContainer.getPaddingRight(), 0);
         }
-
     }
-
     //
     public void setCoordinatorLayoutSwitch(boolean switchScroll) {
         if (switchScroll == false && appbar_layout != null) {
