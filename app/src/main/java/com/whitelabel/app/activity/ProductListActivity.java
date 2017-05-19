@@ -37,7 +37,6 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     public boolean mGATrackTimeEnable = false;
     public Long GATrackSearchTimeStart = 0L;
     public boolean GATrackSearchTimeEnable = false;
-
     public static final int RESULT_WISH = 101;
     public final static int TABBAR_INDEX_NONE = -1;
     public final static int TABBAR_INDEX_FILTER = 1;
@@ -132,14 +131,11 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
             operateProductIdPrecache.setAvailable(available);
         }
     }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mCurrentFragment.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

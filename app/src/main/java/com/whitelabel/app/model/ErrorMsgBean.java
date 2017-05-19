@@ -9,8 +9,17 @@ import java.util.List;
 public class ErrorMsgBean implements Serializable {
     private int status;
     private String errorMessage;
+    private String error_messages;
     private List<String> ids;
     private Object params;
+
+    public String getError_messages() {
+        return error_messages;
+    }
+
+    public void setError_messages(String error_messages) {
+        this.error_messages = error_messages;
+    }
 
     public Object getParams() {
         return params;

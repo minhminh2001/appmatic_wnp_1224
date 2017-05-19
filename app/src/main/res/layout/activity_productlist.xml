@@ -3,12 +3,10 @@
     xmlns:imaginato="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <FrameLayout
         android:id="@+id/flFilterSortContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
     <RelativeLayout
         android:id="@+id/rlBottomBar"
         android:layout_width="match_parent"
@@ -99,7 +97,6 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1">
-
                     <com.whitelabel.app.widget.CustomTextView
                         android:id="@+id/ctvBottomBarSort"
                         android:layout_width="match_parent"
@@ -111,9 +108,7 @@
                         android:maxLines="1"
                         android:text="@string/productlist_sort"
                         android:textSize="17sp"
-
                         style="@style/font_family_robot_regular" />
-
                     <RelativeLayout
                         android:id="@+id/rl_sort_plus"
                         android:layout_centerVertical="true"
@@ -133,10 +128,8 @@
                             android:layout_height="match_parent"
                             android:layout_centerHorizontal="true"/>
                     </RelativeLayout>
-
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
-
 </RelativeLayout>

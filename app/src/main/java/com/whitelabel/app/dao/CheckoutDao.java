@@ -257,7 +257,7 @@ public class CheckoutDao extends BaseHttp {
                     postHandler(requestCode, entity, RESPONSE_SUCCESS);
                 } else {
                     ErrorMsgBean bean = getErrorMsgBean(response);
-                    postHandler(requestCode, bean.getErrorMessage(), RESPONSE_FAILED);
+                    postHandler(requestCode, bean.getError_messages(), RESPONSE_FAILED);
                 }
                 break;
             case REQUEST_CHANGEORDERSTATUS:

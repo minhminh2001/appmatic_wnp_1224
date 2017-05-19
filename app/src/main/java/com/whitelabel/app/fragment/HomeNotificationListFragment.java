@@ -185,7 +185,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
                                 fragment.list.clear();
                                 fragment.currType = fragment.SUCCESS;
                                 if (notificationListReturnEntity == null || notificationListReturnEntity.getData() == null ||
-                                        notificationListReturnEntity.getData().length == 0) {
+                                   notificationListReturnEntity.getData().length == 0) {
                                     fragment.rlEmpty.setVisibility(View.VISIBLE);
                                 }
                             }

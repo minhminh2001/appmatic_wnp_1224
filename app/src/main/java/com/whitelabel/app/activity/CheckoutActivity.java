@@ -259,7 +259,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         list_fragment.add(checkoutShippingSelectaddressFragment);
         addressConditionInShipping = "1";
     }
-
     private void initView() {
         mImageLoader = new ImageLoader(this);
         /*
@@ -299,7 +298,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                 break;
         }
     }
-
     /**
      * GO BACK BUTTON
      * go back to last fragment or activity
