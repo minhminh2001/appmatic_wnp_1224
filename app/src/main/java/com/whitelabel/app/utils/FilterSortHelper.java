@@ -79,10 +79,8 @@ public class FilterSortHelper {
                 sortFragment.setArguments(bundle);
                 fragmentTransaction.add(fragmentContainerId, sortFragment);
             }
-
             fragmentTransaction.commitAllowingStateLoss();
             flFilterSortContainer.setVisibility(View.VISIBLE);
-
         } else {
             shouldHideFragment = true;
             fragmentTransaction.hide(sortFragment);
@@ -90,7 +88,6 @@ public class FilterSortHelper {
         }
         sortActive = show;
     }
-
     public void onFilterClicked(boolean show, Bundle bundle) {
         FragmentTransaction fragmentTransaction = initFragmentTransaction();
         if (show) {
@@ -100,7 +97,6 @@ public class FilterSortHelper {
                 fragmentTransaction.hide(sortFragment);
                 sortActive = false;
             }
-
             if (filterFragment.isAdded()) {
                 filterFragment.getArguments().putAll(bundle);
                 fragmentTransaction.show(filterFragment);
@@ -108,7 +104,6 @@ public class FilterSortHelper {
                 filterFragment.setArguments(bundle);
                 fragmentTransaction.add(fragmentContainerId, filterFragment);
             }
-
             fragmentTransaction.commitAllowingStateLoss();
             flFilterSortContainer.setVisibility(View.VISIBLE);
         } else {
@@ -118,7 +113,6 @@ public class FilterSortHelper {
         }
         filterActive = show;
     }
-
     public boolean isAnyActive() {
         return sortActive || filterActive;
     }

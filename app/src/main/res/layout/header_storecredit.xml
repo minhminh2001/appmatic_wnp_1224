@@ -5,7 +5,6 @@
     xmlns:imaginato="http://schemas.android.com/apk/res-auto"
     tools:context="com.whitelabel.app.fragment.HomeStoreCreditFragment"
     xmlns:tools="http://schemas.android.com/tools">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:background="@color/whiteFFFFFF"
@@ -92,7 +91,6 @@
             android:layout_marginTop="15dp"
             android:background="@color/v2_line"
             android:layout_height="@dimen/myAccount_lineHeight"/>
-
         <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/tv_not_credit_hint"
             android:layout_width="match_parent"
@@ -103,6 +101,4 @@
             style="@style/font_family_robot_regular"
             android:layout_height="match_parent" />
     </LinearLayout>
-
-
 </RelativeLayout>

@@ -125,10 +125,46 @@
                     </com.whitelabel.app.widget.ProductChildListView>
                 </RelativeLayout>
                 <RelativeLayout
+                    android:layout_below="@+id/final_relativelayout"
+                    android:id="@+id/ll_bind_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <View
+                        android:id="@+id/v_group_bottom_line"
+                        android:layout_width="match_parent"
+                        android:background="@color/greyE1E1E1"
+                        android:layout_height="0.8dp"/>
+                     <com.whitelabel.app.widget.CustomTextView
+                         android:layout_below="@+id/v_group_bottom_line"
+                         android:id="@+id/tv_bind_title"
+                         android:textColor="@color/black"
+                         android:textSize="16sp"
+                         android:layout_width="match_parent"
+                         android:text="@string/productdetail_bind_title"
+                         android:padding="10dp"
+                         android:layout_height="wrap_content">
+                     </com.whitelabel.app.widget.CustomTextView>
+                    <ImageView
+                        android:padding="10dp"
+                        android:src="@mipmap/icon_right"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/iv_right"
+                        android:layout_height="wrap_content" />
+
+                    <com.whitelabel.app.widget.BindProductView
+                        android:id="@+id/bpv_bind_product"
+                        android:layout_below="@+id/tv_bind_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/detail_descriptions_RelativeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/final_relativelayout"
+                    android:layout_below="@+id/ll_bind_product"
                     android:layout_marginBottom="-20dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp">
@@ -304,7 +340,6 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
-
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/ctvAddToCart"
                     android:layout_width="wrap_content"

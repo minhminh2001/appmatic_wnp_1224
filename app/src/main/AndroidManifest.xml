@@ -20,7 +20,7 @@
     <!-- GCM requires a Google account. -->
     <!-- <uses-permission android:name="android.permission.GET_ACCOUNTS" /> -->
     <application
-        android:name="com.whitelabel.app.application.WhiteLabelApplication"
+        android:name=".application.WhiteLabelApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon_v1"
         android:theme="@style/AppTheme">
@@ -44,7 +44,7 @@
             </intent-filter>
         </receiver>
 
-        <!--paypal-->
+        <!-- paypal -->
         <activity android:name="com.paypal.android.sdk.payments.PaymentActivity" />
         <activity android:name="com.paypal.android.sdk.payments.PaymentMethodActivity" />
         <activity android:name="com.paypal.android.sdk.payments.PaymentConfirmActivity" />
@@ -54,8 +54,13 @@
         <activity android:name="com.paypal.android.sdk.payments.FuturePaymentInfoActivity" />
         <activity android:name="com.paypal.android.sdk.payments.PayPalProfileSharingActivity" />
         <activity android:name="com.paypal.android.sdk.payments.ProfileSharingConsentActivity" />
-        <service android:name="com.paypal.android.sdk.payments.PayPalService" android:exported="false" />
-        　<!--                    -->
+
+        <service
+            android:name="com.paypal.android.sdk.payments.PayPalService"
+            android:exported="false" />
+
+        　
+        <!--  -->
         <service
             android:name="com.google.android.gms.analytics.AnalyticsService"
             android:enabled="true"
@@ -78,35 +83,39 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             tools:replace="android:theme" />
+
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider604176613049064"
             android:exported="true" />
+
         <activity
-            android:name="com.whitelabel.app.ui.start.StartActivityV2"
+            android:name=".ui.start.StartActivityV2"
             android:screenOrientation="portrait"
             android:theme="@style/startStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.whitelabel.app.activity.LoginRegisterActivity"
+            android:name=".activity.LoginRegisterActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name="com.whitelabel.app.activity.MyAccountActivity"
+            android:name=".activity.MyAccountActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name="com.whitelabel.app.activity.HomeActivity"
+            android:name=".activity.HomeActivity"
             android:hardwareAccelerated="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -128,50 +137,50 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.whitelabel.app.activity.ProductActivity"
+            android:name=".activity.ProductActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BackgroundWhiteTheme" />
         <activity
-            android:name="com.whitelabel.app.activity.ShoppingCartActivity1"
+            android:name=".activity.ShoppingCartActivity1"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.whitelabel.app.activity.BankTransaferActivity"
+            android:name=".activity.BankTransaferActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.whitelabel.app.activity.PaymentHelpActivity"
+            android:name=".activity.PaymentHelpActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.whitelabel.app.activity.AddAddressActivity"
+            android:name=".activity.AddAddressActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.whitelabel.app.activity.EditAddressActivity"
+            android:name=".activity.EditAddressActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name="com.whitelabel.app.activity.HelpCenterDetialActivity"
+            android:name=".activity.HelpCenterDetialActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.whitelabel.app.activity.CurationActivity"
+            android:name=".activity.CurationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BackgroundWhiteTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.whitelabel.app.activity.MerchantStoreFrontActivity"
+            android:name=".activity.MerchantStoreFrontActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BackgroundWhiteTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.whitelabel.app.activity.TrackingInfoActivity"
+            android:name=".activity.TrackingInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BackgroundWhiteTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.whitelabel.app.activity.CheckoutActivity"
+            android:name=".activity.CheckoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BackgroundWhiteTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />
@@ -182,35 +191,35 @@
         <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
         <!-- android:screenOrientation="portrait" /> -->
         <activity
-            android:name="com.whitelabel.app.activity.CheckoutPaymentStatusActivity"
+            android:name=".activity.CheckoutPaymentStatusActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BlackgroundBalckTheme" />
         <activity
-            android:name="com.whitelabel.app.activity.MyAccountChangePasswordActivity"
+            android:name=".activity.MyAccountChangePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.whitelabel.app.activity.MyAccountOrderDetailActivity"
+            android:name=".activity.MyAccountOrderDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.whitelabel.app.activity.ProductListActivity"
+            android:name=".activity.ProductListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BackgroundWhiteTheme" />
         <activity
-            android:name="com.whitelabel.app.activity.CheckoutPaymentRedirectActivity"
+            android:name=".activity.CheckoutPaymentRedirectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.whitelabel.app.activity.FavoriteActivity"
+            android:name=".activity.FavoriteActivity"
             android:screenOrientation="portrait" />
 
         <!-- android:theme="@style/ImageScale" -->
         <activity
-            android:name="com.whitelabel.app.activity.ProductDetailPictureActivity"
+            android:name=".activity.ProductDetailPictureActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.whitelabel.app.activity.ShoppingCartCampaignActivity"
+            android:name=".activity.ShoppingCartCampaignActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.whitelabel.app.activity.CreditInstructionActivity"
+            android:name=".activity.CreditInstructionActivity"
             android:screenOrientation="portrait" />
         <!--
         <activity
@@ -219,7 +228,7 @@
         </activity>
         -->
         <activity
-            android:name="com.whitelabel.app.activity.BankTransaferSuccessActivity"
+            android:name=".activity.BankTransaferSuccessActivity"
             android:label="@string/title_activity_bank_transafer_success"
             android:screenOrientation="portrait" />
 
@@ -236,7 +245,7 @@
         </receiver>
         <!-- [START gcm_listener] -->
         <service
-            android:name="com.whitelabel.app.notification.MyGcmListenerService"
+            android:name=".notification.MyGcmListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -245,7 +254,7 @@
         <!-- [END gcm_listener] -->
         <!-- [START instanceId_listener] -->
         <service
-            android:name="com.whitelabel.app.notification.MyInstanceIDListenerService"
+            android:name=".notification.MyInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
@@ -253,32 +262,34 @@
         </service>
         <!-- [END instanceId_listener] -->
         <service
-            android:name="com.whitelabel.app.notification.RegistrationIntentService"
+            android:name=".notification.RegistrationIntentService"
             android:exported="false" />
 
         <activity
-            android:name="com.whitelabel.app.activity.NotificationDetailActivity"
+            android:name=".activity.NotificationDetailActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.whitelabel.app.activity.NotificationDetailOpenLinkActivity"
+            android:name=".activity.NotificationDetailOpenLinkActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.whitelabel.app.activity.HideFunctionActivity"
+            android:name=".activity.HideFunctionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.whitelabel.app.activity.HideFunctionLoginActivity"
+            android:name=".activity.HideFunctionLoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.whitelabel.app.activity.RegisterToHelpCenter"
+            android:name=".activity.RegisterToHelpCenter"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.whitelabel.app.activity.SplashScreenActivity"
+            android:name=".activity.SplashScreenActivity"
             android:screenOrientation="portrait" />
+
         <receiver
-            android:name="com.whitelabel.app.activity.NotificationReceiver"
+            android:name=".activity.NotificationReceiver"
             android:enabled="true"
             android:exported="true" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="967ab5d94c3f9fda9e3bbf9adef59d05e74bcc41" />
@@ -298,8 +309,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="com.whitelabel.app.ui.brandstore.BrandStoreFontActivity" />
-        <!--<activity android:name="com.whitelabel.app.activity.PaypalActivity"></activity>-->
+        <activity android:name=".ui.brandstore.BrandStoreFontActivity" />
+        <!-- <activity android:name="com.whitelabel.app.activity.PaypalActivity"></activity> -->
+        <activity android:name=".ui.productdetail.BindProductActivity"></activity>
     </application>
 
 </manifest>

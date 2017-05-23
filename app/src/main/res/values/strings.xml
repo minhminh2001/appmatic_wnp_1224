@@ -675,5 +675,7 @@
     <string name="home_new_arrivals">NEW ARRIVALS</string>
     <string name="home_best_sellers">BEST SELLERS</string>
     <string name="order_re_payment">RePayment</string>
+    <string name="productdetail_bind_title">Frequently Bought Together</string>
+    <string name="productdetail_bind_add">Add All to Cart</string>
 
 </resources>

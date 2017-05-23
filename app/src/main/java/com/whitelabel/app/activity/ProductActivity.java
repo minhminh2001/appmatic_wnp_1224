@@ -41,6 +41,7 @@ import android.widget.Toast;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.whitelabel.app.R;
+import com.whitelabel.app.adapter.BindProductAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.ProductDetailCallback;
@@ -61,6 +62,7 @@ import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
+import com.whitelabel.app.ui.productdetail.BindProductActivity;
 import com.whitelabel.app.utils.FacebookEventUtils;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
@@ -73,6 +75,7 @@ import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.ShareUtil;
+import com.whitelabel.app.widget.BindProductView;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
 import com.whitelabel.app.widget.CustomDialog;
 import com.whitelabel.app.widget.CustomNestedScrollView;
@@ -101,6 +104,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     private final int REQUESTCODE_LOGIN = 1000;
     private final int REQUEST_SHOPPINGCART = 2000;
     private ViewGroup group;
+    private BindProductView  bpvBindProduct;
+    private TextView productDetailBindTitle;
     private TextView textView_num, oldprice, ctvAddToCart, price_textview,  ctvProductInStock, ctvProductOutOfStock, productUnavailable, productTrans, product_merchant;
     private Dialog mDialog;
     private TextView ctvProductName, ctvProductBrand;
@@ -572,10 +577,14 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         mAttributeEntity.setOldValue(new WheelPickerEntity());
         setActivityImageTransition(bundle);
     }
+
     public void initView(){
 //        flSimpleConfig= (FrameLayout) findViewById(R.id.fl_simple_config);
         pcGroupConfig = (ProductChildListView) findViewById(R.id.pc_group_config);
+        bpvBindProduct= (BindProductView) findViewById(R.id.bpv_bind_product);
         CustomCoordinatorLayout coordinatorLayout = (CustomCoordinatorLayout) findViewById(R.id.cl_product);
+        productDetailBindTitle= (TextView) findViewById(R.id.tv_bind_title);
+        productDetailBindTitle.setOnClickListener(this);
         coordinatorLayout.setSwitchScroll(false);
         appbar_layout = ((AppBarLayout) findViewById(R.id.appbar_layout));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -918,11 +927,13 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     userSelectedProductQty = currUserSelectedProductMaxStockQty;
                     showNoInventory(ProductActivity.this);
                 }
-
                 textView_num.setText(userSelectedProductQty + "");
                 break;
             }
-
+            case R.id.tv_bind_title:
+                Intent bindIntent=new Intent(ProductActivity.this, BindProductActivity.class);
+                startActivity(bindIntent);
+                break;
             case R.id.ivPricePlus: {
                 if (currUserSelectedProductMaxStockQty <= 0) {
                     showNoInventory(ProductActivity.this);
@@ -1375,10 +1386,13 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             updateProductDetailUIProductImage(productImagesArrayList);
         }
 
+        List<SVRAppserviceProductDetailResultPropertyReturnEntity>  products=new ArrayList<>();
+        products.add(new SVRAppserviceProductDetailResultPropertyReturnEntity());
+        products.add(new SVRAppserviceProductDetailResultPropertyReturnEntity());
+        products.add(new SVRAppserviceProductDetailResultPropertyReturnEntity());
+        bpvBindProduct.initData(products);
         initVisibleProduct();
     }
-
-
     public void createAttributeView(int level, SVRAppserviceProductDetailResultPropertyReturnEntity bean) {
         if (level % 2 == 0) {
             llLayout = new LinearLayout(this);
@@ -2056,7 +2070,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         JLogUtils.d(TAG, "onPause()");
         super.onPause();
     }
-
     @Override
     protected void onStop() {
         mFromProductList = "";
@@ -2064,6 +2077,4 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         JLogUtils.d(TAG, "onStop()");
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
     }
-
-
 }

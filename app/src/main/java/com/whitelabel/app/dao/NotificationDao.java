@@ -68,7 +68,6 @@ public class NotificationDao extends BaseHttp {
             params.put("session_key", session_key);
         }
         params.put("device_token", device_token);
-
         requestHttp(HTTP_METHOD.GET, "appsnotification/notification/count", params, REQUEST_NOTIFICATION_COUNT);
     }
 
@@ -84,7 +83,7 @@ public class NotificationDao extends BaseHttp {
         params.put("page", page);
         params.put("pagesize", pagesize);
         params.put("device_token", device_token);
-        requestHttp(HTTP_METHOD.GET, "appservice/notification/list/"+userId, params, REQUEST_GETLIST, page);
+        requestHttp(HTTP_METHOD.GET, "appservice/notification/list/12755", params, REQUEST_GETLIST, page);
     }
 
     @Override
@@ -94,6 +93,7 @@ public class NotificationDao extends BaseHttp {
             case REQUEST_GETLIST:
                 if (isOkByCode(response)) {
                     SVRAppserviceNotificationListReturnEntity entity = JJsonUtils.parseJsonObj(response, SVRAppserviceNotificationListReturnEntity.class);
+                    JLogUtils.i("ray","SVRAppserviceNotificationListReturnEntity:"+entity);
                     entity.setPage(Integer.parseInt((String) object));
                     postHandler(REQUEST_GETLIST, entity, RESPONSE_SUCCESS);
                 } else {

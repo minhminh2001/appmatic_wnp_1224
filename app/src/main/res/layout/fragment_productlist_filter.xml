@@ -127,7 +127,6 @@
                 android:textColor="@color/black000000"
                 android:textSize="17sp"
                 style="@style/font_family_robot_regular" />
-
             <RelativeLayout
                 android:id="@+id/rl_all_brands_plus"
                 android:layout_width="12dp"
@@ -135,7 +134,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="18dp">
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1.5dp"
@@ -149,7 +147,6 @@
                     android:layout_centerHorizontal="true"
                     android:background="@color/black" />
             </RelativeLayout>
-
         </RelativeLayout>
 
         <View

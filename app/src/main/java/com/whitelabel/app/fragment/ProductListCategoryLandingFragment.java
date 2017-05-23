@@ -54,14 +54,11 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     protected ProductListActivity productListActivity;
     protected View mContentView;
     private String categoryId;
-
     private FrameLayout flFilterSortContainer;
-
     private CustomTabCustomPageIndicator ctpiCategoryList;
     private ViewPager vpProductList;
     private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> categoryArrayList;
     private CustomTabPageIndicatorAdapter fragmentPagerAdapter;
-
     private int FRAGMENT_CONTAINER_ID;
     private ProductListFilterFragment filterFragment;
     private ProductListSortFragment sortFragment;

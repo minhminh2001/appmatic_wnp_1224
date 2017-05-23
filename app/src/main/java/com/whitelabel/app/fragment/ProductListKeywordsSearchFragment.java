@@ -54,10 +54,8 @@ import com.whitelabel.app.widget.CustomEditText;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.CustomXListView;
 import com.whitelabel.app.widget.FilterSortBottomView;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -151,26 +149,20 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
                 mRlSwitchViewbar.setVisibility(View.GONE);
             }
         }
-
     }
-
     @Override
     public void startActivityForResultCallBack(Intent intent, int code) {
         this.startActivityForResult(intent, code);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContentView = inflater.inflate(R.layout.fragment_productlist_list, null);
         mImageLoader = new ImageLoader(getContext());
         return mContentView;
     }
-
     @Override
     public void onFilterComplete(int count) {
-
     }
-
     @Override
     public int getCurrentFilterSortTabIndex() {
         return productListActivity.getCurrentFilterSortTabIndex();
@@ -183,7 +175,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             mActivity = new WeakReference<>(activity);
             mFragment = new WeakReference<>(fragment);
         }
-
         @Override
         public void handleMessage(Message msg) {
             if (mActivity.get() == null || mFragment == null) {

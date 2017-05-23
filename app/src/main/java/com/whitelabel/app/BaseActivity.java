@@ -44,7 +44,6 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     protected T mPresenter;
     private TextView tvTitleNum, tvTitle;
     private ImageView ivTitle;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

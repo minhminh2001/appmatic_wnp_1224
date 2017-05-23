@@ -93,7 +93,6 @@ public class AnimUtil {
         PropertyValuesHolder pvhTop = PropertyValuesHolder.ofInt("top", 0, 1);
         PropertyValuesHolder pvhRight = PropertyValuesHolder.ofInt("right", 0, 1);
         PropertyValuesHolder pvhBottom = PropertyValuesHolder.ofInt("bottom", 0, 1);
-
         final Animator collapseExpandAnim = ObjectAnimator.ofPropertyValuesHolder(view, pvhLeft, pvhTop,
                 pvhRight, pvhBottom);
         collapseExpandAnim.setupStartValues();

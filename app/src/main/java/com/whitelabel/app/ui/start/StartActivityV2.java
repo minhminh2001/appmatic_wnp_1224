@@ -79,6 +79,7 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
         mCallback=new INITApp(StartActivityV2.this, new MeInitCallBack(this));
         INITExecutor.getInstance().execute(mCallback);
         mPresenter.getConfigInfo("","");
+//        mPresenter.getConfigInfo();
     }
     static class MeInitCallBack extends   INITCallback{
         WeakReference<StartActivityV2> mStartActivity;

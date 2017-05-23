@@ -15,8 +15,6 @@ import com.whitelabel.app.ui.home.HomeHomeFragmentV2;
 public class FragmentFactory {
     private static FragmentFactory fragmentFactory;
     private FragmentFactory(){
-
-
     }
     public  static FragmentFactory newInstance(){
         if(fragmentFactory==null){
