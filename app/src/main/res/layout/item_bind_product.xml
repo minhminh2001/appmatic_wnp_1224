@@ -6,14 +6,18 @@
     tools:context="com.whitelabel.app.fragment.HomeStoreCreditFragment"
     xmlns:tools="http://schemas.android.com/tools">
     <ImageView
-        android:id="@+id/iv_img"
+        android:id="@+id/iv_product_img"
         android:layout_width="70dp"
         android:background="@color/black000000"
-        android:layout_height="70dp"/>
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
     <com.whitelabel.app.widget.CustomTextView
         android:id="@+id/tv_product_name"
-        android:layout_toRightOf="@+id/iv_img"
+        android:layout_toRightOf="@+id/iv_product_img"
         android:layout_toLeftOf="@+id/rl_product_quantity"
+        android:layout_marginRight="5dp"
         android:layout_marginLeft="10dp"
         android:textColor="@color/black000000"
         android:text="handcrafted Stoneware Cat Bowls Made to FDA Standards"
@@ -24,8 +28,9 @@
         android:id="@+id/tv_property"
         android:layout_toLeftOf="@+id/rl_product_quantity"
         android:layout_alignLeft="@+id/tv_product_name"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:textColor="@color/grayText"
+        android:layout_alignRight="@+id/tv_product_name"
         android:layout_below="@+id/tv_product_name"
         android:text="Silly Kitty Oval Cat Bow Color: Green Size 5"
         android:layout_width="wrap_content"
@@ -35,7 +40,7 @@
         android:layout_alignLeft="@+id/tv_product_name"
         android:layout_width="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:layout_height="wrap_content">
      <com.whitelabel.app.widget.CustomTextView
          android:id="@+id/tv_old_price"
@@ -55,15 +60,15 @@
 
     <RelativeLayout
         android:id="@+id/rl_product_quantity"
-        android:layout_width="80dp"
-        android:layout_height="38dp"
+        android:layout_width="70dp"
+        android:layout_height="35dp"
         android:background="@drawable/shape_productdetail_colorsize_bg"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true">
         <ImageView
             android:id="@+id/ivChildPriceMinus"
-            android:layout_width="25dp"
+            android:layout_width="23dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
@@ -79,7 +84,7 @@
         <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/tv_child_number"
             style="@style/font_family_robot_regular"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
@@ -89,7 +94,7 @@
             android:textSize="13sp"/>
         <ImageView
             android:id="@+id/ivChildPricePlus"
-            android:layout_width="25dp"
+            android:layout_width="23dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

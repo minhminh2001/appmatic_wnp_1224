@@ -336,7 +336,6 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
                 break;
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUESTCODE_CAMERA || requestCode == REQUESTCODE_STORAGE) {
@@ -357,7 +356,6 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
                 }
             }
         }
-
         // NOTE: delegate the permission handling to generated method
         BankTransaferActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
@@ -403,17 +401,14 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
                 new String[]{Manifest.permission.CAMERA},
                 REQUESTCODE_CAMERA);
     }
-
     private void showCameraPermissionDialog() {
         permissionDialog = JViewUtils.showPermissionDialog(this, getString(R.string.permission_error_title), getString(R.string.permission_error_camera_content), REQUESTCODE_CAMERA, false);
     }
-
     @Override
     protected void onDestroy() {
         mDao.cancelHttpByTag(TAG);
         super.onDestroy();
     }
-
     public void showPopWindowSelectPhoto() {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popupWindowView = inflater.inflate(R.layout.popup_window, null);
@@ -429,7 +424,6 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
         cancleButton.setOnClickListener(this);
         mSelectImgPop.showAtLocation(album, Gravity.CENTER, 0, 0);//以album为主容器,gravity为对齐参照点,定义偏移
     }
-
     public void saveBrankConfirm(String profFile) {
         url = profFile;
         rankFrom = String.valueOf(tvTrasferFrom.getTag());
@@ -443,9 +437,15 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
             transferDate = date[2] + "/" + date[1] + "/" + date[0];
         }
         String id = mBean.getTransferId();
-        mDao.saveBankTransferConfirm(id, WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), rankFrom, email, orderNumber, transferee, transferred, transferDate, profFile);
+        mDao.saveBankTransferConfirm(id, WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
+                rankFrom,
+                email,
+                orderNumber,
+                transferee,
+                transferred,
+                transferDate,
+                profFile);
     }
-
     public void closeKeyBoard() {
         JToolUtils.closeKeyBoard(BankTransaferActivity.this, etCustomer.getEditText());
         JToolUtils.closeKeyBoard(BankTransaferActivity.this, etOrderNum.getEditText());

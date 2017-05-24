@@ -7,8 +7,12 @@ import android.widget.LinearLayout;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.BindProductAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomTextView;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 public class BindProductActivity extends com.whitelabel.app.BaseActivity {
@@ -22,6 +26,7 @@ public class BindProductActivity extends com.whitelabel.app.BaseActivity {
     CustomTextView tvTotalTitle;
     @BindView(R.id.tv_total_value)
     CustomTextView tvTotalValue;
+    private List<SVRAppserviceProductDetailResultPropertyReturnEntity> mProducts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +49,7 @@ public class BindProductActivity extends com.whitelabel.app.BaseActivity {
         LinearLayoutManager  linearLayoutManager=new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvRecycler.setLayoutManager(linearLayoutManager);
-        BindProductAdapter mBindProductAdapter=new BindProductAdapter();
+        BindProductAdapter mBindProductAdapter=new BindProductAdapter(mProducts);
         rvRecycler.setAdapter(mBindProductAdapter);
     }
 }

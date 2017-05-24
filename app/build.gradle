@@ -33,6 +33,7 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
     }
     productFlavors {
         wnp {

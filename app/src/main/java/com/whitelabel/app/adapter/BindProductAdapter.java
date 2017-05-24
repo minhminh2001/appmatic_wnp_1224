@@ -1,5 +1,6 @@
 package com.whitelabel.app.adapter;
 
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
 import com.whitelabel.app.widget.CustomTextView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,8 +22,10 @@ import butterknife.ButterKnife;
  */
 
 public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-
+  private  List<SVRAppserviceProductDetailResultPropertyReturnEntity> mProducts;
+  public BindProductAdapter( List<SVRAppserviceProductDetailResultPropertyReturnEntity> products){
+        this.mProducts=products;
+  }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bind_product, null);
@@ -28,7 +34,13 @@ public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+//        SVRAppserviceProductDetailResultPropertyReturnEntity  product=mProducts.get(position);
+//        ItemViewHolder itemViewHolder= (ItemViewHolder) holder;
+//        itemViewHolder.tvProductName.setText(product.getName());
+//        itemViewHolder.tvOldPrice.setText(product.getPrice());
+//        itemViewHolder.tvFinalPrice.setText(product.getFinalPrice());
+//        itemViewHolder.tvOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+//        itemViewHolder.tvProperty.setText();
     }
     @Override
     public int getItemCount() {
@@ -36,7 +48,7 @@ public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     static class ItemViewHolder  extends  RecyclerView.ViewHolder{
-        @BindView(R.id.iv_img)
+        @BindView(R.id.iv_product_img)
         ImageView ivImg;
         @BindView(R.id.tv_product_name)
         CustomTextView tvProductName;
@@ -54,7 +66,6 @@ public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ImageView ivChildPricePlus;
         @BindView(R.id.rl_product_quantity)
         RelativeLayout rlProductQuantity;
-
         ItemViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

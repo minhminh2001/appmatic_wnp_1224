@@ -74,6 +74,7 @@
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:visibility="visible"/>
+
                 <RelativeLayout
                     android:id="@+id/detail_title_RelativeLayout"
                     android:layout_width="match_parent"
@@ -84,18 +85,21 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:visibility="visible">
+
                     <View
                         android:id="@+id/ctvProductTitleLine"
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"/>
+                        android:layout_height="0.5dp" />
+
                     <com.whitelabel.app.widget.CustomTextView
                         android:id="@+id/ctvProductBrand"
+                        style="@style/font_family_robot_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ctvProductTitleLine"
                         android:textColor="@color/black000000"
-                        style="@style/font_family_robot_regular"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
+
                     <com.whitelabel.app.widget.CustomTextView
                         android:id="@+id/ctvProductName"
                         android:layout_width="wrap_content"
@@ -105,6 +109,7 @@
                         android:textSize="18sp"
                         imaginato:textFont="LatoBold" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/final_relativelayout"
                     android:layout_width="match_parent"
@@ -126,6 +131,8 @@
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_below="@+id/final_relativelayout"
+                    android:visibility="gone"
+                    android:background="@color/white"
                     android:id="@+id/ll_bind_product"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

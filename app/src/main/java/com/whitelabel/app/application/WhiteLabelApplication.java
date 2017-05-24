@@ -86,7 +86,6 @@ public class WhiteLabelApplication extends MultiDexApplication {
         }
         return analytics;
     }
-
     public Tracker getAnalyticTracherInstance(Context context) {
         if (mTracker == null) {
             getAnalyticInstance();
@@ -101,5 +100,4 @@ public class WhiteLabelApplication extends MultiDexApplication {
         }
         return mTracker;
     }
-
 }

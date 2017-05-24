@@ -1390,7 +1390,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         products.add(new SVRAppserviceProductDetailResultPropertyReturnEntity());
         products.add(new SVRAppserviceProductDetailResultPropertyReturnEntity());
         products.add(new SVRAppserviceProductDetailResultPropertyReturnEntity());
-        bpvBindProduct.initData(products);
+        findViewById(R.id.ll_bind_product).setVisibility(View.VISIBLE);
+        bpvBindProduct.initData(products,mImageLoader);
         initVisibleProduct();
     }
     public void createAttributeView(int level, SVRAppserviceProductDetailResultPropertyReturnEntity bean) {
