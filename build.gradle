@@ -10,6 +10,16 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.0.0-alpha1'
         classpath 'com.google.gms:google-services:3.0.0'
     }
+
+    repositories {
+
+        // You need to add the following repository to download the
+        // new plugin.
+        maven {
+            url 'https://maven.google.com'
+        }
+    }
+
 }
 allprojects {
     repositories {

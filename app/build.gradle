@@ -73,7 +73,7 @@ android {
     }
 }
 ext{
-    SUPPORT_LIB_VERSION = '24.1.0'
+    SUPPORT_LIB_VERSION = '25.0.1'
     BUTTERKNIFE_VERSION='8.4.0'
     PLAY_SERVICE_VERSION='9.4.0'
     RETROFIT2_VERSION='2.1.0'
@@ -95,6 +95,7 @@ dependencies {
     compile "com.google.android.gms:play-services-analytics:${PLAY_SERVICE_VERSION}"
 //    compile "com.google.android.gms:play-services-auth:${PLAY_SERVICE_VERSION}"
     compile "com.google.firebase:firebase-core:${PLAY_SERVICE_VERSION}"
+//    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 //    compile rootProject.ext.dependencies["gson"]
     compile "com.squareup.okhttp3:okhttp-urlconnection:3.5.0"
     compile "org.apache.httpcomponents:httpcore:4.4.4"
