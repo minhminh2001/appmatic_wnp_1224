@@ -577,7 +577,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         mAttributeEntity.setOldValue(new WheelPickerEntity());
         setActivityImageTransition(bundle);
     }
-
     public void initView(){
 //        flSimpleConfig= (FrameLayout) findViewById(R.id.fl_simple_config);
         pcGroupConfig = (ProductChildListView) findViewById(R.id.pc_group_config);
@@ -594,7 +593,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         llWebView = (LinearLayout) findViewById(R.id.ll_webView);
         mWebView = getWebView();
         myScrollView = (CustomNestedScrollView) findViewById(R.id.myScroll);
-
         ivProductImage = (ImageView) findViewById(R.id.ivProductImage);
         llAttribute = (LinearLayout) findViewById(R.id.ll_attribute);
         ivHeaderBarWishlist = (ImageView) findViewById(R.id.ivHeaderBarWishlist);
