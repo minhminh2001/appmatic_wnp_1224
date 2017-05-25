@@ -128,6 +128,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
             sessionKey=WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
         }
+
         mPresenter.getCategoryDetail(mCategoryId,sessionKey);
     }
     @Override

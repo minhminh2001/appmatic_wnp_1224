@@ -34,23 +34,17 @@ android {
         versionName rootProject.ext.android.versionName
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        javaCompileOptions {
-            annotationProcessorOptions {
-                includeCompileClasspath false
-            }
-        }
     }
 
-    flavorDimensions "color"
     productFlavors {
         wnp {
-            dimension "color"
+
         }
         whitelabel{
-            dimension "color"
+
         }
         evisu {
-            dimension "color"
+
         }
     }
     signingConfigs {
