@@ -35,12 +35,17 @@ android {
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
+
+    flavorDimensions "color"
     productFlavors {
         wnp {
+            dimension "color"
         }
         whitelabel{
+            dimension "color"
         }
         evisu {
+            dimension "color"
         }
     }
     signingConfigs {
