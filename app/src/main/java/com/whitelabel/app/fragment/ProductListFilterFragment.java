@@ -63,12 +63,10 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
 
     private boolean allBrandsListViewIsShow = true;
     private boolean allTypesListViewIsShow = false;
-
     public ProductListFilterFragment(){
 
     }
     public final static String EXTRA_CAN_USE_BRANDFILTER="can_use_brandfilter";
-
     public static ProductListFilterFragment newInstance(String canUserBrand){
         ProductListFilterFragment fragment=new ProductListFilterFragment();
         Bundle bundle=new Bundle();
@@ -76,20 +74,15 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
         fragment.setArguments(bundle);
         return fragment;
     }
-
-
-
     public void setCanUseBrand(boolean  canUseBrand){
         this.mCanUserBrand=canUseBrand;
 
     }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -165,11 +158,9 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
         }
 
     }
-
     protected void onAnimationEnded() {
         fragmentListener.onAnimationFinished(this);
     }
-
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {

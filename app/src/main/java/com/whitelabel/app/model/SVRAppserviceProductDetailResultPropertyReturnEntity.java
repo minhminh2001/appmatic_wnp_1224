@@ -22,10 +22,17 @@ public class SVRAppserviceProductDetailResultPropertyReturnEntity implements Ser
     private String productId;
     private long maxSaleQty;
     private int inStock;
+    private String image;
     private ArrayList<String> images;
     private ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity> child;
     public String getName() {
         return name;
+    }
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getProductId() {

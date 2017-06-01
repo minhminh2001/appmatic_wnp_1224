@@ -58,7 +58,6 @@ public class GaTrackHelper {
                 .setQuantity(qty)
                 .setCurrencyCode(currCode);
         mTracker.send(itemBuilder.build());
-
     }
     public  void googleAnalyticsEvent(String category,String action,String lable,Long value){
         Tracker mTracker= WhiteLabelApplication.getInstance().getAnalyticTracherInstance(null);
@@ -186,7 +185,6 @@ public class GaTrackHelper {
             e.printStackTrace();
         }
     }
-
 
 
     public static String GA_TIME_CATEGORY_IMPRESSION="Impression Screens Loading";

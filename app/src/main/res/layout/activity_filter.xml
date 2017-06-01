@@ -162,42 +162,38 @@
                 android:layout_marginTop="10dp"
                 android:layout_alignParentLeft="true"
                 android:orientation="vertical">
-
                 <RadioButton
                     android:id="@+id/filrer_RadioButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:button="@anim/radiogroup_background"
+                    android:button="@drawable/radiogroup_background"
                     android:paddingLeft="10dp"
                     android:text="57th Street(3)"
                     android:textColor="@color/black000000"
                     android:textSize="15sp" />
-
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginTop="15dp"
-                    android:button="@anim/radiogroup_background"
+                    android:button="@drawable/radiogroup_background"
                     android:paddingLeft="10dp"
                     android:text="AIRWAYS(1)"
                     android:textColor="@color/black000000"
                     android:textSize="15sp" />
-
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginTop="15dp"
-                    android:button="@anim/radiogroup_background"
+                    android:button="@drawable/radiogroup_background"
                     android:paddingLeft="10dp"
                     android:text="Almatrichi(100)"
                     android:textColor="@color/black000000"
                     android:textSize="15sp" />
-
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginTop="15dp"
-                    android:button="@anim/radiogroup_background"
+                    android:button="@drawable/radiogroup_background"
                     android:paddingLeft="10dp"
                     android:text="ANGRY BIRD(3)" />
 
@@ -205,7 +201,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginTop="15dp"
-                    android:button="@anim/radiogroup_background"
+                    android:button="@drawable/radiogroup_background"
                     android:paddingLeft="10dp"
                     android:text="Autumnz(46)"
                     android:textColor="@color/black000000"
@@ -215,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:button="@anim/radiogroup_background"
+                    android:button="@drawable/radiogroup_background"
                     android:paddingLeft="10dp"
                     android:text="Belkin(2)"
                     android:textColor="@color/black000000"
@@ -225,7 +221,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginTop="15dp"
-                    android:button="@anim/radiogroup_background"
+                    android:button="@drawable/radiogroup_background"
                     android:paddingLeft="10dp"
                     android:text="Bose(2)"
                     android:textColor="@color/black000000"

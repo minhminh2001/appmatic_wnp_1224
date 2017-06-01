@@ -2,11 +2,15 @@ package com.whitelabel.app.data.retrofit;
 
 import com.google.gson.JsonObject;
 import com.whitelabel.app.model.AddToWishlistEntity;
+import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
+
+import java.util.List;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -27,8 +31,6 @@ public interface ProductApi {
             , @Query("order") String order
             , @Query("dir") String dir
             , @Query("model_type") String model_type);
-
-
     @FormUrlEncoded
     @POST("appservice/wishlist/remove")
     public  Observable<WishDelEntityResult>   deleteWistListById(@Field("session_key") String sessionKey, @Field("item_id") String itemId);
@@ -40,4 +42,10 @@ public interface ProductApi {
     @GET("appservice/category/categoryDetail")
     public Observable<ResponseModel<CategoryDetailModel>>  getCategoryDetail(@Query("category_id") String categoryId ,@Query("session_key") String sessionKey);
 
+    @GET("appservice/product/getRelatedProducts")
+    public  Observable<ResponseModel<BindProductResponseModel>>  getRelateProducts(@Query("productId") String productId);
+
+    @FormUrlEncoded
+    @POST("appservice/appservice/cart/addBoughtTogether")
+    public Observable<ResponseModel> addBoughtTogether(@Field("relatedProductIds") String productIds,@Field("session_key") String sessionKey);
 }

@@ -56,10 +56,11 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
     private List<SVRAppserviceProductSearchResultsItemReturnEntity> mBeans;
     private ImageLoader mImageLoader;
     private MyAccountDao myAccountDao;
-    private String TAG="CategoryDetailItemAdapter";
+
     public CategoryDetailItemAdapter(Context context,List<SVRAppserviceProductSearchResultsItemReturnEntity> beans,ImageLoader imageLoader) {
         mBeans = beans;
         mImageLoader=imageLoader;
+        String TAG = "CategoryDetailItemAdapter";
         mProductDao = new ProductDao(TAG, new DataHandler(context,this));
         myAccountDao = new MyAccountDao(TAG, new DataHandler(context,this));
     }

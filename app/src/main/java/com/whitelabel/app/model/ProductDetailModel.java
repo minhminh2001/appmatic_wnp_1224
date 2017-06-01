@@ -2,6 +2,7 @@ package com.whitelabel.app.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by imaginato on 2015/7/8.
@@ -50,11 +51,16 @@ public class ProductDetailModel implements Serializable {
     private String vendorDisplayName;
     private String vendor_id;
     private ArrayList<SVRAppserviceProductDetailResultProductDimensionReturnEntity> productDimension;
-
+    private List<SVRAppserviceProductDetailResultPropertyReturnEntity> relatedProducts;
+    public List<SVRAppserviceProductDetailResultPropertyReturnEntity> getRelatedProducts() {
+        return relatedProducts;
+    }
+    public void setRelatedProducts(List<SVRAppserviceProductDetailResultPropertyReturnEntity> relatedProducts) {
+        this.relatedProducts = relatedProducts;
+    }
     public ArrayList<SVRAppserviceProductDetailResultProductDimensionReturnEntity> getProductDimension() {
         return productDimension;
     }
-
     public void setProductDimension(ArrayList<SVRAppserviceProductDetailResultProductDimensionReturnEntity> productDimension) {
         this.productDimension = productDimension;
     }

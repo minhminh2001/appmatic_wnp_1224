@@ -115,17 +115,14 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
             mAttachedFragmentList.set(index, fragment);
         }
     }
-
     private void initFragment() {
         addFragment(FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, new ProductListCategoryLandingFragment());
         addFragment(FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, new ProductListKeywordsSearchFragment());
     }
-
     public void saveProductIdWhenJumpLoginPage(String productId) {
         //点击wish icon 时跳到登陆页面前，需要保存
         operateProductIdPrecache = new OperateProductIdPrecache(productId);
     }
-
     public void changeOperateProductIdPrecacheStatus(boolean available) {
         if (operateProductIdPrecache != null) {
             operateProductIdPrecache.setAvailable(available);

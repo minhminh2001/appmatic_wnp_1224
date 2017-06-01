@@ -2,4 +2,5 @@
 <resources>
     <item name="recyclerview_swipe" type="id" />
     <item type="id" name="glide_tag" />
+    <item name="bindName"  type="id" ></item>
 </resources>

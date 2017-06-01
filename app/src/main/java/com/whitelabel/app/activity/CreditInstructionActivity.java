@@ -14,7 +14,6 @@ import com.whitelabel.app.utils.JToolUtils;
 
 public class CreditInstructionActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener{
     private String data;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,10 +22,7 @@ public class CreditInstructionActivity extends com.whitelabel.app.BaseActivity i
         initIntent();
         initWebView();
     }
-
-
     private void initToolbar() {
-
         setTitle(getResources().getString(R.string.credit_instruction));
         setLeftMenuIcon(R.drawable.action_back);
         setLeftMenuClickListener(new View.OnClickListener() {
@@ -36,14 +32,12 @@ public class CreditInstructionActivity extends com.whitelabel.app.BaseActivity i
             }
         });
     }
-
     public void onBackPressed() {
         finish();
         overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
     }
     @Override
     public void onClick(View view) {
-
         int id=view.getId();
         switch (id){ }
     }
@@ -75,10 +69,8 @@ public class CreditInstructionActivity extends com.whitelabel.app.BaseActivity i
         });
         JLogUtils.d("jay","data="+data);
         JToolUtils.webViewFont(this, mWebView, data, 12.5f);
-
 //        JToolUtils.webViewFont(CreditInstructionActivity.this, mWebView, data, "html/custom_web.html");
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -90,7 +82,6 @@ public class CreditInstructionActivity extends com.whitelabel.app.BaseActivity i
         }
         JLogUtils.i("googleGA_screen", "Store Credit Instruction Screen");
     }
-
     @Override
     protected void onStop() {
         super.onStop();

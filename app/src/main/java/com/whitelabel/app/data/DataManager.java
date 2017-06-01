@@ -18,9 +18,7 @@ public class DataManager {
     private  AppApi mAppApi;
     private ProductApi  mProductApi;
     private DataManager(){
-
     }
-
     public static DataManager getInstance(){
         if(dataManager==null){
             synchronized (DataManager.class){
@@ -29,7 +27,6 @@ public class DataManager {
         }
         return dataManager;
     }
-
     public PreferHelper getPreferHelper(){
         if(preferHelper==null){
             synchronized (DataManager.class){
@@ -38,8 +35,6 @@ public class DataManager {
         }
         return preferHelper;
     }
-
-
     public ProductApi getProductApi(){
         if(mProductApi==null){
             synchronized (DataManager.class){
@@ -47,7 +42,6 @@ public class DataManager {
             }
         }
         return mProductApi;
-
     }
     public CheckoutApi  getCheckoutApi(){
             if(checkoutApi==null){
@@ -57,7 +51,6 @@ public class DataManager {
             }
         return checkoutApi;
     }
-
     public AppApi  getAppApi(){
         if(mAppApi==null){
             synchronized (DataManager.class){
@@ -66,9 +59,7 @@ public class DataManager {
         }
         return mAppApi;
     }
-
     private MockApi mMockApi;
-
     public MockApi getMockApi(){
         if(mMockApi==null){
             synchronized (DataManager.class){
@@ -77,7 +68,4 @@ public class DataManager {
         }
         return mMockApi;
     }
-
-
-
 }

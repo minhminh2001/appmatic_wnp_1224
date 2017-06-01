@@ -324,7 +324,6 @@ public class JToolUtils {
                 intent.putExtras(bundle);
                context.startActivityForResult(intent, requestCode);
                 return true;
-
             }
         return false;
     }

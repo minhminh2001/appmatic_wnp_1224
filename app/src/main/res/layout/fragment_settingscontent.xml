@@ -236,7 +236,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_weight="18"
-            android:background="@anim/et_contact_normal_shape"
+            android:background="@drawable/et_contact_normal_shape"
             android:orientation="horizontal">
 
 

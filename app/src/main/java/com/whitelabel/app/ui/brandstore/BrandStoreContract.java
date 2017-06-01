@@ -13,12 +13,11 @@ import com.whitelabel.app.ui.common.BaseView;
 public interface BrandStoreContract {
     interface View extends BaseView{
 
-        public  void showContentView(BrandStoreModel brandStoreModel, int currPage);
+public  void showContentView(BrandStoreModel brandStoreModel, int currPage);
+ public void showNoDataView();
+ public  void showNetworkErrorView(String errorMsg);
 
-        public void showNoDataView();
-        public  void showNetworkErrorView(String errorMsg);
-
-    }
+}
 
     interface  Presenter extends BasePresenter<View>{
        void  getBrandProductList(String brandId, final int offset, int limit, String price, String order, String dir, String modelType);

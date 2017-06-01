@@ -7,7 +7,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/splash_screen_01"
         android:scaleType="fitXY"
         android:id="@+id/img1"
         android:gravity="center"/>

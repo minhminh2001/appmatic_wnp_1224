@@ -44,7 +44,7 @@
             android:layout_marginLeft="10dp"
 
             android:id="@+id/cancel"
-            android:textColor="@anim/to_cancel"
+            android:textColor="@drawable/to_cancel"
             />
         </LinearLayout>
      <EditText
