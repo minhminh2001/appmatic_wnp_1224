@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imagianto="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <com.whitelabel.app.widget.CustomTextView
+        android:textColor="@color/gray888888"
+        android:paddingLeft="15dp"
+        imagianto:textFont="LatoRegular"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:id="@+id/tv_filter_child_name"
+        android:layout_centerVertical="true"
+        android:maxLines="2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_below="@+id/tv_filter_child_name"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="@color/v2_line"
+        ></View>
+</RelativeLayout>

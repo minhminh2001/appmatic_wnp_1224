@@ -16,6 +16,7 @@ import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.handler.INITApp;
 import com.whitelabel.app.task.INITExecutor;
+import com.whitelabel.app.ui.productlist.ProductListFilterFragmentV2;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
@@ -119,15 +120,17 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 //        gaTrackNotificationSwitch();
-        mStartTimeLong = System.currentTimeMillis();
-        mNetworkErrorMsg =getResources().getString(R.string.productlist_list_prompt_error_nointernet);
-//        mSplashScreen = JStorageUtils.getToSplashScreenMark(StartActivity.this);
-        mStartHandler=new StartHandler(this);
-        if(WhiteLabelApplication.getAppConfiguration().isSignIn(StartActivity.this)) {
-            mSessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-        }
-        mCallback=new INITApp(StartActivity.this, new MeInitCallBack(this));
-        INITExecutor.getInstance().execute(mCallback);
+//        mStartTimeLong = System.currentTimeMillis();
+//        mNetworkErrorMsg =getResources().getString(R.string.productlist_list_prompt_error_nointernet);
+////        mSplashScreen = JStorageUtils.getToSplashScreenMark(StartActivity.this);
+//        mStartHandler=new StartHandler(this);
+//        if(WhiteLabelApplication.getAppConfiguration().isSignIn(StartActivity.this)) {
+//            mSessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+//        }
+//        mCallback=new INITApp(StartActivity.this, new MeInitCallBack(this));
+//        INITExecutor.getInstance().execute(mCallback);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.relative_container, ProductListFilterFragmentV2.newInstance()).commit();
     }
     static class MeInitCallBack extends   INITCallback{
         WeakReference<StartActivity> mStartActivity;

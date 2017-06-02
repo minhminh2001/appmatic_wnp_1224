@@ -184,7 +184,6 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
         }
 
         llPriceBar.removeAllViews();
-
         int minPrice = 1;
         int minSelectedPrice = minPrice;
         int maxPrice = 10000;
@@ -207,7 +206,6 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
             ctvPriceRangeMax.setVisibility(View.VISIBLE);
         }
     }
-
     private View addPriceLabel(int price) {
         CustomTextView textView = new CustomTextView(getActivity());
         textView.setText(JDataUtils.formatPrice(price));
@@ -217,7 +215,6 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
         textView.setFont("fonts/Lato-Regular.ttf", getActivity());
         return textView;
     }
-
     private View addSortBar(int minSelectedPrice, int maxSelectedPrice, int minPrice, int maxPrice) {
         ctvPriceRangeMin.setText("" + minSelectedPrice);
         ctvPriceRangeMax.setText("" + maxSelectedPrice);
@@ -231,7 +228,6 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
                 ctvPriceRangeMin.setText("" + minValue);
                 ctvPriceRangeMax.setText("" + maxValue);
             }
-
             @Override
             public void onRangeSeekBarTouchActionUp(CustomRangeSeekBar<?> bar, Integer minValue, Integer maxValue) {
                 // This is done so that the result will include the products with maxValue price

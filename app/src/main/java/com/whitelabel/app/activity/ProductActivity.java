@@ -1290,7 +1290,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         webView.getSettings().setDisplayZoomControls(false);
         return webView;
     }
-
     protected void makeLinkClickable(SpannableStringBuilder strBuilder, final URLSpan span) {
         try {
             int start = strBuilder.getSpanStart(span);
@@ -1360,6 +1359,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }else if(ProductDetailModel.TYPE_GROUP.equals(mProductDetailBean.getType())){
             showView.setVisibility(View.GONE);
             pcGroupConfig.setVisibility(View.VISIBLE);
+            if( mProductDetailBean.getProperty().size()>0&&mProductDetailBean.getImages().size()>0){
+                mProductDetailBean.getProperty().get(0).setImage(mProductDetailBean.getImages().get(0));
+            }
             pcGroupConfig.initProductChildListView(mProductDetailBean.getProperty());
             boolean instock=false;
             if(mProductDetailBean.getImages()!=null) {
@@ -1384,6 +1386,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         List<SVRAppserviceProductDetailResultPropertyReturnEntity>  products=mProductDetailBean.getRelatedProducts();
 //        findViewById(R.id.ll_bind_product).setVisibility(View.VISIBLE);
         if(products!=null&&products.size()>0) {
+            products.add(0,mProductDetailBean.getProperty().get(0));
             bpvBindProduct.initData(products, mImageLoader);
         }else{
             bpvBindProduct.setVisibility(View.GONE);

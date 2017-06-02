@@ -1,0 +1,76 @@
+<LinearLayout
+    android:id="@+id/llFilter"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/vHeaderBarContentDivider"
+    android:orientation="vertical"
+    android:visibility="visible"
+    android:weightSum="1">
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/ctvPriceRangeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="17dp"
+        android:layout_marginTop="27dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:singleLine="true"
+        android:textColor="@color/black000000"
+        android:textSize="17sp"
+        style="@style/font_family_robot_regular" />
+
+    <LinearLayout
+        android:id="@+id/llPriceRangeBar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginBottom="34dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:weightSum="1">
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvPriceRangeMin"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="right|center_vertical"
+            android:paddingRight="3dp"
+            android:text="1"
+            android:textColor="@color/tranblack89"
+            android:textSize="15sp"
+            style="@style/font_family_robot_regular" />
+
+        <LinearLayout
+            android:id="@+id/llPriceBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/ctvPriceRangeMax"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="3dp"
+            android:text="100"
+            android:textColor="@color/tranblack89"
+            android:textSize="15sp"
+            style="@style/font_family_robot_regular" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vPriceRangeBrandsDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/greyE1E1E1" />
+
+
+</LinearLayout>

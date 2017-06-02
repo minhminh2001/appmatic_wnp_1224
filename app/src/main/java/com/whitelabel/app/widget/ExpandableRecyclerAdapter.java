@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.whitelabel.app.model.FilterItemModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JScreenUtils;
 
 import java.util.ArrayList;
@@ -28,14 +30,16 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
     private List<Integer> indexList = new ArrayList<>();
     private SparseIntArray expandMap = new SparseIntArray();
     private int mode;
-
-
-
-
+    private boolean hasHeader;
     public List<T> getVisibleData(){
         return visibleItems;
     }
     private RecyclerView recyclerView;
+
+
+    public   void setHasHeader(boolean  hasHeader){
+        this.hasHeader=hasHeader;
+    }
 
     protected static final int TYPE_HEADER = 1000;
 
@@ -67,7 +71,6 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
     public void setRecycleView(RecyclerView recyclerView){
         this.recyclerView=recyclerView;
     }
-
     /**
      * 实体类
      */
@@ -75,31 +78,24 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
         public String parentId;
         public int ItemType;
         public boolean expaned=false;
-
         public boolean isExpaned() {
             return expaned;
         }
-
         public void setExpaned(boolean expaned) {
             this.expaned = expaned;
         }
-
         public int getItemType() {
             return ItemType;
         }
-
         public void setItemType(int itemType) {
             ItemType = itemType;
         }
-
         public String getParentId() {
             return parentId;
         }
-
         public void setParentId(String parentId) {
             this.parentId = parentId;
         }
-
         public ListItem() {
         }
         public ListItem(int itemType) {
@@ -159,7 +155,7 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
         }
         //点击回调
         protected void handleClick() {
-            int position=getLayoutPosition();
+            int position=hasHeader? getLayoutPosition()-1:getLayoutPosition();
             boolean isExpland=toggleExpandedItems(position, false);
             if(arrowChangeListener!=null&&arrow!=null) {
                 if (isExpland) {
@@ -169,7 +165,6 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
                 }
             }
         }
-
     }
 
     //当前可在屏幕显示的item组
@@ -178,6 +173,7 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
     }
     //展开收起互相切换
     public boolean toggleExpandedItems(int position, boolean notify) {
+        JLogUtils.i("ray","isExpanded(position):"+isExpanded(position));
         if (isExpanded(position)) {
             collapseItems(position, notify);
             return false;
@@ -187,15 +183,12 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
             if (mode == MODE_ACCORDION) {
                 collapseAllExcept(position);
             }
-
             Message message=new Message();
             message.obj=currentItem;
             delayHandler.sendMessageDelayed(message,200);
-
             return true;
         }
     }
-
     DelayHandler delayHandler=new DelayHandler();
     private class DelayHandler extends Handler{
         @Override
@@ -204,13 +197,20 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
             //如果显示不全，尝试滚动recycleView
             try {
                 int position=visibleItems.indexOf(msg.obj);
+                JLogUtils.i("ray","handlerPostion:"+position);
                 if(position==0){
                     //第一个不需要滚动
                     return;
                 }
                 int tagPosition = position;
-                if (((SVRAppserviceCatalogSearchCategoryItemReturnEntity)getItem(position)).getChildren().size() < maxChildItemCount) {
-                    tagPosition = position + ((SVRAppserviceCatalogSearchCategoryItemReturnEntity)getItem(position)).getChildren().size();
+                int children=0;
+                  if(getItem(position) instanceof SVRAppserviceCatalogSearchCategoryItemReturnEntity){
+                      children=((SVRAppserviceCatalogSearchCategoryItemReturnEntity)getItem(position)).getChildren().size();
+                  }else if(getItem(position) instanceof  FilterItemModel){
+                      children=((FilterItemModel)getItem(position)).getValues().size();
+                  }
+                if (children< maxChildItemCount) {
+                    tagPosition = position + children;
                 } else {
                     tagPosition = position+maxChildItemCount;
                 }
@@ -232,12 +232,15 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
             visibleItems.add(insert, allItems.get(i));
             indexList.add(insert, i);
         }
-        notifyItemRangeInserted(position + 1, count);
+        int offset=position;
+        if(hasHeader){
+            offset+=1;
+        }
+        notifyItemRangeInserted(offset + 1, count);
         int allItemsPosition = indexList.get(position);
         expandMap.put(allItemsPosition, 1);
-
         if (notify) {
-            notifyItemChanged(position);
+            notifyItemChanged(offset);
         }
     }
     //关闭
@@ -250,14 +253,15 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
             visibleItems.remove(position + 1);
             indexList.remove(position + 1);
         }
-
-        notifyItemRangeRemoved(position + 1, count);
-
+        int offset=position;
+        if(hasHeader){
+            offset+=1;
+        }
+        notifyItemRangeRemoved(offset + 1, count);
         int allItemsPosition = indexList.get(position);
         expandMap.delete(allItemsPosition);
-
         if (notify) {
-            notifyItemChanged(position);
+            notifyItemChanged(offset);
         }
     }
 
@@ -265,7 +269,6 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
         int allItemsPosition = indexList.get(position);
         return expandMap.get(allItemsPosition, -1) >= 0;
     }
-
     @Override
     public int getItemViewType(int position) {
         return visibleItems.get(position).ItemType;
@@ -283,11 +286,9 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
                 visibleItems.add(items.get(i));
             }
         }
-
         this.visibleItems = visibleItems;
         notifyDataSetChanged();
     }
-
     protected void notifyItemInserted(int allItemsPosition, int visiblePosition) {
         incrementIndexList(allItemsPosition, visiblePosition, 1);
         incrementExpandMapAfter(allItemsPosition, 1);
@@ -296,16 +297,12 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
             notifyItemInserted(visiblePosition);
         }
     }
-
     protected void removeItemAt(int visiblePosition) {
         int allItemsPosition = indexList.get(visiblePosition);
-
         allItems.remove(allItemsPosition);
         visibleItems.remove(visiblePosition);
-
         incrementIndexList(allItemsPosition, visiblePosition, -1);
         incrementExpandMapAfter(allItemsPosition, -1);
-
         notifyItemRemoved(visiblePosition);
     }
 

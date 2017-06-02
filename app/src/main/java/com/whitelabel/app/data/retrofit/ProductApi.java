@@ -46,6 +46,6 @@ public interface ProductApi {
     public  Observable<ResponseModel<BindProductResponseModel>>  getRelateProducts(@Query("productId") String productId);
 
     @FormUrlEncoded
-    @POST("appservice/appservice/cart/addBoughtTogether")
+    @POST("appservice/cart/addBoughtTogether")
     public Observable<ResponseModel> addBoughtTogether(@Field("relatedProductIds") String productIds,@Field("session_key") String sessionKey);
 }

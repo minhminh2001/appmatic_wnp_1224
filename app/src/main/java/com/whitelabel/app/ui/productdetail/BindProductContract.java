@@ -12,16 +12,14 @@ import java.util.List;
  */
 
 public interface BindProductContract {
-
     interface View extends BaseView{
         public void showData(BindProductResponseModel products);
         void showNetworkErrorView(String errorMsg);
+        void showFaildErrorMsg(String errorMsg);
+        void  addCartSuccess();
     }
-
     interface  Presenter extends BasePresenter<View>{
         public void loadData(String productId);
-
         public void addToCart(String relatedProductIds,String sessionKey);
-
     }
 }

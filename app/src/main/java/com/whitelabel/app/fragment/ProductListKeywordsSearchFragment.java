@@ -1021,7 +1021,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             }
         }
     }
-
     private Bundle createBundle() {
         TMPProductListFilterSortPageEntity filterSortPageEntity = new TMPProductListFilterSortPageEntity();
         filterSortPageEntity.setPreviousFragmentType(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS);

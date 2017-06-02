@@ -9,7 +9,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.whitelabel.app.R;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
@@ -21,18 +20,14 @@ import java.util.ArrayList;
 /**
  * Created by kevin on 2016/11/3.
  */
-
 public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<SVRAppserviceCatalogSearchCategoryItemReturnEntity> {
     public static final int TYPE_CHILD = 1001;
     private Context context;
     private final ImageLoader mImageLoader;
-
     private ChildOnClick childOnClick;
-
     public interface ChildOnClick {
         void childOnClick(int position, Object ob, String parentId);
     }
-
     public CategoryTreeExpandableAdapter1(Activity activity, Context context,
                                          ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> groupList, ImageLoader imageLoader,
                                          ChildOnClick childOnClick) {
@@ -42,7 +37,6 @@ public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<S
         mImageLoader = imageLoader;
         setDataType(groupList);
     }
-
     public void setDataType(ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> groupList) {
         //将entity 排好序，并且设置itemType 和其父类Id
         ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> tempList = new ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity>();
@@ -59,7 +53,6 @@ public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<S
         //将数据更新到 ExpandableRecyclerAdapter
         setItems(groupList1);
     }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
@@ -72,7 +65,6 @@ public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<S
                 return new ChildViewHolder(convertView2);
         }
     }
-
     @Override
     public void onBindViewHolder(ExpandableRecyclerAdapter.ViewHolder holder, int position2) {
         final int position = position2;
@@ -80,13 +72,11 @@ public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<S
             GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
             SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) getItem(position);
             groupViewHolder.tvCategoryTreeGroupName.setText(entity.getName());
-
             if (groupViewHolder.ivCategoryTreeGroup.getTag() != null && groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage())) {
             } else {
                 JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, groupViewHolder.ivCategoryTreeGroup, entity.getImage());
                 groupViewHolder.ivCategoryTreeGroup.setTag(entity.getImage());
             }
-
             if (position == 0) {
                 groupViewHolder.tv_category_tree_divi.setVisibility(View.GONE);
             } else {
@@ -109,11 +99,9 @@ public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<S
             });
         }
     }
-
     public class GroupViewHolder extends HeaderViewHolder {
         public TextView tvCategoryTreeGroupName, tvCategoryTreeLine, tv_category_tree_divi;
         public ImageView ivCategoryTreeGroup;
-
         public GroupViewHolder(View view) {
             super(view);
             tvCategoryTreeGroupName = (TextView) view.findViewById(R.id.tv_category_tree_group_name);
@@ -130,12 +118,10 @@ public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<S
                             @Override
                             public void onAnimationStart(Animation animation) {
                             }
-
                             @Override
                             public void onAnimationEnd(Animation animation) {
                                 arrow.setVisibility(View.GONE);
                             }
-
                             @Override
                             public void onAnimationRepeat(Animation animation) {
                             }

@@ -30,6 +30,9 @@ public class ApplicationConfigurationEntity {
     private GOCurrencyEntity currency;
     private LayoutStyleModel  mLayoutStyle;
     public LayoutStyleModel getLayoutStyle() {
+        if(mLayoutStyle==null){
+            mLayoutStyle=new LayoutStyleModel();
+        }
         return mLayoutStyle;
     }
     private SVRAppserviceCatalogSearchReturnEntity categoryArrayList;

@@ -97,7 +97,6 @@ public class ProductListFilterSortFilterBrandAdapter extends ArrayAdapter<SVRApp
                 if (productListFilterSortPageEntity == null) {
                     return;
                 }
-
                 if (index < 0 || brandItemReturnEntityArrayList == null || brandItemReturnEntityArrayList.size() <= index) {
                     return;
                 }
@@ -108,11 +107,9 @@ public class ProductListFilterSortFilterBrandAdapter extends ArrayAdapter<SVRApp
                     return;
                 }
                 try {
-
                     if (oldBrandItemReturnEntity != null) {
                         oldBrandItemReturnEntity.setSelected(false);
                     }
-
                     brandItemReturnEntity.setSelected(true);
                     notifyDataSetChanged();
                 } catch (Exception ex) {
@@ -123,8 +120,6 @@ public class ProductListFilterSortFilterBrandAdapter extends ArrayAdapter<SVRApp
                     @Override
                     public void run() {
                         if (productListFilterSortPageEntity.getPreviousFragmentType() == ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY) {
-                            JLogUtils.i("ray", "=========productListFilterSortPageEntity.getCategoryFragmentPosition()=======" + productListFilterSortPageEntity.getCategoryFragmentPosition());
-
                             ((ProductListActivity) mActivity).setSVRAppserviceProductSearchParameterBrand(productListFilterSortPageEntity.getPreviousFragmentType(), productListFilterSortPageEntity.getCategoryFragmentPosition(), brandItemReturnEntity.getValue());
 //                        mActivity.setSVRAppserviceProductSearchParameterBrandName(productListFilterSortPageEntity.getCategoryFragmentPosition(), brandItemReturnEntity.getLabel());
                             if (filterSortFragmentListener != null) {

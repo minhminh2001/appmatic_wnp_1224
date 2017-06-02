@@ -1,31 +1,29 @@
 package com.whitelabel.app.ui.productdetail;
-
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductActivity;
+import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.adapter.BindProductAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomTextView;
-
+import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 public class BindProductActivity extends BaseActivity<BindProductContract.Presenter> implements BindProductContract.View {
     @BindView(R.id.rv_recycler)
     RecyclerView rvRecycler;
@@ -39,11 +37,11 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
     CustomTextView tvTotalValue;
     private String mProductId;
     private ImageLoader mImageLoader;
-    private List<SVRAppserviceProductDetailResultPropertyReturnEntity> mProducts;
+    private  List<SVRAppserviceProductDetailResultPropertyReturnEntity> mRelatedProducts;
     public final static String EXTRA_PRODUCTID = "product_id";
     public final static String EXTRA_PRODUCT_DATA = "product";
     private SVRAppserviceProductDetailResultPropertyReturnEntity mProduct;
-
+    private Dialog mDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +53,7 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
         if (getIntent().getExtras() != null) {
             mProduct = (SVRAppserviceProductDetailResultPropertyReturnEntity) getIntent().getExtras().getSerializable(EXTRA_PRODUCT_DATA);
         }
+        mRelatedProducts=new ArrayList<>();
         JViewUtils.setSoildButtonGlobalStyle(this, tvAddToCart);
         tvTotalTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
         tvTotalValue.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
@@ -65,34 +64,69 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
                 onBackPressed();
             }
         });
+        openProgressDialog();
         mPresenter.loadData(mProductId);
+    }
+
+    public void  openProgressDialog(){
+        mDialog=JViewUtils.showProgressDialog(this);
+    }
+
+    public void closeProgressDialog(){
+        if(mDialog!=null){
+            mDialog.dismiss();
+        }
+    }
+    @Override
+    public void showFaildErrorMsg(String errorMsg) {
+        closeProgressDialog();
+        JViewUtils.showErrorToast(this,errorMsg+"");
+    }
+    @Override
+    public void addCartSuccess() {
+        closeProgressDialog();
+        finish();
+        Intent intent = new Intent();
+        intent.setClass(this, ShoppingCartActivity1.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
     }
     @Override
     public void showNetworkErrorView(String errorMsg) {
+        closeProgressDialog();
         JViewUtils.showErrorToast(this, errorMsg);
     }
     @Override
     public BindProductContract.Presenter getPresenter() {
         return new BindProductPresenterImpl();
     }
-   private  List<SVRAppserviceProductDetailResultPropertyReturnEntity> mRelatedProducts;
     @Override
     public void showData(BindProductResponseModel products) {
+        llAddToCar.setVisibility(View.VISIBLE);
+        closeProgressDialog();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvRecycler.setLayoutManager(linearLayoutManager);
-        mRelatedProducts.add(mProduct);
-        mRelatedProducts.addAll(products.getRelatedProducts());
+        mRelatedProducts.add(mProduct);mRelatedProducts.addAll(products.getRelatedProducts());
         BindProductAdapter mBindProductAdapter = new BindProductAdapter(mRelatedProducts, mImageLoader);
         rvRecycler.setAdapter(mBindProductAdapter);
-        tvTotalValue.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + products.getTotalPrice());
+        double  totalPrice=0;
+        try {
+              totalPrice=products.getTotalPrice()+Double.parseDouble(mProduct.getFinalPrice());
+        }catch (Exception ex){
+            ex.getStackTrace();
+        }
+        tvTotalValue.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + JDataUtils.formatDouble(totalPrice+""));
+
     }
-    @OnClick(R.id.ll_add_to_car)
+    @OnClick(R.id.tv_add_to_cart)
     public void onClick() {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(BindProductActivity.this)) {
+            openProgressDialog();
             StringBuilder stringBuilder = new StringBuilder();
             for (SVRAppserviceProductDetailResultPropertyReturnEntity bean : mRelatedProducts) {
-                stringBuilder = stringBuilder.append(bean.getProductId()).append(",");
+                stringBuilder = stringBuilder.append(bean.getId()).append(",");
             }
             String ids = stringBuilder.substring(0, stringBuilder.length() - 1);
             mPresenter.addToCart(ids, WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
@@ -101,6 +135,5 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
             startActivityForResult(intent, 1000);
             overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
         }
-
     }
 }

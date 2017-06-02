@@ -388,7 +388,6 @@ public class JToolUtils {
         String SESSION_EXPIRED = "session expired,login again please";
 
         if ((!JDataUtils.isEmpty(errorMsg)) && (errorMsg.contains(SESSION_EXPIRED))) {
-
             Intent intent = new Intent();
             intent.setClass(context, LoginRegisterActivity.class);
             Bundle bundle = new Bundle();

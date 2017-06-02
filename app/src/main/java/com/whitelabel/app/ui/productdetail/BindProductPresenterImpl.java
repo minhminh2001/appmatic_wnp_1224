@@ -9,6 +9,7 @@ import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEn
 import com.whitelabel.app.ui.common.RxPresenter;
 import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.ExceptionParse;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 
 import java.util.List;
@@ -21,7 +22,6 @@ import rx.functions.Action1;
  */
 
 public class BindProductPresenterImpl  extends RxPresenter<BindProductContract.View> implements BindProductContract.Presenter{
-
     @Override
     public void loadData(String productId) {
         Subscription  subscription=   DataManager.getInstance().getProductApi().getRelateProducts(productId).compose(RxUtil.<ResponseModel<BindProductResponseModel>>rxSchedulerHelper())
@@ -40,8 +40,6 @@ public class BindProductPresenterImpl  extends RxPresenter<BindProductContract.V
         });
         addSubscrebe(subscription);
     }
-
-
     @Override
     public void addToCart(String relatedProductIds,String sessionKey) {
         Subscription  subscription= DataManager.getInstance().getProductApi().addBoughtTogether(relatedProductIds,sessionKey)
@@ -49,12 +47,18 @@ public class BindProductPresenterImpl  extends RxPresenter<BindProductContract.V
                     .subscribe(new Action1<ResponseModel>() {
                         @Override
                         public void call(ResponseModel responseModel) {
-
+                            if(responseModel.getStatus()==1){
+                                mView.addCartSuccess();
+                            }else{
+                                mView.showFaildErrorMsg(responseModel.getErrorMessage());
+                            }
                         }
                     }, new ErrorHandlerAction() {
                         @Override
                         protected void requestError(ApiFaildException ex) {
-
+                            if(ex.getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
+                                mView.showNetworkErrorView(ex.getErrorMsg());
+                            }
                         }
                     });
         addSubscrebe(subscription);

@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
@@ -19,7 +18,6 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
-import com.whitelabel.app.utils.JViewUtils;
 import java.util.List;
 /**
  * Created by ray on 2017/5/23.
@@ -34,7 +32,6 @@ public class BindProductView extends RelativeLayout {
     }
     public BindProductView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
     }
     public void initData(List<SVRAppserviceProductDetailResultPropertyReturnEntity>  products,ImageLoader imageLoader){
         padding =JToolUtils.dip2px(getContext(),10);

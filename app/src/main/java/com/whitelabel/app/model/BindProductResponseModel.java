@@ -8,14 +8,14 @@ import java.util.List;
  */
 
 public class BindProductResponseModel implements Serializable {
-    private  int totalPrice;
+    private  double totalPrice;
     private List<SVRAppserviceProductDetailResultPropertyReturnEntity> relatedProducts;
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

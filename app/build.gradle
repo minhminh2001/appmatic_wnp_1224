@@ -2,7 +2,6 @@ buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
     }
-
     dependencies {
         classpath 'io.fabric.tools:gradle:1+'
     }
@@ -40,7 +39,7 @@ android {
         wnp {
 
         }
-        whitelabel{
+        whitelabel {
 
         }
         evisu {
@@ -71,12 +70,12 @@ android {
         javaMaxHeapSize "4g"
     }
 }
-ext{
+ext {
     SUPPORT_LIB_VERSION = '25.0.1'
-    BUTTERKNIFE_VERSION='8.4.0'
-    PLAY_SERVICE_VERSION='9.4.0'
-    RETROFIT2_VERSION='2.1.0'
-    PERMISSION_VERSION='2.3.1'
+    BUTTERKNIFE_VERSION = '8.4.0'
+    PLAY_SERVICE_VERSION = '9.4.0'
+    RETROFIT2_VERSION = '2.1.0'
+    PERMISSION_VERSION = '2.3.1'
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -113,6 +112,7 @@ dependencies {
         transitive = true;
     }
     testCompile "org.robolectric:robolectric:3.0"
+    compile 'com.android.support:support-v4:25.3.1'
 }
 //    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
 //        transitive = true;
