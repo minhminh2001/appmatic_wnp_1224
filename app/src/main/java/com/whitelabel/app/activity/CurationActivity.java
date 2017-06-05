@@ -78,7 +78,6 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
     private final int LIMIT = 36;
     private ImageView iv_bottom_slideto_top;
     private DataHandler dataHandler;
-
     private WebView wv_cms;
     //header view
     private View view;
@@ -102,8 +101,6 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
     public final static int ACTIVITY_TYPE_PRODUCTLIST_CURATION = 4;
     private int mCurrentFilterSortTabIndex;
     private SVRAppserviceProductSearchParameter mSVRAppserviceProductSearchParameter = new SVRAppserviceProductSearchParameter();
-
-
     private final int LOADING = 2;
     private final int NONE = 1;
     private final int NOTDATA = 3;

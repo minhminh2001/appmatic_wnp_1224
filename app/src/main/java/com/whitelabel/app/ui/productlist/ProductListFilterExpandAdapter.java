@@ -22,7 +22,6 @@ import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.CustomRangeSeekBar;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.ExpandableRecyclerAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +84,6 @@ public class ProductListFilterExpandAdapter extends ExpandableRecyclerAdapter {
         }
         return null;
     }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HeaderViewHolder1) {
