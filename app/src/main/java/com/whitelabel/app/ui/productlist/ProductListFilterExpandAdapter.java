@@ -93,10 +93,6 @@ public class ProductListFilterExpandAdapter extends ExpandableRecyclerAdapter {
             int minSelectedPrice = minPrice;
             int maxPrice = (int)mFilterModel.getPrice_filter().getMax_price();
             int maxSelectedPrice = maxPrice;
-//            minPrice = 100;
-//            minSelectedPrice = 100;
-//            maxPrice = 1000;
-//            maxSelectedPrice = 1000;
             // if the is no range, just display a text
             if (maxPrice - minPrice < 1) {
                 CustomTextView textView = new CustomTextView(headerViewHolder.itemView.getContext());
@@ -133,7 +129,6 @@ public class ProductListFilterExpandAdapter extends ExpandableRecyclerAdapter {
                 headerViewHolder.ctvPriceRangeMax.setVisibility(View.VISIBLE);
             }
         } else if (holder instanceof TitleViewHolder) {
-            JLogUtils.i("ray","postion:"+position);
             TitleViewHolder titleViewHolder = (TitleViewHolder) holder;
             FilterItemModel  filterItemModel= (FilterItemModel) getItem(position-1);
             titleViewHolder.tvCategoryTreeGroupName.setText(filterItemModel.getLabel());

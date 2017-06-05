@@ -115,11 +115,9 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                         if (getCityANdStateByPostCodeEntity.getStatus() == 1) {
                             activity.city.setEnabled(true);
                             if (!JDataUtils.isEmpty(getCityANdStateByPostCodeEntity.getCity())) {
-
                                 activity.city.setText(getCityANdStateByPostCodeEntity.getCity());
                                 activity.stateText.setText(getCityANdStateByPostCodeEntity.getRegionName());
                                 activity.stateText.setTag(getCityANdStateByPostCodeEntity.getRegionId());
-
                                 if(activity.cityText.getVisibility()==View.GONE&&activity.cityText2.getVisibility()!=View.VISIBLE) {
                                     activity.cityText2.setText("City");
                                 }else if(activity.cityText2.getVisibility()==View.VISIBLE&&activity.cityText2.getText().toString().equals(activity.getResources().getString(R.string.required_field))){
