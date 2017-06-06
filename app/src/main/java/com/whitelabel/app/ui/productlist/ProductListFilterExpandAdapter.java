@@ -1,5 +1,4 @@
 package com.whitelabel.app.ui.productlist;
-
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -24,7 +23,6 @@ import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.ExpandableRecyclerAdapter;
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 /**

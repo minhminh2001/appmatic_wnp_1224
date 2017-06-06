@@ -56,7 +56,6 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
                 finish();
         }
     }
-
     static class StartHandler extends  Handler{
         private  WeakReference<StartActivity>  activity;
         public StartHandler(StartActivity startActivity){

@@ -20,5 +20,5 @@
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
         android:background="@color/v2_line"
-        ></View>
+        />
 </RelativeLayout>

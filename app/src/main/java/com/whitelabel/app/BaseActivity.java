@@ -30,11 +30,9 @@ import com.whitelabel.app.widget.CustomButton;
  * Created by Administrator on 2016/10/6.
  */
 public class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
-
     //requests
     protected static final int REQUEST_SHOPPINGCART = 10001;
     protected static final int REQUEST_SEARCH = 10002;
-
     protected boolean isActivityFinished = true;
     protected boolean isActivityInvisible = true;
     protected String currTag;
