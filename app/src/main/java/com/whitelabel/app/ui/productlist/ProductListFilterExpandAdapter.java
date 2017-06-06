@@ -185,7 +185,6 @@ public class ProductListFilterExpandAdapter extends ExpandableRecyclerAdapter {
                             @Override
                             public void onAnimationStart(Animation animation) {
                             }
-
                             @Override
                             public void onAnimationEnd(Animation animation) {
                                 arrow.setVisibility(View.GONE);
@@ -201,6 +200,7 @@ public class ProductListFilterExpandAdapter extends ExpandableRecyclerAdapter {
                         operatingAnim.setAnimationListener(new Animation.AnimationListener() {
                             @Override
                             public void onAnimationStart(Animation animation) {
+
                             }
 
                             @Override

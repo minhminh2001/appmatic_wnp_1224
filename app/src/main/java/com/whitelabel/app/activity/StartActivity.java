@@ -118,17 +118,6 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-//        gaTrackNotificationSwitch();
-//        mStartTimeLong = System.currentTimeMillis();
-//        mNetworkErrorMsg =getResources().getString(R.string.productlist_list_prompt_error_nointernet);
-////        mSplashScreen = JStorageUtils.getToSplashScreenMark(StartActivity.this);
-//        mStartHandler=new StartHandler(this);
-//        if(WhiteLabelApplication.getAppConfiguration().isSignIn(StartActivity.this)) {
-//            mSessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-//        }
-//        mCallback=new INITApp(StartActivity.this, new MeInitCallBack(this));
-//        INITExecutor.getInstance().execute(mCallback);
-
         getSupportFragmentManager().beginTransaction().replace(R.id.relative_container, ProductListFilterFragmentV2.newInstance()).commit();
     }
     static class MeInitCallBack extends   INITCallback{
@@ -157,20 +146,16 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
             }
         }
     }
-
     @Override
     public void onClick(View v) {
-
     }
     @Override
     protected void onStart() {
         super.onStart();
     }
-
     @Override
     protected void onResume() {
         super.onResume();
-
 //        if (checkInstallationPlayServices()) {
 //            Intent intent = new Intent(this, RegistrationIntentService.class);
 //            startService(intent);
@@ -202,7 +187,6 @@ public class StartActivity extends com.whitelabel.app.BaseActivity implements Vi
     protected void onStop() {
         super.onStop();
     }
-
     @Override
     protected void onDestroy() {
         if(mProgressDialog !=null){

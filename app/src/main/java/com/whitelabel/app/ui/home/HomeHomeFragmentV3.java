@@ -158,7 +158,6 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public void loadData(CategoryDetailModel categoryDetailModel) {
         if(getActivity()!=null) {
-
             mAdapter = new CategoryDetailVerticalAdapter(getActivity(), categoryDetailModel, mImageLoader);
             mAdapter.setOnItemClickLitener(new CategoryDetailVerticalAdapter.OnItemClickLitener() {
                 @Override

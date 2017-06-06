@@ -276,25 +276,25 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                         WhiteLabelApplication.getAppConfiguration().updateWishlist(activity.getApplicationContext(), wishDelEntityResult.getWishListItemCount());
                     }
                     break;
-                case ProductDao.REQUEST_ADDPRODUCTLISTTOWISH:
-                    if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
-                        try {
-                            AddToWishlistEntity entity = (AddToWishlistEntity) msg.obj;
-//                            String productId = (String) entity.getParams();
-//                            Iterator<SVRAppserviceProductRecommendedResultsItemReturnEntity> iterator = mActivity.get().recommendedList.iterator();
-//                            while (iterator.hasNext()) {
-//                                SVRAppserviceProductRecommendedResultsItemReturnEntity itemEntity = iterator.next();
-//                                if (itemEntity.getProductId().equals(productId)) {
-//                                    itemEntity.setIs_like(1);
-//                                    int indx = mActivity.get().recommendedList.indexOf(itemEntity);
-//                                    mActivity.get().recommendedAdapter.notifyItemChanged(indx);
-//                                }
-//                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    break;
+//                case ProductDao.REQUEST_ADDPRODUCTLISTTOWISH:
+//                    if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
+//                        try {
+//                            AddToWishlistEntity entity = (AddToWishlistEntity) msg.obj;
+////                            String productId = (String) entity.getParams();
+////                            Iterator<SVRAppserviceProductRecommendedResultsItemReturnEntity> iterator = mActivity.get().recommendedList.iterator();
+////                            while (iterator.hasNext()) {
+////                                SVRAppserviceProductRecommendedResultsItemReturnEntity itemEntity = iterator.next();
+////                                if (itemEntity.getProductId().equals(productId)) {
+////                                    itemEntity.setIs_like(1);
+////                                    int indx = mActivity.get().recommendedList.indexOf(itemEntity);
+////                                    mActivity.get().recommendedAdapter.notifyItemChanged(indx);
+////                                }
+////                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    break;
                 case ProductDao.REQUEST_ADDPRODUCTTOWISH:
                     if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
                         AddToWishlistEntity addToWishlistEntity = (AddToWishlistEntity) msg.obj;
@@ -465,7 +465,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         ivHeaderBarWishlist.startAnimation(animation2);
         mIVHeaderBarWishlist.startAnimation(animation2);
     }
-
     class MyWheelPickerCallback extends WheelPickerCallback {
         private List<SVRAppserviceProductDetailResultPropertyReturnEntity> mPropertyList;
         private int mLevel;

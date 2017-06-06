@@ -41,7 +41,7 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
 
     @BindView(R.id.rl_category_tree)
     RecyclerView rlCategoryTree;
-
+    private ImageLoader mImageLoader;
     public HomeHomeFragmentV2() {
         // Required empty public constructor
     }
@@ -85,7 +85,7 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rlCategoryTree.setLayoutManager(linearLayoutManager);
     }
-    private ImageLoader mImageLoader;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

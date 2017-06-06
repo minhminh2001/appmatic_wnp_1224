@@ -81,7 +81,7 @@ import java.util.LinkedList;
 public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment implements SwipeRefreshLayout.OnRefreshListener, View.OnFocusChangeListener, View.OnClickListener, ShoppingCartAdapterCallback {
     private static final String ARG_PARAM1 = "type";
     private static final String ARG_PARAM2 = "mGATrackTimeStart";
-
+    private TextView tvShoppingShippingFeeTitle;
     public Long mGATrackCheckoutTimeStart = 0L;
     public Long mGATrackTimeStart = 0L;
     public boolean mGATrackTimeEnable = false;
@@ -91,8 +91,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private DataHandler mHandler;
     private TimeHandler timeHandler;
     public RecyclerView listView;
-    //    private RelativeLayout rlShoppingcartTopGoback;
-//    private View vVoucher;
     private View infoView;
 //    private ImageView ivUpdate;
     public TextView tvSubtotal;
@@ -167,49 +165,15 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     @Override
     public void onRefresh() {
         //暂时没有用到
-//        mCarDao.getShoppingCartLocalInfo(getActivity());
-
         sendRequest();
     }
     @Override
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-//            case R.id.iv_shoppingcart_campaign:
-//                Bundle bundle = new Bundle();
-//                bundle.putString("productId", campaignProductId);
-//                bundle.putString("popText", mCampaignPopText);
-//                Intent intent = new Intent(getActivity(), ShoppingCartCampaignActivity.class);
-//                intent.putExtras(bundle);
-//                startActivityForResult(intent, 2000);
-//                getActivity().overridePendingTransition(R.anim.enter_righttoleft,
-//                        R.anim.exit_righttoleft);
-//                break;
-//            case R.id.rl_shoppingcart_top_goback:
-//                shoppingCallback.leftButtonClick();
-//                break;
             case R.id.tv_shoppingcart_apply:
                 checkAndApplyVoucherCode();
                 break;
-//            case R.id.ctv_storecredit:
-//                if (getSwipeRefreshStatus()) {
-//                    return;
-//                }
-//                if (!WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-//                    startLoginActivity();
-//                } else {
-//                    mDialog = JViewUtils.showProgressDialog(getActivity());
-//                    String sessionKey = "";
-//                    if (WhiteLabelApplication.getAppConfiguration() != null && WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()) != null) {
-//                        sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
-//                    }
-//                    if (mReedemStr.equals(String.valueOf(tvStoreCredit.getText()))) {
-//                        mCarDao.redeemStoreCredit(sessionKey, "0");
-//                    } else {
-//                        mCarDao.redeemStoreCredit(sessionKey, "1");
-//                    }
-//                }
-//                break;
             case R.id.tv_sc_checkout:
                 if (getSwipeRefreshStatus()) {
                     return;
@@ -313,10 +277,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         startActivityForResult(loginIntent, REQUESTCODE);
         getActivity().overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
     }
-
-//    private TextView tvStoreCreditTitle, tvStoreCredit, tvStoreCreditPrice, tvStoreCreditWorld, tvStoreCreditValue;
-//    private View llStoreCredit, llBottomStoreCredit;
-
     public void initView(View view) {
         mImageLoader = new ImageLoader(getActivity());
         btnGoShopping = (TextView) view.findViewById(R.id.btn_sc_nothing_goshopping);
@@ -415,26 +375,23 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == 1000) {
-                mFragment.get().listView.setOnTouchListener(mFragment.get().gestureTouchListener);
-            }
-            super.handleMessage(msg);
+        if (msg.what == 1000) {
+            mFragment.get().listView.setOnTouchListener(mFragment.get().gestureTouchListener);
         }
-
+        super.handleMessage(msg);
     }
-
+}
     @Override
     public View getInfoView() {
         return infoView;
     }
-
-
     public void initInfoView(View view) {
         tv_shoppingbottominfo_blank = (TextView) view.findViewById(R.id.tv_shoppingbottominfo_blank);
 //        vVoucher = view.findViewById(R.id.ll_voucher);
 //        ivUpdate = (ImageView) view.findViewById(R.id.iv_shoppingcart_campaign);
         tvSubtotal = (TextView) view.findViewById(R.id.tv_shoppingcart_subtotal);
         tvVoucher = (TextView) view.findViewById(R.id.tv_shoppingcart_voucher);
+        tvShoppingShippingFeeTitle= (TextView) view.findViewById(R.id.tv_shopping_shipping_title);
         tvApply = (TextView) view.findViewById(R.id.tv_shoppingcart_apply);
         etVoucherApply = (EditText) view.findViewById(R.id.et_shoppingcart_voucher_apply);
         tvGrandTotal = (TextView) view.findViewById(R.id.tv_shoppingcart_grandtotal);
@@ -447,16 +404,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         llVoucherPrice = (RelativeLayout) view.findViewById(R.id.ll_shoppingcart_voucher);
         tvShippingFree = (TextView) view.findViewById(R.id.tv_shoppingcart_shippingFree);
         tvVoucherWorld = (TextView) view.findViewById(R.id.tv_voucher_world);
-//        tvStoreCreditTitle = (TextView) view.findViewById(R.id.tv_storecredit_title);
-//        tvStoreCreditWorld = (TextView) view.findViewById(R.id.tv_storeCredit_world);
-//        tvStoreCreditValue = (TextView) view.findViewById(R.id.tv_shoppingcart_storeCredit);
-//        llStoreCreditHint = view.findViewById(R.id.ll_storeCredit_hint);
-//        tvStoreCredit = (TextView) view.findViewById(R.id.ctv_storecredit);
-//        llBottomStoreCredit = view.findViewById(R.id.ll_shoppingcart_storeCredit);
-//        tvStoreCreditPrice = (TextView) view.findViewById(R.id.tv_storecredit_price);
-//        llStoreCredit = view.findViewById(R.id.ll_storeCredit);
-//        vCampaign = view.findViewById(R.id.rl_campaign);
-//        vProgress = view.findViewById(R.id.progress_view);
         clearVoucher = (ImageView) view.findViewById(R.id.clear_voucher);
         etVoucherApply.addTextChangedListener(new TextWatcher() {
             @Override
@@ -470,7 +417,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                     clearVoucher.setVisibility(View.GONE);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable != null) {
@@ -478,9 +424,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 }
             }
         });
-
-
-
     }
 
     @Override
@@ -529,14 +472,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             } else {
 
             }
-//
-//            if (!"0".equals(mProducts.get(i).getCanViewPdp())) {
-//                Intent it = new Intent(getActivity(), ProductActivity.class);
-//                it.putExtra("productId", mProducts.get(i).getProductId());
-//                startActivity(it);
-//                getActivity().overridePendingTransition(R.anim.enter_righttoleft,
-//                        R.anim.exit_righttoleft);
-//            }
         }
     };
 
@@ -625,23 +560,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             final ShoppingCartVerticalFragment fragment = mFragment.get();
             if (activity != null & fragment != null) {
                 switch (msg.what) {
-//                    case ShoppingCarDao.REQUEST_LOCALSHOPPINGINFO:
-//                        //initData()每次进来加载本地数据，调用此方法，
-//                        //如果未登陆，就 offLineHandler
-//                        //如果登陆，如果有本地缓存的shopping,先synShoppingCart，推到server上后，
-//                        // 在REQUEST_MULTIPLECODE response里 再调initData(),此时已没有本地缓存，走onLineHandler 从服务器拉数据。
-//                        JLogUtils.d("getShoppingCartInfo", "REQUEST_LOCALSHOPPINGINFO");
-//                        fragment.mCar = (ShoppingCartListEntityCart) msg.obj;
-//                        if (activity != null && !WhiteLabelApplication.getAppConfiguration().isSignIn(activity)) {
-//                            JLogUtils.d("getShoppingCartInfo", "offlineHandler");
-//                            mFragment.get().swipeRefrshLayout.setRefreshing(false);
-//                            fragment.currStatus = LOADSUCCESS;
-//                            fragment.offlineHandler(fragment.mCar);
-//                        } else if (activity != null) {
-//                            JLogUtils.d("getShoppingCartInfo", "onLineHandler");
-//                            fragment.onLineHandler(fragment.mCar);
-//                        }
-//                        break;
                     case ShoppingCarDao.REQUEST_SHOPPINGINFO:
                         fragment.currStatus = LOADSUCCESS;
                         if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS && activity != null) {
@@ -734,70 +652,16 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                         }
                         fragment.initData();
                         break;
-//                    case ShoppingCarDao.REQUEST_STORECREDIT:
-//                        fragment.closeDialog();
-//                        if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS && activity != null) {
-//                            ShoppingCartDeleteCellEntity shoppingCartDeleteCellEntity = (ShoppingCartDeleteCellEntity) msg.obj;
-//                            fragment.mCar.setSummaryQty(shoppingCartDeleteCellEntity.getSummaryQty());
-//                            fragment.mCar.setSubTotal(shoppingCartDeleteCellEntity.getSubTotal());
-//                            fragment.mCar.setStoreCreditMessage(shoppingCartDeleteCellEntity.getStoreCreditMessage());
-//                            fragment.mCar.setGrandTotal(shoppingCartDeleteCellEntity.getGrandTotal());
-//                            fragment.mCar.setStoreCredit(shoppingCartDeleteCellEntity.getStoreCredit());
-//                            if (fragment.mCar.getStoreCredit() != null) {
-//                                fragment.gaTrackerRedeem(fragment.REDEEM);
-//                            } else {
-//                                fragment.gaTrackerRedeem(fragment.UNREDEEM);
-//                            }
-//                            fragment.initShoppingCartData(fragment.mCar, false);
-//                        } else if (activity != null) {
-//                            String errorMsg = String.valueOf(msg.obj);
-//                            if (!JToolUtils.expireHandler(activity, errorMsg, 2000)) {
-//                                JViewUtils.showErrorToast(activity, errorMsg);
-//                            }
-//                        }
-//                        break;
                 }
             }
             super.handleMessage(msg);
         }
     }
-
-//    public void outofstockHandler(ErrorItemsBean errorItemsBean) {
-//        //目前ErrorItemsBean 里所有的list只是暂时 拼合，以判断是否oos
-//        List<String> ids = new ArrayList<String>();
-//        if (errorItemsBean.getOos_ids() != null) {
-//            ids.addAll(errorItemsBean.getOos_ids());
-//        }
-//        if (errorItemsBean.getDisabled_ids() != null) {
-//            ids.addAll(errorItemsBean.getDisabled_ids());
-//        }
-//        if (errorItemsBean.getInsufficient_ids() != null) {
-//            ids.addAll(errorItemsBean.getInsufficient_ids());
-//        }
-//        if (errorItemsBean.getUnapproved_ids() != null) {
-//            ids.addAll(errorItemsBean.getUnapproved_ids());
-//        }
-//
-//        for (int i = 0; i < mProducts.size(); i++) {
-//            if (mProducts.get(i) instanceof ShoppingCartListEntityBody) {
-//                continue;
-//            }
-//            ShoppingCartListEntityCell cell = (ShoppingCartListEntityCell) mProducts.get(i);
-//            for (int j = 0; j < ids.size(); j++) {
-//                if (cell.getId().equals(ids.get(j))) {
-//                    cell.setInStock("0");
-//                }
-//            }
-//        }
-//        adapter.notifyDataSetChanged();
-//    }
-
     public void closeDialog() {
         if (mDialog != null) {
             mDialog.dismiss();
         }
     }
-
     public void gaTrackerRedeem(int type) {
         if (getActivity() != null) {
             String action = "";
@@ -883,11 +747,9 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             llApplyAnim.setVisibility(View.GONE);
         }
     }
-
     public void offlineHandler(ShoppingCartListEntityCart object) {
         initShoppingCartData(object, true);
     }
-
     public void setDiscountPrice(double disCount, String title) {
         llVoucherPrice.setVisibility(View.VISIBLE);
         tvVoucher.setText("-"+WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble((Math.abs(disCount)) + ""));
@@ -914,6 +776,11 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             setButtonQty(cart.getSummaryQty());
             saveShoppingCartCount(cart.getSummaryQty());
             //discount
+            if(cart.getShipping()!=null){
+                tvShoppingShippingFeeTitle.setText(cart.getShipping().getTitle());
+                tvShippingFree.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+JDataUtils.formatDouble(cart.getShipping().getValue()));
+                tvShippingFree.setVisibility(View.VISIBLE);
+            }
             if (cart.getDiscount() != null && !TextUtils.isEmpty(cart.getDiscount().getCouponCode())) {
                 switchVoucheStatus(cart.getDiscount().getCouponCode(), STATUS_VOUCHERCODE_CANCEL);
                 voucherCodeHintMsg(VOUCHER_APPLY_HINT_SUCCESS, cart.getDiscount().getCouponCode());
@@ -941,16 +808,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 voucherCodeHintMsg(VOUCHER_APPLY_HINT_HIDE, "");
                 llVoucherPrice.setVisibility(View.GONE);
             }
-//            mCampaignPopText = cart.getPopupText();
-//            mCampaignBanner = cart.getAndroidCampBanner();
-//            if (cart.getCanUseCampaign() == 1) {
-//                showCampaignProduct(campaignProductId, cart.getAndroidCampBanner(), cart.getPopupText());
-//            } else {
-//                campaignProductId = "";
-//                mCampaignBanner = "";
-//                mCampaignPopText = "";
-//                hideCampaignProduct();
-//            }
             if (isInit) {
                 if (mProducts != null) {
                     mProducts.clear();
@@ -963,14 +820,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                             cell.setCurrStockQty(Integer.parseInt(cell.getQty()) + cell.getStockQty() + "");
                         }
                         mProducts.add(cell);
-//                        if (cell.getIsCampaignProduct() == 1) {
-////                            isCampaignProduct = true;
-//                            campaignProductId = cell.getProductId();
-//                        }
                     }
-//                    if (!isCampaignProduct) {
-//                        campaignProductId = "";
-//                    }
                     if (mProducts.size() > 0) {
                         mProducts.add(new ShoppingCartListEntityBody(ShoppingCartVerticalAdapter.TYPE_BODY));
                     }
@@ -986,26 +836,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 showOrHideView(VIEW_NOTHING_SHOW);
                 showOrHideView(VIEW_NOTNETWORK_HIDE);
             }
-            //initStoreCredit
-
-//            if (cart.getStoreCredit() != null) {
-//                switchStoreCredit(STATUS_STORECREDIT_CANCEL);
-//                llBottomStoreCredit.setVisibility(View.VISIBLE);
-//                tvStoreCreditWorld.setText(cart.getStoreCredit().getTitle());
-//                tvStoreCreditValue.setText("-RM " + JDataUtils.formatDouble(cart.getStoreCredit().getValue()));
-//            } else {
-//                switchStoreCredit(STATUS_STORECREDIT_REEDEM);
-//                llBottomStoreCredit.setVisibility(View.GONE);
-//            }
-//
-//
-//            if (cart.getStoreCreditMessage() != null && WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-//                llStoreCredit.setVisibility(View.VISIBLE);
-//                tvStoreCreditTitle.setText(cart.getStoreCreditMessage().getMessage());
-//                tvStoreCreditPrice.setText(cart.getStoreCreditMessage().getValue());
-//            } else {
-//                llStoreCredit.setVisibility(View.GONE);
-//            }
         }
         if (mGATrackTimeEnable) {
             GaTrackHelper.getInstance().googleAnalyticsTimeStop(
@@ -1076,91 +906,11 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     }
 
 
-//    private final int STATUS_STORECREDIT_REEDEM = 22;
-//    private final int STATUS_STORECREDIT_CANCEL = 23;
 
-//    public void switchStoreCredit(int fromType) {
-//        if (fromType == STATUS_STORECREDIT_REEDEM) {
-//            tvStoreCredit.setText(mReedemStr);
-//            //tvStoreCredit.setBackgroundResource(R.color.purple);
-//            tvStoreCredit.setBackground(getResources().getDrawable(R.drawable.big_button_style_config));
-//            llStoreCreditHint.setVisibility(View.GONE);
-//        } else {
-//            tvStoreCredit.setText(mCancelStr);
-//            //tvStoreCredit.setBackgroundResource(R.color.black000000);
-//            tvStoreCredit.setBackground(getResources().getDrawable(R.drawable.big_button_style_black));
-//            llStoreCreditHint.setVisibility(View.VISIBLE);
-//        }
-//    }
-
-//    public void initCampaignSize() {
-//        int width = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(getActivity());
-//        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ivUpdate.getLayoutParams();
-//        params.height = (int) (width * (200 / 720.0));
-//        params.width = ActionBar.LayoutParams.MATCH_PARENT;
-//        ivUpdate.setLayoutParams(params);
-//    }
-
-//    private class ImageLoadingListener implements RequestListener<String, Bitmap> {
-//        @Override
-//        public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
-//            vProgress.setVisibility(View.GONE);
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
-//            if (getActivity() != null) {
-//                ivUpdate.setImageBitmap(resource);
-//                vProgress.setVisibility(View.GONE);
-//                return true;
-//            }
-//            return false;
-//        }
-//    }
-
-//    public void showCampaignProduct(final String campaignProductId, String banner, final String popText) {
-//        vCampaign.setVisibility(View.VISIBLE);
-//        ivUpdate.setVisibility(View.VISIBLE);
-//        initCampaignSize();
-//        if (banner != null && !banner.equals(String.valueOf(ivUpdate.getTag()))) {
-//            ivUpdate.setTag(banner);
-//            JImageUtils.downloadImageFromServerListener(getActivity(), mImageLoader, ivUpdate, banner, new ImageLoadingListener());
-//        } else {
-//            vProgress.setVisibility(View.GONE);
-//        }
-//    }
-
-//    public void hideCampaignProduct() {
-//        vCampaign.setVisibility(View.GONE);
-//        ivUpdate.setVisibility(View.GONE);
-//        for (int i = 0; i < mProducts.size(); i++) {
-//            if (mProducts.get(i) instanceof ShoppingCartListEntityBody) {
-//                continue;
-//            }
-//            if (((ShoppingCartListEntityCell) mProducts.get(i)).getIsCampaignProduct() == 1) {
-//                mProducts.remove(i);
-//                adapter.notifyDataSetChanged();
-//                break;
-//            }
-//        }
-//    }
 
 
     public void setButtonQty(int sunQty) {
-//        if (getActivity() != null) {
-//            if (sunQty == 1) {
-//                String checkoutStr = getResources().getString(R.string.check_out_num_product).replace("{num}", sunQty + "");
-//                if (!checkoutStr.equals(tvCheckout.getText().toString())) {
-//                    tvCheckout.setText(checkoutStr);
-//                }
-//            } else {
-//                String checkoutStr = getResources().getString(R.string.check_out_num_products).replace("{num}", sunQty + "");
-//                if (!checkoutStr.equals(tvCheckout.getText().toString())) {
-//                    tvCheckout.setText(checkoutStr);
-//                }
-//            }
-//        }
+
     }
 
     public void synShoppingCart() {
@@ -1343,7 +1093,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                     }
                     oldAllItemHeight = allItemHeight;
                 } else {
-
                     if (tv_shoppingbottominfo_blank.getVisibility() != View.GONE) {
                         gapHeight = 0;
                         tv_shoppingbottominfo_blank.setVisibility(View.GONE);
@@ -1353,10 +1102,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             }
         };
         vto.addOnPreDrawListener(onPreDrawListener);
-        ////
     }
-
-
     @Override
     public void setItemHeightByView(int allItemHeight) {
         Rect rNavBar = new Rect();
@@ -1371,20 +1117,12 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             tv_shoppingbottominfo_blank.setVisibility(View.VISIBLE);
         }
     }
-
     private void delHeightListenerOnInfoView() {
         ViewTreeObserver vto = infoView.getViewTreeObserver();
         if (onPreDrawListener != null) {
             vto.removeOnPreDrawListener(onPreDrawListener);
         }
     }
-
-    private void hideRecycleViewAndBottom() {
-        //每次加载数据都先把listView 和botton隐藏了
-        listView.setVisibility(View.INVISIBLE);
-        llCheckout.setVisibility(View.INVISIBLE);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -1396,13 +1134,10 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         initInfoView(infoView);
         return view;
     }
-
-
     @Override
     public void setItemHeight(int itemHeight) {
         this.itemHieght = itemHeight;
     }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -1410,13 +1145,11 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             mHomeCallback = (HomeBaseFragment.HomeCommonCallback) activity;
         }
         baseActivity = (BaseActivity) activity;
-//        shoppingCallback= (ShoppingCartCallback) activity;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-//        mListener = null;
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
         }

@@ -43,6 +43,7 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeCont
     @BindView(R.id.rl_category_tree)
     RecyclerView rlCategoryTree;
     private CategoryTreeExpandableAdapter  mAdapter;
+    private  HomeHomeContract.Presenter mHomePresenter;
     public HomeHomeFragmentV1() {
         // Required empty public constructor
     }
@@ -150,17 +151,14 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeCont
     public void onAttach(Context context) {
         super.onAttach(context);
     }
-
     @Override
     public void onDetach() {
         super.onDetach();
     }
-
     @Override
     public void showErrorMsg(String errormsg) {
         Toast.makeText(getActivity(), errormsg, Toast.LENGTH_SHORT).show();
     }
-    HomeHomeContract.Presenter mHomePresenter;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -181,7 +179,6 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeCont
         rlCategoryTree.setAdapter(mAdapter);
         mAdapter.setRecycleView(rlCategoryTree);
     }
-
     private CategoryTreeExpandableAdapter.ChildOnClick childOnClick = new CategoryTreeExpandableAdapter.ChildOnClick() {
         @Override
         public void childOnClick(int position, Object ob, String parentId) {
