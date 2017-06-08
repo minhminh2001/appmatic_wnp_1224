@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.whitelabel.app.BaseActivity;
@@ -67,11 +68,9 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
         openProgressDialog();
         mPresenter.loadData(mProductId);
     }
-
     public void  openProgressDialog(){
         mDialog=JViewUtils.showProgressDialog(this);
     }
-
     public void closeProgressDialog(){
         if(mDialog!=null){
             mDialog.dismiss();
@@ -108,17 +107,19 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvRecycler.setLayoutManager(linearLayoutManager);
-        mRelatedProducts.add(mProduct);mRelatedProducts.addAll(products.getRelatedProducts());
-        BindProductAdapter mBindProductAdapter = new BindProductAdapter(mRelatedProducts, mImageLoader);
+        mRelatedProducts.add(mProduct);
+        mRelatedProducts.addAll(products.getRelatedProducts());
+        final BindProductAdapter mBindProductAdapter = new BindProductAdapter(mRelatedProducts, mImageLoader);
+        mBindProductAdapter.setOnItemClickListener(new BindProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClient(View view, int position) {
+                 mRelatedProducts.get(position).setSelected(!mRelatedProducts.get(position).isSelected());
+                tvTotalValue.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + mPresenter.computeSumPrice(mRelatedProducts));
+                mBindProductAdapter.notifyDataSetChanged();
+            }
+        });
         rvRecycler.setAdapter(mBindProductAdapter);
-        double  totalPrice=0;
-        try {
-              totalPrice=products.getTotalPrice()+Double.parseDouble(mProduct.getFinalPrice());
-        }catch (Exception ex){
-            ex.getStackTrace();
-        }
-        tvTotalValue.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + JDataUtils.formatDouble(totalPrice+""));
-
+        tvTotalValue.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + mPresenter.computeSumPrice(mRelatedProducts));
     }
     @OnClick(R.id.tv_add_to_cart)
     public void onClick() {
@@ -126,10 +127,14 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
             openProgressDialog();
             StringBuilder stringBuilder = new StringBuilder();
             for (SVRAppserviceProductDetailResultPropertyReturnEntity bean : mRelatedProducts) {
-                stringBuilder = stringBuilder.append(bean.getId()).append(",");
+                if(bean.isSelected()) {
+                    stringBuilder = stringBuilder.append(bean.getId()).append(",");
+                }
             }
-            String ids = stringBuilder.substring(0, stringBuilder.length() - 1);
-            mPresenter.addToCart(ids, WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
+            if(!TextUtils.isEmpty(stringBuilder.toString())) {
+                String ids = stringBuilder.substring(0, stringBuilder.length() - 1);
+                mPresenter.addToCart(ids, WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
+            }
         }else{
             Intent intent = new Intent(this, LoginRegisterActivity.class);
             startActivityForResult(intent, 1000);

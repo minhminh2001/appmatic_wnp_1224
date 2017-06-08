@@ -88,11 +88,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     public Toolbar getToolBar() {
         return getToolbar();
     }
-
-//    @Override
-//    public void showUserGuide(HomeBaseFragment.UserGuideType userGuideType) {
-//
-//    }
     @Override
     public void jumpHomePage(Serializable serializable) {
         if (!(mCurrentFragment instanceof HomeHomeFragment)) {
@@ -257,7 +252,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             }
         });
     }
-
     @Override
     public void setHomeSearchBarAndOnClick(View.OnClickListener onClickListener) {
         setHomeSearchBarClickListener(onClickListener);

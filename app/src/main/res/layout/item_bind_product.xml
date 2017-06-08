@@ -1,26 +1,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
     android:paddingTop="15dp"
     tools:context="com.whitelabel.app.fragment.HomeStoreCreditFragment"
     xmlns:tools="http://schemas.android.com/tools">
+
+
+    <com.whitelabel.app.widget.CustomRadioButton
+        android:id="@+id/ivSortTitle"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:scaleType="centerInside" />
     <ImageView
         android:id="@+id/iv_product_img"
         android:layout_width="70dp"
+        android:layout_toRightOf="@+id/ivSortTitle"
         android:layout_marginLeft="15dp"
         android:background="@color/white"
         android:layout_height="70dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        />
     <com.whitelabel.app.widget.CustomTextView
         android:id="@+id/tv_product_name"
         android:layout_toRightOf="@+id/iv_product_img"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="10dp"
         android:textColor="@color/black000000"
-        android:text="handcrafted Stoneware Cat Bowls Made to FDA Standards"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />

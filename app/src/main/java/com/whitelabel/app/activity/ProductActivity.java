@@ -1392,6 +1392,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         initVisibleProduct();
     }
+
     public void createAttributeView(int level, SVRAppserviceProductDetailResultPropertyReturnEntity bean) {
         if (level % 2 == 0) {
             llLayout = new LinearLayout(this);

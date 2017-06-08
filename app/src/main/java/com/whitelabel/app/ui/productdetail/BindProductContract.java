@@ -21,5 +21,6 @@ public interface BindProductContract {
     interface  Presenter extends BasePresenter<View>{
         public void loadData(String productId);
         public void addToCart(String relatedProductIds,String sessionKey);
+        public double computeSumPrice(List<SVRAppserviceProductDetailResultPropertyReturnEntity> svrAppserviceProductDetailResultPropertyReturnEntities);
     }
 }

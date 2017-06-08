@@ -85,14 +85,11 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     public Long mGATrackCheckoutTimeStart = 0L;
     public Long mGATrackTimeStart = 0L;
     public boolean mGATrackTimeEnable = false;
-
     private CustomSwipefreshLayout swipeRefrshLayout;
-    private String mReedemStr;
     private DataHandler mHandler;
     private TimeHandler timeHandler;
     public RecyclerView listView;
     private View infoView;
-//    private ImageView ivUpdate;
     public TextView tvSubtotal;
     public TextView tvVoucher;
     private TextView tvApply;
@@ -250,7 +247,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             GaTrackHelper.getInstance().googleAnalyticsReportActivity(getActivity(), false);
         }
     }
-
     @Override
     public void onResume() {
         addHeightListenerOnInfoView();
@@ -260,18 +256,15 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         }
         super.onResume();
     }
-
     public void refresh() {
         initData();
     }
-
     public void startHomeActivity() {
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         startActivity(intent);
         getActivity().overridePendingTransition(R.anim.enter_righttoleft,
                 R.anim.exit_righttoleft);
     }
-
     public void startLoginActivity() {
         Intent loginIntent = new Intent(getActivity(), LoginRegisterActivity.class);
         startActivityForResult(loginIntent, REQUESTCODE);
@@ -989,7 +982,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         mCarDao = new ShoppingCarDao(TAG, mHandler);
         mCancelStr = getResources().getString(R.string.shoppingcart_btn_cancel);
         mApplyStr = getResources().getString(R.string.shoppingcart_btn_apply);
-        mReedemStr = getResources().getString(R.string.redeem);
+//        mReedemStr = getResources().getString(R.string.redeem);
         initAdapter();
         sendRequest();
 //        mCarDao.getShoppingCartLocalInfo(getActivity());

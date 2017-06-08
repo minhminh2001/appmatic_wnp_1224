@@ -1,5 +1,6 @@
 package com.whitelabel.app.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,6 +19,7 @@ import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEn
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import java.util.List;
 /**
@@ -29,10 +32,13 @@ public class BindProductView extends RelativeLayout {
     private  int  padding ;
     public BindProductView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        int width=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity) getContext());
+        imageWidth=(width-JDataUtils.dp2Px(90))/3;
     }
     public BindProductView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
+    int imageWidth;
     public void initData(List<SVRAppserviceProductDetailResultPropertyReturnEntity>  products,ImageLoader imageLoader){
         padding =JToolUtils.dip2px(getContext(),10);
         setPadding(padding,padding,padding,0);
@@ -90,21 +96,31 @@ public class BindProductView extends RelativeLayout {
         ImageView ivImg= (ImageView) view.findViewById(R.id.iv_img);
         TextView tvBindPrice= (TextView) view.findViewById(R.id.tv_bind_price);
         if(!TextUtils.isEmpty(bean.getImage())){
+            ivImg.getLayoutParams().height=imageWidth;
+            ivImg.getLayoutParams().width=imageWidth;
             JImageUtils.downloadImageFromServerByUrl(getContext(), imageLoader, ivImg,
-                    bean.getImage(),JToolUtils.dip2px(getContext(),
-                            70),JToolUtils.dip2px(getContext(),70));
+                    bean.getImage(),imageWidth,imageWidth);
         }
         tvBindPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+ JDataUtils.formatDouble(bean.getFinalPrice()));
         view.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,1));
         return view;
     }
     public View createAddView(){
-        CustomTextView  customTextView=new CustomTextView(getContext());
+       final CustomTextView  customTextView=new CustomTextView(getContext());
 //        customTextView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,0.5f));
-        customTextView.setPadding(0, JToolUtils.dip2px(getContext(),20),0,0);
-        customTextView.setTextColor(ContextCompat.getColor(getContext(),R.color.black2c));
+        customTextView.setTextColor(ContextCompat.getColor(getContext(),R.color.black));
         customTextView.setTextSize(20);
         customTextView.setText("+");
+        final ViewTreeObserver  viewTreeObserver= customTextView.getViewTreeObserver();
+        viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener(){
+               @Override
+                public boolean onPreDraw() {
+                   customTextView.getViewTreeObserver().removeOnPreDrawListener(this);
+                  customTextView.setPadding(0, (imageWidth-customTextView.getMeasuredHeight())/2,0,0);
+                  return false;
+                }
+             }
+        );
         return customTextView;
     }
 }

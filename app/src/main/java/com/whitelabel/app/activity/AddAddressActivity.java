@@ -86,7 +86,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     private CustomCheckBox addaddress_checkbox;
     private ScrollView  mScrollView;
     private Dialog mDialog;
-//    private ProgressBar mProgressBar;
     private final String SESSION_EXPIRED = "session expired,login again please";
     private final int REQUESTCODE_LOGIN = 1000;
     private MyAccountDao dao;
@@ -131,7 +130,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                                     InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
                                     inputMethodManager.hideSoftInputFromWindow(activity.city.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                                 }
-
                                 activity.cityText2.setVisibility(View.VISIBLE);
                                 activity.onFocus(activity.postalcode, activity.stateText, activity.stateText2, "State", null);
                                 activity.stateText2.setTextColor(activity.getResources().getColor(R.color.hint));
@@ -307,10 +305,8 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                     clearAddress1.setVisibility(View.GONE);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         address2= (EditText) findViewById(R.id.edit_addaddresss_address2);
@@ -335,7 +331,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() != 0) {
@@ -344,7 +339,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                     clearAddressCode.setVisibility(View.GONE);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
             }

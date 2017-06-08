@@ -968,7 +968,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         } else if(mActivity.get().paymethodType.equals(CheckoutPaymentFragment.PAYPAL)) {
                              mActivity.get().payPalPayment(saveOrderReturnEntity.getLastrealorderid(),
                                      saveOrderReturnEntity.getAmount(),saveOrderReturnEntity.getUnit(),reviewFragment.productName,shippingFee);
-
                         }else {
                             //offline payment
                             if (mActivity.get().paymethodType .equals(CheckoutPaymentFragment.OFFLINEPAYMENT)) {

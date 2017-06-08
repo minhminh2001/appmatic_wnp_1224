@@ -34,6 +34,15 @@ public class SVRAppserviceProductDetailResultPropertyReturnEntity implements Ser
     public void setImage(String image) {
         this.image = image;
     }
+    private boolean  selected=true;
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
     public String getProductId() {
         return productId;

@@ -20,11 +20,11 @@ import rx.functions.Action1;
 /**
  * Created by Administrator on 2017/5/31.
  */
-
 public class BindProductPresenterImpl  extends RxPresenter<BindProductContract.View> implements BindProductContract.Presenter{
     @Override
     public void loadData(String productId) {
-        Subscription  subscription=   DataManager.getInstance().getProductApi().getRelateProducts(productId).compose(RxUtil.<ResponseModel<BindProductResponseModel>>rxSchedulerHelper())
+        Subscription  subscription=   DataManager.getInstance().getProductApi().
+                getRelateProducts(productId).compose(RxUtil.<ResponseModel<BindProductResponseModel>>rxSchedulerHelper())
                 .compose(RxUtil.<BindProductResponseModel>handleResult()).subscribe(new Action1<BindProductResponseModel>() {
             @Override
             public void call(BindProductResponseModel bindProductResponseModel) {
@@ -40,6 +40,23 @@ public class BindProductPresenterImpl  extends RxPresenter<BindProductContract.V
         });
         addSubscrebe(subscription);
     }
+    public double  computeSumPrice(List<SVRAppserviceProductDetailResultPropertyReturnEntity> svrAppserviceProductDetailResultPropertyReturnEntities){
+            double  prices=0;
+            for(int i=0;i<svrAppserviceProductDetailResultPropertyReturnEntities.size();i++){
+                SVRAppserviceProductDetailResultPropertyReturnEntity bean=
+                        svrAppserviceProductDetailResultPropertyReturnEntities.get(i);
+                 if(bean.isSelected()){
+                     try {
+                         prices += Double.parseDouble(bean.getFinalPrice());
+                     }catch (Exception ex){
+                         ex.getStackTrace();
+                     }
+                 }
+            }
+            return prices;
+    }
+
+
     @Override
     public void addToCart(String relatedProductIds,String sessionKey) {
         Subscription  subscription= DataManager.getInstance().getProductApi().addBoughtTogether(relatedProductIds,sessionKey)

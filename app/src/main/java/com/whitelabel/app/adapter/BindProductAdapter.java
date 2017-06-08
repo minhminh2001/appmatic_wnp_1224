@@ -14,6 +14,7 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.widget.CustomRadioButton;
 import com.whitelabel.app.widget.CustomTextView;
 import java.util.List;
 import butterknife.BindView;
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
 public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   private  List<SVRAppserviceProductDetailResultPropertyReturnEntity> mProducts;
   private ImageLoader   mImageloader;
+  private  OnItemClickListener mOnItemClickListener;
   public BindProductAdapter( List<SVRAppserviceProductDetailResultPropertyReturnEntity> products,ImageLoader  imageLoader){
         this.mProducts=products;
         this.mImageloader=imageLoader;
@@ -34,7 +36,7 @@ public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return new ItemViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder,final  int position) {
         ItemViewHolder itemViewHolder= (ItemViewHolder) holder;
         SVRAppserviceProductDetailResultPropertyReturnEntity  svrAppserviceProductDetailResultPropertyReturnEntity=mProducts.get(position);
         if(!TextUtils.isEmpty(   svrAppserviceProductDetailResultPropertyReturnEntity.getImage())) {
@@ -42,9 +44,19 @@ public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     svrAppserviceProductDetailResultPropertyReturnEntity.getImage(), JToolUtils.dip2px(itemViewHolder.itemView.getContext(),
                             70), JToolUtils.dip2px(itemViewHolder.itemView.getContext(), 70));
         }
+        itemViewHolder.rbCheck.setSelect(svrAppserviceProductDetailResultPropertyReturnEntity.isSelected());
         itemViewHolder.tvProductName.setText(svrAppserviceProductDetailResultPropertyReturnEntity.getName());
         itemViewHolder.tvFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+
                 JDataUtils.formatDouble(svrAppserviceProductDetailResultPropertyReturnEntity.getFinalPrice()));
+        itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mOnItemClickListener!=null){
+                    mOnItemClickListener.onItemClient(v,position);
+                }
+            }
+        });
+
         if(Double.valueOf(svrAppserviceProductDetailResultPropertyReturnEntity.getPrice())>Double.valueOf(svrAppserviceProductDetailResultPropertyReturnEntity.getFinalPrice())){
             itemViewHolder.tvOldPrice.setVisibility(View.VISIBLE);
             itemViewHolder.tvOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -54,6 +66,12 @@ public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             itemViewHolder.tvOldPrice.setVisibility(View.GONE);
         }
     }
+    public void   setOnItemClickListener(OnItemClickListener  onItemClickListener){
+        this.mOnItemClickListener=onItemClickListener;
+    }
+     public interface  OnItemClickListener{
+        public void  onItemClient(View view,int position);
+     }
     @Override
     public int getItemCount() {
         return mProducts.size();
@@ -69,6 +87,8 @@ public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         CustomTextView tvOldPrice;
         @BindView(R.id.tv_final_price)
         CustomTextView tvFinalPrice;
+        @BindView(R.id.ivSortTitle)
+        CustomRadioButton rbCheck;
         ItemViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
