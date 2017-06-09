@@ -130,6 +130,7 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
     // Set this dependency to build and run UI Automator tests
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
+    compile 'com.android.support:support-v4:25.3.1'
 }
 //    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
 //        transitive = true;

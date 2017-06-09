@@ -108,7 +108,6 @@ public class ShoppingCarDao extends BaseHttp {
             if (!TextUtils.isEmpty(cell.getQty())) {
                 params.put("products[" + i + "][qty]", cell.getQty());
             }
-
             if (cell.getLocalOptions() != null) {
                 for (int z = 0; z < cell.getLocalOptions().size(); z++) {
                     HashMap<String, String> attribute = cell.getLocalOptions().get(z);
@@ -146,9 +145,6 @@ public class ShoppingCarDao extends BaseHttp {
 //        }
 //        requestHttp(HTTP_METHOD.POST, "/appservice/cart/add", params, REQUEST_ADDPRODUCT);
 //    }
-
-
-
     public void sendRecoverOrder(String sessionKey, String orderId, String storeId) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
@@ -156,22 +152,18 @@ public class ShoppingCarDao extends BaseHttp {
         params.put("store_id", storeId);
         requestHttp(HTTP_METHOD.POST, "appservice/order/reorder", params, REQUEST_RECOVERORDER);
     }
-
     public void addCampaignProductToCart(String sessionKey, String productId) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         params.put("product_id", productId);
         requestHttp(HTTP_METHOD.POST, "appservice/cart/addPromoProduct", params, REQUEST_ADDCAMPAGINTOCART);
     }
-
     public void requestChangeCount(String sessionKey, String cellId, String qty, KeyValueBean keyValueBean) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         params.put("cart[" + cellId + "][qty]", qty);
         requestHttp(HTTP_METHOD.POST, "appservice/cart/updateShoppingCart", params, REQUEST_CHANGESHOPPINGCARCOUNT, keyValueBean);
     }
-
-
     public void applyOrCancelVoucherCode(String sessionKey, String voucherCode, String flag) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);

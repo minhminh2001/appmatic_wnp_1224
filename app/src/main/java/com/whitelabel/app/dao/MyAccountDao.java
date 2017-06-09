@@ -73,18 +73,14 @@ public class MyAccountDao extends BaseHttp {
     public static final int LOCAL_ORDER_SAVE = 100023;
     public static final int LOCAL_ADDRESS_GET = 100024;
     public static final int LOCAL_ADDRESS_SAVE = 100025;
-
-
     public MyAccountDao(String TAG, Handler handler) {
         super(TAG, handler);
     }
-
     public void getAddressBySession(String sessionkey) {
         params = new TreeMap<>();
         params.put("session_key", sessionkey);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/customer/customerAddressInfo", params, REQUEST_GETADDRESS);
     }
-
     public void emailLogin(String email, String password, String deviceToken) {
         params = new TreeMap<>();
         params.put("email", email);
@@ -96,8 +92,6 @@ public class MyAccountDao extends BaseHttp {
         }
         requestHttp(HTTP_METHOD.POST, "appservice/customer/login", params, REQUEST_EMAILLOGIN);
     }
-
-
     class MyAccountThread extends Thread {
         public static final int DATA_WIST_SAVE = 1;
         public static final int DATA_WIST_GET = 2;
@@ -120,7 +114,6 @@ public class MyAccountDao extends BaseHttp {
             mHandler = new WeakReference<Handler>(handler);
             mRequestCode = requestCode;
         }
-
         @Override
         public void run() {
             if (mContext.get() == null || mHandler.get() == null) {
@@ -178,8 +171,6 @@ public class MyAccountDao extends BaseHttp {
         params.put("max", max);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/order/history", params, REQUEST_ORDERLIST);
     }
-
-
     public void registerUser(String firstname, String lastname, String email, String password, String subscribed, String deviceToken) {
         params = new TreeMap<>();
         if (TextUtils.isEmpty(firstname)) {
@@ -187,7 +178,6 @@ public class MyAccountDao extends BaseHttp {
         } else {
             params.put("firstname", firstname);
         }
-
         if (TextUtils.isEmpty(lastname)) {
             params.put("lastname", "");
         } else {

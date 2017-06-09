@@ -1,6 +1,8 @@
 package com.whitelabel.app.data.retrofit;
 
+import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.WishDelEntityResult;
+import com.whitelabel.app.ui.checkout.model.CheckoutDefaultAddressResponse;
 
 import retrofit2.http.Field;
 import retrofit2.http.GET;
@@ -13,5 +15,7 @@ import rx.Observable;
  */
 public interface CheckoutApi {
 
+    @GET("appservice/customer/getCheckoutAddress")
+    public Observable<ResponseModel<CheckoutDefaultAddressResponse>> getDefaultAddress(@Query("session_key") String sessionKey);
 
 }

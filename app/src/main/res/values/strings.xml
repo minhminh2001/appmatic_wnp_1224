@@ -686,5 +686,9 @@
     <!--  mobilde number-->
     <string name="address_mobile_number">Mobile Number</string>
     <string name="day_time_contact">Day Time Contact</string>
+    <string name="checkout_shipping_address">Shipping Address</string>
+    <string name="checkout_address_change">Change</string>
+
+    <string name="checkout_bill_diffent">Bill to different address</string>
 
 </resources>

@@ -95,6 +95,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     private String order_id;
     String amount = "";
     String shippingFee = "";
+    private AddressParameter addressParams;
     /**
      * record that if fragment has entered into payment module.
      * initialized value is true because it must be in shipping model in the beginning.
@@ -123,12 +124,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
      */
     private DataHandler mHandler = new DataHandler(this);
     private boolean isGoBack = false;
-    //    public static String SESSION_KEY = "2e4d2348e09dfcaf189453d99b3a4589";
-    private final String SESSION_EXPIRED = "session expired,login again please";
     private final int REQUESTCODE_LOGIN = 1000;
     private CheckoutPaymentDialog mCheckoutPaymentDialog = null;//place order dialog
     private Dialog mDialog;//common loading dialog
-    private static final int REQUEST_CODE_MOLPAY = 1;
     private ShoppingDiscountBean mDiscountBean;
     public int fromType;
     private int skipPayment;
@@ -449,11 +447,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             }
         }
     }
-
-
-
-
-
     /**
      * CONTINUE BUTTON
      */
@@ -473,24 +466,22 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             case 3://place my order
                 mGATrackPlaceOrderToResultTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
                 placeOrder();
-
-                try {
-                    GaTrackHelper.getInstance().googleAnalytics("Review Order Screen ", this);
-//                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getDiscount());
-//                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getShipping());
-                    String discount = "";
-                    String shippingFee = "";
-                    if (paymentSaveReturnEntity.getDiscount() != null) {
-                        discount = paymentSaveReturnEntity.getDiscount().get("value");
-                    }
-                    if (paymentSaveReturnEntity.getShipping() != null) {
-                        shippingFee = paymentSaveReturnEntity.getShipping().get("value");
-                    }
+//                try {
+//                    GaTrackHelper.getInstance().googleAnalytics("Review Order Screen ", this);
+////                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getDiscount());
+////                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getShipping());
+//                    String discount = "";
+//                    String shippingFee = "";
+//                    if (paymentSaveReturnEntity.getDiscount() != null) {
+//                        discount = paymentSaveReturnEntity.getDiscount().get("value");
+//                    }
+//                    if (paymentSaveReturnEntity.getShipping() != null) {
+//                        shippingFee = paymentSaveReturnEntity.getShipping().get("value");
+//                    }
 //                    FirebaseEventUtils.getInstance().customizedBeginCheck(CheckoutActivity.this, discount, JDataUtils.formatDouble(paymentSaveReturnEntity.getGrandtotal()), JDataUtils.formatDouble(shippingFee));
-                } catch (Exception ex) {
-                    ex.getStackTrace();
-                }
-                JLogUtils.i("googleGA_screen", "Review Order Screen ");
+//                } catch (Exception ex) {
+//                    ex.getStackTrace();
+//                }
                 break;
         }
     }
@@ -661,20 +652,14 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         });
         mMaterialDialog.show();
     }
-
-    private AddressParameter addressParams;
-
     /**
      * send Request And Go To Next Payment Module
      */
     private void sendRequestAndGoToNextPaymentModule() {
         mGATrackAddressToPaymentTimeEnable = true;
         mGATrackAddressToPaymentTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-//        SVRParameters parameters = new SVRParameters();
-//        parameters.put("session_key",  WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
         //judge to show which fragment(module)
         switch (Integer.parseInt(addressConditionInShipping)) {
-
             case 0://It is adding new address or editing address,connect newAddressWebservice or editAddressWebService
                 //we need to get params from addNewAddressFragment first.
                 final CheckoutShippingAddaddressFragment addNewAddressFragment = (CheckoutShippingAddaddressFragment) getFragmentManager().findFragmentByTag("addNewAddressFragment");
@@ -699,13 +684,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     //then validate these params
                     addressParams = validateDatasOfNewAddressFragment(null, editAddressFragment);
 //                    String errorMsg = parameters.getUrlParams().get("validation_notpass_reason");
-
                     if (addressParams == null) {//do not pass validation
-                        // jk
                         return;
                     }
                     addressParams.setAddressId(editAddressFragment.tvPhone_otheruse.getHint().toString());
-
                     mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
                     setButtonEnable(false);
                     editAddressFragment.tvErrorMsg.setText("");
@@ -718,7 +700,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     }
                 }
                 break;
-
             case 1://It's in shipping select or default address module,
                 try {
                     final Fragment fragment = getFragmentManager().findFragmentByTag("defaultaddressFragment");
