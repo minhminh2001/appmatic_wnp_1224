@@ -1372,8 +1372,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     break;
                 }
             }
-            if(instock) {
-                mRLAddToWishlistSmall.setVisibility(View.GONE);
+            if(instock) {mRLAddToWishlistSmall.setVisibility(View.GONE);
                 mRLAddToWishlistBig.setVisibility(View.VISIBLE);
                 ctvAddToCart.setText(getString(R.string.product_detail_addtocart));
                 setAddCartButtonEnable(false);
@@ -1653,7 +1652,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             mLLAddToCart.setEnabled(true);
 //            JViewUtils.setSoildButtonGlobalStyle(this,mLLAddToCart);
             mLLAddToCart.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
-
         }else{
             ctvAddToCart.setEnabled(false);
             mLLAddToCart.setEnabled(false);

@@ -1,12 +1,14 @@
 package com.whitelabel.app.model;
 
+import com.whitelabel.app.utils.JLogUtils;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by imaginato on 2015/6/29.
  */
-public class AddressBook  implements Serializable {
+public class AddressBook  implements Serializable , Cloneable{
     private String addressId;
     private String firstName;
     private String lastName;
@@ -14,6 +16,7 @@ public class AddressBook  implements Serializable {
     private String telephone;
     private List<String> street;
     private String city;
+    private String fax;
     private String regionId;
     private String region;
     private String postcode;
@@ -23,6 +26,27 @@ public class AddressBook  implements Serializable {
     private String primaryShipping;
     public List<String> getStreet() {
         return street;
+    }
+
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+    @Override
+    public Object clone() {
+        AddressBook addressBook = null;
+        try{
+            addressBook = (AddressBook)super.clone();
+        }catch(CloneNotSupportedException e) {
+            JLogUtils.i("AddressBook","exception:"+e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+        return addressBook;
     }
 
 

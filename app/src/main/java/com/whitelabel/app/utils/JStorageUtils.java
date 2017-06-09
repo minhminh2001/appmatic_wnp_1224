@@ -109,6 +109,7 @@ public class JStorageUtils {
             SharedPreferences sharedPreferences = context.getSharedPreferences("myAccount", Context.MODE_PRIVATE);
             String beanStr=sharedPreferences.getString("address_" + userId, "");
             if(!TextUtils.isEmpty(beanStr)) {
+                JLogUtils.i("JStorageUtils","localStr;"+beanStr);
                 beans = JJsonUtils.parseAddressList(beanStr);
             }
             return beans;

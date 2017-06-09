@@ -735,19 +735,144 @@
                     </LinearLayout>
                 </RelativeLayout>
 
+
+
                 <RelativeLayout
-                    android:id="@+id/relative14"
+                    android:id="@+id/rl_day_phone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edit_relative13">
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/ctv_day_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="@dimen/table_margain_left"
+                        android:text="@string/_phone"
+                        android:visibility="gone"
+                        android:textColor="@color/label_saved"
+                        android:textSize="@dimen/labelTextFontSize"
+                        style="@style/font_family_robot_regular" />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/ctv_day_phone_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ctv_day_phone"
+                        android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                        android:layout_marginLeft="@dimen/table_margain_left"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/add6"
+                        android:visibility="gone"
+                        android:textColor="@color/editColor"
+                        android:textSize="@dimen/editTextFontSize"
+                        style="@style/font_family_robot_regular" />
+                    <View
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignLeft="@+id/ctv_day_phone"
+                        android:layout_alignRight="@+id/ctv_day_phone"
+                        android:layout_width="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginRight="-3dp"
+                        android:layout_height="@dimen/line_height"
+                        android:background="@color/edittext_line" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/ctv_day_phone">
+                        <View
+                            android:layout_width="@dimen/line_height"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/rl_day_hone_layout"
+                            android:visibility="gone"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginBottom="-10dp"
+                            android:background="@color/edittext_line"></View>
+                        <RelativeLayout
+                            android:id="@+id/rl_day_hone_layout"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ctv_day_phone_eg_text2"
+                            android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                            android:layout_marginTop="5dp">
+
+                            <com.whitelabel.app.widget.CustomEditText
+                                android:id="@+id/edit_day_phone_eg"
+                                style="@style/font_family_robot_regular"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:background="@null"
+                                android:hint="@string/day_time_contact"
+                                android:inputType="phone"
+                                android:maxLength="@integer/phone_number_length"
+                                android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                                android:singleLine="true"
+                                android:textColor="@color/editColor"
+                                android:textColorHint="@color/hint"
+                                android:textCursorDrawable="@null"
+                                android:textSize="@dimen/editTextFontSize" />
+
+                            <ImageView
+                                android:id="@+id/iv_day_phone_clear_phone"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@mipmap/text_elimination"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+                        <com.whitelabel.app.widget.CustomTextView
+                            android:id="@+id/ctv_day_phone_eg_text2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/day_time_contact"
+                            android:textColor="@color/label_saved"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:visibility="invisible"
+                            style="@style/font_family_robot_regular" />
+                        <com.whitelabel.app.widget.CustomTextView
+                            android:id="@+id/ctv_day_phone_eg_text"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/day_time_contact"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/colorAccent"
+                            android:visibility="invisible"
+                            style="@style/font_family_robot_regular"
+                            android:layout_below="@+id/ctv_day_phone_eg_text2"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_marginLeft="3dp"
+                        android:layout_toRightOf="@+id/ctv_day_phone"
+                        android:layout_width="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/v_add_day_phone_line"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="@dimen/line_height"
+                            android:background="@color/edittext_line" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_default_shipping"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/edit_relative13"
-                    android:layout_marginTop="20dp"
-                    >
-                    <!--<CheckBox-->
-                    <!--android:id="@+id/addaddress_checkbox"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textColor="@color/grayText"-->
-                    <!--android:checked="false" />-->
+                    android:layout_below="@+id/rl_day_phone"
+                    android:layout_marginTop="20dp">
                     <com.whitelabel.app.widget.CustomCheckBox
                         android:id="@+id/addaddress_checkbox"
                         android:layout_width="24dp"
@@ -755,18 +880,37 @@
                         android:layout_centerVertical="true"
                         imaginato:color_checked="@color/colorAccent"
                         imaginato:color_unchecked_stroke="@color/color_checkbox_unchecked"/>
-
                     <com.whitelabel.app.widget.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/addaddress_checkbox"
-                        android:text="@string/use_the_address_for_sipping"
+                        android:text="@string/address_for_shipping"
                         style="@style/font_family_robot_regular"/>
-
                 </RelativeLayout>
-
+                <RelativeLayout
+                    android:id="@+id/rl_default_billing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_default_shipping"
+                    android:layout_marginTop="10dp">
+                    <com.whitelabel.app.widget.CustomCheckBox
+                        android:id="@+id/cb_billing_check"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        imaginato:color_checked="@color/colorAccent"
+                        imaginato:color_unchecked_stroke="@color/color_checkbox_unchecked"/>
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/cb_billing_check"
+                        android:text="@string/address_for_billing"
+                        style="@style/font_family_robot_regular"/>
+                </RelativeLayout>
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_error_hint"
                     android:layout_width="fill_parent"
@@ -777,11 +921,8 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:textColor="@color/red"
-
                     android:textSize="15sp"
                     style="@style/font_family_robot_regular"/>
-
-
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

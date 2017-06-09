@@ -41,7 +41,6 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
     private  List<SVRAppserviceProductDetailResultPropertyReturnEntity> mRelatedProducts;
     public final static String EXTRA_PRODUCTID = "product_id";
     public final static String EXTRA_PRODUCT_DATA = "product";
-    private SVRAppserviceProductDetailResultPropertyReturnEntity mProduct;
     private Dialog mDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +50,6 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
         setTitle(getResources().getString(R.string.productdetail_bind_title));
         mImageLoader = new ImageLoader(this);
         mProductId = getIntent().getStringExtra(EXTRA_PRODUCTID);
-        if (getIntent().getExtras() != null) {
-            mProduct = (SVRAppserviceProductDetailResultPropertyReturnEntity) getIntent().getExtras().getSerializable(EXTRA_PRODUCT_DATA);
-        }
         mRelatedProducts=new ArrayList<>();
         JViewUtils.setSoildButtonGlobalStyle(this, tvAddToCart);
         tvTotalTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
@@ -65,8 +61,14 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
                 onBackPressed();
             }
         });
+        initRecyclerView();
         openProgressDialog();
         mPresenter.loadData(mProductId);
+    }
+    private void initRecyclerView() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvRecycler.setLayoutManager(linearLayoutManager);
     }
     public void  openProgressDialog(){
         mDialog=JViewUtils.showProgressDialog(this);
@@ -104,22 +106,19 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
     public void showData(BindProductResponseModel products) {
         llAddToCar.setVisibility(View.VISIBLE);
         closeProgressDialog();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvRecycler.setLayoutManager(linearLayoutManager);
-        mRelatedProducts.add(mProduct);
+//        mRelatedProducts.add(mProduct);
         mRelatedProducts.addAll(products.getRelatedProducts());
         final BindProductAdapter mBindProductAdapter = new BindProductAdapter(mRelatedProducts, mImageLoader);
         mBindProductAdapter.setOnItemClickListener(new BindProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClient(View view, int position) {
                  mRelatedProducts.get(position).setSelected(!mRelatedProducts.get(position).isSelected());
-                tvTotalValue.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + mPresenter.computeSumPrice(mRelatedProducts));
+                tvTotalValue.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + JDataUtils.formatDouble(mPresenter.computeSumPrice(mRelatedProducts)+""));
                 mBindProductAdapter.notifyDataSetChanged();
             }
         });
         rvRecycler.setAdapter(mBindProductAdapter);
-        tvTotalValue.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + mPresenter.computeSumPrice(mRelatedProducts));
+        tvTotalValue.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() +JDataUtils.formatDouble(mPresenter.computeSumPrice(mRelatedProducts)+""));
     }
     @OnClick(R.id.tv_add_to_cart)
     public void onClick() {

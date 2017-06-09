@@ -53,27 +53,23 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
     private HomeActivity addressBookActivity;
     private Handler mHandler = new Handler();
     private String number;
-    private int mSelectIndex = -1;
+    private int mSelectShippingIndex = -1;
+    private int mSelectBillingIndex=-1;
     private SwipeMenuListView mListView;
     public ArrayList<AddressBook> mBeans = new ArrayList<AddressBook>();
     private Dialog mDialog;
-    private View gride;
     private MyAccountDao dao;
     private String TAG;
     private SwipeRefreshLayout refreshLayout;
-    private int index;
     private RequestErrorHelper requestErrorHelper;
     private View connectionLayout;
-
     private final static class DataHandler extends Handler {
         private final WeakReference<HomeActivity> mActivity;
         private final WeakReference<HomeMyAccountAddressBookFragment> mFragment;
-
         public DataHandler(HomeActivity activity, HomeMyAccountAddressBookFragment fragment) {
             mActivity = new WeakReference<HomeActivity>(activity);
             mFragment = new WeakReference<HomeMyAccountAddressBookFragment>(fragment);
         }
-
         @Override
         public void handleMessage(Message msg) {
             if (mActivity.get() == null || mFragment.get() == null) {
@@ -84,7 +80,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
 
             switch (msg.what) {
                 case MyAccountDao.REQUEST_DELETEADDRESS:
-
                     if (msg.arg1 == MyAccountDao.RESPONSE_SUCCESS) {
                         final AddressDeleteCellEntity addressDeleteCell = (AddressDeleteCellEntity) msg.obj;
                         if (addressDeleteCell.getStatus() == 1) {
@@ -95,7 +90,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
                         if (!JDataUtils.errorMsgHandler(activity, msg.obj.toString())) {
                             if (!activity.isFinishing()) {
                                 if ((!JDataUtils.isEmpty(msg.obj.toString())) && (msg.obj.toString().contains(SESSION_EXPIRED))) {
-
                                     Toast.makeText(activity, msg.obj.toString(), Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent();
                                     intent.setClass(activity, LoginRegisterActivity.class);
@@ -115,11 +109,9 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
                 case MyAccountDao.LOCAL_ADDRESS_GET:
                     fragment.connectionLayout.setVisibility(View.GONE);
                     fragment.textView_add.setVisibility(View.VISIBLE);
-
                     List<AddressBook> address = (List<AddressBook>) msg.obj;
                     if (address != null && address.size() > 0) {
-                        boolean isLocalData = true;
-                        fragment.initWithWebServiceDatas(address, isLocalData);
+                        fragment.initWithWebServiceDatas(address);
                     }
                     fragment.sendRequest();
                     break;
@@ -135,8 +127,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
                             final AddresslistReslut addresslistReslut = (AddresslistReslut) msg.obj;
                             if (null != addresslistReslut.getAddress()) {
                                 fragment.dao.saveLocalAddressData(activity, WhiteLabelApplication.getAppConfiguration().getUser().getId(), addresslistReslut.getAddress());
-                                boolean isLocalData = false;
-                                fragment.initWithWebServiceDatas(addresslistReslut.getAddress(), isLocalData);
+                                fragment.initWithWebServiceDatas(addresslistReslut.getAddress());
                             }
                         }
                     } else {
@@ -159,7 +150,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
                     fragment.requestErrorHelper.showNetWorkErrorToast(msg);
                     break;
             }
-
             super.handleMessage(msg);
         }
     }
@@ -207,17 +197,12 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
         setSwipeListView();
         setHasOptionsMenu(true);
     }
-
-
     @Override
     public void onRefresh() {
         sendRequest();
     }
-
-
     private SwipeMenu menu;
     private int mMenuWidth = 50;
-
     public void setSwipeListView() {
         SwipeMenuCreator creator = new SwipeMenuCreator() {
             @Override
@@ -232,12 +217,10 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
                 openItem.setIcon(getResources().getDrawable(R.drawable.draw_edit));
                 // add to menu
                 menu.addMenuItem(openItem);
-                JLogUtils.i(TAG, "position===" + position + ":::mSelectIndex:" + mSelectIndex);
-                if (position != mSelectIndex) {
+                if (position != mSelectBillingIndex&&position!=mSelectShippingIndex) {
                     menu.addMenuItem(createDeleteSwipeItem());
                 }
 //                AdderssBookFragment.this.menu=menu;
-
             }
         };
         // set creator
@@ -276,88 +259,60 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
         });
         adapter = new AddressBookAdapter(addressBookActivity, mBeans);
     }
-
     public final SwipeMenuItem createDeleteSwipeItem() {
         SwipeMenuItem deleteItem = new SwipeMenuItem(
                 getActivity());
         // set item background
         deleteItem.setBackground(getResources().getDrawable(R.color.white));
         // set item width
-
         deleteItem.setWidth(JToolUtils.dip2px(getActivity(), mMenuWidth));
         // set a icon
         deleteItem.setIcon(getResources().getDrawable(R.drawable.draw_dele));
-
         // add to menu
         return deleteItem;
     }
-
-
     private void onAccountFragment(Fragment fragment) {
         HomeMyAccountFragmentV2 myAccountUserGuide = (HomeMyAccountFragmentV2) fragment;
     }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onAccountFragment(getParentFragment());
     }
-
-    private void initWithWebServiceDatas(List<AddressBook> address, boolean isLocalData) {
+    private void initWithWebServiceDatas(List<AddressBook> address) {
         if (mBeans != null) {
             mBeans.clear();
         }
         for (int i = 0; i < address.size(); i++) {
             AddressBook addressBook = address.get(i);
-            if ("1".equals(addressBook.getPrimaryShipping())) {
-                mBeans.add(0, addressBook);
-                mSelectIndex = 0;
-            } else {
+            if("1".equals(addressBook.getPrimaryShipping())&&"1".equals(addressBook.getPrimaryBilling())) {
+                AddressBook cloneObject= (AddressBook) addressBook.clone();
+                addressBook.setPrimaryBilling("0");
+                mBeans.add(0,addressBook);
+                cloneObject.setPrimaryShipping("0");
+                mBeans.add(0,cloneObject);
+                mSelectShippingIndex=1;
+                mSelectBillingIndex=0;
+            }else if("1".equals(addressBook.getPrimaryBilling())){
+                mBeans.add(0,addressBook);
+                mSelectBillingIndex=i;
+            }else if("1".equals(addressBook.getPrimaryShipping())){
+                mBeans.add(0,addressBook);
+                mSelectShippingIndex=i;
+            } else{
                 mBeans.add(addressBook);
             }
         }
         mListView.setAdapter(adapter);
-        //mListView.scrollToPosition(0);
-        //如果在 handler加载完数据前切换了fragment,则不显示AppGuide5
-//        if (!myAccountUserGuide.mCurrTag.equals(myAccountUserGuide.TAG_ADDRESSLIST)) {
-//            return;
-//        }
-//        boolean showGuide = JStorageUtils.showAppGuide5(addressBookActivity);
-////            boolean showGuide = true;
-//        if (address != null && address.size() > 1 && showGuide && myAccountUserGuide.mCurrTag.equals(myAccountUserGuide.TAG_ADDRESSLIST)) {
-//            myAccountUserGuide.setMenuEnable(false);
-//            long time = System.currentTimeMillis();
-//            if (mCommonCallback != null) {
-//                mCommonCallback.showUserGuide(UserGuideType.ADDRESS);
-//            }
-//            JLogUtils.i(TAG, "TIME:" + (System.currentTimeMillis() - time));
-//            mHandler.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    myAccountUserGuide.setMenuEnable(true);
-//                }
-//            }, 1000);
-
-//                if(mCommonCallback!=null){
-//                    mCommonCallback.showUserGuide(UserGuideType.ADDRESS);
-//                    myAccountUserGuide.setMenuEnable(true);
-//                }
-//        }
     }
-
-
     private void sendRequestToDeteleteCell(String itemId) {
         mDialog = JViewUtils.showProgressDialog(getActivity());
         dao.deleteAddress(WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(), itemId);
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
-
     }
-
     public void refresh(boolean refresh) {
         if (addressBookActivity != null && !addressBookActivity.isFinishing() && isAdded() && refresh) {
             showRefreshLayout();
@@ -369,7 +324,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
             });
         }
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -387,7 +341,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
                 break;
         }
     }
-
     public void showRefreshLayout() {
         mHandler.post(new Runnable() {
             @Override
@@ -396,7 +349,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
             }
         });
     }
-
     /**
      * send request to server
      */
@@ -405,8 +357,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
             dao.getAddresslist(WhiteLabelApplication.getAppConfiguration().getUserInfo(addressBookActivity).getSessionKey());
         }
     }
-
-
     @Override
     public void onStart() {
         super.onStart();
@@ -414,7 +364,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
         GaTrackHelper.getInstance().googleAnalytics("My Address Book Screen", addressBookActivity);
         JLogUtils.i("googleGA_screen", "My Address Book Screen ");
     }
-
     @Override
     public void onStop() {
         super.onStop();

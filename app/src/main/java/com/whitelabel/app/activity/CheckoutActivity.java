@@ -20,8 +20,6 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -696,7 +694,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                      */
                     mAccountDao.addressSave(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(),
                             addressParams.getFirstname(), addressParams.getLastname(), addressParams.getCountryId(), addressParams.getTelephone(), addressParams.getStreet0(),
-                            addressParams.getStreet1(), addressParams.getPostcode(), addressParams.getCity(), addressParams.getRegion(), addressParams.getRegionId(), "0");
+                            addressParams.getStreet1(), addressParams.getPostcode(), addressParams.getCity(), addressParams.getRegion(), addressParams.getRegionId(), "0","0","");
                 } else if (editAddressFragment != null && editAddressFragment.AllVerifyNotNull()) {
                     //then validate these params
                     addressParams = validateDatasOfNewAddressFragment(null, editAddressFragment);
@@ -713,7 +711,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     editAddressFragment.tvErrorMsg.setText("");
                     mAccountDao.EditSave(addressParams.getAddressId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), addressParams.getFirstname(),
                             addressParams.getLastname(), addressParams.getCountryId(), addressParams.getTelephone(), addressParams.getStreet0(), addressParams.getStreet1(),
-                            addressParams.getPostcode(), addressParams.getCity(), addressParams.getRegion(), addressParams.getRegionId(), null);
+                            addressParams.getPostcode(), addressParams.getCity(), addressParams.getRegion(), addressParams.getRegionId(), null,"0","");
                 } else {
                     if (editAddressFragment.AllVerifyNotNull()) {
                         Toast.makeText(CheckoutActivity.this, "failed to find and cast to Add new Address Fragment or edit address fragment", Toast.LENGTH_SHORT).show();
@@ -1052,7 +1050,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             super.handleMessage(msg);
         }
     }
-
 //    private  final static  int REQUEST_CODE_PAYMENT=10000;
     public void payPalPayment(String orderNumber,String price,String unit,String productName,String shippingFee){
         mPaypalHelper.startPaypalPayment(this,price,unit,productName,orderNumber);

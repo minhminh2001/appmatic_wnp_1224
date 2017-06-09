@@ -2,6 +2,7 @@ package com.whitelabel.app.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -43,8 +44,16 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
         }else{
             holder= (AddressViewHolder) view.getTag();
         }
-
         final   AddressBook addreddBean = list.get(position);
+        if("1".equals(addreddBean.getPrimaryBilling())){
+            holder.tvDefault.setVisibility(View.VISIBLE);
+            holder.tvDefault.setText(context.getResources().getString(R.string.address_default_billing));
+        }else if("1".equals(addreddBean.getPrimaryShipping())){
+            holder.tvDefault.setVisibility(View.VISIBLE);
+            holder.tvDefault.setText(context.getResources().getString(R.string.address_default_shipping));
+        }else{
+            holder.tvDefault.setVisibility(View.GONE);
+        }
         holder.tvname.setText(addreddBean.getFirstName()+" "+addreddBean.getLastName());
         holder.tvsecond.setText(addreddBean.getStreet().get(0));
         if(TextUtils.isEmpty(addreddBean.getStreet().get(1))){
@@ -63,17 +72,8 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
         }
         holder.tvaddress.setText(stringBuilder.toString());
         holder.tvmalaysia.setText(addreddBean.getCountry());
-        holder.tvtel.setText(context.getResources().getString(R.string.t) + addreddBean.getTelephone());
-        boolean defaultAddress=addreddBean.getPrimaryShipping().toString().trim().equals("1") ? true : false;
-        if(defaultAddress){
-            holder.ivDefault.setVisibility(View.VISIBLE);
-//            holder.ivDelete.setVisibility(View.GONE);
-            holder.rlAddressItem.setBackgroundColor(myAddressBookActivity.getResources().getColor(R.color.greyC2C2C2));
-        }else {
-            holder.ivDefault.setVisibility(View.INVISIBLE);
-//            holder.ivDelete.setVisibility(View.VISIBLE);
-            holder.rlAddressItem.setBackgroundColor(Color.WHITE);
-        }
+        holder.tvtel.setText(" : "+addreddBean.getTelephone());
+        holder.tvDayPhoneValue.setText(" : "+addreddBean.getFax());
         return view;
     }
     private static class AddressViewHolder extends RecyclerView.ViewHolder{
@@ -85,16 +85,19 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
         TextView tvtel ;
         TextView tvLine;
         View ivDefault;
+        TextView tvDefault;
         // item 主要内容
+        TextView tvDayPhoneValue;
         RelativeLayout rlAddressItem;
 
         public AddressViewHolder(View view) {
             super(view);
+            tvDayPhoneValue= (TextView) view.findViewById(R.id.tv_day_phone_value);
             tvname = (TextView) view.findViewById(R.id.AddAddress_name_textview);
             tvsecond = (TextView) view.findViewById(R.id.AddAddress_second_textview);
             tvthird= (TextView) view.findViewById(R.id.AddAddress_third_textview);
             tvaddress = (TextView) view.findViewById(R.id.AddAddress_address_textview);
-
+            tvDefault= (TextView) view.findViewById(R.id.tv_default_address);
             tvmalaysia = (TextView) view.findViewById(R.id.AddAddress_malaysia_textview);
             tvtel = (TextView) view.findViewById(R.id.AddAddress_tel_textview);
 

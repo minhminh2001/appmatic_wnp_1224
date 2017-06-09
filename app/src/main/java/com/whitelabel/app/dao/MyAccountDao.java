@@ -32,6 +32,7 @@ import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
+import com.whitelabel.app.utils.JViewUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -163,24 +164,19 @@ public class MyAccountDao extends BaseHttp {
     public void saveLocalOrderData(Context context, String userId, List<MyAccountOrderOuter> beans) {
         new MyAccountThread(MyAccountThread.DATA_ORDER_SAVE, userId, beans, context, mHandler, LOCAL_ORDER_SAVE).start();
     }
-
     public void getLocalAddressData(Context context, String userId) {
         new MyAccountThread(MyAccountThread.DATA_ADDRESS_GET, userId, null, context, mHandler, LOCAL_ADDRESS_GET).start();
     }
-
     public void saveLocalAddressData(Context context, String userId, List<AddressBook> beans) {
-        new MyAccountThread(MyAccountThread.DATA_ADDRESS_SAVE, userId, beans, context, mHandler, LOCAL_ADDRESS_SAVE).start();
+//        new MyAccountThread(MyAccountThread.DATA_ADDRESS_SAVE, userId, beans, context, mHandler, LOCAL_ADDRESS_SAVE).start();
+        JStorageUtils.saveAddressData(context,userId,beans);
     }
-
-
     public void getOrderList(String sessionKey, String offset, String max) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         params.put("offset", offset);
         params.put("max", max);
-
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/order/history", params, REQUEST_ORDERLIST);
-
     }
 
 
@@ -276,21 +272,16 @@ public class MyAccountDao extends BaseHttp {
         }
         requestHttp(BaseHttp.HTTP_METHOD.POST, "appservice/customer/gglogin", params, REQUEST_GOOGLELOGIN);
     }
-
-
     public void checkEmail(String email) {
         params = new TreeMap<>();
         params.put("email", email);
         requestHttp(BaseHttp.HTTP_METHOD.POST, "appservice/customer/confirmation", params, REQUEST_CHECKEMAIL);
-
     }
-
     public void getAddresslist(String sessionkey) {
         params = new TreeMap<>();
         params.put("session_key", sessionkey);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/customer/customerAddressInfo", params, REQUEST_GETADDRESLIST);
     }
-
     public void deleteAddress(String sessionKey, String addressId) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
@@ -311,7 +302,7 @@ public class MyAccountDao extends BaseHttp {
     }
     public void addressSave(String sessionKey, String firstname, String lastname,
                             String country_id, String telephone, String street0, String street1,
-                            String postcode, String city, String region, String region_id, String default_shipping) {
+                            String postcode, String city, String region, String region_id, String default_shipping,String defaultBilling,String fax) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         params.put("firstname", firstname);
@@ -320,6 +311,7 @@ public class MyAccountDao extends BaseHttp {
         params.put("telephone", telephone);
         params.put("street[0]", street0);
         params.put("street[1]", street1);
+        params.put("fax",fax);
         if(TextUtils.isEmpty(postcode)){
             params.put("postcode", "");
         }else {
@@ -331,6 +323,9 @@ public class MyAccountDao extends BaseHttp {
         }else{
             params.put("region", "");
         }
+        if(defaultBilling!=null){
+            params.put("default_billing",defaultBilling);
+        }
         if(!TextUtils.isEmpty(region_id)){
             params.put("region_id", region_id);
         }else{
@@ -341,7 +336,7 @@ public class MyAccountDao extends BaseHttp {
     }
     public void EditSave(String addressId, String sessionKey, String firstname, String lastname,
                          String country_id, String telephone, String street0, String street1,
-                         String postcode, String city, String region, String region_id, String default_shipping) {
+                         String postcode, String city, String region, String region_id, String default_shipping,String defaultBilling,String fax) {
         params = new TreeMap<>();
         params.put("address_id", addressId);
         params.put("session_key", sessionKey);
@@ -351,6 +346,7 @@ public class MyAccountDao extends BaseHttp {
         params.put("telephone", telephone);
         params.put("street[0]", street0);
         params.put("street[1]", street1);
+        params.put("fax",fax);
         if(TextUtils.isEmpty(postcode)){
             params.put("postcode", "");
         }else{
@@ -362,9 +358,11 @@ public class MyAccountDao extends BaseHttp {
         if (default_shipping != null) {
             params.put("default_shipping", default_shipping);
         }
+        if(defaultBilling!=null){
+            params.put("default_billing",defaultBilling);
+        }
         requestHttp(HTTP_METHOD.POST, "appservice/customer/editCustomerAddress", params, REQUEST_EDIT_SAVE);
     }
-
     public void sendRequest(String storeId, String session_key, String orderId) {
         params = new TreeMap<>();
         params.put("storeId", storeId);
@@ -372,15 +370,12 @@ public class MyAccountDao extends BaseHttp {
         params.put("orderId", orderId);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/order/detail", params, REQUEST_SENDREQUEST);
     }
-
-
     public void rePaymentInfo(String sessionKey,String id){
         params = new TreeMap<>();
         params.put("orderId", id);
         params.put("session_key",sessionKey);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/order/repayment", params, REQUEST_RE_PAYMENT);
     }
-
     public void changePass(String session_key, String current_password, String password, String confirmation) {
         params = new TreeMap<>();
         params.put("session_key", session_key);

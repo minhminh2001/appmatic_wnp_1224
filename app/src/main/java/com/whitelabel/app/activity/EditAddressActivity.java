@@ -15,6 +15,7 @@ import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.animation.AlphaAnimation;
@@ -82,22 +83,25 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
     private ArrayList<CountrySubclass> list_countries = new ArrayList<CountrySubclass>();
     private View view_firstname_line,view_lastname_line,v_phone_line;
     private ImageView iv_country_arrow,iv_state_arrow;
-    private ImageView ivClearEditFirst,ivClearEditLast,ivClearEditAddress1,ivClearEditAddress2,ivClearEditCode,ivClearEditCity,ivClearEditPhone;
+    private ImageView ivClearEditFirst,ivClearEditLast,ivClearEditAddress1,ivClearEditAddress2,ivClearEditCode,ivClearEditCity,ivClearEditPhone,clearDayPhone;
 //    public static String SESSION_KEY = null;
     private Handler mHandler = new Handler();
 //    private String addeessId,firtname,lastname,county,address11,address22,postalcode1,city1,state1,phonenumber;
     private CustomCheckBox addaddress_checkbox;
     private AddressBook  mBean;
     private TextView tvError;
+    private TextView tvDayPhone;
+    private TextView tvDayPhone2;
 //    private ProgressBar mProgressBar;
     private Dialog  mDialog;
     private ScrollView myScrollView;
-
+    private CustomCheckBox  cbDefaultBilling;
     private final String SESSION_EXPIRED = "session expired,login again please";
     private final int REQUESTCODE_LOGIN = 1000;
     private MyAccountDao dao;
     private String TAG;
-
+    private  EditText  etDayPhone;
+    private View vAddDayPhoneLine;
 
     private static final class DataHandler extends  Handler{
         private final WeakReference<EditAddressActivity> mActivity;
@@ -248,45 +252,32 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             super.handleMessage(msg);
         }
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editaddress);
         TAG =this.getClass().getSimpleName();
         DataHandler dataHandler = new DataHandler(this);
-        dao=new MyAccountDao(TAG, dataHandler);
-//        SharedPreferences sharedPreferences = getSharedPreferences("session_key", Activity.MODE_PRIVATE);
-        View checkBoxView = findViewById(R.id.relative14);
-        addaddress_checkbox= (CustomCheckBox) findViewById(R.id.addaddress_checkbox);
-        addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-        addaddress_checkbox.setChecked(false);
-        myScrollView= (ScrollView) findViewById(R.id.myScrollView);
-//        SESSION_KEY = sharedPreferences.getString("session_key", "");
-        Intent intent=this.getIntent();
-        Bundle bundle=intent.getExtras();
-        int index = intent.getIntExtra("position", 0);
-        if(bundle!=null ){
-            mBean=(AddressBook)bundle.getSerializable("bean");
+        if(getIntent().getExtras()!=null ){
+            mBean=(AddressBook)getIntent().getExtras().getSerializable("bean");
             if (mDialog != null) {
                 mDialog.cancel();
             }
         }
-        if("1".equals(mBean.getPrimaryShipping())){
-            checkBoxView.setVisibility(View.GONE);
-            addaddress_checkbox.setChecked(true);
-        }else{
-            checkBoxView.setVisibility(View.VISIBLE);
-
-            addaddress_checkbox.setChecked(false);
-        }
-
+        dao=new MyAccountDao(TAG, dataHandler);
+        View rlDefaultShipping = findViewById(R.id.rl_default_shipping);
+        View rlDefaultBilling=findViewById(R.id.rl_default_billing);
+          cbDefaultBilling= (CustomCheckBox) findViewById(R.id.cb_billing_check);
+        cbDefaultBilling.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        cbDefaultBilling.setChecked(false);
+        addaddress_checkbox= (CustomCheckBox) findViewById(R.id.addaddress_checkbox);
+        addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        addaddress_checkbox.setChecked(false);
+        myScrollView= (ScrollView) findViewById(R.id.myScrollView);
         firstName= (EditText) findViewById(R.id.edit_firstName_EditText);
+        tvDayPhone= (TextView) findViewById(R.id.ctv_day_phone_eg_text);
+        tvDayPhone.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        tvDayPhone2= (TextView) findViewById(R.id.ctv_day_phone_eg_text2);
         firstName.setText(mBean.getFirstName());
         rl_edit_country=(CustomButtomLineRelativeLayout)findViewById(R.id.rl_edit_country);
         rl_edit_address1=(CustomButtomLineRelativeLayout)findViewById(R.id.rl_edit_address1);
@@ -312,6 +303,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         stateText= (TextView) findViewById(R.id.edit_state_text1);
         city= (EditText)findViewById(R.id.edit_city_EditText);
         city.setText(mBean.getCity());
+        vAddDayPhoneLine=findViewById(R.id.v_add_day_phone_line);
         state= (EditText)findViewById(R.id.edit_state_EditText);
         eg= (EditText) findViewById(R.id.edit_eg);
         eg.setText(mBean.getTelephone());
@@ -364,23 +356,20 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         ivClearEditCode=(ImageView)findViewById(R.id.iv_clear_code);
         ivClearEditCity=(ImageView)findViewById(R.id.ic_clear_city);
         ivClearEditPhone=(ImageView)findViewById(R.id.ic_clear_phone);
-
-//        postalcode.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                if (!state.isEnabled()) {
-//                    state.setEnabled(true);
-//                    stateText.setEnabled(true);
-//                    stateText.setTextColor(getResources().getColor(R.color.black000000));
-//                }
-//            }
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//            }
-//        });
+        if("1".equals(mBean.getPrimaryShipping())){
+            rlDefaultShipping.setVisibility(View.GONE);
+            addaddress_checkbox.setChecked(true);
+        }else{
+            rlDefaultShipping.setVisibility(View.VISIBLE);
+            addaddress_checkbox.setChecked(false);
+        }
+        if("1".equals(mBean.getPrimaryBilling())){
+            rlDefaultBilling.setVisibility(View.GONE);
+            cbDefaultBilling.setChecked(true);
+        }else{
+            rlDefaultBilling.setVisibility(View.VISIBLE);
+            cbDefaultBilling.setChecked(false);
+        }
         firstName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -445,7 +434,6 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             public void afterTextChanged(Editable s) {
             }
         });
-
         postalcode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -458,7 +446,6 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                     ivClearEditCode.setVisibility(View.GONE);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -483,23 +470,42 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         eg.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length()!=0)
                     ivClearEditPhone.setVisibility(View.VISIBLE);
                 else
                     ivClearEditPhone.setVisibility(View.GONE);
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
             }
         });
+        clearDayPhone= (ImageView) findViewById(R.id.iv_day_phone_clear_phone);
+        etDayPhone= (EditText) findViewById(R.id.edit_day_phone_eg);
+        etDayPhone.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        etDayPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() != 0) {
+                    clearDayPhone.setVisibility(View.VISIBLE);
+                } else {
+                    clearDayPhone.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        clearDayPhone.setOnClickListener(this);
+        etDayPhone.setOnFocusChangeListener(this);
+
 
         ivClearEditFirst.setOnClickListener(this);
         ivClearEditLast.setOnClickListener(this);
@@ -508,10 +514,8 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         ivClearEditCode.setOnClickListener(this);
         ivClearEditCity.setOnClickListener(this);
         ivClearEditPhone.setOnClickListener(this);
-
         country.setOnClickListener(this);
         state.setOnClickListener(this);
-        
         if(!TextUtils.isEmpty(mBean.getRegion())){
             stateText2.setVisibility(View.VISIBLE);
         }
@@ -519,16 +523,15 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             stateText.setTag(mBean.getRegionId());
             stateText.setOnClickListener(this);
             stateText.setText(mBean.getRegion());
-
             DisplayMetrics dm = getResources().getDisplayMetrics();
             float value  = dm.scaledDensity;
             stateText.setTextSize(state.getTextSize()/value);
         }
         if(!TextUtils.isEmpty(mBean.getRegion())){
-//            state.setEnabled(false);
-//            stateText.setEnabled(false);
-//            stateText.setTextColor(getResources().getColor(R.color.hint));
             state.setText(mBean.getRegion());
+        }
+        if(!TextUtils.isEmpty(mBean.getFax())){
+            etDayPhone.setText(mBean.getFax());
         }
         initAllHint();
         initData();
@@ -555,12 +558,9 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         if(!city.getText().toString().equals("")){cityText2.setVisibility(View.VISIBLE);}
         if (!state.getText().toString().equals("")){stateText2.setVisibility(View.VISIBLE);}
         if (!eg.getText().toString().equals("")){egText2.setVisibility(View.VISIBLE);}
+        if(!etDayPhone.getText().toString().equals("")){tvDayPhone2.setVisibility(View.VISIBLE);}
     }
-
-    private ArrayList<CountrySubclass> countryList;
-    private SharedPreferences sharedCountry,sharedStateProvince;
     private ArrayList<CountryRegions>  mRegions=new ArrayList<CountryRegions>();
-
     public void initData(){
         sendRequestToGetCountryAndRegions();
     }
@@ -598,22 +598,19 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
     private void clickSave(){
         JViewUtils.cleanCurrentViewFocus(EditAddressActivity.this);
         if (onblurAll(R.id.edit_firstName_EditText) && onblurAll(R.id.edit_lastName_EditText)  && onblurAll(R.id.edit_address1_EditText)
-                && onblurAll(R.id.edit_city_EditText) && onblurAll(R.id.edit_country_EditText)  && onblurAll(R.id.edit_eg)) {//&& onblurAll(R.id.edit_state_EditText)
+                && onblurAll(R.id.edit_city_EditText) && onblurAll(R.id.edit_country_EditText)  && onblurAll(R.id.edit_eg)&&onblurAll(R.id.edit_day_phone_eg)) {//&& onblurAll(R.id.edit_state_EditText)
             mDialog=JViewUtils.showProgressDialog(EditAddressActivity.this);
             String region="";
             String region_id="";
             if(state.getVisibility()==View.GONE){
                 if( !TextUtils.isEmpty(String.valueOf(stateText.getText()))){
-                    //   parameters.put("region",stateText.getText().toString().trim());
                     region=stateText.getText().toString().trim();
                 }
                 if( stateText.getTag()!=null){
-                    //      parameters.put("region_id", String.valueOf(stateText.getTag()));
                     region_id= String.valueOf(stateText.getTag());
                 }
             }else{
                 if( !TextUtils.isEmpty(String.valueOf(state.getText()))){
-                    //    parameters.put("region",state.getText().toString().trim());
                     region=state.getText().toString().trim();
                 }
             }
@@ -627,9 +624,11 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             String street1=address2.getText().toString().trim();
             String postcode=postalcode.getText().toString().trim();
             String city2= city.getText().toString().trim();
-            int addAddressCode=addaddress_checkbox.isChecked()?1:0;
-            String default_shipping=""+addAddressCode;
-            dao.EditSave(address_id,sessionKey, firstname, lastname, country_id, telephone, street0, street1, postcode, city2, region, region_id, default_shipping);
+            String   default_shipping=addaddress_checkbox.isChecked()?"1":"0";
+            String  defaultBilling=cbDefaultBilling.isChecked()?"1":"0";
+            String fax=etDayPhone.getText().toString();
+
+            dao.EditSave(address_id,sessionKey, firstname, lastname, country_id, telephone, street0, street1, postcode, city2, region, region_id, default_shipping,defaultBilling,fax);
 
         }
     }
@@ -684,6 +683,9 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                 break;
             case R.id.ic_clear_phone:
                 eg.setText("");
+                break;
+            case R.id.iv_day_phone_clear_phone:
+                etDayPhone.setText("");
                 break;
         }
     }
@@ -904,6 +906,16 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                         ivClearEditPhone.setVisibility(View.VISIBLE);
                     else
                         ivClearEditPhone.setVisibility(View.GONE);
+                    break;
+                case R.id.edit_day_phone_eg:
+
+                    onFocus(etDayPhone,tvDayPhone,tvDayPhone2,getResources().getString(R.string.address_day_phone),null);
+                    CustomButtomLineRelativeLayout.setBottomLineActive(vAddDayPhoneLine, true);
+                    if (etDayPhone.getText().length()!=0)
+                        clearDayPhone.setVisibility(View.VISIBLE);
+                    else
+                        clearDayPhone.setVisibility(View.GONE);
+                    break;
             }
         }else{
             onblurAll(v.getId());
@@ -916,6 +928,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             ivClearEditPhone.setVisibility(View.GONE);
         }
     }
+
     public boolean onblurAll(int id){
         switch (id){
             case R.id.edit_firstName_EditText:
@@ -1066,6 +1079,22 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                 }else{
                     egText.clearAnimation();
                 }
+                break;
+            case R.id.edit_day_phone_eg:
+                CustomButtomLineRelativeLayout.setBottomLineActive(vAddDayPhoneLine,false);
+                tvDayPhone2.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
+                tvDayPhone2.setVisibility(View.VISIBLE);
+                if(etDayPhone.getText().toString().trim().equals("")){
+                    etDayPhone.setHint(getResources().getString(R.string.address_day_phone));
+                    tvDayPhone.clearAnimation();
+                    //验证字段
+                    tvDayPhone2.setText(getResources().getString(R.string.required_field));
+                    tvDayPhone2.setTextColor(getResources().getColor(R.color.redC2060A));
+                    return false;
+                }else{
+                    tvDayPhone.clearAnimation();
+                }
+                break;
         }
         return true;
     }

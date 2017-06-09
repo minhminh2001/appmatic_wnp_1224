@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,28 +71,32 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     private TextView postalcodeText2;
     private TextView cityText;
     private TextView cityText2;
+    private EditText  etDayPhone;
     private TextView stateText;
     private TextView stateText2;
     private TextView egText;
     private TextView egText2;
-    private ImageView clearAddressFirst,clearAddressLast,clearAddress1,clearAddress2,clearAddressCode,clearAddressCity,clearAddressPhone;
+    private TextView tvDayPhone;
+    private TextView tvDayPhone2;
+    private ImageView clearAddressFirst,clearAddressLast,clearAddress1,clearAddress2,clearAddressCode,clearAddressCity,clearAddressPhone,clearDayPhone;
     private ImageView iv_country_arrow,iv_state_arrow;
     private CustomButtomLineRelativeLayout rl_addadd_country,rl_addadd_address1,rl_addadd_address2,rl_addadd_postcode,rl_addadd_city,rl_addadd_state;
-    private View v_add_phone_line,view_firstname_line,view_lastname_line;
+    private View v_add_phone_line,view_firstname_line,view_lastname_line,vAddDayPhoneLine;
     private ArrayList<CountrySubclass> list_countries = new ArrayList<CountrySubclass>();
     private Handler mHandler = new Handler();
-    private int num;
     private InputMethodManager imm ;
     private TextView tvError;
-    private CustomCheckBox addaddress_checkbox;
+    private CustomCheckBox cbDefaultShipping;
+    private CustomCheckBox cbDefaultBilling;
     private ScrollView  mScrollView;
     private Dialog mDialog;
     private final String SESSION_EXPIRED = "session expired,login again please";
     private final int REQUESTCODE_LOGIN = 1000;
     private MyAccountDao dao;
     private int height;
+    public final static  String  EXTRA_FIRST_ADD="first_add_address";
+    private boolean firstAdd;
     private int[] location = new int[2];
-    ArrayList<CountrySubclass> countryValue=null;
     private static class DataHandler extends Handler{
         private final WeakReference<AddAddressActivity> mActivity;
         public DataHandler(AddAddressActivity activity){
@@ -231,6 +236,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             super.handleMessage(msg);
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -239,10 +245,13 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         String TAG = this.getClass().getSimpleName();
         dao=new MyAccountDao(TAG, handler);
         initToolBar();
-        RelativeLayout checkBox_RelativeLayout = (RelativeLayout) findViewById(R.id.relative1);
-        Intent intent=this.getIntent();
-        String number = intent.getStringExtra("listnum");
+        firstAdd=getIntent().getBooleanExtra(EXTRA_FIRST_ADD,false);
+        if(firstAdd){
+            findViewById(R.id.relative14).setVisibility(View.GONE);
+            findViewById(R.id.rl_default_billing).setVisibility(View.GONE);
+        }
         v_add_phone_line=findViewById(R.id.v_add_phone_line);
+        vAddDayPhoneLine=findViewById(R.id.v_add_day_phone_line);
         view_firstname_line=findViewById(R.id.view_firstname_line);
         view_lastname_line=findViewById(R.id.view_lastname_line);
         rl_addadd_country= (CustomButtomLineRelativeLayout) findViewById(R.id.rl_addadd_country);
@@ -291,7 +300,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             }
         });
         country= (EditText)findViewById(R.id.edit_addaddresss_country);
-
         address1= (EditText)findViewById(R.id.edit_addaddresss_address1);
         address1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -326,6 +334,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             public void afterTextChanged(Editable s) {
             }
         });
+
         postalcode= (EditText) findViewById(R.id.edit_addaddresss_postalcode);
         postalcode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -360,7 +369,26 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             @Override
             public void afterTextChanged(Editable s) {
             }
-        });
+         });
+           etDayPhone= (EditText) findViewById(R.id.edit_day_phone_eg);
+           etDayPhone.addTextChangedListener(new TextWatcher() {
+             @Override
+             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+             }
+             @Override
+             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                 if (s.length() != 0) {
+                     clearDayPhone.setVisibility(View.VISIBLE);
+                 } else {
+                     clearDayPhone.setVisibility(View.GONE);
+                 }
+             }
+
+             @Override
+             public void afterTextChanged(Editable s) {
+
+             }
+         });
 
         state= (EditText)findViewById(R.id.edit_addaddresss_state);
         eg= (EditText) findViewById(R.id.edit_addaddresss_eg);
@@ -384,6 +412,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         });
 
         eg.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+        etDayPhone.setInputType(EditorInfo.TYPE_CLASS_PHONE);
 
         firstName.setOnFocusChangeListener(this);
         lastName.setOnFocusChangeListener(this);
@@ -394,6 +423,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         country.setOnFocusChangeListener(this);
         state.setOnFocusChangeListener(this);
         eg.setOnFocusChangeListener(this);
+        etDayPhone.setOnFocusChangeListener(this);
         firstNameText= (TextView)findViewById(R.id.ctv_addaddress_firstName_text);
         firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
@@ -426,9 +456,12 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         stateText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
 
         stateText2= (TextView) findViewById(R.id.ctv_addaddresss_state_text2);
+        tvDayPhone= (TextView) findViewById(R.id.ctv_day_phone_eg_text);
+        tvDayPhone.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        tvDayPhone2= (TextView) findViewById(R.id.ctv_day_phone_eg_text2);
+
         egText= (TextView) findViewById(R.id.ctv_addaddresss_eg_text);
         egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-
         egText2= (TextView) findViewById(R.id.ctv_addaddresss_eg_text2);
         TextView phoneNumber = (TextView) findViewById(R.id.ctv_addaddress_number_value);
         phoneNumber.setOnClickListener(this);
@@ -440,6 +473,8 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         clearAddressCode=(ImageView)findViewById(R.id.iv_address_clear_code);
         clearAddressCity=(ImageView)findViewById(R.id.iv_address_clear_city);
         clearAddressPhone=(ImageView)findViewById(R.id.iv_address_clear_phone);
+        clearDayPhone= (ImageView) findViewById(R.id.iv_day_phone_clear_phone);
+
 
         iv_country_arrow=(ImageView)findViewById(R.id.iv_country_arrow);
         iv_state_arrow=(ImageView)findViewById(R.id.iv_state_arrow);
@@ -451,15 +486,19 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         clearAddressCode.setOnClickListener(this);
         clearAddressCity.setOnClickListener(this);
         clearAddressPhone.setOnClickListener(this);
+        clearDayPhone.setOnClickListener(this);
 
 //        country.setOnClickListener(this);
         imm = (InputMethodManager)
         getSystemService(Context.INPUT_METHOD_SERVICE);
         RelativeLayout scrollView = (RelativeLayout) findViewById(R.id.addaddress_ScrollView);
         scrollView.setOnClickListener(this);
-        addaddress_checkbox= (CustomCheckBox) findViewById(R.id.addaddress_checkbox);
-        addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-        addaddress_checkbox.setChecked(false);
+        cbDefaultShipping = (CustomCheckBox) findViewById(R.id.addaddress_checkbox);
+        cbDefaultShipping.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        cbDefaultShipping.setChecked(false);
+        cbDefaultBilling= (CustomCheckBox) findViewById(R.id.cb_billing_check);
+        cbDefaultBilling.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        cbDefaultBilling.setChecked(false);
 //        country.setTag("MY");
 //        country.setText(getResources().getString(R.string.malaysia));
         state.setVisibility(View.GONE);
@@ -680,7 +719,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         JViewUtils.cleanCurrentViewFocus(AddAddressActivity.this);
         if (onblurAll(R.id.edit_addaddress_firstName) && onblurAll(R.id.edit_addaddress_lastName)  && onblurAll(R.id.edit_addaddresss_country)
                 && onblurAll(R.id.edit_addaddresss_address1)
-                && onblurAll(R.id.edit_addaddresss_city)  && onblurAll(R.id.edit_addaddresss_eg)) {
+                && onblurAll(R.id.edit_addaddresss_city)  && onblurAll(R.id.edit_addaddresss_eg)&&onblurAll(R.id.edit_day_phone_eg)) {
 
             mDialog=JViewUtils.showProgressDialog(AddAddressActivity.this);
             String region="";
@@ -701,8 +740,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             if(WhiteLabelApplication.getAppConfiguration().isSignIn(AddAddressActivity.this)){
                  sessionKey= WhiteLabelApplication.getAppConfiguration().getUserInfo(AddAddressActivity.this).getSessionKey();
             }
-
-
             String firstname =firstName.getText().toString().trim();
             String lastname=lastName.getText().toString().trim();
             String country_id = String.valueOf(country.getTag());
@@ -711,14 +748,13 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             String street1=address2.getText().toString().trim();
             String postcode=postalcode.getText().toString().trim();
             String city2= city.getText().toString().trim();
-            int addAddressCode=addaddress_checkbox.isChecked()?1:0;
-            String default_shipping=""+addAddressCode;
+            String defaultShipping= cbDefaultShipping.isChecked()?"1":"0";
+            String defaultBilling=cbDefaultBilling.isChecked()?"1":"0";
+            String fax=etDayPhone.getText().toString();
             menuItemClicking=true;
-            dao.addressSave(sessionKey,firstname,lastname,country_id,telephone,street0,street1,postcode,city2,region,region_id,default_shipping);
+            dao.addressSave(sessionKey,firstname,lastname,country_id,telephone,street0,street1,postcode,city2,region,region_id,defaultShipping,defaultBilling,fax);
         }
     }
-
-
     public void clickState(){
             if(mRegions==null){
                 Toast.makeText(AddAddressActivity.this,"Please select a country",Toast.LENGTH_SHORT).show();
@@ -746,7 +782,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_user_address:
-                addaddress_checkbox.setChecked(!addaddress_checkbox.isChecked(),true);
+                cbDefaultShipping.setChecked(!cbDefaultShipping.isChecked(),true);
                 break;
             case R.id.addaddress_ScrollView:
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -801,6 +837,9 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                 break;
             case R.id.iv_address_clear_phone:
                 eg.setText("");
+                break;
+            case R.id.iv_day_phone_clear_phone:
+                etDayPhone.setText("");
                 break;
         }
     }
@@ -880,7 +919,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                     if (tvcountry == null || JDataUtils.isEmpty(tvcountry.toString())) {
                         tvcountry = "Malaysia";
                     }
-
                     break;
                 case R.id.edit_addaddresss_eg:
                     onFocus(eg,egText,egText2,getResources().getString(R.string.eg123),null);
@@ -889,6 +927,16 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                         clearAddressPhone.setVisibility(View.VISIBLE);
                     else
                         clearAddressPhone.setVisibility(View.GONE);
+                    break;
+                case R.id.edit_day_phone_eg:
+
+                    onFocus(etDayPhone,tvDayPhone,tvDayPhone2,getResources().getString(R.string.address_day_phone),null);
+                    CustomButtomLineRelativeLayout.setBottomLineActive(vAddDayPhoneLine, true);
+                    if (etDayPhone.getText().length()!=0)
+                        clearDayPhone.setVisibility(View.VISIBLE);
+                    else
+                        clearDayPhone.setVisibility(View.GONE);
+                    break;
             }
         }else{
             onblurAll(v.getId());
@@ -1077,6 +1125,24 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                 }else{
                     egText.clearAnimation();
                 }
+                break;
+            case R.id.edit_day_phone_eg:
+                CustomButtomLineRelativeLayout.setBottomLineActive(vAddDayPhoneLine,false);
+                tvDayPhone2.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
+                tvDayPhone2.setVisibility(View.VISIBLE);
+                if(etDayPhone.getText().toString().trim().equals("")){
+                    etDayPhone.setHint(getResources().getString(R.string.address_day_phone));
+                    tvDayPhone2.getLocationOnScreen(location);
+                    srollto();
+                    tvDayPhone.clearAnimation();
+                    //验证字段
+                    tvDayPhone2.setText(getResources().getString(R.string.required_field));
+                    tvDayPhone2.setTextColor(getResources().getColor(R.color.redC2060A));
+                    return false;
+                }else{
+                    tvDayPhone.clearAnimation();
+                }
+                break;
         }
         return true;
     }

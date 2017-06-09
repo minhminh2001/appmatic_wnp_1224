@@ -107,7 +107,6 @@ public class BindProductView extends RelativeLayout {
     }
     public View createAddView(){
        final CustomTextView  customTextView=new CustomTextView(getContext());
-//        customTextView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,0.5f));
         customTextView.setTextColor(ContextCompat.getColor(getContext(),R.color.black));
         customTextView.setTextSize(20);
         customTextView.setText("+");
@@ -115,7 +114,7 @@ public class BindProductView extends RelativeLayout {
         viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener(){
                @Override
                 public boolean onPreDraw() {
-                   customTextView.getViewTreeObserver().removeOnPreDrawListener(this);
+                  customTextView.getViewTreeObserver().removeOnPreDrawListener(this);
                   customTextView.setPadding(0, (imageWidth-customTextView.getMeasuredHeight())/2,0,0);
                   return false;
                 }
