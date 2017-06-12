@@ -2,13 +2,13 @@ package com.whitelabel.app.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -44,6 +44,7 @@ import com.whitelabel.app.fragment.CheckoutReviewFragment;
 import com.whitelabel.app.fragment.CheckoutShippingAddaddressFragment;
 import com.whitelabel.app.fragment.CheckoutShippingDefaultaddressFragment;
 import com.whitelabel.app.fragment.CheckoutShippingSelectaddressFragment;
+import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.AddressParameter;
 import com.whitelabel.app.model.CheckoutDefaultShippingAddress;
 import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
@@ -54,6 +55,7 @@ import com.whitelabel.app.model.SVRAppserviceSaveBillingEntity;
 import com.whitelabel.app.model.SVRAppserviceSaveOrderReturnEntity;
 import com.whitelabel.app.model.ShoppingDiscountBean;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressFragment;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLocalMethod;
@@ -87,7 +89,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     public LinearLayout llBody, ll_btn;
     public ProgressBar progressBarLoading;
     private FragmentTransaction fragmentTransaction;
-    private Fragment checkoutShippingSelectaddressFragment;
+    private Fragment checkoutDefaultAddressFragment;
     private Fragment checkoutPaymentFragment;
     private Fragment checkoutReviewFragment;
     public String TAG = CheckoutActivity.class.getSimpleName();
@@ -96,6 +98,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     String amount = "";
     String shippingFee = "";
     private AddressParameter addressParams;
+    private String html;
     /**
      * record that if fragment has entered into payment module.
      * initialized value is true because it must be in shipping model in the beginning.
@@ -113,7 +116,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
      * 0: having no address,now it should use AddaddressFragment or edit an address.
      * 1: having a default adrress,now it should use SelectaddressFragment without top imageButton and show just one address.
      */
-    public String addressConditionInShipping;
+//    public String addressConditionInShipping;
     /**
      * record the position of current module:(shipping,payment,review)
      * from left to right -- 1,2,3
@@ -128,6 +131,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     private CheckoutPaymentDialog mCheckoutPaymentDialog = null;//place order dialog
     private Dialog mDialog;//common loading dialog
     private ShoppingDiscountBean mDiscountBean;
+    private String productIds;
     public int fromType;
     private int skipPayment;
     private MyAccountDao mAccountDao;
@@ -183,7 +187,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         mPaypalHelper=new PaypalHelper();
         mPaypalHelper.startPaypalService(this);
     }
-
     private void initToolBar() {
         setTitle(getResources().getString(R.string.CHECKOUT));
         setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.action_back));
@@ -194,7 +197,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             }
         });
     }
-    private String productIds;
     private void initIntent() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -227,13 +229,13 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         }
     }
     public void reInit() {
-        checkoutShippingSelectaddressFragment = getFragmentManager().findFragmentByTag("selectAddressFragment");
-        checkoutPaymentFragment = getFragmentManager().findFragmentByTag("paymentFragment");
-        checkoutReviewFragment = getFragmentManager().findFragmentByTag("reviewFragment");
+        checkoutDefaultAddressFragment = getSupportFragmentManager().findFragmentByTag("defaultAddressFragment");
+        checkoutPaymentFragment = getSupportFragmentManager().findFragmentByTag("paymentFragment");
+        checkoutReviewFragment = getSupportFragmentManager().findFragmentByTag("reviewFragment");
     }
     public void hiddenAll() {
-        if (checkoutShippingSelectaddressFragment != null) {
-            fragmentTransaction.hide(checkoutShippingSelectaddressFragment);
+        if (checkoutDefaultAddressFragment != null) {
+            fragmentTransaction.hide(checkoutDefaultAddressFragment);
         }
         if (checkoutPaymentFragment != null) {
             fragmentTransaction.hide(checkoutPaymentFragment);
@@ -243,17 +245,17 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         }
     }
     public void openSelectFragment() {
-        fragmentTransaction = getFragmentManager().beginTransaction();
-        if (checkoutShippingSelectaddressFragment != null) {
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        if (checkoutDefaultAddressFragment != null) {
             hiddenAll();
         } else {
-            checkoutShippingSelectaddressFragment = new CheckoutShippingSelectaddressFragment();
-            fragmentTransaction.add(R.id.ll_checkout_body, checkoutShippingSelectaddressFragment, "selectAddressFragment");
+            checkoutDefaultAddressFragment =new CheckoutDefaultAddressFragment();
+            fragmentTransaction.add(R.id.ll_checkout_body, checkoutDefaultAddressFragment, "defaultAddressFragment");
         }
-        fragmentTransaction.show(checkoutShippingSelectaddressFragment).commitAllowingStateLoss();
-        list_fragment_shipping.add(checkoutShippingSelectaddressFragment);
-        list_fragment.add(checkoutShippingSelectaddressFragment);
-        addressConditionInShipping = "1";
+        fragmentTransaction.show(checkoutDefaultAddressFragment).commitAllowingStateLoss();
+        list_fragment_shipping.add(checkoutDefaultAddressFragment);
+        list_fragment.add(checkoutDefaultAddressFragment);
+//        addressConditionInShipping = "1";
     }
     private void initView() {
         mImageLoader = new ImageLoader(this);
@@ -332,39 +334,32 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                 Fragment fragmentOfGoingTo = list_fragment_shipping.get(list_fragment_shipping.size() - 1);
                 list_fragment.clear();//Only One address type fragment is permit in list_fragment
                 list_fragment.add(fragmentOfGoingTo);
-
                 /**
                  * find current fragment according to if it is CheckoutShippingAddaddressFragment or not
                  */
-                if (fragmentOfGoingTo instanceof CheckoutShippingAddaddressFragment) {
-                    addressConditionInShipping = "0";
-                    fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.setCustomAnimations(
-                            R.animator.fragment_slide_left_enter,
-                            R.animator.fragment_slide_right_exit
-                    )/*.add(R.id.ll_checkout_body, fragmentOfGoingTo, "addNewAddressFragment")*/;
+                if (fragmentOfGoingTo instanceof CheckoutDefaultAddressFragment) {
+//                    addressConditionInShipping = "0";
+                    fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    /*.add(R.id.ll_checkout_body, fragmentOfGoingTo, "addNewAddressFragment")*/;
                     fragmentTransaction.remove(currentFragmentInShipping);
                     fragmentTransaction.show(fragmentOfGoingTo).commitAllowingStateLoss();
-
                 } else {
                     /**
                      * If go back go select address fragment , need to refresh
                      */
-                    if (fragmentOfGoingTo instanceof CheckoutShippingSelectaddressFragment) {
-                        ((CheckoutShippingSelectaddressFragment) fragmentOfGoingTo).sendRequestToGetSelectAddress();
-                    }
-
-                    addressConditionInShipping = "1";
-
-                    fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.setCustomAnimations(
-                            R.animator.fragment_slide_left_enter,
-                            R.animator.fragment_slide_right_exit
-                    )/*.add(R.id.ll_checkout_body, fragmentOfGoingTo, "defaultaddressFragment")*/;
+//                    if (fragmentOfGoingTo instanceof CheckoutDefaultAddressFragment) {
+//                        ((CheckoutDefaultAddressFragment) fragmentOfGoingTo).sendRequestToGetSelectAddress();
+//                    }
+//                    addressConditionInShipping = "1";
+                    fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//                    fragmentTransaction.setCustomAnimations(
+//                            R.animator.fragment_slide_left_enter,
+//                            R.animator.fragment_slide_right_exit
+//                    )/*.add(R.id.ll_checkout_body, fragmentOfGoingTo, "defaultaddressFragment")*/;
                     fragmentTransaction.remove(currentFragmentInShipping);
                     fragmentTransaction.show(fragmentOfGoingTo).commitAllowingStateLoss();
-                    CheckoutShippingSelectaddressFragment checkoutShippingSelectaddressFragment = (CheckoutShippingSelectaddressFragment) fragmentOfGoingTo;
-                    checkoutShippingSelectaddressFragment.btnAddNewAddress.setVisibility(View.VISIBLE);
+//                    CheckoutShippingSelectaddressFragment checkoutShippingSelectaddressFragment = (CheckoutShippingSelectaddressFragment) fragmentOfGoingTo;
+//                    checkoutShippingSelectaddressFragment.btnAddNewAddress.setVisibility(View.VISIBLE);
                 }
             }
         } else {
@@ -391,7 +386,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 //                } else {
 //                    Toast.makeText(CheckoutActivity.this, "No more fragement now!", Toast.LENGTH_SHORT).show();
 //                }
-                fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 /**
                  * In order to keep payment information, can't remove but hide.
                  */
@@ -419,7 +414,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     currentModule -= 1;
                     fragmentTransaction.remove(currentFragment);
                 }
-                fragmentTransaction.setCustomAnimations(R.animator.fragment_slide_left_enter, R.animator.fragment_slide_right_exit).show(fragmentOfGoingTo).commitAllowingStateLoss();
+//                setCustomAnimations(R.animator.fragment_slide_left_enter, R.animator.fragment_slide_right_exit)
+                fragmentTransaction.show(fragmentOfGoingTo).commitAllowingStateLoss();
 
                 switch (currentModule) {
                     case 2://means payment module
@@ -577,7 +573,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
      * send Request To Save Payment and parse return entity which is param in next review fragment
      */
     private void sendRequestToSavePayment() {
-        final CheckoutPaymentFragment paymentFragment = (CheckoutPaymentFragment) getFragmentManager().findFragmentByTag("paymentFragment");
+        final CheckoutPaymentFragment paymentFragment = (CheckoutPaymentFragment) getSupportFragmentManager().findFragmentByTag("paymentFragment");
         paymentFragment.savePayment(null);
     }
     public void setButtonEnable(boolean enable) {
@@ -621,17 +617,18 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
             bundle.putString("code", code);
         }
         checkoutReviewFragment.setArguments(bundle);
-        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
         currentModule = 3;
         btnContinue.setText(getResources().getString(R.string.PLACE_MY_ORDER));
         //record this fragment
         list_fragment.add(checkoutReviewFragment);
         fragmentTransaction.add(R.id.ll_checkout_body, checkoutReviewFragment, "reviewFragment");
         fragmentTransaction.hide(list_fragment.get(1));
-        fragmentTransaction.setCustomAnimations(
-                R.animator.fragment_slide_right_enter,
-                R.animator.fragment_slide_left_exit
-        ).show(checkoutReviewFragment).commitAllowingStateLoss();
+        fragmentTransaction.show(checkoutReviewFragment).commitAllowingStateLoss();
+//        .setCustomAnimations(
+//                R.animator.fragment_slide_right_enter,
+//                R.animator.fragment_slide_left_exit
+//        )
     }
 
 
@@ -658,93 +655,97 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     private void sendRequestAndGoToNextPaymentModule() {
         mGATrackAddressToPaymentTimeEnable = true;
         mGATrackAddressToPaymentTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+        AddressBook shippingAddress= ((CheckoutDefaultAddressFragment)checkoutDefaultAddressFragment).getPrimaryShipping();
+        AddressBook   billingAddress=((CheckoutDefaultAddressFragment)checkoutDefaultAddressFragment).getPrimaryBilling();
+        setButtonEnable(false);
+        mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
+        mCheckoutDao.saveBilling(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), shippingAddress,billingAddress);
         //judge to show which fragment(module)
-        switch (Integer.parseInt(addressConditionInShipping)) {
-            case 0://It is adding new address or editing address,connect newAddressWebservice or editAddressWebService
-                //we need to get params from addNewAddressFragment first.
-                final CheckoutShippingAddaddressFragment addNewAddressFragment = (CheckoutShippingAddaddressFragment) getFragmentManager().findFragmentByTag("addNewAddressFragment");
-                final CheckoutShippingAddaddressFragment editAddressFragment = (CheckoutShippingAddaddressFragment) getFragmentManager().findFragmentByTag("editAddressFragment");
-                if (addNewAddressFragment != null) {
-                    //then validate these params
-                    addressParams = validateDatasOfNewAddressFragment(addNewAddressFragment, null);
-                    if (addressParams == null) {//do not pass validation
-                        return;
-                    }
-                    setButtonEnable(false);
-                    addNewAddressFragment.tvErrorMsg.setText("");
-                    //after validation:
-                    mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
-                    /**
-                     * step1, send request to save address
-                     */
-                    mAccountDao.addressSave(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(),
-                            addressParams.getFirstname(), addressParams.getLastname(), addressParams.getCountryId(), addressParams.getTelephone(), addressParams.getStreet0(),
-                            addressParams.getStreet1(), addressParams.getPostcode(), addressParams.getCity(), addressParams.getRegion(), addressParams.getRegionId(), "0","0","");
-                } else if (editAddressFragment != null && editAddressFragment.AllVerifyNotNull()) {
-                    //then validate these params
-                    addressParams = validateDatasOfNewAddressFragment(null, editAddressFragment);
-//                    String errorMsg = parameters.getUrlParams().get("validation_notpass_reason");
-                    if (addressParams == null) {//do not pass validation
-                        return;
-                    }
-                    addressParams.setAddressId(editAddressFragment.tvPhone_otheruse.getHint().toString());
-                    mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
-                    setButtonEnable(false);
-                    editAddressFragment.tvErrorMsg.setText("");
-                    mAccountDao.EditSave(addressParams.getAddressId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), addressParams.getFirstname(),
-                            addressParams.getLastname(), addressParams.getCountryId(), addressParams.getTelephone(), addressParams.getStreet0(), addressParams.getStreet1(),
-                            addressParams.getPostcode(), addressParams.getCity(), addressParams.getRegion(), addressParams.getRegionId(), null,"0","");
-                } else {
-                    if (editAddressFragment.AllVerifyNotNull()) {
-                        Toast.makeText(CheckoutActivity.this, "failed to find and cast to Add new Address Fragment or edit address fragment", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-            case 1://It's in shipping select or default address module,
-                try {
-                    final Fragment fragment = getFragmentManager().findFragmentByTag("defaultaddressFragment");
-//                    final CheckoutShippingDefaultaddressFragment defaultaddressFragment = (CheckoutShippingDefaultaddressFragment) getFragmentManager().findFragmentByTag("defaultaddressFragment");
-                    final CheckoutShippingSelectaddressFragment selectaddressFragment;
-                    Fragment defaultOrSelectFragment;
-                    CheckoutShippingSelectaddressFragment selectFragment = null;
-                    JLogUtils.i("checkout-select-address-fragment:", "do not permit to continue");
-                    CheckoutDefaultShippingAddress defaultShippingAddress = null;
-                    if (fragment != null) {//maybe in select address fragment
-                        if (fragment instanceof CheckoutShippingDefaultaddressFragment) {
-                            CheckoutShippingDefaultaddressFragment defaultaddressFragment = (CheckoutShippingDefaultaddressFragment) fragment;
-                            defaultShippingAddress = defaultaddressFragment.address;
-                        }
-                    } else {
-                        Fragment fragment1 = getFragmentManager().findFragmentByTag("selectAddressFragment");
-                        selectFragment = (CheckoutShippingSelectaddressFragment) fragment1;
-                        defaultShippingAddress = selectFragment.mAddress;
-                        if (defaultShippingAddress == null) {
-                            Toast.makeText(CheckoutActivity.this, R.string.select_address, Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
-                    addressParams = new AddressParameter();
-                    addressParams.setAddressId(defaultShippingAddress.getAddressId());
-                    addressParams.setFirstname(defaultShippingAddress.getFirstName());
-                    addressParams.setLastname(defaultShippingAddress.getLastName());
-                    addressParams.setCountryId(defaultShippingAddress.getCountryId());
-                    addressParams.setStreet0(defaultShippingAddress.getStreet().get(0));
-                    addressParams.setStreet1(defaultShippingAddress.getStreet().get(1));
-                    addressParams.setPostcode(defaultShippingAddress.getPostcode());
-                    addressParams.setCity(defaultShippingAddress.getCity());
-                    addressParams.setRegionId(defaultShippingAddress.getRegionId());
-                    addressParams.setRegion(defaultShippingAddress.getRegion());
-                    addressParams.setTelephone(defaultShippingAddress.getTelephone());
-                    mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
-                    setButtonEnable(false);
-                    mCheckoutDao.saveBilling(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), addressParams);
-                } catch (ClassCastException e) {
-                    e.printStackTrace();
-                }
-                break;
-            default:
-                break;
-        }
+//        switch (Integer.parseInt(addressConditionInShipping)) {
+//            case 0://It is adding new address or editing address,connect newAddressWebservice or editAddressWebService
+//                //we need to get params from addNewAddressFragment first.
+//                final CheckoutShippingAddaddressFragment addNewAddressFragment = (CheckoutShippingAddaddressFragment) getFragmentManager().findFragmentByTag("addNewAddressFragment");
+//                final CheckoutShippingAddaddressFragment editAddressFragment = (CheckoutShippingAddaddressFragment) getFragmentManager().findFragmentByTag("editAddressFragment");
+//                if (addNewAddressFragment != null) {
+//                    //then validate these params
+//                    addressParams = validateDatasOfNewAddressFragment(addNewAddressFragment, null);
+//                    if (addressParams == null) {//do not pass validation
+//                        return;
+//                    }
+//                    setButtonEnable(false);
+//                    addNewAddressFragment.tvErrorMsg.setText("");
+//                    //after validation:
+//                    mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
+//                    /**
+//                     * step1, send request to save address
+//                     */
+//                    mAccountDao.addressSave(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(),
+//                            addressParams.getFirstname(), addressParams.getLastname(), addressParams.getCountryId(), addressParams.getTelephone(), addressParams.getStreet0(),
+//                            addressParams.getStreet1(), addressParams.getPostcode(), addressParams.getCity(), addressParams.getRegion(), addressParams.getRegionId(), "0","0","");
+//                } else if (editAddressFragment != null && editAddressFragment.AllVerifyNotNull()) {
+//                    //then validate these params
+//                    addressParams = validateDatasOfNewAddressFragment(null, editAddressFragment);
+////                    String errorMsg = parameters.getUrlParams().get("validation_notpass_reason");
+//                    if (addressParams == null) {//do not pass validation
+//                        return;
+//                    }
+//                    addressParams.setAddressId(editAddressFragment.tvPhone_otheruse.getHint().toString());
+//                    mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
+//                    setButtonEnable(false);
+//                    editAddressFragment.tvErrorMsg.setText("");
+//                    mAccountDao.EditSave(addressParams.getAddressId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), addressParams.getFirstname(),
+//                            addressParams.getLastname(), addressParams.getCountryId(), addressParams.getTelephone(), addressParams.getStreet0(), addressParams.getStreet1(),
+//                            addressParams.getPostcode(), addressParams.getCity(), addressParams.getRegion(), addressParams.getRegionId(), null,"0","");
+//                } else {
+//                    if (editAddressFragment.AllVerifyNotNull()) {
+//                        Toast.makeText(CheckoutActivity.this, "failed to find and cast to Add new Address Fragment or edit address fragment", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//                break;
+//            case 1://It's in shipping select or default address module,
+//                try {
+//                    final Fragment fragment = getSupportFragmentManager().findFragmentByTag("defaultaddressFragment");
+////                    final CheckoutShippingDefaultaddressFragment defaultaddressFragment = (CheckoutShippingDefaultaddressFragment) getFragmentManager().findFragmentByTag("defaultaddressFragment");
+//                    final CheckoutShippingSelectaddressFragment selectaddressFragment;
+//                    Fragment defaultOrSelectFragment;
+//                    CheckoutShippingDefaultaddressFragment selectFragment = null;
+//                    JLogUtils.i("checkout-select-address-fragment:", "do not permit to continue");
+//                    CheckoutDefaultShippingAddress defaultShippingAddress = null;
+//                    if (fragment != null) {//maybe in select address fragment
+//                        if (fragment instanceof CheckoutShippingDefaultaddressFragment) {
+//                            CheckoutShippingDefaultaddressFragment defaultaddressFragment = (CheckoutShippingDefaultaddressFragment) fragment;
+//                            defaultShippingAddress = defaultaddressFragment.address;
+//                        }
+//                    } else {
+//                        Fragment fragment1 = getFragmentManager().findFragmentByTag("defaultAddressFragment");
+//                        selectFragment = (CheckoutShippingDefaultaddressFragment) fragment1;
+//                        defaultShippingAddress = selectFragment.mAddress;
+//                        if (defaultShippingAddress == null) {
+//                            Toast.makeText(CheckoutActivity.this, R.string.select_address, Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//                    }
+//                    addressParams = new AddressParameter();
+//                    addressParams.setAddressId(defaultShippingAddress.getAddressId());
+//                    addressParams.setFirstname(defaultShippingAddress.getFirstName());
+//                    addressParams.setLastname(defaultShippingAddress.getLastName());
+//                    addressParams.setCountryId(defaultShippingAddress.getCountryId());
+//                    addressParams.setStreet0(defaultShippingAddress.getStreet().get(0));
+//                    addressParams.setStreet1(defaultShippingAddress.getStreet().get(1));
+//                    addressParams.setPostcode(defaultShippingAddress.getPostcode());
+//                    addressParams.setCity(defaultShippingAddress.getCity());
+//                    addressParams.setRegionId(defaultShippingAddress.getRegionId());
+//                    addressParams.setRegion(defaultShippingAddress.getRegion());
+//                    addressParams.setTelephone(defaultShippingAddress.getTelephone());
+//                    mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
+//
+//                } catch (ClassCastException e) {
+//                    e.printStackTrace();
+//                }
+//                break;
+//            default:
+//                break;
+//        }
     }
 
     private static class DataHandler extends Handler {
@@ -806,12 +807,11 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                             mActivity.get().showProductDialog(mActivity.get().errorProductTitle, saveBillingEntity.getError_products());
                             return;
                         }
-                        mActivity.get().gaTrackerSaveShipping(mActivity.get().addressParams.getRegion());
+                        mActivity.get().gaTrackerSaveShipping(((CheckoutDefaultAddressFragment)mActivity.get().checkoutDefaultAddressFragment).getPrimaryShipping().getRegion());
                         if (1 == saveBillingEntity.getSkip_payment()) {
                             /**
                              * grand total is 0 and redirect to review order fragment.
                              */
-                            //零元购
                             mActivity.get().skipPayment = 1;
                             mActivity.get().changeSliderColor(
                                     mActivity.get().getResources().getColor(R.color.grayf8f8f8),
@@ -822,7 +822,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("paymentSaveReturnEntity", saveBillingEntity);
                             mActivity.get().checkoutReviewFragment.setArguments(bundle);
-                            mActivity.get().fragmentTransaction = mActivity.get().getFragmentManager().beginTransaction();
+                            mActivity.get().fragmentTransaction = mActivity.get().getSupportFragmentManager().beginTransaction();
                             //change currentFragment(module)
                             mActivity.get().currentModule = 3;
                             //change button text
@@ -831,10 +831,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                             mActivity.get().list_fragment.add(mActivity.get().checkoutReviewFragment);
                             mActivity.get().fragmentTransaction.add(R.id.ll_checkout_body, mActivity.get().checkoutReviewFragment, "reviewFragment");
                             mActivity.get().fragmentTransaction.hide(mActivity.get().list_fragment.get(0));
-                            mActivity.get().fragmentTransaction.setCustomAnimations(
-                                    R.animator.fragment_slide_right_enter,
-                                    R.animator.fragment_slide_left_exit
-                            ).show(mActivity.get().checkoutReviewFragment).commitAllowingStateLoss();
+                            mActivity.get().fragmentTransaction.show(mActivity.get().checkoutReviewFragment).commitAllowingStateLoss();
                         } else {
                             /**
                              * normal payment
@@ -842,22 +839,16 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                             mActivity.get().skipPayment = 0;
                             mActivity.get().changeSliderColor(mActivity.get().getResources().getColor(R.color.grayf8f8f8), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(), mActivity.get().getResources().getColor(R.color.grayf8f8f8));
                             //switch fragment
-                            mActivity.get().fragmentTransaction = mActivity.get().getFragmentManager().beginTransaction();
-                            mActivity.get().checkoutPaymentFragment = mActivity.get().getFragmentManager().findFragmentByTag("paymentFragment");
+                            mActivity.get().fragmentTransaction = mActivity.get().getSupportFragmentManager().beginTransaction();
+                            mActivity.get().checkoutPaymentFragment = mActivity.get().getSupportFragmentManager().findFragmentByTag("paymentFragment");
                             if (mActivity.get().checkoutPaymentFragment == null) {
                                 mActivity.get().checkoutPaymentFragment = new CheckoutPaymentFragment();
                                 mActivity.get().fragmentTransaction.add(R.id.ll_checkout_body, mActivity.get().checkoutPaymentFragment, "paymentFragment");
                                 mActivity.get().fragmentTransaction.hide(mActivity.get().list_fragment.get(0));
-                                mActivity.get().fragmentTransaction.setCustomAnimations(
-                                        R.animator.fragment_slide_right_enter,
-                                        R.animator.fragment_slide_left_exit
-                                ).show(mActivity.get().checkoutPaymentFragment).commitAllowingStateLoss();
+                                mActivity.get().fragmentTransaction.show(mActivity.get().checkoutPaymentFragment).commitAllowingStateLoss();
                             } else {
                                 mActivity.get().fragmentTransaction.hide(mActivity.get().list_fragment.get(0));
-                                mActivity.get().fragmentTransaction.setCustomAnimations(
-                                        R.animator.fragment_slide_right_enter,
-                                        R.animator.fragment_slide_left_exit
-                                ).show(mActivity.get().checkoutPaymentFragment).commitAllowingStateLoss();
+                                mActivity.get().fragmentTransaction.show(mActivity.get().checkoutPaymentFragment).commitAllowingStateLoss();
                                 ((CheckoutPaymentFragment) mActivity.get().checkoutPaymentFragment).sendRequestToGetPaymentList(true);
                             }
                             mActivity.get().list_fragment.add(mActivity.get().checkoutPaymentFragment);
@@ -876,26 +867,11 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
                         }
-
                     } else {
                         String faildStr = (String) msg.obj;
                         mActivity.get().setButtonEnable(true);
                         if (faildStr != null && !JToolUtils.expireHandler(mActivity.get(), faildStr, mActivity.get().REQUESTCODE_LOGIN)) {
-                            CheckoutShippingAddaddressFragment addNewAddressFragment = (CheckoutShippingAddaddressFragment) mActivity.get().getFragmentManager().findFragmentByTag("addNewAddressFragment");
-                                if (addNewAddressFragment != null) {
-                                    addNewAddressFragment.tvErrorMsg.setText(faildStr);
-                                    addNewAddressFragment.tvErrorMsg.setVisibility(View.VISIBLE);
-                                    addNewAddressFragment.tvErrorMsg.setFocusable(true);
-                                    addNewAddressFragment.tvErrorMsg.setFocusableInTouchMode(true);
-                                    addNewAddressFragment.tvErrorMsg.requestFocus();
-                                } else {
-                                    CheckoutShippingSelectaddressFragment selectFragment = (CheckoutShippingSelectaddressFragment) mActivity.get().getFragmentManager().findFragmentByTag("selectAddressFragment");
-                                    selectFragment.tvErrorMsg.setText(faildStr);
-                                    selectFragment.tvErrorMsg.setVisibility(View.VISIBLE);
-                                    selectFragment.tvErrorMsg.setFocusable(true);
-                                    selectFragment.tvErrorMsg.setFocusableInTouchMode(true);
-                                    selectFragment.tvErrorMsg.requestFocus();
-                                }
+                             JViewUtils.showMaterialDialog(mActivity.get(), "", faildStr,null);
                         }
                     }
                     break;
@@ -923,7 +899,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                     if (msg.arg1 == CheckoutDao.RESPONSE_SUCCESS) {
                         mActivity.get().closeCheckoutPaymentDialog();
                         mActivity.get().saveShoppingCartCount(0);
-                        CheckoutReviewFragment reviewFragment = (CheckoutReviewFragment) mActivity.get().getFragmentManager().findFragmentByTag("reviewFragment");
+                        CheckoutReviewFragment reviewFragment = (CheckoutReviewFragment) mActivity.get().getSupportFragmentManager().findFragmentByTag("reviewFragment");
                         SVRAppserviceSaveOrderReturnEntity saveOrderReturnEntity = (SVRAppserviceSaveOrderReturnEntity) msg.obj;
                         mActivity.get().order_id=saveOrderReturnEntity.getLastrealorderid();
                         String grandTotal = reviewFragment.tvGrandTotal.getText().toString();
@@ -984,19 +960,19 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                         }
                         mActivity.get().startNextActivity(bundle_success, CheckoutPaymentRedirectActivity.class, true);
                     } else {
-                        String errorMsg = (String) msg.obj;
-                        if (!JToolUtils.expireHandler(mActivity.get(), errorMsg, mActivity.get().REQUESTCODE_LOGIN)) {
-                            Bundle bundle_failuer = new Bundle();
-                            bundle_failuer.putString("payment_status", "0");
-                            bundle_failuer.putString("errorMsg", errorMsg);
-                            bundle_failuer.putString("orderNumber", mActivity.get().order_id);
-                            if (mActivity.get().mDiscountBean != null) {
-                                bundle_failuer.putSerializable("discountBean", mActivity.get().mDiscountBean);
-                            }
-                            bundle_failuer.putInt("fromType", mActivity.get().fromType);
-                            mActivity.get().startNextActivity(bundle_failuer, CheckoutPaymentStatusActivity.class, true);
+                    String errorMsg = (String) msg.obj;
+                    if (!JToolUtils.expireHandler(mActivity.get(), errorMsg, mActivity.get().REQUESTCODE_LOGIN)) {
+                        Bundle bundle_failuer = new Bundle();
+                        bundle_failuer.putString("payment_status", "0");
+                        bundle_failuer.putString("errorMsg", errorMsg);
+                        bundle_failuer.putString("orderNumber", mActivity.get().order_id);
+                        if (mActivity.get().mDiscountBean != null) {
+                            bundle_failuer.putSerializable("discountBean", mActivity.get().mDiscountBean);
                         }
+                        bundle_failuer.putInt("fromType", mActivity.get().fromType);
+                        mActivity.get().startNextActivity(bundle_failuer, CheckoutPaymentStatusActivity.class, true);
                     }
+                }
                     break;
                 case ProductDao.REQUEST_ERROR:
                 case MyAccountDao.ERROR:
@@ -1049,7 +1025,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 //        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
 //        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
     }
-
     public void selectedAddressTrack() {
 //        try {
 //            FirebaseEventUtils.getInstance().customizedAddAddressInfo(this);
@@ -1294,33 +1269,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 
     }
 
-    private String html;
 
 
-//    public void goToMolpayPageV2(String orderId, String amount, String shippingFee, String phone, String
-//            channel, String productName){
-//
-//        HashMap<String, Object> paymentDetails = new HashMap<>();
-//        paymentDetails.put(MOLPayActivity.mp_amount, "");
-//        paymentDetails.put(MOLPayActivity.mp_username, "");
-//        paymentDetails.put(MOLPayActivity.mp_password, "");
-//        paymentDetails.put(MOLPayActivity.mp_merchant_ID, "");
-//        paymentDetails.put(MOLPayActivity.mp_app_name, "");
-//        paymentDetails.put(MOLPayActivity.mp_order_ID, "");
-//        paymentDetails.put(MOLPayActivity.mp_currency, "MYR");
-//        paymentDetails.put(MOLPayActivity.mp_country, "MY");
-//        paymentDetails.put(MOLPayActivity.mp_verification_key, "");
-//        paymentDetails.put(MOLPayActivity.mp_channel, "");
-//        paymentDetails.put(MOLPayActivity.mp_bill_description, "");
-//        paymentDetails.put(MOLPayActivity.mp_bill_name, "");
-//        paymentDetails.put(MOLPayActivity.mp_bill_email, "");
-//        paymentDetails.put(MOLPayActivity.mp_bill_mobile, "");
-//        paymentDetails.put(MOLPayActivity.mp_channel_editing, false);
-//        paymentDetails.put(MOLPayActivity.mp_editing_enabled, false);
-//        paymentDetails.put(MOLPayActivity.mp_transaction_id, "");
-//        paymentDetails.put(MOLPayActivity.mp_request_type, "");
-//
-//    }
 
 
     /**
@@ -1333,7 +1283,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
      * @param channel
      * @param productName
      */
-
     private void goToMolpayPage(String orderId, String amount, String shippingFee, String phone, String
             channel, String productName) {
         order_id = orderId;
@@ -1381,184 +1330,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         JLogUtils.i("Pconstants", "PConstants.MP_SECURE_MODE_ENABLED：false");
         paymentDetails.put(MOLPayActivity.mp_verification_key, method.getVERIFYKEY());
 //        intent.putExtras(bundle);
-
         Intent intent = new Intent(CheckoutActivity.this, MOLPayActivity.class);
         intent.putExtra(MOLPayActivity.MOLPayPaymentDetails, paymentDetails);
         startActivityForResult(intent, MOLPayActivity.MOLPayXDK);
     }
-
-
-//    /**
-//     * GO TO Molpay page
-//     * @param orderId
-//     * @param amount
-//
-//     * @param phone
-//     * @param channel
-//     */
-//    private void goToMolpayPage(String orderId, String amount, String shippingFee, String phone, String
-//            channel, String productName) {
-//        order_id = orderId;
-//        GOUserEntity user = WhiteLabelApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this);
-//        Intent intent = new Intent(CheckoutActivity.this, MOLPayActivity.class);
-//        Bundle bundle = new Bundle();
-//        JLocalMethod  method=new JLocalMethod();
-////        JLogUtils.i("Checkout","==================="+method.getMERCHANTID());
-////        JLogUtils.i("Checkout", "===================" + method.getAPPNAME());
-////        JLogUtils.i("Checkout", "===================" + method.getVERIFYKEY());
-////        JLogUtils.i("Checkout", "===================" + method.getUSERNAME());
-////        JLogUtils.i("Checkout", "===================" + method.getPASSWORD());
-//        bundle.putString(PConstants.MP_MERCHANT_ID, method.getMERCHANTID());
-//        JLogUtils.i("Pconstants", "PConstants.MP_MERCHANT_ID：" + method.getMERCHANTID());
-//        bundle.putString(PConstants.MP_APP_NAME, method.getAPPNAME());
-//        JLogUtils.i("Pconstants", "PConstants.MP_APP_NAME：" + method.getAPPNAME());
-//        bundle.putString(PConstants.MP_USERNAME, method.getUSERNAME());
-//        JLogUtils.i("Pconstants", "PConstants.MP_USERNAME：" + method.getUSERNAME());
-//        bundle.putString(PConstants.MP_PASSWORD, method.getPASSWORD());
-//        JLogUtils.i("Pconstants", "PConstants.MP_PASSWORD：" + method.getPASSWORD());
-//        bundle.putString(PConstants.MP_ORDER_ID, orderId);
-//        JLogUtils.i("Pconstants", "PConstants.MP_ORDER_ID：" + orderId);
-//        bundle.putString(PConstants.MP_COUNTRY, "MY");
-//        JLogUtils.i("Pconstants", "PConstants.MP_COUNTRY：MY");
-//        if(!TextUtils.isEmpty(amount)) {
-//            bundle.putString(PConstants.MP_AMOUNT, amount.replace(",", ""));
-//        }
-//        JLogUtils.i("Pconstants", "PConstants.MP_AMOUNT：" + Float.parseFloat(amount.replace(",", "")));
-//        bundle.putString(PConstants.MP_BILL_NAME, user.getFirstName() + " " + user.getLastName());
-//        JLogUtils.i("Pconstants", "PConstants.MP_BILL_NAME：" + user.getFirstName() + " " +
-//                user.getLastName());
-//        bundle.putString(PConstants.MP_BILL_EMAIL, user.getEmail());
-//        JLogUtils.i("Pconstants", "PConstants.MP_BILL_EMAIL：" + user.getEmail());
-//        bundle.putString(PConstants.MP_BILL_MOBILE, phone);
-//        JLogUtils.i("Pconstants", "PConstants.MP_BILL_MOBILE：" + phone);
-//        bundle.putString(PConstants.MP_BILL_DESCRIPTION, productName + ", Shipping Fee "+shippingFee);
-//        JLogUtils.i("Pconstants", "PConstants.MP_BILL_DESCRIPTION：" + productName + ", Shipping Fee "+shippingFee);
-//        bundle.putString(PConstants.MP_CURRENCY, "MYR");
-//        JLogUtils.i("Pconstants", "PConstants.MP_CURRENCY：MYR");
-//        bundle.putString(PConstants.MP_CHANNEL, JDataUtils.isEmpty(channel) ? "multi" : channel);
-//        JLogUtils.i("Pconstants", "PConstants.MP_CHANNEL：" + (JDataUtils.isEmpty(channel) ? "multi" :
-//                channel));
-//        bundle.putBoolean(PConstants.MP_IS_ESCROW, false);
-//        JLogUtils.i("Pconstants", "PConstants.MP_IS_ESCROW：false");
-////        bundle.putBoolean(PConstants.MP_DEBUG_MODE, false);
-//        JLogUtils.i("Pconstants", "PConstants.MP_DEBUG_MODE：false");
-//        bundle.putBoolean(PConstants.MP_EDITING_ENABLED, true);
-//        JLogUtils.i("Pconstants", "PConstants.MP_EDITING_ENABLED：true");
-//        bundle.putBoolean(PConstants.MP_SECURE_MODE_ENABLED, false);
-//        JLogUtils.i("Pconstants", "PConstants.MP_SECURE_MODE_ENABLED：false");
-//        bundle.putString(PConstants.MP_VERIFICATION_KEY, method.getVERIFYKEY());
-////        JLogUtils.i("Pconstants", "PConstants.MP_VERIFICATION_KEY:" + method.getVERIFYKEY());
-//
-////        String secureStr = String.valueOf(amount.replace(",", "")) + method.getMERCHANTID() + orderId +
-////                method.getVERIFYKEY()+"B3";
-////        bundle.putString(PConstants.MP_VERIFICATION_KEY, vcode);
-////        JLogUtils.i("Pconstants", "PConstants.MP_VERIFICATION_KEY:" + secureStr + "----md5:" + get32MD5
-////                (secureStr)); get32MD5(secureStr);
-//
-//
-//
-//
-////        bundle.putBoolean(PConstants.MP_CUSTOM_CC,true);
-////        bundle.putString("DefaultCountry", "Malaysia");
-//
-//        //Merchant Info
-////        bundle.putString("MerchantId", method.getMERCHANTID());
-////        bundle.putString("AppName", method.getAPPNAME());
-////        bundle.putString("VerifyKey", method.getVERIFYKEY());
-////        bundle.putString("Username", method.getUSERNAME());
-////        bundle.putString("Password", method.getPASSWORD());
-////
-//
-//
-////        String secureStr = String.valueOf(amount.replace(",", "")) + method.getMERCHANTID() + orderId +
-////        method.getVERIFYKEY() + "B3";
-////        try {
-////
-////            bundle.putString("VerifyKey", getMD5(secureStr));
-////        } catch (NoSuchAlgorithmException e) {
-////            e.printStackTrace();
-////
-////        }          //bundle.putBoolean("IsSecure", true);
-////
-//
-////        //Buyer Info
-////        bundle.putString("OrderId", orderId);
-////        bundle.putString("BillName", user.getFirstName() + " " + user.getLastName());
-////        bundle.putString("BillEmail", user.getEmail());
-////        bundle.putFloat("Amount", Float.parseFloat(amount.replace(",", "")));
-////
-////        System.out.println("channel========*********=========" + channel);
-////
-////        bundle.putString("BillDesc", productName + ", Shipping Fee " + shippingFee);//"Purchase of 5 pcs
-////        of survivor kits");
-////        bundle.putString("BillMobile", phone);
-////        //bundle.putString("Channel", "multi");
-////        bundle.putString("Channel", JDataUtils.isEmpty(channel) ? "multi" : channel);
-////        bundle.putString("Currency", "MYR");
-////        bundle.putString("Country", "MY");
-////        bundle.putBoolean("is_escrow", false);//make this true to enable to enable escrow
-////        bundle.putBoolean("debug", false);
-////        bundle.putBoolean("editable", true);
-////
-////        bundle.putBoolean("ShowCCDetails", true);
-////        bundle.putString("DefaultCountry", "Malaysia");
-////        bundle.putBoolean("ShowTimer", true);
-////        bundle.putLong("Duration", 60 * 8000);//sample 1 minute
-//
-//        intent.putExtras(bundle);
-//        startActivityForResult(intent, REQUEST_CODE_MOLPAY);
-//    }
-
-//    /**
-//     * GO TO Molpay page
-//     * @param orderId
-//     * @param amount
-//
-//     * @param phone
-//     * @param channel
-//     */
-//    private void goToMolpayPage(String orderId, String amount, String shippingFee, String phone, String channel, String productName) {
-//        order_id = orderId;
-//        GOUserEntity user = WhiteLabelApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this);
-//        Intent intent = new Intent(CheckoutActivity.this, MOLPayActivity.class);
-//        Bundle bundle = new Bundle();
-//        JLocalMethod  method=new JLocalMethod();
-////        JLogUtils.i("ray","==================="+method.getMERCHANTID());
-////        JLogUtils.i("ray", "===================" + method.getAPPNAME());
-////        JLogUtils.i("ray", "===================" + method.getVERIFYKEY());
-////        JLogUtils.i("ray", "===================" + method.getUSERNAME());
-////        JLogUtils.i("ray", "===================" + method.getPASSWORD());
-//        //Merchant Info
-//        bundle.putString("MerchantId", method.getMERCHANTID());
-//        bundle.putString("AppName", method.getAPPNAME());
-//        bundle.putString("VerifyKey", method.getVERIFYKEY());
-//        bundle.putString("Username", method.getUSERNAME());
-//        bundle.putString("Password", method.getPASSWORD());
-//        //bundle.putBoolean("IsSecure", true);
-//        String secureStr = String.valueOf(amount.replace(",", "")) + method.getMERCHANTID() + orderId + method.getVERIFYKEY() + "B3";
-//        //bundle.putString("VerifyKey", string2MD5(secureStr));
-//        //Buyer Info
-//        bundle.putString("OrderId", orderId);
-//        bundle.putString("BillName", user.getFirstName() + " " + user.getLastName());
-//        bundle.putString("BillEmail", user.getEmail());
-//        bundle.putFloat("Amount", Float.parseFloat(amount.replace(",", "")));
-//        System.out.println("channel========*********=========" + channel);
-//        bundle.putString("BillDesc", productName + ", Shipping Fee " + shippingFee);//"Purchase of 5 pcs of survivor kits");
-//        bundle.putString("BillMobile", phone);
-//        //bundle.putString("Channel", "multi");
-//        bundle.putString("Channel", JDataUtils.isEmpty(channel) ? "multi" : channel);
-//        bundle.putString("Currency", "MYR");
-//        bundle.putString("Country", "MY");
-//        bundle.putBoolean("is_escrow", false);//make this true to enable to enable escrow
-//        bundle.putBoolean("debug", false);
-//        bundle.putBoolean("editable", true);
-//        bundle.putBoolean("ShowCCDetails", true);
-//        bundle.putString("DefaultCountry", "Malaysia");
-//        bundle.putBoolean("ShowTimer", true);
-//        bundle.putLong("Duration", 60 * 8000);//sample 1 minute
-//        intent.putExtras(bundle);
-//        startActivityForResult(intent, REQUEST_CODE_MOLPAY);
-//    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1568,289 +1343,43 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                 startNextActivity(null, ShoppingCartActivity1.class, true);
             }
             return;
-        }else if(requestCode == PaypalHelper.REQUEST_CODE_PAYMENT){
-                if (resultCode == Activity.RESULT_OK) {
-                    PaymentConfirmation confirm =
-                            data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-                    if (confirm != null) {
-                        try {
-                            Log.i(TAG, confirm.toJSONObject().toString(4));
-                            Log.i(TAG, confirm.getPayment().toJSONObject().toString(4));
-                        } catch (JSONException e) {
-                            Log.e(TAG, "an extremely unlikely failure occurred: ", e);
-                        }
-                    }
-                  JSONObject jsonObject= confirm.getPayment().toJSONObject();
-                    String productName="PayPal-Android-SDK";
-                    String currencyCode="";
-                    String amount="";
-                    String id=confirm.getProofOfPayment().getPaymentId();
-                    String state=confirm.getProofOfPayment().getState();
-                    String createTime=confirm.getProofOfPayment().getCreateTime();
+        } else if (requestCode == PaypalHelper.REQUEST_CODE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                PaymentConfirmation confirm =
+                        data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                if (confirm != null) {
                     try {
-                        currencyCode=jsonObject.getString("currency_code");
-                        amount=jsonObject.getString("amount");
+                        Log.i(TAG, confirm.toJSONObject().toString(4));
+                        Log.i(TAG, confirm.getPayment().toJSONObject().toString(4));
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Log.e(TAG, "an extremely unlikely failure occurred: ", e);
                     }
-                    mDialog=JViewUtils.showProgressDialog(CheckoutActivity.this);
-                    mCheckoutDao.changeOrderStatus(WhiteLabelApplication.getAppConfiguration().
-                            getUserInfo(this).getSessionKey(),
-                            order_id,paymethodType,productName,currencyCode,amount,id,state,createTime);
-                }else {
-//                    mDialog=JViewUtils.showProgressDialog(CheckoutActivity.this);
-                    mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
                 }
+                JSONObject jsonObject = confirm.getPayment().toJSONObject();
+                String productName = "PayPal-Android-SDK";
+                String currencyCode = "";
+                String amount = "";
+                String id = confirm.getProofOfPayment().getPaymentId();
+                String state = confirm.getProofOfPayment().getState();
+                String createTime = confirm.getProofOfPayment().getCreateTime();
+                try {
+                    currencyCode = jsonObject.getString("currency_code");
+                    amount = jsonObject.getString("amount");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
+                mCheckoutDao.changeOrderStatus(WhiteLabelApplication.getAppConfiguration().
+                                getUserInfo(this).getSessionKey(),
+                        order_id, paymethodType, productName, currencyCode, amount, id, state, createTime);
+            } else {
+//                    mDialog=JViewUtils.showProgressDialog(CheckoutActivity.this);
+                mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
             }
-//        String transaction_id = "";
-//        String transaction_status = "";
-//        String orderId = "";
-//        String channel = "";
-//        String currency = "";
-//        String payDate = "";
-//        String appCode = "";
-//        if (requestCode == MOLPayActivity.MOLPayXDK) {
-//            JLogUtils.i(TAG, "RESULT_OK : " + resultCode);
-//            mCheckoutPaymentDialog = new CheckoutPaymentDialog(CheckoutActivity.this, R.style.loading_dialog, getResources().getString(R.string.payment_molpay_hint)).showDialog();
-//            if (resultCode == RESULT_OK) {
-//                if (data != null) {
-//                    String result = data.getStringExtra(MOLPayActivity.MOLPayTransactionResult);
-//                    MolpayResponseBean bean = JJsonUtils.parseJsonObj(result, MolpayResponseBean.class);
-//                    if(bean!=null) {
-//                        amount = bean.getAmount();
-//                        transaction_status = bean.getStatus_code();
-//                        orderId = bean.getOrder_id();
-//                        channel = bean.getChannel();
-//                        payDate = bean.getPaydate();
-//                        appCode = bean.getApp_code();
-//                        currency = "MYR";
-//                        transaction_id = bean.getTxn_ID();
-//                    }
-//                }
-//            }
-//
-//            if (TextUtils.isEmpty(orderId)) {
-////                mDialog=JViewUtils.showProgressDialog(CheckoutActivity.this);
-//                mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
-//                return;
-//            }
-////            if (TextUtils.isEmpty(orderId)) {
-////                orderId = order_id;
-////            }
-//            mCheckoutDao.changeOrderStatus(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(),
-//                    orderId, transaction_status, channel, transaction_id, payDate, amount, currency, appCode);
-//        }
-
-
+        }
     }
 
-//        if (requestCode == MOLPayActivity.MOLPayXDK) {
-//            if (resultCode == RESULT_OK) {
-//                if (data != null) {
-//                    String result = data.getStringExtra(MOLPayActivity.MOLPayTransactionResult);
-//                    MolpayResponseBean bean = JJsonUtils.parseJsonObj(result, MolpayResponseBean.class);
-//                    amount = bean.getAmount();
-//                    transaction_status = bean.getStatus_code();
-//                    orderId = bean.getOrder_id();
-//                    channel = bean.getChannel();
-//                    payDate = bean.getPaydate();
-//                    appCode = bean.getApp_code();
-//                    currency = "MYR";
-//                    transaction_id = bean.getTxn_ID();
-//
-//                    JViewUtils.showMaterialDialog(CheckoutActivity.this, "", result + "a", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//
-//                        }
-//                    });
-//
-//                }
-//            } else {
-//                JViewUtils.showMaterialDialog(CheckoutActivity.this, "", "RESULT_OK:"+RESULT_OK, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-////                if (TextUtils.isEmpty(orderId)) {
-////                    mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
-////                    return;
-////                }
-//            }
-//        }else{
-//            JViewUtils.showMaterialDialog(CheckoutActivity.this, "", "requestCode:"+requestCode, new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
-//        }
 
-
-//
-//    /**
-//     * accept molpay result and deal next
-//     *
-//     * @param requestCode
-//     * @param resultCode
-//     * @param data
-//     */
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        System.out.println("******************molpay***back*****requestCode***************"+requestCode);
-//        if (REQUESTCODE_LOGIN == requestCode) {
-//            /**
-//             * If sesion-expiration occured during payment process,
-//             * turn to login page ,
-//             * then go back to shoppingcart page
-//             */
-//            if (WhiteLabelApplication.getAppConfiguration().isSignIn(CheckoutActivity.this)) {
-//                JLogUtils.i("checkout-continue-option---->", "login back");
-//                startNextActivity(null, ShoppingCartActivity1.class, true);
-//            }
-//            return;
-//        }
-//        //progressBarLoading.setVisibility(View.VISIBLE);
-//        mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
-//        scrollViewBody.setVisibility(View.GONE);
-//        ll_btn.setVisibility(View.GONE);
-//        String transaction_id = "";
-//        String transaction_status = "";
-//        String orderId = "";
-//        String channel = "";
-//        String currency = "";
-//        String payDate = "";
-//        String appCode = "";
-////        boolean isSuccess=false;
-//        if (requestCode == REQUEST_CODE_MOLPAY) {
-//            if(resultCode == RESULT_OK) {
-//             if(data!=null){
-//                    amount = data.getStringExtra(PConstants.MP_AMOUNT);
-////                  appCode=bundle.getString(PConstants.);
-//                    transaction_id = data.getStringExtra(PConstants.MP_TRANSACTION_ID);
-//                    transaction_status = data.getStringExtra(PConstants.MP_STATUS_CODE);
-//                    orderId = data.getStringExtra(PConstants.MP_ORDER_ID);
-//                    currency = data.getStringExtra(PConstants.MP_CURRENCY);
-////                  payDate=bundle.getString(PConstants.MP_);
-//                    channel = data.getStringExtra(PConstants.MP_CHANNEL);
-//                    String bill_desc = data.getStringExtra(PConstants.MP_BILL_DESCRIPTION);
-//                    shippingFee = bill_desc.split("Shipping Fee")[1];
-//                    if (!JDataUtils.isEmpty(shippingFee)) {
-//                        shippingFee = shippingFee.trim();
-//                    }
-////                    isSuccess = true;
-////                amount = bundle.getString(MerchantInfo.PAY_AMOUNT);
-////                appCode = bundle.getString(MerchantInfo.APP_CODE);
-////                transaction_id = bundle.getString(MerchantInfo.TXN_ID);
-////                transaction_status = bundle.getString(MerchantInfo.STATUS_CODE);
-////                String error_desc = bundle.getString(MerchantInfo.ERR_DESC);
-////                orderId = bundle.getString(MerchantInfo.ORDER_ID);
-////                currency = bundle.getString(MerchantInfo.CURRENCY);
-////                payDate = bundle.getString(MerchantInfo.PAYDATE);
-////                String bill_name = bundle.getString(MerchantInfo.BILL_NAME);
-////                String bill_email = bundle.getString(MerchantInfo.BILL_EMAIL);
-////                String bill_mobile = bundle.getString(MerchantInfo.BILL_MOBILE);
-////                String bill_desc = bundle.getString(MerchantInfo.BILL_DESC);
-////                shippingFee = bill_desc.split("Shipping Fee")[1];
-////                if (!JDataUtils.isEmpty(shippingFee)) {
-////                    shippingFee = shippingFee.trim();
-////                }
-////                channel = bundle.getString(MerchantInfo.CHANNEL);
-////                String result = "**********the transaction_status is " + transaction_status + "\nthe name is " + bill_name + "\nthe mobile is " + bill_mobile + "\nthe email is " + bill_email + "\nthe description is " + bill_desc + ", shippingFee = " + shippingFee + "\nthe amount is " + amount + "\nthe transaction id is " + transaction_id;
-//                }
-//            }else{
-//                if (TextUtils.isEmpty(orderId)) {
-//                    mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
-//                    return;
-//                }
-//            }
-//        }
-//        if(TextUtils.isEmpty(orderId)){
-//            orderId=order_id;
-//        }
-////        String str="resultCode:"+resultCode+"\n"+"isSuccess:"+isSuccess+"\n"+"transaction_id:"+transaction_id+"  \n"+"transaction_status:"+transaction_status+"\n"+"orderId:"+orderId+" \n"+"channel:"+channel+" \n"+"currency:"+currency+" \n"+"payDate:"+payDate+" \n"+"appCode:"+appCode;
-////        JViewUtils.showMaterialDialog(CheckoutActivity.this, "", str, new View.OnClickListener() {
-////            @Override
-////            public void onClick(View view) {
-////
-////            }
-////        });
-//        mCheckoutDao.changeOrderStatus(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(),
-//                orderId,transaction_status,channel,transaction_id,payDate,amount,currency,appCode);
-//
-//
-//
-//        /**
-//         * Call WebService
-//         */
-////        SVRParameters parameters = new SVRParameters();
-////        parameters.put("session_key",  WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
-////        parameters.put("orderid", orderId);
-////        parameters.put("method", "molpay");
-////        parameters.put("status", transaction_status);
-////        parameters.put("channel", channel);
-////        parameters.put("tranID", transaction_id);
-////        parameters.put("paydate", payDate);
-////        parameters.put("amount", amount);
-////        parameters.put("currency", currency);
-////        parameters.put("appCode", appCode);
-////        SVRCheckoutMolpayReturnChangeOrderStatus changeOrderStatusHandler = new SVRCheckoutMolpayReturnChangeOrderStatus(CheckoutActivity.this, parameters);
-////        JLogUtils.i("russell->amount", amount);
-////        JLogUtils.i("russell->shippingFee", shippingFee);
-////        changeOrderStatusHandler.loadDatasFromServer(new SVRCallback() {
-////            @Override
-////            public void onSuccess(int resultCode, SVRReturnEntity result) {
-////                if (mDialog != null) {
-////                    mDialog.cancel();
-////                }
-////                Bundle bundle_success = new Bundle();
-////                bundle_success.putString("payment_status", "1");
-////                bundle_success.putString("lastrealorderid", order_id);
-////                bundle_success.putString("grand_total", amount);
-////                bundle_success.putString("shipping_fee", shippingFee);
-////                bundle_success.putSerializable("paymentSaveReturnEntity", paymentSaveReturnEntity);
-////                bundle_success.putInt("fromType", fromType);
-////                bundle_success.putInt("paymentMethod",CheckoutPaymentRedirectActivity.PAYMENT_PALPAY);
-////                if(mDiscountBean!=null){
-////                    bundle_success.putSerializable("discountBean",mDiscountBean);
-////                }
-////                startNextActivity(bundle_success, CheckoutPaymentRedirectActivity.class, true);
-////                //progressBarLoading.setVisibility(View.GONE);
-////            }
-////            @Override
-////            public void onFailure(int resultCode, String errorMsg) {
-////                //progressBarLoading.setVisibility(View.GONE);
-////                if (mDialog != null) {
-////                    mDialog.cancel();
-////                }
-////                if (!JDataUtils.errorMsgHandler(CheckoutActivity.this, errorMsg)) {
-////                    if ((!JDataUtils.isEmpty(errorMsg)) && (errorMsg.contains(SESSION_EXPIRED))) {
-////                        Intent intent = new Intent();
-////                        intent.setClass(CheckoutActivity.this, LoginRegisterActivity.class);
-////                        Bundle bundle = new Bundle();
-////                        bundle.putBoolean("expire", true);
-////                        intent.putExtras(bundle);
-////                        startActivityForResult(intent, REQUESTCODE_LOGIN);
-////                    } else {
-////                        Bundle bundle_failuer = new Bundle();
-////                        bundle_failuer.putString("payment_status", "0");
-////                        bundle_failuer.putString("errorMsg", errorMsg);
-////                        bundle_failuer.putString("orderNumber", order_id);
-////                        if (mDiscountBean != null) {
-////                            bundle_failuer.putSerializable("discountBean", mDiscountBean);
-////                        }
-////                        bundle_failuer.putInt("fromType",fromType);
-////                        startNextActivity(bundle_failuer, CheckoutPaymentStatusActivity.class, true);
-////                    }
-////                }
-////            }
-////        });
-//    }
-//    public void retryOrder(String orderId) {
-//        mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this).getSessionKey(), orderId, "");
-//    }
 
     public void startShoppingActivity() {
         Intent intent = new Intent(CheckoutActivity.this, ShoppingCartActivity1.class);

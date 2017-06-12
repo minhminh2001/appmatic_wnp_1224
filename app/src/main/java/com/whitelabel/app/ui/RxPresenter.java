@@ -1,7 +1,9 @@
-package com.whitelabel.app.ui.common;
+package com.whitelabel.app.ui;
 
 
 import com.whitelabel.app.data.retrofit.ApiFaildException;
+import com.whitelabel.app.ui.BasePresenter;
+import com.whitelabel.app.ui.BaseView;
 import com.whitelabel.app.utils.JLogUtils;
 
 import rx.Subscription;
@@ -11,7 +13,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by Administrator on 2016/12/23.
  */
 
-public class RxPresenter<T extends  BaseView> implements BasePresenter<T> {
+public class RxPresenter<T extends BaseView> implements BasePresenter<T> {
     protected   T mView;
     protected CompositeSubscription mCompositeSubscription;
     @Override

@@ -132,13 +132,12 @@ public class CheckoutShippingDefaultaddressFragment extends Fragment {
                 ).replace(R.id.ll_checkout_body, checkoutShippingAddaddressFragment,"editAddressFragment").commit();
 
                 //record fragment count of Shipping Module for Go Back Button.
-                checkoutActivity.list_fragment_shipping.add(checkoutShippingAddaddressFragment);
-                checkoutActivity.addressConditionInShipping = "0";
+//                checkoutActivity.list_fragment_shipping.add(checkoutShippingAddaddressFragment);
+//                checkoutActivity.addressConditionInShipping = "0";
 
                 closePopupWindow();
             }
         });
-
         view.findViewById(R.id.tv_checkout_shipping_address_change).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,8 +149,8 @@ public class CheckoutShippingDefaultaddressFragment extends Fragment {
                 ).replace(R.id.ll_checkout_body, checkoutShippingSelectaddressFragment,"selectAddressFragment").commit();
 
                 //record fragment count of Shipping Module for Go Back Button.
-                checkoutActivity.list_fragment_shipping.add(checkoutShippingSelectaddressFragment);
-                checkoutActivity.addressConditionInShipping = "1";
+//                checkoutActivity.list_fragment_shipping.add(checkoutShippingSelectaddressFragment);
+//                checkoutActivity.addressConditionInShipping = "1";
 
                 closePopupWindow();
             }

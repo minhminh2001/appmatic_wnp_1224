@@ -4,7 +4,9 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
+import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.AddressParameter;
+import com.whitelabel.app.model.CheckoutDefaultShippingAddress;
 import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.model.CustomAnimEntity;
 import com.whitelabel.app.model.ErrorMsgBean;
@@ -57,10 +59,6 @@ public class CheckoutDao extends BaseHttp {
         params.put("paypal[create_time]",createTime);
         requestHttp(HTTP_METHOD.POST, "appservice/checkout/changeOrderStatus", params, REQUEST_CHANGEORDERSTATUS);
     }
-
-
-
-
 
     public void saveBilling(String session, AddressParameter addressParameter) {
         params = new TreeMap<>();
@@ -153,6 +151,101 @@ public class CheckoutDao extends BaseHttp {
         }
         if (!TextUtils.isEmpty(addressParameter.getTelephone())) {
             params.put("billing[telephone]", addressParameter.getTelephone());
+        }
+//        params.put("store_id","3");
+        params.put("billing[save_in_address_book]", "1");
+        params.put("billing[use_for_shipping]", "1");
+        requestHttp(HTTP_METHOD.POST, "appservice/checkout/saveBilling", params, REQUEST_SAVEBILLING);
+    }
+    public void saveBilling(String session, AddressBook shippingAddress, AddressBook billingAddress) {
+        params = new TreeMap<>();
+        params.put("session_key", session);
+        if (!TextUtils.isEmpty(shippingAddress.getAddressId())) {
+            params.put("shipping_address_id", shippingAddress.getAddressId());
+        }
+
+        if (!TextUtils.isEmpty(shippingAddress.getFirstName())) {
+            params.put("shipping[firstname]", shippingAddress.getFirstName());
+        }
+
+        if (!TextUtils.isEmpty(shippingAddress.getLastName())) {
+            params.put("shipping[lastname]", shippingAddress.getLastName());
+        }
+
+        if (!TextUtils.isEmpty(shippingAddress.getCountryId())) {
+            params.put("shipping[country_id]", shippingAddress.getCountryId());
+        }
+        if (shippingAddress.getStreet().size()>0) {
+            params.put("shipping[street][0]", shippingAddress.getStreet().get(0));
+        }
+        if (shippingAddress.getStreet().size()>1&&!TextUtils.isEmpty(shippingAddress.getStreet().get(1))) {
+            params.put("shipping[street][1]", shippingAddress.getStreet().get(1));
+        }
+
+        if (!TextUtils.isEmpty(shippingAddress.getPostcode())) {
+            params.put("shipping[postcode]", shippingAddress.getPostcode());
+        }
+
+        if (!TextUtils.isEmpty(shippingAddress.getCity())) {
+            params.put("shipping[city]", shippingAddress.getCity());
+        }
+
+        if (!TextUtils.isEmpty(shippingAddress.getRegionId())) {
+            params.put("shipping[region_id]", shippingAddress.getRegionId());
+        }else{
+            params.put("shipping[region_id]", "0");
+        }
+        if (!TextUtils.isEmpty(shippingAddress.getRegion())) {
+            params.put("shipping[region]", shippingAddress.getRegion());
+        }else{
+            params.put("shipping[region]", "-");
+        }
+        if (!TextUtils.isEmpty(shippingAddress.getTelephone())) {
+            params.put("shipping[telephone]", shippingAddress.getTelephone());
+        }
+        params.put("shipping[save_in_address_book]", "1");
+        params.put("shipping[same_as_billing]", "1");
+
+        if (!TextUtils.isEmpty(billingAddress.getAddressId())) {
+            params.put("billing_address_id", billingAddress.getAddressId());
+        }
+        if (!TextUtils.isEmpty(billingAddress.getFirstName())) {
+            params.put("billing[firstname]", billingAddress.getFirstName());
+        }
+
+        if (!TextUtils.isEmpty(billingAddress.getLastName())) {
+            params.put("billing[lastname]", billingAddress.getLastName());
+        }
+
+        if (!TextUtils.isEmpty(billingAddress.getCountryId())) {
+            params.put("billing[country_id]", billingAddress.getCountryId());
+        }
+
+        if (billingAddress.getStreet().size()>0) {
+            params.put("billing[street][0]", billingAddress.getStreet().get(0));
+        }
+        if (billingAddress.getStreet().size()>1&&!TextUtils.isEmpty(billingAddress.getStreet().get(1))) {
+            params.put("billing[street][1]", billingAddress.getStreet().get(1));
+        }
+        if (!TextUtils.isEmpty(billingAddress.getPostcode())) {
+            params.put("billing[postcode]", billingAddress.getPostcode());
+        }
+        if (!TextUtils.isEmpty(billingAddress.getCity())) {
+            params.put("billing[city]", billingAddress.getCity());
+        }
+
+        if (!TextUtils.isEmpty(billingAddress.getRegionId())) {
+            params.put("billing[region_id]", billingAddress.getRegionId());
+        }else{
+            params.put("billing[region_id]", "0");
+        }
+        if (!TextUtils.isEmpty(billingAddress.getRegion())) {
+            params.put("billing[region]", billingAddress.getRegion());
+        }else {
+            params.put("billing[region]", "-");
+        }
+        if (!TextUtils.isEmpty(billingAddress.getTelephone())) {
+            params.put("billing[telephone]", billingAddress.getTelephone());
         }
 //        params.put("store_id","3");
         params.put("billing[save_in_address_book]", "1");

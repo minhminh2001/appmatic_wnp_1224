@@ -1,5 +1,6 @@
 package com.whitelabel.app.ui.checkout.model;
 
+import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CheckoutDefaultShippingAddress;
 
 import java.io.Serializable;
@@ -9,22 +10,18 @@ import java.io.Serializable;
  */
 
 public class CheckoutDefaultAddressResponse implements Serializable {
-    private CheckoutDefaultShippingAddress  primaryBilling;
-    private CheckoutDefaultShippingAddress  primaryShipping;
-
-    public CheckoutDefaultShippingAddress getPrimaryBilling() {
+    private AddressBook primaryBilling;
+    private AddressBook  primaryShipping;
+    public AddressBook getPrimaryBilling() {
         return primaryBilling;
     }
-
-    public void setPrimaryBilling(CheckoutDefaultShippingAddress primaryBilling) {
+    public void setPrimaryBilling(AddressBook primaryBilling) {
         this.primaryBilling = primaryBilling;
     }
-
-    public CheckoutDefaultShippingAddress getPrimaryShipping() {
+    public AddressBook getPrimaryShipping() {
         return primaryShipping;
     }
-
-    public void setPrimaryShipping(CheckoutDefaultShippingAddress primaryShipping) {
+    public void setPrimaryShipping(AddressBook primaryShipping) {
         this.primaryShipping = primaryShipping;
     }
 }

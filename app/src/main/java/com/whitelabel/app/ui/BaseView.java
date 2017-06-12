@@ -1,4 +1,4 @@
-package com.whitelabel.app.ui.common;
+package com.whitelabel.app.ui;
 
 /**
  * Created by Administrator on 2016/12/22.

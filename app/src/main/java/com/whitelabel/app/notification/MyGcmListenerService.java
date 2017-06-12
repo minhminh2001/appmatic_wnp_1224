@@ -57,14 +57,11 @@ public class MyGcmListenerService extends GcmListenerService {
 
         createNotification(message);
     }
-
     private int getNotificationIcon() {
         boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
         return useWhiteIcon ? R.mipmap.icon_v1 : R.mipmap.icon_v1;
     }
-
     private static int requestId = 1;
-
     public void createNotification(String message) {
         final NotificationReceivedEntity entity = new Gson().fromJson(message, NotificationReceivedEntity.class);
 //        try {

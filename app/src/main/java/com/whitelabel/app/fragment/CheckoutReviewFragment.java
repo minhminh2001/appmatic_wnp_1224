@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.whitelabel.app.R;
+import com.whitelabel.app.*;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.adapter.CheckoutReviewShoppingCartAdapter;
@@ -34,7 +34,7 @@ import com.whitelabel.app.widget.CustomWebView;
 
 import java.util.ArrayList;
 
-public class CheckoutReviewFragment extends BaseFragment {
+public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
     private CheckoutActivity checkoutActivity;
     private ListView lvShoppingCart;
     private TextView tvSubtotal, tvVoucher, tvVoucherTitle;
@@ -454,10 +454,7 @@ public class CheckoutReviewFragment extends BaseFragment {
         //Toast.makeText(checkoutActivity,"review fragment is over",Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onKeyDown(int keyCode, KeyEvent event) {
 
-    }
 
     public CheckoutPaymentSaveReturnEntity getPaymentSaveReturnEntity() {
         return paymentSaveReturnEntity;

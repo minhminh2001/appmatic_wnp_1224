@@ -3,8 +3,8 @@ package com.whitelabel.app.ui.brandstore;
 import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
-import com.whitelabel.app.ui.common.BasePresenter;
-import com.whitelabel.app.ui.common.BaseView;
+import com.whitelabel.app.ui.BasePresenter;
+import com.whitelabel.app.ui.BaseView;
 
 /**
  * Created by Administrator on 2017/2/28.

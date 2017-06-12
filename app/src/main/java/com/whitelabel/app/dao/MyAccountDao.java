@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-
 import com.android.volley.VolleyError;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.AddressDeleteCellEntity;
@@ -33,11 +32,9 @@ import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
-
 import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.TreeMap;
-
 /**
  * Created by Administrator on 2016/3/30.
  */
@@ -63,7 +60,6 @@ public class MyAccountDao extends BaseHttp {
     public static final int REQUEST_CHECKEMAIL = 10009;
     public static final int REQUEST_EMAILLOGIN = 10010;
     public static final int REQUEST_FACEBOOKLOGIN = 10011;
-
     public static final int REQUEST_REGISTERCODE = 10012;
     public static final int REQUEST_ORDERLIST = 10013;
     public static final int REQUEST_GOOGLELOGIN = 10014;
@@ -105,7 +101,6 @@ public class MyAccountDao extends BaseHttp {
         private int mType;
         private String mUserId;
         private int mRequestCode;
-
         public MyAccountThread(int currType, String userId, Object data, Context context, Handler handler, int requestCode) {
             this.mType = currType;
             this.mUserId = userId;
@@ -374,19 +369,16 @@ public class MyAccountDao extends BaseHttp {
         params.put("confirmation", confirmation);
         requestHttp(BaseHttp.HTTP_METHOD.POST, "appservice/customer/changePassword", params, REQUEST_CHANGEPASS);
     }
-
     public void CustomerInfo(String session_key) {
         params = new TreeMap<>();
         params.put("session_key", session_key);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/customer/customerInfo", params, REQUEST_ACCOUNTUPDATEA);
     }
-
     public void MonthlyIncom(String session_key) {
         params = new TreeMap<>();
         params.put("session_key", session_key);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/directory/getMonthlyIncomeList", params, REQUEST_MONTHLYINCOM);
     }
-
     public void sendRequestToGetCityAndStateByPostCode(String session_key, String postcode, String country_id) {
         params = new TreeMap<>();
         params.put("session_key", session_key);
@@ -394,7 +386,6 @@ public class MyAccountDao extends BaseHttp {
         params.put("country_id", country_id);
         requestHttp(HTTP_METHOD.POST, "appservice/customer/getCityRegionByPostcode", params, REQUEST_SENDREQUESTTOGET);
     }
-
     public void save(String session_key, String emailStr, String firstNameStr, String lastNameStr, String genderStr, String birthdayStr, String countryIdStr, String regionIdStr,
                      String cityStr, String incomeIdStr, String postcodeStr, String telephoneCodeStr, String telephoneStr) {
         params = new TreeMap<>();
@@ -413,8 +404,6 @@ public class MyAccountDao extends BaseHttp {
         params.put("telephone", telephoneStr);
         requestHttp(HTTP_METHOD.POST, "appservice/customer/update", params, REQUEST_SAVE);
     }
-
-
     @Override
     public void onSuccess(int requestCode, String response, Object object) {
         JLogUtils.json("response", requestCode, response);
@@ -522,7 +511,6 @@ public class MyAccountDao extends BaseHttp {
                 if (isOk(response)) {
                     AddresslistReslut bean = JJsonUtils.parseJsonObj(response, AddresslistReslut.class);
                     postHandler(requestCode, bean, RESPONSE_SUCCESS);
-
                 } else {
                     ErrorMsgBean errorBean = getErrorMsgBean(response);
                     postHandler(REQUEST_GETADDRESLIST, errorBean.getErrorMessage(), RESPONSE_FAILED);

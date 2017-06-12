@@ -2,8 +2,8 @@ package com.whitelabel.app.ui.productdetail;
 
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
-import com.whitelabel.app.ui.common.BasePresenter;
-import com.whitelabel.app.ui.common.BaseView;
+import com.whitelabel.app.ui.BasePresenter;
+import com.whitelabel.app.ui.BaseView;
 
 import java.util.List;
 

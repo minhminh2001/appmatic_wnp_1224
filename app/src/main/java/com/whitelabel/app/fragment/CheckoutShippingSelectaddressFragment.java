@@ -80,25 +80,25 @@ public class CheckoutShippingSelectaddressFragment extends Fragment implements V
     }
     @Override
     public void onClick(View v) {
-        int id=v.getId();
-        switch (id){
-            case R.id.btn_checkout_shipping_add_new_address :
-                btnAddNewAddress.setVisibility(View.GONE);
-                CheckoutShippingAddaddressFragment checkoutShippingAddaddressFragment = new CheckoutShippingAddaddressFragment();
-                FragmentTransaction fragmentTransaction = checkoutActivity.getFragmentManager().beginTransaction();
-                checkoutActivity.list_fragment_shipping.add(checkoutShippingAddaddressFragment);
-                checkoutActivity.list_fragment.clear();
-                checkoutActivity.list_fragment.add(checkoutShippingAddaddressFragment);
-                fragmentTransaction.add(R.id.ll_checkout_body, checkoutShippingAddaddressFragment, "addNewAddressFragment");
-                fragmentTransaction.hide(checkoutActivity.list_fragment_shipping.get(0));//hide selectAddressFragment
-                fragmentTransaction.setCustomAnimations(
-                        R.animator.fragment_slide_right_enter,
-                        R.animator.fragment_slide_left_exit
-                ).show(checkoutShippingAddaddressFragment).commit();
-                btnAddNewAddress.setVisibility(View.GONE);
-                checkoutActivity.addressConditionInShipping = "0";
-                break;
-        }
+//        int id=v.getId();
+//        switch (id){
+//            case R.id.btn_checkout_shipping_add_new_address :
+//                btnAddNewAddress.setVisibility(View.GONE);
+//                CheckoutShippingAddaddressFragment checkoutShippingAddaddressFragment = new CheckoutShippingAddaddressFragment();
+//                FragmentTransaction fragmentTransaction = checkoutActivity.getFragmentManager().beginTransaction();
+//                checkoutActivity.list_fragment_shipping.add(checkoutShippingAddaddressFragment);
+//                checkoutActivity.list_fragment.clear();
+//                checkoutActivity.list_fragment.add(checkoutShippingAddaddressFragment);
+//                fragmentTransaction.add(R.id.ll_checkout_body, checkoutShippingAddaddressFragment, "addNewAddressFragment");
+//                fragmentTransaction.hide(checkoutActivity.list_fragment_shipping.get(0));//hide selectAddressFragment
+//                fragmentTransaction.setCustomAnimations(
+//                        R.animator.fragment_slide_right_enter,
+//                        R.animator.fragment_slide_left_exit
+//                ).show(checkoutShippingAddaddressFragment).commit();
+//                btnAddNewAddress.setVisibility(View.GONE);
+//                checkoutActivity.addressConditionInShipping = "0";
+//                break;
+//        }
     }
 
     public void initView(View view){
@@ -112,14 +112,11 @@ public class CheckoutShippingSelectaddressFragment extends Fragment implements V
 //        swipeLayout= (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
 //        swipeLayout.setColorSchemeResources(R.color.purple660070);
 //        swipeLayout.setOnRefreshListener(this);
-
     }
-
 //    @Override
 //    public void onRefresh() {
 //        new MyAccountDao(TAG,mHandler).getAddressBySession(WhiteLabelApplication.getAppConfiguration().getUserInfo(checkoutActivity).getSessionKey());
 //    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checkout_shipping_selectaddress, container, false);
@@ -180,23 +177,23 @@ public class CheckoutShippingSelectaddressFragment extends Fragment implements V
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        CheckoutDefaultShippingAddress address = mBeans.get(position);
-                        CheckoutShippingAddaddressFragment checkoutShippingAddaddressFragment = new CheckoutShippingAddaddressFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("address", address);
-                        checkoutShippingAddaddressFragment.setArguments(bundle);
-                        FragmentTransaction fragmentTransaction = checkoutActivity.getFragmentManager().beginTransaction();
-                        fragmentTransaction.hide(checkoutActivity.list_fragment_shipping.get(0));//hide select address fragment
-                        fragmentTransaction.setCustomAnimations(
-                                R.animator.fragment_slide_right_enter,
-                                R.animator.fragment_slide_left_exit
-                        ).add(R.id.ll_checkout_body, checkoutShippingAddaddressFragment, "editAddressFragment").commit();
-                        //record fragment count of Shipping Module for Go Back Button.
-                        checkoutActivity.list_fragment_shipping.add(checkoutShippingAddaddressFragment);
-                        checkoutActivity.list_fragment.clear();
-                        checkoutActivity.list_fragment.add(checkoutShippingAddaddressFragment);
-
-                        checkoutActivity.addressConditionInShipping = "0";
+//                        CheckoutDefaultShippingAddress address = mBeans.get(position);
+//                        CheckoutShippingAddaddressFragment checkoutShippingAddaddressFragment = new CheckoutShippingAddaddressFragment();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putSerializable("address", address);
+//                        checkoutShippingAddaddressFragment.setArguments(bundle);
+//                        FragmentTransaction fragmentTransaction = checkoutActivity.getFragmentManager().beginTransaction();
+//                        fragmentTransaction.hide(checkoutActivity.list_fragment_shipping.get(0));//hide select address fragment
+//                        fragmentTransaction.setCustomAnimations(
+//                                R.animator.fragment_slide_right_enter,
+//                                R.animator.fragment_slide_left_exit
+//                        ).add(R.id.ll_checkout_body, checkoutShippingAddaddressFragment, "editAddressFragment").commit();
+//                        //record fragment count of Shipping Module for Go Back Button.
+//                        checkoutActivity.list_fragment_shipping.add(checkoutShippingAddaddressFragment);
+//                        checkoutActivity.list_fragment.clear();
+//                        checkoutActivity.list_fragment.add(checkoutShippingAddaddressFragment);
+//
+//                        checkoutActivity.addressConditionInShipping = "0";
                         break;
 
 
@@ -211,18 +208,16 @@ public class CheckoutShippingSelectaddressFragment extends Fragment implements V
             btnAddNewAddress.setVisibility(View.GONE);
             CheckoutShippingAddaddressFragment checkoutShippingAddaddressFragment = new CheckoutShippingAddaddressFragment();
             FragmentTransaction fragmentTransaction = checkoutActivity.getFragmentManager().beginTransaction();
-            fragmentTransaction.remove(checkoutActivity.list_fragment.get(0));//Add New Address Fragment is the first one
-            checkoutActivity.list_fragment.clear();//Add New Address Fragment is the first one
-            checkoutActivity.list_fragment_shipping.clear();//Add New Address Fragment is the first one
-            checkoutActivity.list_fragment.add(checkoutShippingAddaddressFragment);
-            checkoutActivity.list_fragment_shipping.add(checkoutShippingAddaddressFragment);
+//            fragmentTransaction.remove(checkoutActivity.list_fragment.get(0));//Add New Address Fragment is the first one
+//            checkoutActivity.list_fragment.clear();//Add New Address Fragment is the first one
+//            checkoutActivity.list_fragment_shipping.clear();//Add New Address Fragment is the first one
+//            checkoutActivity.list_fragment.add(checkoutShippingAddaddressFragment);
+//            checkoutActivity.list_fragment_shipping.add(checkoutShippingAddaddressFragment);
             fragmentTransaction.add(R.id.ll_checkout_body, checkoutShippingAddaddressFragment, "addNewAddressFragment").commitAllowingStateLoss();
             btnAddNewAddress.setVisibility(View.GONE);
-            checkoutActivity.addressConditionInShipping = "0";
+//            checkoutActivity.addressConditionInShipping = "0";
         }
     }
-
-
 
     public static final class DataHandler extends Handler{
         private final WeakReference<CheckoutActivity> mActivity;

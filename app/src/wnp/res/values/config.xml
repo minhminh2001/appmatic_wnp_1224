@@ -15,5 +15,5 @@
     <string name="app_name">Wnp</string>
     <string name="request_url">https://dev2.wnp.com.hk/</string>
     <string name="image_base_url">https://dev2.wnp.com.hk/</string>
-    <string name="mock_url">http://45.115.36.210:8088/</string>
+    <string name="mock_url">http://192.168.1.233:8088/</string>
 </resources>

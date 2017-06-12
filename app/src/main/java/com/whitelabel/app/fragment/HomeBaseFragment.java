@@ -5,11 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
-import com.whitelabel.app.model.MarketingLayersEntity;
-import com.whitelabel.app.ui.common.BasePresenter;
+import com.whitelabel.app.ui.BasePresenter;
 
 /**
  * Created by Administrator on 2016/7/7.

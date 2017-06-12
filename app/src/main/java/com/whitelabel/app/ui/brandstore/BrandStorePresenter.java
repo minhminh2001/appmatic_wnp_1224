@@ -8,7 +8,7 @@ import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
-import com.whitelabel.app.ui.common.RxPresenter;
+import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.GaTrackHelper;

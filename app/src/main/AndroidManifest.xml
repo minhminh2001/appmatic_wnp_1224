@@ -59,7 +59,10 @@
             android:name="com.paypal.android.sdk.payments.PayPalService"
             android:exported="false" />
 
+
         　
+
+
         <!--  -->
         <service
             android:name="com.google.android.gms.analytics.AnalyticsService"
@@ -83,16 +86,19 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             tools:replace="android:theme" />
+
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider604176613049064"
             android:exported="true" />
+
         <activity
             android:name=".ui.start.StartActivityV2"
             android:screenOrientation="portrait"
             android:theme="@style/startStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -120,6 +126,7 @@
             android:theme="@style/BlackgroundBalckTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -307,7 +314,8 @@
 
         <activity android:name=".ui.brandstore.BrandStoreFontActivity" />
         <!-- <activity android:name="com.whitelabel.app.activity.PaypalActivity"></activity> -->
-        <activity android:name=".ui.productdetail.BindProductActivity"></activity>
+        <activity android:name=".ui.productdetail.BindProductActivity" />
+        <activity android:name=".ui.checkout.CheckoutSelectAddressActivity"></activity>
     </application>
 
 </manifest>

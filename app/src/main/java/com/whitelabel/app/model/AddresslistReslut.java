@@ -7,9 +7,19 @@ import java.util.List;
  */
 public class AddresslistReslut extends SVRReturnEntity {
     private int success;
+    private int status;
     private List<AddressBook> address;
     public int getSuccess() {
         return success;
+    }
+
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public void setSuccess(int success) {

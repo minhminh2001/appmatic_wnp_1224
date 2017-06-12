@@ -1,4 +1,4 @@
-package com.whitelabel.app.ui.common;
+package com.whitelabel.app.ui;
 
 /**
  * Every presenter in the app must either implement this interface or extend BasePresenter

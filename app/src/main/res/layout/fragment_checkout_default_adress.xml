@@ -1,8 +1,14 @@
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true">
 <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rl_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:paddingBottom="7dp"
         android:paddingTop="5dp"
         android:paddingLeft="20dp"
@@ -109,7 +115,7 @@
            android:id="@+id/ll_checkbox"
            android:layout_below="@+id/ll_shipping_address"
            android:layout_width="match_parent"
-           android:layout_marginTop="10dp"
+           android:layout_marginTop="15dp"
            android:gravity="center_vertical"
            android:orientation="horizontal"
            android:layout_height="wrap_content">
@@ -128,6 +134,7 @@
         android:layout_below="@+id/ll_checkbox"
         android:id="@+id/ll_billing_address"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_toLeftOf="@+id/AddAddress_select_button"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -224,3 +231,4 @@
             style="@style/font_family_robot_regular" />
        </LinearLayout>
     </RelativeLayout>
+</ScrollView>

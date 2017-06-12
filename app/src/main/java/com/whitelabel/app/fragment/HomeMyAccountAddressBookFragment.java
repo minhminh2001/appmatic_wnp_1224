@@ -15,11 +15,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.activity.EditAddressActivity;
-import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.adapter.AddressBookAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -37,11 +35,9 @@ import com.whitelabel.app.widget.swipemenulistview.SwipeMenu;
 import com.whitelabel.app.widget.swipemenulistview.SwipeMenuCreator;
 import com.whitelabel.app.widget.swipemenulistview.SwipeMenuItem;
 import com.whitelabel.app.widget.swipemenulistview.SwipeMenuListView;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Created by imaginato on 2015/7/28.
  */
@@ -50,7 +46,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
     //    private ListView lv;
     private TextView textView_add;
     private AddressBookAdapter adapter;
-    private HomeActivity addressBookActivity;
+    private Activity addressBookActivity;
     private Handler mHandler = new Handler();
     private String number;
     private int mSelectShippingIndex = -1;
@@ -64,10 +60,10 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
     private RequestErrorHelper requestErrorHelper;
     private View connectionLayout;
     private final static class DataHandler extends Handler {
-        private final WeakReference<HomeActivity> mActivity;
+        private final WeakReference<Activity> mActivity;
         private final WeakReference<HomeMyAccountAddressBookFragment> mFragment;
-        public DataHandler(HomeActivity activity, HomeMyAccountAddressBookFragment fragment) {
-            mActivity = new WeakReference<HomeActivity>(activity);
+        public DataHandler(Activity activity, HomeMyAccountAddressBookFragment fragment) {
+            mActivity = new WeakReference<Activity>(activity);
             mFragment = new WeakReference<HomeMyAccountAddressBookFragment>(fragment);
         }
         @Override
@@ -75,7 +71,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
             if (mActivity.get() == null || mFragment.get() == null) {
                 return;
             }
-            HomeActivity activity = mActivity.get();
+            Activity activity = mActivity.get();
             final HomeMyAccountAddressBookFragment fragment = mFragment.get();
 
             switch (msg.what) {
@@ -157,7 +153,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            addressBookActivity = (HomeActivity) activity;
+            addressBookActivity = (Activity) activity;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -169,8 +165,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
         setRetryTheme(contentView);
         return contentView;
     }
-
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -198,7 +192,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
         setHasOptionsMenu(true);
     }
     @Override
-    public void onRefresh() {
+    public void onRefresh(){
         sendRequest();
     }
     private SwipeMenu menu;

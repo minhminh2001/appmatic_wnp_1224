@@ -37,8 +37,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.whitelabel.app.GlobalData;
-import com.whitelabel.app.R;
+import com.whitelabel.app.*;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.adapter.WheelPickerAdapter;
@@ -75,7 +74,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CheckoutPaymentFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener {
+public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment implements View.OnClickListener, View.OnFocusChangeListener {
     private CheckoutActivity checkoutActivity;
     private PopupWindow popupWindowPaymentType;
     private WebView tvHtml;
@@ -1229,10 +1228,6 @@ public class CheckoutPaymentFragment extends BaseFragment implements View.OnClic
      */
     private String expirationDate = "";
 
-    @Override
-    public void onKeyDown(int keyCode, KeyEvent event) {
-
-    }
 
     /**
      * send Request To Get Payment List

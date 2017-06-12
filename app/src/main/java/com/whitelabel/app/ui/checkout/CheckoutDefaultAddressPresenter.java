@@ -1,16 +1,14 @@
 package com.whitelabel.app.ui.checkout;
 
-import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.model.ApiFaildException;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.ui.checkout.model.CheckoutDefaultAddressResponse;
-import com.whitelabel.app.ui.common.RxPresenter;
+import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.RxUtil;
 
-import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -32,7 +30,7 @@ public class CheckoutDefaultAddressPresenter extends RxPresenter<CheckoutDefault
                     @Override
                     public void call(CheckoutDefaultAddressResponse checkoutDefaultAddressResponse) {
                         mView.dissmissProgressDialog();
-                        mView.showData(checkoutDefaultAddressResponse);
+                        mView.showData(checkoutDefaultAddressResponse.getPrimaryShipping(),checkoutDefaultAddressResponse.getPrimaryBilling());
                     }
                 }, new ErrorHandlerAction() {
                     @Override

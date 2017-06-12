@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
-import com.whitelabel.app.ui.common.RxPresenter;
+import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 
@@ -57,6 +57,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
             @Override
             public void call(Object o) {
                 if(o instanceof RemoteConfigResonseModel){
+
                     RemoteConfigResonseModel  remoteConfigResonseModel= (RemoteConfigResonseModel) o;
                     WhiteLabelApplication.getAppConfiguration().initAppConfig(
                             remoteConfigResonseModel.getData());
@@ -77,7 +78,6 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
             }
         });
     }
-
     @Override
     public void getConfigInfo() {
        String currentVersionNumber= DataManager.getInstance().getPreferHelper().getVersionNumber();

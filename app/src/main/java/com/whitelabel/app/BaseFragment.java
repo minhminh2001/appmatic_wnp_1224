@@ -21,8 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.application.WhiteLabelApplication;
-import com.whitelabel.app.ui.common.BasePresenter;
-import com.whitelabel.app.ui.common.BaseView;
+import com.whitelabel.app.ui.BasePresenter;
+import com.whitelabel.app.ui.BaseView;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;

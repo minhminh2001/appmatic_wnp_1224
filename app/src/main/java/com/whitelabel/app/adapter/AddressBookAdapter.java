@@ -18,21 +18,28 @@ import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.utils.JLogUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by imaginato on 2015/6/29.
  */
 public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
-    public ArrayList<AddressBook> list;
+    public List<AddressBook> list;
     private Context context;
     private Context myAddressBookActivity;
-    public AddressBookAdapter(Context context,ArrayList<AddressBook> list) {
+    public AddressBookAdapter(Context context,List<AddressBook> list) {
         super(context,0,list);
         this.list=list;
         this.context = context;
         myAddressBookActivity =context;
         AddressBookAdapter adapter = this;
     }
+
+
+    public  List<AddressBook> getData(){
+        return list;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view=convertView;
