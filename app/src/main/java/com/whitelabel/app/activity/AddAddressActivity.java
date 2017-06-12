@@ -90,6 +90,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     private CustomCheckBox cbDefaultBilling;
     private ScrollView  mScrollView;
     private Dialog mDialog;
+    public  final static   int  RESULT_CODE=1000;
     private final String SESSION_EXPIRED = "session expired,login again please";
     private final int REQUESTCODE_LOGIN = 1000;
     private MyAccountDao dao;
@@ -124,7 +125,8 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                                 activity.stateText.setTag(getCityANdStateByPostCodeEntity.getRegionId());
                                 if(activity.cityText.getVisibility()==View.GONE&&activity.cityText2.getVisibility()!=View.VISIBLE) {
                                     activity.cityText2.setText("City");
-                                }else if(activity.cityText2.getVisibility()==View.VISIBLE&&activity.cityText2.getText().toString().equals(activity.getResources().getString(R.string.required_field))){
+                                }else if(activity.cityText2.getVisibility()==View.VISIBLE&&
+                                        activity.cityText2.getText().toString().equals(activity.getResources().getString(R.string.required_field))){
                                     //之前是红字的话，改为灰字
                                     activity.cityText2.setText("City");
                                 }
@@ -182,7 +184,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                         ab.setPostcode(item7);
                         ab.setCity(item8);
                         list.add(ab);
-                        activity.setResult(1000);
+                        activity.setResult(RESULT_CODE);
                         activity.finish();
                     }else{
                         activity.menuItemClicking=false;

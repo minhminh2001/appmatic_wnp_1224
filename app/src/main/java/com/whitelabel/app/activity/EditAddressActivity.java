@@ -102,6 +102,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
     private String TAG;
     private  EditText  etDayPhone;
     private View vAddDayPhoneLine;
+    public  final static  int RESULT_CODE=1000;
 
     private static final class DataHandler extends  Handler{
         private final WeakReference<EditAddressActivity> mActivity;
@@ -225,7 +226,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                         ab.setPostcode(item7);
                         ab.setCity(item8);
                         list.add(ab);
-                        activity.setResult(1000);
+                        activity.setResult(RESULT_CODE);
                         activity.finish();
                     }else{
                         if (!JDataUtils.errorMsgHandler(activity, msg.obj.toString())) {
