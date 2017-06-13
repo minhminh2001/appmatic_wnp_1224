@@ -8,14 +8,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.animation.AlphaAnimation;
@@ -103,14 +101,12 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
     private  EditText  etDayPhone;
     private View vAddDayPhoneLine;
     public  final static  int RESULT_CODE=1000;
-
+    public  static  final String EXTRA_USE_DEFAULT="user_default";
     private static final class DataHandler extends  Handler{
         private final WeakReference<EditAddressActivity> mActivity;
         public DataHandler(EditAddressActivity activity){
             mActivity=new WeakReference<EditAddressActivity>(activity);
         }
-
-
         @Override
         public void handleMessage(Message msg) {
             if(mActivity.get()==null){
@@ -253,12 +249,14 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             super.handleMessage(msg);
         }
     }
+    private boolean mUseDefault;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editaddress);
         TAG =this.getClass().getSimpleName();
         DataHandler dataHandler = new DataHandler(this);
+        mUseDefault=getIntent().getBooleanExtra(EXTRA_USE_DEFAULT,true);
         if(getIntent().getExtras()!=null ){
             mBean=(AddressBook)getIntent().getExtras().getSerializable("bean");
             if (mDialog != null) {
@@ -269,15 +267,15 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         View rlDefaultShipping = findViewById(R.id.rl_default_shipping);
         View rlDefaultBilling=findViewById(R.id.rl_default_billing);
           cbDefaultBilling= (CustomCheckBox) findViewById(R.id.cb_billing_check);
-        cbDefaultBilling.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        cbDefaultBilling.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         cbDefaultBilling.setChecked(false);
         addaddress_checkbox= (CustomCheckBox) findViewById(R.id.addaddress_checkbox);
-        addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        addaddress_checkbox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         addaddress_checkbox.setChecked(false);
         myScrollView= (ScrollView) findViewById(R.id.myScrollView);
         firstName= (EditText) findViewById(R.id.edit_firstName_EditText);
         tvDayPhone= (TextView) findViewById(R.id.ctv_day_phone_eg_text);
-        tvDayPhone.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        tvDayPhone.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         tvDayPhone2= (TextView) findViewById(R.id.ctv_day_phone_eg_text2);
         firstName.setText(mBean.getFirstName());
         rl_edit_country=(CustomButtomLineRelativeLayout)findViewById(R.id.rl_edit_country);
@@ -319,37 +317,34 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         state.setOnFocusChangeListener(this);
         eg.setOnFocusChangeListener(this);
         firstNameText= (TextView)findViewById(R.id.edit_firstName_text);
-        firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         firstNameText2= (TextView)findViewById(R.id.edit_firstName_text2);
         lastNameText= (TextView)findViewById(R.id.edit_lastName_text);
-        lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         lastNameText2= (TextView) findViewById(R.id.edit_lastName_text2);
         countryText= (TextView) findViewById(R.id.edit_country_text);
-        countryText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        countryText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         countryText2= (TextView) findViewById(R.id.edit_country_text2);
         address1Text= (TextView) findViewById(R.id.edit_address1_text1);
-        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         address1Text2= (TextView) findViewById(R.id.edit_address1_text2);
         address2Text= (TextView) findViewById(R.id.edit_address2_text1);
-        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         address2Text2= (TextView) findViewById(R.id.edit_address2_text2);
         postalcodeText= (TextView) findViewById(R.id.edit_postalcode_text);
-        postalcodeText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        postalcodeText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         postalcodeText2= (TextView)findViewById(R.id.edit_postalcode_text2);
         cityText= (TextView) findViewById(R.id.edit_city_text1);
-        cityText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        cityText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         cityText2= (TextView) findViewById(R.id.edit_city_text2);
-
         stateText2= (TextView) findViewById(R.id.edit_state_text2);
         egText= (TextView) findViewById(R.id.ctv_eg_text);
-        egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         egText2= (TextView) findViewById(R.id.ctv_eg_text2);
         TextView phoneNumber = (TextView) findViewById(R.id.ctv_phone_number_value);
         phoneNumber.setOnClickListener(this);
-
         iv_country_arrow=(ImageView)findViewById(R.id.iv_country_arrow);
         iv_state_arrow=(ImageView)findViewById(R.id.iv_state_arrow);
-
         ivClearEditFirst=(ImageView)findViewById(R.id.iv_clear_first);
         ivClearEditLast=(ImageView)findViewById(R.id.iv_clear_last);
         ivClearEditAddress1=(ImageView)findViewById(R.id.iv_clear_address1);
@@ -357,6 +352,8 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         ivClearEditCode=(ImageView)findViewById(R.id.iv_clear_code);
         ivClearEditCity=(ImageView)findViewById(R.id.ic_clear_city);
         ivClearEditPhone=(ImageView)findViewById(R.id.ic_clear_phone);
+        getIntent().getBooleanExtra(EXTRA_USE_DEFAULT,false);
+          if(mUseDefault){
         if("1".equals(mBean.getPrimaryShipping())){
             rlDefaultShipping.setVisibility(View.GONE);
             addaddress_checkbox.setChecked(true);
@@ -370,7 +367,11 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         }else{
             rlDefaultBilling.setVisibility(View.VISIBLE);
             cbDefaultBilling.setChecked(false);
-        }
+         }
+       }else{
+              rlDefaultShipping.setVisibility(View.GONE);
+              rlDefaultBilling.setVisibility(View.GONE);
+       }
         firstName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1132,7 +1133,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             text2.setVisibility(View.INVISIBLE);
             text.startAnimation(set);
         }else{
-            text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+            text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         }
         if(relativeLayout!=null) {
             relativeLayout.setBottomLineActive(true);

@@ -73,7 +73,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
         final NotificationCompat.Builder nb = new NotificationCompat.Builder(this);
         nb.setSmallIcon(getNotificationIcon())
-                .setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor())
+                .setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color())
                 .setSmallIcon(getNotificationIcon())
                 .setContentTitle(entity.getTitle())
                 .setContentText(entity.getMessage())

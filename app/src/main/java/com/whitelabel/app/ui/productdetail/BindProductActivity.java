@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.adapter.BindProductAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -52,8 +51,8 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
         mProductId = getIntent().getStringExtra(EXTRA_PRODUCTID);
         mRelatedProducts=new ArrayList<>();
         JViewUtils.setSoildButtonGlobalStyle(this, tvAddToCart);
-        tvTotalTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-        tvTotalValue.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        tvTotalTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        tvTotalValue.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this, R.drawable.ic_action_back));
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override

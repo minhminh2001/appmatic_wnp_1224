@@ -742,9 +742,9 @@ public class RefreshLoadMoreRecyclerView extends RecyclerView {
 
                 mProgressBar.setIndeterminateTintMode(PorterDuff.Mode.SRC_ATOP);
                 mProgressBar.setIndeterminateTintList(ColorStateList.
-                        valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor()));
+                        valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color()));
 //            mProgressBar.getIndeterminateDrawable().setColorFilter(
-//                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(), android.graphics.PorterDuff.Mode.MULTIPLY);
+//                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color(), android.graphics.PorterDuff.Mode.MULTIPLY);
             }
             mProgressBar.setVisibility(GONE);
             mHintView = (TextView)moreView.findViewById(R.id.ctvContentView);

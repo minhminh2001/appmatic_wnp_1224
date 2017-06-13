@@ -18,7 +18,6 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -49,7 +48,6 @@ import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 //import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 //import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -466,12 +464,12 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         email = (EditText) contentView.findViewById(R.id.email);
         password = (EditText) contentView.findViewById(R.id.password);
         Button sign_in = (Button) contentView.findViewById(R.id.sign_in);
-        sign_in.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        sign_in.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         View ivFacebookLogin = contentView.findViewById(R.id.ivFacebookLogin);
         TextView register = (TextView) contentView.findViewById(R.id.register);
-        register.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        register.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         TextView forgotPassword = (TextView) contentView.findViewById(R.id.forgot_password);
-        forgotPassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        forgotPassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         //      bottomText=contentView.findViewById(R.id.bottomText);
 //        ivFacebookLogin.setOnClickListener(this);
         sign_in.setOnClickListener(this);
@@ -950,7 +948,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
             switch (v.getId()) {
                 case R.id.email:
                     email_text2.setText(getResources().getString(R.string.loginregister_emailbound_email_hint));
-                    email_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+                    email_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
                     rl_login_email.setBottomLineActive(true);
                     if (email.getText().length()!=0)
                         clearMail.setVisibility(View.VISIBLE);
@@ -961,13 +959,13 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         email.setHint("");
                         email_text.startAnimation(set);
                    } else {
-                        email_text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+                        email_text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
                     }
 
                     break;
                 case R.id.password:
                     rl_login_pwd.setBottomLineActive(true);
-                    password_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+                    password_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
                     password_text2.setText(getResources().getString(R.string.enter_password));
                     if (password.getText().length()!=0)
                         clearPassword.setVisibility(View.VISIBLE);
@@ -978,7 +976,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         password.setHint("");
                         password_text.startAnimation(set);
                     } else {
-                        password_text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+                        password_text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
                     }
 
                     break;

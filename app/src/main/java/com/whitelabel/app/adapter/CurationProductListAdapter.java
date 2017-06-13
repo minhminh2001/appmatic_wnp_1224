@@ -700,7 +700,7 @@ public class CurationProductListAdapter extends BaseAdapter {
         ivWishIcon.setTag(repeatAnim);
         ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
 //        JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2),
-//                WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+//                WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         final ScaleAnimation animation2 = new ScaleAnimation(1f, 0f, 1f, 0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         animation2.setDuration(250);//设置动画持续时间

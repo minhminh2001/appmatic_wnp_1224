@@ -188,7 +188,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
         mPresenter.getDefaultAddress();
     }
     private void initView() {
-        cbBillAddress.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        cbBillAddress.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         cbBillAddress.setOnCheckedChangeListener(new CustomCheckBox.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CustomCheckBox checkBox, boolean isChecked) {
@@ -214,6 +214,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             case R.id.tv_shipping_address_change:
                 Intent intent=new Intent(getActivity(),CheckoutSelectAddressActivity.class);
                 startActivityForResult(intent,REQUEST_SHIPPING_ADDRESS);
+                getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
                 break;
             case R.id.ll_checkbox:
                 cbBillAddress.setChecked(!cbBillAddress.isChecked(),true);
@@ -221,6 +222,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             case R.id.tv_billing_address_change:
                 Intent billingIntent=new Intent(getActivity(),CheckoutSelectAddressActivity.class);
                 startActivityForResult(billingIntent,REQUEST_BILLING_ADDRESS);
+                getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
                 break;
         }
     }

@@ -18,7 +18,6 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -201,7 +200,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         view_paymentmethod_line = view.findViewById(R.id.view_paymentmethod_line);
         view_payment_online_line = view.findViewById(R.id.view_payment_online_line);
         ctv_payment_method_lab = (TextView) view.findViewById(R.id.ctv_payment_method_lab);
-        ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         tvPaymentMethod = (TextView) view.findViewById(R.id.tv_checkout_payment_method);
         tvPaymentMethodArrow = (ImageView) view.findViewById(R.id.tv_checkout_payment_method_arrow);
         llPaymentMethod = (LinearLayout) view.findViewById(R.id.ll_checkout_payment_method);
@@ -212,7 +211,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         ImageView ivSelectI = (ImageView) view.findViewById(R.id.iv_checkout_payment_select_i);
         ivSelectI.setOnClickListener(this);
         tvCreditCardNumberAnim = (TextView) view.findViewById(R.id.tv_checkout_payment_creditcardnumber_anim);
-        tvCreditCardNumberAnim.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        tvCreditCardNumberAnim.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         etCreditCardNumber = (EditText) view.findViewById(R.id.et_checkout_payment_creditcardnumber);
         etCreditCardNumber.setOnFocusChangeListener(this);
         etCreditCardNumber.addTextChangedListener(new CreditCartNumberTextWatcher());
@@ -220,7 +219,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         etCVC = (EditText) view.findViewById(R.id.et_checkout_payment_CVC);
         etCVC.setOnFocusChangeListener(this);
         tvNameoncardAnim = (TextView) view.findViewById(R.id.tv_checkout_payment_nameoncard_anim);
-        tvNameoncardAnim.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        tvNameoncardAnim.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         etNameoncard = (EditText) view.findViewById(R.id.et_checkout_payment_nameoncard);
         etNameoncard.setOnFocusChangeListener(this);
         tvCardtypeHint = (TextView) view.findViewById(R.id.tv_checkout_payment_cardtype_hint);
@@ -679,7 +678,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
                     }
                 },260);
                 JViewUtils.cleanCurrentViewFocus(getActivity());
-                tvExpirationDateHint.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+                tvExpirationDateHint.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
                 CustomButtomLineRelativeLayout.setBottomLineActive(view_expiration_date_line,true);
                 AnimUtil.rotateArrow(arrowSelectExpirationDate,true);
                 //createDialogPickerOfTwoColumn();
@@ -723,7 +722,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         final RelativeLayout rlContainer = (RelativeLayout) dialogView.findViewById(R.id.rlContainer);
         final CustomTextView ctvCancel = (CustomTextView) dialogView.findViewById(R.id.ctvCancel);
         final CustomTextView ctvSet = (CustomTextView) dialogView.findViewById(R.id.ctvSet);
-        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
 
@@ -1163,7 +1162,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
 
 
                 tv.setText(hintText);
-                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
             }
 
             @Override
@@ -1451,7 +1450,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
                                                        CustomButtomLineRelativeLayout.setRelativeBottomLineActive(view_paymentmethod_line, true);
                                                        AnimUtil.rotateArrow(tvPaymentMethodArrow, true);
 
-                                                       ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+                                                       ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
 
                                                        final WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
 
@@ -1591,7 +1590,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
                         }
                         CustomButtomLineRelativeLayout.setBottomLineActive(view_payment_online_line, true);
                         AnimUtil.rotateArrow(arrowSelectOnlineBankingPayWith, true);
-                        tvOnlinebankHint.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+                        tvOnlinebankHint.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
                         configEntity.setArrayList(list_onlinebanks);
                         configEntity.setOldValue(oldEntity_onlinebanks);
                         configEntity.setCallBack(new WheelPickerCallback() {

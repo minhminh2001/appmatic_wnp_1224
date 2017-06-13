@@ -178,7 +178,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
             categoryId = (String) getArguments().getSerializable("data");
         }
         ctpiCategoryList = (CustomTabCustomPageIndicator) mContainView.findViewById(R.id.ctpiCategoryList);
-        ctpiCategoryList.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        ctpiCategoryList.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         chvpContainer = (CustomHomeViewPager) mContainView.findViewById(R.id.chvpContainer);
         rlHome = mContainView.findViewById(R.id.rl_home);
         rlHome.setVisibility(View.GONE);

@@ -89,7 +89,7 @@ public class JViewUtils {
 
 
     public  static   void  setNavBarTextColor(TextView textView){
-         textView.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarTextIconColorDefault());
+         textView.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavigation_bar_text_icon_default_color());
     }
 
 
@@ -97,15 +97,15 @@ public class JViewUtils {
         ivImg.setImageDrawable(JImageUtils.
                 getThemeIconTapping(ContextCompat.getDrawable(context,icon),
                         WhiteLabelApplication.getAppConfiguration().
-                                getThemeConfig().getNavBarTextIconColorDefault(),
-                        WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarTextIconColorTapping()));
+                                getThemeConfig().getNavigation_bar_text_icon_default_color(),
+                        WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavigation_bar_text_icon_tapping_color()));
     }
 
     public static  void setSlideMenuTextStyle(TextView tvText,boolean defaultIsGray){
         int defaultColor=defaultIsGray? ContextCompat.getColor(tvText.getContext(),R.color.blackD0):
                 ContextCompat.getColor(tvText.getContext(),R.color.black);
-        int[] colors = new int[] {WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSideMenuBackgroudColorDefault()
-                , WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSideMenuTextIconColorTapping(),
+        int[] colors = new int[] {WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSide_menu_background_default_color()
+                , WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSide_menu_text_icon_tapping_color(),
                 defaultColor};
         int[][] states = new int[3][];
         states[0] = new int[] { android.R.attr.state_enabled, android.R.attr.state_selected };
@@ -120,18 +120,18 @@ public class JViewUtils {
      return   JImageUtils.
                 getThemeIconTapping(ContextCompat.getDrawable(context,icon),
                         WhiteLabelApplication.getAppConfiguration().
-                                getThemeConfig().getNavBarTextIconColorDefault(),
-                        WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarTextIconColorTapping());
+                                getThemeConfig().getNavigation_bar_text_icon_default_color(),
+                        WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavigation_bar_text_icon_tapping_color());
     }
     public static void setStrokeButtonGlobalStyle(Context context,TextView textView){
         textView.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(context));
-        textView.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        textView.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
     }
 
 
     public static   void setSoildButtonGlobalStyle(Context context,TextView textView){
         textView.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(context));
-        textView.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getButtonTextColor());
+        textView.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getButton_text_color());
     }
     public static void showErrorToast(Context context, String error) {
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
@@ -656,7 +656,7 @@ public class JViewUtils {
         final RelativeLayout rlContainer = (RelativeLayout) dialogView.findViewById(R.id.rlContainer);
         final CustomTextView ctvCancel = (CustomTextView) dialogView.findViewById(R.id.ctvCancel);
         final CustomTextView ctvSet = (CustomTextView) dialogView.findViewById(R.id.ctvSet);
-        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         final WheelView wheelView = (WheelView) dialogView.findViewById(R.id.wheelView);
 
         WheelPickerAdapter wheelPickerAdapter = new WheelPickerAdapter(context, pickerConfigEntity.getArrayList());
@@ -786,7 +786,7 @@ public class JViewUtils {
         final WheelView wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         final WheelView wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
         final WheelView wvRight = (WheelView) dialogView.findViewById(R.id.wvRight);
-        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         wvLeft.setViewAdapter(wpaLeft);
         wvLeft.setVisibleItems(5);
         wvLeft.setCurrentItem(currentItem1);
@@ -1010,7 +1010,7 @@ public class JViewUtils {
         final WheelView wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         final WheelView wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
         final WheelView wvRight = (WheelView) dialogView.findViewById(R.id.wvRight);
-        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         WheelPickerAdapter wpaLeft = new WheelPickerAdapter(context, pickerConfigEntityLeft.getArrayList());
         wvLeft.setViewAdapter(wpaLeft);
         wvLeft.setVisibleItems(5);
@@ -1238,7 +1238,7 @@ public class JViewUtils {
         final CustomTextView ctvSet = (CustomTextView) dialogView.findViewById(R.id.ctvSet);
         final WheelView wvLeft = (WheelView) dialogView.findViewById(R.id.wvLeft);
         final WheelView wvMiddle = (WheelView) dialogView.findViewById(R.id.wvMiddle);
-        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        ctvSet.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         WheelPickerAdapter wpaLeft = new WheelPickerAdapter(context, pickerConfigEntityLeft.getArrayList());
         wvLeft.setViewAdapter(wpaLeft);
         wvLeft.setVisibleItems(5);

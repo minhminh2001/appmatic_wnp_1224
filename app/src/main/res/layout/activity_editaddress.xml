@@ -10,10 +10,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/edit_relative1"
         android:background="@color/black000000">
-
         <include layout="@layout/common_toolbar"/>
     </RelativeLayout>
-
     <ScrollView
         android:id="@+id/myScrollView"
         android:layout_width="match_parent"
@@ -21,7 +19,6 @@
         android:layout_below="@+id/edit_relative1"
         android:background="@color/whiteFFFFFF"
         android:scrollbars="none">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -33,7 +30,9 @@
                 android:background="@color/whiteFFFFFF"
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:paddingRight="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true">
 
                 <RelativeLayout
                     android:id="@+id/relative4"
@@ -692,7 +691,6 @@
                                 android:src="@mipmap/text_elimination"
                                 android:visibility="gone"/>
                         </RelativeLayout>
-
                         <com.whitelabel.app.widget.CustomTextView
                             android:id="@+id/ctv_eg_text"
                             android:layout_width="fill_parent"
@@ -704,7 +702,6 @@
                             android:textSize="@dimen/labelTextFontSize"
                             android:visibility="invisible"
                             style="@style/font_family_robot_regular"/>
-
                         <com.whitelabel.app.widget.CustomTextView
                             android:id="@+id/ctv_eg_text2"
                             android:layout_width="fill_parent"
@@ -717,26 +714,20 @@
                             android:visibility="invisible"
                             style="@style/font_family_robot_regular"/>
                     </RelativeLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="3dp"
                         android:layout_toRightOf="@+id/ctv_phoneNumber">
-
                         <View
                             android:id="@+id/v_edit_phone_line"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/line_height"
                             android:layout_weight="1"
                             android:background="@color/edittext_line"/>
-
                     </LinearLayout>
                 </RelativeLayout>
-
-
-
                 <RelativeLayout
                     android:id="@+id/rl_day_phone"
                     android:layout_width="fill_parent"
@@ -861,12 +852,8 @@
                             android:layout_weight="1"
                             android:layout_height="@dimen/line_height"
                             android:background="@color/edittext_line" />
-
                     </LinearLayout>
                 </RelativeLayout>
-
-
-
                 <RelativeLayout
                     android:id="@+id/rl_default_shipping"
                     android:layout_width="match_parent"
@@ -926,7 +913,6 @@
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
-
     <ProgressBar
         android:id="@+id/pb_shoppingcart"
         android:layout_width="wrap_content"

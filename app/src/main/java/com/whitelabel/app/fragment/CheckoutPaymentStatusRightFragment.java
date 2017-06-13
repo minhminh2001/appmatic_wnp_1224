@@ -33,7 +33,6 @@ import com.whitelabel.app.model.GetAnimCodeEntity;
 import com.whitelabel.app.model.ShoppingDiscountBean;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.GaTrackHelper;
-import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JShareUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -440,7 +439,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
         View layout = view.findViewById(R.id.rl_root);
         TextView tvOrderNumber = (TextView) view.findViewById(R.id.tv_checkout_payment_status_ordernumber);
         TextView tvEmail = (TextView) view.findViewById(R.id.tv_checkout_payment_status_email);
-        tvEmail.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        tvEmail.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         tvShare= (TextView) view.findViewById(R.id.tv_share);
         rlRoot=view.findViewById(R.id.sv_content);
         rlBackGroud=view.findViewById(R.id.rlBackGroud);

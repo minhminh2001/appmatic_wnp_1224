@@ -95,7 +95,7 @@ public class CircularProgressView extends View {
             TypedValue t = new TypedValue();
             getContext().getTheme().resolveAttribute(accentColor, t, true);
 //            color = t.data;
-            color= WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor();
+            color= WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color();
         }
         // If using native accentColor (SDK >21)
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

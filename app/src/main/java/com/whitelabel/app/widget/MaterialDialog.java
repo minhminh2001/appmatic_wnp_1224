@@ -287,8 +287,8 @@ public class MaterialDialog {
                     R.id.buttonLayout);
             mPositiveButton = (Button) mButtonLayout.findViewById(R.id.btn_p);
             mNegativeButton = (Button) mButtonLayout.findViewById(R.id.btn_n);
-            mPositiveButton.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-            mNegativeButton.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+            mPositiveButton.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+            mNegativeButton.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
             mMessageContentRoot = (ViewGroup) mAlertDialogWindow.findViewById(
                     R.id.message_content_root);
             if (mView != null) {

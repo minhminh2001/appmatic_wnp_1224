@@ -948,7 +948,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
                 }, 100);
 
                 tv.setText(hintText);
-                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
             }
 
             @Override

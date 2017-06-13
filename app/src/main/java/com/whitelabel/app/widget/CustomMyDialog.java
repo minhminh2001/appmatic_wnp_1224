@@ -125,8 +125,8 @@ public class CustomMyDialog extends Dialog {
             View layout = inflater.inflate(R.layout.dialog_normal_layout, null);
             TextView  okText= (TextView) layout.findViewById(R.id.positiveButton);
             TextView cancelText= (TextView) layout.findViewById(R.id.negativeButton);
-            okText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
-            cancelText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+            okText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+            cancelText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
             dialog.addContentView(layout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
             // set the dialog title

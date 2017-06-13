@@ -115,7 +115,7 @@ public class CustomRangeSeekBar<T extends Number> extends ImageView {
         absoluteMinValuePrim = absoluteMinValue.doubleValue();
         absoluteMaxValuePrim = absoluteMaxValue.doubleValue();
         numberType = NumberType.fromNumber(absoluteMinValue);
-        SINGLE_COLOR= WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor();
+        SINGLE_COLOR= WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color();
         IS_MULTI_COLORED = false;
         LEFT_COLOR = 0;
         MIDDLE_COLOR = 0;

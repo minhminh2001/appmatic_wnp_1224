@@ -185,7 +185,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
         textView_add.setOnClickListener(this);
         refreshLayout.setOnRefreshListener(this);
 //        refreshLayout.setColorSchemeResources(R.color.colorAccent);
-        refreshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        refreshLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         dao.getLocalAddressData(getActivity(), WhiteLabelApplication.getAppConfiguration().getUser().getId());
         showRefreshLayout();
         setSwipeListView();
@@ -324,6 +324,9 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
             case R.id.addressbook_add_textview:
                 Intent intent = new Intent(getActivity(), AddAddressActivity.class);
                 intent.putExtra("listnum", number);
+                if(mBeans==null||mBeans.size()==0){
+                    intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT,false);
+                }
                 getParentFragment().startActivityForResult(intent, 2000);
                 getActivity().overridePendingTransition(
                         R.anim.enter_righttoleft, R.anim.exit_righttoleft);

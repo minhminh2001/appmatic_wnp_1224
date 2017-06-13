@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ import butterknife.Unbinder;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContract.Presenter> implements BaseAddressContract.View, SwipeMenuListView.OnMenuItemClickListener, SwipeMenuListView.OnSwipeListener, AdapterView.OnItemClickListener {
+public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContract.Presenter> implements BaseAddressContract.View, SwipeMenuListView.OnMenuItemClickListener, SwipeMenuListView.OnSwipeListener, AdapterView.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.mListView)
     SwipeMenuListView mListView;
     @BindView(R.id.swipe_container)
@@ -76,36 +77,36 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     Unbinder unbinder;
     private boolean useCache;
     private int mMenuWidth = 50;
-
+    public final static  int REQUEST_EDIT_ADDRESS=1000;
+    public final static  int REQUEST_ADD_ADDRESS=2000;
     public abstract List<AddressBook> handlerAddressData(List<AddressBook> addressBooks);
-
     private AddressBookAdapter mAddressBookAdapter;
     protected final static String EXTRA_USE_CACHE = "use_cache";
-
     // TODO: Rename parameter arguments, choose names that match
     public BaseAddressFragment() {
         // Required empty public constructor
     }
-
-
     public AddressBookAdapter getAdapter() {
         return mAddressBookAdapter;
     }
-
     @Override
     public void onSwipeStart(int position) {
         swipeContainer.setEnabled(false);
     }
-
     @Override
     public void onSwipeEnd(int position) {
         swipeContainer.setEnabled(true);
     }
-
     @Override
     public void showNetworkErrorView() {
     }
-
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    }
+    @Override
+    public void closeSwipeLayout() {
+            swipeContainer.setRefreshing(false);
+    }
     @Override
     public void loadData(List<AddressBook> addressBooks) {
         addressbookAddTextview.setVisibility(View.VISIBLE);
@@ -113,9 +114,10 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         mAddressBookAdapter = new AddressBookAdapter(getContext(), addressBooks);
         mListView.setAdapter(mAddressBookAdapter);
     }
-    public final static  int REQUEST_EDIT_ADDRESS=1000;
-    public final static  int REQUEST_ADD_ADDRESS=2000;
-
+    @Override
+    public void onRefresh() {
+        requestData(false);
+    }
     @Override
     public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
         switch (index) {
@@ -137,7 +139,6 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         }
         return false;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +146,6 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
             useCache = getArguments().getBoolean(EXTRA_USE_CACHE);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -154,28 +154,28 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
-
     @Override
     public BaseAddressContract.Presenter getPresenter() {
         return new BaseAddressPresenter();
     }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        swipeContainer.setOnRefreshListener(this);
         setSwipeListView();
-        requestData();
+        requestData(true);
     }
-
-    public void  requestData(){
+    public void  requestData(boolean showDialog){
         String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+        if(showDialog){
+            showProgressDialog();
+        }
         if (useCache) {
             mPresenter.getAddressListCache(sessionKey);
         }
         mPresenter.getAddressListOnLine(sessionKey);
     }
-
     public void setSwipeListView() {
         SwipeMenuCreator creator = new SwipeMenuCreator() {
             @Override
@@ -226,16 +226,18 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         super.onActivityResult(requestCode, resultCode, data);
         if((requestCode==REQUEST_ADD_ADDRESS&&resultCode==AddAddressActivity.RESULT_CODE)
                 ||(requestCode==REQUEST_EDIT_ADDRESS&&resultCode==EditAddressActivity.RESULT_CODE)){
-            requestData();
+            requestData(false);
         }
     }
     @OnClick(R.id.addressbook_add_textview)
     public void onViewClicked() {
         Intent intent=new Intent(getActivity(), AddAddressActivity.class);
+        intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT,false);
         if(getParentFragment()!=null){
             getParentFragment().startActivityForResult(intent,REQUEST_ADD_ADDRESS);
         }else{
             startActivityForResult(intent,REQUEST_ADD_ADDRESS);
         }
+        getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
     }
 }

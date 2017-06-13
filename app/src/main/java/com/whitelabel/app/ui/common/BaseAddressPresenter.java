@@ -37,6 +37,8 @@ public class BaseAddressPresenter extends RxPresenter<BaseAddressContract.View> 
                 .subscribe(new Action1<AddresslistReslut>() {
                     @Override
                     public void call(AddresslistReslut addresslistReslut) {
+                        mView.closeProgressDialog();
+                        mView.closeSwipeLayout();
                         if(addresslistReslut.getStatus()==1){
                             mView.loadData(addresslistReslut.getAddress());
                         }
@@ -44,6 +46,8 @@ public class BaseAddressPresenter extends RxPresenter<BaseAddressContract.View> 
                 }, new ErrorHandlerAction() {
                     @Override
                     protected void requestError(ApiFaildException ex) {
+                        mView.closeProgressDialog();
+                        mView.closeSwipeLayout();
                         if(ex.getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
                             mView.showNetworkErrorView();
                         }

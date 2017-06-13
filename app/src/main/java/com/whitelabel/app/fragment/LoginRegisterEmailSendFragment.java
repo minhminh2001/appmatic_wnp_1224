@@ -35,7 +35,6 @@ import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
@@ -91,12 +90,12 @@ public class LoginRegisterEmailSendFragment extends Fragment implements View.OnC
         rl_send_email= (RelativeLayout) contentView.findViewById(R.id.rl_send_email);
         view_send_email_line= contentView.findViewById(R.id.view_send_email_line);
         Button s_submit = (Button) contentView.findViewById(R.id.s_submit);
-        s_submit.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        s_submit.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
 
         s_submit.setOnClickListener(this);
         et_email= (EditText) contentView.findViewById(R.id.et_email);
         email_text= (TextView) contentView.findViewById(R.id.email_text);
-        email_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        email_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         email_text2= (TextView) contentView.findViewById(R.id.email_text2);
         clearSubmit=(ImageView)contentView.findViewById(R.id.clear_submit);
         clearSubmit.setOnClickListener(this);

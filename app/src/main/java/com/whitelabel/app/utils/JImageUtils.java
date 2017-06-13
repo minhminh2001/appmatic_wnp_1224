@@ -43,7 +43,7 @@ public class JImageUtils {
 
     public  static  Drawable getThemeCircle(Context context){
         GradientDrawable drawable= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.bg_cart_number);
-        drawable.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        drawable.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         return drawable;
     }
     public static Drawable getColorCircle(Context context,int color){
@@ -70,11 +70,11 @@ public class JImageUtils {
     public static  Drawable getButtonBackgroudSolidDrawable(Context context){
         StateListDrawable drawable=new StateListDrawable();
         GradientDrawable  normal= new GradientDrawable();
-        normal.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        normal.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         normal.setCornerRadius(JScreenUtils.dip2px(context,2));
         GradientDrawable  pressed= new GradientDrawable();
         pressed.setCornerRadius(JScreenUtils.dip2px(context,2));
-        pressed.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getButtonColorTapping());
+        pressed.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getButton_tapping_color());
         drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
         drawable.addState(new int[]{android.R.attr.state_enabled},normal);
         drawable.addState(new int[]{},normal);
@@ -84,7 +84,7 @@ public class JImageUtils {
         StateListDrawable drawable=new StateListDrawable();
         GradientDrawable  normal= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
         normal.setColor(ContextCompat.getColor(context,R.color.transparent00));
-        normal.setStroke(JScreenUtils.dip2px(context,1.5f), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        normal.setStroke(JScreenUtils.dip2px(context,1.5f), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
 //        GradientDrawable  pressed= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
 //        pressed.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getButtonClickColor());
         drawable.addState(new int[]{},normal);
@@ -92,7 +92,7 @@ public class JImageUtils {
         return drawable;
     }
     public static ColorStateList getThemeTextColorDrawable(int defaultColor){
-        int[] colors = new int[] { WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(), defaultColor,defaultColor};
+        int[] colors = new int[] { WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color(), defaultColor,defaultColor};
         int[][] states = new int[3][];
         states[0] = new int[] { android.R.attr.state_enabled, android.R.attr.state_selected };
         states[1] = new int[] { android.R.attr.state_enabled };
@@ -103,7 +103,7 @@ public class JImageUtils {
 
 
     public static Drawable getThemeIconSelector(Drawable drawable,int defaultColor){
-        int[] colors = new int[] { WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(), defaultColor,defaultColor};
+        int[] colors = new int[] { WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color(), defaultColor,defaultColor};
         int[][] states = new int[3][];
         states[0] = new int[] { android.R.attr.state_enabled, android.R.attr.state_selected };
         states[1] = new int[] { android.R.attr.state_enabled };
@@ -134,7 +134,7 @@ public class JImageUtils {
         Drawable drawable1=ContextCompat.getDrawable(context, drawable);
         final Drawable wrappedDrawable = DrawableCompat.wrap(drawable1);
         DrawableCompat.setTintList(wrappedDrawable,
-                ColorStateList.valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor()));
+                ColorStateList.valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color()));
         return wrappedDrawable;
     }
 

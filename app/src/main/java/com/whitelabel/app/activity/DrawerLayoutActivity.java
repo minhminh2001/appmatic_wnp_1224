@@ -8,7 +8,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
@@ -258,7 +257,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         tvUserName = (TextView) findViewById(R.id.tv_user_name);
         View llProfile = findViewById(R.id.ll_profile);
         llProfile.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().
-                getThemeConfig().getSideMenuBackgroudColorDefault());
+                getThemeConfig().getSide_menu_background_default_color());
         tvHome = (TextView) findViewById(R.id.tv_home);
         tvCategoryTree = (TextView) findViewById(R.id.tv_category_tree);
         tvShoppingCart = (TextView) findViewById(R.id.tv_shopping_cart);

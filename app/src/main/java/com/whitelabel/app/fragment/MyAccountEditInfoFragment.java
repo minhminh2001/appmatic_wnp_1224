@@ -539,42 +539,42 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         eg.setOnFocusChangeListener(this);
         email.setInputType(EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         firstNameText = (TextView) contentView.findViewById(R.id.ctv_account_firstName_label_ani);
-        firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        firstNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         firstNameText2 = (TextView) contentView.findViewById(R.id.ctv_account_firstName_label);
         lastNameText = (TextView) contentView.findViewById(R.id.ctv_account_lastName_label_ani);
-        lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        lastNameText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         lastNameText2 = (TextView) contentView.findViewById(R.id.ctv_account_lastName_label);
 
         emailText = (TextView) contentView.findViewById(R.id.ctv_account_email_label_ani);
-        emailText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        emailText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         emailText2 = (TextView) contentView.findViewById(R.id.ctv_account_email_label);
         countryText = (TextView) contentView.findViewById(R.id.ctv_account_country_label_ani);
-        countryText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        countryText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         countryText2 = (TextView) contentView.findViewById(R.id.ctv_account_country_label);
         birthdayText = (TextView) contentView.findViewById(R.id.ctv_account_birthday_label_ani);
-        birthdayText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        birthdayText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         birthdayText2 = (TextView) contentView.findViewById(R.id.ctv_account_birthday_label);
         genderText = (TextView) contentView.findViewById(R.id.ctv_account_gender_label_ani);
-        genderText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        genderText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         genderText2 = (TextView) contentView.findViewById(R.id.ctv_account_gender_label);
         monthlyIncomeText = (TextView) contentView.findViewById(R.id.ctv_account_monthlyIncome_label_ani);
-        monthlyIncomeText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        monthlyIncomeText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         monthlyIncomeText2 = (TextView) contentView.findViewById(R.id.ctv_account_monthlyIncome_label);
         //zip=postal code
         zipText = (TextView) contentView.findViewById(R.id.ctv_account_zip_label_ani);
-        zipText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        zipText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         zipText2 = (TextView) contentView.findViewById(R.id.ctv_account_zip_label);
         cityText = (TextView) contentView.findViewById(R.id.ctv_account_city_label_ani);
-        cityText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        cityText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         cityText2 = (TextView) contentView.findViewById(R.id.ctv_account_city_label);
         stateProvinceText = (TextView) contentView.findViewById(R.id.ctv_account_state_label_ani);
-        stateProvinceText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        stateProvinceText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         stateProvinceText2 = (TextView) contentView.findViewById(R.id.ctv_account_state_label);
         egText = (TextView) contentView.findViewById(R.id.ctv_account_eg_label_ani);
-        egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        egText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         egText2 = (TextView) contentView.findViewById(R.id.ctv_account_eg_label);
         TextView changePassword = (TextView) contentView.findViewById(R.id.changePassword);
-        changePassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        changePassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         changePassword.setOnClickListener(this);
         ImageView photo = (ImageView) contentView.findViewById(R.id.photo);
         photo.setOnClickListener(this);
@@ -1840,7 +1840,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             edit.setHint("");
             text.startAnimation(set);
         } else {
-            text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+            text2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         }
         if (relativeLayout != null) {
             relativeLayout.setBottomLineActive(true);

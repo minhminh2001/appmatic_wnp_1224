@@ -52,7 +52,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor());
+            window.setStatusBarColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavigation_bar_background_color());
 
         }
         currTag = this.getClass().getSimpleName();
@@ -199,7 +199,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mHomeSearchBarRL = (RelativeLayout) findViewById(R.id.rl_home_searchBar);
         if(mHomeSearchBarRL!=null){
-            mHomeSearchBarRL.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSearchBoxBackgroundColor());
+            mHomeSearchBarRL.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSearch_box_background_color());
         }
         mTitleRL = (RelativeLayout) findViewById(R.id.rl_home_searchBar);
         tvTitleNum = (TextView) findViewById(R.id.tv_title_num);
@@ -207,7 +207,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         TextView tvSearch = (TextView) findViewById(R.id.tv_search);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         if(tvSearch !=null){
-            tvSearch.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSearchBoxTextColor());
+            tvSearch.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSearch_box_text_color());
         }
         if(tvTitle!=null) {
             JViewUtils.setNavBarTextColor(tvTitle);
@@ -216,14 +216,14 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         CustomButton  btnAgain= (CustomButton) findViewById(R.id.btn_try_again);
         if(ivTryAgain!=null&&btnAgain!=null){
             ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(this,R.mipmap.connection_break_loading));
-            btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+            btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         }
         if (mToolbar != null) {
             mToolbar.setTitle("");
             setSupportActionBar(mToolbar);
         }
         if(getToolbar()!=null){
-            getToolbar().setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor());
+            getToolbar().setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavigation_bar_background_color());
         }
     }
     public Toolbar getToolbar() {

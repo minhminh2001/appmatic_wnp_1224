@@ -534,7 +534,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
                 }, 100);
 
                 tv.setText(hintText);
-                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
             }
 
             @Override

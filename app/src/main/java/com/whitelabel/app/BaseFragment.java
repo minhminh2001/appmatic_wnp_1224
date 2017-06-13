@@ -187,7 +187,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
             ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
         }
         if(mToolbar!=null){
-            mToolbar.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor());
+            mToolbar.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavigation_bar_background_color());
         }
     }
     @Override
@@ -202,7 +202,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         CustomButton btnAgain= (CustomButton)  view.findViewById(R.id.btn_try_again);
         if(ivTryAgain!=null&&btnAgain!=null){
             ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(getActivity(),R.mipmap.connection_break_loading));
-            btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+            btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         }
     }
     protected void onAnimationStarted () {}

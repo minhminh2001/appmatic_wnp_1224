@@ -12,117 +12,78 @@ public class ThemeConfigModel implements Serializable{
 
 
     /**
-     * keyColor : #FBC801
-     * buttonTextColor : #009E82
-     * buttonColorTapping : #009E82
-     * navBarBackgroundColor : 009E82
-     * navBarTextIconColorDefault : 009E82
-     * navBarTextIconColorTapping : 009E82
-     * sideMenuBackgroudColorDefault : #FBåC801
-     * sideMenuBackgroundColorSelected : #FBC801
-     * sideMenuTextIconColorDefault : #FBC801
+     * theme_color : #FBC801
+     * button_text_color : #009E82
+     * button_tapping_color : #009E82
+     * navigation_bar_background_color : 009E82
+     * navigation_bar_text_icon_default_color : 009E82
+     * navigation_bar_text_icon_tapping_color : 009E82
+     * side_menu_background_default_color : #FBåC801
+     * side_menu_background_selected_color : #FBC801
+     * side_menu_text_icon_default_color : #FBC801
      * sldeMenuTextIconColorSelected : #FBC801
      * sldeMenuTextIconColorTapping : #FBC801
-     * searchBoxBackgroundColor : #FBC801
-     * searchBoxTextColor : #FBC801
+     * search_box_background_color : #FBC801
+     * search_box_text_color : #FBC801
      */
 
-    private String keyColor="#4d9cf2";
-    private String buttonTextColor="#6f6f6f";
-    private String buttonColorTapping="#4c0052";
-    private String navBarBackgroundColor="#4d9cf2";
-    private String navBarTextIconColorDefault="#17B1C8";
-    private String navBarTextIconColorTapping="#B0CE27";
-    private String sideMenuBackgroudColorDefault="#FBC801";
-    private String sideMenuBackgroundColorSelected="#FBC801";
-    private String sideMenuTextIconColorDefault="#7D66006E";
-    private String sideMenuTextIconColorSelected="#D82529";
-    private String sideMenuTextIconColorTapping="#66006e";
-    private String searchBoxBackgroundColor="#7f66006e";
-    private String searchBoxTextColor="#EAFFFFFF";
+    private String theme_color ="#4d9cf2";
+    private String button_text_color ="#6f6f6f";
+    private String button_tapping_color ="#4c0052";
+    private String navigation_bar_background_color ="#4d9cf2";
+    private String navigation_bar_text_icon_default_color ="#17B1C8";
+    private String navigation_bar_text_icon_tapping_color ="#B0CE27";
+    private String side_menu_background_default_color ="#FBC801";
+    private String side_menu_background_selected_color ="#FBC801";
+    private String side_menu_text_icon_default_color ="#7D66006E";
+    private String side_menu_text_icon_selected_color ="#D82529";
+    private String side_menu_text_icon_tapping_color ="#66006e";
+    private String search_box_background_color ="#7f66006e";
+    private String search_box_text_color ="#EAFFFFFF";
 
-    public int getKeyColor() {
+    public int getTheme_color() {
         try {
-            return Color.parseColor(keyColor);
+            return Color.parseColor(theme_color);
         }catch (Exception ex){
             ex.getMessage();
         }
         return 0;
     }
 
-    public void setKeyColor(String keyColor) {
-        this.keyColor = keyColor;
+    public void setTheme_color(String theme_color) {
+        this.theme_color = theme_color;
     }
 
-    public int  getButtonTextColor() {
+    public int getButton_text_color() {
         try {
-            return Color.parseColor(buttonTextColor);
+            return Color.parseColor(button_text_color);
         }catch (Exception ex){
             ex.getMessage();
         }
         return 0;
     }
 
-    public void setButtonTextColor(String buttonTextColor) {
-        this.buttonTextColor = buttonTextColor;
+    public void setButton_text_color(String button_text_color) {
+        this.button_text_color = button_text_color;
     }
 
-    public int getButtonColorTapping() {
+    public int getButton_tapping_color() {
         try {
-            return Color.parseColor(buttonColorTapping);
-        }catch (Exception ex){
-            ex.getMessage();
-        }
-        return 0;
-
-    }
-
-    public void setButtonColorTapping(String buttonColorTapping) {
-        this.buttonColorTapping = buttonColorTapping;
-    }
-
-    public int getNavBarBackgroundColor() {
-
-        try {
-            return Color.parseColor(navBarBackgroundColor);
-        }catch (Exception ex){
-            ex.getMessage();
-        }
-        return 0;
-
-    }
-
-    public void setNavBarBackgroundColor(String navBarBackgroundColor) {
-        this.navBarBackgroundColor = navBarBackgroundColor;
-    }
-
-    public int getNavBarTextIconColorDefault() {
-        try {
-            return Color.parseColor(navBarTextIconColorDefault);
-        }catch (Exception ex){
-            ex.getMessage();
-        }
-        return 0;
-    }
-    public void setNavBarTextIconColorDefault(String navBarTextIconColorDefault) {
-        this.navBarTextIconColorDefault = navBarTextIconColorDefault;
-    }
-    public int getNavBarTextIconColorTapping() {
-        try {
-            return Color.parseColor(navBarTextIconColorTapping);
+            return Color.parseColor(button_tapping_color);
         }catch (Exception ex){
             ex.getMessage();
         }
         return 0;
     }
 
-    public void setNavBarTextIconColorTapping(String navBarTextIconColorTapping) {
-        this.navBarTextIconColorTapping = navBarTextIconColorTapping;
+    public void setButton_tapping_color(String button_tapping_color) {
+        this.button_tapping_color = button_tapping_color;
     }
 
-    public int getSideMenuBackgroudColorDefault() {
+    public int getNavigation_bar_background_color() {
+
         try {
-            return Color.parseColor(sideMenuBackgroudColorDefault);
+            return Color.parseColor(navigation_bar_background_color);
         }catch (Exception ex){
             ex.getMessage();
         }
@@ -130,14 +91,37 @@ public class ThemeConfigModel implements Serializable{
 
     }
 
-    public void setSideMenuBackgroudColorDefault(String sideMenuBackgroudColorDefault) {
-        this.sideMenuBackgroudColorDefault = sideMenuBackgroudColorDefault;
+    public void setNavigation_bar_background_color(String navigation_bar_background_color) {
+        this.navigation_bar_background_color = navigation_bar_background_color;
     }
 
-    public int getSideMenuBackgroundColorSelected() {
-
+    public int getNavigation_bar_text_icon_default_color() {
         try {
-            return Color.parseColor(sideMenuBackgroundColorSelected);
+            return Color.parseColor(navigation_bar_text_icon_default_color);
+        }catch (Exception ex){
+            ex.getMessage();
+        }
+        return 0;
+    }
+    public void setNavigation_bar_text_icon_default_color(String navigation_bar_text_icon_default_color) {
+        this.navigation_bar_text_icon_default_color = navigation_bar_text_icon_default_color;
+    }
+    public int getNavigation_bar_text_icon_tapping_color() {
+        try {
+            return Color.parseColor(navigation_bar_text_icon_tapping_color);
+        }catch (Exception ex){
+            ex.getMessage();
+        }
+        return 0;
+    }
+
+    public void setNavigation_bar_text_icon_tapping_color(String navigation_bar_text_icon_tapping_color) {
+        this.navigation_bar_text_icon_tapping_color = navigation_bar_text_icon_tapping_color;
+    }
+
+    public int getSide_menu_background_default_color() {
+        try {
+            return Color.parseColor(side_menu_background_default_color);
         }catch (Exception ex){
             ex.getMessage();
         }
@@ -145,13 +129,14 @@ public class ThemeConfigModel implements Serializable{
 
     }
 
-    public void setSideMenuBackgroundColorSelected(String sideMenuBackgroundColorSelected) {
-        this.sideMenuBackgroundColorSelected = sideMenuBackgroundColorSelected;
+    public void setSide_menu_background_default_color(String side_menu_background_default_color) {
+        this.side_menu_background_default_color = side_menu_background_default_color;
     }
 
-    public int getSideMenuTextIconColorDefault() {
+    public int getSide_menu_background_selected_color() {
+
         try {
-            return Color.parseColor(sideMenuTextIconColorDefault);
+            return Color.parseColor(side_menu_background_selected_color);
         }catch (Exception ex){
             ex.getMessage();
         }
@@ -159,14 +144,13 @@ public class ThemeConfigModel implements Serializable{
 
     }
 
-    public void setSideMenuTextIconColorDefault(String sideMenuTextIconColorDefault) {
-        this.sideMenuTextIconColorDefault = sideMenuTextIconColorDefault;
+    public void setSide_menu_background_selected_color(String side_menu_background_selected_color) {
+        this.side_menu_background_selected_color = side_menu_background_selected_color;
     }
 
-    public int getSideMenuTextIconColorSelected() {
-
+    public int getSide_menu_text_icon_default_color() {
         try {
-            return Color.parseColor(sideMenuTextIconColorSelected);
+            return Color.parseColor(side_menu_text_icon_default_color);
         }catch (Exception ex){
             ex.getMessage();
         }
@@ -174,14 +158,29 @@ public class ThemeConfigModel implements Serializable{
 
     }
 
-    public void setSideMenuTextIconColorSelected(String sldeMenuTextIconColorSelected) {
-        this.sideMenuTextIconColorSelected = sldeMenuTextIconColorSelected;
+    public void setSide_menu_text_icon_default_color(String side_menu_text_icon_default_color) {
+        this.side_menu_text_icon_default_color = side_menu_text_icon_default_color;
     }
 
-    public int getSideMenuTextIconColorTapping() {
+    public int getSide_menu_text_icon_selected_color() {
 
         try {
-            return Color.parseColor(sideMenuTextIconColorTapping);
+            return Color.parseColor(side_menu_text_icon_selected_color);
+        }catch (Exception ex){
+            ex.getMessage();
+        }
+        return 0;
+
+    }
+
+    public void setSide_menu_text_icon_selected_color(String sldeMenuTextIconColorSelected) {
+        this.side_menu_text_icon_selected_color = sldeMenuTextIconColorSelected;
+    }
+
+    public int getSide_menu_text_icon_tapping_color() {
+
+        try {
+            return Color.parseColor(side_menu_text_icon_tapping_color);
         }catch (Exception ex){
             ex.getMessage();
         }
@@ -190,12 +189,12 @@ public class ThemeConfigModel implements Serializable{
     }
 
     public void setSldeMenuTextIconColorTapping(String sldeMenuTextIconColorTapping) {
-        this.sideMenuTextIconColorTapping = sldeMenuTextIconColorTapping;
+        this.side_menu_text_icon_tapping_color = sldeMenuTextIconColorTapping;
     }
 
-    public int getSearchBoxBackgroundColor() {
+    public int getSearch_box_background_color() {
         try {
-            return Color.parseColor(searchBoxBackgroundColor);
+            return Color.parseColor(search_box_background_color);
         }catch (Exception ex){
             ex.getMessage();
         }
@@ -203,20 +202,20 @@ public class ThemeConfigModel implements Serializable{
 
     }
 
-    public void setSearchBoxBackgroundColor(String searchBoxBackgroundColor) {
-        this.searchBoxBackgroundColor = searchBoxBackgroundColor;
+    public void setSearch_box_background_color(String search_box_background_color) {
+        this.search_box_background_color = search_box_background_color;
     }
 
-    public int getSearchBoxTextColor() {
+    public int getSearch_box_text_color() {
         try {
-            return Color.parseColor(searchBoxTextColor);
+            return Color.parseColor(search_box_text_color);
         }catch (Exception ex){
             ex.getMessage();
         }
         return 0;
     }
 
-    public void setSearchBoxTextColor(String searchBoxTextColor) {
-        this.searchBoxTextColor = searchBoxTextColor;
+    public void setSearch_box_text_color(String search_box_text_color) {
+        this.search_box_text_color = search_box_text_color;
     }
 }

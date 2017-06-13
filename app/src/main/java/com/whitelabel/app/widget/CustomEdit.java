@@ -62,7 +62,7 @@ public class CustomEdit extends LinearLayout implements View.OnFocusChangeListen
         myText1= (TextView) view.findViewById(R.id.my_text1);
         myText2=(TextView) view.findViewById(R.id.my_text2);
         myEditText.setOnFocusChangeListener(this);
-        myText1.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        myText1.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         myEditText.setHint(hint);
         myText1.setText(hint);
         myText2.setText(hint);
@@ -117,7 +117,7 @@ public class CustomEdit extends LinearLayout implements View.OnFocusChangeListen
                     myText1.startAnimation(set);
                 } else {
                     myText2.setVisibility(View.VISIBLE);
-                    myText2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+                    myText2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
                 }
 
             }
@@ -186,7 +186,7 @@ public class CustomEdit extends LinearLayout implements View.OnFocusChangeListen
         if(TextUtils.isEmpty(text)){
             myText2.setText(hint);
             myText2.setVisibility(View.VISIBLE);
-            myText2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+            myText2.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         }else {
             myEditText.setHint(hint);
             myText2.setVisibility(View.VISIBLE);

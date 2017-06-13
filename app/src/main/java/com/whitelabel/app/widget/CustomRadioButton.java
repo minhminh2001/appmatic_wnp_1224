@@ -33,7 +33,7 @@ public class CustomRadioButton  extends RelativeLayout{
 //        ivBigImage.setBackground(JImageUtils.getThemeCircle(context));
         ivSmallImage.setBackground(JImageUtils.getThemeCircle(context));
         GradientDrawable drawable= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.radio_oval);
-        drawable.setStroke(JScreenUtils.dip2px(context,2), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+        drawable.setStroke(JScreenUtils.dip2px(context,2), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         ivBigImage.setBackground(drawable);
         addView(view);
     }
@@ -41,7 +41,7 @@ public class CustomRadioButton  extends RelativeLayout{
     public void setSelect(boolean  selected){
         if(selected){
             GradientDrawable drawable= (GradientDrawable) ContextCompat.getDrawable(getContext(), R.drawable.radio_oval);
-            drawable.setStroke(JScreenUtils.dip2px(getContext(),2), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor());
+            drawable.setStroke(JScreenUtils.dip2px(getContext(),2), WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
             ivBigImage.setBackground(drawable);
             ivSmallImage.setVisibility(View.VISIBLE);
         }else{

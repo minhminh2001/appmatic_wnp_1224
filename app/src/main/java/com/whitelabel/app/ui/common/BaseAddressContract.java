@@ -16,6 +16,9 @@ public class BaseAddressContract {
     public interface  View extends BaseView {
        public void  loadData(List<AddressBook> addressBooks);
        public void showNetworkErrorView();
+       public void showProgressDialog();
+       public void closeProgressDialog();
+       public  void closeSwipeLayout();
     }
     public interface  Presenter extends BasePresenter<BaseAddressContract.View> {
         public  void  getAddressListCache(String sessionKey);

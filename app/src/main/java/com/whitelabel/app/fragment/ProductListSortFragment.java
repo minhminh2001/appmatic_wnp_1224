@@ -71,7 +71,7 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
         if (bundle != null) {
             productListFilterSortPageEntity = (TMPProductListFilterSortPageEntity) bundle.getSerializable("data");
         }
-        contentView.findViewById(R.id.rlHeaderBar).setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavBarBackgroundColor());
+        contentView.findViewById(R.id.rlHeaderBar).setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavigation_bar_background_color());
         rlHeaderbarCancel = (RelativeLayout) contentView.findViewById(R.id.rl_headerbar_cancel);
         rlHeaderbarCancel.setOnClickListener(this);
         lvSortConditions = (ListView) contentView.findViewById(R.id.lvSortConditions);

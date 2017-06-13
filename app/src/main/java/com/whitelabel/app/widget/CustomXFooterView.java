@@ -152,9 +152,9 @@ public class CustomXFooterView extends LinearLayout {
 
             mProgressBar.setIndeterminateTintMode(PorterDuff.Mode.SRC_ATOP);
             mProgressBar.setIndeterminateTintList(ColorStateList.
-                    valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor()));
+                    valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color()));
 //            mProgressBar.getIndeterminateDrawable().setColorFilter(
-//                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getKeyColor(), android.graphics.PorterDuff.Mode.MULTIPLY);
+//                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color(), android.graphics.PorterDuff.Mode.MULTIPLY);
         }
         mHintView = (TextView) moreView
                 .findViewById(R.id.xlistview_footer_hint_textview);
