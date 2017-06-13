@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+
+import com.whitelabel.app.R;
+import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.ui.common.BaseAddressFragment;
 import java.util.ArrayList;
@@ -29,6 +32,15 @@ public class CheckoutSelectAddressFragment extends BaseAddressFragment {
         checkoutSelectAddressFragment.setArguments(bundle);
          return checkoutSelectAddressFragment;
     }
+
+    @Override
+    public void addAddressBtnOnClick() {
+        Intent intent=new Intent(getActivity(), AddAddressActivity.class);
+        intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT,false);
+        startActivityForResult(intent,REQUEST_ADD_ADDRESS);
+        getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+    }
+
     @Override
     public List<AddressBook> handlerAddressData(List<AddressBook> addressBooks) {
         for(int i=0;i<addressBooks.size();i++){

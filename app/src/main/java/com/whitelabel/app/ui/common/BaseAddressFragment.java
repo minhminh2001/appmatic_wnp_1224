@@ -29,14 +29,11 @@ import com.whitelabel.app.widget.swipemenulistview.SwipeMenu;
 import com.whitelabel.app.widget.swipemenulistview.SwipeMenuCreator;
 import com.whitelabel.app.widget.swipemenulistview.SwipeMenuItem;
 import com.whitelabel.app.widget.swipemenulistview.SwipeMenuListView;
-
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -116,7 +113,8 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     }
     @Override
     public void onRefresh() {
-        requestData(false);
+        String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+        mPresenter.getAddressListOnLine(sessionKey);
     }
     @Override
     public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
@@ -139,13 +137,7 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         }
         return false;
     }
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            useCache = getArguments().getBoolean(EXTRA_USE_CACHE);
-        }
-    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -156,7 +148,10 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     }
     @Override
     public BaseAddressContract.Presenter getPresenter() {
-        return new BaseAddressPresenter();
+        if (getArguments() != null) {
+            useCache = getArguments().getBoolean(EXTRA_USE_CACHE);
+        }
+        return new BaseAddressPresenter(useCache);
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -164,15 +159,21 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         swipeContainer.setOnRefreshListener(this);
         setSwipeListView();
-        requestData(true);
-    }
-    public void  requestData(boolean showDialog){
-        String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-        if(showDialog){
-            showProgressDialog();
+        if(useCache){
+            requestCacheData();
         }
+        requestData();
+    }
+    public void requestCacheData(){
+        String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+        mPresenter.getAddressListCache(sessionKey);
+    }
+    public void  requestData(){
+        String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
         if (useCache) {
-            mPresenter.getAddressListCache(sessionKey);
+            swipeContainer.setRefreshing(true);
+        }else{
+            showProgressDialog();
         }
         mPresenter.getAddressListOnLine(sessionKey);
     }
@@ -226,18 +227,12 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         super.onActivityResult(requestCode, resultCode, data);
         if((requestCode==REQUEST_ADD_ADDRESS&&resultCode==AddAddressActivity.RESULT_CODE)
                 ||(requestCode==REQUEST_EDIT_ADDRESS&&resultCode==EditAddressActivity.RESULT_CODE)){
-            requestData(false);
+            requestData();
         }
     }
     @OnClick(R.id.addressbook_add_textview)
     public void onViewClicked() {
-        Intent intent=new Intent(getActivity(), AddAddressActivity.class);
-        intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT,false);
-        if(getParentFragment()!=null){
-            getParentFragment().startActivityForResult(intent,REQUEST_ADD_ADDRESS);
-        }else{
-            startActivityForResult(intent,REQUEST_ADD_ADDRESS);
-        }
-        getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+            addAddressBtnOnClick();
     }
+    public  abstract  void  addAddressBtnOnClick();
 }

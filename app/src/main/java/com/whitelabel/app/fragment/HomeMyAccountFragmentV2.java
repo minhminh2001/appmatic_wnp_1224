@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.ui.home.HomeAccountAddressBookFragmentV3;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.MyAccountTopMenuView;
@@ -125,7 +126,7 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
                 currFragment = mFragmentOrderlist;
                 transaction.add(R.id.frame, mFragmentOrderlist, tag);
             } else if (tag.equals(TAG_ADDRESSLIST)) {
-                mFragmentAddresslist = new HomeMyAccountAddressBookFragment();
+                mFragmentAddresslist =  HomeAccountAddressBookFragmentV3.newInstance(true);
                 currFragment = mFragmentAddresslist;
                 transaction.add(R.id.frame, mFragmentAddresslist, tag);
             }
@@ -222,8 +223,8 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         if (resultCode == 1000) {
             FragmentManager fragmentManager = getChildFragmentManager();
             Fragment currFragment = fragmentManager.findFragmentByTag(mCurrTag);
-            if (currFragment instanceof HomeMyAccountAddressBookFragment) {
-                ((HomeMyAccountAddressBookFragment) currFragment).refresh(true);
+            if (currFragment instanceof HomeAccountAddressBookFragmentV3) {
+                ((HomeAccountAddressBookFragmentV3) currFragment).requestData();
                 return;
             }
         }

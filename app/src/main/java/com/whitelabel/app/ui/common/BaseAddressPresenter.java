@@ -14,6 +14,10 @@ import rx.functions.Action1;
  * Created by Administrator on 2017/6/12.
  */
 public class BaseAddressPresenter extends RxPresenter<BaseAddressContract.View> implements BaseAddressContract.Presenter {
+    private boolean  useCache;
+    public BaseAddressPresenter(boolean  useCache){
+        this.useCache=useCache;
+    }
     @Override
     public void getAddressListCache(String sessionKey) {
         DataManager.getInstance().getPreferHelper().
@@ -40,6 +44,9 @@ public class BaseAddressPresenter extends RxPresenter<BaseAddressContract.View> 
                         mView.closeProgressDialog();
                         mView.closeSwipeLayout();
                         if(addresslistReslut.getStatus()==1){
+                            if(useCache){
+                                DataManager.getInstance().getPreferHelper().saveAddressList(WhiteLabelApplication.getAppConfiguration().getUser().getId(),addresslistReslut.getAddress());
+                            }
                             mView.loadData(addresslistReslut.getAddress());
                         }
                     }

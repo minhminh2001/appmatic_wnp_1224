@@ -65,6 +65,20 @@ public class PreferHelper {
         }
         return retomeConfig;
     }
+    public  void  saveAddressList(String userId,List<AddressBook> beans){
+        try {
+            SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences("myAccount", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            Gson gson = new Gson();
+            String beanStr = gson.toJson(beans);
+            editor.putString("address_"+userId, beanStr);
+            editor.commit();
+        }catch (Exception ex){
+            ex.getStackTrace();
+        }
+
+    }
+
     public rx.Observable<List<AddressBook>> getAddressListCache(final String userId){
        return  rx.Observable.fromCallable(new Callable<List<AddressBook>>() {
             @Override
