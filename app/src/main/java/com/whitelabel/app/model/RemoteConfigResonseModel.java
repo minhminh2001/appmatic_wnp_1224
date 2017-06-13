@@ -7,17 +7,14 @@ import java.io.Serializable;
  */
 
 public class RemoteConfigResonseModel implements Serializable {
-
     /**
      * status : 1
      * message :
      * data : {"uiStyle":{"themeColor":"","navBarBackgroudColor":"","navBarTextIconColor":"","sideMenuColor":"","sldeMenuTextIconColor":"","sideMenuTextIconSelectedColor":""},"baseUrl":{"serviceBaseUrl":""},"version":100001}
      */
-
     private int code;
     private String message;
     private RetomeConfig data;
-
     public int getCode() {
         return code;
     }
@@ -48,20 +45,16 @@ public class RemoteConfigResonseModel implements Serializable {
          * baseUrl : {"serviceBaseUrl":""}
          * version : 100001
          */
-
         private ThemeConfigModel uiStyle;
         private LayoutStyleModel layoutStyle;
         private String version;
         private ThirdPartyConfig thirdParty;
-
         public LayoutStyleModel getLayoutStyle() {
             return layoutStyle;
         }
-
         public void setLayoutStyle(LayoutStyleModel layoutStyle) {
             this.layoutStyle = layoutStyle;
         }
-
         public ThirdPartyConfig getThirdParty() {
             return thirdParty;
         }
@@ -96,31 +89,24 @@ public class RemoteConfigResonseModel implements Serializable {
             private String sideMenuColor;
             private String sldeMenuTextIconColor;
             private String sideMenuTextIconSelectedColor;
-
             public String getThemeColor() {
                 return themeColor;
             }
-
             public String getButtonPressColor() {
                 return buttonPressColor;
             }
-
             public void setButtonPressColor(String buttonPressColor) {
                 this.buttonPressColor = buttonPressColor;
             }
-
             public void setThemeColor(String themeColor) {
                 this.themeColor = themeColor;
             }
-
             public String getNavBarBackgroudColor() {
                 return navBarBackgroudColor;
             }
-
             public void setNavBarBackgroudColor(String navBarBackgroudColor) {
                 this.navBarBackgroudColor = navBarBackgroudColor;
             }
-
             public String getNavBarTextIconColor() {
                 return navBarTextIconColor;
             }

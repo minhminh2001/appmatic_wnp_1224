@@ -57,7 +57,6 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
             @Override
             public void call(Object o) {
                 if(o instanceof RemoteConfigResonseModel){
-
                     RemoteConfigResonseModel  remoteConfigResonseModel= (RemoteConfigResonseModel) o;
                     WhiteLabelApplication.getAppConfiguration().initAppConfig(
                             remoteConfigResonseModel.getData());

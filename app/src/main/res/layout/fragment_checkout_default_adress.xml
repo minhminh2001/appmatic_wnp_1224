@@ -61,7 +61,7 @@
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/black000000"
                     android:textSize="15sp"
-                    android:visibility="gone" />
+                    />
             </LinearLayout>
 
             <com.whitelabel.app.widget.CustomTextView
@@ -178,7 +178,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:visibility="gone"
                 android:textColor="@color/black000000"
                 android:textSize="15sp"
                 style="@style/font_family_roboto_medium" />
