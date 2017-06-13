@@ -24,6 +24,7 @@ import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.BaseView;
 import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomButton;
@@ -193,10 +194,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
     }
-
-
     public void  setRetryTheme(View view){
         ImageView ivTryAgain= (ImageView) view.findViewById(R.id.iv_try_again);
         CustomButton btnAgain= (CustomButton)  view.findViewById(R.id.btn_try_again);
@@ -206,11 +204,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         }
     }
     protected void onAnimationStarted () {}
-
     protected void onAnimationEnded () {}
-
     protected void onAnimationRepeated () {}
-
     @Override
     public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
         Animation anim = super.onCreateAnimation(transit, enter, nextAnim);

@@ -1257,7 +1257,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 if (!TextUtils.isEmpty(detailDelivery1)) {
                     sb.append(detailDelivery1 + "<br>");
                 }
-
                 String detailDelivery2 = mProductDetailBean.getShippingInfo().getDetailDelivery2();
                 if (!TextUtils.isEmpty(detailDelivery2)) {
                     detailDelivery2 = detailDelivery2.replace("<li>","");
@@ -1272,7 +1271,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         return "";
     }
 //    private WebView wbProductDetail;
-
     private WebView getWebView() {
         WebView webView = new WebView(getApplicationContext());
         webView.getSettings().setJavaScriptEnabled(true);

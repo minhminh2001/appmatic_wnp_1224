@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import com.whitelabel.app.BaseFragment;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
@@ -21,7 +20,9 @@ import com.whitelabel.app.activity.EditAddressActivity;
 import com.whitelabel.app.adapter.AddressBookAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
+import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomTextView;
@@ -76,13 +77,16 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     private int mMenuWidth = 50;
     public final static  int REQUEST_EDIT_ADDRESS=1000;
     public final static  int REQUEST_ADD_ADDRESS=2000;
-    public abstract List<AddressBook> handlerAddressData(List<AddressBook> addressBooks);
     private AddressBookAdapter mAddressBookAdapter;
     protected final static String EXTRA_USE_CACHE = "use_cache";
+    private RequestErrorHelper requestErrorHelper;
     // TODO: Rename parameter arguments, choose names that match
     public BaseAddressFragment() {
         // Required empty public constructor
     }
+    public abstract List<Integer> getDeleteFuntionPostions();
+    public abstract  void  addAddressBtnOnClick();
+    public abstract List<AddressBook> handlerAddressData(List<AddressBook> addressBooks);
     public AddressBookAdapter getAdapter() {
         return mAddressBookAdapter;
     }
@@ -95,7 +99,11 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         swipeContainer.setEnabled(true);
     }
     @Override
-    public void showNetworkErrorView() {
+    public void showNetworkErrorView(String errorMsg) {
+        if(mAddressBookAdapter==null||mAddressBookAdapter.getData().size()==0){
+           addressbookAddTextview.setVisibility(View.INVISIBLE);
+           requestErrorHelper.showConnectionBreaks(BaseHttp.ERROR_TYPE_NET);
+        }
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -144,6 +152,7 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_base_address, container, false);
         unbinder = ButterKnife.bind(this, view);
+        setRetryTheme(view);
         return view;
     }
     @Override
@@ -158,11 +167,19 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         super.onActivityCreated(savedInstanceState);
         swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         swipeContainer.setOnRefreshListener(this);
+        requestErrorHelper=new RequestErrorHelper(getActivity(),connectionBreaks);
         setSwipeListView();
         if(useCache){
             requestCacheData();
+        }else {
+            requestData();
         }
-        requestData();
+    }
+    @Override
+    public void loadCachaData(List<AddressBook> addressBooks) {
+            String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+            mPresenter.getAddressListOnLine(sessionKey);
+            loadData(addressBooks);
     }
     public void requestCacheData(){
         String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
@@ -191,9 +208,9 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
                 openItem.setIcon(getResources().getDrawable(R.drawable.draw_edit));
                 // add to menu
                 menu.addMenuItem(openItem);
-                if (getDeleteFuntionPostions() != null) {
-                    if (getDeleteFuntionPostions().contains(position)) {
-                        menu.addMenuItem(createDeleteSwipeItem());
+              if (getDeleteFuntionPostions() != null) {
+                    for(int  index: getDeleteFuntionPostions()){
+                         if(index==position)menu.addMenuItem(createDeleteSwipeItem());
                     }
                 }
             }
@@ -204,7 +221,6 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         mListView.setOnMenuItemClickListener(this);
         mListView.setOnSwipeListener(this);
     }
-    public abstract List<Integer> getDeleteFuntionPostions();
     public final SwipeMenuItem createDeleteSwipeItem() {
         SwipeMenuItem deleteItem = new SwipeMenuItem(
                 getActivity());
@@ -230,9 +246,17 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
             requestData();
         }
     }
-    @OnClick(R.id.addressbook_add_textview)
-    public void onViewClicked() {
-            addAddressBtnOnClick();
+    @OnClick({R.id.addressbook_add_textview,R.id.try_again})
+    public void onViewClicked(View view) {
+           switch(view.getId()){
+               case R.id.addressbook_add_textview:
+                   addAddressBtnOnClick();
+                   break;
+               case R.id.try_again:
+                   connectionBreaks.setVisibility(View.GONE);
+                   requestData();
+                   break;
+           }
     }
-    public  abstract  void  addAddressBtnOnClick();
+
 }

@@ -1122,6 +1122,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         //加载  shoppingCart 底部布局文件, adapter里通过调用 getInfoView 来获取view,并绑定在viewHolder上。
         infoView = inflater.inflate(R.layout.fragment_shopping_cart_vertical_info, container, false);
         initInfoView(infoView);
+        setRetryTheme(view);
         return view;
     }
     @Override

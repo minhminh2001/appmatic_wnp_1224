@@ -7,6 +7,7 @@ import com.whitelabel.app.model.ApiFaildException;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.ExceptionParse;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 import java.util.List;
 import rx.functions.Action1;
@@ -54,9 +55,9 @@ public class BaseAddressPresenter extends RxPresenter<BaseAddressContract.View> 
                     @Override
                     protected void requestError(ApiFaildException ex) {
                         mView.closeProgressDialog();
-                        mView.closeSwipeLayout();
+                        JLogUtils.i("ray","apiFaildException："+ex);
                         if(ex.getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
-                            mView.showNetworkErrorView();
+                            mView.showNetworkErrorView(ex.getErrorMsg());
                         }
                     }
                 });

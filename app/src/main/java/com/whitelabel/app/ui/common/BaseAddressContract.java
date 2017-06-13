@@ -15,7 +15,8 @@ import java.util.List;
 public class BaseAddressContract {
     public interface  View extends BaseView {
        public void  loadData(List<AddressBook> addressBooks);
-       public void showNetworkErrorView();
+       public void  loadCachaData(List<AddressBook> addressBooks);
+       public void showNetworkErrorView(String errorMsg);
        public void showProgressDialog();
        public void closeProgressDialog();
        public  void closeSwipeLayout();

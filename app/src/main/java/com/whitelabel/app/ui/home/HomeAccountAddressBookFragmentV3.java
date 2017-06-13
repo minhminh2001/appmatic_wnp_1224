@@ -1,23 +1,14 @@
 package com.whitelabel.app.ui.home;
-
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.fragment.MyAccountFragmentRefresh;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.ui.common.BaseAddressFragment;
-
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -41,7 +32,6 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public List<AddressBook> handlerAddressData(List<AddressBook> addressBooks) {
          ArrayList<AddressBook> mBeans = new ArrayList<AddressBook>();
@@ -67,18 +57,17 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
     public List<Integer> getDeleteFuntionPostions() {
         List<Integer>  deleteFuntionPostions=new ArrayList<>();
         for(int i=0;i<getAdapter().getData().size();i++){
-                if("1".equals(getAdapter().getData().get(i).getPrimaryBilling())||
-                        "1".equals(getAdapter().getData().get(i).getPrimaryShipping())) {
+                if(!"1".equals(getAdapter().getData().get(i).getPrimaryBilling())&&
+                        !"1".equals(getAdapter().getData().get(i).getPrimaryShipping())) {
                     deleteFuntionPostions.add(i);
                 }
         }
-        return null;
+        return deleteFuntionPostions;
     }
     @Override
     public void refresh(boolean isRefresh) {
         requestData();
     }
-
     @Override
     public void addAddressBtnOnClick() {
         Intent intent=new Intent(getActivity(), AddAddressActivity.class);
@@ -86,10 +75,8 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
         getParentFragment().startActivityForResult(intent,REQUEST_ADD_ADDRESS);
         getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 }

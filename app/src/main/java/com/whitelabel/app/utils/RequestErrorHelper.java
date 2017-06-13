@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.network.BaseHttp;
 
 import java.lang.ref.WeakReference;
@@ -95,6 +96,7 @@ public class RequestErrorHelper {
     }
 
     public void setResponseButtonText(String message) {
+        ((Button) mConnectionLayout.get().findViewById(R.id.btn_try_again)).setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         ((Button) mConnectionLayout.get().findViewById(R.id.btn_try_again)).setText(message);
     }
 
