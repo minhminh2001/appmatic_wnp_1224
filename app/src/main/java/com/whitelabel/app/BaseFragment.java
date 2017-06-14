@@ -58,7 +58,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
             mPresenter.attachView(this);
         }
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

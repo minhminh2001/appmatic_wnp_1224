@@ -32,7 +32,6 @@ public class CheckoutSelectAddressFragment extends BaseAddressFragment {
         checkoutSelectAddressFragment.setArguments(bundle);
          return checkoutSelectAddressFragment;
     }
-
     @Override
     public void addAddressBtnOnClick() {
         Intent intent=new Intent(getActivity(), AddAddressActivity.class);

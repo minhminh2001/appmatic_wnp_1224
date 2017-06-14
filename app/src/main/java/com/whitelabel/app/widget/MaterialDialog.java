@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 
 /**
@@ -93,8 +94,6 @@ public class MaterialDialog {
         }
         return this;
     }
-
-
     /**
      * Set a custom view resource to be the contents of the dialog.
      *
@@ -117,11 +116,6 @@ public class MaterialDialog {
         }
         return this;
     }
-
-
-
-
-
     public MaterialDialog setBackgroundResource(int resId) {
         mBackgroundResId = resId;
         if (mBuilder != null) {
@@ -176,13 +170,10 @@ public class MaterialDialog {
         }
         return this;
     }
-
     private boolean canable;
     public void setCancelable(boolean isCancel){
         canable=isCancel;
     }
-
-
     public MaterialDialog setMessage(CharSequence message) {
         mMessage = message;
         if (mBuilder != null) {
@@ -190,15 +181,11 @@ public class MaterialDialog {
         }
         return this;
     }
-
-
     public MaterialDialog setPositiveButton(int resId, final View.OnClickListener listener) {
         this.pId = resId;
         this.pListener = listener;
         return this;
     }
-
-
     public Button getPositiveButton() {
         return mPositiveButton;
     }
@@ -252,34 +239,31 @@ public class MaterialDialog {
         private TextView mMessageView;
         private Window mAlertDialogWindow;
         private LinearLayout mButtonLayout;
-
-
         private Builder() {
             mAlertDialog = new AlertDialog.Builder(mContext).create();
             mAlertDialog.setCancelable(canable);
             mAlertDialog.show();
-
             mAlertDialog.getWindow()
-                        .clearFlags(
-                                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
-                                        WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                    .clearFlags(
+                            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                                    WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
             mAlertDialog.getWindow()
-                        .setSoftInputMode(
-                                WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
+                    .setSoftInputMode(
+                            WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
 
             mAlertDialogWindow = mAlertDialog.getWindow();
+            WindowManager.LayoutParams  p = mAlertDialogWindow.getAttributes();
+            p.width= JDataUtils.dp2Px(280);
+            mAlertDialogWindow.setAttributes(p);
             View contentView = LayoutInflater.from(mContext)
-                                             .inflate(
-                                                     R.layout.layout_materialdialog,
-                                                     null);
+                    .inflate(
+                            R.layout.layout_materialdialog,
+                            null);
             contentView.setFocusable(true);
             contentView.setFocusableInTouchMode(true);
-
             mAlertDialogWindow.setBackgroundDrawableResource(
                     R.drawable.material_dialog_window);
-
             mAlertDialogWindow.setContentView(contentView);
-
             mTitleView = (TextView) mAlertDialogWindow.findViewById(R.id.title);
             mMessageView = (TextView) mAlertDialogWindow.findViewById(
                     R.id.message);

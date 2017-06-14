@@ -437,15 +437,12 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         FacebookSdk.sdkInitialize(loginRegisterActivity.getApplicationContext());
         facebookCallbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(facebookCallbackManager, facebookCallback);
-
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView = inflater.inflate(R.layout.fragment_loginregister_login, null);
         return contentView;
     }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

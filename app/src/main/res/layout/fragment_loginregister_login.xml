@@ -278,10 +278,8 @@
                             android:text="@string/name_password_error"
                             android:textSize="14sp"
                             android:textColor="@color/redC2060A"/>
-
                         <RelativeLayout
                             android:layout_below="@+id/error"
-
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/clickEmailInfo"
@@ -311,7 +309,6 @@
                             </RelativeLayout>
                         </RelativeLayout>
                     </RelativeLayout>
-
                     <com.whitelabel.app.widget.CustomButton
                         style="@style/font_family_roboto_medium"
                         android:id="@+id/sign_in"
@@ -322,7 +319,6 @@
                         android:text="@string/sign_in"
                         android:textColor="@color/buttonTextColorPrimary"
                         android:textSize="16sp" />
-
                     <com.whitelabel.app.widget.CustomTextView
                         style="@style/font_family_robot_regular"
                         android:id="@+id/forgot_password"
