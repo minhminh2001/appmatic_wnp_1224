@@ -14,9 +14,18 @@ public class CheckoutPaymentReturnShippingAddress implements Serializable{
     private String region;
     private String postcode;
     private String country;
+    private String fax;
     private String telephone;
 
     public CheckoutPaymentReturnShippingAddress() {
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
     }
 
     public CheckoutPaymentReturnShippingAddress(String firstname, String lastname, String street, String city, String region, String postcode, String country, String telephone) {

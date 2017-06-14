@@ -1,14 +1,12 @@
 package com.whitelabel.app.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -16,12 +14,10 @@ import android.widget.TextView;
 
 import com.whitelabel.app.*;
 import com.whitelabel.app.activity.CheckoutActivity;
-import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.adapter.CheckoutReviewShoppingCartAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.CheckoutPaymentReturnShippingAddress;
 import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
-import com.whitelabel.app.model.SVRAppserviceSaveBillingEntity;
 import com.whitelabel.app.model.ShoppingCarStoreCreditBean;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.network.ImageLoader;
@@ -29,7 +25,6 @@ import com.whitelabel.app.utils.FileUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.widget.CustomWebView;
 
 import java.util.ArrayList;
@@ -43,7 +38,8 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
     private RelativeLayout rlVoucherText;
     public TextView tvErrorMsg;
     private CheckoutReviewShoppingCartAdapter checkoutReviewShoppingCartAdapter;
-    private LinearLayout llAddress;
+    private LinearLayout llShippingAddress;
+    private LinearLayout llBillingAddress;
     private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
     public CheckoutPaymentReturnShippingAddress address;
     /**
@@ -111,7 +107,8 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
         checkoutReviewShoppingCartAdapter = new CheckoutReviewShoppingCartAdapter(checkoutActivity, mImageLoader);
         lvShoppingCart.setAdapter(checkoutReviewShoppingCartAdapter);
         //address container
-        llAddress = (LinearLayout) view.findViewById(R.id.ll_checkout_review_address);
+        llShippingAddress = (LinearLayout) view.findViewById(R.id.ll_checkout_review_address);
+        llBillingAddress= (LinearLayout) view.findViewById(R.id.ll_checkout_review_billling_address);
         initData();
         tvWord.setFocusable(true);
         tvWord.setFocusableInTouchMode(true);
@@ -151,7 +148,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
 /*<<<<<<< HEAD
         paymentSaveReturnEntity = (CheckoutPaymentSaveReturnEntity) getArguments().getSerializable("paymentSaveReturnEntity");
 
-        //Set Datas to ShippingAddress and inflate llAddress with an address cell
+        //Set Datas to ShippingAddress and inflate llShippingAddress with an address cell
         address = paymentSaveReturnEntity.getShippingAddress();
         View view = LayoutInflater.from(checkoutActivity).inflate(R.layout.fragment_checkout_shipping_selectaddress_cell_for_review,null);
         view.findViewById(R.id.image_address_select_top).setVisibility(View.GONE);
@@ -198,62 +195,23 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
             }else{
                 mTvInstruction.setText("");
             }
-            //Set Datas to ShippingAddress and inflate llAddress with an address cell
-            address = paymentSaveReturnEntity.getShippingAddress();
-            View view = LayoutInflater.from(checkoutActivity).inflate(R.layout.fragment_checkout_shipping_selectaddress_cell_for_review, null);
-            view.findViewById(R.id.image_address_select_top).setVisibility(View.GONE);
-            view.findViewById(R.id.image_address_select_end).setVisibility(View.GONE);
-            //view.findViewById(R.id.btn_address_select_cover).setVisibility(View.GONE);
-            TextView tvFirstname = (TextView) view.findViewById(R.id.tv_address_select_firstname);
-            //TextView tvLastname = (TextView) view.findViewById(R.id.tv_address_select_lastname);
-            TextView tvAddress1 = (TextView) view.findViewById(R.id.tv_address_select_address1);
-            TextView tvAddress2 = (TextView) view.findViewById(R.id.tv_address_select_address2);
-            TextView tvCityStatePostcode = (TextView) view.findViewById(R.id.tv_address_select_citystatepostcode);
-            TextView tvCountry = (TextView) view.findViewById(R.id.tv_address_select_country);
-            TextView tvTelephone = (TextView) view.findViewById(R.id.tv_address_select_telephone);
-            tvFirstname.setText(address.getFirstname() + " " + address.getLastname());
-            //tvLastname.setText(address.getLastname());
-            tvAddress1.setText(address.getStreet());
-            tvAddress2.setVisibility(View.GONE);
-            //initstoreCredit
-            initStoreCredit(paymentSaveReturnEntity.getStoreCredit());
+            //Set Datas to ShippingAddress and inflate llShippingAddress with an address cell
+              address = paymentSaveReturnEntity.getShippingAddress();
+             View view = getAddressView(address);
+            llShippingAddress.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-            /**
-             * Constructor city,state,postcode
-             */
-
-            StringBuilder stringBuilder=new StringBuilder();
-            stringBuilder=stringBuilder.append(address.getCity()).append(",");
-            if(!JDataUtils.isEmpty(address.getRegion()) && !address.getRegion().equalsIgnoreCase("null")){
-                stringBuilder=stringBuilder.append(address.getRegion());
-            }
-            if(!TextUtils.isEmpty(address.getPostcode())){
-                stringBuilder=stringBuilder.append(",").append(address.getPostcode());
-            }
-
-//            String cityStatePostcode = address.getCity() + ", ";
-//            if (!JDataUtils.isEmpty(address.getRegion()) && !address.getRegion().equalsIgnoreCase("null")) {
-//                cityStatePostcode += address.getRegion() + ", ";
-//            }
-//            cityStatePostcode += address.getPostcode();
-            tvCityStatePostcode.setText(stringBuilder.toString());
-            tvCountry.setText(address.getCountry());
-            tvTelephone.setText(getResources().getString(R.string.t) + address.getTelephone());
-
-            llAddress.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            View  billingView=getAddressView(paymentSaveReturnEntity.getBillingAddress());
+            llBillingAddress.addView(billingView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
             //Set Datas to Payment Method
             payment_type = getArguments().getString("payment[molpay_type]");
-        String code = getArguments().getString("code");
+            String code = getArguments().getString("code");
 
             String paymentInfo = paymentSaveReturnEntity.getPaymentinfo();
             if (!TextUtils.isEmpty(paymentInfo)) {
                 //   JToolUtils.setWebViewText(checkoutActivity, paymentInfo, tvCreditCartTitleOnly);
                 webViewFont(paymentInfo);
             }
-
-
-//
 //            if(!TextUtils.isEmpty(checkoutActivity.paymentMethodCode)) {
 //                tvCardType.setText(paymentInfo.get("title"));
 //                String content=paymentInfo.get("instructions");
@@ -322,7 +280,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
 //                if (paymentSaveReturnEntity.getOrders_notice() != null) {
 //                    mTvInstruction.setText(paymentSaveReturnEntity.getOrders_notice());
 //                }
-//                //Set Datas to ShippingAddress and inflate llAddress with an address cell
+//                //Set Datas to ShippingAddress and inflate llShippingAddress with an address cell
 //                address = paymentSaveReturnEntity.getShippingAddress();
 //                View view = LayoutInflater.from(checkoutActivity).inflate(R.layout.fragment_checkout_shipping_selectaddress_cell_for_review, null);
 //                view.findViewById(R.id.image_address_select_top).setVisibility(View.GONE);
@@ -356,7 +314,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
 //                tvCountry.setText(address.getCountry());
 //                tvTelephone.setText(getResources().getString(R.string.t) + address.getTelephone());
 //
-//                llAddress.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//                llShippingAddress.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 //
 //                //Set Datas to Payment Method
 //                payment_type = getArguments().getString("payment[molpay_type]");
@@ -442,6 +400,48 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
 //            );
 //            checkoutActivity.mGATrackPaymentToReviewTimeEnable = false;
 //        }
+    }
+
+    @NonNull
+    private View getAddressView(CheckoutPaymentReturnShippingAddress address) {
+        View view = LayoutInflater.from(checkoutActivity).inflate(R.layout.fragment_checkout_shipping_selectaddress_cell_for_review, null);
+        view.findViewById(R.id.image_address_select_top).setVisibility(View.GONE);
+        view.findViewById(R.id.image_address_select_end).setVisibility(View.GONE);
+        //view.findViewById(R.id.btn_address_select_cover).setVisibility(View.GONE);
+        TextView tvFirstname = (TextView) view.findViewById(R.id.tv_address_select_firstname);
+        //TextView tvLastname = (TextView) view.findViewById(R.id.tv_address_select_lastname);
+        TextView tvAddress1 = (TextView) view.findViewById(R.id.tv_address_select_address1);
+        TextView tvAddress2 = (TextView) view.findViewById(R.id.tv_address_select_address2);
+        TextView  tvDayTimeTelephone= (TextView) view.findViewById(R.id.tv_day_time_telephone);
+        TextView tvCityStatePostcode = (TextView) view.findViewById(R.id.tv_address_select_citystatepostcode);
+        TextView tvCountry = (TextView) view.findViewById(R.id.tv_address_select_country);
+        TextView tvTelephone = (TextView) view.findViewById(R.id.tv_address_select_telephone);
+        tvFirstname.setText(address.getFirstname() + " " + address.getLastname());
+        //tvLastname.setText(address.getLastname());
+        tvAddress1.setText(address.getStreet());
+        tvAddress2.setVisibility(View.GONE);
+        //initstoreCredit
+        initStoreCredit(paymentSaveReturnEntity.getStoreCredit());
+        /**
+         * Constructor city,state,postcode
+         */
+        if(!TextUtils.isEmpty(address.getFax())){
+            tvDayTimeTelephone.setText(getResources().getString(R.string.day_time_contact)+" : "+address.getFax());
+        }else{
+            tvDayTimeTelephone.setVisibility(View.GONE);
+        }
+        StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder=stringBuilder.append(address.getCity()).append(",");
+        if(!JDataUtils.isEmpty(address.getRegion()) && !address.getRegion().equalsIgnoreCase("null")){
+            stringBuilder=stringBuilder.append(address.getRegion());
+        }
+        if(!TextUtils.isEmpty(address.getPostcode())){
+            stringBuilder=stringBuilder.append(",").append(address.getPostcode());
+        }
+        tvCityStatePostcode.setText(stringBuilder.toString());
+        tvCountry.setText(address.getCountry());
+        tvTelephone.setText(getResources().getString(R.string.address_mobile_number)+" : " + address.getTelephone());
+        return view;
     }
 
     /**

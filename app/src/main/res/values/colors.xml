@@ -55,6 +55,7 @@
     <!-- 灰色 -->
     <color name="greyDCDCDC">#DCDCDC</color>
     <color name="edittext_line">#1F000000</color>
+    <color name="device_line">#1e000000</color>
 
     <color name="grey878787">#878787</color>
     <color name="greyC2C2C2">#e1e1e1</color>

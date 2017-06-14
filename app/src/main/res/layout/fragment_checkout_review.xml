@@ -12,16 +12,18 @@
         style="@style/font_family_roboto_medium"
         android:layout_width="match_parent"
         android:paddingLeft="10dp"
-        android:layout_height="@dimen/checkout_line_height"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/checkout_line_space"
         android:gravity="center_vertical"
-        android:text="@string/Ship_To"
-        android:textSize="17sp"
+        android:text="@string/checkout_shipping_address"
+        android:paddingTop="16sp"
+        android:paddingBottom="16sp"
+        android:textSize="16sp"
         android:textColor="@color/black000000" />
 
     <View
         android:layout_width="fill_parent"
-        android:background="@color/greyE1E1E1"
+        android:background="@color/device_line"
         android:layout_height="@dimen/line_height"></View>
 
     <LinearLayout
@@ -34,24 +36,61 @@
         android:orientation="vertical">
 
     </LinearLayout>
+
     <View
         android:layout_width="fill_parent"
-        android:background="@color/greyE1E1E1"
+        android:background="@color/device_line"
+        android:layout_height="@dimen/line_height"></View>
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/tv_billing_title"
+        style="@style/font_family_roboto_medium"
+        android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/checkout_line_space"
+        android:gravity="center_vertical"
+        android:text="@string/checkout_billing_address"
+        android:paddingTop="16sp"
+        android:paddingBottom="16sp"
+        android:textSize="16sp"
+        android:textColor="@color/black000000" />
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:background="@color/device_line"
+        android:layout_height="@dimen/line_height"></View>
+
+    <LinearLayout
+        android:id="@+id/ll_checkout_review_billling_address"
+        android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/checkout_line_space"
+        android:orientation="vertical">
+    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:background="@color/device_line"
         android:layout_height="@dimen/line_height"></View>
 
     <com.whitelabel.app.widget.CustomTextView
         style="@style/font_family_roboto_medium"
         android:paddingLeft="10dp"
+        android:paddingTop="16sp"
+        android:paddingBottom="16sp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/checkout_line_height"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/checkout_line_space"
         android:gravity="center_vertical"
         android:text="@string/Payment_Method"
-        android:textSize="17sp"
+        android:textSize="16sp"
         android:textColor="@color/black000000" />
     <View
         android:layout_width="fill_parent"
-        android:background="@color/greyE1E1E1"
+        android:background="@color/device_line"
         android:layout_height="@dimen/line_height"></View>
 
     <LinearLayout
@@ -102,7 +141,7 @@
     </LinearLayout>
     <View
         android:layout_width="fill_parent"
-        android:background="@color/greyE1E1E1"
+        android:background="@color/device_line"
         android:layout_height="@dimen/line_height"></View>
 
     <com.whitelabel.app.widget.CustomTextView
@@ -114,7 +153,7 @@
         android:layout_marginBottom="@dimen/checkout_line_space"
         android:gravity="center_vertical"
         android:text="@string/Products"
-        android:textSize="17sp"
+        android:textSize="16sp"
         android:textColor="@color/black000000" />
 
 

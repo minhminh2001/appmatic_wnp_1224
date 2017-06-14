@@ -153,7 +153,7 @@
     <string name="I_would_like_to_pay_with">I would like to pay with</string>
     <string name="Grand_Total">GRAND TOTAL:</string>
     <string name="Grand_Total_below_description">6% GST applied where applicable &#160;</string>
-    <string name="Payment_Method">Payment Method: </string>
+    <string name="Payment_Method">Payment Method </string>
     <string name="Payment_Method_Edit_Label">Payment Method</string>
     <string name="PLACE_MY_ORDER">PLACE MY ORDER</string>
     <string name="payment_method_ONLINE_BANKING">Online Banking</string>

@@ -46,7 +46,7 @@
             android:orientation="horizontal">
 
             <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_roboto_medium"
+                style="@style/font_family_robot_regular"
                 android:id="@+id/tv_address_select_firstname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -105,6 +105,16 @@
         <com.whitelabel.app.widget.CustomTextView
             style="@style/font_family_robot_regular"
             android:id="@+id/tv_address_select_telephone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black000000"
+            android:textSize="14sp"
+            android:layout_marginTop="@dimen/address_select_text_space" />
+
+
+        <com.whitelabel.app.widget.CustomTextView
+            style="@style/font_family_robot_regular"
+            android:id="@+id/tv_day_time_telephone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black000000"

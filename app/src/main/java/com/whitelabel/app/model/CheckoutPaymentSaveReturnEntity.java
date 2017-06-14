@@ -10,6 +10,7 @@ public class CheckoutPaymentSaveReturnEntity extends SVRReturnEntity {
 
     private int status;
     private CheckoutPaymentReturnShippingAddress shippingAddress;
+    private CheckoutPaymentReturnShippingAddress billingAddress;
     private String paymentinfo;
     private ArrayList<ShoppingCartListEntityCell> reviewOrder;
     private String subtotal;
@@ -20,6 +21,14 @@ public class CheckoutPaymentSaveReturnEntity extends SVRReturnEntity {
     private String orders_notice;
     private String gst;
 
+
+    public CheckoutPaymentReturnShippingAddress getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(CheckoutPaymentReturnShippingAddress billingAddress) {
+        this.billingAddress = billingAddress;
+    }
 
     public String getOrders_notice() {
         return orders_notice;
