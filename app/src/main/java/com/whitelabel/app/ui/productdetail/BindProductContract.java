@@ -22,5 +22,6 @@ public interface BindProductContract {
         public void loadData(String productId);
         public void addToCart(String relatedProductIds,String sessionKey);
         public double computeSumPrice(List<SVRAppserviceProductDetailResultPropertyReturnEntity> svrAppserviceProductDetailResultPropertyReturnEntities);
+        public boolean  checkProductIsSelected(List<SVRAppserviceProductDetailResultPropertyReturnEntity> svrAppserviceProductDetailResultPropertyReturnEntities);
     }
 }

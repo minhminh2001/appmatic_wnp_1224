@@ -119,74 +119,106 @@
                     android:layout_marginTop="6dp"
                     android:textColor="@color/black000000"
                     android:textSize="14sp" />
-
-                <com.whitelabel.app.widget.CustomTextView
-                    style="@style/font_family_robot_regular"
+                <LinearLayout
+                    android:id="@+id/ll_shipping_address"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/orderdetail_line_space"
-                    android:background="@color/gray_light"
-                    android:visibility="gone"/>
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
 
-                <!--Shipping Address Data-->
+                </LinearLayout>
+                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--style="@style/font_family_robot_regular"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="@dimen/orderdetail_line_space"-->
+                    <!--android:background="@color/gray_light"-->
+                    <!--android:visibility="gone"/>-->
+
+                <!--&lt;!&ndash;Shipping Address Data&ndash;&gt;-->
+
+                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--android:id="@+id/tv_order_detail_username"-->
+                    <!--style="@style/font_family_roboto_medium"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:textColor="@color/black000000"-->
+                    <!--android:textSize="@dimen/checkout_and_order_common_textsize" />-->
+
+                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--style="@style/font_family_robot_regular"-->
+                    <!--android:id="@+id/tv_order_detail_address1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:textSize="@dimen/checkout_and_order_common_textsize"-->
+                    <!--android:textColor="@color/black000000" />-->
+
+                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--style="@style/font_family_robot_regular"-->
+                    <!--android:id="@+id/tv_order_detail_address2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:textSize="@dimen/checkout_and_order_common_textsize"-->
+                    <!--android:textColor="@color/black000000"-->
+                    <!--android:visibility="gone" />-->
+
+                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--style="@style/font_family_robot_regular"-->
+                    <!--android:id="@+id/tv_order_detail_citystatepostcode"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:textSize="@dimen/checkout_and_order_common_textsize"-->
+                    <!--android:textColor="@color/black000000" />-->
+
+                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--style="@style/font_family_robot_regular"-->
+                    <!--android:id="@+id/tv_order_detail_country"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/malaysia"-->
+                    <!--android:textSize="@dimen/checkout_and_order_common_textsize"-->
+                    <!--android:textColor="@color/black000000"-->
+                    <!--android:gravity="center_vertical" />-->
+
+                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--style="@style/font_family_robot_regular"-->
+                    <!--android:id="@+id/tv_order_detail_telephone"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="10dp"-->
+                    <!--android:layout_marginTop="8dp"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:textSize="@dimen/checkout_and_order_common_textsize"-->
+                    <!--android:textColor="@color/black000000" />-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="3dp"
+                android:background="@color/greyEEEEEE"
+                android:paddingLeft="10dp">
+                <!--Shipping Address Title-->
                 <com.whitelabel.app.widget.CustomTextView
                     style="@style/font_family_roboto_medium"
-                    android:id="@+id/tv_order_detail_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:gravity="center_vertical"
-                    android:textSize="@dimen/checkout_and_order_common_textsize"
-                    android:textColor="@color/black000000" />
+                    android:text="@string/checkout_bill_diffent"
 
-                <com.whitelabel.app.widget.CustomTextView
-                    style="@style/font_family_robot_regular"
-                    android:id="@+id/tv_order_detail_address1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/checkout_and_order_common_textsize"
-                    android:textColor="@color/black000000" />
-
-                <com.whitelabel.app.widget.CustomTextView
-                    style="@style/font_family_robot_regular"
-                    android:id="@+id/tv_order_detail_address2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/checkout_and_order_common_textsize"
+                    android:layout_marginTop="6dp"
                     android:textColor="@color/black000000"
-                    android:visibility="gone" />
-
-                <com.whitelabel.app.widget.CustomTextView
-                    style="@style/font_family_robot_regular"
-                    android:id="@+id/tv_order_detail_citystatepostcode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/checkout_and_order_common_textsize"
-                    android:textColor="@color/black000000" />
-
-                <com.whitelabel.app.widget.CustomTextView
-                    style="@style/font_family_robot_regular"
-                    android:id="@+id/tv_order_detail_country"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/malaysia"
-                    android:textSize="@dimen/checkout_and_order_common_textsize"
-                    android:textColor="@color/black000000"
-                    android:gravity="center_vertical" />
-
-                <com.whitelabel.app.widget.CustomTextView
-                    style="@style/font_family_robot_regular"
-                    android:id="@+id/tv_order_detail_telephone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/checkout_and_order_common_textsize"
-                    android:textColor="@color/black000000" />
-
+                    android:textSize="14sp" />
+                <LinearLayout
+                    android:id="@+id/ll_billing_address"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

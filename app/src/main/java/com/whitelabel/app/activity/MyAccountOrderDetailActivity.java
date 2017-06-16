@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -25,10 +28,12 @@ import com.whitelabel.app.adapter.MyAccountOrderDetailAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.CheckoutDao;
 import com.whitelabel.app.dao.MyAccountDao;
+import com.whitelabel.app.model.CheckoutPaymentReturnShippingAddress;
 import com.whitelabel.app.model.MyAccountOrderDetailEntityResult;
 import com.whitelabel.app.model.MyAccountOrderMiddle;
 import com.whitelabel.app.model.MyAccountOrderOuter;
 import com.whitelabel.app.model.RepaymentInfoModel;
+import com.whitelabel.app.model.SVRAppserviceSaveBillingEntity;
 import com.whitelabel.app.model.ShippingAddress;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.AnimUtil;
@@ -60,11 +65,11 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private TextView tvVoucher;
     private TextView tvVoucherTitle;
     private TextView tvGrandTotal;
-    private TextView tvUsername;
-    private TextView tvAddress1;
-    private TextView tvCityStatePostCode;
-    private TextView tvCountry;
-    private TextView tvPhone;
+//    private TextView tvUsername;
+//    private TextView tvAddress1;
+//    private TextView tvCityStatePostCode;
+//    private TextView tvCountry;
+//    private TextView tvPhone;
     private TextView mTvGst;
     private TextView tvStoreCreditTitle;
     private TextView tvStoreCreditVlaue;
@@ -182,6 +187,9 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     }
     private PaypalHelper  mPaypalHelper;
     private CheckoutDao mCheckoutDao;
+    private LinearLayout llShippingAddress;
+    private LinearLayout llBillingAddress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,6 +198,8 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         initView();
         // ViewUtils.inject(this);
         tvConfirm = (TextView) findViewById(R.id.tv_confirm);
+        llShippingAddress= (LinearLayout) findViewById(R.id.ll_shipping_address);
+        llBillingAddress= (LinearLayout) findViewById(R.id.ll_billing_address);
         tvConfirm.setOnClickListener(this);
         JViewUtils.setSoildButtonGlobalStyle(this,tvConfirm);
 //        tvConfirm.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
@@ -225,12 +235,12 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         tvVoucher = (TextView) findViewById(R.id.tv_order_detail_voucher);
         tvVoucherTitle = (TextView) findViewById(R.id.tv_order_detail_voucher_title);
         tvGrandTotal = (TextView) findViewById(R.id.tv_order_detail_grandtotal);
-        tvUsername = (TextView) findViewById(R.id.tv_order_detail_username);
-        tvAddress1 = (TextView) findViewById(R.id.tv_order_detail_address1);
-        TextView tvAddress2 = (TextView) findViewById(R.id.tv_order_detail_address2);
-        tvCityStatePostCode = (TextView) findViewById(R.id.tv_order_detail_citystatepostcode);
-        tvCountry = (TextView) findViewById(R.id.tv_order_detail_country);
-        tvPhone = (TextView) findViewById(R.id.tv_order_detail_telephone);
+//        tvUsername = (TextView) findViewById(R.id.tv_order_detail_username);
+//        tvAddress1 = (TextView) findViewById(R.id.tv_order_detail_address1);
+//        TextView tvAddress2 = (TextView) findViewById(R.id.tv_order_detail_address2);
+//        tvCityStatePostCode = (TextView) findViewById(R.id.tv_order_detail_citystatepostcode);
+//        tvCountry = (TextView) findViewById(R.id.tv_order_detail_country);
+//        tvPhone = (TextView) findViewById(R.id.tv_order_detail_telephone);
         tvCreditCardTypeText = (CustomWebView) findViewById(R.id.tv_order_detail_paymentmethod_text);
         RelativeLayout rlBody = (RelativeLayout) findViewById(R.id.rl_orderdetail_body);
         scrollView = (ScrollView) findViewById(R.id.scollview_myorder_detail);
@@ -373,8 +383,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
 //            }
 //        });
     }
-
-
     public void webViewFont(String str) {
         String html = FileUtils.readAssest(this, "html/order_web.html");
 //        html = html.replace("@fontName0", "LatoRegular");
@@ -386,7 +394,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         tvCreditCardTypeText.loadDataWithBaseURL(baseurl, html, "text/html", "UTF-8", null);
 
     }
-
     /**
      * init UI datas with WebService Datas
      *
@@ -432,9 +439,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
             findViewById(R.id.bottom_black).setVisibility(View.GONE);
             tvConfirm.setVisibility(View.GONE);
         }
-
-
-
         tvDate.setText(orderDetail.getDate());
         tvSubTotal.setText(orderDetail.getSubtotal());
         tvShippingFee.setText(orderDetail.getShippingFee());
@@ -455,14 +459,16 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         }
         tvGrandTotal.setText(orderDetail.getGrandTotal());
         tvGrandTotal.setTextColor(getResources().getColor(R.color.black000000));
-        ShippingAddress shippingAddress = orderDetail.getShippingAddress();
-        tvUsername.setText(shippingAddress.getFirstname() + " " + shippingAddress.getLastname());
-        tvAddress1.setText(shippingAddress.getStreet());
-        //tvAddress2.setText(shippingAddress.getStreet());
-        String state = JDataUtils.isEmpty(shippingAddress.getRegion()) ? "" : shippingAddress.getRegion() + ", ";
-        tvCityStatePostCode.setText(shippingAddress.getCity() + ", " + state + shippingAddress.getPostcode());
-        tvCountry.setText(shippingAddress.getCountry());
-        tvPhone.setText(getResources().getString(R.string.t) + shippingAddress.getTelephone());
+         llShippingAddress.addView(getAddressView(orderDetail.getShippingAddress()));
+         llBillingAddress.addView(getAddressView(orderDetail.getBillingAddress()));
+//        ShippingAddress shippingAddress = orderDetail.getShippingAddress();
+//        tvUsername.setText(shippingAddress.getFirstname() + " " + shippingAddress.getLastname());
+//        tvAddress1.setText(shippingAddress.getStreet());
+//        //tvAddress2.setText(shippingAddress.getStreet());
+//        String state = JDataUtils.isEmpty(shippingAddress.getRegion()) ? "" : shippingAddress.getRegion() + ", ";
+//        tvCityStatePostCode.setText(shippingAddress.getCity() + ", " + state + shippingAddress.getPostcode());
+//        tvCountry.setText(shippingAddress.getCountry());
+//        tvPhone.setText(getResources().getString(R.string.t) + shippingAddress.getTelephone());
         MyAccountOrderMiddle[] orderMiddle = orderDetail.getSuborders();
         LinkedList<MyAccountOrderMiddle> list_orderMiddles = new LinkedList<MyAccountOrderMiddle>();
         list_orderMiddles.addAll(Arrays.asList(orderMiddle));
@@ -481,7 +487,47 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         listView.setLayoutParams(params);
 //
     }
-
+    @NonNull
+    private View getAddressView(CheckoutPaymentReturnShippingAddress address) {
+        View view = LayoutInflater.from(this).inflate(R.layout.fragment_checkout_shipping_selectaddress_cell_for_review, null);
+        view.findViewById(R.id.image_address_select_top).setVisibility(View.GONE);
+        view.findViewById(R.id.image_address_select_end).setVisibility(View.GONE);
+        //view.findViewById(R.id.btn_address_select_cover).setVisibility(View.GONE);
+        TextView tvFirstname = (TextView) view.findViewById(R.id.tv_address_select_firstname);
+        //TextView tvLastname = (TextView) view.findViewById(R.id.tv_address_select_lastname);
+        TextView tvAddress1 = (TextView) view.findViewById(R.id.tv_address_select_address1);
+        TextView tvAddress2 = (TextView) view.findViewById(R.id.tv_address_select_address2);
+        TextView  tvDayTimeTelephone= (TextView) view.findViewById(R.id.tv_day_time_telephone);
+        TextView tvCityStatePostcode = (TextView) view.findViewById(R.id.tv_address_select_citystatepostcode);
+        TextView tvCountry = (TextView) view.findViewById(R.id.tv_address_select_country);
+        TextView tvTelephone = (TextView) view.findViewById(R.id.tv_address_select_telephone);
+        tvFirstname.setText(address.getFirstname() + " " + address.getLastname());
+        //tvLastname.setText(address.getLastname());
+        tvAddress1.setText(address.getStreet());
+        tvAddress2.setVisibility(View.GONE);
+        //initstoreCredit
+        /**
+         * Constructor city,state,postcode
+         */
+        if(!TextUtils.isEmpty(address.getFax())){
+            tvDayTimeTelephone.setText(getResources().getString(R.string.day_time_contact)+" : "+address.getFax());
+        }else{
+            tvDayTimeTelephone.setVisibility(View.GONE);
+        }
+        StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder=stringBuilder.append(address.getCity()).append(",");
+        if(!JDataUtils.isEmpty(address.getRegion()) && !address.getRegion().equalsIgnoreCase("null")){
+            stringBuilder=stringBuilder.append(address.getRegion());
+        }
+        if(!TextUtils.isEmpty(address.getPostcode())){
+            stringBuilder=stringBuilder.append(",").append(address.getPostcode());
+        }
+        tvCityStatePostcode.setText(stringBuilder.toString());
+        tvCountry.setText(address.getCountry());
+        tvTelephone.setText(getResources().getString(R.string.address_mobile_number)+" : " + address.getTelephone());
+        view.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent00));
+        return view;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

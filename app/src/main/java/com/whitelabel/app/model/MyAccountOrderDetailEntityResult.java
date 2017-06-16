@@ -16,7 +16,8 @@ public class MyAccountOrderDetailEntityResult extends SVRReturnEntity{
     private String grandTotal;
     private String storeCredit;
     private String gst;
-    private ShippingAddress shippingAddress;
+    private CheckoutPaymentReturnShippingAddress billingAddress;
+    private CheckoutPaymentReturnShippingAddress shippingAddress;
     private String paymentMethod;
     private String paymentCode;
     private int isRPayment;
@@ -137,14 +138,21 @@ public class MyAccountOrderDetailEntityResult extends SVRReturnEntity{
         this.grandTotal = grandTotal;
     }
 
-    public ShippingAddress getShippingAddress() {
+    public CheckoutPaymentReturnShippingAddress getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(CheckoutPaymentReturnShippingAddress billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public CheckoutPaymentReturnShippingAddress getShippingAddress() {
         return shippingAddress;
     }
 
-    public void setShippingAddress(ShippingAddress shippingAddress) {
+    public void setShippingAddress(CheckoutPaymentReturnShippingAddress shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
-
 
     public String getPaymentMethod() {
         return paymentMethod;

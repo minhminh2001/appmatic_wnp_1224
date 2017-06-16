@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whiteFFFFFF"
     xmlns:imaginato="http://schemas.android.com/apk/res-auto">
 
 <RelativeLayout
@@ -10,9 +11,7 @@
     android:layout_height="match_parent"
     android:paddingBottom="10dp"
     android:paddingTop="10dp"
-    android:background="@color/whiteFFFFFF">
-
-
+>
     <ImageView
         android:id="@+id/AddAddress_select_button"
         android:layout_width="25dp"
@@ -33,9 +32,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_toLeftOf="@+id/AddAddress_select_button"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/AddAddress_select_button"
         android:layout_toRightOf="@id/image_address_select_top"
         android:orientation="vertical">
 
@@ -46,8 +45,8 @@
             android:orientation="horizontal">
 
             <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_robot_regular"
                 android:id="@+id/tv_address_select_firstname"
+                style="@style/font_family_robot_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black000000"
@@ -65,8 +64,8 @@
         </LinearLayout>
 
         <com.whitelabel.app.widget.CustomTextView
-            style="@style/font_family_robot_regular"
             android:id="@+id/tv_address_select_address1"
+            style="@style/font_family_robot_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/address_select_text_space"
@@ -75,8 +74,8 @@
             android:textSize="14sp" />
 
         <com.whitelabel.app.widget.CustomTextView
-            style="@style/font_family_robot_regular"
             android:id="@+id/tv_address_select_address2"
+            style="@style/font_family_robot_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/address_select_text_space"
@@ -84,8 +83,8 @@
             android:textSize="14sp" />
 
         <com.whitelabel.app.widget.CustomTextView
-            style="@style/font_family_robot_regular"
             android:id="@+id/tv_address_select_citystatepostcode"
+            style="@style/font_family_robot_regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/address_select_text_space"
@@ -93,8 +92,8 @@
             android:textSize="14sp" />
 
         <com.whitelabel.app.widget.CustomTextView
-            style="@style/font_family_robot_regular"
             android:id="@+id/tv_address_select_country"
+            style="@style/font_family_robot_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/address_select_text_space"
@@ -103,23 +102,23 @@
             android:textSize="14sp" />
 
         <com.whitelabel.app.widget.CustomTextView
-            style="@style/font_family_robot_regular"
             android:id="@+id/tv_address_select_telephone"
+            style="@style/font_family_robot_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/address_select_text_space"
             android:textColor="@color/black000000"
-            android:textSize="14sp"
-            android:layout_marginTop="@dimen/address_select_text_space" />
+            android:textSize="14sp" />
 
 
         <com.whitelabel.app.widget.CustomTextView
-            style="@style/font_family_robot_regular"
             android:id="@+id/tv_day_time_telephone"
+            style="@style/font_family_robot_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/address_select_text_space"
             android:textColor="@color/black000000"
-            android:textSize="14sp"
-            android:layout_marginTop="@dimen/address_select_text_space" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 

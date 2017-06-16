@@ -86,8 +86,6 @@ public class ProductListFilterFragmentV2 extends Fragment {
         filterItemValueModels.add(new FilterItemValueModel("green1","13"));
         filterItemModel.setValues(filterItemValueModels);
         filterList.add(filterItemModel);
-
-
         FilterItemModel filterItemModel1=new FilterItemModel();
         filterItemModel1.setId("10001");
         filterItemModel1.setLabel("Size");

@@ -78,4 +78,16 @@ public class BindProductPresenterImpl  extends RxPresenter<BindProductContract.V
                     });
         addSubscrebe(subscription);
     }
+
+    @Override
+    public boolean checkProductIsSelected(List<SVRAppserviceProductDetailResultPropertyReturnEntity> svrAppserviceProductDetailResultPropertyReturnEntities) {
+        if(svrAppserviceProductDetailResultPropertyReturnEntities!=null) {
+            for (int i = 0; i < svrAppserviceProductDetailResultPropertyReturnEntities.size(); i++) {
+                if (svrAppserviceProductDetailResultPropertyReturnEntities.get(i).isSelected()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

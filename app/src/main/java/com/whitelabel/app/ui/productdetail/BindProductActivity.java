@@ -17,6 +17,8 @@ import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomTextView;
 import java.util.ArrayList;
@@ -101,6 +103,21 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
     public BindProductContract.Presenter getPresenter() {
         return new BindProductPresenterImpl();
     }
+
+
+
+    public void setAddToCartButtonEnable(boolean  enable){
+        if(enable){
+            tvAddToCart.setEnabled(true);
+            tvAddToCart.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
+        }else{
+            tvAddToCart.setEnabled(false);
+            tvAddToCart.setBackgroundResource(R.drawable.big_button_style_b8);
+        }
+
+    }
+
+
     @Override
     public void showData(BindProductResponseModel products) {
         llAddToCar.setVisibility(View.VISIBLE);
@@ -111,9 +128,14 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
         mBindProductAdapter.setOnItemClickListener(new BindProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClient(View view, int position) {
-                 mRelatedProducts.get(position).setSelected(!mRelatedProducts.get(position).isSelected());
+                mRelatedProducts.get(position).setSelected(!mRelatedProducts.get(position).isSelected());
                 tvTotalValue.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + JDataUtils.formatDouble(mPresenter.computeSumPrice(mRelatedProducts)+""));
                 mBindProductAdapter.notifyDataSetChanged();
+                if(mPresenter.checkProductIsSelected(mRelatedProducts)){
+                    setAddToCartButtonEnable(true);
+                }else{
+                    setAddToCartButtonEnable(false);
+                }
             }
         });
         rvRecycler.setAdapter(mBindProductAdapter);
@@ -122,7 +144,6 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
     @OnClick(R.id.tv_add_to_cart)
     public void onClick() {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(BindProductActivity.this)) {
-            openProgressDialog();
             StringBuilder stringBuilder = new StringBuilder();
             for (SVRAppserviceProductDetailResultPropertyReturnEntity bean : mRelatedProducts) {
                 if(bean.isSelected()) {
@@ -130,6 +151,7 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
                 }
             }
             if(!TextUtils.isEmpty(stringBuilder.toString())) {
+                openProgressDialog();
                 String ids = stringBuilder.substring(0, stringBuilder.length() - 1);
                 mPresenter.addToCart(ids, WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
             }

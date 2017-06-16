@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.whitelabel.app.*;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.adapter.CheckoutReviewShoppingCartAdapter;
@@ -26,7 +25,6 @@ import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.CustomWebView;
-
 import java.util.ArrayList;
 
 public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
@@ -42,6 +40,9 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
     private LinearLayout llBillingAddress;
     private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
     public CheckoutPaymentReturnShippingAddress address;
+    private View rlStoreCredit;
+    private TextView tvStoreCreditTitle;
+    private TextView tvStoreCreditValue;
     /**
      * ...
      * <p>
@@ -75,9 +76,6 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
         super.onCreate(savedInstanceState);
     }
 
-    private View rlStoreCredit;
-    private TextView tvStoreCreditTitle;
-    private TextView tvStoreCreditValue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -241,7 +239,6 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
             checkoutReviewShoppingCartAdapter.list = list;
             productName = paymentSaveReturnEntity.getReviewOrder().get(0).getName();
             checkoutReviewShoppingCartAdapter.notifyDataSetChanged();
-
             // click not jump
 //            lvShoppingCart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                @Override
