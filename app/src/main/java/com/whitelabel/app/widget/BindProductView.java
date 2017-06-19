@@ -29,7 +29,7 @@ public class BindProductView extends RelativeLayout {
     public BindProductView(Context context) {
         super(context);
     }
-    private  int  padding ;
+
     public BindProductView(Context context, AttributeSet attrs) {
         super(context, attrs);
         int width=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity) getContext());
@@ -40,8 +40,8 @@ public class BindProductView extends RelativeLayout {
     }
     int imageWidth;
     public void initData(List<SVRAppserviceProductDetailResultPropertyReturnEntity>  products,ImageLoader imageLoader){
-        padding =JToolUtils.dip2px(getContext(),10);
-        setPadding(padding,padding,padding,0);
+        int padding = JToolUtils.dip2px(getContext(), 10);
+        setPadding(padding, padding, padding,0);
         if(products==null||products.size()==0){
             return;
         }
@@ -50,7 +50,7 @@ public class BindProductView extends RelativeLayout {
         addView(tvTitle);
         ImageView imageView=getRightImage();
         LayoutParams  layoutParams=new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,0,padding,0);
+        layoutParams.setMargins(0,0, padding,0);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         layoutParams.addRule(RelativeLayout.ALIGN_TOP,R.id.bindName);
         addView(imageView,layoutParams);
@@ -74,7 +74,7 @@ public class BindProductView extends RelativeLayout {
             }
         }
         LayoutParams  bindProductParams=new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
-        bindProductParams.setMargins(0,padding,0,0);
+        bindProductParams.setMargins(0, padding,0,0);
         bindProductParams.addRule(RelativeLayout.BELOW,R.id.bindName);
         addView(linearLayout,bindProductParams);
     }

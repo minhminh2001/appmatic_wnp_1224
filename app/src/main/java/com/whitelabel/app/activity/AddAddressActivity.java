@@ -95,7 +95,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     private MyAccountDao dao;
     private int height;
     public final static  String  EXTRA_USE_DEFAULT="use_default";
-    private boolean firstAdd;
     private int[] location = new int[2];
     private static class DataHandler extends Handler{
         private final WeakReference<AddAddressActivity> mActivity;
@@ -245,7 +244,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         String TAG = this.getClass().getSimpleName();
         dao=new MyAccountDao(TAG, handler);
         initToolBar();
-        firstAdd=getIntent().getBooleanExtra(EXTRA_USE_DEFAULT,true);
+        boolean firstAdd = getIntent().getBooleanExtra(EXTRA_USE_DEFAULT, true);
         if(!firstAdd){
             findViewById(R.id.relative14).setVisibility(View.GONE);
             findViewById(R.id.rl_default_billing).setVisibility(View.GONE);
@@ -901,7 +900,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                 case R.id.edit_addaddresss_state:
                     onFocus(state, stateText, stateText2, "State",rl_addadd_state);
                     clickState();
-                    CharSequence tvcountry = country.getText();
+//                    CharSequence tvcountry = country.getText();
 //                    if (tvcountry == null || JDataUtils.isEmpty(tvcountry.toString())) {
 //                        tvcountry = "Malaysia";
 //                    }
@@ -915,7 +914,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                         clearAddressPhone.setVisibility(View.GONE);
                     break;
                 case R.id.edit_day_phone_eg:
-
                     onFocus(etDayPhone,tvDayPhone,tvDayPhone2,getResources().getString(R.string.address_day_phone),null);
                     CustomButtomLineRelativeLayout.setBottomLineActive(vAddDayPhoneLine, true);
                     if (etDayPhone.getText().length()!=0)

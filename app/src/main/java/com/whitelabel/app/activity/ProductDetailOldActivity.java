@@ -105,7 +105,6 @@ public class ProductDetailOldActivity extends com.whitelabel.app.BaseActivity im
     private Dialog mDialog;
     private WebView wvProductDesc;
     private TextView ctvProductName, ctvProductBrand;
-    private CustomCoordinatorLayout coordinatorLayout;
     private AppBarLayout appbar_layout;
     private RelativeLayout mRLAddToWishlistSmall, mRLAddToWishlistBig;
     private LinearLayout  llBottomBar, mLLAddToCart;
@@ -625,7 +624,7 @@ public class ProductDetailOldActivity extends com.whitelabel.app.BaseActivity im
 
     public void initView(){
 
-        coordinatorLayout = (CustomCoordinatorLayout) findViewById(R.id.cl_product);
+        CustomCoordinatorLayout coordinatorLayout = (CustomCoordinatorLayout) findViewById(R.id.cl_product);
         coordinatorLayout.setSwitchScroll(false);
         appbar_layout = ((AppBarLayout) findViewById(R.id.appbar_layout));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

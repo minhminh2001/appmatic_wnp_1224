@@ -53,20 +53,14 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     protected ProductListActivity productListActivity;
     protected View mContentView;
     private String categoryId;
-    private FrameLayout flFilterSortContainer;
     private CustomTabCustomPageIndicator ctpiCategoryList;
-    private ViewPager vpProductList;
     private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> categoryArrayList;
-    private CustomTabPageIndicatorAdapter fragmentPagerAdapter;
-    private int FRAGMENT_CONTAINER_ID;
     private ProductListFilterFragment filterFragment;
     private ProductListSortFragment sortFragment;
     private FilterSortHelper filterSortHelper;
     public FilterSortBottomView filterSortBottomView;
     private ArrayList<ProductListProductListFragment> categoryProductListFragmentArrayList;
     public ImageView mTopViewToggleIV;
-    private LinearLayout mTopFilterLL;
-    private LinearLayout mTopSortLL;
     public RelativeLayout mTopFilterAndSortBarRL;
     public boolean mIsShowSwitchFilterBar;
     public ImageView mIVBottomSlideToTop;
@@ -176,7 +170,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initToolBar();
-        FRAGMENT_CONTAINER_ID = R.id.flFilterSortContainer;
+        int FRAGMENT_CONTAINER_ID = R.id.flFilterSortContainer;
         try {
             GaTrackHelper.getInstance().googleAnalytics("Sub Category Screen", getActivity());
             JLogUtils.i("googleAnalytics", "Sub Category Screen");
@@ -188,8 +182,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         mIVBottomSlideToTop = (ImageView) mContentView.findViewById(R.id.iv_bottom_slideto_top);
         mTopFilterAndSortBarRL = (RelativeLayout) mContentView.findViewById(R.id.top_switch_and_filter_bar);
         mTopViewToggleIV = (ImageView) mContentView.findViewById(R.id.iv_view_toggle_top);
-        mTopFilterLL = (LinearLayout) mContentView.findViewById(R.id.ll_filter_top);
-        mTopSortLL = (LinearLayout) mContentView.findViewById(R.id.ll_sort_top);
+        LinearLayout mTopFilterLL = (LinearLayout) mContentView.findViewById(R.id.ll_filter_top);
+        LinearLayout mTopSortLL = (LinearLayout) mContentView.findViewById(R.id.ll_sort_top);
         mTopFilterLL.setOnClickListener(this);
         mTopSortLL.setOnClickListener(this);
         mTopViewToggleIV.setOnClickListener(this);
@@ -198,8 +192,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         filterSortBottomView.initView(mTopFilterAndSortBarRL, mIVBottomSlideToTop, this);
         ctpiCategoryList = (CustomTabCustomPageIndicator) mContentView.findViewById(R.id.ctpiCategoryList);
         ctpiCategoryList.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-        vpProductList = (ViewPager) mContentView.findViewById(R.id.vpProductList);
-        flFilterSortContainer = (FrameLayout) mContentView.findViewById(R.id.flFilterSortContainer);
+        ViewPager vpProductList = (ViewPager) mContentView.findViewById(R.id.vpProductList);
+        FrameLayout flFilterSortContainer = (FrameLayout) mContentView.findViewById(R.id.flFilterSortContainer);
         flFilterSortContainer.setOnClickListener(this);
         if(getArguments()!=null) {
             categoryId = (String) getArguments().getSerializable("data");
@@ -262,7 +256,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
                 productListActivity.setCurrentProductListFragmentPosition(parentCategoryIndex);
             }
             JLogUtils.i("Martin", "currentProductListFragmentPosition=>" + parentCategoryIndex);
-            fragmentPagerAdapter = new CustomTabPageIndicatorAdapter(getChildFragmentManager());
+            CustomTabPageIndicatorAdapter fragmentPagerAdapter = new CustomTabPageIndicatorAdapter(getChildFragmentManager());
             vpProductList.setAdapter(fragmentPagerAdapter);
 
             ctpiCategoryList.setViewPager(vpProductList);

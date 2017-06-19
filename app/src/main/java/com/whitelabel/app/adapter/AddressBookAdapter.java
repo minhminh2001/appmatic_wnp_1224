@@ -26,12 +26,11 @@ import java.util.List;
 public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
     public List<AddressBook> list;
     private Context context;
-    private Context myAddressBookActivity;
+
     public AddressBookAdapter(Context context,List<AddressBook> list) {
         super(context,0,list);
         this.list=list;
         this.context = context;
-        myAddressBookActivity =context;
         AddressBookAdapter adapter = this;
     }
 

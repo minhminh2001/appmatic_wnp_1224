@@ -37,7 +37,6 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
     CustomTextView tvTotalTitle;
     @BindView(R.id.tv_total_value)
     CustomTextView tvTotalValue;
-    private String mProductId;
     private ImageLoader mImageLoader;
     private  List<SVRAppserviceProductDetailResultPropertyReturnEntity> mRelatedProducts;
     public final static String EXTRA_PRODUCTID = "product_id";
@@ -50,7 +49,7 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
         ButterKnife.bind(this);
         setTitle(getResources().getString(R.string.productdetail_bind_title));
         mImageLoader = new ImageLoader(this);
-        mProductId = getIntent().getStringExtra(EXTRA_PRODUCTID);
+        String mProductId = getIntent().getStringExtra(EXTRA_PRODUCTID);
         mRelatedProducts=new ArrayList<>();
         JViewUtils.setSoildButtonGlobalStyle(this, tvAddToCart);
         tvTotalTitle.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());

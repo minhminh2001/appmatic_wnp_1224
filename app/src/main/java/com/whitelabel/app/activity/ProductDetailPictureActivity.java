@@ -26,7 +26,6 @@ import java.util.ArrayList;
 
 public class ProductDetailPictureActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
 
-    private RelativeLayout relativeLayout;
     private LinearLayout groupTips;
     private ViewPager viewPager;
     private ArrayList<ImageView> mProductImageView;
@@ -170,7 +169,7 @@ public class ProductDetailPictureActivity extends com.whitelabel.app.BaseActivit
 
     private void initView() {
         mImageLoader = new ImageLoader(this);
-        relativeLayout = (RelativeLayout) findViewById(R.id.rl_productdetail_picture);
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rl_productdetail_picture);
         groupTips = (LinearLayout) findViewById(R.id.ll_productdetail_picture_grouptips);
         viewPager = (ViewPager) findViewById(R.id.vp_productdetail_picture);
         mProductdetailPictureImageView = (ImageView) findViewById(R.id.iv_productdetail_picture);

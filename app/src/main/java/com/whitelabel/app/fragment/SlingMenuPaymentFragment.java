@@ -42,8 +42,9 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
     private static final String ARG_PARAM2 = "param2";
     // TODO: Rename and change types of parameters
     private NotificationDao mDao;
-    private String mParam1;
-    private String mParam2;
+    private DataHandler dataHandler;
+//    private String mParam1;
+//    private String mParam2;
     private CheckoutPaymentStatusActivity paymentStatusActivity;
     /**
      * Use this factory method to create a new instance of
@@ -214,10 +215,10 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+//        if (getArguments() != null) {
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
     }
 
     private ImageView signin_ImageView;
@@ -406,9 +407,6 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
 //            }
 //        });
     }
-
-
-    private DataHandler dataHandler;
     private static final class DataHandler extends Handler {
         private final WeakReference<SlingMenuPaymentFragment> mFragment;
         public DataHandler( SlingMenuPaymentFragment fragment) {

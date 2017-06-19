@@ -170,11 +170,9 @@ public class JDataUtils {
         if (et == null) {
             return true;
         }
-
         if (et.getText() == null) {
             return true;
         }
-
         String str = et.getText().toString().trim();
         return isEmpty(str);
     }
@@ -183,11 +181,9 @@ public class JDataUtils {
         if (tv == null) {
             return true;
         }
-
         if (tv.getText() == null) {
             return true;
         }
-
         String str = tv.getText().toString().trim();
         return isEmpty(str);
     }

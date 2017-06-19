@@ -60,7 +60,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
     private ProductDao mDao;
     private boolean isPrepared, isVisible, mHasLoadedOnce;
     //    private GetServiceListDao mDao;
-    private int showItAfter;
+//    private int showItAfter;
     private Handler mHandler = new Handler();
     private CurationAdapter adapter;
     private DataHandler mHandler1;
@@ -354,16 +354,16 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
 //        }
 //    };
 
-    private void showMarketLayers(final MarketingLayersEntity curationListReturnEntity) {
-        if (!mMarketShow) {
-            return;
-        }
-        if (getParentFragment() instanceof HomeHomeFragment) {
-            HomeHomeFragment fragment = (HomeHomeFragment) getParentFragment();
-            int currIndex = fragment.getCurrentFragmentIndex();
-            if (currIndex == mIndex) {
+//    private void showMarketLayers(final MarketingLayersEntity curationListReturnEntity) {
+//        if (!mMarketShow) {
+//            return;
+//        }
+//        if (getParentFragment() instanceof HomeHomeFragment) {
+//            HomeHomeFragment fragment = (HomeHomeFragment) getParentFragment();
+//            int currIndex = fragment.getCurrentFragmentIndex();
+//            if (currIndex == mIndex) {
 //                mCommonCallback.initMarketingLayers(curationListReturnEntity);
-                showItAfter = curationListReturnEntity.getShowItAfter() * 1000;
+//                showItAfter = curationListReturnEntity.getShowItAfter() * 1000;
                 //loadImage
                 //String imageUrl = JImageUtils.getImageServerUrlByWidthHeight(homeActivity, curationListReturnEntity.getImage(), WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(homeActivity), WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth(homeActivity) - JDataUtils.dp2Px(170));
                 //JLogUtils.i("Allen","url== "+imageUrl);
@@ -372,9 +372,9 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
 //                int marketLayerHeight = WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth(homeActivity) - JDataUtils.dp2Px(170);
 //                JImageUtils.downloadImageFromServerListener(homeActivity, curationListReturnEntity.getImage(), marketLayerWidth, marketLayerHeight, new CategoryLoadImageListener(this));
 //               JImageUtils.getInstance(homeActivity).display(((HomeHomeCallback)(getParentFragment())).getIvMarketLayer(), imageUrl, defaultBitmapLoadCallBack);
-            }
-        }
-    }
+//            }
+//        }
+//    }
 
 //    private class CategoryLoadImageListener extends SimpleTarget<Bitmap> {
 //        WeakReference<HomeHomeCategoryFragment> mFragment;

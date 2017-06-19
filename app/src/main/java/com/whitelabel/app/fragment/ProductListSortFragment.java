@@ -35,7 +35,6 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
     private View contentView;
     private OnFilterSortFragmentListener fragmentListener;
     private ListView lvSortConditions;
-    private RelativeLayout rlHeaderbarCancel;
     private TMPProductListFilterSortPageEntity productListFilterSortPageEntity;
     private ArrayList<SVRAppserviceProductSearchFacetsSortItemReturnEntity> facetsSortItemReturnEntityArrayList;
     private ProductListFilterSortSortAdapter sortAdapter;
@@ -72,7 +71,7 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
             productListFilterSortPageEntity = (TMPProductListFilterSortPageEntity) bundle.getSerializable("data");
         }
         contentView.findViewById(R.id.rlHeaderBar).setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavigation_bar_background_color());
-        rlHeaderbarCancel = (RelativeLayout) contentView.findViewById(R.id.rl_headerbar_cancel);
+        RelativeLayout rlHeaderbarCancel = (RelativeLayout) contentView.findViewById(R.id.rl_headerbar_cancel);
         rlHeaderbarCancel.setOnClickListener(this);
         lvSortConditions = (ListView) contentView.findViewById(R.id.lvSortConditions);
         addSortSortConditions();

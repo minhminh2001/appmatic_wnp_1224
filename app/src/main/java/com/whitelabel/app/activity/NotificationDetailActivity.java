@@ -46,7 +46,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
     private boolean isUnRead;
     private View connectionLayout;
     private RequestErrorHelper requestErrorHelper;
-    private LinearLayout mLlBottomBar;
+//    private LinearLayout mLlBottomBar;
     public static final int RESPONSECODE = 1000;
     private ImageLoader mImageLoader;
     @Override
@@ -60,7 +60,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
         btnOpen = (Button) findViewById(R.id.notification_detail_open);
         tvNotiTitle = (TextView) findViewById(R.id.tv_nitititle);
         tvTime = (TextView) findViewById(R.id.tv_notification_time);
-        mLlBottomBar = (LinearLayout) findViewById(R.id.llBottomBar);
+//        mLlBottomBar = (LinearLayout) findViewById(R.id.llBottomBar);
 //        mLlBottomBar.setOnClickListener(this);
 //        ivBack.setOnClickListener(this);
         btnOpen.setOnClickListener(this);

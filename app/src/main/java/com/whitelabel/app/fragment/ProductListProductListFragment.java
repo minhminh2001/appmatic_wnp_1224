@@ -73,7 +73,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
     private View connectionLayout;
     private LinearLayout tryAgain;
     private SVRAppserviceProductSearchFacetsReturnEntity searchReturnEntityFacets;
-    private boolean showConnectionLayout = true;
+//    private boolean showConnectionLayout = true;
     private ProductDao mProductDao;
     private DataHandler dataHandler;
     private ImageLoader mImageLoader;
@@ -81,8 +81,6 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
     private ImageView mIvViewToggle;
     private TextView mTVProductTotalCount;
     private boolean mIsFirst=true;
-    private LinearLayout mHeaderFilterLL;
-    private LinearLayout mHeaderSortLL;
     private String TAG = this.getClass().getSimpleName();
     @Override
     public void onAttach(Activity activity) {
@@ -162,8 +160,8 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
         view.setLayoutParams(params);
         mRlViewbar = (RelativeLayout) view.findViewById(R.id.rl_viewbar);
         mIvViewToggle = (ImageView) view.findViewById(R.id.iv_view_toggle);
-        mHeaderFilterLL = (LinearLayout) view.findViewById(R.id.ll_filter);
-        mHeaderSortLL = (LinearLayout) view.findViewById(R.id.ll_sort);
+        LinearLayout mHeaderFilterLL = (LinearLayout) view.findViewById(R.id.ll_filter);
+        LinearLayout mHeaderSortLL = (LinearLayout) view.findViewById(R.id.ll_sort);
         mTVProductTotalCount = (TextView) view.findViewById(R.id.tv_product_total);
         mIvViewToggle.setOnClickListener(this);
         mHeaderFilterLL.setOnClickListener(this);
@@ -406,8 +404,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
 //                        public void callBack() {
 //                        }
 //                    });
-
-                    showConnectionLayout = false;
+//                    showConnectionLayout = false;
                     search();
                 }
                 if (view.getFirstVisiblePosition() == 0) {

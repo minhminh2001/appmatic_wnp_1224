@@ -103,7 +103,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private RelativeLayout llVoucherPrice;
     public TextView tvShippingFree;
     private TextView tvVoucherWorld, tv_shoppingbottominfo_blank;
-    private ImageView btnBack;
+//    private ImageView btnBack;
     public ShoppingCartVerticalAdapter adapter;
     public LinkedList<ShoppingCartListBase> mProducts;
     private ShoppingCartListEntityCart mCar;
@@ -144,7 +144,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 //    private View llStoreCreditHint;
     private boolean apply = false;
     private HomeBaseFragment.HomeCommonCallback mHomeCallback;
-    private BaseActivity baseActivity;
+//    private BaseActivity baseActivity;
     private Boolean mIsFromLogin = false;
     private String mVoucherCode;
     private ImageLoader mImageLoader;
@@ -274,7 +274,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         JViewUtils.setSoildButtonGlobalStyle(getActivity(),btnGoShopping);
         llBody = (RelativeLayout) view.findViewById(R.id.ll_body);
 //        rlShoppingcartTopGoback= (RelativeLayout) view.findViewById(R.id.rl_shoppingcart_top_goback);
-        btnBack = (ImageView) view.findViewById(R.id.tv_shoppingcart_top_goback);
+//        btnBack = (ImageView) view.findViewById(R.id.tv_shoppingcart_top_goback);
         listView = (RecyclerView) view.findViewById(R.id.hlv_shoppingcart);
         llNothing = (LinearLayout) view.findViewById(R.id.ll_sc_nothing);
         llCheckout = (LinearLayout) view.findViewById(R.id.ll_sc_checkout);
@@ -947,13 +947,13 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         }
     }
 
-    private long currTime;
+//    private long currTime;
 
     private void sendRequest() {
         if (!swipeRefrshLayout.isRefreshing()) {
             showDialog();
         }
-        currTime = System.currentTimeMillis();
+//        currTime = System.currentTimeMillis();
         String sessionKey="";
         if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
             sessionKey= WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
@@ -1135,7 +1135,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         if (activity instanceof HomeBaseFragment.HomeCommonCallback) {
             mHomeCallback = (HomeBaseFragment.HomeCommonCallback) activity;
         }
-        baseActivity = (BaseActivity) activity;
+//        baseActivity = (BaseActivity) activity;
     }
 
     @Override

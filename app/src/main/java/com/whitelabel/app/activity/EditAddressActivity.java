@@ -249,14 +249,14 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             super.handleMessage(msg);
         }
     }
-    private boolean mUseDefault;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editaddress);
         TAG =this.getClass().getSimpleName();
         DataHandler dataHandler = new DataHandler(this);
-        mUseDefault=getIntent().getBooleanExtra(EXTRA_USE_DEFAULT,true);
+        boolean mUseDefault = getIntent().getBooleanExtra(EXTRA_USE_DEFAULT, true);
         if(getIntent().getExtras()!=null ){
             mBean=(AddressBook)getIntent().getExtras().getSerializable("bean");
             if (mDialog != null) {

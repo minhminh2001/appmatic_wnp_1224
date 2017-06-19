@@ -73,7 +73,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
      */
     private MyAccountDao mAccountDao;
     private ImageView arrowSelectCountry, arrowSelectState,clearCheckFirst,clearCheckLast,clearCheckAddress1,clearCheckAddress2,clearCheckCode,clearCheckCity,clearCheckPhone;
-    private CustomButtomLineRelativeLayout rl_checkaddadd_firstname,rl_checkaddadd_lastname,rl_checkaddadd_country,rl_checkaddadd_city,rl_checkaddadd_postcode,
+    private CustomButtomLineRelativeLayout rl_checkaddadd_firstname,rl_checkaddadd_lastname,rl_checkaddadd_country,rl_checkaddadd_city,
             rl_checkaddadd_address1,rl_checkaddadd_address2,rl_checkout_shipping_state,rl_checkadd_phone;
     public TextView tvErrorMsg,tvPhone_otheruse ;
     private OnFragmentInteractionListener mListener;
@@ -195,7 +195,7 @@ public class CheckoutShippingAddaddressFragment extends BaseFragment implements 
         // edit line
         rl_checkadd_phone = (CustomButtomLineRelativeLayout) view.findViewById(R.id.rl_checkadd_phone);
         rl_checkaddadd_city = (CustomButtomLineRelativeLayout) view.findViewById(R.id.rl_checkaddadd_city);
-        rl_checkaddadd_postcode = (CustomButtomLineRelativeLayout) view.findViewById(R.id.rl_checkaddadd_postcode);
+//        rl_checkaddadd_postcode = (CustomButtomLineRelativeLayout) view.findViewById(R.id.rl_checkaddadd_postcode);
         rl_checkaddadd_firstname = (CustomButtomLineRelativeLayout) view.findViewById(R.id.rl_checkaddadd_firstname);
         rl_checkaddadd_lastname = (CustomButtomLineRelativeLayout) view.findViewById(R.id.rl_checkaddadd_lastname);
         rl_checkaddadd_country = (CustomButtomLineRelativeLayout) view.findViewById(R.id.rl_checkaddadd_country);

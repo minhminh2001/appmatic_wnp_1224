@@ -81,10 +81,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     private RequestErrorHelper requestErrorHelper;
     protected View mContentView;
     private View connectionLayout;
-    private LinearLayout tryAgain;
     private ProductDao mProductDao;
-    private RelativeLayout rlContainer;
-    private RelativeLayout mBackRL, mClearRL;
+    private RelativeLayout mClearRL;
     private CustomEditText cetKeywords;
     private CustomXListView cxlvProductList;
     private RelativeLayout rlNodata;
@@ -100,7 +98,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     private SearchResultHandler searchResultHandler;
     private SVRAppserviceProductSearchFacetsReturnEntity searchReturnEntityFacets;
     private TMPProductListListPageEntity productListListPageEntity;
-    private int FRAGMENT_CONTAINER_ID;
     private FrameLayout flFilterSortContainer;
     private ImageLoader mImageLoader;
     private ProductListFilterFragment filterFragment;
@@ -110,24 +107,21 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 //    private ArrayList<SuggestsEntity> mSuggestionsArrayList;
 //    private String mKeyWord;
 //    private SearchSuggestionAdapter mSearchSuggestionAdapter;
-    private String mSuggestionBrand;
-    private String mSuggestionCategoryID;
-    private String mSuggestionsModleType;
-    private boolean mIsSuggestionSearch;
+//    private String mSuggestionBrand;
+//    private String mSuggestionCategoryID;
+//    private String mSuggestionsModleType;
 ////    private PublishSubject<String> mSubject = PublishSubject.create();
 //    private boolean mIsShowSuggestion;
 //    private long mTime_start;
+    private boolean mIsSuggestionSearch;
+
     private RelativeLayout mRlSwitchViewbar;
     private ImageView mHeaderIvViewToggle;
     private boolean mIsFirst=true;
     private ImageView mTopViewToggleIV;
-    private LinearLayout mTopFilterLL;
-    private LinearLayout mTopSortLL;
     private RelativeLayout mTopFilterAndSortBarRL;
     private boolean mIsShowSwitchFilterBar;
-    private ImageView mIVBottomSlideToTop;
-    private LinearLayout mHeaderFilterLL;
-    private LinearLayout mHeaderSortLL;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -298,7 +292,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         mProductDao = new ProductDao(TAG, dataHandler);
         connectionLayout = mContentView.findViewById(R.id.connectionBreaks);
         requestErrorHelper = new RequestErrorHelper(getContext(), connectionLayout);
-        tryAgain = (LinearLayout) mContentView.findViewById(R.id.try_again);
+        LinearLayout tryAgain = (LinearLayout) mContentView.findViewById(R.id.try_again);
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -307,7 +301,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
                 getProductListFromServer();
             }
         });
-        FRAGMENT_CONTAINER_ID = R.id.flFilterSortContainer;
+        int FRAGMENT_CONTAINER_ID = R.id.flFilterSortContainer;
         searchResultHandler = new SearchResultHandler((ProductListActivity) getActivity(), this);
         PROMPT_ERROR_NOINTERNET = getString(R.string.productlist_list_prompt_error_nointernet);
 
@@ -322,8 +316,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         if (bundle != null) {
             productListListPageEntity = (TMPProductListListPageEntity) bundle.getSerializable("data");
         }
-        rlContainer = (RelativeLayout) mContentView.findViewById(R.id.rlContainer);
-        mBackRL = (RelativeLayout) mContentView.findViewById(R.id.rl_back);
+        RelativeLayout rlContainer = (RelativeLayout) mContentView.findViewById(R.id.rlContainer);
+        RelativeLayout mBackRL = (RelativeLayout) mContentView.findViewById(R.id.rl_back);
         cetKeywords = (CustomEditText) mContentView.findViewById(R.id.cetKeywords);
         cxlvProductList = (CustomXListView) mContentView.findViewById(R.id.cxlvProductList);
         rlNodata = (RelativeLayout) mContentView.findViewById(R.id.rlNodata);
@@ -333,11 +327,11 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         //filter&sort
         flFilterSortContainer = (FrameLayout) mContentView.findViewById(R.id.flFilterSortContainer);
         flFilterSortContainer.setOnClickListener(this);
-        mIVBottomSlideToTop = (ImageView) mContentView.findViewById(R.id.iv_bottom_slideto_top);
+        ImageView mIVBottomSlideToTop = (ImageView) mContentView.findViewById(R.id.iv_bottom_slideto_top);
         mTopFilterAndSortBarRL = (RelativeLayout) mContentView.findViewById(R.id.top_switch_and_filter_bar);
         mTopViewToggleIV = (ImageView) mContentView.findViewById(R.id.iv_view_toggle_top);
-        mTopFilterLL = (LinearLayout) mContentView.findViewById(R.id.ll_filter_top);
-        mTopSortLL = (LinearLayout) mContentView.findViewById(R.id.ll_sort_top);
+        LinearLayout mTopFilterLL = (LinearLayout) mContentView.findViewById(R.id.ll_filter_top);
+        LinearLayout mTopSortLL = (LinearLayout) mContentView.findViewById(R.id.ll_sort_top);
         mTopFilterLL.setOnClickListener(this);
         mTopSortLL.setOnClickListener(this);
         mTopViewToggleIV.setOnClickListener(this);
@@ -518,8 +512,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         AbsListView.LayoutParams params=new AbsListView.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT,JDataUtils.dp2Px(40));
         view.setLayoutParams(params);
         mRlSwitchViewbar = (RelativeLayout) view.findViewById(R.id.rl_viewbar);
-        mHeaderFilterLL = (LinearLayout) view.findViewById(R.id.ll_filter);
-        mHeaderSortLL = (LinearLayout) view.findViewById(R.id.ll_sort);
+        LinearLayout mHeaderFilterLL = (LinearLayout) view.findViewById(R.id.ll_filter);
+        LinearLayout mHeaderSortLL = (LinearLayout) view.findViewById(R.id.ll_sort);
         mHeaderIvViewToggle = (ImageView) view.findViewById(R.id.iv_view_toggle);
         mHeaderIvViewToggle.setOnClickListener(this);
         mHeaderFilterLL.setOnClickListener(this);
@@ -617,16 +611,16 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         }
     }
 
-    private void clearSuggestionSearch() {
-        mSuggestionBrand = "";
-        mSuggestionCategoryID = "";
-        mSuggestionsModleType = "";
-        productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setPrice("");
-        productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setBrand(mSuggestionBrand);
-        productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setCategory_id(mSuggestionCategoryID);
-        productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setModel_type(mSuggestionsModleType);
-
-    }
+//    private void clearSuggestionSearch() {
+//        mSuggestionBrand = "";
+//        mSuggestionCategoryID = "";
+//        mSuggestionsModleType = "";
+//        productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setPrice("");
+//        productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setBrand(mSuggestionBrand);
+//        productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setCategory_id(mSuggestionCategoryID);
+//        productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setModel_type(mSuggestionsModleType);
+//
+//    }
 
     private void onSubmitKeyWord() {
         if (!"".equals(cetKeywords.getText().toString().trim())) {

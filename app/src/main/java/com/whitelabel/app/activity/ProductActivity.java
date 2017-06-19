@@ -129,8 +129,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     private long userSelectedProductMaxStockQty;
     private long userSelectedProductQty;
     private LinearLayout llWebView;
-    private int destWidthColorSize;
-    private int destHeightColorSize;
     private Toast mToast;
     private WebView mWebView;
     private boolean isClickShopping = false;
@@ -638,8 +636,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         llBottomBar.setOnClickListener(this);
         textView_num = (TextView) findViewById(R.id.detail_quantity_textview2);
         rlProductQuantity = (RelativeLayout) findViewById(R.id.rlProductQuantity);
-        destWidthColorSize = (WhiteLabelApplication.getPhoneConfiguration().getScreenWidth() - (JDataUtils.dp2Px(27))) / 2;
-        destHeightColorSize = JDataUtils.dp2Px(37);
+        int destWidthColorSize = (WhiteLabelApplication.getPhoneConfiguration().getScreenWidth() - (JDataUtils.dp2Px(27))) / 2;
+        int destHeightColorSize = JDataUtils.dp2Px(37);
         if (rlProductQuantity.getLayoutParams() != null) {
             rlProductQuantity.getLayoutParams().width = destWidthColorSize;
             rlProductQuantity.getLayoutParams().height = destHeightColorSize;

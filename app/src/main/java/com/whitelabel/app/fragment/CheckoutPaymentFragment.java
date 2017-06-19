@@ -1,5 +1,6 @@
 package com.whitelabel.app.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -79,7 +80,8 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
     private WebView tvHtml;
     private View view;
     private TextView tvPaymentMethod, ctv_payment_method_lab;
-    private CustomButtomLineRelativeLayout ll_payment_cardnumber, rl_card_name, rl_card_type, rl_issuer_bank;
+    private CustomButtomLineRelativeLayout ll_payment_cardnumber, rl_card_name, rl_card_type;
+//            , rl_issuer_bank;
     private View view_avc_line, view_expiration_date_line;
     /**
      * EditText and Animation TextView define
@@ -93,9 +95,10 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
      * TextView and selector ImageView define;
      */
     public TextView tvOnlinebankHint, tvCardtypeHint, tvCardType, tvIssuerbankHint, tvIssuerBank, tvIssuerCountry, tvExpirationDateHint, tvSelectExpirationDate, tvOnlineBankingPayWith, tvOnlinebankingBlankbottom;
-    private ImageView arrowCardType, arrowIssuerbank, arrowIssuerCountry, arrowSelectExpirationDate, arrowSelectOnlineBankingPayWith;
+    private ImageView arrowCardType, arrowSelectExpirationDate;
+//    arrowSelectOnlineBankingPayWith,arrowIssuerbank, arrowIssuerCountry;
     private ImageView tvPaymentMethodArrow, clear_card_number, clear_card_cvc, clear_card_name;
-    private View view_paymentmethod_line, view_payment_online_line;
+    private View view_paymentmethod_line;
     public LinearLayout llPaymentMethodOnlineBanking;
     public LinearLayout llPaymentMethodCreditCardBody, llPaymentMethod;
     //    public ScrollView svPaymentMethodCreditCard;
@@ -179,6 +182,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         });
         mMaterialDialog.show();
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -198,12 +202,12 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         ll_payment_cardnumber = (CustomButtomLineRelativeLayout) view.findViewById(R.id.ll_payment_cardnumber);
         rl_card_name = (CustomButtomLineRelativeLayout) view.findViewById(R.id.rl_card_name);
         rl_card_type = (CustomButtomLineRelativeLayout) view.findViewById(R.id.rl_card_type);
-        rl_issuer_bank = (CustomButtomLineRelativeLayout) view.findViewById(R.id.rl_issuer_bank);
+//        rl_issuer_bank = (CustomButtomLineRelativeLayout) view.findViewById(R.id.rl_issuer_bank);
         tvOnlinebankHint = (TextView) view.findViewById(R.id.tv_onlinebank_hint);
         view_avc_line = view.findViewById(R.id.view_avc_line);
         view_expiration_date_line = view.findViewById(R.id.view_expiration_date_line);
         view_paymentmethod_line = view.findViewById(R.id.view_paymentmethod_line);
-        view_payment_online_line = view.findViewById(R.id.view_payment_online_line);
+//        view_payment_online_line = view.findViewById(R.id.view_payment_online_line);
         ctv_payment_method_lab = (TextView) view.findViewById(R.id.ctv_payment_method_lab);
         ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         tvPaymentMethod = (TextView) view.findViewById(R.id.tv_checkout_payment_method);
@@ -233,7 +237,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         view.findViewById(R.id.ll_checkout_payment_cardtype).setOnClickListener(this);
         tvIssuerbankHint = (TextView) view.findViewById(R.id.tv_checkout_payment_issuerbank_hint);
         tvIssuerBank = (TextView) view.findViewById(R.id.tv_checkout_payment_issuerbank);
-        arrowIssuerbank = (ImageView) view.findViewById(R.id.arrow_checkout_payment_select_issuerbank);
+//        arrowIssuerbank = (ImageView) view.findViewById(R.id.arrow_checkout_payment_select_issuerbank);
         //arrowIssuerbank.setOnClickListener(this);
         view.findViewById(R.id.ll_checkout_payment_issuerbank).setOnClickListener(this);
         tvExpirationDateHint = (TextView) view.findViewById(R.id.tv_checkout_payment_expiration_date_hint);
@@ -241,7 +245,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         arrowSelectExpirationDate = (ImageView) view.findViewById(R.id.arrow_checkout_payment_select_expiration_date);
         view.findViewById(R.id.ll_checkout_payment_expire_date).setOnClickListener(this);
         tvOnlineBankingPayWith = (TextView) view.findViewById(R.id.tv_checkout_payment_onlinebanking_paywith);
-        arrowSelectOnlineBankingPayWith = (ImageView) view.findViewById(R.id.arrow_checkout_payment_onlinebanking_paywith);
+//        arrowSelectOnlineBankingPayWith = (ImageView) view.findViewById(R.id.arrow_checkout_payment_onlinebanking_paywith);
         view.findViewById(R.id.ll_checkout_payment_onlinebanking).setOnClickListener(this);
         tvErrorMsg = (TextView) view.findViewById(R.id.tv_checkout_errormsg_payment);
         llPaymentMethod.setFocusable(true);

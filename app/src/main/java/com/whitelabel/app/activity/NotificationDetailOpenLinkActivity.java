@@ -16,8 +16,6 @@ import com.whitelabel.app.utils.JViewUtils;
 public class NotificationDetailOpenLinkActivity extends BaseActivity implements View.OnClickListener {
 
     private WebView webView;
-    private TextView tvTitle;
-    private View vBack;
     private Dialog mDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +23,10 @@ public class NotificationDetailOpenLinkActivity extends BaseActivity implements 
         setContentView(R.layout.activity_webview);
         String attached_link = getIntent().getExtras().getString("attached_link");
         String title=getIntent().getExtras().getString("title");
-        tvTitle= (TextView) findViewById(R.id.ctvHeaderBarTitle);
+        TextView tvTitle = (TextView) findViewById(R.id.ctvHeaderBarTitle);
         tvTitle.setText(title);
         webView= (WebView) findViewById(R.id.wv_view);
-        vBack=findViewById(R.id.ivHeaderBarMenu);
+        View vBack = findViewById(R.id.ivHeaderBarMenu);
         vBack.setOnClickListener(this);
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);

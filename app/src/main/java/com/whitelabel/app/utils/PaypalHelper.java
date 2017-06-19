@@ -17,11 +17,10 @@ import java.math.BigDecimal;
  */
 
 public class PaypalHelper{
-    private  static String  CONFIG_CLIENT_ID;
     private  PayPalConfiguration payPalConfiguration=null;
     public static  final   int REQUEST_CODE_PAYMENT=10000;
     public PaypalHelper(){
-        CONFIG_CLIENT_ID= WhiteLabelApplication.getAppConfiguration().getThirdPartyConfig().getPaypalClientId().getSandbox();
+        String CONFIG_CLIENT_ID = WhiteLabelApplication.getAppConfiguration().getThirdPartyConfig().getPaypalClientId().getSandbox();
 //        CONFIG_CLIENT_ID="Aas9UBfT7TVygV7BXM9CFGZTHKNgMSy70gx7YVXcSvn-6QCgb-kjlAj38t_JzCy1MCvw8eoZqpSkBOhX";
         payPalConfiguration=new
                 PayPalConfiguration()

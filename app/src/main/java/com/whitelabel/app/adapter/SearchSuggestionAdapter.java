@@ -18,15 +18,15 @@ import java.util.ArrayList;
 public class SearchSuggestionAdapter extends BaseAdapter implements Filterable {
 
     private ArrayList<SuggestsEntity> mSuggestsEntityArrayList;
-    private ArrayList<SuggestsEntity> mFilterSuggestsEntityArrayList;
+//    private ArrayList<SuggestsEntity> mFilterSuggestsEntityArrayList;
     private LayoutInflater inflater;
-    private Context mContext;
-    private String mSubTitle;
+//    private Context mContext;
+//    private String mSubTitle;
 
     public SearchSuggestionAdapter(Context context, ArrayList<SuggestsEntity> suggestsEntities) {
         inflater = LayoutInflater.from(context);
-        mContext = context;
-        mFilterSuggestsEntityArrayList = new ArrayList<>();
+//        mContext = context;
+//        mFilterSuggestsEntityArrayList = new ArrayList<>();
         this.mSuggestsEntityArrayList = suggestsEntities;
     }
 
