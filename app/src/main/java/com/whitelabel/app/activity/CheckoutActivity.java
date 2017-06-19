@@ -337,7 +337,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                 if (fragmentOfGoingTo instanceof CheckoutDefaultAddressFragment) {
 //                    addressConditionInShipping = "0";
                     fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    /*.add(R.id.ll_checkout_body, fragmentOfGoingTo, "addNewAddressFragment")*/;
+                    /*.add(R.id.ll_checkout_body, fragmentOfGoingTo, "addNewAddressFragment")*/
                     fragmentTransaction.remove(currentFragmentInShipping);
                     fragmentTransaction.show(fragmentOfGoingTo).commitAllowingStateLoss();
                 } else {

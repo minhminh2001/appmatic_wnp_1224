@@ -65,7 +65,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
             mPresenter.detachView();
         }
     }
-    public  T getPresenter(){return null;};
+    public  T getPresenter(){return null;}
 
     public void setTitleNum(int num){
         if(num>0){

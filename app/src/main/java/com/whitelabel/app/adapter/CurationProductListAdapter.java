@@ -402,7 +402,7 @@ public class CurationProductListAdapter extends BaseAdapter {
                             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP && finalViewHolder.ivLeftProductImage.getTag().toString().equals(leftProductImageUrl)) {
                                 intent.putExtras(bundle);
                                 ActivityOptionsCompat aop = ActivityOptionsCompat.makeSceneTransitionAnimation(curationActivity, finalViewHolder.ivLeftProductImage, curationActivity.getResources().getString(R.string.activity_image_trans));
-                                ActivityCompat.startActivityForResult(curationActivity, intent, curationActivity.RESULT_WISH, aop.toBundle());
+                                ActivityCompat.startActivityForResult(curationActivity, intent, CurationActivity.RESULT_WISH, aop.toBundle());
                             } else {
                                 setBundleAndToPDP(intent, bundle);
                             }
@@ -588,7 +588,7 @@ public class CurationProductListAdapter extends BaseAdapter {
                                 intent.putExtras(bundle);
                                 ActivityOptionsCompat aop = ActivityOptionsCompat.makeSceneTransitionAnimation(curationActivity, finalViewHolder.ivRightProductImage, curationActivity.getResources()
                                         .getString(R.string.activity_image_trans));
-                                ActivityCompat.startActivityForResult(curationActivity, intent, curationActivity.RESULT_WISH, aop.toBundle());
+                                ActivityCompat.startActivityForResult(curationActivity, intent, CurationActivity.RESULT_WISH, aop.toBundle());
                             } else {
                                 setBundleAndToPDP(intent, bundle);
                             }
@@ -639,7 +639,7 @@ public class CurationProductListAdapter extends BaseAdapter {
 
     private void setBundleAndToPDP(Intent intent, Bundle bundle) {
         intent.putExtras(bundle);
-        curationActivity.startActivityForResult(intent, curationActivity.RESULT_WISH);
+        curationActivity.startActivityForResult(intent, CurationActivity.RESULT_WISH);
         curationActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
     }
 

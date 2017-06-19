@@ -468,7 +468,6 @@ public class RefreshLoadMoreRecyclerViewV2 extends RecyclerView {
             mHeaderView = (CustomDragHeaderView) layoutManager.findViewByPosition(0);
         if (mHeaderView != null) mHeaderView.setState(CustomDragHeaderView.STATE_REFRESHING);
         mIsRefreshing = true;
-        ;
         mIsHeaderReady = false;
         smoothShowHeader();
         if (refreshListener != null) refreshListener.onRefresh();

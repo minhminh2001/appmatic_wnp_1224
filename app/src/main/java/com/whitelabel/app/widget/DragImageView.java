@@ -48,7 +48,7 @@ public class DragImageView extends ImageView {
     private enum MODE {
         NONE, DRAG, ZOOM
 
-    };
+    }
 
     private MODE mode = MODE.NONE;// 默认模式
 

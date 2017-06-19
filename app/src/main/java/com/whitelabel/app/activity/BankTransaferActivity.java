@@ -412,7 +412,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
     public void showPopWindowSelectPhoto() {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popupWindowView = inflater.inflate(R.layout.popup_window, null);
-        mSelectImgPop = new PopupWindow(popupWindowView, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, true);
+        mSelectImgPop = new PopupWindow(popupWindowView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
         mSelectImgPop.setBackgroundDrawable(new BitmapDrawable());
         //设置PopupWindow的弹出和消失效果
         mSelectImgPop.setAnimationStyle(R.style.popupAnimation);

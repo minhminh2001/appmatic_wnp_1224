@@ -305,7 +305,7 @@ public abstract class BaseHttp {
 
     //    public abstract  void
     public enum HTTP_METHOD {
-        GET, POST;
+        GET, POST
     }
 
 }

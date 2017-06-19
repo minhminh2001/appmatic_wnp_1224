@@ -123,7 +123,7 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
             TextView unavailable=(TextView)view_inner.findViewById(R.id.order_detail_unavailable);
             TextView orderDetailTrans=(TextView)view_inner.findViewById(R.id.order_detail_trans);
             TextView orderMerchantName=(TextView)view_inner.findViewById(R.id.tv_orderlist_new_mername);
-            final MyAccountOrderTrackingInfo  trackingInfo = orderMiddle.getTrackingInfo();;
+            final MyAccountOrderTrackingInfo  trackingInfo = orderMiddle.getTrackingInfo();
             tvCurreny.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+"");
 //            if (trackingInfo!=null) {
 //                tvTrickingInfo.setVisibility(View.VISIBLE);
