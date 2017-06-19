@@ -39,9 +39,9 @@ import butterknife.ButterKnife;
 
 
 public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeContract.View,HomeActivity.HomeFragmentCallback {
-
     @BindView(R.id.rl_category_tree)
     RecyclerView rlCategoryTree;
+    private ImageLoader  mImageLoader;
     private CategoryTreeExpandableAdapter  mAdapter;
     private  HomeHomeContract.Presenter mHomePresenter;
     public HomeHomeFragmentV1() {
@@ -67,31 +67,26 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeCont
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
-
     public void initRecyclerView() {
         CustomSpeedLayoutManager linearLayoutManager = new CustomSpeedLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rlCategoryTree.setLayoutManager(linearLayoutManager);
     }
-    private ImageLoader  mImageLoader;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setScrollToolBarEnable(true);
         View view = inflater.inflate(R.layout.fragment_home_home_fragment_v2, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
-
     @Override
     public void requestData() {
         showProgressDialog();
         mHomePresenter.attachView(this);
         mHomePresenter.getSearchCategory();
     }
-
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         mCommonCallback.setHomeSearchBarAndOnClick(new View.OnClickListener() {
             @Override
@@ -198,7 +193,4 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeCont
             ((Activity) getContext()).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
         }
     };
-
-
-
 }

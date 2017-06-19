@@ -35,20 +35,14 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
         return visibleItems;
     }
     private RecyclerView recyclerView;
-
-
     public   void setHasHeader(boolean  hasHeader){
         this.hasHeader=hasHeader;
     }
-
     protected static final int TYPE_HEADER = 1000;
-
     private static final int ARROW_ROTATION_DURATION = 150;
-
     public static final int MODE_NORMAL = 0;
     //展开一个item，关闭其他所有item
     public static final int MODE_ACCORDION = 1;
-
     public ExpandableRecyclerAdapter(Context context, Activity activity) {
         mContext = context;
         getMaxChildItem(activity);
@@ -57,13 +51,13 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
     private void getMaxChildItem(Activity activity){
         int screenHeight=JScreenUtils.getScreenHeight(activity);
         if(screenHeight>=2350){
-            maxChildItemCount=13;
-        }else if(screenHeight>=1900){
             maxChildItemCount=12;
-        }else if(screenHeight>=1170){
+        }else if(screenHeight>=1900){
             maxChildItemCount=11;
-        }else if(screenHeight>=800){
+        }else if(screenHeight>=1170){
             maxChildItemCount=9;
+        }else if(screenHeight>=800){
+            maxChildItemCount=8;
         }else if(screenHeight>=200){
             maxChildItemCount=7;
         }
@@ -209,6 +203,7 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
                   }else if(getItem(position) instanceof  FilterItemModel){
                       children=((FilterItemModel)getItem(position)).getValues().size();
                   }
+                  JLogUtils.i("ray","maxChildItemCount:"+maxChildItemCount);
                 if (children< maxChildItemCount) {
                     tagPosition = position + children;
                 } else {

@@ -12,11 +12,9 @@
     android:layout_width="match_parent"
     android:layout_height="5dp" />
 <RelativeLayout
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
+    android:paddingTop="12dp"
     android:id="@+id/rl_title"
     android:layout_width="fill_parent"
-    android:paddingLeft="15dp"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:id="@+id/rl_category_tree_group_tag"
@@ -37,14 +35,21 @@
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
     <com.whitelabel.app.widget.CustomTextView
+        android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/rl_category_tree_group_tag"
         imagianto:textFont="LatoRegular"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:id="@+id/tv_category_tree_group_name"
         android:layout_centerVertical="true"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
+    <View
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/tv_category_tree_group_name"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="@color/device_line" />
 </RelativeLayout>
   <ImageView
       android:id="@+id/iv_category_tree_group"
