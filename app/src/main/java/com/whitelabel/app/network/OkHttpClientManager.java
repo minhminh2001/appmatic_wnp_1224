@@ -889,10 +889,12 @@ public class OkHttpClientManager {
                         try {
                             if (is != null) is.close();
                         } catch (IOException e) {
+                            e.getStackTrace();
                         }
                         try {
                             if (fos != null) fos.close();
                         } catch (IOException e) {
+                            e.getStackTrace();
                         }
                     }
                 }
@@ -931,9 +933,8 @@ public class OkHttpClientManager {
                     try {
                         if (certificate != null)
                             certificate.close();
-                    } catch (IOException e)
-
-                    {
+                    } catch (IOException e) {
+                        e.getStackTrace();
                     }
                 }
                 TrustManagerFactory trustManagerFactory = null;
@@ -1203,6 +1204,7 @@ public class OkHttpClientManager {
                     value = fieldValue;
                 }
             } catch (Exception e) {
+                e.getStackTrace();
             }
             return value;
 

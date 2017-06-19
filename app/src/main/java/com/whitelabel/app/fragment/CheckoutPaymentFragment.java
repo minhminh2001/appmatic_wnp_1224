@@ -134,18 +134,23 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
     }
     public String getPaymengStr(List<PaymentMethodModel> method, String paymentType) {
         String likeStr = "";
-        if (paymentType.equals(CARDPAYMENT)) {
-            likeStr = "Credit";
-        } else if (paymentType .equals(ONLINEPAYMENT)) {
-            likeStr = "Online";
-        } else if ( paymentType .equals(OFFLINEPAYMENT)){
-            if (paymentListEntity.getBanktransfer() != null) {
-                return paymentListEntity.getBanktransfer().getTitle();
-            }
-        } else if (paymentType .equals( CODPAYMENT)) {
-            if (paymentListEntity.getCashondelivery() != null) {
-                return paymentListEntity.getCashondelivery().getTitle();
-            }
+        switch (paymentType){
+            case CARDPAYMENT:
+                likeStr = "Credit";
+                break;
+            case ONLINEPAYMENT:
+                likeStr = "Online";
+            break;
+            case OFFLINEPAYMENT:
+                if (paymentListEntity.getBanktransfer() != null) {
+                    return paymentListEntity.getBanktransfer().getTitle();
+                }
+                break;
+            case CODPAYMENT:
+                if (paymentListEntity.getCashondelivery() != null) {
+                    return paymentListEntity.getCashondelivery().getTitle();
+                }
+                break;
         }
         for (int i = 0; i < method.size(); i++) {
             if (method.get(i).getLabel().contains(likeStr)) {
@@ -1267,62 +1272,74 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         }
     }
     public void handlerPaymentType(List<PaymentMethodModel> method, String paymentType) {
-        if (paymentType .equals( CARDPAYMENT)) {
-            checkoutActivity.setButtonEnable(true);
-            llPaymentMethodOnlineBanking.setVisibility(View.INVISIBLE);
-            tvOnlinebankingBlankbottom.setVisibility(View.GONE);
-            llPaymentMethodCreditCardBody.setVisibility(View.VISIBLE);
-            tvHtml.setVisibility(View.GONE);
-            wvHtml.setVisibility(View.GONE);
-            tvPaymentMethod.setText(getPaymengStr(method, paymentType));
-        } else if (paymentType .equals( ONLINEPAYMENT) ){
-            checkoutActivity.setButtonEnable(true);
-            llPaymentMethodOnlineBanking.setVisibility(View.VISIBLE);
-            llPaymentMethodCreditCardBody.setVisibility(View.INVISIBLE);
-            tvOnlinebankingBlankbottom.setVisibility(View.VISIBLE);
-            tvHtml.setVisibility(View.GONE);
-            wvHtml.setVisibility(View.GONE);
-            tvPaymentMethod.setText(getPaymengStr(method, paymentType));
-        } else if (paymentType .equals(CODPAYMENT)) {
-            Boolean right = checkCODPayment();
-            if (!right) {
-                if (CheckoutPaymentFragment.this.paymentType == CODPAYMENT)
-                    handlerPaymentType(method, CARDPAYMENT);
-                return;
-            }
-            tvPaymentMethod.setText("Cash On Delivery");
-            llPaymentMethodOnlineBanking.setVisibility(View.INVISIBLE);
-            tvOnlinebankingBlankbottom.setVisibility(View.GONE);
-            llPaymentMethodCreditCardBody.setVisibility(View.INVISIBLE);
-            if (paymentListEntity.getCashondelivery() != null && !TextUtils.isEmpty(paymentListEntity.getCashondelivery().getContent()) && !"null".equals(paymentListEntity.getCashondelivery().getContent())) {
-                wvHtml.setVisibility(View.VISIBLE);
-                String content = JToolUtils.replaceFont(paymentListEntity.getCashondelivery().getContent());
-                JToolUtils.webViewFont(WhiteLabelApplication.getInstance().getBaseContext(), wvHtml, content);
-                //wvHtml.loadDataWithBaseURL("file:///android_asset/html/", paymentListEntity.getCashondelivery().getContent(), "text/html", "utf-8", null);
-            }
-            tvHtml.setVisibility(View.GONE);
-        } else if (paymentType .equals( OFFLINEPAYMENT)) {
-            if (paymentListEntity.getBanktransfer() != null) {
-                checkoutActivity.setButtonEnable(true);
-                llPaymentMethodOnlineBanking.setVisibility(View.INVISIBLE);
-                tvOnlinebankingBlankbottom.setVisibility(View.GONE);
-                llPaymentMethodCreditCardBody.setVisibility(View.INVISIBLE);
-                if (paymentListEntity.getBanktransfer() != null && !TextUtils.isEmpty(paymentListEntity.getBanktransfer().getContent()) && !"null".equals(paymentListEntity.getBanktransfer().getContent())) {
-                    tvHtml.setVisibility(View.VISIBLE);
-                    String content = JToolUtils.replaceFont(paymentListEntity.getBanktransfer().getContent());
-                    JToolUtils.webViewFont(WhiteLabelApplication.getInstance().getBaseContext(), tvHtml, content);
-                }
-                wvHtml.setVisibility(View.GONE);
-                tvPaymentMethod.setText(getPaymengStr(method, paymentType));
-            } else {
-                handlerPaymentType(method, CARDPAYMENT);
-                return;
-            }
-        }else if(paymentType.equals(PAYPAL)){
-            llPaymentMethodOnlineBanking.setVisibility(View.INVISIBLE);
-            tvOnlinebankingBlankbottom.setVisibility(View.GONE);
-            llPaymentMethodCreditCardBody.setVisibility(View.INVISIBLE);
-        }
+         switch (paymentType){
+             case CARDPAYMENT:
+                 checkoutActivity.setButtonEnable(true);
+                 llPaymentMethodOnlineBanking.setVisibility(View.INVISIBLE);
+                 tvOnlinebankingBlankbottom.setVisibility(View.GONE);
+                 llPaymentMethodCreditCardBody.setVisibility(View.VISIBLE);
+                 tvHtml.setVisibility(View.GONE);
+                 wvHtml.setVisibility(View.GONE);
+                 tvPaymentMethod.setText(getPaymengStr(method, paymentType));
+                 break;
+
+             case ONLINEPAYMENT:
+                 checkoutActivity.setButtonEnable(true);
+                 llPaymentMethodOnlineBanking.setVisibility(View.VISIBLE);
+                 llPaymentMethodCreditCardBody.setVisibility(View.INVISIBLE);
+                 tvOnlinebankingBlankbottom.setVisibility(View.VISIBLE);
+                 tvHtml.setVisibility(View.GONE);
+                 wvHtml.setVisibility(View.GONE);
+                 tvPaymentMethod.setText(getPaymengStr(method, paymentType));
+                 break;
+
+             case CODPAYMENT:
+                 Boolean right = checkCODPayment();
+                 if (!right) {
+                     if (CheckoutPaymentFragment.this.paymentType == CODPAYMENT)
+                         handlerPaymentType(method, CARDPAYMENT);
+                     return;
+                 }
+                 tvPaymentMethod.setText("Cash On Delivery");
+                 llPaymentMethodOnlineBanking.setVisibility(View.INVISIBLE);
+                 tvOnlinebankingBlankbottom.setVisibility(View.GONE);
+                 llPaymentMethodCreditCardBody.setVisibility(View.INVISIBLE);
+                 if (paymentListEntity.getCashondelivery() != null && !TextUtils.isEmpty(paymentListEntity.getCashondelivery().getContent()) && !"null".equals(paymentListEntity.getCashondelivery().getContent())) {
+                     wvHtml.setVisibility(View.VISIBLE);
+                     String content = JToolUtils.replaceFont(paymentListEntity.getCashondelivery().getContent());
+                     JToolUtils.webViewFont(WhiteLabelApplication.getInstance().getBaseContext(), wvHtml, content);
+                     //wvHtml.loadDataWithBaseURL("file:///android_asset/html/", paymentListEntity.getCashondelivery().getContent(), "text/html", "utf-8", null);
+                 }
+                 tvHtml.setVisibility(View.GONE);
+                 break;
+
+
+             case OFFLINEPAYMENT:
+                 if (paymentListEntity.getBanktransfer() != null) {
+                     checkoutActivity.setButtonEnable(true);
+                     llPaymentMethodOnlineBanking.setVisibility(View.INVISIBLE);
+                     tvOnlinebankingBlankbottom.setVisibility(View.GONE);
+                     llPaymentMethodCreditCardBody.setVisibility(View.INVISIBLE);
+                     if (paymentListEntity.getBanktransfer() != null && !TextUtils.isEmpty(paymentListEntity.getBanktransfer().getContent()) && !"null".equals(paymentListEntity.getBanktransfer().getContent())) {
+                         tvHtml.setVisibility(View.VISIBLE);
+                         String content = JToolUtils.replaceFont(paymentListEntity.getBanktransfer().getContent());
+                         JToolUtils.webViewFont(WhiteLabelApplication.getInstance().getBaseContext(), tvHtml, content);
+                     }
+                     wvHtml.setVisibility(View.GONE);
+                     tvPaymentMethod.setText(getPaymengStr(method, paymentType));
+                 } else {
+                     handlerPaymentType(method, CARDPAYMENT);
+                     return;
+                 }
+                 break;
+             case PAYPAL:
+
+                 llPaymentMethodOnlineBanking.setVisibility(View.INVISIBLE);
+                 tvOnlinebankingBlankbottom.setVisibility(View.GONE);
+                 llPaymentMethodCreditCardBody.setVisibility(View.INVISIBLE);
+                 break;
+         }
+
         CheckoutPaymentFragment.this.paymentType = paymentType;
     }
 
@@ -1470,169 +1487,169 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         /////////////////////////Credit Card Bank begin////////////////////////////
 
 
-        if(false) {
-            checkoutActivity.findViewById(R.id.ll_checkout_payment_issuerbank).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    rl_issuer_bank.setBottomLineActive(true);
-                    AnimUtil.rotateArrow(arrowIssuerbank, true);
-                    tvIssuerbankHint.setVisibility(View.VISIBLE);
-                    tvIssuerbankHint.startAnimation(getHintAnimation(tvIssuerbankHint, checkoutActivity.getResources().getString(R.string.Issuer_Bank)));
-
-                    JViewUtils.cleanCurrentViewFocus(getActivity());
-                    String[] banks = paymentListEntity.getBanks();
-                    final ArrayList<WheelPickerEntity> list = new ArrayList<WheelPickerEntity>();
-                    for (String bank : banks) {
-                        WheelPickerEntity entity = new WheelPickerEntity();
-                        entity.setDisplay(bank);
-                        entity.setValue(bank);
-                        list.add(entity);
-                    }
-
-                    final WheelPickerEntity oldEntity = new WheelPickerEntity();
-                    oldEntity.setDisplay(banks[0]);
-                    oldEntity.setValue(banks[0]);
-
-                    WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
-
-                    final String bank = tvIssuerBank.getText().toString();
-                    for (int i = 0; i < list.size(); i++) {
-                        if (list.get(i).getDisplay().equalsIgnoreCase(bank)) {
-                            oldEntity.setIndex(i);
-                            configEntity.setIndex(i);
-                        }
-                    }
-
-                    configEntity.setArrayList(list);
-                    configEntity.setOldValue(oldEntity);
-                    configEntity.setCallBack(new WheelPickerCallback() {
-                        @Override
-                        public void onCancel() {
-                            AnimUtil.rotateArrow(arrowIssuerbank, false);
-                            rl_issuer_bank.setBottomLineActive(false);
-                            if (tvIssuerBank.getText().length() > 0) {
-                                tvIssuerbankHint.setTextColor(JToolUtils.getColor(R.color.label_saved));
-                            } else {
-                                tvIssuerbankHint.setVisibility(View.INVISIBLE);
-                            }
-                        }
-
-                        @Override
-                        public void onScrolling(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
-                            JLogUtils.i("Russell", "onScrolling() -- oldValue => " + oldValue + "  newValue => " + newValue);
-                        }
-
-                        @Override
-                        public void onDone(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
-                            if (newValue.getDisplay() == null) {
-                                if (JDataUtils.isEmpty(bank)) {
-
-                                    tvIssuerBank.setText(oldValue.getDisplay());
-                                    tvIssuerBank.setHint(oldValue.getValue());
-                                    tvIssuerBank.setTextColor(getResources().getColor(R.color.black));
-                                    tvIssuerbankHint.setText(getResources().getString(R.string.Issuer_Bank));
-                                    tvIssuerbankHint.setTextColor(ctv_payment_method_lab.getHintTextColors());
-                                }
-                            } else {
-                                tvIssuerBank.setText(newValue.getDisplay());
-                                tvIssuerBank.setHint(newValue.getValue());
-                                tvIssuerBank.setTextColor(getResources().getColor(R.color.black));
-                                tvIssuerbankHint.setText(getResources().getString(R.string.Issuer_Bank));
-                                tvIssuerbankHint.setTextColor(ctv_payment_method_lab.getHintTextColors());
-                            }
-                            AnimUtil.rotateArrow(arrowIssuerbank, false);
-                            rl_issuer_bank.setBottomLineActive(false);
-                            if (tvIssuerBank.getText().length() > 0) {
-                                tvIssuerbankHint.setTextColor(JToolUtils.getColor(R.color.label_saved));
-                            } else {
-                                tvIssuerbankHint.setVisibility(View.INVISIBLE);
-                            }
-                        }
-                    });
-                    JViewUtils.showWheelPickerOneDialog(checkoutActivity, configEntity);
-
-                    //createDialogPicker(list, oldEntity, tvIssuerBank);
-                }
-            });
-            /////////////////////////Credit Card Bank end////////////////////////////
-
-            /////////////////////////Online Banking Bank begin////////////////////////////
-                HashMap<String, String> onlinebanks = paymentListEntity.getOnlinebanks();
-                final ArrayList<WheelPickerEntity> list_onlinebanks = new ArrayList<WheelPickerEntity>();
-
-                for (String bank : onlinebanks.keySet()) {
-                    WheelPickerEntity entity = new WheelPickerEntity();
-                    entity.setDisplay(onlinebanks.get(bank));
-                    entity.setValue(bank);
-                    list_onlinebanks.add(entity);
-                }
-
-                tvOnlineBankingPayWith.setText(list_onlinebanks.get(0).getDisplay());
-                tvOnlineBankingPayWith.setHint(list_onlinebanks.get(0).getValue());
-
-                checkoutActivity.findViewById(R.id.ll_checkout_payment_onlinebanking).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        final WheelPickerEntity oldEntity_onlinebanks = new WheelPickerEntity();
-                        oldEntity_onlinebanks.setDisplay(list_onlinebanks.get(0).getDisplay());
-                        oldEntity_onlinebanks.setValue(list_onlinebanks.get(0).getValue());
-
-                        WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
-
-                        String bank = tvOnlineBankingPayWith.getText().toString();
-                        for (int i = 0; i < list_onlinebanks.size(); i++) {
-                            if (list_onlinebanks.get(i).getDisplay().equalsIgnoreCase(bank)) {
-                                oldEntity_onlinebanks.setIndex(i);
-                                configEntity.setIndex(i);
-                            }
-
-                        }
-                        CustomButtomLineRelativeLayout.setBottomLineActive(view_payment_online_line, true);
-                        AnimUtil.rotateArrow(arrowSelectOnlineBankingPayWith, true);
-                        tvOnlinebankHint.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-                        configEntity.setArrayList(list_onlinebanks);
-                        configEntity.setOldValue(oldEntity_onlinebanks);
-                        configEntity.setCallBack(new WheelPickerCallback() {
-                            @Override
-                            public void onCancel() {
-                                CustomButtomLineRelativeLayout.setBottomLineActive(view_payment_online_line, false);
-                                AnimUtil.rotateArrow(arrowSelectOnlineBankingPayWith, false);
-                                tvOnlinebankHint.setTextColor(JToolUtils.getColor(R.color.label_saved));
-                            }
-
-                            @Override
-                            public void onScrolling(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
-                                JLogUtils.i("Russell", "onScrolling() -- oldValue => " + oldValue + "  newValue => " + newValue);
-                            }
-
-                            @Override
-                            public void onDone(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
-                                CustomButtomLineRelativeLayout.setBottomLineActive(view_payment_online_line, false);
-                                AnimUtil.rotateArrow(arrowSelectOnlineBankingPayWith, false);
-                                tvOnlinebankHint.setTextColor(JToolUtils.getColor(R.color.label_saved));
-
-                                if (newValue.getDisplay() == null) {
-                                    if (JDataUtils.isEmpty(tvOnlineBankingPayWith)) {
-
-                                        tvOnlineBankingPayWith.setText(oldValue.getDisplay());
-                                        tvOnlineBankingPayWith.setHint(oldValue.getValue());
-                                    }
-
-                                } else {
-                                    tvOnlineBankingPayWith.setText(newValue.getDisplay());
-                                    tvOnlineBankingPayWith.setHint(newValue.getValue());
-
-                                }
-
-                            }
-                        });
-                        JViewUtils.showWheelPickerOneDialog(checkoutActivity, configEntity);
-
-                        //createDialogPicker(list_onlinebanks, oldEntity_onlinebanks, tvOnlineBankingPayWith);
-                    }
-                });
-            }
+//        if(false) {
+//            checkoutActivity.findViewById(R.id.ll_checkout_payment_issuerbank).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    rl_issuer_bank.setBottomLineActive(true);
+//                    AnimUtil.rotateArrow(arrowIssuerbank, true);
+//                    tvIssuerbankHint.setVisibility(View.VISIBLE);
+//                    tvIssuerbankHint.startAnimation(getHintAnimation(tvIssuerbankHint, checkoutActivity.getResources().getString(R.string.Issuer_Bank)));
+//
+//                    JViewUtils.cleanCurrentViewFocus(getActivity());
+//                    String[] banks = paymentListEntity.getBanks();
+//                    final ArrayList<WheelPickerEntity> list = new ArrayList<WheelPickerEntity>();
+//                    for (String bank : banks) {
+//                        WheelPickerEntity entity = new WheelPickerEntity();
+//                        entity.setDisplay(bank);
+//                        entity.setValue(bank);
+//                        list.add(entity);
+//                    }
+//
+//                    final WheelPickerEntity oldEntity = new WheelPickerEntity();
+//                    oldEntity.setDisplay(banks[0]);
+//                    oldEntity.setValue(banks[0]);
+//
+//                    WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
+//
+//                    final String bank = tvIssuerBank.getText().toString();
+//                    for (int i = 0; i < list.size(); i++) {
+//                        if (list.get(i).getDisplay().equalsIgnoreCase(bank)) {
+//                            oldEntity.setIndex(i);
+//                            configEntity.setIndex(i);
+//                        }
+//                    }
+//
+//                    configEntity.setArrayList(list);
+//                    configEntity.setOldValue(oldEntity);
+//                    configEntity.setCallBack(new WheelPickerCallback() {
+//                        @Override
+//                        public void onCancel() {
+//                            AnimUtil.rotateArrow(arrowIssuerbank, false);
+//                            rl_issuer_bank.setBottomLineActive(false);
+//                            if (tvIssuerBank.getText().length() > 0) {
+//                                tvIssuerbankHint.setTextColor(JToolUtils.getColor(R.color.label_saved));
+//                            } else {
+//                                tvIssuerbankHint.setVisibility(View.INVISIBLE);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onScrolling(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
+//                            JLogUtils.i("Russell", "onScrolling() -- oldValue => " + oldValue + "  newValue => " + newValue);
+//                        }
+//
+//                        @Override
+//                        public void onDone(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
+//                            if (newValue.getDisplay() == null) {
+//                                if (JDataUtils.isEmpty(bank)) {
+//
+//                                    tvIssuerBank.setText(oldValue.getDisplay());
+//                                    tvIssuerBank.setHint(oldValue.getValue());
+//                                    tvIssuerBank.setTextColor(getResources().getColor(R.color.black));
+//                                    tvIssuerbankHint.setText(getResources().getString(R.string.Issuer_Bank));
+//                                    tvIssuerbankHint.setTextColor(ctv_payment_method_lab.getHintTextColors());
+//                                }
+//                            } else {
+//                                tvIssuerBank.setText(newValue.getDisplay());
+//                                tvIssuerBank.setHint(newValue.getValue());
+//                                tvIssuerBank.setTextColor(getResources().getColor(R.color.black));
+//                                tvIssuerbankHint.setText(getResources().getString(R.string.Issuer_Bank));
+//                                tvIssuerbankHint.setTextColor(ctv_payment_method_lab.getHintTextColors());
+//                            }
+//                            AnimUtil.rotateArrow(arrowIssuerbank, false);
+//                            rl_issuer_bank.setBottomLineActive(false);
+//                            if (tvIssuerBank.getText().length() > 0) {
+//                                tvIssuerbankHint.setTextColor(JToolUtils.getColor(R.color.label_saved));
+//                            } else {
+//                                tvIssuerbankHint.setVisibility(View.INVISIBLE);
+//                            }
+//                        }
+//                    });
+//                    JViewUtils.showWheelPickerOneDialog(checkoutActivity, configEntity);
+//
+//                    //createDialogPicker(list, oldEntity, tvIssuerBank);
+//                }
+//            });
+//            /////////////////////////Credit Card Bank end////////////////////////////
+//
+//            /////////////////////////Online Banking Bank begin////////////////////////////
+//                HashMap<String, String> onlinebanks = paymentListEntity.getOnlinebanks();
+//                final ArrayList<WheelPickerEntity> list_onlinebanks = new ArrayList<WheelPickerEntity>();
+//
+//                for (String bank : onlinebanks.keySet()) {
+//                    WheelPickerEntity entity = new WheelPickerEntity();
+//                    entity.setDisplay(onlinebanks.get(bank));
+//                    entity.setValue(bank);
+//                    list_onlinebanks.add(entity);
+//                }
+//
+//                tvOnlineBankingPayWith.setText(list_onlinebanks.get(0).getDisplay());
+//                tvOnlineBankingPayWith.setHint(list_onlinebanks.get(0).getValue());
+//
+//                checkoutActivity.findViewById(R.id.ll_checkout_payment_onlinebanking).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        final WheelPickerEntity oldEntity_onlinebanks = new WheelPickerEntity();
+//                        oldEntity_onlinebanks.setDisplay(list_onlinebanks.get(0).getDisplay());
+//                        oldEntity_onlinebanks.setValue(list_onlinebanks.get(0).getValue());
+//
+//                        WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
+//
+//                        String bank = tvOnlineBankingPayWith.getText().toString();
+//                        for (int i = 0; i < list_onlinebanks.size(); i++) {
+//                            if (list_onlinebanks.get(i).getDisplay().equalsIgnoreCase(bank)) {
+//                                oldEntity_onlinebanks.setIndex(i);
+//                                configEntity.setIndex(i);
+//                            }
+//
+//                        }
+//                        CustomButtomLineRelativeLayout.setBottomLineActive(view_payment_online_line, true);
+//                        AnimUtil.rotateArrow(arrowSelectOnlineBankingPayWith, true);
+//                        tvOnlinebankHint.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+//                        configEntity.setArrayList(list_onlinebanks);
+//                        configEntity.setOldValue(oldEntity_onlinebanks);
+//                        configEntity.setCallBack(new WheelPickerCallback() {
+//                            @Override
+//                            public void onCancel() {
+//                                CustomButtomLineRelativeLayout.setBottomLineActive(view_payment_online_line, false);
+//                                AnimUtil.rotateArrow(arrowSelectOnlineBankingPayWith, false);
+//                                tvOnlinebankHint.setTextColor(JToolUtils.getColor(R.color.label_saved));
+//                            }
+//
+//                            @Override
+//                            public void onScrolling(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
+//                                JLogUtils.i("Russell", "onScrolling() -- oldValue => " + oldValue + "  newValue => " + newValue);
+//                            }
+//
+//                            @Override
+//                            public void onDone(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
+//                                CustomButtomLineRelativeLayout.setBottomLineActive(view_payment_online_line, false);
+//                                AnimUtil.rotateArrow(arrowSelectOnlineBankingPayWith, false);
+//                                tvOnlinebankHint.setTextColor(JToolUtils.getColor(R.color.label_saved));
+//
+//                                if (newValue.getDisplay() == null) {
+//                                    if (JDataUtils.isEmpty(tvOnlineBankingPayWith)) {
+//
+//                                        tvOnlineBankingPayWith.setText(oldValue.getDisplay());
+//                                        tvOnlineBankingPayWith.setHint(oldValue.getValue());
+//                                    }
+//
+//                                } else {
+//                                    tvOnlineBankingPayWith.setText(newValue.getDisplay());
+//                                    tvOnlineBankingPayWith.setHint(newValue.getValue());
+//
+//                                }
+//
+//                            }
+//                        });
+//                        JViewUtils.showWheelPickerOneDialog(checkoutActivity, configEntity);
+//
+//                        //createDialogPicker(list_onlinebanks, oldEntity_onlinebanks, tvOnlineBankingPayWith);
+//                    }
+//                });
+//            }
             /////////////////////////Online Banking Bank end////////////////////////////
 
             /////////////////////////Credit Card Type Begin////////////////////////////
@@ -1775,119 +1792,101 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         //1 online  2.credit 3. offline payment
 //        parameters.put("session_key", WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
         //we need to get params from paymentFragment first.
-        if (paymentType .equals(ONLINEPAYMENT)) {
-            /**
-             * Online Banking
-             */
-            bank = tvOnlineBankingPayWith.getText().toString();
-            paymentMethod = "molpay";
-//            parameters.put("payment[method]", "molpay");
 
-            CharSequence tvOnlineBanking = tvOnlineBankingPayWith.getHint();
-            if (null == tvOnlineBanking || JDataUtils.isEmpty(tvOnlineBanking.toString().trim())) {
-                //Toast.makeText(CheckoutActivity.this, "please choose a bank!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            molpayType = tvOnlineBanking.toString();
-//            parameters.put("payment[molpay_type]", tvOnlineBanking.toString());
-
-        } else if (paymentType .equals(CARDPAYMENT)) {
-            paymentMethod = paymentType;
-//            paymentMethod="braintree";
-            paymentCountry = "Malaysia";
-//            parameters.put("payment[method]", "migsvpc_merchantnew");
-//            parameters.put("payment[cc_country]", "Malaysia");
-            Editable etCreditCardNumber = CheckoutPaymentFragment.this.etCreditCardNumber.getText();
-            if (etCreditCardNumber == null || JDataUtils.isEmpty(etCreditCardNumber.toString().trim())) {
-                tvCreditCardNumberAnim.setText(getResources().getString(R.string.This_is_a_required_field));
-                //tvCreditCardNumberAnim.setText(getResources().getString(R.string.payment_credit_card_anim_hint));
-                tvCreditCardNumberAnim.setTextColor(getResources().getColor(R.color.red_common));
-                //Toast.makeText(CheckoutActivity.this, "Please input your Credit Card Number !", Toast.LENGTH_SHORT).show();
-                return;
-            } else {
-                ccNumber = etCreditCardNumber.toString().replace(" ", "");
+        switch (paymentType){
+            case ONLINEPAYMENT:
+                bank = tvOnlineBankingPayWith.getText().toString();
+                paymentMethod = "molpay";
+                CharSequence tvOnlineBanking = tvOnlineBankingPayWith.getHint();
+                if (null == tvOnlineBanking || JDataUtils.isEmpty(tvOnlineBanking.toString().trim())) {
+                    //Toast.makeText(CheckoutActivity.this, "please choose a bank!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                molpayType = tvOnlineBanking.toString();
+                break;
+            case CARDPAYMENT:
+                paymentMethod = paymentType;
+                paymentCountry = "Malaysia";
+                Editable etCreditCardNumber = CheckoutPaymentFragment.this.etCreditCardNumber.getText();
+                if (etCreditCardNumber == null || JDataUtils.isEmpty(etCreditCardNumber.toString().trim())) {
+                    tvCreditCardNumberAnim.setText(getResources().getString(R.string.This_is_a_required_field));
+                    //tvCreditCardNumberAnim.setText(getResources().getString(R.string.payment_credit_card_anim_hint));
+                    tvCreditCardNumberAnim.setTextColor(getResources().getColor(R.color.red_common));
+                    //Toast.makeText(CheckoutActivity.this, "Please input your Credit Card Number !", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    ccNumber = etCreditCardNumber.toString().replace(" ", "");
 //                parameters.put("payment[cc_number]", etCreditCardNumber.toString().replace(" ", ""));
-            }
-
-            Editable etCVC = CheckoutPaymentFragment.this.etCVC.getText();
-            if (etCVC == null || JDataUtils.isEmpty(etCVC.toString().trim())) {
-                tvCVCAnim.setText(getResources().getString(R.string.This_is_a_required_field));
-                tvCVCAnim.setTextColor(getResources().getColor(R.color.red_common));
-                //Toast.makeText(CheckoutActivity.this, "Please input your CVC/CVV2 !", Toast.LENGTH_SHORT).show();
-                return;
-            } else {
-                ccId = etCVC.toString();
+                }
+                Editable etCVC = CheckoutPaymentFragment.this.etCVC.getText();
+                if (etCVC == null || JDataUtils.isEmpty(etCVC.toString().trim())) {
+                    tvCVCAnim.setText(getResources().getString(R.string.This_is_a_required_field));
+                    tvCVCAnim.setTextColor(getResources().getColor(R.color.red_common));
+                    //Toast.makeText(CheckoutActivity.this, "Please input your CVC/CVV2 !", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    ccId = etCVC.toString();
 //                parameters.put("payment[cc_cid]", etCVC.toString());
-            }
-            CharSequence tvSelectExpirationDate = CheckoutPaymentFragment.this.tvSelectExpirationDate.getText();
-            if (tvSelectExpirationDate == null || JDataUtils.isEmpty(tvSelectExpirationDate.toString().trim())) {
-                tvExpirationDateHint.setText(getResources().getString(R.string.This_is_a_required_field));
-                tvExpirationDateHint.setTextColor(getResources().getColor(R.color.red_common));
-                return;
-            } else {
-                String[] time = tvSelectExpirationDate.toString().split("-");
-                ccExpMonth = time[0];
-                ccExpYear = time[1];
-//                parameters.put("payment[cc_exp_month]", time[0]);
-//                parameters.put("payment[cc_exp_year]", time[1]);
-            }
-            Editable etNameoncard = CheckoutPaymentFragment.this.etNameoncard.getText();
-            if (etNameoncard == null || JDataUtils.isEmpty(etNameoncard.toString().trim())) {
-                tvNameoncardAnim.setText(getResources().getString(R.string.This_is_a_required_field));
-                tvNameoncardAnim.setTextColor(getResources().getColor(R.color.red_common));
-                //Toast.makeText(CheckoutActivity.this, "Please input your Name On Card !", Toast.LENGTH_SHORT).show();
-                return;
-            } else {
-                ccOwner = etNameoncard.toString();
-            }
-            CharSequence tvCardType = CheckoutPaymentFragment.this.tvCardType.getHint();
-            if (tvCardType == null || JDataUtils.isEmpty(tvCardType.toString().trim()) || "Card Type".equalsIgnoreCase(tvCardType.toString())) {
-                tvCardtypeHint.setText(getResources().getString(R.string.This_is_a_required_field));
-                tvCardtypeHint.setTextColor(getResources().getColor(R.color.red_common));
-                return;
-            } else {
-                ccType = tvCardType.toString();
-//                parameters.put("payment[cc_type]", tvCardType.toString());
-            }
-            CharSequence tvIssuerBank = CheckoutPaymentFragment.this.tvIssuerBank.getHint();
-            if (tvIssuerBank == null || JDataUtils.isEmpty(tvIssuerBank.toString().trim()) || "Issuer Bank".equalsIgnoreCase(tvIssuerBank.toString())) {
-                tvIssuerbankHint.setText(getResources().getString(R.string.This_is_a_required_field));
-                tvIssuerbankHint.setTextColor(getResources().getColor(R.color.red_common));
-                return;
-            } else {
-                ccBank = tvIssuerBank.toString();
-//                parameters.put("payment[cc_bank]", tvIssuerBank.toString());
-            }
-//            String secure_hash = JConstantUtils.getPaymentSecureHashKey(checkoutActivity)
-//                    + parameters.getUrlParams().get("payment[cc_number]")
-//                    + parameters.getUrlParams().get("payment[cc_cid]")
-//                    + parameters.getUrlParams().get("payment[cc_owner]")
-//                    + parameters.getUrlParams().get("payment[cc_exp_month]")
-//                    + parameters.getUrlParams().get("payment[cc_exp_year]")
-//                    + parameters.getUrlParams().get("payment[cc_bank]");
-            String secure_hash = GlobalData.checkoutHashKey + ccNumber + ccId + ccOwner + ccExpMonth + ccExpYear + ccBank;
-            JLogUtils.i("CheckoutPaymentFragment", "secure_hash:" + secure_hash);
-            ccSecureHash = JDataUtils.getMD5Result(secure_hash).toUpperCase();
-//            parameters.put("payment[secure_hash]", JDataUtils.getMD5Result(secure_hash).toUpperCase());
-        } else if (paymentType .equals( OFFLINEPAYMENT)) {
-            code = paymentListEntity.getBanktransfer().getCode();
-            html = paymentListEntity.getBanktransfer().getContent();
-            paymentMethod = code;
-//            parameters.put("payment[method]",code);
-        } else if (paymentType .equals(CODPAYMENT)) {
-            if (paymentListEntity.getCashondelivery() != null) {
-                code = paymentListEntity.getCashondelivery().getCode();
-                html = paymentListEntity.getCashondelivery().getContent();
-                JLogUtils.i("CheckoutPayment", code);
+                }
+                CharSequence tvSelectExpirationDate = CheckoutPaymentFragment.this.tvSelectExpirationDate.getText();
+                if (tvSelectExpirationDate == null || JDataUtils.isEmpty(tvSelectExpirationDate.toString().trim())) {
+                    tvExpirationDateHint.setText(getResources().getString(R.string.This_is_a_required_field));
+                    tvExpirationDateHint.setTextColor(getResources().getColor(R.color.red_common));
+                    return;
+                } else {
+                    String[] time = tvSelectExpirationDate.toString().split("-");
+                    ccExpMonth = time[0];
+                    ccExpYear = time[1];
+                }
+                Editable etNameoncard = CheckoutPaymentFragment.this.etNameoncard.getText();
+                if (etNameoncard == null || JDataUtils.isEmpty(etNameoncard.toString().trim())) {
+                    tvNameoncardAnim.setText(getResources().getString(R.string.This_is_a_required_field));
+                    tvNameoncardAnim.setTextColor(getResources().getColor(R.color.red_common));
+                    //Toast.makeText(CheckoutActivity.this, "Please input your Name On Card !", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    ccOwner = etNameoncard.toString();
+                }
+                CharSequence tvCardType = CheckoutPaymentFragment.this.tvCardType.getHint();
+                if (tvCardType == null || JDataUtils.isEmpty(tvCardType.toString().trim()) || "Card Type".equalsIgnoreCase(tvCardType.toString())) {
+                    tvCardtypeHint.setText(getResources().getString(R.string.This_is_a_required_field));
+                    tvCardtypeHint.setTextColor(getResources().getColor(R.color.red_common));
+                    return;
+                } else {
+                    ccType = tvCardType.toString();
+                }
+                CharSequence tvIssuerBank = CheckoutPaymentFragment.this.tvIssuerBank.getHint();
+                if (tvIssuerBank == null || JDataUtils.isEmpty(tvIssuerBank.toString().trim()) || "Issuer Bank".equalsIgnoreCase(tvIssuerBank.toString())) {
+                    tvIssuerbankHint.setText(getResources().getString(R.string.This_is_a_required_field));
+                    tvIssuerbankHint.setTextColor(getResources().getColor(R.color.red_common));
+                    return;
+                } else {
+                    ccBank = tvIssuerBank.toString();
+                }
+                String secure_hash = GlobalData.checkoutHashKey + ccNumber + ccId + ccOwner + ccExpMonth + ccExpYear + ccBank;
+                JLogUtils.i("CheckoutPaymentFragment", "secure_hash:" + secure_hash);
+                ccSecureHash = JDataUtils.getMD5Result(secure_hash).toUpperCase();
+                break;
+            case OFFLINEPAYMENT:
+                code = paymentListEntity.getBanktransfer().getCode();
+                html = paymentListEntity.getBanktransfer().getContent();
                 paymentMethod = code;
-            }
-//            parameters.put("payment[method]",code);
-        }else {
-            paymentMethod= (String) tvPaymentMethod.getTag();
+                break;
+            case CODPAYMENT:
+                if (paymentListEntity.getCashondelivery() != null) {
+                    code = paymentListEntity.getCashondelivery().getCode();
+                    html = paymentListEntity.getCashondelivery().getContent();
+                    JLogUtils.i("CheckoutPayment", code);
+                    paymentMethod = code;
+                }
+                break;
+            default:
+                paymentMethod= (String) tvPaymentMethod.getTag();
+                break;
         }
         mDialog = JViewUtils.showProgressDialog(checkoutActivity);
         checkoutActivity.setButtonEnable(false);
-        mCheckoutDao.savePayment(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), paymentMethod, molpayType, paymentCountry, ccNumber, ccId, ccExpMonth, ccExpYear, ccOwner, ccType, ccBank, ccSecureHash, nonce);
+        mCheckoutDao.savePayment(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),paymentMethod, molpayType, paymentCountry, ccNumber, ccId, ccExpMonth, ccExpYear, ccOwner, ccType, ccBank, ccSecureHash, nonce);
     }
 
     public void gaTrackerSavePayment() {

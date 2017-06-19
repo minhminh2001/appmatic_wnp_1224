@@ -156,6 +156,7 @@ public class CurationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             ((Activity) mContext).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
                             GaTrackHelper.getInstance().googleAnalytics(categoryentity.getName(), mContext);
                         } catch (Exception ex) {
+                            ex.getStackTrace();
                         }
                     }
                 });

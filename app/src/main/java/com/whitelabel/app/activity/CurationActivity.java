@@ -368,7 +368,7 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
                 try {
                     wv_cms.destroy();
                 } catch (Throwable ex) {
-
+                   ex.getStackTrace();
                 }
             }
         } catch (Exception ex) {

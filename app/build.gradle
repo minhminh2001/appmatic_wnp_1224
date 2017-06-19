@@ -9,6 +9,37 @@ buildscript {
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: "jacoco"
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+}
+def coverageSourceDirs = [
+        '../app/src/main/java'
+]
+
+task jacocoTestReport(type:JacocoReport, dependsOn:["testWnpDebugUnitTest","createWnpDebugCoverageReport"]) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports"
+    classDirectories = fileTree(
+            dir: '../app/build/intermediates/classes/debug',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/*$ViewInjector*.*',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*']
+    )
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files('../app/build/jacoco/testDebug.exec')
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+
+
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
@@ -63,6 +94,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+            testCoverageEnabled = true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

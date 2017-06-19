@@ -5,40 +5,32 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/purple</item>
     </style>
-
     <style name="AppThemeBlack" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/black000000</item>
     </style>
-
     <style name="startStyle" parent="AppThemeBlack"></style>
-
     <style name="BlackgroundBalckTheme" parent="AppTheme">
         <item name="android:windowBackground">@color/black000000</item>
     </style>
-
     <style name="BackgroundWhiteTheme" parent="AppTheme">
         <item name="android:windowBackground">@color/white</item>
     </style>
-
     <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
-
     <style name="checkout_textview_size_hint" parent="font_family_robot_regular">
         <item name="android:textColor">@color/label_saved</item>
         <item name="android:textSize">@dimen/labelTextFontSize</item>
     </style>
-
     <style name="checkout_textview_size_content" parent="font_family_robot_regular">
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/editColor</item>
         <item name="android:textColorHint">@color/hint</item>
         <item name="android:textSize">@dimen/editTextFontSize</item>
     </style>
-
     <style name="curation_time_desc">
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginTop">10px</item>
@@ -46,17 +38,14 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/gray_3fabac</item>
     </style>
-
     <style name="tv_curation_time_style">
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
-
     <style name="rl_curation_time_num_style">
         <item name="android:layout_centerHorizontal">true</item>
     </style>
-
     <style name="rl_curation_time_style">
         <item name="android:layout_centerVertical">true</item>
         <item name="android:paddingLeft">15dp</item>
@@ -64,8 +53,6 @@
         <item name="android:paddingTop">20dp</item>
         <item name="android:paddingBottom">20dp</item>
     </style>
-
-
     <style name="SplashScreen">
         <item name="android:padding">0dp</item>
         <item name="android:windowFrame">@null</item>
@@ -73,7 +60,7 @@
     </style>
     <!-- spinner -->
     <style name="spinner_style">
-        <item name="android:background">@anim/background_selector</item>
+        <item name="android:background">@drawable/background_selector</item>
         <item name="android:paddingLeft">5dip</item>
     </style>
     <!--checkout module: popupwindow animation-->

@@ -194,6 +194,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             try {
                 webView.destroy();
             } catch (Throwable ex) {
+                ex.getStackTrace();
             }
         } catch (Exception ex) {
             ex.getStackTrace();
@@ -1666,11 +1667,13 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         try {
             childPrice = Float.parseFloat(price);
         } catch (Exception ex) {
+            ex.getStackTrace();
         }
         float childFinalPrice = 0.0f;
         try {
             childFinalPrice = Float.parseFloat(finalPrice);
         } catch (Exception ex) {
+            ex.getStackTrace();
         }
 //        userSelectedProductPriceOffsetFloat = 0;
 //        userSelectedProductFinalPriceOffsetFloat = 0;
@@ -1679,10 +1682,12 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         try {
             productPriceFloat = Float.parseFloat(mProductDetailBean.getPrice());
         } catch (Exception ex) {
+            ex.getStackTrace();
         }
         try {
             productFinalPriceFloat = Float.parseFloat(mProductDetailBean.getFinalPrice());
         } catch (Exception ex) {
+            ex.getStackTrace();
         }
         if (childPrice != 0) {
             userSelectedProductPriceFloat = childPrice;

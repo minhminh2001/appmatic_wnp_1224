@@ -92,7 +92,9 @@ public class AppUtils {
 					}
 				}
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
 
 		return false;
 	}

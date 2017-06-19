@@ -129,7 +129,7 @@ public abstract class BaseHttp {
     //处理get 请求中的空格
     private String formatBlack(String value) {
         String[] values = value.split(" ");
-        StringBuffer finalValue = new StringBuffer("");
+        StringBuilder finalValue = new StringBuilder("");
         for (int i = 0; i < values.length; i++) {
             finalValue.append(URLEncoder.encode(values[i]));
             if (i < values.length - 1) {

@@ -118,7 +118,7 @@ public class JJsonUtils {
                          Gson gson = new Gson();
                          list = gson.fromJson(jsonString, new TypeToken<List<T>>() {}.getType());
                      } catch (Exception e) {
-                      JLogUtils.i("exception", "========" + e.getStackTrace().toString());
+                     e.getStackTrace();
                      }
                  return list;
     }

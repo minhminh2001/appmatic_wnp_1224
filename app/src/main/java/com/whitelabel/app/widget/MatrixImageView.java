@@ -150,7 +150,9 @@ public class MatrixImageView extends ImageView{
                                         mHandler.sendMessage(message);
                                         return;
                                     }
-                                }catch (Exception e){}
+                                }catch (Exception e){
+                                    e.getStackTrace();
+                                }
                             }
                         }.start();
                     }else{

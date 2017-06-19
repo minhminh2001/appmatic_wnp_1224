@@ -335,6 +335,7 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
         try {
             rightProductPriceFloat = Float.parseFloat(rightProductPrice);
         } catch (Exception ex) {
+            ex.getStackTrace();
         }
 
         float rightProductFinalPriceFloat = 0.0f;

@@ -335,24 +335,24 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
 
         if(getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
             WhiteLabelApplication.getAppConfiguration().signIn(loginRegisterActivity, fbLoginReturnEntity);
-            if (false) {
-                String testMessage = "sessionKey:" + fbLoginReturnEntity.getSessionKey() + "\n" + "user id:" + fbLoginReturnEntity.getId();
-                JViewUtils.showMessageDialog(loginRegisterActivity, testMessage, new OnMessageDialogListener() {
-                    @Override
-                    public void onOKClickListener(Object object) {
-
-                        if (isStart) {
-                            Intent intent = new Intent(loginRegisterActivity, HomeActivity.class);
-                            startActivity(intent);
-                        } else {
-                            loginRegisterActivity.setResult(RESULTCODE);
-                        }
-
-                        loginRegisterActivity.finish();
-                        loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
-                    }
-                });
-            } else {
+//            if (false) {
+//                String testMessage = "sessionKey:" + fbLoginReturnEntity.getSessionKey() + "\n" + "user id:" + fbLoginReturnEntity.getId();
+//                JViewUtils.showMessageDialog(loginRegisterActivity, testMessage, new OnMessageDialogListener() {
+//                    @Override
+//                    public void onOKClickListener(Object object) {
+//
+//                        if (isStart) {
+//                            Intent intent = new Intent(loginRegisterActivity, HomeActivity.class);
+//                            startActivity(intent);
+//                        } else {
+//                            loginRegisterActivity.setResult(RESULTCODE);
+//                        }
+//
+//                        loginRegisterActivity.finish();
+//                        loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
+//                    }
+//                });
+//            } else {
                 SendBoardUtil.sendNotificationBoard(loginRegisterActivity, SendBoardUtil.LOGINCODE, null);
                 if (isStart) {
                     Intent intent = new Intent(loginRegisterActivity, HomeActivity.class);
@@ -369,7 +369,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                 }
                 loginRegisterActivity.finish();
                 loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
-            }
+//            }
         }
 
     }
@@ -751,24 +751,24 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                             mFragment.get().clickEmailInfo.setVisibility(View.VISIBLE);
 
                         } else {
-                            if (false) {
-                                String testMessage = "sessionKey:" + loginReturnEntity.getSessionKey() + "\n" + "user id:" + loginReturnEntity.getId();
-                                JViewUtils.showMessageDialog(mActivity.get(), testMessage, new OnMessageDialogListener() {
-                                    private SVRAppServiceCustomerLoginReturnEntity loginReturnEntity;
-
-                                    public OnMessageDialogListener init(SVRAppServiceCustomerLoginReturnEntity a) {
-                                        this.loginReturnEntity = a;
-                                        return this;
-                                    }
-                                    @Override
-                                    public void onOKClickListener(Object object) {
-                                        Bundle mBundle = new Bundle();
-                                        mBundle.putString("sessionKey", loginReturnEntity.getSessionKey());
-                                        mActivity.get().startNextActivity(mBundle, HomeActivity.class, false);
-                                        mActivity.get().finish();
-                                    }
-                                }.init(loginReturnEntity));
-                            } else {
+//                            if (false) {
+//                                String testMessage = "sessionKey:" + loginReturnEntity.getSessionKey() + "\n" + "user id:" + loginReturnEntity.getId();
+//                                JViewUtils.showMessageDialog(mActivity.get(), testMessage, new OnMessageDialogListener() {
+//                                    private SVRAppServiceCustomerLoginReturnEntity loginReturnEntity;
+//
+//                                    public OnMessageDialogListener init(SVRAppServiceCustomerLoginReturnEntity a) {
+//                                        this.loginReturnEntity = a;
+//                                        return this;
+//                                    }
+//                                    @Override
+//                                    public void onOKClickListener(Object object) {
+//                                        Bundle mBundle = new Bundle();
+//                                        mBundle.putString("sessionKey", loginReturnEntity.getSessionKey());
+//                                        mActivity.get().startNextActivity(mBundle, HomeActivity.class, false);
+//                                        mActivity.get().finish();
+//                                    }
+//                                }.init(loginReturnEntity));
+//                            } else {
 //                                SendBoardUtil.sendNotificationBoard(mActivity.get(),SendBoardUtil.LOGINCODE,null);
                                 Bundle mBundle = new Bundle();
                                 mBundle.putString("sessionKey", loginReturnEntity.getSessionKey());
@@ -787,7 +787,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                                 }
                                 mActivity.get().finish();
                             }
-                        }
+//                        }
                         SharedPreferences.Editor editor2 = shared.edit();
                         editor2.putString("email", loginReturnEntity.getEmail());
                         editor2.commit();

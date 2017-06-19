@@ -117,18 +117,22 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
         hideFragment(transaction);
         Fragment currFragment = fragmentManager.findFragmentByTag(tag);
         if (currFragment == null) {
-            if (tag.equals(TAG_WISHLIST)) {
-                mFragmentWishlist = new HomeMyAccountWishlistFragment();
-                currFragment = mFragmentWishlist;
-                transaction.add(R.id.frame, mFragmentWishlist, tag);
-            } else if (tag.equals(TAG_ORDERLIST)) {
-                mFragmentOrderlist = new HomeMyAccountOrdersFragment();
-                currFragment = mFragmentOrderlist;
-                transaction.add(R.id.frame, mFragmentOrderlist, tag);
-            } else if (tag.equals(TAG_ADDRESSLIST)) {
-                mFragmentAddresslist =  HomeAccountAddressBookFragmentV3.newInstance(true);
-                currFragment = mFragmentAddresslist;
-                transaction.add(R.id.frame, mFragmentAddresslist, tag);
+            switch (tag){
+                case TAG_WISHLIST:
+                    mFragmentWishlist = new HomeMyAccountWishlistFragment();
+                    currFragment = mFragmentWishlist;
+                    transaction.add(R.id.frame, mFragmentWishlist, tag);
+                    break;
+                case TAG_ORDERLIST:
+                    mFragmentOrderlist = new HomeMyAccountOrdersFragment();
+                    currFragment = mFragmentOrderlist;
+                    transaction.add(R.id.frame, mFragmentOrderlist, tag);
+                    break;
+                case TAG_ADDRESSLIST:
+                    mFragmentAddresslist =  HomeAccountAddressBookFragmentV3.newInstance(true);
+                    currFragment = mFragmentAddresslist;
+                    transaction.add(R.id.frame, mFragmentAddresslist, tag);
+                    break;
             }
         } else {
             ((MyAccountFragmentRefresh) currFragment).refresh(refresh);

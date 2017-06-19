@@ -107,16 +107,16 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     private ProductListSortFragment sortFragment;
     private FilterSortHelper filterSortHelper;
     public FilterSortBottomView filterSortBottomView;
-    private ArrayList<SuggestsEntity> mSuggestionsArrayList;
-    private String mKeyWord;
-    private SearchSuggestionAdapter mSearchSuggestionAdapter;
+//    private ArrayList<SuggestsEntity> mSuggestionsArrayList;
+//    private String mKeyWord;
+//    private SearchSuggestionAdapter mSearchSuggestionAdapter;
     private String mSuggestionBrand;
     private String mSuggestionCategoryID;
     private String mSuggestionsModleType;
     private boolean mIsSuggestionSearch;
-//    private PublishSubject<String> mSubject = PublishSubject.create();
-    private boolean mIsShowSuggestion;
-    private long mTime_start;
+////    private PublishSubject<String> mSubject = PublishSubject.create();
+//    private boolean mIsShowSuggestion;
+//    private long mTime_start;
     private RelativeLayout mRlSwitchViewbar;
     private ImageView mHeaderIvViewToggle;
     private boolean mIsFirst=true;
@@ -128,7 +128,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     private ImageView mIVBottomSlideToTop;
     private LinearLayout mHeaderFilterLL;
     private LinearLayout mHeaderSortLL;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -140,7 +139,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             sortFragment.setFragmentListener(this);
         }
     }
-
     public void showViewSwitch(boolean show) {
         if (mRlSwitchViewbar != null) {
             if(show){
@@ -508,12 +506,12 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         });
        }
 
-    private void clearSuggestionList() {
-        if (mSuggestionsArrayList != null) {
-            mSuggestionsArrayList.clear();
-            mSearchSuggestionAdapter.notifyDataSetChanged();
-        }
-    }
+//    private void clearSuggestionList() {
+//        if (mSuggestionsArrayList != null) {
+//            mSuggestionsArrayList.clear();
+//            mSearchSuggestionAdapter.notifyDataSetChanged();
+//        }
+//    }
 
     private void initListViewHeader(){
         View view = LayoutInflater.from(productListActivity).inflate(R.layout.header_product_list_switch_and_filter_bar, null);
@@ -529,11 +527,11 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         cxlvProductList.addHeaderView(view);
     }
 
-    public void showSuggestions() {
-        if (mSearchSuggestionAdapter != null) {
-            mIsShowSuggestion = true;
-        }
-    }
+//    public void showSuggestions() {
+//        if (mSearchSuggestionAdapter != null) {
+//            mIsShowSuggestion = true;
+//        }
+//    }
 
     public void dismissSuggestions() {
         if (cetKeywords != null) {
@@ -722,21 +720,21 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     }
 
 
-    public void searchTrack() {
-        String keyWord = mKeyWord;
-        try {
-            //追踪用户搜索过得数据
-            if (!TextUtils.isEmpty(mKeyWord)) {
-                GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action", "Search", keyWord, null);
-                FirebaseEventUtils.getInstance().ecommerceSearchResult(getActivity(), keyWord);
-                FirebaseEventUtils.getInstance().allAppSearch(getActivity(), keyWord);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+//    public void searchTrack() {
+//        String keyWord = mKeyWord;
+//        try {
+//            //追踪用户搜索过得数据
+//            if (!TextUtils.isEmpty(mKeyWord)) {
+//                GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action", "Search", keyWord, null);
+//                FirebaseEventUtils.getInstance().ecommerceSearchResult(getActivity(), keyWord);
+//                FirebaseEventUtils.getInstance().allAppSearch(getActivity(), keyWord);
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
 
     private Dialog mDialog;

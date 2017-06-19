@@ -902,9 +902,9 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                     onFocus(state, stateText, stateText2, "State",rl_addadd_state);
                     clickState();
                     CharSequence tvcountry = country.getText();
-                    if (tvcountry == null || JDataUtils.isEmpty(tvcountry.toString())) {
-                        tvcountry = "Malaysia";
-                    }
+//                    if (tvcountry == null || JDataUtils.isEmpty(tvcountry.toString())) {
+//                        tvcountry = "Malaysia";
+//                    }
                     break;
                 case R.id.edit_addaddresss_eg:
                     onFocus(eg,egText,egText2,getResources().getString(R.string.eg123),null);

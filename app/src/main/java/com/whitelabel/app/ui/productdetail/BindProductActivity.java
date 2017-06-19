@@ -104,8 +104,6 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
         return new BindProductPresenterImpl();
     }
 
-
-
     public void setAddToCartButtonEnable(boolean  enable){
         if(enable){
             tvAddToCart.setEnabled(true);
@@ -114,10 +112,7 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
             tvAddToCart.setEnabled(false);
             tvAddToCart.setBackgroundResource(R.drawable.big_button_style_b8);
         }
-
     }
-
-
     @Override
     public void showData(BindProductResponseModel products) {
         llAddToCar.setVisibility(View.VISIBLE);
