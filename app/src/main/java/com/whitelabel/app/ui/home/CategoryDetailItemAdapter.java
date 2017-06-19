@@ -64,8 +64,6 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
         mProductDao = new ProductDao(TAG, new DataHandler(context,this));
         myAccountDao = new MyAccountDao(TAG, new DataHandler(context,this));
     }
-
-
     private static final class DataHandler extends Handler {
         private final WeakReference<CategoryDetailItemAdapter> mAdapter;
         private final WeakReference<Context> mContext;
@@ -78,7 +76,6 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
             if (mAdapter.get() == null || mContext.get() == null) {
                 return;
             }
-
             switch (msg.what) {
                 case MyAccountDao.REQUEST_DELETEWISHLIST:
                     if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
@@ -148,13 +145,6 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
         destWidth = (phoneWidth - (marginLeft * 2) - dividerWidth) / 2;
         destHeight = destWidth;
         itemViewHolder.productItem.setLayoutParams(new LinearLayout.LayoutParams(destWidth, ActionBar.LayoutParams.WRAP_CONTENT));
-//        RelativeLayout.LayoutParams leftImagelp = (RelativeLayout.LayoutParams) itemViewHolder.ivProductImage.getLayoutParams();
-//        if (leftImagelp != null) {
-//            leftImagelp.width = destWidth;
-//            leftImagelp.height = destHeight;
-//            itemViewHolder.ivProductImage.setLayoutParams(leftImagelp);
-//        }
-
         final String leftProductImageUrl = leftProductEntity.getSmallImage();
         // load left image
         if (itemViewHolder.ivProductImage.getTag() != null) {

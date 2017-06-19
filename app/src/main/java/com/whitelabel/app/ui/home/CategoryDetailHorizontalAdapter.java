@@ -124,7 +124,6 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
             itemViewHolder.rvCategory.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    JLogUtils.i("ray1","montionEvent:"+event.getAction());
                     return false;
                 }
             });

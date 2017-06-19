@@ -129,7 +129,7 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setScrollToolBarEnable(true);
+        setScrollToolBarEnable(false);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_home_fragment_v4, container, false);
         ButterKnife.bind(this, view);

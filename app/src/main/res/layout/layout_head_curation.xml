@@ -3,7 +3,6 @@
     android:layout_height="wrap_content"
     android:paddingTop="10dp"
     android:descendantFocusability="blocksDescendants"
-
     android:layout_width="match_parent">
     <!--imaginato:isDisallowParentTouch="true"-->
     <!--imaginato:isStopHorizontalScroll="false"-->
