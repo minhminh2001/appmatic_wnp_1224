@@ -271,17 +271,11 @@ public class DragImageView extends ImageView {
             /***
              * 此时因为考虑到对称，所以只做一遍判断就可以了。
              */
-            if (current_Top <= 0 && current_Bottom >= screen_H) {
-                //		Log.e("jj", "屏幕高度=" + this.getHeight());
-                isControl_V = true;// 开启垂直监控
-            } else {
-                isControl_V = false;
-            }
-            if (current_Left <= 0 && current_Right >= screen_W) {
-                isControl_H = true;// 开启水平监控
-            } else {
-                isControl_H = false;
-            }
+            //		Log.e("jj", "屏幕高度=" + this.getHeight());
+// 开启垂直监控
+            isControl_V = current_Top <= 0 && current_Bottom >= screen_H;
+            // 开启水平监控
+            isControl_H = current_Left <= 0 && current_Right >= screen_W;
 
         }
         // 缩小

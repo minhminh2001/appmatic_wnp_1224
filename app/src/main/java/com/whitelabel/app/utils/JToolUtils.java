@@ -222,11 +222,7 @@ public class JToolUtils {
     }
 
     public static boolean checkFragmentIsAdded(BaseFragment baseFragment) {
-        if (baseFragment != null && baseFragment.isAdded()) {
-            return true;
-        } else {
-            return false;
-        }
+        return baseFragment != null && baseFragment.isAdded();
     }
 
 

@@ -1059,17 +1059,9 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         String str = "";
         int year1 = Integer.parseInt(year);
         if (year1 % 100 == 0) {
-            if (year1 % 4 == 0) {
-                leapYear = true;
-            } else {
-                leapYear = false;
-            }
+            leapYear = year1 % 4 == 0;
         } else {
-            if (year1 % 4 == 0) {
-                leapYear = true;
-            } else {
-                leapYear = false;
-            }
+            leapYear = year1 % 4 == 0;
         }
         //the number of days
         if (month.equals(brithdayMonth[0]) || month.equals(brithdayMonth[2]) || month.equals(brithdayMonth[4]) || month.equals(brithdayMonth[6]) || month.equals(brithdayMonth[7]) || month.equals(brithdayMonth[9]) || month.equals(brithdayMonth[11])) {
@@ -1119,17 +1111,9 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                 String str2 = "";
                 int yearInt = Integer.parseInt(year);
                 if (yearInt % 100 == 0) {
-                    if (yearInt % 4 == 0) {
-                        leapYear = true;
-                    } else {
-                        leapYear = false;
-                    }
+                    leapYear = yearInt % 4 == 0;
                 } else {
-                    if (yearInt % 4 == 0) {
-                        leapYear = true;
-                    } else {
-                        leapYear = false;
-                    }
+                    leapYear = yearInt % 4 == 0;
                 }
                 if (value.equals(brithdayMonth[1])) {
                     if (leapYear) {

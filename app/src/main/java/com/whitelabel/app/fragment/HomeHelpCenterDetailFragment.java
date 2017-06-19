@@ -222,10 +222,7 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
     }
 
     public boolean onBackPressed() {
-        if (listToDetailEntity.getType() == SECOND_MENU) {
-            return true;
-        }
-        return false;
+        return listToDetailEntity.getType() == SECOND_MENU;
 
     }
 

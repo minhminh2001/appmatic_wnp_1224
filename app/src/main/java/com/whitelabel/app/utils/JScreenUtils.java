@@ -22,11 +22,7 @@ public class JScreenUtils {
         height=p.y;
 
         Rect rect=new Rect(0,0,width,height );
-        if(view.getLocalVisibleRect(rect)){
-            return true;
-        }else{
-            return false;
-        }
+        return view.getLocalVisibleRect(rect);
     }
     public static int getScreenWidth(Activity context){
        if(screenWith==0){

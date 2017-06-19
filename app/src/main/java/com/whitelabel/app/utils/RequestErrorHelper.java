@@ -72,11 +72,7 @@ public class RequestErrorHelper {
         if (msg == null) {
             return false;
         }
-        if (msg.arg2 == BaseHttp.ERROR_TYPE_SERVER) {
-            return true;
-        } else {
-            return false;
-        }
+        return msg.arg2 == BaseHttp.ERROR_TYPE_SERVER;
     }
 
     public static boolean isServerError(int errorMessage) {

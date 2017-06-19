@@ -341,10 +341,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
         return fragment;
     }
     public static boolean isCategory(SVRAppserviceCatalogSearchCategoryItemReturnEntity categoryEntity) {
-        if (categoryEntity != null && categoryEntity.getChildren() != null && categoryEntity.getChildren().size() > 0) {
-            return true;
-        }
-        return false;
+        return categoryEntity != null && categoryEntity.getChildren() != null && categoryEntity.getChildren().size() > 0;
     }
     public int getCurrIndex(String categoryId) {
         if (categoryArrayList != null) {

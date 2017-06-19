@@ -251,11 +251,7 @@ public abstract class BaseHttp {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (state == RESPONSE_SUCCESS) {
-            return true;
-        } else {
-            return false;
-        }
+        return state==RESPONSE_SUCCESS;
     }
 
 
@@ -267,12 +263,7 @@ public abstract class BaseHttp {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if(state==RESPONSE_SUCCESS){
-            return true;
-        }else{
-            return false;
-        }
-
+        return  state==RESPONSE_SUCCESS;
     }
 
     public void cancelHttpByTag(String tag) {

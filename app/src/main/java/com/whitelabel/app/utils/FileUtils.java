@@ -332,11 +332,8 @@ public class FileUtils {
         String path = AppUtils.getMyCacheDir(bucket);
         File file = new File(path, filename);
 
-        if (file.exists()) {
-            return true;
-        }
+        return file.exists();
 
-        return false;
     }
 
     public static boolean isSDCardExist() {

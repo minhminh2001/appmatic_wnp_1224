@@ -119,11 +119,8 @@ public class CustomXFooterView extends LinearLayout {
     }
 
     public boolean isHide() {
-        if (line.getVisibility() == View.GONE) {
-            return false;
-        } else {
-            return true;
-        }
+        return line.getVisibility() != View.GONE;
+
     }
 
     /**

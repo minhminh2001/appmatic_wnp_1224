@@ -52,11 +52,8 @@ public class CustomListView extends ListView{
                     if(itemHeight> apartY && filpperDeleterListener != null){
                         filpperDeleterListener.onFlipping(orginX,orginY, apartX, apartY);
                     }
-                    if (Math.abs(deltaX) > this.getWidth() / ratio) {
-                        delete = true;
-                    } else {
-                        delete = false;
-                    }
+
+                    delete=Math.abs(deltaX) > this.getWidth() / ratio;
                 }
                 break;
             //主要是移动距离之后判断移动的位置是回原来的位置，还是移动到值得的位置(这些的操作都是的listview中实现具体的位置移动)

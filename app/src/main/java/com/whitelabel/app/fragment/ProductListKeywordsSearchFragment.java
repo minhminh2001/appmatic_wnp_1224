@@ -371,9 +371,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 
             public boolean isSlideToBottom(CustomXListView lv) {
                 if (lv == null) return false;
-                if (lv.computeVerticalScrollExtent() + lv.computeVerticalScrollOffset() >= lv.computeVerticalScrollRange())
-                    return true;
-                return false;
+                return lv.computeVerticalScrollExtent() + lv.computeVerticalScrollOffset() >= lv.computeVerticalScrollRange();
             }
 
             @Override

@@ -368,9 +368,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
 
             public boolean isSlideToBottom(CustomXListView lv) {
                 if (lv == null) return false;
-                if (lv.computeVerticalScrollExtent() + lv.computeVerticalScrollOffset() >= lv.computeVerticalScrollRange())
-                    return true;
-                return false;
+                return lv.computeVerticalScrollExtent() + lv.computeVerticalScrollOffset() >= lv.computeVerticalScrollRange();
             }
 
             @Override
