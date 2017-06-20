@@ -215,7 +215,7 @@ public abstract class BaseHttp {
 
             @Override
             public void onResponse(String response) {
-                JLogUtils.d(TAG, "success" + response.toString());
+                JLogUtils.d(TAG, "success" + response);
                 onSuccess(requestCode, response, obj);
             }
         }, new Response.ErrorListener() {
@@ -290,12 +290,12 @@ public abstract class BaseHttp {
             for (Map.Entry<String, String> entry : entrySet) {
                 pArray.add(entry);
             }
-            String param = "";
+            StringBuilder param = new StringBuilder();
             for (int i = 0; i < pArray.size(); i++) {
                 if (i == 0) {
-                    param += "?" + pArray.get(0).toString();
+                    param.append("?").append(pArray.get(0).toString());
                 } else {
-                    param += "&" + pArray.get(i).toString();
+                    param.append("&").append(pArray.get(i).toString());
                 }
             }
             JLogUtils.d("MyUrl_post", "" + mUrl + param);

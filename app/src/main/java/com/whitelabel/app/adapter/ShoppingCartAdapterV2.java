@@ -386,8 +386,8 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
             int position = (Integer) v.getTag();
             ShoppingCartListEntityCell shoppingCart = list.get(position);
             if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
-                if (Integer.parseInt(shoppingCart.getQty().toString()) + 1 <= Integer.parseInt(shoppingCart.getMaxQty())) {
-                    final int newCount = Integer.parseInt(shoppingCart.getQty().toString()) + 1;
+                if (Integer.parseInt(shoppingCart.getQty()) + 1 <= Integer.parseInt(shoppingCart.getMaxQty())) {
+                    final int newCount = Integer.parseInt(shoppingCart.getQty()) + 1;
                     shoppingCart.setQty(newCount + "");
                     calculationToatalPriceAndNum(list);
                     JStorageUtils.savaProductListToLocalCartRepository(context, shoppingCarToTMPLocal(list));
@@ -399,7 +399,7 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
                 ShoppingCartAdapterV2.this.notifyDataSetChanged();
             } else {
                 gaTrackerIncresaseQuantity(shoppingCart.getName(), shoppingCart.getProductId());
-                final int newCount = Integer.parseInt(shoppingCart.getQty().toString()) + 1;
+                final int newCount = Integer.parseInt(shoppingCart.getQty()) + 1;
                 shoppingCart.setQty(newCount + "");
                 sendRequestToChangeCount(position, shoppingCart.getId(), newCount, "opt-plus");
             }

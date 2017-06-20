@@ -189,24 +189,24 @@ public class CrashHandler implements UncaughtExceptionHandler {
             return;
         }
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         try {
             PackageManager pm = mContext.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(mContext.getPackageName(), PackageManager.GET_ACTIVITIES);
             if (pi != null) {
-                sb.append("\nVersonName: " + (pi.versionName == null ? "not set" : pi.versionName));
-                sb.append("\nVersonCode: " + ("" + pi.versionCode));
+                sb.append("\nVersonName: ").append(pi.versionName == null ? "not set" : pi.versionName);
+                sb.append("\nVersonCode: ").append(pi.versionCode);
             }
         } catch (Exception e) {
             JLogUtils.e(TAG, "sendCrashReportsToServer", e);
         }
 
-        sb.append("\nOS-VERSION: Android" + Build.VERSION.RELEASE);
-        sb.append("\nMOBILE: " + Build.MODEL);
+        sb.append("\nOS-VERSION: Android").append(Build.VERSION.RELEASE);
+        sb.append("\nMOBILE: ").append(Build.MODEL);
 //        if(WhiteLabelApplication.getPhoneConfiguration()!=null&&!TextUtils.isEmpty(WhiteLabelApplication.getPhoneConfiguration().getPhoneInfo(mContext))){
 //            sb.append(WhiteLabelApplication.getPhoneConfiguration().getPhoneInfo(mContext));
 //        }
-        sb.append("\nERROR: " + msg);
+        sb.append("\nERROR: ").append(msg);
         msg = sb.toString();
 
         String svrUrl = servercommonaddress + "appservice/crash/log?";

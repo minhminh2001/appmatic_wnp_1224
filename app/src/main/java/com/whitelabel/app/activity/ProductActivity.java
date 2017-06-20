@@ -1184,7 +1184,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     if(!TextUtils.isEmpty(label)){
                         label="<B class=\"text1\" >"+label+"</B><br> ";
                     }
-                    stringBuilder.append(label+productdetailitem.getValue()+"<br><br>");
+                    stringBuilder.append(label).append(productdetailitem.getValue()).append("<br><br>");
                 }
             }
             htmlText+=stringBuilder.toString();
@@ -1244,23 +1244,23 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             if (mProductDetailBean.getShippingInfo() != null) {
                 sb.append("<h3 class=\"text1\" ><B>SHIPPING INFO</B></h3>");
                 if (!TextUtils.isEmpty(mProductDetailBean.getShippingInfo().getWestDeliversDays())) {
-                    sb.append(mProductDetailBean.getShippingInfo().getWestDeliversDays() + "<br>");
+                    sb.append(mProductDetailBean.getShippingInfo().getWestDeliversDays()).append("<br>");
                 }
                 if (!TextUtils.isEmpty(mProductDetailBean.getShippingInfo().getEastDeliversDays())) {
-                    sb.append(mProductDetailBean.getShippingInfo().getEastDeliversDays() + "<br>");
+                    sb.append(mProductDetailBean.getShippingInfo().getEastDeliversDays()).append("<br>");
                 }
                 if (!TextUtils.isEmpty(mProductDetailBean.getShippingInfo().getLocationNotDelivered())) {
-                    sb.append(mProductDetailBean.getShippingInfo().getLocationNotDelivered() + "<br>");
+                    sb.append(mProductDetailBean.getShippingInfo().getLocationNotDelivered()).append("<br>");
                 }
                 String detailDelivery1 = mProductDetailBean.getShippingInfo().getDetailDelivery1();
                 if (!TextUtils.isEmpty(detailDelivery1)) {
-                    sb.append(detailDelivery1 + "<br>");
+                    sb.append(detailDelivery1).append("<br>");
                 }
                 String detailDelivery2 = mProductDetailBean.getShippingInfo().getDetailDelivery2();
                 if (!TextUtils.isEmpty(detailDelivery2)) {
                     detailDelivery2 = detailDelivery2.replace("<li>","");
                     detailDelivery2 = detailDelivery2.replace("</li>","");
-                    sb.append(detailDelivery2 + "<br>");
+                    sb.append(detailDelivery2).append("<br>");
                 }
             }
             return sb.toString();
@@ -1725,7 +1725,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 bottomBarLp.height = 0;
                 llBottomBar.setLayoutParams(bottomBarLp);
             }
-            currUserSelectedProductMaxStockQty = 0l;
+            currUserSelectedProductMaxStockQty = 0L;
             userSelectedProductMaxStockQty = 01;
             userSelectedProductQty = 0;
             ctvProductInStock.setVisibility(View.INVISIBLE);

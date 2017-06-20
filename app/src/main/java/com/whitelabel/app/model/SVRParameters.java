@@ -53,7 +53,7 @@ public class SVRParameters {
                 JLogUtils.e(TAG, "toString", ex);
             }
             result.append(key);
-            result.append("=" + value);
+            result.append("=").append(value);
         }
         return result.toString();
     }

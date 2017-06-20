@@ -304,9 +304,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
 
     public ArrayList<MyAccountOrderOuter> initArray(List<MyAccountOrderOuter> array) {
         ArrayList<MyAccountOrderOuter> arrayList = new ArrayList<>();
-        for (int i = 0; i < array.size(); i++) {
-            arrayList.add(array.get(i));
-        }
+        arrayList.addAll(array);
         return arrayList;
     }
 

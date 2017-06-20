@@ -589,7 +589,7 @@ public class JViewUtils {
                         if (buffer.length() == 0) {
                             String monthstr = (month + 1) < 10 ? "0" + (month + 1) : (month + 1) + "";
                             String dayOfMonthStr = dayOfMonth < 10 ? "0" + dayOfMonth : dayOfMonth + "";
-                            buffer.append(year + "-" + monthstr + "-" + dayOfMonthStr);
+                            buffer.append(year).append("-").append(monthstr).append("-").append(dayOfMonthStr);
                             tvDate.setText(buffer.toString());
                         }
                     }
@@ -613,7 +613,7 @@ public class JViewUtils {
             }
         }
 
-        final StringBuffer buffer = new StringBuffer();
+        final StringBuilder buffer = new StringBuilder();
 
         dialog = new DatePickerDialog(context,
                 new DatePickerDialog.OnDateSetListener() {
@@ -622,7 +622,7 @@ public class JViewUtils {
                         if (buffer.length() == 0) {
                             String monthstr = (month + 1) < 10 ? "0" + (month + 1) : (month + 1) + "";
                             String dayOfMonthStr = dayOfMonth < 10 ? "0" + dayOfMonth : dayOfMonth + "";
-                            buffer.append(year + "-" + monthstr + "-" + dayOfMonthStr);
+                            buffer.append(year).append("-").append(monthstr).append("-").append(dayOfMonthStr);
                             tvDate.setText(buffer.toString());
                             callback.callBack();
                         }

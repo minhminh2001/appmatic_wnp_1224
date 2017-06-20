@@ -286,15 +286,15 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         viewHolder.tvColorAndSize.setText("");
         if (productAttributes != null && productAttributes.size() > 0) {
             viewHolder.tvColorAndSize.setVisibility(View.VISIBLE);
-            String attributeStr = "";
+            StringBuilder attributeStr = new StringBuilder();
             if (productAttributes != null && productAttributes.size() > 0) {
                 for (int z = 0; z < productAttributes.size(); z++) {
                     for (String key : productAttributes.get(z).keySet()) {
-                        attributeStr += productAttributes.get(z).get(key) + " | ";
+                        attributeStr.append(productAttributes.get(z).get(key)).append(" | ");
                     }
                 }
-                attributeStr = attributeStr.substring(0, attributeStr.length() - 2);
-                viewHolder.tvColorAndSize.setText(attributeStr);
+                attributeStr = new StringBuilder(attributeStr.substring(0, attributeStr.length() - 2));
+                viewHolder.tvColorAndSize.setText(attributeStr.toString());
             }
         } else {
             viewHolder.tvColorAndSize.setVisibility(View.GONE);
@@ -561,12 +561,12 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             }
             ShoppingCartListEntityCell shoppingCart = (ShoppingCartListEntityCell) list.get(position);
             if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
-                if (Integer.parseInt(shoppingCart.getQty().toString()) + 1 <= Integer.parseInt(shoppingCart.getMaxQty())) {
+                if (Integer.parseInt(shoppingCart.getQty()) + 1 <= Integer.parseInt(shoppingCart.getMaxQty())) {
                     if (!TextUtils.isEmpty(shoppingCart.getMaxSaleQty())) {
                         String maxSaleQty = shoppingCart.getMaxSaleQty();
                         JLogUtils.d(TAG, "maxSaleQty=" + Integer.parseInt(maxSaleQty));
-                        if (Integer.parseInt(shoppingCart.getQty().toString()) + 1 <= Integer.parseInt(maxSaleQty)) {
-                            final int newCount = Integer.parseInt(shoppingCart.getQty().toString()) + 1;
+                        if (Integer.parseInt(shoppingCart.getQty()) + 1 <= Integer.parseInt(maxSaleQty)) {
+                            final int newCount = Integer.parseInt(shoppingCart.getQty()) + 1;
                             shoppingCart.setQty(newCount + "");
                             calculationToatalPriceAndNum(list);
                             JStorageUtils.savaProductListToLocalCartRepository(context, shoppingCarToTMPLocal(list));
@@ -577,7 +577,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                             JViewUtils.showSingleToast(context, message);
                         }
                     } else {
-                        final int newCount = Integer.parseInt(shoppingCart.getQty().toString()) + 1;
+                        final int newCount = Integer.parseInt(shoppingCart.getQty()) + 1;
                         shoppingCart.setQty(newCount + "");
                         calculationToatalPriceAndNum(list);
                         JStorageUtils.savaProductListToLocalCartRepository(context, shoppingCarToTMPLocal(list));
@@ -591,7 +591,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             } else {
                 if ("1".equals(shoppingCart.getInStock())) {
                     gaTrackerIncresaseQuantity(shoppingCart.getName(), shoppingCart.getProductId());
-                    final int newCount = Integer.parseInt(shoppingCart.getQty().toString()) + 1;
+                    final int newCount = Integer.parseInt(shoppingCart.getQty()) + 1;
                     int stockQty = shoppingCart.getStockQty();
                     int mCurrentStockQty = Integer.parseInt(shoppingCart.getCurrStockQty());
                     JLogUtils.d(TAG, "shoppingCart--newCount=" + newCount + "--------------curretnQty=" + mCurrentStockQty + "-------------stockQty=" + stockQty);

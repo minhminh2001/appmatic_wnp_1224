@@ -301,7 +301,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
             allBrandsEntity.setLabel(FILTER_ALLBRANDS);
             allBrandsEntity.setSelected(true);
             allBrandsEntity.setValue(null);
-            allBrandsEntity.setCount(0l);
+            allBrandsEntity.setCount(0L);
             allBrandsEntity.setUrl(null);
 
             brandItemReturnEntityArrayList.add(allBrandsEntity);
@@ -310,7 +310,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
             allBrandsEntity.setLabel(FILTER_ALLBRANDS);
             allBrandsEntity.setSelected(true);
             allBrandsEntity.setValue(null);
-            allBrandsEntity.setCount(0l);
+            allBrandsEntity.setCount(0L);
             allBrandsEntity.setUrl(null);
 
             brandItemReturnEntityArrayList.add(allBrandsEntity);
@@ -328,7 +328,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
             brandItemReturnEntityArrayList.addAll(productListFilterSortPageEntity.getFacets().getBrand_filter());
         }
 
-        long allBrandsCount = 0l;
+        long allBrandsCount = 0L;
         if (allBrandsEntity != null) {
             allBrandsCount = allBrandsEntity.getCount();
         }
@@ -403,7 +403,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
             allTypesEntity = new SVRAppserviceProductSearchFacetsModelReturnEntity();
             allTypesEntity.setLabel(FILTER_ALLTYPES);
             allTypesEntity.setSelected(false);
-            allTypesEntity.setCount(0l);
+            allTypesEntity.setCount(0L);
             allTypesEntity.setValue(null);
             allTypesEntity.setUrl(null);
 
@@ -412,7 +412,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
             allTypesEntity = new SVRAppserviceProductSearchFacetsModelReturnEntity();
             allTypesEntity.setLabel(FILTER_ALLTYPES);
             allTypesEntity.setSelected(false);
-            allTypesEntity.setCount(0l);
+            allTypesEntity.setCount(0L);
             allTypesEntity.setValue(null);
             allTypesEntity.setUrl(null);
 
@@ -431,7 +431,7 @@ public class ProductListFilterFragment extends com.whitelabel.app.BaseFragment i
             modelTypeReturnEntityArrayList.addAll(productListFilterSortPageEntity.getFacets().getModel_type_filter());
         }
 
-        long allTypesCount = 0l;
+        long allTypesCount = 0L;
         if (allTypesEntity != null) {
             allTypesCount = allTypesEntity.getCount();
         }

@@ -284,18 +284,18 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     public String setCS(MyAccountOrderInner orderInners) {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         ArrayList<HashMap<String, String>> colorAndSizes = orderInners.getOptions();
         if (colorAndSizes != null && colorAndSizes.size() > 0) {
             for (int i = 0; i < colorAndSizes.size(); i++) {
-                str += colorAndSizes.get(i).get("value") + " | ";
+                str.append(colorAndSizes.get(i).get("value")).append(" | ");
             }
-            str = str.substring(0, str.length() - 2);
+            str = new StringBuilder(str.substring(0, str.length() - 2));
         } else {
             //textView.setVisibility(View.GONE);
-            str = "";
+            str = new StringBuilder();
         }
-        return str;
+        return str.toString();
     }
 
 //    public void setStatus(TextView textView, String statusCode) {

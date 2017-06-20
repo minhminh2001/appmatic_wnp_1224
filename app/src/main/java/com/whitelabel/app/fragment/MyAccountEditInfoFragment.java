@@ -414,17 +414,17 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             title = title.toLowerCase();
 
             String[] split = title.trim().split(" ");
-            String newTitle = "";
+            StringBuilder newTitle = new StringBuilder();
             if (split.length != 0) {
                 for (String cell : split) {
                     if (cell.trim().length() > 1) {
-                        newTitle += cell.substring(0, 1).toUpperCase() + cell.substring(1) + " ";
+                        newTitle.append(cell.substring(0, 1).toUpperCase()).append(cell.substring(1)).append(" ");
                     } else {
-                        newTitle += cell.toUpperCase() + " ";
+                        newTitle.append(cell.toUpperCase()).append(" ");
                     }
                 }
             }
-            return newTitle.trim();
+            return newTitle.toString().trim();
         }
         return "";
     }

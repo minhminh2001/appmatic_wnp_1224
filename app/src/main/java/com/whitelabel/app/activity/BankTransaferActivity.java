@@ -427,10 +427,10 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
     public void saveBrankConfirm(String profFile) {
         url = profFile;
         rankFrom = String.valueOf(tvTrasferFrom.getTag());
-        email = etEmailAddress.getText().toString();
-        orderNumber = etOrderNum.getText().toString();
-        transferee = etCustomer.getText().toString();
-        transferred = etTransferAmount.getText().toString();
+        email = etEmailAddress.getText();
+        orderNumber = etOrderNum.getText();
+        transferee = etCustomer.getText();
+        transferred = etTransferAmount.getText();
         transferDate = tvDate.getText().toString();
         String[] date = transferDate.split("-");
         if (date.length == 3) {
@@ -557,7 +557,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
             tvBankHint.setTextColor(getResources().getColor(R.color.redC2060A));
             return false;
         }
-        String email = etEmailAddress.getText().toString();
+        String email = etEmailAddress.getText();
         if (etEmailAddress.isEmpty()) {
             return false;
         }

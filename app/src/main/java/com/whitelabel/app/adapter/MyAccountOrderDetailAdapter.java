@@ -228,14 +228,14 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
             ArrayList<HashMap<String, String>> colorAndSizes = orderInner.getOptions();
             if (colorAndSizes != null && colorAndSizes.size() > 0) {
 
-                String attributeStr = "";
+                StringBuilder attributeStr = new StringBuilder();
                 if (colorAndSizes != null && colorAndSizes.size() > 0) {
                     for (int z = 0; z < colorAndSizes.size(); z++) {
-                        attributeStr += colorAndSizes.get(z).get("value") + " | ";
+                        attributeStr.append(colorAndSizes.get(z).get("value")).append(" | ");
                     }
-                    attributeStr = attributeStr.substring(0, attributeStr.length() - 2);
+                    attributeStr = new StringBuilder(attributeStr.substring(0, attributeStr.length() - 2));
                 }
-                tvColorsAndSize.setText(attributeStr);
+                tvColorsAndSize.setText(attributeStr.toString());
             } else {
                 tvColorsAndSize.setVisibility(View.GONE);
             }

@@ -210,7 +210,7 @@ public class JTimeUtils {
      * @return ERROR=>0
      */
     public static long getTimeLongOfTheDay(String value) {
-        long result = 0l;
+        long result = 0L;
         if (JDataUtils.isEmpty(value)) {
             return result;
         }
@@ -244,10 +244,10 @@ public class JTimeUtils {
      */
     public static long getTimeLongOfTheDay(Date date) {
         if (date == null) {
-            return 0l;
+            return 0L;
         }
 
-        long result = 0l;
+        long result = 0L;
         try {
             String basetimestring = getStringFromDateValue(date, TIME_FORMAT_yyyyMMdd);
             basetimestring = basetimestring + " 00:00:00";
@@ -276,10 +276,10 @@ public class JTimeUtils {
      */
     public static long getTimeLongOfTheDay(Calendar calendar) {
         if (calendar == null) {
-            return 0l;
+            return 0L;
         }
 
-        long result = 0l;
+        long result = 0L;
         try {
             getTimeLongOfTheDay(calendar.getTime());
         } catch (Exception ex) {

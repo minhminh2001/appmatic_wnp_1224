@@ -595,21 +595,21 @@ public class JDataUtils {
         if (!TextUtils.isEmpty(title)) {
             title = title.toLowerCase();
             String[] split = title.trim().split(" ");
-            String newTitle = "";
+            StringBuilder newTitle = new StringBuilder();
             if (split.length != 0) {
                 for (String cell : split) {
                     if (cell.length() > 1) {
                         if (("rm").equals(cell.substring(0, 2)) || ("RM").equals(cell.substring(0, 2))) {
-                            newTitle += cell.toUpperCase() + " ";
+                            newTitle.append(cell.toUpperCase()).append(" ");
                         } else {
-                            newTitle += cell.substring(0, 1).toUpperCase() + cell.substring(1) + " ";
+                            newTitle.append(cell.substring(0, 1).toUpperCase()).append(cell.substring(1)).append(" ");
                         }
                     } else {
-                        newTitle += cell.toUpperCase() + " ";
+                        newTitle.append(cell.toUpperCase()).append(" ");
                     }
                 }
             }
-            return newTitle.trim();
+            return newTitle.toString().trim();
         }
         return "";
     }

@@ -65,6 +65,7 @@ import com.whitelabel.app.utils.SoftInputShownUtil;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 
 import java.lang.ref.WeakReference;
+import java.util.Collections;
 import java.util.LinkedList;
 
 /**
@@ -206,7 +207,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             mVoucherCode = voucherCode;
             startLoginActivity();
         } else {
-            if (voucherCode.toString().trim().length() < 1) {
+            if (voucherCode.trim().length() < 1) {
                 tvApplyImageAnim.setImageResource(R.mipmap.icon_shopping_cart_error);
                 tvApplyTextAnim.setTextColor(getResources().getColor(R.color.redC1033D));
                 tvApplyTextAnim.setText(getResources().getString(R.string.apply_hint_red));
@@ -923,9 +924,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 
     public LinkedList<ShoppingCartListBase> toShoppingCartList(ShoppingCartListBase[] cell) {
         LinkedList<ShoppingCartListBase> cells = new LinkedList<>();
-        for (int i = 0; i < cell.length; i++) {
-            cells.add(cell[i]);
-        }
+        Collections.addAll(cells, cell);
         return cells;
     }
 
@@ -940,7 +939,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
                         "Tap Checkout Items Button",
                         null,
-                        0l);
+                        0L);
             } catch (Exception e) {
                 e.printStackTrace();
             }

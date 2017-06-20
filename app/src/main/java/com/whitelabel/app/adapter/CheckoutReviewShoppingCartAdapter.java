@@ -76,17 +76,17 @@ public class CheckoutReviewShoppingCartAdapter extends BaseAdapter {
         //colors and size
         ArrayList<HashMap<String, String>> colorAndSizes = sc.getOptions();
         if (colorAndSizes != null && colorAndSizes.size() > 0) {
-            String attributeStr = "";
+            StringBuilder attributeStr = new StringBuilder();
             if (colorAndSizes != null && colorAndSizes.size() > 0) {
                 for (int z = 0; z < colorAndSizes.size(); z++) {
                     for (String key : colorAndSizes.get(z).keySet()) {
-                        attributeStr += colorAndSizes.get(z).get(key) + " | ";
+                        attributeStr.append(colorAndSizes.get(z).get(key)).append(" | ");
                     }
                 }
-                attributeStr = attributeStr.substring(0, attributeStr.length() - 2);
+                attributeStr = new StringBuilder(attributeStr.substring(0, attributeStr.length() - 2));
             }
             tvColorsAndSize.setVisibility(View.VISIBLE);
-            tvColorsAndSize.setText(attributeStr);
+            tvColorsAndSize.setText(attributeStr.toString());
         } else {
             tvColorsAndSize.setVisibility(View.INVISIBLE);
         }

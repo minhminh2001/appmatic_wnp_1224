@@ -207,7 +207,7 @@ public class FileUtils {
         try {
             delAllFile(folderPath); // 删除完里面所有内容
             String filePath = folderPath;
-            filePath = filePath.toString();
+            filePath = filePath;
             File myFilePath = new File(filePath);
             myFilePath.delete(); // 删除空文件夹
         } catch (Exception e) {
@@ -341,7 +341,7 @@ public class FileUtils {
     }
 
     public static String readString(String path) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         File file = new File(path);
         if (!file.exists()) {
             return null;
@@ -350,13 +350,13 @@ public class FileUtils {
             BufferedReader br = new BufferedReader(new FileReader(file));// 构造一个BufferedReader类来读取文件
             String s = "";
             while ((s = br.readLine()) != null) {// 使用readLine方法，一次读一行
-                result = result + s + "\n";
+                result.append(s).append("\n");
             }
             br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result;
+        return result.toString();
     }
 
     public static void writeString(String filePath, String content) {

@@ -58,7 +58,7 @@ public class ShoppingCartActivity1 extends com.whitelabel.app.BaseActivity {
     }
 
     private void initFragment() {
-        fragment = ShoppingCartVerticalFragment.newInstance(ShoppingCartBaseFragment.FROM_OTHER, 0l);
+        fragment = ShoppingCartVerticalFragment.newInstance(ShoppingCartBaseFragment.FROM_OTHER, 0L);
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.mParent, fragment).commit();
     }
