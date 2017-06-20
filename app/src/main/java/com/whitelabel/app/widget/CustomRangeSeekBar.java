@@ -753,7 +753,7 @@ public class CustomRangeSeekBar<T extends Number> extends ImageView {
      *
      * @author Stephan Tittel (stephan.tittel@kom.tu-darmstadt.de)
      */
-    private static enum NumberType {
+    private  enum NumberType {
         LONG, DOUBLE, INTEGER, FLOAT, SHORT, BYTE, BIG_DECIMAL;
 
         public static <E extends Number> NumberType fromNumber(E value)

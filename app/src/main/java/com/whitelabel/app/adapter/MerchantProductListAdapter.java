@@ -661,11 +661,6 @@ public class MerchantProductListAdapter extends BaseAdapter {
                         productEntity.setItemId(addToWishlistEntity.getItemId());
                         //update wishlist number
                         WhiteLabelApplication.getAppConfiguration().updateWishlist(mAdapter.get().mMerchantStoreFrontActivity, addToWishlistEntity.getWishListItemCount());
-                        try {
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
                     } else {
                         try {
                             ErrorMsgBean bean = (ErrorMsgBean) msg.obj;

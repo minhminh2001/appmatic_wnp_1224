@@ -162,11 +162,11 @@ public class JDataUtils {
         return "" + value;
     }
 
-    public final static boolean isEmpty(String str) {
+    public  static boolean isEmpty(String str) {
         return TextUtils.isEmpty(str);
     }
 
-    public final static boolean isEmpty(EditText et) {
+    public  static boolean isEmpty(EditText et) {
         if (et == null) {
             return true;
         }
@@ -177,7 +177,7 @@ public class JDataUtils {
         return isEmpty(str);
     }
 
-    public final static boolean isEmpty(TextView tv) {
+    public  static boolean isEmpty(TextView tv) {
         if (tv == null) {
             return true;
         }
@@ -188,7 +188,7 @@ public class JDataUtils {
         return isEmpty(str);
     }
 
-    public final static boolean isEmail(String email) {
+    public  static boolean isEmail(String email) {
         if (isEmpty(email)) {
             return false;
         }
@@ -197,7 +197,7 @@ public class JDataUtils {
         return m.find();
     }
 
-    public final static boolean isEmail(EditText et) {
+    public  static boolean isEmail(EditText et) {
         if (isEmpty(et)) {
             return false;
         }
@@ -277,7 +277,7 @@ public class JDataUtils {
         return isPassword(password);
     }
 
-    public final static String getMD5Result(String s) {
+    public  static String getMD5Result(String s) {
         char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         try {
             byte[] btInput = s.getBytes();

@@ -105,7 +105,6 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -26,7 +26,7 @@ public interface SwipeItemManagerInterface {
     public void setMode(Mode mode);
 
 
-    public static enum Mode{
+    enum Mode{
         Single, Multiple
     }
 }

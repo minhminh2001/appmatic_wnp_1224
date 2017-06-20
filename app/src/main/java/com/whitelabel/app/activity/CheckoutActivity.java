@@ -55,7 +55,6 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressFragment;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JLocalMethod;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -1285,20 +1284,20 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         order_id = orderId;
         GOUserEntity user = WhiteLabelApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this);
 
-        JLocalMethod method = new JLocalMethod();
+//        JLocalMethod method = new JLocalMethod();
         HashMap<String, Object> paymentDetails = new HashMap<>();
-        paymentDetails.put(MOLPayActivity.mp_merchant_ID, method.getMERCHANTID());
-        JLogUtils.i("Pconstants", "PConstants.MP_MERCHANT_ID：" + method.getMERCHANTID());
-        paymentDetails.put(MOLPayActivity.mp_app_name, method.getAPPNAME());
-        JLogUtils.i("Pconstants", "PConstants.MP_APP_NAME：" + method.getAPPNAME());
-        paymentDetails.put(MOLPayActivity.mp_username, method.getUSERNAME());
-        JLogUtils.i("Pconstants", "PConstants.MP_USERNAME：" + method.getUSERNAME());
-        paymentDetails.put(MOLPayActivity.mp_password, method.getPASSWORD());
-        JLogUtils.i("Pconstants", "PConstants.MP_PASSWORD：" + method.getPASSWORD());
-        paymentDetails.put(MOLPayActivity.mp_order_ID, orderId);
-        JLogUtils.i("Pconstants", "PConstants.MP_ORDER_ID：" + orderId);
-        paymentDetails.put(MOLPayActivity.mp_country, "MY");
-        JLogUtils.i("Pconstants", "PConstants.MP_COUNTRY：MY");
+//        paymentDetails.put(MOLPayActivity.mp_merchant_ID, method.getMERCHANTID());
+//        JLogUtils.i("Pconstants", "PConstants.MP_MERCHANT_ID：" + method.getMERCHANTID());
+//        paymentDetails.put(MOLPayActivity.mp_app_name, method.getAPPNAME());
+//        JLogUtils.i("Pconstants", "PConstants.MP_APP_NAME：" + method.getAPPNAME());
+//        paymentDetails.put(MOLPayActivity.mp_username, method.getUSERNAME());
+//        JLogUtils.i("Pconstants", "PConstants.MP_USERNAME：" + method.getUSERNAME());
+//        paymentDetails.put(MOLPayActivity.mp_password, method.getPASSWORD());
+//        JLogUtils.i("Pconstants", "PConstants.MP_PASSWORD：" + method.getPASSWORD());
+//        paymentDetails.put(MOLPayActivity.mp_order_ID, orderId);
+//        JLogUtils.i("Pconstants", "PConstants.MP_ORDER_ID：" + orderId);
+//        paymentDetails.put(MOLPayActivity.mp_country, "MY");
+//        JLogUtils.i("Pconstants", "PConstants.MP_COUNTRY：MY");
         if (!TextUtils.isEmpty(amount)) {
             paymentDetails.put(MOLPayActivity.mp_amount, amount.replace(",", ""));
         }
@@ -1325,7 +1324,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         JLogUtils.i("Pconstants", "PConstants.MP_EDITING_ENABLED：true");
         paymentDetails.put(MOLPayActivity.mp_editing_enabled, false);
         JLogUtils.i("Pconstants", "PConstants.MP_SECURE_MODE_ENABLED：false");
-        paymentDetails.put(MOLPayActivity.mp_verification_key, method.getVERIFYKEY());
+//        paymentDetails.put(MOLPayActivity.mp_verification_key, method.getVERIFYKEY());
 //        intent.putExtras(bundle);
         Intent intent = new Intent(CheckoutActivity.this, MOLPayActivity.class);
         intent.putExtra(MOLPayActivity.MOLPayPaymentDetails, paymentDetails);
