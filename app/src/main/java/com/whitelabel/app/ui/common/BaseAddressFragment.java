@@ -21,6 +21,7 @@ import com.whitelabel.app.adapter.AddressBookAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.network.BaseHttp;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomButton;
@@ -77,6 +78,9 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     private int mMenuWidth = 50;
     public final static  int REQUEST_EDIT_ADDRESS=1000;
     public final static  int REQUEST_ADD_ADDRESS=2000;
+    public abstract List<Integer> getDeleteFuntionPostions();
+    public abstract  void  addAddressBtnOnClick();
+    public abstract List<AddressBook> handlerAddressData(List<AddressBook> addressBooks);
     private AddressBookAdapter mAddressBookAdapter;
     protected final static String EXTRA_USE_CACHE = "use_cache";
     private RequestErrorHelper requestErrorHelper;
@@ -84,15 +88,11 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     public BaseAddressFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void openSwipeLayout() {
          swipeContainer.setRefreshing(true);
     }
 
-    public abstract List<Integer> getDeleteFuntionPostions();
-    public abstract  void  addAddressBtnOnClick();
-    public abstract List<AddressBook> handlerAddressData(List<AddressBook> addressBooks);
     public AddressBookAdapter getAdapter() {
         return mAddressBookAdapter;
     }
@@ -114,10 +114,6 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }
-
-
-
-
     @Override
     public void closeSwipeLayout() {
             swipeContainer.setRefreshing(false);
@@ -141,7 +137,7 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         switch (index) {
             case 0:
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("bean", mAddressBookAdapter.getData().get(index));
+                bundle.putSerializable("bean", mAddressBookAdapter.getData().get(position));
                 Intent intent = new Intent(getActivity(), EditAddressActivity.class);
                 intent.putExtras(bundle);
                 if (getParentFragment() != null) {
@@ -157,7 +153,6 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         }
         return false;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -1,42 +1,37 @@
 package com.whitelabel.app.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.model.AddressBook;
-import com.whitelabel.app.utils.JLogUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by imaginato on 2015/6/29.
  */
 public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
-    public List<AddressBook> list;
+    public List<AddressBook> mAddressBook;
     private Context context;
 
     public AddressBookAdapter(Context context,List<AddressBook> list) {
         super(context,0,list);
-        this.list=list;
+        this.mAddressBook =list;
         this.context = context;
         AddressBookAdapter adapter = this;
     }
 
 
     public  List<AddressBook> getData(){
-        return list;
+        return mAddressBook;
     }
 
     @Override
@@ -50,7 +45,7 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
         }else{
             holder= (AddressViewHolder) view.getTag();
         }
-        final   AddressBook addreddBean = list.get(position);
+        final   AddressBook addreddBean = mAddressBook.get(position);
         if("1".equals(addreddBean.getPrimaryBilling())){
             holder.tvDefault.setVisibility(View.VISIBLE);
             holder.tvDefault.setText(context.getResources().getString(R.string.address_default_billing));
