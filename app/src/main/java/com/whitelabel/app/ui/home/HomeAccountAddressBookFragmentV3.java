@@ -1,6 +1,7 @@
 package com.whitelabel.app.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
@@ -75,6 +76,12 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
         getParentFragment().startActivityForResult(intent,REQUEST_ADD_ADDRESS);
         getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

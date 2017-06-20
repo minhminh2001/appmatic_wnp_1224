@@ -84,6 +84,12 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     public BaseAddressFragment() {
         // Required empty public constructor
     }
+
+    @Override
+    public void openSwipeLayout() {
+         swipeContainer.setRefreshing(true);
+    }
+
     public abstract List<Integer> getDeleteFuntionPostions();
     public abstract  void  addAddressBtnOnClick();
     public abstract List<AddressBook> handlerAddressData(List<AddressBook> addressBooks);
@@ -108,16 +114,22 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }
+
+
+
+
     @Override
     public void closeSwipeLayout() {
             swipeContainer.setRefreshing(false);
     }
     @Override
     public void loadData(List<AddressBook> addressBooks) {
-        addressbookAddTextview.setVisibility(View.VISIBLE);
-        addressBooks = handlerAddressData(addressBooks);
-        mAddressBookAdapter = new AddressBookAdapter(getContext(), addressBooks);
-        mListView.setAdapter(mAddressBookAdapter);
+        if(addressBooks!=null) {
+            addressbookAddTextview.setVisibility(View.VISIBLE);
+            addressBooks = handlerAddressData(addressBooks);
+            mAddressBookAdapter = new AddressBookAdapter(getContext(), addressBooks);
+            mListView.setAdapter(mAddressBookAdapter);
+        }
     }
     @Override
     public void onRefresh() {

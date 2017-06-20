@@ -39,6 +39,7 @@ import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomDialog;
 import com.whitelabel.app.widget.CustomHomeViewPager;
 import com.whitelabel.app.widget.CustomTabCustomPageIndicator;
@@ -115,6 +116,7 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
                 homeActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
             }
         });
+
         inflater.inflate(R.menu.menu_home, menu);
         MenuItem cartItem = menu.findItem(R.id.action_shopping_cart);
         MenuItemCompat.setActionView(cartItem, R.layout.item_count);
@@ -232,6 +234,12 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
     private void inflateIfNeeded() {
         if (ll_error == null) {
             ll_error = ((ViewStub) mContainView.findViewById(R.id.vs_offline)).inflate();
+            ImageView ivTryAgain= (ImageView) ll_error.findViewById(R.id.iv_try_again);
+            CustomButton btnAgain= (CustomButton)  ll_error.findViewById(R.id.btn_try_again);
+            if(ivTryAgain!=null&&btnAgain!=null){
+                ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(getActivity(),R.mipmap.connection_break_loading));
+                btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+            }
         }
     }
 

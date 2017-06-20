@@ -112,13 +112,9 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-
         super.onActivityCreated(savedInstanceState);
         mImageLoader=new ImageLoader(getActivity());
-        if(ivTryAgain!=null&&btnTryAgain!=null){
-            ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(getActivity(),R.mipmap.connection_break_loading));
-            btnTryAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-        }
+
         swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         swipeContainer.setOnRefreshListener(this);
         if(mIndex==0) {

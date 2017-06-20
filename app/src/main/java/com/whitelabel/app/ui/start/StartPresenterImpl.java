@@ -1,6 +1,7 @@
 package com.whitelabel.app.ui.start;
 
 import com.google.gson.JsonObject;
+import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
@@ -46,8 +47,6 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                 });
         addSubscrebe(subscription);
     }
-
-
     @Override
     public void getConfigInfo(String sessionKey,String deviceToken) {
         Observable openConfig= DataManager.getInstance().getAppApi().openApp(sessionKey,deviceToken);
@@ -61,6 +60,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                     WhiteLabelApplication.getAppConfiguration().initAppConfig(
                             remoteConfigResonseModel.getData());
                     DataManager.getInstance().getPreferHelper().saveConfigInfo(remoteConfigResonseModel);
+//                    GlobalData.serviceRequestUrl=remoteConfigResonseModel.getData().getBaseUrl().getServiceBaseUrl();
                     mView.delayStart();
                 }else if(o instanceof JsonObject){
                     JsonObject jsonObject= (JsonObject) o;

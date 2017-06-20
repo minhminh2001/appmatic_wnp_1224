@@ -223,7 +223,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         });
     }
 
-
     public void initView() {
         mImageLoader = new ImageLoader(this);
         mTvGst= (TextView) findViewById(R.id.tv_order_detail_gst);

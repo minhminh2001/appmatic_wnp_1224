@@ -73,6 +73,16 @@ public class RemoteConfigResonseModel implements Serializable {
         public void setVersion(String version) {
             this.version = version;
         }
+        public BaseUrlModel baseUrl;
+
+        public BaseUrlModel getBaseUrl() {
+            return baseUrl;
+        }
+
+        public void setBaseUrl(BaseUrlModel baseUrl) {
+            this.baseUrl = baseUrl;
+        }
+
         public static class UiStyleBean {
             /**
              * themeColor :

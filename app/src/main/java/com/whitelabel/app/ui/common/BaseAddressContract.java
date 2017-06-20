@@ -20,6 +20,7 @@ public class BaseAddressContract {
        public void showProgressDialog();
        public void closeProgressDialog();
        public  void closeSwipeLayout();
+        public void openSwipeLayout();
     }
     public interface  Presenter extends BasePresenter<BaseAddressContract.View> {
         public  void  getAddressListCache(String sessionKey);

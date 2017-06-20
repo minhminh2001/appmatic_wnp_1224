@@ -20,14 +20,16 @@ public class BaseAddressPresenter extends RxPresenter<BaseAddressContract.View> 
         this.useCache=useCache;
     }
     @Override
-    public void getAddressListCache(String sessionKey) {
+    public void getAddressListCache(final String sessionKey) {
         DataManager.getInstance().getPreferHelper().
                 getAddressListCache(WhiteLabelApplication.getAppConfiguration().getUserInfo().getId())
                 .compose(RxUtil.<List<AddressBook>>rxSchedulerHelper())
                 .subscribe(new Action1<List<AddressBook>>() {
                     @Override
                     public void call(List<AddressBook> addressBooks) {
-                        mView.loadData(addressBooks);
+                         mView.openSwipeLayout();
+                         getAddressListOnLine(sessionKey);
+                         mView.loadData(addressBooks);
                     }
                 }, new Action1<Throwable>() {
                     @Override
