@@ -53,7 +53,8 @@
         imaginato:pstsDividerColor="@color/whiteFFFFFF"
         imaginato:pstsDividerPadding="0dp"
         imaginato:pstsIndicatorColor="@color/appColorPrimary"
-        imaginato:pstsIndicatorHeight="2dp" />
+        imaginato:pstsIndicatorHeight="2dp"
+        imaginato:pstsShouldExpand="true"/>
 <!--
     <LinearLayout
         android:visibility="gone"

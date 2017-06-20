@@ -45,7 +45,6 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
     private LinearLayout.LayoutParams defaultTabLayoutParams;
     private LinearLayout.LayoutParams expandedTabLayoutParams;
     private LinearLayout tabsContainer;
-    private ViewPager pager;
     private int tabCount;
     private int currentPosition = -1;
     private float currentPositionOffset = 0f;
@@ -135,20 +134,13 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
             locale = getResources().getConfiguration().locale;
         }
     }
-    public void setOnMyAccountUserGuide(OnMyAccountUserGuide myAccountUserGuide){
-        OnMyAccountUserGuide onMyAccountUserGuide = myAccountUserGuide;
-    }
     public void setCurrentPosition(int index){
         notifyDataSetChanged(index);
     }
-    public void setOldPosition(int position){
-        this.mOldIndex=position;
-    }
     public void setTitles(List<String> titles){
-        List<String> mTitle = titles;
         tabCount = titles.size();
         for(int i=0;i<tabCount;i++){
-            addTextTab(i, mTitle.get(i));
+            addTextTab(i, titles.get(i));
         }
         updateTabStyles();
         getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
@@ -171,20 +163,16 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
     }
     private void addTextTab(final int position, String title) {
         CustomTextView tab = new CustomTextView(getContext());
+//        LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) tab.getLayoutParams();
+//        if(params!=null){
+//            params.weight=1;
+//            params.width=0;
+//            tab.setLayoutParams(params);
+//        }
         tab.setText(title);
         tab.setTag(position);
         tab.setGravity(Gravity.CENTER);
         tab.setSingleLine();
-//        tab.setTypeface(tabTypeface, tabTypefaceStyle);
-//        Typeface typeFace = JFontUtils.getTypeface(getContext(), 28);
-//        if (typeFace != null) {
-//            tab.setTypeface(typeFace);
-//        }
-//        CustomTextView tab=new CustomTextView(getContext(),null);
-//        tab.setText(title);
-//        tab.setGravity(Gravity.CENTER);
-//        tab.setSingleLine();
-
         addTab(position, tab);
     }
 
@@ -274,7 +262,6 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
         }
         @Override
         public void onAnimationStart(Animation animation) {
-
         }
         @Override
         public void onAnimationEnd(Animation animation) {
@@ -282,10 +269,8 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
         }
         @Override
         public void onAnimationRepeat(Animation animation) {
-
         }
     }
-
     private void updateTabStyles() {
         for (int i = 0; i < tabCount; i++) {
             View v = tabsContainer.getChildAt(i);
@@ -293,16 +278,8 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
             if (v instanceof TextView) {
                 TextView tab = (TextView) v;
                 tab.setTextSize(TypedValue.COMPLEX_UNIT_PX, tabTextSize);
-                 tab.setTypeface(tabTypeface, tabTypefaceStyle);
+                tab.setTypeface(tabTypeface, tabTypefaceStyle);
                 tab.setTextColor(tabTextColor);
-//                Typeface typeFace = JFontUtils.getTypeface(getContext(), 34);
-//                if (typeFace != null) {
-//                    tab.setTypeface(typeFace);
-//                } else {
-//                    tab.setTypeface(tabTypeface, tabTypefaceStyle);
-//                }
-                // setAllCaps() is only available from API 14, so the upper case is made manually if we are on a
-                // pre-ICS-build
                 if (textAllCaps) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                         tab.setAllCaps(true);
@@ -349,11 +326,9 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
             JLogUtils.i(currTag,"NewlineLeft:"+lineLeft+",newlineRight:"+lineRight+",currentPositionOffset:"+currentPositionOffset);
         }
         canvas.drawRect(lineLeft, height-indicatorHeight, lineRight, height, rectPaint);
-
         // draw underline
         rectPaint.setColor(underlineColor);
         canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
-
         // draw divider
         dividerPaint.setColor(dividerColor);
         for (int i = 0; i < tabCount - 1; i++) {
@@ -361,7 +336,6 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
             canvas.drawLine(tab.getRight(), dividerPadding, tab.getRight(), height - dividerPadding, dividerPaint);
         }
     }
-
     public void setIndicatorColorResource(int resId) {
         this.indicatorColor = getResources().getColor(resId);
         invalidate();
@@ -517,11 +491,6 @@ public class MyAccountTopMenuView extends HorizontalScrollView {
         savedState.currentPosition = currentPosition;
         return savedState;
     }
-
-    public interface IconTabProvider {
-        public int getPageIconResId(int position);
-    }
-
     static class SavedState extends BaseSavedState {
         public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
             @Override
