@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -45,7 +46,7 @@ import java.util.List;
 
 public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements View.OnClickListener, MyAccountFragmentRefresh, SwipeRefreshLayout.OnRefreshListener {
     private Activity homeActivity;
-    private SwipeMenuListView lv;
+    private SwipeMenuListView smlvWishListView;
     private MyAccountWishlistAdapter adapter;
     private View nogoods;
     private List<Wishlist> list = new ArrayList<>();
@@ -129,7 +130,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
                     List<Wishlist> wishlists = (List<Wishlist>) msg.obj;
                     if (wishlists != null && wishlists.size() > 0) {
                         mFragment.get().nogoods.setVisibility(View.GONE);
-                        mFragment.get().lv.setVisibility(View.VISIBLE);
+                        mFragment.get().smlvWishListView.setVisibility(View.VISIBLE);
                         mFragment.get().list.addAll(wishlists);
                         mFragment.get().adapter.notifyDataSetChanged();
                     }
@@ -159,14 +160,14 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
                             if ((null == wishlistEntityResult.getResults() || wishlistEntityResult.getResults().size() == 0)) {
                                 mFragment.get().adapter.notifyDataSetChanged();
                                 mFragment.get().nogoods.setVisibility(View.VISIBLE);
-//                                mFragment.get(). lv.setVisibility(View.GONE);
+//                                mFragment.get(). smlvWishListView.setVisibility(View.GONE);
                                 return;
                             }
                         }
 
                         if (wishlistEntityResult.getResults() != null) {
                             mFragment.get().nogoods.setVisibility(View.GONE);
-                            mFragment.get().lv.setVisibility(View.VISIBLE);
+                            mFragment.get().smlvWishListView.setVisibility(View.VISIBLE);
                             if (wishlistEntityResult.getResults().size() >= mFragment.get().pageSize) {
                                 if (mFragment.get().currentPage == 1 && !mFragment.get().isAddFoot) {
                                     mFragment.get().isAddFoot = true;
@@ -278,11 +279,11 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
                 menu.addMenuItem(createDeleteSwipeItem());
             }
         };
-        lv.setMenuCreator(creator);
+        smlvWishListView.setMenuCreator(creator);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            lv.setFooterDividersEnabled(false);
+            smlvWishListView.setFooterDividersEnabled(false);
         }
-        lv.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+        smlvWishListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
@@ -294,7 +295,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
                 return false;
             }
         });
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        smlvWishListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String visibility = list.get(position).getVisibility();
@@ -308,13 +309,12 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
             }
         });
         adapter = new MyAccountWishlistAdapter(homeActivity, list, mImageLoader);
-        lv.setAdapter(adapter);
-        lv.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
+        smlvWishListView.setAdapter(adapter);
+        smlvWishListView.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
             @Override
             public void onSwipeStart(int position) {
                 swipeLayout.setEnabled(false);
             }
-
             @Override
             public void onSwipeEnd(int position) {
                 swipeLayout.setEnabled(true);
@@ -351,7 +351,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
         requestErrorHelper = new RequestErrorHelper(getContext(), connectionLayout);
         tryAgain = (LinearLayout) contentView.findViewById(R.id.try_again);
         nogoods = contentView.findViewById(R.id.wishlist_no_goods);
-        lv = (SwipeMenuListView) contentView.findViewById(R.id.whistlist_lv);
+        smlvWishListView = (SwipeMenuListView) contentView.findViewById(R.id.whistlist_lv);
         swipeLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.swipe_container);
 //        swipeLayout.setColorSchemeResources(R.color.colorAccent);
         swipeLayout.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
@@ -362,14 +362,13 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
         //获得布局设置页脚
         LayoutInflater inflater = LayoutInflater.from(homeActivity);
         layout = inflater.inflate(R.layout.layout_my_footer, null);
-        lv.addFooterView(layout);//设置页脚
+        smlvWishListView.addFooterView(layout);//设置页脚
         layout.setVisibility(View.GONE);//隐藏页脚
-        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+        smlvWishListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 //滑动到底部并且屏幕不在滚动
                 if (adapter.getCount() >= pageSize && adapter.getCount() - lastItem <= pageSize - 10 && scrollState == SCROLL_STATE_IDLE && Loading) {
-                    JLogUtils.i("Allen", "adapter.getCount()=" + adapter.getCount());
                     if (currentPage > 1) {
                         layout.setVisibility(View.VISIBLE);
                         sendRequest();

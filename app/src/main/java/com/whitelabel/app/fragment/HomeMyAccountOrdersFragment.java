@@ -188,7 +188,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         } else {
             list_outer_record.clear();
         }
-        String networkerror = getResources().getString(R.string.Global_Error_Internet);
     }
     @Override
     public void onDestroy() {
@@ -295,15 +294,12 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             super.handleMessage(msg);
         }
     }
-
     private DataHandler dataHandler;
-
     /**
      * send request to server
      */
     private void sendRequest() {
         mMyAccountDao.getOrderList(WhiteLabelApplication.getAppConfiguration().getUserInfo(homeActivity).getSessionKey(), pageIndex + "", pageSize + "");
-
     }
 
     public ArrayList<MyAccountOrderOuter> initArray(List<MyAccountOrderOuter> array) {

@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:listSelector="@null"
-            android:divider="@color/v2_line"
-            android:dividerHeight="@dimen/myAccount_lineHeight"
+            android:divider="@color/device_line"
+            android:dividerHeight="@dimen/line_height"
             android:layout_below="@+id/addressbook_add_RelativeLayout"/>
     </android.support.v4.widget.SwipeRefreshLayout>
     <LinearLayout
