@@ -357,7 +357,6 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
             setSVRAppserviceProductSearchParameterCategoryId(index, categoryId);
         } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
             setSVRAppserviceProductSearchParameterCategoryId(categoryId);
-        } else {
         }
     }
 
@@ -401,7 +400,6 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
             setSVRAppserviceProductSearchParameterBrandId(index, brandId);
         } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
             setSVRAppserviceProductSearchParameterBrandId(brandId);
-        } else {
         }
     }
 
@@ -447,7 +445,6 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
             setSVRAppserviceProductSearchParameterMinPriceMaxPrice(index, minPrice, maxPrice);
         } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
             setSVRAppserviceProductSearchParameterMinPriceMaxPrice(minPrice, maxPrice);
-        } else {
         }
     }
 
@@ -486,12 +483,12 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         svrAppserviceProductSearchParameter.setPrice(minPrice + "-" + maxPrice);
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     public void setSVRAppserviceProductSearchParameterBrand(int type, int index, String brandValue) {
         if (FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
             setSVRAppserviceProductSearchParameterBrand(index, brandValue);
         } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
             setSVRAppserviceProductSearchParameterBrand(brandValue);
-        } else {
         }
     }
 
@@ -562,7 +559,6 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
             setSVRAppserviceProductSearchParameterType(index, typeValue);
         } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
             setSVRAppserviceProductSearchParameterType(typeValue);
-        } else {
         }
     }
 
@@ -607,7 +603,6 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
             setSVRAppserviceProductSearchParameterSort(index, sortValue);
         } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
             setSVRAppserviceProductSearchParameterSort(sortValue);
-        } else {
         }
     }
 

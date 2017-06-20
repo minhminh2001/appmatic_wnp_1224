@@ -72,8 +72,7 @@ public  class CategoryTreeExpandableAdapter1 extends ExpandableRecyclerAdapter<S
             GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
             SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) getItem(position);
             groupViewHolder.tvCategoryTreeGroupName.setText(entity.getName());
-            if (groupViewHolder.ivCategoryTreeGroup.getTag() != null && groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage())) {
-            } else {
+            if (groupViewHolder.ivCategoryTreeGroup.getTag() == null || !(groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage()))) {
                 JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, groupViewHolder.ivCategoryTreeGroup, entity.getImage());
                 groupViewHolder.ivCategoryTreeGroup.setTag(entity.getImage());
             }

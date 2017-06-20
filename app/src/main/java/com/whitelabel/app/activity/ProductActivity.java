@@ -812,7 +812,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
                         cartItemCount += localCartRepositoryProductEntity.getSelectedQty();
                     }
-                } else {
                 }
             }
         } catch (Exception ex) {
@@ -1876,9 +1875,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     String productId = data.getStringExtra("productId");
                     String itemId = data.getStringExtra("itemId");
                     int isLike = data.getIntExtra("isLike", -1);
-                    if (!TextUtils.isEmpty(productId) && isLike != -1) {
+//                    if (!TextUtils.isEmpty(productId) && isLike != -1) {
 //                        refreWishIconByPDPResult(productId, isLike, itemId);
-                    }
+//                    }
                 } else {
                     //此出设了刷新后，按后退键， pdp返pdp也会刷新，一直刷到curation page或productlist page等
 //                    refreshProductRecommended();

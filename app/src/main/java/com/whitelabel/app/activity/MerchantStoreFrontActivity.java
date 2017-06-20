@@ -767,13 +767,13 @@ public class MerchantStoreFrontActivity extends BaseActivitySearchCart implement
         mCustomXListView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            onBackPressed();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+////            onBackPressed();
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     @Override
     protected void onDestroy() {

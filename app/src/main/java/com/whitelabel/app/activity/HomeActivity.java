@@ -398,7 +398,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
                         cartItemCount += localCartRepositoryProductEntity.getSelectedQty();
                     }
-                } else {
                 }
             }
         } catch (Exception ex) {

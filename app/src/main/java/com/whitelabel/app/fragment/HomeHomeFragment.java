@@ -154,7 +154,6 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
                         cartItemCount += localCartRepositoryProductEntity.getSelectedQty();
                     }
-                } else {
                 }
             }
         } catch (Exception ex) {

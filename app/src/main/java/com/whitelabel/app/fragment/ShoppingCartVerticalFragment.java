@@ -553,7 +553,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 switch (msg.what) {
                     case ShoppingCarDao.REQUEST_SHOPPINGINFO:
                         fragment.currStatus = LOADSUCCESS;
-                        if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS && activity != null) {
+                        if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
                             fragment.mCar = (ShoppingCartListEntityCart) msg.obj;
                             fragment.initShoppingCartData(fragment.mCar, true);
                             fragment.mCarDao.saveShoppingCartCount(activity, fragment.mCar.getSummaryQty());
@@ -566,7 +566,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                                     }
                                 }, 10);
                             }
-                        } else if (activity != null) {
+                        } else {
                             String errorMsg = String.valueOf(msg.obj);
                             if (!JToolUtils.expireHandler(activity, errorMsg, 2000)) {
                                 JViewUtils.showErrorToast(activity, errorMsg);
@@ -578,7 +578,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                     case ShoppingCarDao.REQUEST_VOUCHERCODE:
                         fragment.closeDialog();
                         fragment.mIsFromLogin = false;
-                        if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS && activity != null) {
+                        if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
                             ShoppingCartVoucherApplyEntity shoppingCartVoucherApplyEntity = (ShoppingCartVoucherApplyEntity) msg.obj;
                             fragment.mCar.setDiscount(shoppingCartVoucherApplyEntity.getDiscount());
                             fragment.mCar.setGrandTotal(shoppingCartVoucherApplyEntity.getGrandTotal());
@@ -590,7 +590,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                                 fragment.gaTrackerApplyCode(fragment.UNAPPLIED);
                             }
 
-                        } else if (activity != null) {
+                        } else {
                             ErrorMsgBean errorBean = (ErrorMsgBean) msg.obj;
                             if (!JToolUtils.expireHandler(activity, errorBean.getErrorMessage(), 2000)) {
                                 fragment.voucherCodeHintMsg(VOUCHER_APPLY_HINT_FIALD, errorBean.getErrorMessage());
@@ -600,7 +600,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                     case ShoppingCarDao.REQUEST_ERROR:
                         fragment.closeDialog();
                         mFragment.get().swipeRefrshLayout.setRefreshing(false);
-                        if (msg.arg1 == ShoppingCarDao.REQUEST_SHOPPINGINFO && activity != null) {
+                        if (msg.arg1 == ShoppingCarDao.REQUEST_SHOPPINGINFO) {
                             fragment.currStatus = LOADSUCCESS;
                             fragment.requestErrorHelper.showConnectionBreaks(msg);
                         } else {
@@ -615,19 +615,17 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                             fragment.gaTrackerCheckout();
                             fragment.startCheckoutActivity();
                         } else {
-                            if (activity != null) {
-                                ShoppingCartErrorMsgBean errorMsg = (ShoppingCartErrorMsgBean) msg.obj;
-                                if (!JToolUtils.expireHandler(activity, errorMsg.getErrorMessage(), 2000)) {
-                                    try {
-                                        JViewUtils.showMaterialDialogV2(activity, null, errorMsg.getErrorMessage() + "", new MaterialDialogCallback() {
-                                            @Override
-                                            public void callBack() {
-                                                fragment.sendRequest();
-                                            }
-                                        });
-                                    } catch (Exception ex) {
-                                        ex.getStackTrace();
-                                    }
+                            ShoppingCartErrorMsgBean errorMsg = (ShoppingCartErrorMsgBean) msg.obj;
+                            if (!JToolUtils.expireHandler(activity, errorMsg.getErrorMessage(), 2000)) {
+                                try {
+                                    JViewUtils.showMaterialDialogV2(activity, null, errorMsg.getErrorMessage() + "", new MaterialDialogCallback() {
+                                        @Override
+                                        public void callBack() {
+                                            fragment.sendRequest();
+                                        }
+                                    });
+                                } catch (Exception ex) {
+                                    ex.getStackTrace();
                                 }
                             }
                         }
@@ -637,7 +635,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                         fragment.closeDialog();
                         fragment.mProducts.clear();
                         JStorageUtils.savaProductListToLocalCartRepository(activity, ShoppingCartVerticalAdapter.shoppingCarToTMPLocal(fragment.mProducts));
-                        if (ShoppingCarDao.RESPONSE_SUCCESS != msg.arg1 && activity != null) {
+                        if (ShoppingCarDao.RESPONSE_SUCCESS != msg.arg1) {
                             ErrorMsgBean errorMsgBean = (ErrorMsgBean) msg.obj;
                             Toast.makeText(activity, errorMsgBean.getErrorMessage(), Toast.LENGTH_LONG).show();
                         }

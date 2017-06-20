@@ -673,9 +673,10 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
             } catch (Exception e) {
                 JLogUtils.d("error", "loadClockhasError" + e.toString());
             }
-        } else {
-//            hideBottomSlideToTop(false);
         }
+//        else {
+//            hideBottomSlideToTop(false);
+//        }
 
         ivCuration.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mDestHeight));
         TextView tvHeading = (TextView) view.findViewById(R.id.tv_title);
@@ -792,7 +793,8 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
                 tvBanner9.setPadding(JToolUtils.dip2px(CurationActivity.this, 2), JToolUtils.dip2px(CurationActivity.this, 20), 0, 0);
                 tvBanner9.setTextSize(16);
             }
-        } else {
+        }
+//        else {
 //            vBanner1.setVisibility(View.GONE);
 //            vBanner2.setVisibility(View.GONE);
 //            vBanner3.setVisibility(View.GONE);
@@ -801,7 +803,7 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
 //            vBanner6.setVisibility(View.GONE);
 //            vBanner7.setVisibility(View.GONE);
 //            vBanner8.setVisibility(View.GONE);
-        }
+//        }
     }
 
 

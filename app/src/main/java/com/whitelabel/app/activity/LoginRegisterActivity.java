@@ -257,11 +257,6 @@ public class LoginRegisterActivity extends com.whitelabel.app.BaseActivity imple
 //                    R.animator.fragment_slide_right_enter,
 //                    R.animator.fragment_slide_left_exit
 //                   );
-        } else if (type == -2) {
-//            fragmentTransaction.setCustomAnimations(
-//                    R.animator.fragment_slide_zero_enter,
-//                    R.animator.fragment_slide_bottom_exit
-//            );
         }
         currentFragmentTag = to;
         fragmentTransaction.replace(R.id.flFilterSortContainer, subFragment);

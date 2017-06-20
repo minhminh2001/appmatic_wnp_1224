@@ -293,7 +293,6 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
                         cartItemCount += localCartRepositoryProductEntity.getSelectedQty();
                     }
-                } else {
                 }
             }
         }catch (Exception ex){

@@ -79,8 +79,6 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
                 case LoginRegisterDao.REQUEST_FBUSERINFO:
                     if(msg.arg1==LoginRegisterDao.RESPONSE_SUCCESS) {
                         WhiteLabelApplication.getAppConfiguration().signIn(mActivity.get(), (SVRAppserviceCustomerFbLoginReturnEntity) msg.obj);
-                    }else{
-
                     }
                     break;
                 case LoginRegisterDao.REQUEST_BOUNDUSERINFO:

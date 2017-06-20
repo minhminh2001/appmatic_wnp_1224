@@ -38,8 +38,8 @@ public class CreditInstructionActivity extends com.whitelabel.app.BaseActivity i
     }
     @Override
     public void onClick(View view) {
-        int id=view.getId();
-        switch (id){ }
+//        int id=view.getId();
+//        switch (id){ }
     }
     private void initIntent() {
         data=getIntent().getStringExtra("data");

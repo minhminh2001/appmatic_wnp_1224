@@ -120,7 +120,6 @@ public class BaseFragmentSearchCart<T extends BasePresenter> extends com.whitela
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
                         cartItemCount += localCartRepositoryProductEntity.getSelectedQty();
                     }
-                } else {
                 }
             }
         } catch (Exception ex) {

@@ -803,10 +803,8 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
 
                     }else{
                         String errorMsg= (String) msg.obj;
-                        if(errorMsg.contains("app version")){
+                        if(!errorMsg.contains("app version")){
 //                            JViewUtils.showMaterialDialog(mActivity.get(), "", mFragment.get().updateDiaHintmsg, mFragment.get().updateDiaBtnMsg, mFragment.get().updateListener, false);
-
-                        }else{
                             mFragment.get().error.setText(errorMsg);
                             mFragment.get().error.setVisibility(View.VISIBLE);
                         }
@@ -887,9 +885,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                     }
                     break;
                 case MyAccountDao.ERROR:
-                    if(msg.arg1==ProductDao.REQUEST_CHECKVERSION){
-
-                    }else {
+                    if(msg.arg1!=ProductDao.REQUEST_CHECKVERSION){
                         if (mFragment.get().mDialog != null) {
                             mFragment.get().mDialog.dismiss();
                         }
@@ -1098,7 +1094,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
         JLogUtils.i(mCurrTag,"result:"+resultCode);
         if(getActivity()==null)return;
-        if (requestCode == RC_SIGN_IN&&resultCode==getActivity().RESULT_OK) {
+//        if (requestCode == RC_SIGN_IN&&resultCode==getActivity().RESULT_OK) {
 //            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
 //            if (result.isSuccess()) {
 //                GoogleSignInAccount acct = result.getSignInAccount();
@@ -1108,7 +1104,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
 //                JViewUtils.showToast(loginRegisterActivity, null, getString(R.string.Global_Error_Internet));
 //            }
 //        }
-        }
+//        }
     }
 
 

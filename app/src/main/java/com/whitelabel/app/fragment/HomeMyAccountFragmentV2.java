@@ -138,8 +138,9 @@ public class HomeMyAccountFragmentV2 extends HomeBaseFragment {
             ((MyAccountFragmentRefresh) currFragment).refresh(refresh);
         }
         //如果是addressFragment,则手动判断是否需要guide
-        if (mCurrTag.equals(TAG_ADDRESSLIST) && getActivity() != null) {
-        } else if (!mCurrTag.equals(TAG_ADDRESSLIST)) {
+//        if (mCurrTag.equals(TAG_ADDRESSLIST) && getActivity() != null) {
+//        } else
+            if (!mCurrTag.equals(TAG_ADDRESSLIST)) {
             isShowGuide4 = true;
         }
         transaction.show(currFragment);

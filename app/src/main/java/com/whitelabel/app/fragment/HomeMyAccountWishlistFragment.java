@@ -387,8 +387,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
 
     @Override
     public void refresh(boolean bool) {
-        if (bool) {
-        }
+
     }
 
     @Override

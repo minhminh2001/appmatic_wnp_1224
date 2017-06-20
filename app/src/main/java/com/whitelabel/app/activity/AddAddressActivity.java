@@ -163,7 +163,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                     break;
                 case MyAccountDao.REQUEST_ADDRESS_SAVE:
                     if(msg.arg1==MyAccountDao.RESPONSE_SUCCESS){
-                        SVRAddAddress addAddress = (SVRAddAddress) msg.obj;
+//                        SVRAddAddress addAddress = (SVRAddAddress) msg.obj;
                         LinkedList<AddressBook> list = new LinkedList<AddressBook>();
                         String item1= activity.firstName.getText().toString();
                         String item2=activity.lastName.getText().toString();

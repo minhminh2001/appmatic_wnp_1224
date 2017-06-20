@@ -140,8 +140,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                                 repaymentInfoModel.getOrderSn());
                     }else{
                         String errorMsg = msg.obj.toString();
-                        if (!JDataUtils.errorMsgHandler(mActivity.get(), errorMsg)) {
-                        }
+                        JDataUtils.errorMsgHandler(mActivity.get(), errorMsg);
                     }
                     break;
                 case CheckoutDao.REQUEST_CHANGEORDERSTATUS:
@@ -590,7 +589,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                 mCheckoutDao.changeOrderStatus(WhiteLabelApplication.getAppConfiguration().
                                 getUserInfo(this).getSessionKey(),
                         mOrderNumber,mBean.getPaymentCode(),productName,currencyCode,amount,id,state,createTime);
-            }else {
             }
         }
     }

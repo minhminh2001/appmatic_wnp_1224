@@ -372,11 +372,7 @@ public class CheckoutDao extends BaseHttp {
 
                 break;
             case REQUEST_TRACK:
-                if (isOk(response)) {
 
-                } else {
-
-                }
                 break;
             case REQUEST_WINCODE:
                 if (isOk(response)) {

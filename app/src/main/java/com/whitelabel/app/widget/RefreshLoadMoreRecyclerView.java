@@ -671,11 +671,7 @@ public class RefreshLoadMoreRecyclerView extends RecyclerView {
                 mContentView.setVisibility(GONE);
                 mProgressBar.setVisibility(GONE);
             }
-            else {
-//                mHintView.setVisibility(View.VISIBLE);
-//                mHintView.setText(R.string.xlistview_footer_hint_normal);
-//                mHintView.setText("");
-            }
+
         }
 
         public void setBottomMargin(int height) {

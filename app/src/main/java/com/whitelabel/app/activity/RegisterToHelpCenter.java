@@ -47,7 +47,6 @@ public class RegisterToHelpCenter extends com.whitelabel.app.BaseActivity  imple
                             SVRAppserviceCmsCmsPageReturnEntity returnEntity = (SVRAppserviceCmsCmsPageReturnEntity) msg.obj;
                             String content= JToolUtils.replaceFont(returnEntity.getContent());
                              mActivity.get().cwvDetail.setText(content);
-                    }else{
                     }
                     break;
                 case HelpCenterDao.REQUEST_ERROR:

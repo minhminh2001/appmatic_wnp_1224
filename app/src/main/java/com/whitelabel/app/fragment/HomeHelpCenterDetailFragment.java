@@ -170,9 +170,7 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
 
         if (homeActivity instanceof HomeActivity) {
             //来自HomeActivity
-            if (listToDetailEntity.getType() == FIREST_MENU) {
-                //受homeActivity控制
-            } else {
+            if (listToDetailEntity.getType() != FIREST_MENU) {
                 //后退
                 mCommonCallback.setLeftMenuClickListener(new View.OnClickListener() {
                     @Override

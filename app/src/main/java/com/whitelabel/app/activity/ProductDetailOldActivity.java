@@ -847,7 +847,6 @@ public class ProductDetailOldActivity extends com.whitelabel.app.BaseActivity im
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
                         cartItemCount += localCartRepositoryProductEntity.getSelectedQty();
                     }
-                } else {
                 }
             }
         } catch (Exception ex) {
@@ -1385,9 +1384,10 @@ public class ProductDetailOldActivity extends com.whitelabel.app.BaseActivity im
                 mAttributeViews.clear();
                 createAttributeView(0, mProductDetailBean.getProperty().get(0));
             }
-        }else if(ProductDetailModel.TYPE_GROUP.equals(mProductDetailBean.getType())){
-
         }
+//        else if(ProductDetailModel.TYPE_GROUP.equals(mProductDetailBean.getType())){
+//
+//        }
         updateProductDetailUIProductImage(productImagesArrayList);
         initVisibleProduct();
     }

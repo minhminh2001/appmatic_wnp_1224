@@ -25,8 +25,6 @@ public class HomeHomePresenterImpl extends RxPresenter<HomeHomeContract.View> im
                         mView.closeProgressDialog();
                         if(svrAppserviceCatalogSearchReturnEntity.getStatus()==1){
                              mView.loadRecyclerViewData(svrAppserviceCatalogSearchReturnEntity);
-                        }else{
-
                         }
                     }
                 }, new ErrorHandlerAction() {

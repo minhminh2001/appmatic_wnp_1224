@@ -68,8 +68,7 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+
     }
 
     @Override
@@ -140,7 +139,6 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
                     for (TMPLocalCartRepositoryProductEntity localCartRepositoryProductEntity : list) {
                         cartItemCount += localCartRepositoryProductEntity.getSelectedQty();
                     }
-                } else {
                 }
             }
         } catch (Exception ex) {

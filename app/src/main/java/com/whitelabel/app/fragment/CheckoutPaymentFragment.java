@@ -1242,9 +1242,9 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
      */
     public void sendRequestToGetPaymentList(boolean resetPaymentType) {
         goneView();
-        if (resetPaymentType) {
-//            paymentType = CARDPAYMENT;
-        }
+//        if (resetPaymentType) {
+////            paymentType = CARDPAYMENT;
+//        }
         mDialog = JViewUtils.showProgressDialog(getActivity());
         offlineDao.getPaymentList(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
     }

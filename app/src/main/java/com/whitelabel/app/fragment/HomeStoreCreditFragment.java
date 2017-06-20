@@ -122,9 +122,7 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        this.onAttachFragment(getParentFragment());
-        if (getArguments() != null) {
 
-        }
 //        this.onAttachFragment(getParentFragment());
     }
 

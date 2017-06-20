@@ -143,10 +143,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     onOrderViewItemClickListener.onItemClick(orderListholder.itemView, position);
                 }
             });
-        } else if (holder instanceof VHHeader) {
-            //cast holder to VHHeader and set data for header.f196704ba8a04d420409a3bcdf8efe20
-
-        } else if (holder instanceof VHFooter) {
+        }  else if (holder instanceof VHFooter) {
 //            if(!loadMore){
             ((VHFooter) holder).footerView.setState(RefreshLoadMoreRecyclerView.CustomDragRecyclerFooterView.STATE_READY);
 //            }
