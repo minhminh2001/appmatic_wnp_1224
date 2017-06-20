@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
+import com.whitelabel.app.activity.EditAddressActivity;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.ui.common.BaseAddressFragment;
 import java.util.ArrayList;
@@ -40,6 +41,29 @@ public class CheckoutSelectAddressFragment extends BaseAddressFragment {
         getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
     }
 
+    @Override
+    public void onEditButtonClick(int postion) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("bean", getAdapter().getData().get(postion));
+        Intent intent = new Intent(getActivity(), EditAddressActivity.class);
+        intent.putExtra(EditAddressActivity.EXTRA_USE_DEFAULT,false);
+        intent.putExtras(bundle);
+        if (getParentFragment() != null) {
+            getParentFragment().startActivityForResult(intent, REQUEST_EDIT_ADDRESS);
+        } else {
+            startActivityForResult(intent, REQUEST_EDIT_ADDRESS);
+        }
+        getActivity().overridePendingTransition(R.anim.enter_righttoleft,
+                R.anim.exit_righttoleft);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if((requestCode==REQUEST_ADD_ADDRESS&&resultCode==AddAddressActivity.RESULT_CODE)
+                ||(requestCode==REQUEST_EDIT_ADDRESS&&resultCode==EditAddressActivity.RESULT_CODE)){
+            requestData();
+        }
+    }
     @Override
     public List<AddressBook> handlerAddressData(List<AddressBook> addressBooks) {
         for(int i=0;i<addressBooks.size();i++){

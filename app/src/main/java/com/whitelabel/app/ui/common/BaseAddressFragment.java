@@ -81,6 +81,7 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     public abstract List<Integer> getDeleteFuntionPostions();
     public abstract  void  addAddressBtnOnClick();
     public abstract List<AddressBook> handlerAddressData(List<AddressBook> addressBooks);
+    public abstract   void onEditButtonClick(int postion);
     private AddressBookAdapter mAddressBookAdapter;
     protected final static String EXTRA_USE_CACHE = "use_cache";
     private RequestErrorHelper requestErrorHelper;
@@ -136,19 +137,12 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
         switch (index) {
             case 0:
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("bean", mAddressBookAdapter.getData().get(position));
-                Intent intent = new Intent(getActivity(), EditAddressActivity.class);
-                intent.putExtras(bundle);
-                if (getParentFragment() != null) {
-                    getParentFragment().startActivityForResult(intent, REQUEST_EDIT_ADDRESS);
-                } else {
-                    startActivityForResult(intent, REQUEST_EDIT_ADDRESS);
-                }
-                getActivity().overridePendingTransition(R.anim.enter_righttoleft,
-                        R.anim.exit_righttoleft);
+                onEditButtonClick(position);
                 break;
             case 1:
+                showProgressDialog();
+                String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+                mPresenter.deleteAddressById(sessionKey,mAddressBookAdapter.getData().get(position).getAddressId());
                 break;
         }
         return false;
@@ -245,14 +239,7 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         super.onDestroyView();
         unbinder.unbind();
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if((requestCode==REQUEST_ADD_ADDRESS&&resultCode==AddAddressActivity.RESULT_CODE)
-                ||(requestCode==REQUEST_EDIT_ADDRESS&&resultCode==EditAddressActivity.RESULT_CODE)){
-            requestData();
-        }
-    }
+
     @OnClick({R.id.addressbook_add_textview,R.id.try_again})
     public void onViewClicked(View view) {
            switch(view.getId()){

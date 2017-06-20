@@ -25,6 +25,7 @@ public class BaseAddressContract {
     public interface  Presenter extends BasePresenter<BaseAddressContract.View> {
         public  void  getAddressListCache(String sessionKey);
         public void   getAddressListOnLine(String sessionKey);
+        public void   deleteAddressById(String sessionKey,String addressId);
 
     }
 }

@@ -4,12 +4,16 @@ import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.AddresslistReslut;
 import com.whitelabel.app.model.ApiFaildException;
+import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 import java.util.List;
+
+import rx.Subscriber;
+import rx.Subscription;
 import rx.functions.Action1;
 /**
  * Created by Administrator on 2017/6/12.
@@ -21,7 +25,7 @@ public class BaseAddressPresenter extends RxPresenter<BaseAddressContract.View> 
     }
     @Override
     public void getAddressListCache(final String sessionKey) {
-        DataManager.getInstance().getPreferHelper().
+      Subscription subscriber= DataManager.getInstance().getPreferHelper().
                 getAddressListCache(WhiteLabelApplication.getAppConfiguration().getUserInfo().getId())
                 .compose(RxUtil.<List<AddressBook>>rxSchedulerHelper())
                 .subscribe(new Action1<List<AddressBook>>() {
@@ -36,10 +40,33 @@ public class BaseAddressPresenter extends RxPresenter<BaseAddressContract.View> 
                     public void call(Throwable throwable) {
                     }
                 });
+      addSubscrebe(subscriber);
     }
     @Override
+    public void deleteAddressById(final String sessionKey, String addressId) {
+         DataManager.getInstance().getMyAccountApi().deleteAddressById(sessionKey,addressId)
+                 .compose(RxUtil.<ResponseModel>rxSchedulerHelper())
+                 .subscribe(new Action1<ResponseModel>() {
+                     @Override
+                     public void call(ResponseModel responseModel) {
+                         mView.closeProgressDialog();
+                        if(responseModel.getStatus()==1){
+                            mView.openSwipeLayout();
+                            getAddressListOnLine(sessionKey);
+                        }
+                     }
+                 }, new ErrorHandlerAction() {
+                     @Override
+                     protected void requestError(ApiFaildException ex) {
+                        mView.showNetworkErrorView(ex.getErrorMsg());
+                     }
+                 });
+
+    }
+
+    @Override
     public void getAddressListOnLine(String sessionKey) {
-        DataManager.getInstance().getMyAccountApi().getAddressList(sessionKey)
+       Subscription subscription= DataManager.getInstance().getMyAccountApi().getAddressList(sessionKey)
                 .compose(RxUtil.<AddresslistReslut>rxSchedulerHelper())
                 .subscribe(new Action1<AddresslistReslut>() {
                     @Override
@@ -63,5 +90,6 @@ public class BaseAddressPresenter extends RxPresenter<BaseAddressContract.View> 
                         }
                     }
                 });
+       addSubscrebe(subscription);
     }
 }

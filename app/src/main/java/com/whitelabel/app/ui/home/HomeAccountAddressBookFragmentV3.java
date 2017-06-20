@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
+import com.whitelabel.app.activity.EditAddressActivity;
 import com.whitelabel.app.fragment.MyAccountFragmentRefresh;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.ui.common.BaseAddressFragment;
@@ -55,6 +56,21 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
         return mBeans;
     }
     @Override
+    public void onEditButtonClick(int postion) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("bean", getAdapter().getData().get(postion));
+        Intent intent = new Intent(getActivity(), EditAddressActivity.class);
+
+        intent.putExtras(bundle);
+        if (getParentFragment() != null) {
+            getParentFragment().startActivityForResult(intent, REQUEST_EDIT_ADDRESS);
+        } else {
+            startActivityForResult(intent, REQUEST_EDIT_ADDRESS);
+        }
+        getActivity().overridePendingTransition(R.anim.enter_righttoleft,
+                R.anim.exit_righttoleft);
+    }
+    @Override
     public List<Integer> getDeleteFuntionPostions() {
         List<Integer>  deleteFuntionPostions=new ArrayList<>();
         for(int i=0;i<getAdapter().getData().size();i++){
@@ -77,6 +93,14 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
         getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if((requestCode==REQUEST_ADD_ADDRESS&&resultCode==AddAddressActivity.RESULT_CODE)
+                ||(requestCode==REQUEST_EDIT_ADDRESS&&resultCode==EditAddressActivity.RESULT_CODE)){
+            requestData();
+        }
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
