@@ -10,6 +10,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: "jacoco"
+apply plugin: 'newrelic'
 jacoco {
     toolVersion = "0.7.1.201405082137"
 }
@@ -37,9 +38,6 @@ task jacocoTestReport(type:JacocoReport, dependsOn:["testWnpDebugUnitTest","crea
         html.enabled = true
     }
 }
-
-
-
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
@@ -147,7 +145,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
-
+    compile 'com.newrelic.agent.android:android-agent:5.+'
     //Test framework
     testCompile "org.robolectric:robolectric:3.0"
     testCompile 'junit:junit:4.12'
