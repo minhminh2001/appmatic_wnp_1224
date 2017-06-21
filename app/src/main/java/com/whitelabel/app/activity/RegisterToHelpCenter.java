@@ -76,8 +76,7 @@ public class RegisterToHelpCenter extends com.whitelabel.app.BaseActivity  imple
     }
     private void onClickLeftMenu(){
         setResult(101, this.getIntent().putExtras(new Bundle()));
-        this.finish();
-        overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+       onBackPressed();
     }
     private void initToolBar(String title){
         setTitle(title);
@@ -94,8 +93,7 @@ public class RegisterToHelpCenter extends com.whitelabel.app.BaseActivity  imple
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             Bundle bundle = new Bundle();
             setResult(101, this.getIntent().putExtras(bundle));
-            this.finish();
-            overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+            super.onBackPressed();
             return true;
         }else {
             return super.onKeyDown(keyCode, event);

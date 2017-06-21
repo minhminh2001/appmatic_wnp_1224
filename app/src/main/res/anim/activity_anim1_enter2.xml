@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shareInterpolator="false" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:shareInterpolator="false"
+    tools:keep="@anim/activity_anim1_enter2">
 
     <!-- 平移动画效果 从左到右  改变x轴坐标 -->
     <translate

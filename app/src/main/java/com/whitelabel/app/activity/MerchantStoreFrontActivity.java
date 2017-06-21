@@ -9,7 +9,6 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -366,9 +365,7 @@ public class MerchantStoreFrontActivity extends BaseActivitySearchCart implement
             filterSortHelper.hideVisibleFragments();
             resetCurrentFilterSortTabIndex();
         } else {
-            finish();
-            overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
-
+            super.onBackPressed();
         }
     }
 

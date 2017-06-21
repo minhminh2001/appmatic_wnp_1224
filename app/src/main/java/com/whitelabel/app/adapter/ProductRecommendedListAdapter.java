@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -114,7 +115,7 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
 //                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, leftProductEntity.getVendorDisplayName());
 //                            intent.putExtras(bundle);
 //                            context.startActivity(intent);
-//                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //                        }
 //                    });
 //                } else {
@@ -288,7 +289,7 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
 //                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, rightProductEntity.getVendorDisplayName());
 //                            intent.putExtras(bundle);
 //                            context.startActivity(intent);
-//                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //                        }
 //                    });
 //                }else{
@@ -297,7 +298,7 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
 //                        public void onClick(View v) {
 //                            Intent i = new Intent(context, HomeActivity.class);
 //                            context.startActivity(i);
-//                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //                        }
 //                    });
 //                }
@@ -415,8 +416,8 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
 
     private void setBundleAndToPDP(Intent intent, Bundle bundle) {
         intent.putExtras(bundle);
-        ((Activity) context).startActivityForResult(intent, ProductActivity.RESULT_WISH);
-        ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+        ((BaseActivity) context).startActivityForResult(intent, ProductActivity.RESULT_WISH);
+//        ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
     }
 
     public class ViewHolderImp extends RecyclerView.ViewHolder {

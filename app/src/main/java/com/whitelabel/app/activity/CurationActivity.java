@@ -916,9 +916,7 @@ public class CurationActivity extends BaseActivitySearchCart implements View.OnC
             filterSortHelper.hideVisibleFragments();
             resetCurrentFilterSortTabIndex();
         } else {
-            finish();
-            overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
-
+            super.onBackPressed();
         }
     }
 

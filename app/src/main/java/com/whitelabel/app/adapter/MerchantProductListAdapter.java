@@ -499,7 +499,7 @@ public class MerchantProductListAdapter extends BaseAdapter {
     private void setBundleAndToPDP(Intent intent, Bundle bundle) {
         intent.putExtras(bundle);
         this.mMerchantStoreFrontActivity.startActivityForResult(intent, MerchantStoreFrontActivity.RESULT_ADD_WISH);
-        this.mMerchantStoreFrontActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        this.mMerchantStoreFrontActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
     }
 
     public class ViewHolder {
@@ -683,20 +683,20 @@ public class MerchantProductListAdapter extends BaseAdapter {
         }
     }
 
-    private void startBrandStoreActivity(Activity activity, String brandName, String brandId) {
-        if (!"0".equals(brandId)) {
-            Intent brandStoreIntent = new Intent(activity, BrandStoreFontActivity.class);
-            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_ID, brandId);
-            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_NAME, brandName);
-            activity.startActivity(brandStoreIntent);
-            activity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-        } else {
-            Intent intent = new Intent(activity, HomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            activity.startActivity(intent);
-            activity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-            activity.finish();
-        }
-    }
+//    private void startBrandStoreActivity(Activity activity, String brandName, String brandId) {
+//        if (!"0".equals(brandId)) {
+//            Intent brandStoreIntent = new Intent(activity, BrandStoreFontActivity.class);
+//            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_ID, brandId);
+//            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_NAME, brandName);
+//            activity.startActivity(brandStoreIntent);
+//            activity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
+//        } else {
+//            Intent intent = new Intent(activity, HomeActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            activity.startActivity(intent);
+//            activity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
+//            activity.finish();
+//        }
+//    }
 
 }

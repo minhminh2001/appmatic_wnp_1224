@@ -74,7 +74,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
             case R.id.signin_home_RelativeLayout: {
                 Intent intent = new Intent(paymentStatusActivity, HomeActivity.class);
                 startActivity(intent);
-//                paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 paymentStatusActivity.finish();
                 break;
             }
@@ -94,7 +94,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                 bundle.putString("from_checkout_to_wishlist", "from_checkout_to_wishlist");
                 intent.putExtras(bundle);
                 startActivity(intent);
-//                paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 paymentStatusActivity.finish();
                 break;
             }
@@ -105,7 +105,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                     bundle.putString("from_checkout_to_wishlist", "from_checkout_to_wishlist");
                     intent.putExtras(bundle);
                     startActivity(intent);
-//                    paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                    paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 } else {
                     Intent intent = new Intent(paymentStatusActivity, LoginRegisterActivity.class);
                     startActivityForResult(intent, 1000);
@@ -120,7 +120,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                 bundle1.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_ORDER);
                 i.putExtras(bundle1);
                 startActivity(i);
-//                paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 paymentStatusActivity.finish();
                 break;
             }
@@ -130,7 +130,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                 bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_NOTIFICATION);
                 intent.putExtras(bundle);
                 startActivity(intent);
-//                paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 paymentStatusActivity.finish();
                 break;
             }
@@ -140,7 +140,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                 bundle2.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE,HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_ADDRESS);
                 intent2.putExtras(bundle2);
                 startActivity(intent2);
-//                paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 paymentStatusActivity.finish();
                 break;
             }
@@ -150,7 +150,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                 bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SETTING);
                 intent.putExtras(bundle);
                 startActivity(intent);
-//                paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 paymentStatusActivity.finish();
                 break;
             }
@@ -160,7 +160,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                 bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_HELPCENTER);
                 intent.putExtras(bundle);
                 startActivity(intent);
-//                paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 paymentStatusActivity.finish();
                 break;
             }
@@ -170,7 +170,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                 bundle.putString("ShoppingCart", "ShoppingCart");
                 intent.putExtras(bundle);
                 startActivity(intent);
-//                paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 paymentStatusActivity.finish();
                 break;
             case R.id.signin_category_RelativeLayout:
@@ -179,7 +179,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                 bundle_category_tree.putString("CategoryTree", "CategoryTree");
                 intent_category_tree.putExtras(bundle_category_tree);
                 startActivity(intent_category_tree);
-//                paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 paymentStatusActivity.finish();
                 break;
             case R.id.signin_customerService_RelativeLayout:
@@ -188,7 +188,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                 bundle1.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_HELPCENTERCUSTOMSERVICE);
                 intent1.putExtras(bundle1);
                 startActivity(intent1);
-//                paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 paymentStatusActivity.finish();
                 break;
              case R.id.signin_shippingReturns_RelativeLayout:
@@ -197,7 +197,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                  bundle2.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_HELPCENTERSHIPPINGDELIVERY);
                  intent2.putExtras(bundle2);
                  startActivity(intent2);
-//                 paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                 paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                  paymentStatusActivity.finish();
                 break;
             case R.id.signin_storeCredit_RelativeLayout:
@@ -206,7 +206,7 @@ public class SlingMenuPaymentFragment extends Fragment implements View.OnClickLi
                 storeCreditBundle.putString(HomeActivity.BUNDLE_START_FRAGMENT, HomeActivity.BUNDLE_FRAGMENT_STORECREDIT);
                 storeCreditIntent.putExtras(storeCreditBundle);
                 startActivity(storeCreditIntent);
-//                paymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                paymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 paymentStatusActivity.finish();
                 break;
         }

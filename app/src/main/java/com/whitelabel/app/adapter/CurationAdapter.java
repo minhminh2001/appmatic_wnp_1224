@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -152,8 +153,8 @@ public class CurationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_MAINCATEGOTY);
                             intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY);
                             intent.putExtra(ProductListActivity.INTENT_DATA_CATEGORYID, categoryentity);
-                            mContext.startActivity(intent);
-                            ((Activity) mContext).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                            ((BaseActivity) mContext).startActivity(intent);
+//                            ((Activity) mContext).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                             GaTrackHelper.getInstance().googleAnalytics(categoryentity.getName(), mContext);
                         } catch (Exception ex) {
                             ex.getStackTrace();

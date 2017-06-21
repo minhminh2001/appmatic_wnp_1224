@@ -59,7 +59,7 @@ public  class BaseActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         finish();
-        overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+        overridePendingTransition(R.anim.activity_transition_enter_lefttoright, R.anim.activity_transition_exit_lefttoright);
     }
 
     /**
@@ -72,8 +72,8 @@ public  class BaseActivity extends FragmentActivity {
             intent.putExtras(bundle);
         }
         startActivity(intent);
-        overridePendingTransition(R.anim.enter_righttoleft,
-                R.anim.exit_righttoleft);
+        overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+                R.anim.activity_transition_exit_righttoleft);
         if (finishFlag) {
             super.finish();
         }
@@ -89,7 +89,7 @@ public  class BaseActivity extends FragmentActivity {
             intent.putExtras(bundle);
         }
         startActivityForResult(intent, resquestCode);
-        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
     }
 
     public void BottomtoTopActivity(Bundle bundle, Class<?> pClass, boolean finishFlag) {

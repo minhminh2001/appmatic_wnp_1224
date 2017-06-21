@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.DrawerLayoutActivity;
 import com.whitelabel.app.activity.ProductListActivity;
@@ -169,7 +170,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
             //第三级bran选择的位置
             intent.putExtra("categoryId", entity.getId());
             getContext().startActivity(intent);
-            ((Activity) getContext()).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+            ((BaseActivity) getContext()).startActivityTransitionAnim();
         }
     };
 

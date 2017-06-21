@@ -1,6 +1,7 @@
 package com.whitelabel.app.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -140,14 +141,14 @@ public class BaseActivitySearchCart<T extends BasePresenter> extends com.whitela
         intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS);
         startActivityForResult(intent, REQUEST_SEARCH);
         //overridePendingTransition(R.anim.activity_anim1_enter1, R.anim.activity_anim1_exit1);
-        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
     }
 
     protected void launchShoppingCart() {
         Intent intent = new Intent(this, ShoppingCartActivity1.class);
         startActivityForResult(intent, REQUEST_SHOPPINGCART);
         //overridePendingTransition(R.anim.activity_anim1_enter1, R.anim.activity_anim1_exit1);
-        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
     }
 
 }

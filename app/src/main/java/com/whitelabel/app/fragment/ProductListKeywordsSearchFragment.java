@@ -29,7 +29,6 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListAdapter;
-import com.whitelabel.app.adapter.SearchSuggestionAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.FragmentOnAdapterCallBack;
 import com.whitelabel.app.callback.ProductListFilterHideCallBack;
@@ -44,7 +43,6 @@ import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.model.TMPProductListListPageEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.FilterSortHelper;
-import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -1003,8 +1001,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
                 filterSortDefault();
             } else if (ProductListActivity.TABBAR_INDEX_NONE == productListActivity.getCurrentFilterSortTabIndex()) {
                 if (ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_HOME == productListActivity.getPrevType()) {
-                    productListActivity.finish();
-                    productListActivity.overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+                    productListActivity.onBackPressed();
                 } else {
                     productListActivity.switchFragment(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, null);
                 }

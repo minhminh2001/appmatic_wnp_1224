@@ -260,8 +260,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     public void startHomeActivity() {
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         startActivity(intent);
-        getActivity().overridePendingTransition(R.anim.enter_righttoleft,
-                R.anim.exit_righttoleft);
+        ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
     public void startLoginActivity() {
         Intent loginIntent = new Intent(getActivity(), LoginRegisterActivity.class);
@@ -457,8 +456,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                     Intent it = new Intent(getActivity(), ProductActivity.class);
                     it.putExtra("productId", ((ShoppingCartListEntityCell) mProducts.get(i)).getProductId());
                     startActivity(it);
-                    getActivity().overridePendingTransition(R.anim.enter_righttoleft,
-                            R.anim.exit_righttoleft);
+                    ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 }
             } else {
 
@@ -530,12 +528,10 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         bundle.putInt("fromType", fromType);
         bundle.putString("grandTotal", tvGrandTotal.getText().toString());
         bundle.putLong("mGATrackTimeStart", mGATrackCheckoutTimeStart);
-
         Intent intent = new Intent(getActivity(), CheckoutActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
-        getActivity().overridePendingTransition(R.anim.enter_righttoleft,
-                R.anim.exit_righttoleft);
+        ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
 
     public final static class DataHandler extends Handler {

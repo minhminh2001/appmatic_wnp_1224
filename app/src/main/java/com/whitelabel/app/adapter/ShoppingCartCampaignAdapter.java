@@ -214,8 +214,7 @@ public class ShoppingCartCampaignAdapter extends BaseAdapter {
 //                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 //                activity.startActivity(intent);
                         mActivity.get().setResult(1000);
-                        mActivity.get().finish();
-                        mActivity.get().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+                        mActivity.get().onBackPressed();
                     } else {
 
                         mAdapter.get().flag = true;
@@ -275,7 +274,7 @@ public class ShoppingCartCampaignAdapter extends BaseAdapter {
 ////                activity.startActivity(intent);
 //                activity.setResult(1000);
 //                activity.finish();
-//                activity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                activity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //            }
 //
 //            @Override

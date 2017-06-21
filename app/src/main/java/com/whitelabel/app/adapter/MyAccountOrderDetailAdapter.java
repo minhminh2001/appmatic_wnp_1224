@@ -13,11 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.MyAccountOrderDetailActivity;
 import com.whitelabel.app.activity.ProductActivity;
-import com.whitelabel.app.activity.TrackingInfoActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.MyAccountOrderInner;
 import com.whitelabel.app.model.MyAccountOrderMiddle;
@@ -92,18 +92,18 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
                         if (("1").equals(visibility)) {
                             Intent it = new Intent(context, ProductActivity.class);
                             it.putExtra("productId", orderInner.getProductId());
-                            context.startActivity(it);
-                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft,
-                                    R.anim.exit_righttoleft);
+                            ((BaseActivity) context).startActivity(it);
+//                            ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+//                                    R.anim.activity_transition_exit_righttoleft);
                         }
                     } else {
                         Intent it = new Intent(context, ProductActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("productId", orderInner.getProductId());
                         it.putExtras(bundle);
-                        context.startActivity(it);
-                        ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft,
-                                R.anim.exit_righttoleft);
+                        ((BaseActivity) context).startActivity(it);
+//                        ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+//                                R.anim.activity_transition_exit_righttoleft);
 
                   }
                 }
@@ -136,7 +136,7 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
 //                        bundle.putString(TrackingInfoActivity.BUNDLE_URL, trackingInfo.getUrl());
 //                        intent.putExtras(bundle);
 //                        context.startActivity(intent);
-//                        ((Activity)context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                        ((Activity)context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //                    }
 //                });
 //            } else{
@@ -170,7 +170,7 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
 //                                bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, orderInner.getVendorDisplayName());
 //                                intent.putExtras(bundle);
 //                                context.startActivity(intent);
-//                                ((Activity)context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                                ((Activity)context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //                            }
 //                        });
 //                    }else{
@@ -179,7 +179,7 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
 //                            public void onClick(View v) {
 //                                Intent i = new Intent(context, HomeActivity.class);
 //                                context.startActivity(i);
-//                                ((Activity)context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                                ((Activity)context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //                            }
 //                        });
 //                    }
@@ -244,19 +244,19 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
 
         return convertView;
     }
-    private void startBrandStoreActivity(Activity activity,String brandName,String brandId){
-        if(!"0".equals(brandId)) {
-            Intent brandStoreIntent = new Intent(activity, BrandStoreFontActivity.class);
-            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_ID, brandId);
-            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_NAME, brandName);
-            activity.startActivity(brandStoreIntent);
-            activity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-        }else{
-            Intent intent=new Intent(activity, HomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            activity.startActivity(intent);
-            activity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-            activity.finish();
-        }
-    }
+//    private void startBrandStoreActivity(Activity activity,String brandName,String brandId){
+//        if(!"0".equals(brandId)) {
+//            Intent brandStoreIntent = new Intent(activity, BrandStoreFontActivity.class);
+//            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_ID, brandId);
+//            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_NAME, brandName);
+//            activity.startActivity(brandStoreIntent);
+//            activity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
+//        }else{
+//            Intent intent=new Intent(activity, HomeActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            activity.startActivity(intent);
+//            activity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
+//            activity.finish();
+//        }
+//    }
 }

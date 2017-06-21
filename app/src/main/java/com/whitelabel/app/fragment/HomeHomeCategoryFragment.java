@@ -22,7 +22,6 @@ import com.whitelabel.app.adapter.CurationAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.ZoomImageViewCallBack;
 import com.whitelabel.app.dao.ProductDao;
-import com.whitelabel.app.model.MarketingLayersEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceLandingPagesListLandingPageItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceLandingPagesListReturnEntity;
@@ -477,7 +476,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
                             intent.putExtra(CurationActivity.EXTRA_CATEGORY_NAME, categoryEntity.getName());
                         }
                         homeActivity.startActivity(intent);
-                        homeActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                        homeActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                         //跳转结束后记得将curationheading  复原
                         if (itemHolder.img != null) {
                             itemHolder.img.wait(new ZoomImageViewCallBack() {

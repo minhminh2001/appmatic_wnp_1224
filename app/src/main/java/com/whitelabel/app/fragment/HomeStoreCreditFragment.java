@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CreditInstructionActivity;
 import com.whitelabel.app.adapter.StoreCreditAdapter;
@@ -100,8 +101,7 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
                 Intent intent = new Intent(getActivity(), CreditInstructionActivity.class);
                 intent.putExtra("data", mBean.getCMScontent());
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.enter_righttoleft,
-                        R.anim.exit_righttoleft);
+                ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 break;
             case R.id.try_again:
                 mConnectionLayout.setVisibility(View.GONE);

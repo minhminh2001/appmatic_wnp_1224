@@ -15,6 +15,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -173,6 +175,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
                     bundle.putString("imageurl", productEntity.getSmallImage());
                     intent.putExtras(bundle);
                     startActivityForResult(intent,1000);
+                    ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 }
             });
             GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);

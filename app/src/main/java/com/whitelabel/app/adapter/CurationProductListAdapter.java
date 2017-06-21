@@ -239,7 +239,7 @@ public class CurationProductListAdapter extends BaseAdapter {
 //                                    bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, finalLeftProductEntity.getVendorDisplayName());
 //                                    intent.putExtras(bundle);
 //                                    curationActivity.startActivity(intent);
-//                                    curationActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                                    curationActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //                                }
 //                            });
 //                        } else {
@@ -248,7 +248,7 @@ public class CurationProductListAdapter extends BaseAdapter {
 //                                public void onClick(View v) {
 //                                    Intent i = new Intent(curationActivity, HomeActivity.class);
 //                                    curationActivity.startActivity(i);
-//                                    curationActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                                    curationActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //                                }
 //                            });
 //                        }
@@ -466,7 +466,7 @@ public class CurationProductListAdapter extends BaseAdapter {
 //                                    bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, finalRightProductEntity.getVendorDisplayName());
 //                                    intent.putExtras(bundle);
 //                                    curationActivity.startActivity(intent);
-//                                    curationActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                                    curationActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //                                }
 //                            });
 //                        } else {
@@ -475,7 +475,7 @@ public class CurationProductListAdapter extends BaseAdapter {
 //                                public void onClick(View v) {
 //                                    Intent i = new Intent(curationActivity, HomeActivity.class);
 //                                    curationActivity.startActivity(i);
-//                                    curationActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                                    curationActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //                                }
 //                            });
 //                        }
@@ -640,7 +640,7 @@ public class CurationProductListAdapter extends BaseAdapter {
     private void setBundleAndToPDP(Intent intent, Bundle bundle) {
         intent.putExtras(bundle);
         curationActivity.startActivityForResult(intent, CurationActivity.RESULT_WISH);
-        curationActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        curationActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
     }
 
 
@@ -775,7 +775,7 @@ public class CurationProductListAdapter extends BaseAdapter {
             Intent intent = new Intent();
             intent.setClass(curationActivity, LoginRegisterActivity.class);
             curationActivity.startActivityForResult(intent, LoginRegisterActivity.REQUESTCODE_LOGIN);
-            curationActivity.overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
+//            curationActivity.overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
         }
     }
 
@@ -850,12 +850,12 @@ public class CurationProductListAdapter extends BaseAdapter {
             brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_ID, brandId);
             brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_NAME, brandName);
             curationActivity.startActivity(brandStoreIntent);
-            curationActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//            curationActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         } else {
             Intent intent = new Intent(curationActivity, HomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             curationActivity.startActivity(intent);
-            curationActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//            curationActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
             curationActivity.finish();
         }
     }

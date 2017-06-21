@@ -813,8 +813,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
             intent.putExtras(bundle);
         }
         startActivityForResult(intent, 110);
-        loginRegisterActivity.overridePendingTransition(R.anim.enter_righttoleft,
-                R.anim.exit_righttoleft);
+        loginRegisterActivity.startActivityTransitionAnim();
         if (finishFlag) {
             loginRegisterActivity.finish();
         }

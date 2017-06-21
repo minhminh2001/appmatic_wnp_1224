@@ -9,7 +9,6 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
 import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 
 /**
@@ -46,7 +45,7 @@ public class ShoppingCartActivity1 extends com.whitelabel.app.BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+        super.startActivityTransitionAnim();
         if (fragment != null) {
             fragment.refresh();
         }
@@ -64,9 +63,6 @@ public class ShoppingCartActivity1 extends com.whitelabel.app.BaseActivity {
     }
 
 
-    public void onBackPressed() {
-        finish();
-        overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
-    }
+
 
 }

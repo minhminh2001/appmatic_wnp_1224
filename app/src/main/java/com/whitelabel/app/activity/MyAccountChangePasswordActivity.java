@@ -94,12 +94,6 @@ public class MyAccountChangePasswordActivity extends com.whitelabel.app.BaseActi
         });
     }
 
-
-
-    public void onBackPressed() {
-        finish();
-        overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
-    }
     private void initToolbar() {
         setTitle(getResources().getString(R.string.change_password));
         setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.ic_action_back));

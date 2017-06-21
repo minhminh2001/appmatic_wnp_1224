@@ -390,8 +390,7 @@ public class BrandStoreFontActivity extends BaseActivitySearchCart<BrandStoreCon
             filterSortHelper.hideVisibleFragments();
             resetCurrentFilterSortTabIndex();
         } else {
-            finish();
-            overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+           super.onBackPressed();
         }
     }
 

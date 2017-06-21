@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
@@ -386,8 +387,9 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                             bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, merchantId);
                             bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, merchantName);
                             intent.putExtras(bundle);
-                            ctvLeftCurationProductMerchant.getContext().startActivity(intent);
-                            ((Activity) ctvLeftCurationProductMerchant.getContext()).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                            ((BaseActivity)ctvLeftCurationProductMerchant.getContext()).startActivity(intent);
+//                            ((BaseActivity)getActivity()).startActivityTransitionAnim();
+//                            ((Activity) ctvLeftCurationProductMerchant.getContext()).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                         }
                     });
                 } else {
@@ -395,8 +397,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                         @Override
                         public void onClick(View v) {
                             Intent i = new Intent(ctvLeftCurationProductMerchant.getContext(), HomeActivity.class);
-                            ctvLeftCurationProductMerchant.getContext().startActivity(i);
-                            ((Activity) ctvLeftCurationProductMerchant.getContext()).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                            ((BaseActivity)ctvLeftCurationProductMerchant.getContext()).startActivity(i);
                         }
                     });
                 }

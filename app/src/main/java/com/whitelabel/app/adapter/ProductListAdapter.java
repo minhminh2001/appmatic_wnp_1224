@@ -202,7 +202,7 @@ public class ProductListAdapter extends BaseAdapter {
                             bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, finalLeftProductEntity.getVendorDisplayName());
                             intent.putExtras(bundle);
                             productListActivity.startActivity(intent);
-                            productListActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            productListActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                         }
                     });
                 }else{
@@ -211,7 +211,7 @@ public class ProductListAdapter extends BaseAdapter {
                         public void onClick(View v) {
                             Intent i = new Intent(productListActivity, HomeActivity.class);
                             productListActivity.startActivity(i);
-                            productListActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            productListActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                         }
                     });
                 }
@@ -298,7 +298,7 @@ public class ProductListAdapter extends BaseAdapter {
             viewHolder.ctvLeftProductBrand.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startBrandStoreActivity((Activity) view.getContext(), leftProductEntity.getBrand(), leftProductEntity.getBrandId());
+//                    startBrandStoreActivity((Activity) view.getContext(), leftProductEntity.getBrand(), leftProductEntity.getBrandId());
                 }
             });
         }
@@ -422,7 +422,7 @@ public class ProductListAdapter extends BaseAdapter {
                             bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, finalRightProductEntity.getVendorDisplayName());
                             intent.putExtras(bundle);
                             productListActivity.startActivity(intent);
-                            productListActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            productListActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                         }
                     });
                 }else{
@@ -431,7 +431,7 @@ public class ProductListAdapter extends BaseAdapter {
                         public void onClick(View v) {
                             Intent i = new Intent(productListActivity, HomeActivity.class);
                             productListActivity.startActivity(i);
-                            productListActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            productListActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                         }
                     });
                 }
@@ -469,7 +469,7 @@ public class ProductListAdapter extends BaseAdapter {
             viewHolder.ctvRightProductBrand.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startBrandStoreActivity((Activity) view.getContext(), rightProductEntity.getBrand(), rightProductEntity.getBrandId());
+//                    startBrandStoreActivity((Activity) view.getContext(), rightProductEntity.getBrand(), rightProductEntity.getBrandId());
                 }
             });
         }
@@ -586,7 +586,7 @@ public class ProductListAdapter extends BaseAdapter {
     private void setBundleAndToPDP(Intent intent, Bundle bundle) {
         intent.putExtras(bundle);
         fragmentOnAdapterCallBack.startActivityForResultCallBack(intent, productListActivity.RESULT_WISH);
-        this.productListActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+        this.productListActivity.startActivityTransitionAnim();
     }
 
     public class ViewHolder {
@@ -766,19 +766,19 @@ public class ProductListAdapter extends BaseAdapter {
             }
         }
     }
-    private void startBrandStoreActivity(Activity activity, String brandName, String brandId){
-        if(!"0".equals(brandId)) {
-            Intent brandStoreIntent = new Intent(activity, BrandStoreFontActivity.class);
-            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_ID, brandId);
-            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_NAME, brandName);
-            activity.startActivity(brandStoreIntent);
-            activity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-        }else{
-            Intent intent=new Intent(activity, HomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            activity.startActivity(intent);
-            activity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-            activity.finish();
-        }
-    }
+//    private void startBrandStoreActivity(Activity activity, String brandName, String brandId){
+//        if(!"0".equals(brandId)) {
+//            Intent brandStoreIntent = new Intent(activity, BrandStoreFontActivity.class);
+//            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_ID, brandId);
+//            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_NAME, brandName);
+//            activity.startActivity(brandStoreIntent);
+//            activity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
+//        }else{
+//            Intent intent=new Intent(activity, HomeActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            activity.startActivity(intent);
+//            activity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
+//            activity.finish();
+//        }
+//    }
 }

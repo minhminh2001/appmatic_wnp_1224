@@ -245,8 +245,6 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.putExtras(bundle);
                             startActivity(intent);
-                            overridePendingTransition(R.anim.enter_righttoleft,
-                                    R.anim.exit_righttoleft);
                             finish();
                         } else {//2级菜单
                             Intent intent = new Intent();
@@ -256,15 +254,14 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
                             intent.putExtra(ProductListActivity.INTENT_DATA_CATEGORYID, mBean.getCategory().getAndroidTree());
                             intent.putExtra("categoryId", mBean.getCategory().getThirdCategory());
                             NotificationDetailActivity.this.startActivity(intent);
-                            NotificationDetailActivity.this.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                            NotificationDetailActivity.this.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                         }
                     } else if (mBean.getInternal_type() == 2) {
                         if ("0".equals(mBean.getActive())) {
                             Intent intent = new Intent(NotificationDetailActivity.this, HomeActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
-                            overridePendingTransition(R.anim.enter_righttoleft,
-                                    R.anim.exit_righttoleft);
+
                             finish();
                         } else {
                             Intent intent = new Intent(NotificationDetailActivity.this, CurationActivity.class);
@@ -276,15 +273,13 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
                             Intent intent = new Intent(NotificationDetailActivity.this, HomeActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
-                            overridePendingTransition(R.anim.enter_righttoleft,
-                                    R.anim.exit_righttoleft);
+                            overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+                                    R.anim.activity_transition_exit_righttoleft);
                             finish();
                         } else {
                             Intent it = new Intent(NotificationDetailActivity.this, ProductActivity.class);
                             it.putExtra("productId", mBean.getProductId());
                             startActivity(it);
-                            overridePendingTransition(R.anim.enter_righttoleft,
-                                    R.anim.exit_righttoleft);
                         }
                     }
                 } else if (mBean != null) {

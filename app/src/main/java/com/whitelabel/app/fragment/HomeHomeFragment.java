@@ -113,9 +113,10 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
                 intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_HOME);
                 intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS);
                 homeActivity.startActivity(intent);
-                homeActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                homeActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
             }
         });
+
 
         inflater.inflate(R.menu.menu_home, menu);
         MenuItem cartItem = menu.findItem(R.id.action_shopping_cart);

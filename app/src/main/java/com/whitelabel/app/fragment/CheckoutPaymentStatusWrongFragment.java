@@ -23,7 +23,6 @@ import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.dao.ShoppingCarDao;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -163,14 +162,14 @@ public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
                 bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                getActivity(). overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+                checkoutPaymentStatusActivity.startActivityTransitionAnim();
                 getActivity().finish();
             } else {
                 Intent intent = new Intent(checkoutPaymentStatusActivity, ShoppingCartActivity1.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.enter_lefttoright,
-                        R.anim.exit_lefttoright);
+                getActivity().overridePendingTransition(R.anim.activity_transition_enter_lefttoright,
+                        R.anim.activity_transition_exit_lefttoright);
                 getActivity().finish();
             }
 

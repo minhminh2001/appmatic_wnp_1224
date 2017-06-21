@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.activity.EditAddressActivity;
@@ -230,8 +232,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
                         Intent intent = new Intent(getActivity(), EditAddressActivity.class);
                         intent.putExtras(bundle);
                         getParentFragment().startActivityForResult(intent, 2000);
-                        getActivity().overridePendingTransition(R.anim.enter_righttoleft,
-                                R.anim.exit_righttoleft);
+                        ((BaseActivity)getActivity()).startActivityTransitionAnim();
                         break;
                     case 1:
                         sendRequestToDeteleteCell(addressBook.getAddressId());
@@ -328,8 +329,7 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
                     intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT,false);
                 }
                 getParentFragment().startActivityForResult(intent, 2000);
-                getActivity().overridePendingTransition(
-                        R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 break;
             case R.id.try_again:
                 connectionLayout.setVisibility(View.GONE);

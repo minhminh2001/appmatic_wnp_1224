@@ -18,7 +18,6 @@ import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEn
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomTextView;
 import java.util.ArrayList;
@@ -91,7 +90,7 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
         intent.setClass(this, ShoppingCartActivity1.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
-        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
     }
     @Override
     public void showNetworkErrorView(String errorMsg) {
@@ -102,7 +101,6 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
     public BindProductContract.Presenter getPresenter() {
         return new BindProductPresenterImpl();
     }
-
     public void setAddToCartButtonEnable(boolean  enable){
         if(enable){
             tvAddToCart.setEnabled(true);

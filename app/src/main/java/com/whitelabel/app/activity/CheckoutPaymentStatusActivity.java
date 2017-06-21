@@ -82,7 +82,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
     protected void jumpHomePage() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
-//        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -98,7 +98,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_CATEGORYTREE);
         intent.putExtras(bundle);
         startActivity(intent);
-//        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -109,7 +109,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
         intent.putExtras(bundle);
         startActivity(intent);
-//        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -120,7 +120,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_NOTIFICATION);
         intent.putExtras(bundle);
         startActivity(intent);
-//        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -131,7 +131,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_WISHLIST);
         intent.putExtras(bundle);
         startActivity(intent);
-//        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -142,7 +142,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle1.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_ORDER);
         i.putExtras(bundle1);
         startActivity(i);
-//        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -153,7 +153,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SETTING);
         intent.putExtras(bundle);
         startActivity(intent);
-//        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -164,7 +164,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_EDITPROFILE);
         intent.putExtras(bundle);
         startActivity(intent);
-//        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -175,7 +175,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle1.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_HELPCENTERCUSTOMSERVICE);
         intent1.putExtras(bundle1);
         startActivity(intent1);
-//        this.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        this.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         this.finish();
     }
 
@@ -186,7 +186,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_HELPCENTER);
         intent.putExtras(bundle);
         startActivity(intent);
-        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -197,7 +197,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle2.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_HELPCENTERSHIPPINGDELIVERY);
         intent2.putExtras(bundle2);
         startActivity(intent2);
-        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -208,7 +208,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle2.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_ADDRESS);
         intent2.putExtras(bundle2);
         startActivity(intent2);
-        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -219,7 +219,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         storeCreditBundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_STORECREDIT);
         storeCreditIntent.putExtras(storeCreditBundle);
         startActivity(storeCreditIntent);
-        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -282,8 +282,8 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
             //clear top
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-            overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
             finish();
+//            overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 
             return true;
         }

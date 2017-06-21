@@ -253,7 +253,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
 //                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, sc.getVendorDisplayName());
 //                            intent.putExtras(bundle);
 //                            context.startActivity(intent);
-//                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //                        }
 //                    });
 //                } else {
@@ -262,7 +262,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
 //                        public void onClick(View v) {
 //                            Intent i = new Intent(context, HomeActivity.class);
 //                            context.startActivity(i);
-//                            ((Activity) context).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
 //                        }
 //                    });
 //                   }
@@ -815,20 +815,20 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         mShoppingCartDao.requestChangeCount(WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), cellId, newCount + "", bean);
 
     }
-    private void startBrandStoreActivity(Activity activity,String brandName,String brandId){
-        if(!"0".equals(brandId)) {
-            Intent brandStoreIntent = new Intent(activity, BrandStoreFontActivity.class);
-            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_ID, brandId);
-            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_NAME, brandName);
-            activity.startActivity(brandStoreIntent);
-            activity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-        }else{
-            Intent intent=new Intent(activity, HomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            activity.startActivity(intent);
-            activity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
-        }
-    }
+//    private void startBrandStoreActivity(Activity activity,String brandName,String brandId){
+//        if(!"0".equals(brandId)) {
+//            Intent brandStoreIntent = new Intent(activity, BrandStoreFontActivity.class);
+//            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_ID, brandId);
+//            brandStoreIntent.putExtra(BrandStoreFontActivity.EXTRA_BRAND_NAME, brandName);
+//            activity.startActivity(brandStoreIntent);
+//            activity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
+//        }else{
+//            Intent intent=new Intent(activity, HomeActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            activity.startActivity(intent);
+//            activity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
+//        }
+//    }
     private void sendRequestToDeteleteCell(final int position, String itemId) {
         mDialog = JViewUtils.showProgressDialog(context);
         mShoppingCartDao.deleteProductFromShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), itemId, position + "");

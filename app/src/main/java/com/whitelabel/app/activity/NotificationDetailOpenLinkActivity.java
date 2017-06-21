@@ -61,8 +61,7 @@ public class NotificationDetailOpenLinkActivity extends BaseActivity implements 
         int id=v.getId();
         switch (id){
             case R.id.ivHeaderBarMenu:
-                finish();
-                overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+                onBackPressed();
                 break;
         }
 

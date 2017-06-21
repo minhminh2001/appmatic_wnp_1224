@@ -42,6 +42,9 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     protected T mPresenter;
     private TextView tvTitleNum, tvTitle;
     private ImageView ivTitle;
+    public void transitionOnBackPressed() {
+        super.onBackPressed();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +56,12 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavigation_bar_background_color());
-
         }
         currTag = this.getClass().getSimpleName();
         isActivityFinished = false;
     }
+
+
 
     public void setStatusBarColor(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -87,16 +91,12 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             mDialog.dismiss();
         }
     }
-
     public void setToolBarColor(int colorId) {
         getToolbar().setBackgroundColor(JToolUtils.getColor(colorId));
     }
-
     public T getPresenter() {
         return null;
     }
-
-
     public void setTitleNum(int num) {
         tvTitleNum.setBackground(JImageUtils.getThemeCircle(this));
         if (num > 0) {
@@ -232,31 +232,46 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     @Override
     public void onBackPressed() {
         finish();
-        overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+        overridePendingTransition(R.anim.activity_transition_v2_enter_lefttoright, R.anim.activity_transition_v2_exit_lefttoright);
     }
-    public void transitionOnBackPressed() {
-        super.onBackPressed();
-    }
+
     public void startNextActivity(Bundle bundle, Class<?> pClass, boolean finishFlag) {
         Intent intent = new Intent(this, pClass);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
         startActivity(intent);
-        overridePendingTransition(R.anim.enter_righttoleft,
-                R.anim.exit_righttoleft);
+        startActivityTransitionAnim();
         if (finishFlag) {
             super.finish();
         }
     }
+
+    public    void   startActivityTransitionAnim(){
+        overridePendingTransition(R.anim.activity_transition_v2_enter_righttoleft,
+                R.anim.activity_transition_v2_exit_righttoleft);
+    }
+
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
+        startActivityTransitionAnim();
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        startActivityTransitionAnim();
+    }
+
     public void startNextActivityForResult(Bundle bundle, Class<?> pClass, int requestCode, boolean finishFlag) {
         Intent intent = new Intent(this, pClass);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
         startActivityForResult(intent, requestCode);
-        overridePendingTransition(R.anim.enter_righttoleft,
-                R.anim.exit_righttoleft);
+        startActivityTransitionAnim();
         if (finishFlag) {
             super.finish();
         }
@@ -266,7 +281,6 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         super.onStart();
         isActivityInvisible = false;
     }
-
     @Override
     protected void onStop() {
         super.onStop();

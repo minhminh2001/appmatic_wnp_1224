@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.BaseFragment;
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -214,7 +216,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             case R.id.tv_shipping_address_change:
                 Intent intent=new Intent(getActivity(),CheckoutSelectAddressActivity.class);
                 startActivityForResult(intent,REQUEST_SHIPPING_ADDRESS);
-                getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+                ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 break;
             case R.id.ll_checkbox:
                 cbBillAddress.setChecked(!cbBillAddress.isChecked(),true);
@@ -222,7 +224,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             case R.id.tv_billing_address_change:
                 Intent billingIntent=new Intent(getActivity(),CheckoutSelectAddressActivity.class);
                 startActivityForResult(billingIntent,REQUEST_BILLING_ADDRESS);
-                getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+                ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 break;
         }
     }

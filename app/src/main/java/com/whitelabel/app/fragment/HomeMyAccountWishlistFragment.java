@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -17,6 +16,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.adapter.MyAccountWishlistAdapter;
@@ -45,7 +45,7 @@ import java.util.List;
  */
 
 public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements View.OnClickListener, MyAccountFragmentRefresh, SwipeRefreshLayout.OnRefreshListener {
-    private Activity homeActivity;
+    private BaseActivity homeActivity;
     private SwipeMenuListView smlvWishListView;
     private MyAccountWishlistAdapter adapter;
     private View nogoods;
@@ -97,7 +97,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            homeActivity = activity;
+            homeActivity = (BaseActivity) activity;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -303,8 +303,8 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
                     Intent it = new Intent(getActivity(), ProductActivity.class);
                     it.putExtra("productId", list.get(position).getProductId());
                     homeActivity.startActivity(it);
-                    homeActivity.overridePendingTransition(R.anim.enter_righttoleft,
-                            R.anim.exit_righttoleft);
+//                    homeActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+//                            R.anim.activity_transition_exit_righttoleft);
                 }
             }
         });

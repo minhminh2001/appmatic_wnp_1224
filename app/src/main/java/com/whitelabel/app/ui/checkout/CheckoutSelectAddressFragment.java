@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.activity.EditAddressActivity;
@@ -38,7 +39,7 @@ public class CheckoutSelectAddressFragment extends BaseAddressFragment {
         Intent intent=new Intent(getActivity(), AddAddressActivity.class);
         intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT,false);
         startActivityForResult(intent,REQUEST_ADD_ADDRESS);
-        getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+        ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
 
     @Override
@@ -53,8 +54,9 @@ public class CheckoutSelectAddressFragment extends BaseAddressFragment {
         } else {
             startActivityForResult(intent, REQUEST_EDIT_ADDRESS);
         }
-        getActivity().overridePendingTransition(R.anim.enter_righttoleft,
-                R.anim.exit_righttoleft);
+        ((BaseActivity)getActivity()).startActivityTransitionAnim();
+//        getActivity().overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+//                R.anim.activity_transition_exit_righttoleft);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -3,6 +3,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.activity.EditAddressActivity;
@@ -60,15 +62,13 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
         Bundle bundle = new Bundle();
         bundle.putSerializable("bean", getAdapter().getData().get(postion));
         Intent intent = new Intent(getActivity(), EditAddressActivity.class);
-
         intent.putExtras(bundle);
         if (getParentFragment() != null) {
             getParentFragment().startActivityForResult(intent, REQUEST_EDIT_ADDRESS);
         } else {
             startActivityForResult(intent, REQUEST_EDIT_ADDRESS);
         }
-        getActivity().overridePendingTransition(R.anim.enter_righttoleft,
-                R.anim.exit_righttoleft);
+        ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
     @Override
     public List<Integer> getDeleteFuntionPostions() {
@@ -90,7 +90,7 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
         Intent intent=new Intent(getActivity(), AddAddressActivity.class);
         intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT,true);
         getParentFragment().startActivityForResult(intent,REQUEST_ADD_ADDRESS);
-        getActivity().overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+        ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
 
     @Override

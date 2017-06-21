@@ -417,15 +417,15 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
                 bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                checkoutPaymentStatusActivity.startActivityTransitionAnim();
                 getActivity().finish();
             } else {
                 Intent intent = new Intent(checkoutPaymentStatusActivity, ShoppingCartActivity1.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
-            getActivity().overridePendingTransition(R.anim.enter_lefttoright,
-                    R.anim.exit_lefttoright);
+            getActivity().overridePendingTransition(R.anim.activity_transition_enter_lefttoright,
+                    R.anim.activity_transition_exit_lefttoright);
         }
     }
     @Override
@@ -454,8 +454,8 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
 //                //clear top
 //                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                startActivity(intent);
-//                checkoutPaymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft,
-//                        R.anim.exit_righttoleft);
+//                checkoutPaymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+//                        R.anim.activity_transition_exit_righttoleft);
 //                checkoutPaymentStatusActivity.finish();
             }
         });
@@ -491,8 +491,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
                 //checkoutPaymentStatusActivity.startNextActivity(null, HomeActivity.class, true);
                 Intent intent = new Intent(checkoutPaymentStatusActivity, HomeActivity.class);
                 startActivity(intent);
-                checkoutPaymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft,
-                        R.anim.exit_righttoleft);
+                checkoutPaymentStatusActivity.startActivityTransitionAnim();
                 checkoutPaymentStatusActivity.finish();
             }
         });
@@ -604,8 +603,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
                 Intent intent = new Intent(checkoutPaymentStatusActivity, HomeActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                checkoutPaymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft,
-                        R.anim.exit_righttoleft);
+                checkoutPaymentStatusActivity.startActivityTransitionAnim();
                 checkoutPaymentStatusActivity.finish();
             }
         });
@@ -948,13 +946,13 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
                 case R.id.tv_checkout_payment_status_right_continueshopping3:
                     Intent intent2 = new Intent(checkoutPaymentStatusActivity, HomeActivity.class);
                     startActivity(intent2);
-                    checkoutPaymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                    checkoutPaymentStatusActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                     checkoutPaymentStatusActivity.finish();
                     break;
                 case R.id.tv_checkout_payment_status_right_continueshopping4:
                     Intent intent4 = new Intent(checkoutPaymentStatusActivity, HomeActivity.class);
                     startActivity(intent4);
-                    checkoutPaymentStatusActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                     checkoutPaymentStatusActivity.startActivityTransitionAnim();
                     checkoutPaymentStatusActivity.finish();
                     break;
             }

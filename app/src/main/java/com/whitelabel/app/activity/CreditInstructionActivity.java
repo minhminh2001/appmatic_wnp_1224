@@ -32,10 +32,7 @@ public class CreditInstructionActivity extends com.whitelabel.app.BaseActivity i
             }
         });
     }
-    public void onBackPressed() {
-        finish();
-        overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
-    }
+
     @Override
     public void onClick(View view) {
 //        int id=view.getId();
@@ -62,8 +59,8 @@ public class CreditInstructionActivity extends com.whitelabel.app.BaseActivity i
                 Intent intent=new Intent(CreditInstructionActivity.this,RegisterToHelpCenter.class);
                 intent.putExtra("helpCenter", 8);
                 startActivity(intent);
-                overridePendingTransition(R.anim.enter_righttoleft,
-                        R.anim.exit_righttoleft);
+//                overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+//                        R.anim.activity_transition_exit_righttoleft);
                 return true;
             }
         });

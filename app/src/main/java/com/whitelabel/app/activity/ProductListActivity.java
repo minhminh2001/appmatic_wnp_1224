@@ -300,9 +300,9 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
                 }
 
                 if (TYPE_FRAGMENT_SWITCH_RIGHT2LEFT == type) {
-                    mFragmentTransaction.setCustomAnimations(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                    mFragmentTransaction.setCustomAnimations(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 } else if (TYPE_FRAGMENT_SWITCH_LEFT2RIGHT == type) {
-                    mFragmentTransaction.setCustomAnimations(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+                    mFragmentTransaction.setCustomAnimations(R.anim.activity_transition_enter_lefttoright, R.anim.activity_transition_exit_lefttoright);
                 }
 
                 mFragmentTransaction.replace(FRAGMENT_CONTAINER_ID, subFragment);

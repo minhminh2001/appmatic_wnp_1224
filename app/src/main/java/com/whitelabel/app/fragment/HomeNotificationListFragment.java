@@ -128,8 +128,8 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
                     bundle.putSerializable("data", list.get(position - 1));
                     intent.putExtras(bundle);
                     startActivityForResult(intent, 100);
-                    homeActivity.overridePendingTransition(R.anim.enter_righttoleft,
-                            R.anim.exit_righttoleft);
+//                    homeActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+//                            R.anim.activity_transition_exit_righttoleft);
                 }
             }
         });

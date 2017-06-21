@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ProductListActivity;
@@ -95,8 +96,8 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeCont
                 intent.setClass(getActivity(), ProductListActivity.class);
                 intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_HOME);
                 intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS);
-                getActivity().startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                ((BaseActivity)getActivity()).startActivity(intent);
+//                getActivity().overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
             }
         });
         inflater.inflate(R.menu.menu_home, menu);
@@ -188,8 +189,8 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeCont
                 }
             }
             intent.putExtra("categoryId", entity.getId());
-            getContext().startActivity(intent);
-            ((Activity) getContext()).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+            ((BaseActivity)getActivity()).startActivity(intent);
+//            ((Activity) getActivity()).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         }
     };
 }

@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.MyAccountOrderDetailActivity;
 import com.whitelabel.app.adapter.OrderListRecyclerViewAdapter;
@@ -35,7 +37,7 @@ import java.util.List;
  * Created by imaginato on 2015/7/28.
  */
 public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements View.OnClickListener, MyAccountFragmentRefresh, SwipeRefreshLayout.OnRefreshListener {
-    private Activity homeActivity;
+    private BaseActivity homeActivity;
     private Handler mHandler = new Handler();
     private static final int pageSize = 10;
     private int pageIndex = 1;
@@ -60,7 +62,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            homeActivity = activity;
+            homeActivity = (BaseActivity) activity;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -165,7 +167,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                 Intent intent0 = new Intent(homeActivity, MyAccountOrderDetailActivity.class);
                 intent0.putExtras(bundle);
                 homeActivity.startActivity(intent0);
-                homeActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                homeActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
             }
         });
     }

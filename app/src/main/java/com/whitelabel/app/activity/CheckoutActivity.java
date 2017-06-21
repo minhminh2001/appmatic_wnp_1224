@@ -1381,8 +1381,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         Intent intent = new Intent(CheckoutActivity.this, ShoppingCartActivity1.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
         finish();
+//        overridePendingTransition(R.anim.activity_transition_enter_lefttoright, R.anim.activity_transition_exit_lefttoright);
+
     }
 
     public void saveShoppingCartCount(int num) {

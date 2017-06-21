@@ -12,7 +12,6 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomWebView;
@@ -48,11 +47,14 @@ public class BankTransaferSuccessActivity extends com.whitelabel.app.BaseActivit
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BankTransaferSuccessActivity.this, HomeActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.enter_righttoleft,
-                        R.anim.exit_righttoleft);
-                finish();
+//                Intent intent = new Intent(BankTransaferSuccessActivity.this, HomeActivity.class);
+//                startActivity(intent);
+//                overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+//                        R.anim.activity_transition_exit_righttoleft);
+//                finish();
+                startNextActivity(null,HomeActivity.class,true);
+
+
             }
         });
     }

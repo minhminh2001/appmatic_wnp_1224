@@ -110,7 +110,7 @@ public class HideFunctionLoginActivity extends com.whitelabel.app.BaseActivity i
                 userName.setText("");
                 password.setText("");
                 this.finish();
-//                overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+//                overridePendingTransition(R.anim.activity_transition_enter_lefttoright, R.anim.activity_transition_exit_lefttoright);
 
                 break;
             case R.id.okay:

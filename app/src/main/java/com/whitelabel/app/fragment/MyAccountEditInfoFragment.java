@@ -34,6 +34,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.MyAccountActivity;
@@ -687,7 +689,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             case R.id.changePassword:
                 Intent intent = new Intent(getActivity(), MyAccountChangePasswordActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 break;
             case R.id.et_account_country:
                 wheelPickerCountry();

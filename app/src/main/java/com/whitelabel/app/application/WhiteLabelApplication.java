@@ -81,7 +81,6 @@ public class WhiteLabelApplication extends MultiDexApplication {
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(getApplicationContext());
     }
-
     public  GoogleAnalytics getAnalyticInstance() {
         if (analytics == null) {
             analytics = GoogleAnalytics.getInstance(this);

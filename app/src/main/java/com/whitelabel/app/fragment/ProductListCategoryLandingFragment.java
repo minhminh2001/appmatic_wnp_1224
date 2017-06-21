@@ -132,7 +132,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         if (productListActivity != null) {
             Intent intent = new Intent(productListActivity, ShoppingCartActivity1.class);
             startActivity(intent);
-            productListActivity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+            productListActivity.startActivityTransitionAnim();
         }
     }
     @Override
@@ -413,8 +413,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             if (filterSortHelper.isAnyActive()) {
                 filterSortDefault();
             } else {
-                productListActivity.finish();
-                productListActivity.overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+                productListActivity.onBackPressed();
             }
         }
     }

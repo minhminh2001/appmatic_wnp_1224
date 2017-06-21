@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.activity.BaseActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.adapter.FlowViewAdapter;
@@ -285,8 +286,8 @@ public class BrandStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, merchantId);
                             bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, merchantName);
                             intent.putExtras(bundle);
-                            ctvLeftCurationProductMerchant.getContext().startActivity(intent);
-                            ((Activity) ctvLeftCurationProductMerchant.getContext()).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                            ((com.whitelabel.app.BaseActivity) ctvLeftCurationProductMerchant.getContext()).startActivity(intent);
+//                            ((BaseActivity) ctvLeftCurationProductMerchant.getContext()).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                         }
                     });
                 } else {
@@ -294,8 +295,7 @@ public class BrandStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         @Override
                         public void onClick(View v) {
                             Intent i = new Intent(ctvLeftCurationProductMerchant.getContext(), HomeActivity.class);
-                            ctvLeftCurationProductMerchant.getContext().startActivity(i);
-                            ((Activity) ctvLeftCurationProductMerchant.getContext()).overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                            ((com.whitelabel.app.BaseActivity) ctvLeftCurationProductMerchant.getContext()).startActivity(i);
                         }
                     });
                 }

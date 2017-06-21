@@ -14,7 +14,6 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -31,7 +30,6 @@ import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
 import com.whitelabel.app.model.TMPHelpCenterListToDetailEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
-import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.FragmentFactory;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
@@ -434,7 +432,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             Fragment subFragment = mAttachedFragmentList.get(to);
             JLogUtils.i(currTag, "subFragment:::" + subFragment);
             if (type == TYPE_FRAGMENT_SWITCH) {
-                mFragmentTransaction.setCustomAnimations(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
+                mFragmentTransaction.setCustomAnimations(R.anim.activity_transition_enter_lefttoright, R.anim.activity_transition_exit_lefttoright);
             }
             if ((subFragment != null) && (mCurrentFragment != null) && (subFragment.getClass().equals(mCurrentFragment.getClass()))) {
                 if (serializable != null) {
@@ -462,7 +460,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
                         subFragment.getArguments().putAll(bundle);
                     }
                     if (type == 1) {
-                        mFragmentTransaction.setCustomAnimations(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+                        mFragmentTransaction.setCustomAnimations(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                         mCanback = false;
                         mHandler.postDelayed(new BackRunnble(this), 500);
                     }

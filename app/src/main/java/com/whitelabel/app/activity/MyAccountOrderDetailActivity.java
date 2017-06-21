@@ -33,8 +33,6 @@ import com.whitelabel.app.model.MyAccountOrderDetailEntityResult;
 import com.whitelabel.app.model.MyAccountOrderMiddle;
 import com.whitelabel.app.model.MyAccountOrderOuter;
 import com.whitelabel.app.model.RepaymentInfoModel;
-import com.whitelabel.app.model.SVRAppserviceSaveBillingEntity;
-import com.whitelabel.app.model.ShippingAddress;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.FileUtils;
@@ -283,8 +281,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                     intent.putExtras(bundle);
                     int REQUESTCODE_TRANSAFER = 2000;
                     startActivityForResult(intent, REQUESTCODE_TRANSAFER);
-                    overridePendingTransition(R.anim.enter_righttoleft,
-                            R.anim.exit_righttoleft);
                 }
                 break;
 

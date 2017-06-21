@@ -256,7 +256,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                         bundle.putLong("mGATrackTimeStart", mActivity.get().mGATrackAddCartTimeStart);
                         intent.putExtras(bundle);
                         activity.startActivityForResult(intent, activity.REQUEST_SHOPPINGCART);
-                        activity.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                        activity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                     } else {
                         if (activity.mDialog != null) {
                             activity.mDialog.dismiss();
@@ -700,7 +700,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         Intent intent = new Intent(ProductActivity.this, ShoppingCartActivity1.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityForResult(intent, REQUEST_SHOPPINGCART);
-        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
     }
 
     @Override
@@ -869,7 +869,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             if (ivProductImage.getDrawable() == null) {
-                finishActivity();
+            super.onBackPressed();
             } else {
                 ivProductImage.setVisibility(View.VISIBLE);
                 viewPager.setVisibility(View.GONE);
@@ -877,13 +877,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 transitionOnBackPressed();
             }
         } else {
-            finishActivity();
+            super.onBackPressed();
         }
-    }
-
-    void finishActivity() {
-        finish();
-        overridePendingTransition(R.anim.enter_lefttoright, R.anim.exit_lefttoright);
     }
     @Override
     public void onClick(View v) {
@@ -966,7 +961,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             case R.id.ll_cash:
                 Intent intent = new Intent(ProductActivity.this, PaymentHelpActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                 break;
             case R.id.ctv_detailDelivery1:
             case R.id.ctv_detailDetailDelivery2:
@@ -1006,7 +1001,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                         Intent intent1=new Intent(this, HomeActivity.class);
                         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent1);
-                        overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                         finish();
                     }
                 }
@@ -1142,7 +1137,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                             bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, mProductDetailBean.getVendorDisplayName());
                             intent.putExtras(bundle);
                             ProductActivity.this.startActivity(intent);
-                            ProductActivity.this.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            ProductActivity.this.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                         }
                     });
                 } else {
@@ -1153,7 +1148,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                         public void onClick(View v) {
                             Intent i = new Intent(ProductActivity.this, HomeActivity.class);
                             ProductActivity.this.startActivity(i);
-                            ProductActivity.this.overridePendingTransition(R.anim.enter_righttoleft, R.anim.exit_righttoleft);
+//                            ProductActivity.this.overridePendingTransition(R.anim
+//                            .activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
                         }
                     });
                 }
