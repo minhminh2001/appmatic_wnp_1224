@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -159,9 +160,9 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             subOrderHolder.orderName.setText(orderBody.getOrderName());
 
             if (orderBody.getIsRPayment()==0||!orderBody.isLast()) {
-                subOrderHolder.tvRepayment.setVisibility(View.GONE);
+                subOrderHolder.llOrderRePayment.setVisibility(View.GONE);
             } else {
-                subOrderHolder.tvRepayment.setVisibility(View.VISIBLE);
+                subOrderHolder.llOrderRePayment.setVisibility(View.VISIBLE);
                 JViewUtils.setSoildButtonGlobalStyle(subOrderHolder.itemView.getContext(),subOrderHolder.tvRepayment);
                 subOrderHolder.tvRepayment.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -260,7 +261,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
     public static class SubOrderHolder extends RecyclerView.ViewHolder {
         ImageView orderImage;
-
+        LinearLayout llOrderRePayment;
         TextView orderName, orderCS, orderPrice, orderNum, orderStatus, orderNewStatus, orderMerName, tvRepayment;
         TextView rmTop;
 
@@ -275,6 +276,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             orderNewStatus = (TextView) view.findViewById(R.id.tv_orderlist_new_status);
             orderMerName = (TextView) view.findViewById(R.id.tv_orderlist_new_mername);
             tvRepayment = (TextView) view.findViewById(R.id.tv_order_repayment);
+            llOrderRePayment= (LinearLayout) view.findViewById(R.id.ll_order_repayment);
             rmTop= (TextView) view.findViewById(R.id.rm_top);
 
         }

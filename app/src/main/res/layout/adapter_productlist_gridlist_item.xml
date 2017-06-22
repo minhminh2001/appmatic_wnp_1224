@@ -5,13 +5,13 @@
               android:layout_height="wrap_content"
               android:orientation="vertical"
               android:paddingBottom="8.9dp">
-
     <!--<View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/greyE4E4E4" />-->
 
     <RelativeLayout
+        android:background="@drawable/ripple_with_no_mash"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView

@@ -10,7 +10,6 @@
         android:id="@+id/swipe_shoppingcart_cell"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="60dp"
@@ -22,19 +21,16 @@
                     android:id="@+id/iv_shopping_cart_delete"
                     android:scaleType="fitCenter"
                     android:src="@drawable/draw_dele"/>
-
         </LinearLayout>
-
         <RelativeLayout
             android:id="@+id/rl_shopping_cart_cell_content"
             android:layout_width="match_parent"
-            android:background="@color/whiteFFFFFF"
-
+            android:background="@color/white"
             android:layout_height="wrap_content">
-
             <RelativeLayout
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:background="@drawable/ripple_with_mash_gray_light"
                 android:id="@+id/mparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

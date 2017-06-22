@@ -9,7 +9,7 @@
         android:id="@+id/order_info2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@drawable/ripple_with_no_mash">
 
         <RelativeLayout
             android:id="@+id/iv_orderlist_new1"
@@ -44,7 +44,7 @@
             android:id="@+id/order_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_alignTop="@+id/iv_orderlist_new1"
@@ -190,6 +190,7 @@
         </LinearLayout>
     </RelativeLayout>
     <LinearLayout
+        android:id="@+id/ll_order_repayment"
         android:layout_width="wrap_content"
         android:paddingBottom="12dp"
         android:layout_alignParentRight="true"

@@ -413,7 +413,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             if (filterSortHelper.isAnyActive()) {
                 filterSortDefault();
             } else {
-                productListActivity.onBackPressed();
+                productListActivity.finish();
+                productListActivity.closeActivityTransitionAnim();
             }
         }
     }

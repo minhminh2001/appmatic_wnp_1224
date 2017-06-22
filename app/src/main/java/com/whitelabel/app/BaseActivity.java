@@ -232,7 +232,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     @Override
     public void onBackPressed() {
         finish();
-        overridePendingTransition(R.anim.activity_transition_v2_enter_lefttoright, R.anim.activity_transition_v2_exit_lefttoright);
+        closeActivityTransitionAnim();
     }
 
     public void startNextActivity(Bundle bundle, Class<?> pClass, boolean finishFlag) {
@@ -250,6 +250,10 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     public    void   startActivityTransitionAnim(){
         overridePendingTransition(R.anim.activity_transition_v2_enter_righttoleft,
                 R.anim.activity_transition_v2_exit_righttoleft);
+    }
+
+    public void closeActivityTransitionAnim(){
+        overridePendingTransition(R.anim.activity_transition_v2_enter_lefttoright, R.anim.activity_transition_v2_exit_lefttoright);
     }
 
 
