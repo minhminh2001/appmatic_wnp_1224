@@ -84,7 +84,8 @@
     <color name="greyC888888">#888888</color>
     <color name="purple4c0052">#4c0052</color>
     <color name="grayf8f8f8">#f8f8f8</color>
-    <color name="grayf0f0f0">#fff2f2f2</color>
+    <color name="grayf0f0f0">#f0f0f0</color>
+    <color name="grayf2f2f2">#f2f2f2</color>
     <color name="gray888888">#888888</color>
     <color name="gray999999">#999999</color>
     <color name="greyF3F3F3">#F3F3F3</color>

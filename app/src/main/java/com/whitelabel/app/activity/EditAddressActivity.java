@@ -129,7 +129,6 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                                 }
                                 activity.country.setOnClickListener(activity);
                                 activity.stateText.setOnClickListener(activity);
-
                                 activity.list_countries = countryEntityResult.getCountry();
                                 activity. list_countries.add(0, new CountrySubclass("", activity.getResources().getString(R.string.pleaseselect)));
                                 ArrayList<CountryRegions> regisons=activity.getState( activity.list_countries);

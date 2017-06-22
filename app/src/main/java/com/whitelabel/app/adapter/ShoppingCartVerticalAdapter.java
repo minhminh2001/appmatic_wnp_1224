@@ -86,8 +86,6 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         mShoppingCartDao = new ShoppingCarDao("ShoppingCartAdapterV2", dataHandler);
         mImageLoader = imageLoader;
     }
-
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 1) {

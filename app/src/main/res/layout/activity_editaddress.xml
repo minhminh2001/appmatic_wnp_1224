@@ -229,6 +229,7 @@
                             android:editable="false"
                             android:hint="@string/country"
                             android:paddingRight="20dp"
+                            android:layout_centerVertical="true"
                             android:singleLine="true"
                             android:textColor="@color/editColor"
                             android:textColorHint="@color/hint"
@@ -236,16 +237,15 @@
                             android:textSize="@dimen/editTextFontSize"
                             style="@style/font_family_robot_regular"/>
 
-                        <ImageView
-                            android:id="@+id/iv_country_arrow"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp"
-                            android:src="@mipmap/arrow_down_fill"/>
                     </RelativeLayout>
 
+                    <ImageView
+                        android:id="@+id/iv_country_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_alignParentRight="true"
+                        imaginato:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"/>
                     <com.whitelabel.app.widget.CustomTextView
                         android:id="@+id/edit_country_text"
                         android:layout_width="fill_parent"
@@ -556,17 +556,14 @@
                             android:textCursorDrawable="@null"
                             android:textSize="@dimen/editTextFontSize"
                             style="@style/font_family_robot_regular"/>
-
-                        <ImageView
-                            android:id="@+id/iv_state_arrow"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginRight="10dp"
-                            android:src="@mipmap/arrow_down_fill"/>
                     </RelativeLayout>
-
+                    <ImageView
+                        android:id="@+id/iv_state_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_alignParentRight="true"
+                        imaginato:srcCompat="@drawable/ic_arrow_drop_down_black_24dp" />
                     <com.whitelabel.app.widget.CustomTextView
                         android:id="@+id/edit_state_text1"
                         android:layout_width="fill_parent"
@@ -696,7 +693,6 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ctv_eg_text2"
-                            android:layout_marginLeft="10dp"
                             android:text="@string/eg123"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/labelTextFontSize"
@@ -706,7 +702,6 @@
                             android:id="@+id/ctv_eg_text2"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
                             android:text="@string/eg123"
                             android:textColor="@color/label_saved"
@@ -818,7 +813,6 @@
                             android:id="@+id/ctv_day_phone_eg_text2"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
                             android:text="@string/day_time_contact"
                             android:textColor="@color/label_saved"
@@ -831,7 +825,6 @@
                             android:layout_height="wrap_content"
                             android:text="@string/day_time_contact"
                             android:textSize="@dimen/labelTextFontSize"
-                            android:layout_marginLeft="10dp"
                             android:textColor="@color/colorAccent"
                             android:visibility="invisible"
                             style="@style/font_family_robot_regular"

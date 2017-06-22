@@ -15,9 +15,9 @@ import com.whitelabel.app.utils.JToolUtils;
  * Created by kevin on 2016/9/5.
  */
 public class CustomButtomLineRelativeLayout extends RelativeLayout {
-
     private TextView lineTextView;
-
+    static float  purpleLineHeight=1.6f;
+    static  float defaultLine=0.8f;
     public CustomButtomLineRelativeLayout(Context context) {
         super(context);
     }
@@ -49,8 +49,6 @@ public class CustomButtomLineRelativeLayout extends RelativeLayout {
     }
 
 
-   static float  purpleLineHeight=1.6f;
-   static  float defaultLine=0.8f;
     public static void setBottomLineActive(View view,boolean active) {
 
         LinearLayout.LayoutParams lp=(LinearLayout.LayoutParams)view.getLayoutParams() ;
@@ -65,7 +63,6 @@ public class CustomButtomLineRelativeLayout extends RelativeLayout {
         }
     }
     public static void setRelativeBottomLineActive(View view,boolean active) {
-
         LayoutParams lp=(LayoutParams)view.getLayoutParams() ;
         if (active) {
             view.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
