@@ -61,12 +61,12 @@
             android:text="(Delivered Partially)"
             android:visibility="gone"/>
     </LinearLayout>
-    <TextView
-        android:layout_width="9dp"
-        android:layout_height="15dp"
+    <ImageView
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/textView3"
-        android:background="@mipmap/arrow_right"
+        imaginato:srcCompat="@drawable/ic_keyboard_arrow_right_gray_24dp"
         android:layout_alignParentRight="true"
         android:layout_alignBottom="@+id/order"
         android:layout_centerVertical="true" />

@@ -76,7 +76,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:src="@mipmap/arrow_checkout" />
+                    imaginato:srcCompat="@drawable/ic_trending_flat_black_24dp" />
 
                  <com.whitelabel.app.widget.CustomTextView
                      style="@style/font_family_robot_regular"
@@ -121,7 +121,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:src="@mipmap/arrow_checkout" />
+                    imaginato:srcCompat="@drawable/ic_trending_flat_black_24dp"/>
 
                  <com.whitelabel.app.widget.CustomTextView
                      style="@style/font_family_robot_regular"

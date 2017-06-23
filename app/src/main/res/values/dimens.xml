@@ -48,7 +48,7 @@
     <dimen name="address_select_text_space">0dp</dimen>
     <dimen name="checkout_body_textSize_large">16sp</dimen>
     <dimen name="checkout_body_textSize_small">14sp</dimen>
-    <dimen name="checkout_menu_arrow_width">18dp</dimen>
+    <dimen name="checkout_menu_arrow_width">26dp</dimen>
     <dimen name="checkout_menu_slider_width">60dp</dimen>
     <dimen name="checkout_hint_anim_text_paddingtop">5dp</dimen>
     <dimen name="checkout_and_order_common_textsize">14sp</dimen>

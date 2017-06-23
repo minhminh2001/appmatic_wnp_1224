@@ -350,12 +350,15 @@ public class MyAccountChangePasswordActivity extends com.whitelabel.app.BaseActi
         mDao=new MyAccountDao(TAG, mHandler);
         old= (EditText) findViewById(R.id.old);
         oldText= (TextView) findViewById(R.id.old_text);
+        oldText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         oldText2=(TextView)findViewById(R.id.old_text2);
         newPassword= (EditText) findViewById(R.id.newpassword);
         newPasswordText= (TextView) findViewById(R.id.newpassword_text);
+        newPasswordText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         newPasswordText2= (TextView) findViewById(R.id.newpassword_text2);
         confirm= (EditText) findViewById(R.id.confirm);
         confirmText= (TextView) findViewById(R.id.confirm_text);
+        confirmText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         confirmText2= (TextView) findViewById(R.id.confirm_text2);
         confirm.setOnFocusChangeListener(this);
         old.setOnFocusChangeListener(this);

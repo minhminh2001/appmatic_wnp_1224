@@ -37,12 +37,12 @@
 
             <ImageView
                 android:id="@+id/tv_checkout_payment_method_arrow"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/arrow_down_fill"
-                android:layout_marginRight="10dp"/>
+                imaginato:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
+               />
 
         </RelativeLayout>
     </LinearLayout>
