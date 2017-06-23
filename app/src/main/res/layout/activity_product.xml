@@ -74,7 +74,6 @@
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:visibility="visible"/>
-
                 <RelativeLayout
                     android:id="@+id/detail_title_RelativeLayout"
                     android:layout_width="match_parent"
@@ -85,7 +84,6 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:visibility="visible">
-
                     <View
                         android:id="@+id/ctvProductTitleLine"
                         android:layout_width="match_parent"
@@ -277,7 +275,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/share_icon_normal"
+                imaginato:srcCompat="@drawable/ic_share_black_24dp"
                 android:visibility="visible"/>
         </RelativeLayout>
         <!-- 收藏-->

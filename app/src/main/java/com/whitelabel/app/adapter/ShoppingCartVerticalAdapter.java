@@ -271,7 +271,6 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         } else {
             viewHolder.tvCheckMername.setText("");
         }
-
         viewHolder.tvProductName.setText(sc.getName());
         viewHolder.tvCount.setText(sc.getQty());
         //colors and size

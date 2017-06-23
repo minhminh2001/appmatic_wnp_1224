@@ -106,8 +106,20 @@
                                     android:layout_alignTop="@+id/firstName"
                                     android:layout_marginRight="2dp"
                                     android:layout_marginTop="7dp"
-                                    android:background="@mipmap/text_elimination"
+                                    imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                                     android:visibility="gone"/>
+
+                                <ImageView
+                                    android:id="@+id/iv_country_arrow"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentLeft="true"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginLeft="133dp"
+                                    android:layout_marginStart="133dp"
+                                    android:layout_marginTop="21dp"
+                                    imaginato:srcCompat="@drawable/ic_arrow_drop_down_black_24dp" />
                             </RelativeLayout>
                         </RelativeLayout>
 
@@ -160,17 +172,15 @@
                                     android:textColorHint="@color/hint"
                                     android:textCursorDrawable="@null"
                                     android:textSize="@dimen/editTextFontSize"
-                                    style="@style/font_family_robot_regular"
-                                    />
-
+                                    style="@style/font_family_robot_regular" />
                                 <ImageView
                                     android:id="@+id/iv_clear_last"
-                                    android:layout_width="16dp"
-                                    android:layout_height="16dp"
+                                    android:layout_width="17dp"
+                                    android:layout_height="17dp"
                                     android:layout_alignParentRight="true"
                                     android:layout_alignTop="@+id/lastName"
                                     android:layout_marginTop="7dp"
-                                    android:background="@mipmap/text_elimination"
+                                    imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                                     android:visibility="gone"/>
                             </RelativeLayout>
                         </RelativeLayout>
@@ -187,7 +197,7 @@
                             android:layout_height="@dimen/line_height"
                             android:layout_marginTop="0dp"
                             android:layout_weight="1"
-                            android:background="@color/edittext_line"/>
+                            android:background="@color/edittext_line" />
 
                         <View
                             android:id="@+id/view_lastname_line"
@@ -195,7 +205,7 @@
                             android:layout_height="@dimen/line_height"
                             android:layout_marginTop="0dp"
                             android:layout_weight="1"
-                            android:background="@color/edittext_line"/>
+                            android:background="@color/edittext_line" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -239,13 +249,6 @@
 
                     </RelativeLayout>
 
-                    <ImageView
-                        android:id="@+id/iv_country_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_alignParentRight="true"
-                        imaginato:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"/>
                     <com.whitelabel.app.widget.CustomTextView
                         android:id="@+id/edit_country_text"
                         android:layout_width="fill_parent"
@@ -307,7 +310,7 @@
                             android:layout_height="16dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:src="@mipmap/text_elimination"
+                            imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                             android:visibility="gone"
                             />
                     </RelativeLayout>
@@ -370,7 +373,7 @@
                             android:layout_height="16dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:src="@mipmap/text_elimination"
+                            imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                             android:visibility="gone"/>
                     </RelativeLayout>
 
@@ -429,14 +432,6 @@
                             android:textSize="@dimen/editTextFontSize"
                             style="@style/font_family_robot_regular"/>
 
-                        <ImageView
-                            android:id="@+id/iv_clear_code"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/text_elimination"
-                            android:visibility="gone"/>
                     </RelativeLayout>
 
                     <com.whitelabel.app.widget.CustomTextView
@@ -498,8 +493,19 @@
                             android:layout_height="16dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:src="@mipmap/text_elimination"
+                            imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                             android:visibility="gone"/>
+
+                        <ImageView
+                            android:id="@+id/iv_clear_code"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginBottom="50dp"
+                            android:visibility="gone"
+                            imaginato:srcCompat="@drawable/ic_cancel_black_24dp" />
                     </RelativeLayout>
 
                     <com.whitelabel.app.widget.CustomTextView
@@ -646,12 +652,12 @@
                         <View
                             android:layout_width="@dimen/line_height"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
                             android:layout_alignBottom="@+id/rl_eg_layout"
                             android:layout_alignParentTop="true"
                             android:layout_marginBottom="-10dp"
                             android:layout_marginLeft="3dp"
-                            android:background="@color/edittext_line"></View>
+                            android:background="@color/edittext_line"
+                            android:visibility="gone"></View>
 
                         <RelativeLayout
                             android:id="@+id/rl_eg_layout"
@@ -664,20 +670,20 @@
 
                             <com.whitelabel.app.widget.CustomEditText
                                 android:id="@+id/edit_eg"
+                                style="@style/font_family_robot_regular"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:background="@null"
                                 android:hint="@string/eg123"
                                 android:inputType="phone"
+                                android:maxLength="@integer/phone_number_length"
                                 android:paddingRight="@dimen/customEditText_paddingRight_v2"
                                 android:singleLine="true"
-                                android:maxLength="@integer/phone_number_length"
                                 android:textColor="@color/editColor"
                                 android:textColorHint="@color/hint"
                                 android:textCursorDrawable="@null"
-                                android:textSize="@dimen/editTextFontSize"
-                                style="@style/font_family_robot_regular"/>
+                                android:textSize="@dimen/editTextFontSize" />
 
                             <ImageView
                                 android:id="@+id/ic_clear_phone"
@@ -685,30 +691,33 @@
                                 android:layout_height="16dp"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
-                                android:src="@mipmap/text_elimination"
-                                android:visibility="gone"/>
+                                imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
+                                android:visibility="gone" />
                         </RelativeLayout>
+
                         <com.whitelabel.app.widget.CustomTextView
                             android:id="@+id/ctv_eg_text"
+                            style="@style/font_family_robot_regular"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ctv_eg_text2"
                             android:text="@string/eg123"
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/labelTextFontSize"
-                            android:visibility="invisible"
-                            style="@style/font_family_robot_regular"/>
+                            android:visibility="invisible" />
+
                         <com.whitelabel.app.widget.CustomTextView
                             android:id="@+id/ctv_eg_text2"
+                            style="@style/font_family_robot_regular"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="@string/eg123"
                             android:textColor="@color/label_saved"
                             android:textSize="@dimen/labelTextFontSize"
-                            android:visibility="invisible"
-                            style="@style/font_family_robot_regular"/>
+                            android:visibility="invisible" />
                     </RelativeLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -806,8 +815,9 @@
                                 android:layout_height="16dp"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
-                                android:src="@mipmap/text_elimination"
-                                android:visibility="gone" />
+                                android:visibility="gone"
+                                imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
+                               />
                         </RelativeLayout>
                         <com.whitelabel.app.widget.CustomTextView
                             android:id="@+id/ctv_day_phone_eg_text2"

@@ -107,7 +107,7 @@
                                     android:layout_alignParentRight="true"
                                     android:layout_alignTop="@+id/firstName"
                                     android:layout_centerVertical="true"
-                                    android:background="@mipmap/text_elimination"
+                                     imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                                     android:layout_marginRight="2dp"
                                     android:visibility="gone"/>
                             </RelativeLayout>
@@ -167,7 +167,7 @@
                                     android:layout_alignParentRight="true"
                                     android:layout_alignTop="@+id/lastName"
                                     android:layout_centerVertical="true"
-                                    android:background="@mipmap/text_elimination"
+                                     imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                                     android:visibility="gone"/>
                             </RelativeLayout>
 
@@ -308,12 +308,10 @@
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:layout_centerVertical="true"
-                            android:src="@mipmap/text_elimination"
+                            imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                             android:layout_alignParentRight="true"
-                            android:visibility="gone"
-                            />
+                            android:visibility="gone" />
                     </RelativeLayout>
-
                     <com.whitelabel.app.widget.CustomTextView
                         style="@style/font_family_robot_regular"
                         android:layout_width="fill_parent"
@@ -370,7 +368,7 @@
                             android:layout_height="16dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
-                            android:src="@mipmap/text_elimination"
+                            imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                             android:visibility="gone" />
                     </RelativeLayout>
 
@@ -432,7 +430,7 @@
                             android:layout_height="16dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
-                            android:src="@mipmap/text_elimination"
+                            imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                             android:visibility="gone" />
                     </RelativeLayout>
 
@@ -493,7 +491,7 @@
                             android:layout_height="16dp"
                             android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
-                            android:src="@mipmap/text_elimination"
+                            imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                             android:visibility="gone" />
                     </RelativeLayout>
 
@@ -675,7 +673,7 @@
                                 android:layout_height="16dp"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
-                                android:src="@mipmap/text_elimination"
+                                imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                                 android:visibility="gone" />
                         </RelativeLayout>
 
@@ -804,7 +802,7 @@
                                 android:layout_height="16dp"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
-                                android:src="@mipmap/text_elimination"
+                                imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                                 android:visibility="gone" />
                         </RelativeLayout>
                         <com.whitelabel.app.widget.CustomTextView

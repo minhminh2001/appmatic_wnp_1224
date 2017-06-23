@@ -486,6 +486,9 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         });
         clearDayPhone= (ImageView) findViewById(R.id.iv_day_phone_clear_phone);
         etDayPhone= (EditText) findViewById(R.id.edit_day_phone_eg);
+        if(!TextUtils.isEmpty(mBean.getFax())){
+            etDayPhone.setText(mBean.getFax());
+        }
         etDayPhone.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         etDayPhone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -531,9 +534,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         if(!TextUtils.isEmpty(mBean.getRegion())){
             state.setText(mBean.getRegion());
         }
-        if(!TextUtils.isEmpty(mBean.getFax())){
-            etDayPhone.setText(mBean.getFax());
-        }
+
         initAllHint();
         initData();
         initToolBar();
@@ -927,6 +928,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             ivClearEditCode.setVisibility(View.GONE);
             ivClearEditCity.setVisibility(View.GONE);
             ivClearEditPhone.setVisibility(View.GONE);
+            clearDayPhone.setVisibility(View.GONE);
         }
     }
 

@@ -123,7 +123,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_alignTop="@+id/firstName"
                                 android:layout_centerVertical="true"
-                                android:background="@mipmap/text_elimination"
+                                imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                                 android:layout_marginRight="2dp"
                                 android:visibility="gone"/>
                         </RelativeLayout>
@@ -184,7 +184,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_alignTop="@+id/lastName"
                                 android:layout_centerVertical="true"
-                                android:background="@mipmap/text_elimination"
+                                   imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                                 android:visibility="gone"/>
                         </RelativeLayout>
 
@@ -256,7 +256,7 @@
                         android:layout_height="16dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/text_elimination"
+                           imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                         android:visibility="gone" />
                 </RelativeLayout>
 
@@ -314,15 +314,15 @@
                         android:textColorHint="@color/hint"
                         android:textCursorDrawable="@null"
                         style="@style/font_family_robot_regular" />
-                    <ImageView
-                        android:id="@+id/iv_country_arrow"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        android:src="@mipmap/arrow_down_fill" />
                 </RelativeLayout>
+                <ImageView
+                    android:id="@+id/iv_country_arrow"
+                    android:layout_marginTop="13dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+
+                       imaginato:srcCompat="@drawable/ic_arrow_drop_down_black_24dp" />
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/ctv_account_country_label_ani"
                     android:layout_width="fill_parent"
@@ -378,15 +378,15 @@
                         android:layout_centerVertical="true"
                         android:textCursorDrawable="@null"
                         style="@style/font_family_robot_regular" />
-                    <ImageView
-                        android:id="@+id/iv_birther_arrow"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        android:src="@mipmap/arrow_down_fill" />
                 </RelativeLayout>
+                <ImageView
+                    android:id="@+id/iv_birther_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="13dp"
+                       imaginato:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"  />
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/ctv_account_birthday_label_ani"
                     android:layout_width="fill_parent"
@@ -398,7 +398,6 @@
                     android:textColor="@color/label_active"
                     android:visibility="invisible"
                     style="@style/font_family_robot_regular" />
-
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/ctv_account_birthday_label"
                     android:layout_width="fill_parent"
@@ -442,16 +441,14 @@
                         android:textColorHint="@color/hint"
                         android:textCursorDrawable="@null"
                         style="@style/font_family_robot_regular" />
-
-                    <ImageView
-                        android:id="@+id/iv_gender_arrow"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        android:src="@mipmap/arrow_down_fill" />
                 </RelativeLayout>
+                <ImageView
+                    android:id="@+id/iv_gender_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                   android:layout_marginTop="13dp"
+                       imaginato:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"  />
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/ctv_account_gender_label_ani"
                     android:layout_width="fill_parent"
@@ -460,6 +457,7 @@
                     android:layout_marginLeft="@dimen/table_margain_left"
                     android:text="@string/gender"
                     android:textSize="@dimen/labelTextFontSize"
+
                     android:textColor="@color/label_active"
                     android:visibility="invisible"
                     style="@style/font_family_robot_regular" />
@@ -582,7 +580,7 @@
                         android:layout_height="16dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/text_elimination"
+                           imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                         android:visibility="gone" />
                 </RelativeLayout>
 
@@ -649,7 +647,7 @@
                         android:layout_height="16dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/text_elimination"
+                           imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                         android:visibility="gone" />
                 </RelativeLayout>
 
@@ -825,7 +823,7 @@
                             android:layout_height="16dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:src="@mipmap/text_elimination"
+                               imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                             android:visibility="gone" />
                     </RelativeLayout>
 

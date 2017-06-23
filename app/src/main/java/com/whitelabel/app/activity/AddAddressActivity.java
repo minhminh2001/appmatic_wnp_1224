@@ -933,6 +933,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             clearAddressCode.setVisibility(View.GONE);
             clearAddressCity.setVisibility(View.GONE);
             clearAddressPhone.setVisibility(View.GONE);
+            clearDayPhone.setVisibility(View.GONE);
         }
 
     }
