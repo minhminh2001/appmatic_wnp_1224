@@ -310,10 +310,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         return arrayList;
     }
 
-    //    private  OnMyAccountUserGuide myAccountUserGuide;
-//    private void onAccountFragment(Fragment fragment){
-//         myAccountUserGuide= (OnMyAccountUserGuide) fragment;
-//    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

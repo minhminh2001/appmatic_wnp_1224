@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.BaseFragment;
 import com.whitelabel.app.R;
+import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.utils.JViewUtils;
@@ -75,6 +76,10 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     private Dialog mProgressDialog;
     private AddressBook mPrimaryBilling;
     private AddressBook  mPrimaryShipping;
+    public final static  int REQUEST_ADD_ADDRESS_CODE=10000;
+    public AddressBook getPrimaryShipping() {
+        return mPrimaryShipping;
+    }
     public CheckoutDefaultAddressFragment() {
         // Required empty public constructor
     }
@@ -100,11 +105,17 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     public AddressBook getPrimaryBilling() {
         return mPrimaryBilling;
     }
-    public AddressBook getPrimaryShipping() {
-        return mPrimaryShipping;
-    }
+
     @Override
     public void showData(AddressBook  shippingAddress,AddressBook billingAddress) {
+        if(shippingAddress==null&&billingAddress==null){
+            Intent intent=new Intent(getActivity(), AddAddressActivity.class);
+            intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT,false);
+            startActivityForResult(intent,REQUEST_ADD_ADDRESS_CODE);
+            getActivity(). overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+                    R.anim.activity_transition_exit_righttoleft);
+            return;
+        }
         rlRoot.setVisibility(View.VISIBLE);
         if(shippingAddress!=null) {
             mPrimaryShipping=shippingAddress;
@@ -237,6 +248,12 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
         }else if(requestCode==REQUEST_BILLING_ADDRESS&&resultCode==CheckoutSelectAddressActivity.RESULT_CODE){
                 AddressBook  addressBook= (AddressBook) data.getExtras().getSerializable("data");
                 showData(null,addressBook);
+        }else if(requestCode==REQUEST_ADD_ADDRESS_CODE&&resultCode==AddAddressActivity.RESULT_CODE){
+            openProgressDialog();
+            mPresenter.getDefaultAddress();
+        }else if(requestCode==REQUEST_ADD_ADDRESS_CODE){
+             getActivity().finish();
+             getActivity().overridePendingTransition(R.anim.activity_transition_enter_lefttoright, R.anim.activity_transition_exit_lefttoright);
         }
     }
 }

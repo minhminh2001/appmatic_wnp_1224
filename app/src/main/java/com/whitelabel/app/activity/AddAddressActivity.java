@@ -521,7 +521,10 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             }
         });
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
        View view= setRightTextMenuClickListener(

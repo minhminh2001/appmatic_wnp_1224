@@ -107,7 +107,7 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
     private boolean isEdit;
     private ImageLoader mImageLoader;
     private MaterialDialog permissionDialog;
-
+    private View view_backtransafer_email_line, view_backtransafer_amount_line, view_backtransafer_name_line, view_backtransafer_bankfrom_line, view_backtransafer_date_line;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -746,14 +746,10 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
             mDialog.cancel();
         }
     }
-
-    private View view_backtransafer_email_line, view_backtransafer_amount_line, view_backtransafer_name_line, view_backtransafer_bankfrom_line, view_backtransafer_date_line;
-
     private void initView() {
         mImageLoader = new ImageLoader(this);
         tvDateHint = (TextView) findViewById(R.id.tv_date_hint);
         tvBankHint = (TextView) findViewById(R.id.tv_bankFrom_hint);
-
         etTransferAmount = (CustomEdit) findViewById(R.id.et_transferAmount);
         tvTrasferFrom = (TextView) findViewById(R.id.tv_bankFrom);
         tvDate = (TextView) findViewById(R.id.tv_date);
@@ -767,7 +763,6 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
         ivImg = (ImageView) findViewById(R.id.iv_image);
         iv_bank_from_arrow = (ImageView) findViewById(R.id.iv_bank_from_arrow);
         iv_trans_date_arrow = (ImageView) findViewById(R.id.iv_trans_date_arrow);
-
         llSubmit.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
         tvTrasferFrom.setOnClickListener(this);
@@ -812,8 +807,6 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
         JViewUtils.setSoildButtonGlobalStyle(this, btnSubmit);
 //        btnSubmit.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
     }
-
-
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (v.getId() == tvTrasferFrom.getId()) {
