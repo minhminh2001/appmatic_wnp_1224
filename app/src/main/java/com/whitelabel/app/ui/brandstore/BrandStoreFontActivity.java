@@ -115,7 +115,6 @@ public class BrandStoreFontActivity extends BaseActivitySearchCart<BrandStoreCon
     LinearLayout mLlSortTop;
     @BindView(R.id.top_switch_and_filter_bar)
     RelativeLayout mTopSwitchAndFilterBar;
-
     private String mBrandId;
     private String mBrandName;
     public static final String EXTRA_BRAND_ID = "brand_id";

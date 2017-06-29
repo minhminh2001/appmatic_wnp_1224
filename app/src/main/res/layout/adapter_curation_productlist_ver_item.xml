@@ -44,7 +44,7 @@
                     android:text="@string/out_of_stock2"
                     android:textColor="@color/whiteFFFFFF"
                     android:textSize="11sp"
-                    imaginato:textFont="LatoRegular"
+
                     />
             </RelativeLayout>
         </RelativeLayout>
@@ -93,7 +93,7 @@
                 android:text="@string/string"
                 android:textColor="@color/black000000"
                 android:textSize="11sp"
-                imaginato:textFont="LatoRegular"
+
                 />
 
             <com.whitelabel.app.widget.CustomTextView
@@ -109,7 +109,7 @@
                 android:text="@string/string"
                 android:textColor="@color/black000000"
                 android:textSize="13.5sp"
-                imaginato:textFont="LatoRegular"
+
                 />
 
             <com.whitelabel.app.widget.CustomTextView
@@ -126,7 +126,7 @@
                 android:text="@string/string"
                 android:textColor="@color/black"
                 android:textSize="11sp"
-                imaginato:textFont="LatoRegular"
+
                 />
 
             <com.whitelabel.app.widget.CustomTextView
@@ -142,7 +142,7 @@
                 android:text="@string/string"
                 android:textColor="@color/black"
                 android:textSize="13.5sp"
-                imaginato:textFont="LatoBold"
+
                 />
 
             <com.whitelabel.app.widget.CustomTextView
@@ -156,7 +156,7 @@
                 android:text=""
                 android:textColor="@color/gray888888"
                 android:textSize="11sp"
-                imaginato:textFont="LatoRegular"/>
+                  />
 
         </RelativeLayout>
     </RelativeLayout>

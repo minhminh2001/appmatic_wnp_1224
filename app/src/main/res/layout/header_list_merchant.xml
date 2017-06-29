@@ -27,7 +27,7 @@
             android:text=""
             android:textColor="@color/black000000"
             android:textSize="14sp"
-            imaginato:textFont="LatoBold"/>
+            />
 
         <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/tv_merchant_desc"

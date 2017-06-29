@@ -18,18 +18,25 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.common.widget.swipeback.SwipeBackActivityBase;
+import com.common.widget.swipeback.SwipeBackActivityHelper;
+import com.common.widget.swipeback.SwipeBackLayout;
+import com.common.widget.swipeback.Utils;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.BaseView;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+
 import com.whitelabel.app.widget.CustomButton;
+
+
 
 /**
  * Created by Administrator on 2016/10/6.
  */
-public class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
+public class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView, SwipeBackActivityBase {
     //requests
     protected static final int REQUEST_SHOPPINGCART = 10001;
     protected static final int REQUEST_SEARCH = 10002;
@@ -45,9 +52,12 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     public void transitionOnBackPressed() {
         super.onBackPressed();
     }
+    private SwipeBackActivityHelper mHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mHelper=new SwipeBackActivityHelper(this);
+        mHelper.onActivityCreate();
         mPresenter = getPresenter();
         if (mPresenter != null) {
             mPresenter.attachView(this);
@@ -62,14 +72,40 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     }
 
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mHelper.onPostCreate();
+    }
 
+    @Override
+    public View findViewById(int id) {
+        View v = super.findViewById(id);
+        if (v == null && mHelper != null)
+            return mHelper.findViewById(id);
+        return v;
+    }
+
+    @Override
+    public SwipeBackLayout getSwipeBackLayout() {
+        return mHelper.getSwipeBackLayout();
+    }
+
+    @Override
+    public void setSwipeBackEnable(boolean enable) {
+        getSwipeBackLayout().setEnableGesture(enable);
+    }
+    @Override
+    public void scrollToFinishActivity() {
+        Utils.convertActivityToTranslucent(this);
+        getSwipeBackLayout().scrollToFinishActivity();
+    }
     public void setStatusBarColor(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.setStatusBarColor(color);
         }
     }
-
     public boolean checkIsFinished() {
         return isActivityFinished;
     }
@@ -77,9 +113,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     public boolean checkIsInvisible() {
         return isActivityInvisible;
     }
-
     private Dialog mDialog;
-
     @Override
     public void showProgressDialog() {
         mDialog = JViewUtils.showProgressDialog(this);
@@ -232,7 +266,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     @Override
     public void onBackPressed() {
         finish();
-        closeActivityTransitionAnim();
+//        closeActivityTransitionAnim();
     }
 
     public void startNextActivity(Bundle bundle, Class<?> pClass, boolean finishFlag) {
@@ -255,14 +289,11 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     public void closeActivityTransitionAnim(){
         overridePendingTransition(R.anim.activity_transition_v2_enter_lefttoright, R.anim.activity_transition_v2_exit_lefttoright);
     }
-
-
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         super.startActivityForResult(intent, requestCode);
         startActivityTransitionAnim();
     }
-
     @Override
     public void startActivity(Intent intent) {
         super.startActivity(intent);
@@ -290,10 +321,12 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         super.onStop();
         isActivityInvisible = true;
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(mDialog!=null){
+            mDialog.dismiss();
+        }
         isActivityFinished = true;
         if (mPresenter != null) {
             mPresenter.detachView();

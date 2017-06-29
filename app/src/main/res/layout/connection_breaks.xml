@@ -43,7 +43,7 @@
             android:text="@string/connection_lost"
             android:textColor="@color/black38"
             android:textSize="18sp"
-            imaginato:textFont="LatoMedium" />
+                />
 
         <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/ctv_error_subheader"

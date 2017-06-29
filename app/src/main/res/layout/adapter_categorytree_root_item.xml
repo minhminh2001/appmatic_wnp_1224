@@ -5,7 +5,7 @@
     android:padding="11dp"
     android:layout_height="match_parent">
     <com.whitelabel.app.widget.CustomTextView
-        imagianto:textFont="LatoRegular"
+
         android:id="@+id/tv_category_tree_root_name"
         android:layout_centerVertical="true"
         android:layout_width="fill_parent"

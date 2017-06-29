@@ -51,7 +51,7 @@
                         android:maxLines="1"
                         android:text="@string/productlist_filter"
                         android:textSize="17sp"
-                        imaginato:textFont="LatoRegular" />
+                       />
 
                     <RelativeLayout
                         android:id="@+id/rl_filter_plus"
@@ -98,7 +98,7 @@
                         android:maxLines="1"
                         android:text="@string/productlist_sort"
                         android:textSize="17sp"
-                        imaginato:textFont="LatoRegular" />
+                       />
 
                     <RelativeLayout
                         android:id="@+id/rl_sort_plus"

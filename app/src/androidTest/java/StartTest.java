@@ -1,7 +1,4 @@
-import android.support.test.espresso.Espresso;
-import android.support.test.espresso.action.ViewActions;
-import android.support.test.espresso.assertion.ViewAssertions;
-import android.support.test.espresso.matcher.ViewMatchers;
+
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -33,14 +30,6 @@ public class StartTest {
     }
     @Test
     public void changeText_sameActivity() {
-        // Type text and then press the button.
-//        Espresso.onView(ViewMatchers.withId(R.id.tv_add_to_cart))
-//                .perform(ViewActions.typeText(mStringToBetyped), ViewActions.closeSoftKeyboard());
-//        Espresso.onView(ViewMatchers.withId(R.id.start_logo_imageview)).perform(ViewActions.click());
-//        // Check that the text was changed.
-//        Espresso.onView(ViewMatchers.withId(R.id.start_logo_imageview))
-//                .check(ViewAssertions.matches(ViewMatchers.withText(mStringToBetyped)));
-//        Espresso.onView(ViewMatchers.withId(R.id.tv_add_to_cart)).perform(ViewActions.click());
     }
 
 

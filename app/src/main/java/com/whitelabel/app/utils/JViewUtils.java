@@ -163,8 +163,6 @@ public class JViewUtils {
             mToast.setView(toastView);
         mToast.show();
     }
-
-
     public static Dialog showExitDialog(Context context, String message, String btnLeft, String btnRight, DialogInterface.OnClickListener btnLeftListener, DialogInterface.OnClickListener btnRightListener) {
         Dialog dialog = null;
         CustomMyDialog.Builder builder = new CustomMyDialog.Builder(context);
@@ -183,7 +181,6 @@ public class JViewUtils {
         dialog.show();
         return dialog;
     }
-
     public static void showKeyboard(EditText et) {
         if (et != null) {
             InputMethodManager inputManager = (InputMethodManager) et.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -193,21 +190,16 @@ public class JViewUtils {
             et.requestFocus();
         }
     }
-
-
     public static Dialog showProgressDialog(Context context) {
         Dialog dialog = new CustomDialog(context);
         dialog.show();
         return dialog;
     }
-
     public static Dialog showProgressDialog(Context context, String gravity) {
         Dialog dialog = new CustomDialog(context, gravity);
         dialog.show();
         return dialog;
     }
-
-
     public static MaterialDialog showMaterialDialogV2(Context context, String title, String message, final MaterialDialogCallback materialDialogCallback) {
         final MaterialDialog mMaterialDialog = new MaterialDialog(context);
         mMaterialDialog.setTitle(title);

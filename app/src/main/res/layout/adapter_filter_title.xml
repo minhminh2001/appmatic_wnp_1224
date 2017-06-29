@@ -44,7 +44,7 @@
         </RelativeLayout>
         <com.whitelabel.app.widget.CustomTextView
             android:layout_alignParentLeft="true"
-            imagianto:textFont="LatoRegular"
+
             android:layout_toLeftOf="@+id/rl_category_tree_group_tag"
             android:textColor="@color/black"
             android:id="@+id/tv_category_tree_group_name"

@@ -57,7 +57,7 @@
                         android:textColor="@color/whiteffffff"
                         android:textSize="18dp"
                         android:visibility="gone"
-                        imaginato:textFont="LatoBold"/>
+                        />
                     <TextView
                         android:id="@+id/product_trans"
                         android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                         android:layout_below="@+id/ctvProductBrand"
                         android:textColor="@color/black"
                         android:textSize="18sp"
-                        imaginato:textFont="LatoBold" />
+                         />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -353,7 +353,7 @@
                     android:text="@string/product_detail_addtocart"
                     android:textColor="@color/whiteffffff"
                     android:textSize="@dimen/button_font_size"
-                    imaginato:textFont="LatoBold"/>
+                    />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

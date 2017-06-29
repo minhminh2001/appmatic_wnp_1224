@@ -185,7 +185,7 @@
                         android:maxLines="1"
                         android:textColor="@color/black000000"
                         android:textSize="12sp"
-                        imaginato:textFont="LatoBold"/>
+                        />
                 </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

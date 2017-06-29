@@ -3,7 +3,11 @@
     <!-- Base application theme.  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimaryDark">@color/purple</item>
+         <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="main_theme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
     </style>
     <style name="AppThemeBlack" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/black000000</item>
@@ -11,6 +15,7 @@
     <style name="startStyle" parent="AppThemeBlack"></style>
     <style name="BlackgroundBalckTheme" parent="AppTheme">
         <item name="android:windowBackground">@color/black000000</item>
+        <item name="android:windowIsTranslucent">false</item>
     </style>
     <style name="BackgroundWhiteTheme" parent="AppTheme">
         <item name="android:windowBackground">@color/white</item>

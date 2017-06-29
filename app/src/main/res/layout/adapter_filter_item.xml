@@ -7,7 +7,7 @@
     <com.whitelabel.app.widget.CustomTextView
         android:textColor="@color/gray888888"
         android:paddingLeft="15dp"
-        imagianto:textFont="LatoRegular"
+
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:id="@+id/tv_filter_child_name"

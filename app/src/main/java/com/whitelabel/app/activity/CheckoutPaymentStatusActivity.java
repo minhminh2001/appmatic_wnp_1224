@@ -43,8 +43,8 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
                 getDrawerLayout().openDrawer(Gravity.LEFT);
             }
         });
-
         initData();
+        setSwipeBackEnable(false);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

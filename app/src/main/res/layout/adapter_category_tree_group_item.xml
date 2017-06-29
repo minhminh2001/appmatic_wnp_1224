@@ -36,7 +36,7 @@
     <com.whitelabel.app.widget.CustomTextView
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/rl_category_tree_group_tag"
-        imagianto:textFont="LatoRegular"
+
         android:textColor="@color/black"
         android:textSize="16sp"
         android:id="@+id/tv_category_tree_group_name"

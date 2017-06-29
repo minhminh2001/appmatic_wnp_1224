@@ -20,7 +20,6 @@ public class CustomDialog  extends Dialog{
     private IndeterminateDrawable drawable;
     public static final String TOP="top";
     public static final String BOOTOM="bottom";
-
     public CustomDialog(Context context) {
          this(context, R.style.dialog2,"");
     }

@@ -50,6 +50,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     public void setToolBarColor(int colorId){
         getToolbar().setBackgroundColor(JToolUtils.getColor(colorId));
     }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         if(mPresenter!=null){
             mPresenter.detachView();
         }
+       if(mProgressDialog!=null){
+            mProgressDialog.dismiss();
+       }
     }
     public  T getPresenter(){return null;}
 

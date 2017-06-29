@@ -9,8 +9,8 @@ buildscript {
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: "jacoco"
 apply plugin: 'newrelic'
+apply plugin: "jacoco"
 jacoco {
     toolVersion = "0.7.1.201405082137"
 }
@@ -116,6 +116,7 @@ ext {
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':librarys:baseframework')
     compile "com.android.support:support-v4:${SUPPORT_LIB_VERSION}"
     compile "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
     compile "com.android.support:design:${SUPPORT_LIB_VERSION}"
@@ -162,6 +163,9 @@ dependencies {
 //    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 }
 //    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
 //        transitive = true;

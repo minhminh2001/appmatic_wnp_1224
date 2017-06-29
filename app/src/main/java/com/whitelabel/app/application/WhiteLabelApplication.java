@@ -5,7 +5,6 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import com.android.volley.Request;
 import com.bumptech.glide.request.target.ViewTarget;
-import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
@@ -18,7 +17,8 @@ import com.whitelabel.app.model.ApplicationConfigurationEntity;
 import com.whitelabel.app.model.PhoneConfigurationEntity;
 import com.whitelabel.app.network.HttpClientRequest;
 import com.whitelabel.app.utils.JToolUtils;
-import io.fabric.sdk.android.Fabric;
+import com.whitelabel.app.LeakCanaryForTest;
+
 /**
  * Created by imaginato on 2015/6/10.
  */
@@ -42,11 +42,9 @@ public class WhiteLabelApplication extends MultiDexApplication {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
     }
-
     public void addToRequestQueue(Request request, String tag) {
         HttpClientRequest.getInstance(getApplicationContext()).addToRequestQueue(request, tag);
     }
-
     public void cancelPendingRequests(Object tag) {
         HttpClientRequest.getInstance(getApplicationContext()).cancelPendingRequests(tag);
     }
@@ -67,6 +65,7 @@ public class WhiteLabelApplication extends MultiDexApplication {
         NewRelic.withApplicationToken(
                 "AAd06a20384063c34e4b1ab1ade0f956323ffa6de4"
         ).start(this);
+        LeakCanaryForTest.install(this);
         try {
             mInstance = this;
             GlobalData.init(this);

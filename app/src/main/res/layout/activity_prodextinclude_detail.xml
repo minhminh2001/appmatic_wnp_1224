@@ -39,7 +39,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                imaginato:textFont="LatoBold"/>
+                />
 
             <com.whitelabel.app.widget.CustomTextView
                 android:id="@+id/ctvProductInStock"
