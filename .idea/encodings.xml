@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/whitelabel/app/utils/swipebackutils/Utils.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/librarys/baseframework/src/main/java/com/common/widget/swipeback/PreferenceUtils.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/librarys/baseframework/src/main/java/com/common/widget/swipeback/SwipeBackActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/librarys/baseframework/src/main/java/com/common/widget/swipeback/SwipeBackActivityBase.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/librarys/baseframework/src/main/java/com/common/widget/swipeback/SwipeBackActivityHelper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/librarys/baseframework/src/main/java/com/common/widget/swipeback/SwipeBackLayout.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/librarys/baseframework/src/main/java/com/common/widget/swipeback/SwipeBackPreferenceActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/librarys/baseframework/src/main/java/com/common/widget/swipeback/Utils.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/librarys/baseframework/src/main/java/com/common/widget/swipeback/ViewDragHelper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/librarys/baseframework/src/main/res/drawable-xhdpi/shadow_bottom.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/librarys/baseframework/src/main/res/drawable-xhdpi/shadow_left.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/librarys/baseframework/src/main/res/drawable-xhdpi/shadow_right.png" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/librarys/baseframework/src/main/res/layout/swipeback_layout.xml" charset="GBK" />
+  </component>
+</project>
