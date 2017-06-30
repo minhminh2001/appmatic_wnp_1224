@@ -78,12 +78,10 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
     protected void onStart() {
         super.onStart();
     }
-
     @Override
     protected void onPause() {
         super.onPause();
     }
-
     @Override
     public Toolbar getToolBar() {
         return getToolbar();
@@ -94,19 +92,16 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_HOME, serializable);
         }
     }
-
     @Override
     protected void jumpHomePage() {
         jumpHomePage(null);
     }
-
     @Override
     protected void jumpCategoryTreePage() {
         if (!(mCurrentFragment instanceof HomeCategoryTreeFragment)) {
             switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_CATEGORY, null);
         }
     }
-
     @Override
     protected void jumpShoppingCartPage() {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {

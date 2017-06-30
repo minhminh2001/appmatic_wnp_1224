@@ -131,7 +131,6 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
             sessionKey=WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
         }
         initRecyclerView();
-
         mPresenter.getCategoryDetail(mCategoryId,sessionKey);
     }
 
@@ -139,9 +138,8 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView1.setLayoutManager(layoutManager);
         layoutManager.setSpanSizeLookup(mTwoRowSpan);
-        recyclerView1.addItemDecoration(new SpacesItemDecoration(JDataUtils.dp2Px(5)));
+//        recyclerView1.addItemDecoration(new SpacesItemDecoration(JDataUtils.dp2Px(5)));
     }
-
     @Override
     public void onRefresh() {
         if (getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
@@ -191,7 +189,6 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
                     ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 }
             });
-
             recyclerView1.setAdapter(mAdapter);
         }
     }

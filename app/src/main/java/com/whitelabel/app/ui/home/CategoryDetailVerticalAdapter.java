@@ -61,7 +61,6 @@ import static com.whitelabel.app.utils.AnimUtil.setWishIconColorToPurple;
 
 
 public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     private static final int TYPE_TWOROW_ITEM = 256478;
     private static final int TYPE_SINGLEROW_ITEM = 256123;
     private static final int TYPE_HEADER = 10000;
@@ -87,7 +86,6 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
             if (mAdapter.get() == null || mContext.get() == null) {
                 return;
             }
-
             switch (msg.what) {
                 case MyAccountDao.REQUEST_DELETEWISHLIST:
                     if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
@@ -111,7 +109,6 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                                 }else{
                                     productEntity=mAdapter.get().categoryDetailModel.getNewArrivalProducts().get((position-1));
                                 }
-
                         productEntity.setItem_id(addToWishlistEntity.getItemId());
                         //update wishlist number
                         WhiteLabelApplication.getAppConfiguration().updateWishlist(mContext.get(), addToWishlistEntity.getWishListItemCount());
@@ -151,12 +148,9 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         myAccountDao = new MyAccountDao(TAG, dataHandler);
         mProductDao = new ProductDao(TAG, dataHandler);
     }
-
    public CategoryDetailModel getData(){
        return categoryDetailModel;
    }
-
-
     public int getNewArrivalProductSize() {
         return categoryDetailModel.getNewArrivalProducts().size();
     }
@@ -211,10 +205,13 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         } else if (holder instanceof ItemViewHolder) {
             final ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             SVRAppserviceProductSearchResultsItemReturnEntity leftProductEntity = null;
+            int  finalPostion=0;
             if (position > (categoryDetailModel.getNewArrivalProducts().size())) {
                 leftProductEntity = categoryDetailModel.getBestSellerProducts().get(position - 2 - categoryDetailModel.getNewArrivalProducts().size());
+                finalPostion=position-2;
             } else {
                 leftProductEntity = categoryDetailModel.getNewArrivalProducts().get(position - 1);
+                finalPostion=position-1;
             }
             int destWidth = JScreenUtils.dip2px(itemViewHolder.itemView.getContext(), 100);
             int destHeight = JScreenUtils.dip2px(itemViewHolder.itemView.getContext(), 120);
@@ -247,6 +244,11 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                     }
                 }
             });
+
+            if(finalPostion%2==1){
+                itemViewHolder.itemView.setPadding(JDataUtils.dp2Px(10),0,JDataUtils.dp2Px(10),JDataUtils.dp2Px(10));
+            }
+
             String leftProductName = leftProductEntity.getName();
             itemViewHolder.ctvProductName.setText(leftProductName);
             ///////////////////////russell////////////////////////
@@ -527,9 +529,6 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         }
         return imgs;
     }
-
-
-
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.line)
         View line;
