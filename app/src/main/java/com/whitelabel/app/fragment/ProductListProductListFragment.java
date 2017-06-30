@@ -100,7 +100,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
 
     @Override
     public void startActivityForResultCallBack(Intent intent, int code) {
-        this.startActivityForResult(intent, code);
+        this.startActivity(intent);
     }
 
     @Override

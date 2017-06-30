@@ -357,7 +357,7 @@ public class ProductListAdapter extends BaseAdapter {
                     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
                         intent.putExtras(bundle);
                         ActivityOptionsCompat aop = ActivityOptionsCompat.makeSceneTransitionAnimation(productListActivity, finalViewHolder.ivLeftProductImage, productListActivity.getString(R.string.activity_image_trans));
-                        ActivityCompat.startActivityForResult(productListActivity, intent, productListActivity.RESULT_WISH, aop.toBundle());
+                        ActivityCompat.startActivity(productListActivity, intent, aop.toBundle());
                     } else {
                         setBundleAndToPDP(intent, bundle);
                     }

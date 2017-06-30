@@ -142,7 +142,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     }
     @Override
     public void startActivityForResultCallBack(Intent intent, int code) {
-        this.startActivityForResult(intent, code);
+        this.startActivity(intent);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
