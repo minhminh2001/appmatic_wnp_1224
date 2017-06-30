@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.common.utils.JViewUtil;
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
@@ -218,13 +219,12 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
             int destWidth = JScreenUtils.dip2px(itemViewHolder.itemView.getContext(), 100);
             int destHeight = JScreenUtils.dip2px(itemViewHolder.itemView.getContext(), 120);
             int phoneWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity) itemViewHolder.itemView.getContext());
-            int marginLeft = phoneWidth * 15 / 640;
-            int dividerWidth = phoneWidth * 16 / 640;
-            destWidth = (phoneWidth - (marginLeft * 2) - dividerWidth) / 2;
+            int marginLeft = JDataUtils.dp2Px(10);
+            destWidth = (phoneWidth - (marginLeft * 2)) / 2;
             destHeight = destWidth;
             RelativeLayout.LayoutParams leftImagelp = (RelativeLayout.LayoutParams) itemViewHolder.ivProductImage.getLayoutParams();
             if (leftImagelp != null) {
-                leftImagelp.width = destWidth;
+                leftImagelp.width = LinearLayout.LayoutParams.MATCH_PARENT;
                 leftImagelp.height = destHeight;
                 itemViewHolder.ivProductImage.setLayoutParams(leftImagelp);
             }

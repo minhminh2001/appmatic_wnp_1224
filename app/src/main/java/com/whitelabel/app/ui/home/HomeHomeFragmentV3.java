@@ -174,7 +174,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
                     bundle.putSerializable("product_info", getProductListItemToProductDetailsEntity(productEntity));
                     bundle.putString("imageurl", productEntity.getSmallImage());
                     intent.putExtras(bundle);
-                    startActivityForResult(intent,1000);
+                     getContext().startActivity(intent);
                     ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 }
             });

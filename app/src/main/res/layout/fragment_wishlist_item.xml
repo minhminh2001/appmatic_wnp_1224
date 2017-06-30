@@ -9,8 +9,8 @@
     android:id="@+id/rl_wish_item_context"
     android:orientation="vertical"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     android:background="@drawable/ripple_with_no_mash"
+    android:paddingRight="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <RelativeLayout

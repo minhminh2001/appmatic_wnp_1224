@@ -54,9 +54,7 @@ public class MyAccountWishlistAdapter extends ArrayAdapter<Wishlist> {
             viewHolder.waitlistUnavailable=(TextView)view.findViewById(R.id.waitlist_unavailable);
             viewHolder.waitlistTrans=(TextView)view.findViewById(R.id.waitlist_trans);
             viewHolder.line=(TextView)view.findViewById(R.id.line);
-
             viewHolder.ctvWishMerchant=(TextView) view.findViewById(R.id.ctv_wish_merchant);
-
             view.setTag(viewHolder);
         }else{
             viewHolder=(ViewHolder)view.getTag();
