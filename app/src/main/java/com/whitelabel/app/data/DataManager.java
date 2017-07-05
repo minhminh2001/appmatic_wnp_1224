@@ -11,7 +11,6 @@ import com.whitelabel.app.data.retrofit.RetrofitHelper;
 /**
  * Created by Administrator on 2017/1/3.
  */
-
 public class DataManager {
     private static  DataManager dataManager;
     private PreferHelper  preferHelper;
@@ -19,9 +18,13 @@ public class DataManager {
     private  AppApi mAppApi;
     private ProductApi  mProductApi;
     private MyAccoutApi mMyAccountApi;
+    private static String mBaseUrl;
+    private static  String mMockUrl;
     private DataManager(){
     }
     public static DataManager getInstance(){
+        mBaseUrl="https://dev2.wnp.com.hk/";
+        mMockUrl="http://192.168.1.233:8088/";
         if(dataManager==null){
             synchronized (DataManager.class){
                 dataManager=new DataManager();
@@ -40,7 +43,7 @@ public class DataManager {
     public MyAccoutApi getMyAccountApi(){
         if(mMyAccountApi==null){
             synchronized (DataManager.class){
-                mMyAccountApi=RetrofitHelper.getDefaultRetrofit().create(MyAccoutApi.class);
+                mMyAccountApi=new RetrofitHelper(mBaseUrl,mMockUrl).getDefaultRetrofit().create(MyAccoutApi.class);
             }
         }
         return mMyAccountApi;
@@ -49,7 +52,7 @@ public class DataManager {
     public ProductApi getProductApi(){
         if(mProductApi==null){
             synchronized (DataManager.class){
-                mProductApi= RetrofitHelper.getDefaultRetrofit().create(ProductApi.class);
+                mProductApi= new RetrofitHelper(mBaseUrl,mMockUrl).getDefaultRetrofit().create(ProductApi.class);
             }
         }
         return mProductApi;
@@ -57,7 +60,7 @@ public class DataManager {
     public CheckoutApi  getCheckoutApi(){
             if(checkoutApi==null){
                 synchronized (DataManager.class){
-                    checkoutApi= RetrofitHelper.getDefaultRetrofit().create(CheckoutApi.class);
+                    checkoutApi= new RetrofitHelper(mBaseUrl,mMockUrl).getDefaultRetrofit().create(CheckoutApi.class);
                 }
             }
         return checkoutApi;
@@ -65,7 +68,7 @@ public class DataManager {
     public AppApi  getAppApi(){
         if(mAppApi==null){
             synchronized (DataManager.class){
-                mAppApi= RetrofitHelper.getDefaultRetrofit().create(AppApi.class);
+                mAppApi= new RetrofitHelper(mBaseUrl,mMockUrl).getDefaultRetrofit().create(AppApi.class);
             }
         }
         return mAppApi;
@@ -74,7 +77,7 @@ public class DataManager {
     public MockApi getMockApi(){
         if(mMockApi==null){
             synchronized (DataManager.class){
-                mMockApi= RetrofitHelper.getMockRetrofit().create(MockApi.class);
+                mMockApi=  new RetrofitHelper(mBaseUrl,mMockUrl).getMockRetrofit().create(MockApi.class);
             }
         }
         return mMockApi;

@@ -14,6 +14,8 @@ import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.INITCallback;
+import com.whitelabel.app.data.DataManager;
+import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.handler.INITApp;
 import com.whitelabel.app.notification.RegistrationIntentService;
 import com.whitelabel.app.task.INITExecutor;
@@ -25,8 +27,7 @@ import io.fabric.sdk.android.Fabric;
  */
 public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContract.Presenter> implements StartContract.View{
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    public static final int DELAY_TIME = 1000;
-    private long mStartTimeLong;
+    public static final int DELAY_TIME = 2000;
     private INITApp mCallback;
     private Dialog mProgressDialog;
     public void startNextActivity(){
@@ -45,7 +46,8 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
     }
     @Override
     public StartContract.Presenter getPresenter() {
-        return new StartPresenterImpl();
+        return new StartPresenterImpl(this,
+                new BaseManager(DataManager.getInstance().getMockApi(),DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()));
     }
     static  class StartRunnable implements   Runnable{
         WeakReference<StartActivityV2> mActivity;
@@ -58,23 +60,24 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
             mActivity.get().startNextActivity();
         }
     }
-    private void postDelayed(long deploy) {
+
+    public void postDelayed(long deploy) {
         StartRunnable  startRunnable=  new StartRunnable(StartActivityV2.this);
         new Handler().postDelayed(startRunnable, (DELAY_TIME -deploy));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         Fabric.with(this, new Crashlytics());
-        mStartTimeLong = System.currentTimeMillis();
         ImageView imageView= (ImageView) findViewById(R.id.start_logo_imageview);
         imageView.setImageResource(R.mipmap.icon_v1);
         mCallback=new INITApp(StartActivityV2.this, new MeInitCallBack(this));
         INITExecutor.getInstance().execute(mCallback);
-        mPresenter.getConfigInfo("","");
+        mPresenter.setStartTime();
+        mPresenter. getConfigInfo();
         setSwipeBackEnable(false);
-//        mPresenter.getConfigInfo();
     }
     static class MeInitCallBack extends   INITCallback{
         WeakReference<StartActivityV2> mStartActivity;
@@ -88,14 +91,6 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
         @Override
         public void onFailure(int resultCode, Object object) {
             if(mStartActivity.get()==null)return;
-        }
-    }
-    public  void delayStart() {
-        long deploy=System.currentTimeMillis()-mStartTimeLong;
-        if(deploy<DELAY_TIME){
-           postDelayed(deploy);
-        }else{
-          startNextActivity();
         }
     }
     @Override

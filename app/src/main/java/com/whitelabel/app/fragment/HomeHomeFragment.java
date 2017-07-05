@@ -51,8 +51,6 @@ import java.util.ArrayList;
  * Created by imaginato on 2015/7/17.
  */
 public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.HomeFragmentCallback{
-
-
     public Long mGATrackTimeStart = 0L;
     public boolean mGATrackTimeEnable = false;
     private HomeActivity homeActivity;
@@ -116,8 +114,6 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
 //                homeActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
             }
         });
-
-
         inflater.inflate(R.menu.menu_home, menu);
         MenuItem cartItem = menu.findItem(R.id.action_shopping_cart);
         MenuItemCompat.setActionView(cartItem, R.layout.item_count);
@@ -175,7 +171,6 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
         TAG = this.getClass().getSimpleName();
         DataHandler mHandler = new DataHandler(getActivity(), this);
         productDao = new ProductDao(TAG, mHandler);
-        View layout = mContainView.findViewById(R.id.rl_root);
         if (getArguments() != null) {
             categoryId = (String) getArguments().getSerializable("data");
         }

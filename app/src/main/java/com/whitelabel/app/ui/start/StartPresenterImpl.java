@@ -1,13 +1,16 @@
 package com.whitelabel.app.ui.start;
 
 import com.google.gson.JsonObject;
-import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
+import com.whitelabel.app.data.service.IBaseManager;
+import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
+
+import java.util.Currency;
 
 import rx.Observable;
 import rx.Subscription;
@@ -19,6 +22,23 @@ import rx.functions.Func1;
  */
 
 public class StartPresenterImpl extends RxPresenter<StartContract.View> implements StartContract.Presenter{
+    private IBaseManager configService;
+    private long mStartTimeLong;
+    public  void setStartTime(){
+        mStartTimeLong=System.currentTimeMillis();
+    }
+    public void timeOutJudgment(){
+         long  offset=System.currentTimeMillis()-mStartTimeLong;
+         if(offset<2000){
+                mView.postDelayed(offset);
+         }else{
+                mView.startNextActivity();
+         }
+    }
+    public StartPresenterImpl(StartContract.View view, IBaseManager configService){
+        this.configService=configService;
+        this.mView=view;
+    }
     @Override
     public void openApp(String sessionKey, String deviceToken) {
         Subscription  subscription= DataManager.getInstance().getAppApi().openApp(sessionKey,deviceToken)
@@ -26,7 +46,6 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                 .map(new Func1<JsonObject, String>() {
                     @Override
                     public String call(JsonObject jsonObject) {
-                        JLogUtils.i("ray","jsonObject:"+jsonObject.toString());
                         String unit="";
                         JsonObject  jsonObj= jsonObject.getAsJsonObject("data");
                         unit=jsonObj.get("unit").getAsString();
@@ -35,7 +54,6 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                 }).subscribe(new Action1<String>() {
                     @Override
                     public void call(String s) {
-                        JLogUtils.i("ray","unit:"+s);
                         WhiteLabelApplication.getAppConfiguration().getCurrency().setName(s);
                         DataManager.getInstance().getPreferHelper().saveCurrency(s);
                     }
@@ -48,10 +66,24 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
         addSubscrebe(subscription);
     }
     @Override
+    public void getConfigInfo1() {
+        Observable <RemoteConfigResonseModel> observable= configService.getConfigInfo();
+        observable.subscribe(new Action1<RemoteConfigResonseModel>() {
+            @Override
+            public void call(RemoteConfigResonseModel remoteConfigResonseModel) {
+                  WhiteLabelApplication.getAppConfiguration().initAppConfig(remoteConfigResonseModel.getData());
+                timeOutJudgment();
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+            }
+        });
+    }
+    @Override
     public void getConfigInfo(String sessionKey,String deviceToken) {
-        Observable openConfig= DataManager.getInstance().getAppApi().openApp(sessionKey,deviceToken);
-        String currentVersionNumber= DataManager.getInstance().getPreferHelper().getVersionNumber();
-        Observable<RemoteConfigResonseModel> configObservable=DataManager.getInstance().getMockApi().getConfigInfo((currentVersionNumber));
+        Observable openConfig= configService.getCurrencyUnit(sessionKey,deviceToken);
+        Observable<RemoteConfigResonseModel> configObservable=configService.getConfigInfo();
         Observable.merge(openConfig,configObservable).compose(RxUtil.rxSchedulerHelper()).subscribe(new Action1() {
             @Override
             public void call(Object o) {
@@ -59,16 +91,12 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                     RemoteConfigResonseModel  remoteConfigResonseModel= (RemoteConfigResonseModel) o;
                     WhiteLabelApplication.getAppConfiguration().initAppConfig(
                             remoteConfigResonseModel.getData());
-                    DataManager.getInstance().getPreferHelper().saveConfigInfo(remoteConfigResonseModel);
-//                    GlobalData.serviceRequestUrl=remoteConfigResonseModel.getData().getBaseUrl().getServiceBaseUrl();
-                    mView.delayStart();
-                }else if(o instanceof JsonObject){
-                    JsonObject jsonObject= (JsonObject) o;
-                    String unit="";
-                    JsonObject  jsonObj= jsonObject.getAsJsonObject("data");
-                    unit=jsonObj.get("unit").getAsString();
-                    WhiteLabelApplication.getAppConfiguration().getCurrency().setName(unit);
-                    DataManager.getInstance().getPreferHelper().saveCurrency(unit);
+//                    DataManager.getInstance().getPreferHelper().saveConfigInfo(remoteConfigResonseModel);
+                    timeOutJudgment();
+//                    mView.delayStart();
+                }else if(o instanceof GOCurrencyEntity){
+                    GOCurrencyEntity currencyEntity= (GOCurrencyEntity) o;
+                    WhiteLabelApplication.getAppConfiguration().getCurrency().setName(currencyEntity.getName());
                 }
             }
         }, new Action1<Throwable>() {
@@ -91,23 +119,14 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                                     remoteConfigModel.getData());
                             DataManager.getInstance().getPreferHelper().saveConfigInfo(remoteConfigModel);
                         }
-                        mView.delayStart();
+                        timeOutJudgment();
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
+
                     }
                 });
         addSubscrebe(subscription);
     }
-
-
-
-
-
-
-
-
-
-
 }

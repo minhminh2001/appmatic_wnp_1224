@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -240,6 +241,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addaddress);
+
         DataHandler handler = new DataHandler(this);
         String TAG = this.getClass().getSimpleName();
         dao=new MyAccountDao(TAG, handler);
