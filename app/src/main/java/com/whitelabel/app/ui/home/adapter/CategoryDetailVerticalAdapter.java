@@ -1,4 +1,4 @@
-package com.whitelabel.app.ui.home;
+package com.whitelabel.app.ui.home.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,7 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.common.utils.JViewUtil;
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
@@ -472,7 +471,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         }
     }
 
-    static class ItemViewHolder extends RecyclerView.ViewHolder {
+   public static class ItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.ivProductImage)
         ImageView ivProductImage;
         @BindView(R.id.rl_product_list_out_of_stock)
@@ -541,7 +540,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         }
     }
 
-    static class HeaderViewHolder extends  RecyclerView.ViewHolder {
+    public static class HeaderViewHolder extends  RecyclerView.ViewHolder {
         @BindView(R.id.detail_viewpager)
         ViewPager detailViewpager;
         @BindView(R.id.ll_tips)

@@ -41,11 +41,13 @@ public interface ProductApi {
     public Observable<SVRAppserviceCatalogSearchReturnEntity>  getCategoryList();
     @GET("appservice/category/categoryDetail")
     public Observable<ResponseModel<CategoryDetailModel>>  getCategoryDetail(@Query("category_id") String categoryId ,@Query("session_key") String sessionKey);
-
     @GET("appservice/product/getRelatedProducts")
     public  Observable<ResponseModel<BindProductResponseModel>>  getRelateProducts(@Query("productId") String productId);
-
     @FormUrlEncoded
     @POST("appservice/cart/addBoughtTogether")
     public Observable<ResponseModel> addBoughtTogether(@Field("relatedProductIds") String productIds,@Field("session_key") String sessionKey);
+   @POST("appservice/catalogSearch")
+    public Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory();
+
+
 }

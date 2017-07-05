@@ -31,8 +31,8 @@ import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
-import com.whitelabel.app.ui.home.HomeHomeFragmentV3;
-import com.whitelabel.app.ui.home.HomeHomeFragmentV4;
+import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV3;
+import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV4;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -168,23 +168,31 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mCommonCallback.switchMenu(HomeCommonCallback.MENU_HOME);
+
+        ctpiCategoryList = (CustomTabCustomPageIndicator) mContainView.findViewById(R.id.ctpiCategoryList);
+        ctpiCategoryList.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+
+        chvpContainer = (CustomHomeViewPager) mContainView.findViewById(R.id.chvpContainer);
+        rlHome = mContainView.findViewById(R.id.rl_home);
+        rlHome.setVisibility(View.GONE);
+
         TAG = this.getClass().getSimpleName();
         DataHandler mHandler = new DataHandler(getActivity(), this);
         productDao = new ProductDao(TAG, mHandler);
         if (getArguments() != null) {
             categoryId = (String) getArguments().getSerializable("data");
         }
-        ctpiCategoryList = (CustomTabCustomPageIndicator) mContainView.findViewById(R.id.ctpiCategoryList);
-        ctpiCategoryList.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-        chvpContainer = (CustomHomeViewPager) mContainView.findViewById(R.id.chvpContainer);
-        rlHome = mContainView.findViewById(R.id.rl_home);
-        rlHome.setVisibility(View.GONE);
-        everythingIndex = 0;
-        categoryViewCount = 0;
-        categoryArrayList = new ArrayList<>();
+        resetData();
         requestData();
         setHasOptionsMenu(true);
     }
+
+    public void resetData(){
+        everythingIndex = 0;
+        categoryViewCount = 0;
+        categoryArrayList = new ArrayList<>();
+    }
+
     public void requestData(){
         if (!firstloaded) {
             showLoaderDialog();
@@ -300,6 +308,11 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
             }else {
                 rlHome.setVisibility(View.VISIBLE);
                 hideErrorLayout();
+
+                fragmentPagerAdapter = new CustomTabPageIndicatorAdapter(getChildFragmentManager());
+                chvpContainer.setAdapter(fragmentPagerAdapter);
+                ctpiCategoryList.setViewPager(chvpContainer);
+
                 categoryArrayList = searchCatalog.getCategory();
                 //initFragment();
                 mFragments = new ArrayList<>();
@@ -309,9 +322,9 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
                     }
                 }
                 categoryViewCount = searchCatalog.getCategory().size() - 1;
-                fragmentPagerAdapter = new CustomTabPageIndicatorAdapter(getChildFragmentManager());
-                chvpContainer.setAdapter(fragmentPagerAdapter);
-                ctpiCategoryList.setViewPager(chvpContainer);
+
+
+
                 //page change listener -- russell
                 ctpiCategoryList.setOnPageChangeListener(pageChangeListener);
                 everythingIndex = getCurrIndex(categoryId) == -1 ? everythingIndex : getCurrIndex(categoryId);

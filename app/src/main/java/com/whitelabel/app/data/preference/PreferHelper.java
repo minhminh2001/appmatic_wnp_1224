@@ -5,12 +5,16 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
+import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -76,9 +80,39 @@ public class PreferHelper {
         }catch (Exception ex){
             ex.getStackTrace();
         }
-
     }
-
+    public rx.Observable<List<TMPLocalCartRepositoryProductEntity>> getShoppingCartProduct(){
+        return rx.Observable.fromCallable(new Callable<List<TMPLocalCartRepositoryProductEntity>>() {
+            @Override
+            public List<TMPLocalCartRepositoryProductEntity> call() throws Exception {
+                ArrayList<TMPLocalCartRepositoryProductEntity> result = new ArrayList<TMPLocalCartRepositoryProductEntity>();
+                SharedPreferences cartProductSP = WhiteLabelApplication.getInstance().getSharedPreferences("localStorageShoppingCartProductList", Context.MODE_PRIVATE);
+                if (cartProductSP == null) {
+                    return result;
+                }
+                String productListString = cartProductSP.getString("productList", null);
+                JLogUtils.d("response", "getLocalCart>>" + productListString);
+                if (!JDataUtils.isEmpty(productListString)) {
+                    ArrayList<TMPLocalCartRepositoryProductEntity> oldProductEntityArrayList = null;
+                    try {
+                        Gson gson = new Gson();
+                        TypeToken<ArrayList<TMPLocalCartRepositoryProductEntity>> typeToken = new TypeToken<ArrayList<TMPLocalCartRepositoryProductEntity>>() {
+                        };
+                        if (typeToken != null && gson != null) {
+                            Type type = typeToken.getType();
+                            oldProductEntityArrayList = gson.fromJson(productListString, type);
+                        }
+                    } catch (Exception ex) {
+                        JLogUtils.e("PreferHelper", "getProductListFromLocalCartRepository", ex);
+                    }
+                    if (oldProductEntityArrayList != null && oldProductEntityArrayList.size() > 0) {
+                        result.addAll(oldProductEntityArrayList);
+                    }
+                }
+                return result;
+            }
+        });
+    }
     public rx.Observable<List<AddressBook>> getAddressListCache(final String userId){
        return  rx.Observable.fromCallable(new Callable<List<AddressBook>>() {
             @Override

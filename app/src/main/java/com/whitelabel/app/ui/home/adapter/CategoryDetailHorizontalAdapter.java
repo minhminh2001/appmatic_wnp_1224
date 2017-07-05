@@ -1,9 +1,8 @@
-package com.whitelabel.app.ui.home;
+package com.whitelabel.app.ui.home.adapter;
 
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -21,7 +20,6 @@ import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JLogUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.whitelabel.app.ui.home;
+package com.whitelabel.app.ui.home.fragment;
 
 import android.content.Intent;
 
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,14 +25,13 @@ import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.ui.home.adapter.CategoryDetailVerticalAdapter;
+import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
+import com.whitelabel.app.ui.home.presenter.HomeCategoryDetailPresenterImpl;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomTextView;
-import com.whitelabel.app.widget.DividerGridItemDecoration;
-import com.whitelabel.app.widget.SpacesItemDecoration;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

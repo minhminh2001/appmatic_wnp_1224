@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
-import com.whitelabel.app.ui.home.HomeAccountAddressBookFragmentV3;
+import com.whitelabel.app.ui.home.fragment.HomeAccountAddressBookFragmentV3;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.MyAccountTopMenuView;

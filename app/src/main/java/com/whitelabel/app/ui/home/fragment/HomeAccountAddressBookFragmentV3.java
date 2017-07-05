@@ -1,11 +1,10 @@
-package com.whitelabel.app.ui.home;
+package com.whitelabel.app.ui.home.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.whitelabel.app.BaseActivity;
-import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.activity.EditAddressActivity;
 import com.whitelabel.app.fragment.MyAccountFragmentRefresh;

@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.fragment.HomeHomeFragment;
-import com.whitelabel.app.ui.home.HomeHomeFragmentV1;
-import com.whitelabel.app.ui.home.HomeHomeFragmentV2;
+import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV1;
+import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV2;
 
 /**
  * Created by ray on 2017/5/3.

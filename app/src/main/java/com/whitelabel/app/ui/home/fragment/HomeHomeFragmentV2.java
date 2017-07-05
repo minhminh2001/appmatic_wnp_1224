@@ -1,4 +1,4 @@
-package com.whitelabel.app.ui.home;
+package com.whitelabel.app.ui.home.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +26,8 @@ import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.home.HomeHomeContract;
+import com.whitelabel.app.ui.home.presenter.HomeHomePresenterImpl;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -38,7 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeContract.View ,HomeActivity.HomeFragmentCallback{
+public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeContract.View,HomeActivity.HomeFragmentCallback{
 
     @BindView(R.id.rl_category_tree)
     RecyclerView rlCategoryTree;

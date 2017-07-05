@@ -1,9 +1,10 @@
-package com.whitelabel.app.ui.home;
+package com.whitelabel.app.ui.home.presenter;
 
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.model.ApiFaildException;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.ui.RxPresenter;
+import com.whitelabel.app.ui.home.HomeHomeContract;
 import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.RxUtil;
 
