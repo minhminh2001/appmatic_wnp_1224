@@ -5,7 +5,9 @@ import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.data.retrofit.AppApi;
 import com.whitelabel.app.data.retrofit.MockApi;
 import com.whitelabel.app.model.GOCurrencyEntity;
+import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
+import com.whitelabel.app.model.UserModel;
 
 import rx.Observable;
 import rx.functions.Action1;
@@ -23,6 +25,16 @@ public class BaseManager implements IBaseManager {
         this.appApi=appApi;
         this.preferHelper=preferHelper;
     }
+    @Override
+    public boolean isSign() {
+        return preferHelper.getUser()==null?false:true;
+    }
+
+    @Override
+    public GOUserEntity getUser() {
+        return preferHelper.getUser();
+    }
+
     @Override
     public Observable<RemoteConfigResonseModel> getConfigInfo() {
         String userId=preferHelper.getVersionNumber();

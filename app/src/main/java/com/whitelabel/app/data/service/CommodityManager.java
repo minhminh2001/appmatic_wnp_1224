@@ -5,12 +5,14 @@ import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceSaveBillingEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.utils.RxUtil;
 
 import java.util.List;
 
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2017/7/5.
@@ -26,7 +28,9 @@ public class CommodityManager  implements ICommodityManager{
     @Override
     public Observable<SVRAppserviceCatalogSearchReturnEntity> getAllCategoryManager() {
         if(svrAppserviceCatalogSearchReturnEntity==null) {
-            return productApi.getBaseCategory().doOnNext(new Action1<SVRAppserviceCatalogSearchReturnEntity>() {
+            return productApi.getBaseCategory()
+                    .subscribeOn(Schedulers.io())
+                    .doOnNext(new Action1<SVRAppserviceCatalogSearchReturnEntity>() {
                 @Override
                 public void call(SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity) {
                     CommodityManager.this.svrAppserviceCatalogSearchReturnEntity = svrAppserviceCatalogSearchReturnEntity;
@@ -38,7 +42,9 @@ public class CommodityManager  implements ICommodityManager{
     }
     @Override
     public Observable<Integer> getLocalShoppingProductCount() {
-        return cacheHelper.getShoppingCartProduct().flatMap(new Func1<List<TMPLocalCartRepositoryProductEntity>, Observable<Integer>>() {
+        return cacheHelper.getShoppingCartProduct()
+                .subscribeOn(Schedulers.io())
+        .flatMap(new Func1<List<TMPLocalCartRepositoryProductEntity>, Observable<Integer>>() {
             @Override
             public Observable<Integer> call(List<TMPLocalCartRepositoryProductEntity> tmpLocalCartRepositoryProductEntities) {
                 if(tmpLocalCartRepositoryProductEntities!=null){
@@ -55,6 +61,4 @@ public class CommodityManager  implements ICommodityManager{
          }
          return count;
     }
-
-
 }

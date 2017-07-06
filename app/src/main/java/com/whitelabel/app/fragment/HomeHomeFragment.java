@@ -308,11 +308,6 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
             }else {
                 rlHome.setVisibility(View.VISIBLE);
                 hideErrorLayout();
-
-                fragmentPagerAdapter = new CustomTabPageIndicatorAdapter(getChildFragmentManager());
-                chvpContainer.setAdapter(fragmentPagerAdapter);
-                ctpiCategoryList.setViewPager(chvpContainer);
-
                 categoryArrayList = searchCatalog.getCategory();
                 //initFragment();
                 mFragments = new ArrayList<>();
@@ -322,9 +317,9 @@ public class HomeHomeFragment extends HomeBaseFragment implements HomeActivity.H
                     }
                 }
                 categoryViewCount = searchCatalog.getCategory().size() - 1;
-
-
-
+                fragmentPagerAdapter = new CustomTabPageIndicatorAdapter(getChildFragmentManager());
+                chvpContainer.setAdapter(fragmentPagerAdapter);
+                ctpiCategoryList.setViewPager(chvpContainer);
                 //page change listener -- russell
                 ctpiCategoryList.setOnPageChangeListener(pageChangeListener);
                 everythingIndex = getCurrIndex(categoryId) == -1 ? everythingIndex : getCurrIndex(categoryId);

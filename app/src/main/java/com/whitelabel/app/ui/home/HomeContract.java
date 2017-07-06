@@ -15,8 +15,10 @@ public class HomeContract {
          public void  showOnlineErrorLayout();
          public void hideOnlineErrorLayout();
          public void setShoppingCartCount(int count);
+         public void showRootView();
     }
     public  interface  Presenter extends BasePresenter<View>{
         void  getBaseCategory();
+        void   getShoppingCount();
     }
 }

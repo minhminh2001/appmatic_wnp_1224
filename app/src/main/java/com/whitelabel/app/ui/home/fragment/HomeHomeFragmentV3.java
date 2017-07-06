@@ -107,6 +107,8 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         View view = inflater.inflate(R.layout.fragment_home_category, container, false);
         ButterKnife.bind(this, view);
         setRetryTheme(view);
+        isPrepared = true;
+        init();
         return view;
     }
     @Override
@@ -121,15 +123,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         mImageLoader=new ImageLoader(getActivity());
         swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         swipeContainer.setOnRefreshListener(this);
-        if(mIndex==0) {
-            showProgressDialog();
-        }
-        String sessionKey="";
-        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
-            sessionKey=WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-        }
-        initRecyclerView();
-        mPresenter.getCategoryDetail(mCategoryId,sessionKey);
+
     }
 
     private void initRecyclerView() {
@@ -162,6 +156,35 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         if(getActivity()!=null)
         JViewUtils.showErrorToast(getActivity(),errorMsg);
     }
+
+    private boolean isPrepared, isVisible, mHasLoadedOnce;
+    public void init() {
+        if (!isPrepared || !isVisible || mHasLoadedOnce) {
+            return;
+        }
+        mHasLoadedOnce = true;
+        String sessionKey="";
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
+            sessionKey=WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+        }
+        if(mIndex==0) {
+            showProgressDialog();
+        }
+        initRecyclerView();
+        mPresenter.getCategoryDetail(mCategoryId,sessionKey);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()) {
+            isVisible = true;
+            init();
+        } else {
+            isVisible = false;
+        }
+    }
+
     @Override
     public void loadData(CategoryDetailModel categoryDetailModel) {
         if(getActivity()!=null) {

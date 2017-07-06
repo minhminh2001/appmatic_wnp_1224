@@ -91,9 +91,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                     RemoteConfigResonseModel  remoteConfigResonseModel= (RemoteConfigResonseModel) o;
                     WhiteLabelApplication.getAppConfiguration().initAppConfig(
                             remoteConfigResonseModel.getData());
-//                    DataManager.getInstance().getPreferHelper().saveConfigInfo(remoteConfigResonseModel);
                     timeOutJudgment();
-//                    mView.delayStart();
                 }else if(o instanceof GOCurrencyEntity){
                     GOCurrencyEntity currencyEntity= (GOCurrencyEntity) o;
                     WhiteLabelApplication.getAppConfiguration().getCurrency().setName(currencyEntity.getName());

@@ -55,6 +55,7 @@ public class StartPresenterImplTest {
         ArgumentCaptor<Long> argumentCaptor=ArgumentCaptor.forClass(Long.class);
         verify(mView).postDelayed(argumentCaptor.capture());
         Assert.assertTrue((argumentCaptor.getValue()<2000));
+
         startPresenter.setStartTime();
         Thread.sleep(2300);
         startPresenter.timeOutJudgment();

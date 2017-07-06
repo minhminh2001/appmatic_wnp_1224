@@ -1,5 +1,6 @@
 package com.whitelabel.app.data.preference;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
@@ -8,8 +9,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
+import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.model.UserModel;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -134,6 +137,16 @@ public class PreferHelper {
                 return beans;
             }
         });
+    }
 
+    public GOUserEntity   getUser(){
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+        String userInfo = sharedPreferences.getString("user_info", "");
+        if (!userInfo.equals("")) {
+            GOUserEntity user = JJsonUtils.getUserEntityFromJson(userInfo);
+            return user;
+        } else {
+            return null;
+        }
     }
 }

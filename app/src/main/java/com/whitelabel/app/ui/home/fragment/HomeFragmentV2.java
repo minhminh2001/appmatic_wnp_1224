@@ -1,0 +1,269 @@
+package com.whitelabel.app.ui.home.fragment;
+import android.app.Dialog;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.ImageView;
+import com.whitelabel.app.R;
+import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.data.DataManager;
+import com.whitelabel.app.data.service.BaseManager;
+import com.whitelabel.app.data.service.CommodityManager;
+import com.whitelabel.app.fragment.HomeBaseFragment;
+import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
+import com.whitelabel.app.network.BaseHttp;
+import com.whitelabel.app.ui.home.HomeContract;
+import com.whitelabel.app.ui.home.presenter.HomePresenterImpl;
+import com.whitelabel.app.utils.GaTrackHelper;
+import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.widget.CustomButton;
+import com.whitelabel.app.widget.CustomDialog;
+import com.whitelabel.app.widget.CustomHomeViewPager;
+import com.whitelabel.app.widget.CustomTabCustomPageIndicator;
+import java.util.ArrayList;
+
+/**
+ * Created by imaginato on 2015/7/17.
+ */
+public class HomeFragmentV2 extends HomeBaseFragment implements HomeActivity.HomeFragmentCallback,HomeContract.View{
+    public Long mGATrackTimeStart = 0L;
+    public boolean mGATrackTimeEnable = false;
+    private View mContainView;
+    private CustomTabCustomPageIndicator piPageIndicatory;
+    private CustomHomeViewPager vpCategoryViewPager;
+    private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> categoryArrayList;
+    private CustomTabPageIndicatorAdapter fragmentPagerAdapter;
+    private ArrayList<Fragment> mFragments;
+    private int currentCategoryFragmentIndex = 0;
+    private Dialog mDialog;
+    int categoryViewCount = 0;
+    private HomeContract.Presenter mPresenter;
+    private View rlHome;
+    private View ll_error;
+    public  static  final  int TYPE_FRAGMENT_HORIZONTAL=1;
+    public  static  final int TYPE_FRAGMENT_VERTICAL=2;
+    private int  fragmentType;
+    private final static String PARAM1="param1";
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments()!=null){
+            fragmentType=getArguments().getInt(PARAM1);
+        }
+    }
+    public static HomeFragmentV2 newInstance(int fragmentType){
+        HomeFragmentV2 homeHomeFragment=new HomeFragmentV2();
+        Bundle bundle=new Bundle();
+        bundle.putInt(PARAM1,fragmentType);
+        homeHomeFragment.setArguments(bundle);
+        return homeHomeFragment;
+    }
+    @Override
+    public void showRootView() {
+        rlHome.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void loadData(SVRAppserviceCatalogSearchReturnEntity data) {
+            if(mFragments !=null&& mFragments.size()>0){
+                JLogUtils.i("ray","====================================================");
+                for(int i = 0; i< mFragments.size(); i++){
+                    ((HomeHomeFragmentV3) mFragments.get(i)).onRefresh();
+                }
+            }else {
+              categoryArrayList = data.getCategory();
+              mFragments = new ArrayList<>();
+               for (int i = 0; i < categoryArrayList.size(); i++) {
+                    mFragments.add(createFragmentByIndex(i));
+               }
+            categoryViewCount = data.getCategory().size() - 1;
+            fragmentPagerAdapter = new CustomTabPageIndicatorAdapter(getChildFragmentManager());
+            vpCategoryViewPager.setAdapter(fragmentPagerAdapter);
+            piPageIndicatory.setViewPager(vpCategoryViewPager);
+            piPageIndicatory.setOnPageChangeListener(pageChangeListener);
+            vpCategoryViewPager.setOffscreenPageLimit(categoryViewCount);
+        }
+    }
+    @Override
+    public void dissmissProgressDialog() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+    }
+    @Override
+    public void requestData() {
+        mPresenter.getBaseCategory();
+    }
+    @Override
+    public void showOnlineErrorLayout() {
+        if (getActivity() != null) {
+            inflateIfNeeded();
+            ll_error.setVisibility(View.VISIBLE);
+            RequestErrorHelper requestErrorHelper = new RequestErrorHelper(getContext(), ll_error);
+            requestErrorHelper.showConnectionBreaks(BaseHttp.ERROR_TYPE_NET);
+            requestErrorHelper.setResponseListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    requestData();
+                }
+            });
+        }
+    }
+    @Override
+    public void hideOnlineErrorLayout() {
+        if (ll_error != null && ll_error.getVisibility() == View.VISIBLE) {
+            ll_error.setVisibility(View.GONE);
+        }
+    }
+    @Override
+    public void setShoppingCartCount(int count) {
+        mCommonCallback.updateRightIconNum(R.id.action_shopping_cart, count);
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setScrollToolBarEnable(true);
+        mContainView = inflater.inflate(R.layout.fragment_home_home, null);
+        mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+        setRetryTheme(mContainView);
+        return mContainView;
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mCommonCallback.switchMenu(HomeCommonCallback.MENU_HOME);
+        piPageIndicatory = (CustomTabCustomPageIndicator) mContainView.findViewById(R.id.ctpiCategoryList);
+        piPageIndicatory.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        vpCategoryViewPager = (CustomHomeViewPager) mContainView.findViewById(R.id.chvpContainer);
+        rlHome = mContainView.findViewById(R.id.rl_home);
+        rlHome.setVisibility(View.GONE);
+        TAG = this.getClass().getSimpleName();
+//        if (getArguments() != null) {
+//            categoryId = (String) getArguments().getSerializable("data");
+//        }
+        mPresenter=new HomePresenterImpl(this,new
+                CommodityManager(DataManager.getInstance().getProductApi(),DataManager.getInstance().getPreferHelper()),
+                new BaseManager(DataManager.getInstance().getMockApi(),DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()));
+        resetData();
+        requestData();
+        setHasOptionsMenu(true);
+    }
+    public void resetData(){
+//        everythingIndex = 0;
+        categoryViewCount = 0;
+        categoryArrayList = new ArrayList<>();
+    }
+    @Override
+    public void showProgressDialog() {
+        if (mDialog == null) {
+            mDialog = new CustomDialog(getActivity());
+        }
+        mDialog.show();
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        try {
+            mFragments.clear();
+            fragmentPagerAdapter = null;
+            vpCategoryViewPager.setAdapter(null);
+            vpCategoryViewPager.removeAllViews();
+        } catch (Exception ex) {
+            ex.getStackTrace();
+        }
+    }
+    private void inflateIfNeeded() {
+        if (ll_error == null) {
+            ll_error = ((ViewStub) mContainView.findViewById(R.id.vs_offline)).inflate();
+            ImageView ivTryAgain= (ImageView) ll_error.findViewById(R.id.iv_try_again);
+            CustomButton btnAgain= (CustomButton)  ll_error.findViewById(R.id.btn_try_again);
+            if(ivTryAgain!=null&&btnAgain!=null){
+                ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(getActivity(),R.mipmap.connection_break_loading));
+                btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+            }
+        }
+    }
+    public Fragment  createFragmentByIndex(int  index){
+        Fragment fragment=null;
+        if(fragmentType==TYPE_FRAGMENT_HORIZONTAL){
+            fragment=HomeHomeFragmentV4.newInstance(index, categoryArrayList.get(index).getId());
+        }else if(fragmentType==TYPE_FRAGMENT_VERTICAL){
+            fragment=HomeHomeFragmentV3.newInstance(index, categoryArrayList.get(index).getId());
+        }
+        return fragment;
+    }
+    class CustomTabPageIndicatorAdapter extends FragmentPagerAdapter {
+        public CustomTabPageIndicatorAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            JLogUtils.i("zzz", "getItem=" + position);
+            Fragment fragment = null;
+            Bundle bundle = new Bundle();
+            if (categoryArrayList != null && position >= 0 && categoryArrayList.size() > position) {
+                fragment = mFragments.get(position);
+                bundle.putSerializable("categoryEntity", categoryArrayList.get(position));
+                bundle.putInt("index", position);
+            }
+//            fragment.setArguments(bundle);
+            return fragment;
+        }
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            return super.instantiateItem(container, position);
+        }
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+        }
+        @Override
+        public CharSequence getPageTitle(int position) {
+            String categoryName = null;
+            if (categoryArrayList != null && position >= 0 && categoryArrayList.size() > position) {
+                final int categoryArrayListSize = categoryArrayList.size();
+                position = position % categoryArrayListSize;
+                SVRAppserviceCatalogSearchCategoryItemReturnEntity category = categoryArrayList.get(position);
+                if (category != null) {
+                    categoryName = category.getName();
+                }
+            }
+            return categoryName;
+        }
+        @Override
+        public int getCount() {
+            int count = 0;
+            if (categoryArrayList != null) {
+                count = categoryArrayList.size();
+            }
+            return count;
+        }
+    }
+    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+        @Override
+        public void onPageSelected(int position) {
+            if (categoryArrayList.size() <= position) return;
+            mFragments.get(currentCategoryFragmentIndex).onPause();
+            currentCategoryFragmentIndex = position;
+            mFragments.get(position).onResume();
+        }
+        @Override
+        public void onPageScrollStateChanged(int state) {
+        }
+    };
+
+}
