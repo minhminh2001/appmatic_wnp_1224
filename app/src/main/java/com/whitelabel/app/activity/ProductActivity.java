@@ -154,11 +154,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     private long mStockQty;
     private long mMaxSaleQty;
     private String mFromProductList;
-
     private WheelPickerConfigEntity mAttributeEntity;
-
     private ToolBarAlphaBehavior toolBarAlphaBehavior;
-
     private ImageLoader mImageLoader;
     @Override
     protected void onDestroy() {

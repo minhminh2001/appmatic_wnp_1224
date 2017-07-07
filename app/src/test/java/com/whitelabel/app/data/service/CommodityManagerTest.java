@@ -1,8 +1,6 @@
 package com.whitelabel.app.data.service;
 
 import android.util.Log;
-
-import com.whitelabel.app.SessionKeyProvider;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.model.CategoryDetailModel;
@@ -20,17 +18,12 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import  static  org.mockito.Mockito.verify;
-
 import rx.Observable;
 import rx.observers.TestSubscriber;
-
 import static org.junit.Assert.*;
-
 /**
  * Created by Administrator on 2017/7/5.
  */
@@ -42,13 +35,11 @@ public class CommodityManagerTest {
     private String productId="427";
     @Mock
     PreferHelper preferHelper;
-
     @Before
     public void setUp(){
         PowerMockito.mockStatic(Log.class);
         MockitoAnnotations.initMocks(this);
         mCommodityManager=new CommodityManager(DataManager.getInstance().getProductApi(),preferHelper);
-
     }
     @Test
     public void getProductDetail() throws Exception {
@@ -61,10 +52,8 @@ public class CommodityManagerTest {
          Assert.assertNotNull(productDetailModel);
          Assert.assertNotNull(productDetailModel.getId());
     }
-
     @Test
     public void getAllCategoryManager() throws Exception {
-
         TestSubscriber<SVRAppserviceCatalogSearchReturnEntity> testSubscriber=new TestSubscriber<>();
         mCommodityManager.getAllCategoryManager()
                 .subscribe(testSubscriber);

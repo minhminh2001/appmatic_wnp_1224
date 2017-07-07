@@ -3,8 +3,13 @@ package com.whitelabel.app.data.service;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ProductDetailModel;
+import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
+import com.whitelabel.app.model.ShoppingCartListEntityCell;
+
 import java.util.List;
+import java.util.Map;
+
 import rx.Observable;
 
 /**
@@ -16,5 +21,6 @@ public interface ICommodityManager {
     public Observable<List<AddressBook>> getAddressListCache(String userId);
     public Observable<CategoryDetailModel> getCategoryDetail(boolean isCache,String category,String sessionKey);
     public Observable<ProductDetailModel> getProductDetail(String sessionKey,String productId);
+    public Observable<ResponseModel> addProductToShoppingCart(String sessionKey, String productId,  Map<String,String> idQtys);
 
 }
