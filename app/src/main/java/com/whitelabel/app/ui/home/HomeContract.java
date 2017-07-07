@@ -20,5 +20,6 @@ public class HomeContract {
     public  interface  Presenter extends BasePresenter<View>{
         void  getBaseCategory();
         void   getShoppingCount();
+        String formatShoppingCount(int count);
     }
 }

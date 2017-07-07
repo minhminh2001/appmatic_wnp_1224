@@ -274,25 +274,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                         WhiteLabelApplication.getAppConfiguration().updateWishlist(activity.getApplicationContext(), wishDelEntityResult.getWishListItemCount());
                     }
                     break;
-//                case ProductDao.REQUEST_ADDPRODUCTLISTTOWISH:
-//                    if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
-//                        try {
-//                            AddToWishlistEntity entity = (AddToWishlistEntity) msg.obj;
-////                            String productId = (String) entity.getParams();
-////                            Iterator<SVRAppserviceProductRecommendedResultsItemReturnEntity> iterator = mActivity.get().recommendedList.iterator();
-////                            while (iterator.hasNext()) {
-////                                SVRAppserviceProductRecommendedResultsItemReturnEntity itemEntity = iterator.next();
-////                                if (itemEntity.getProductId().equals(productId)) {
-////                                    itemEntity.setIs_like(1);
-////                                    int indx = mActivity.get().recommendedList.indexOf(itemEntity);
-////                                    mActivity.get().recommendedAdapter.notifyItemChanged(indx);
-////                                }
-////                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    break;
                 case ProductDao.REQUEST_ADDPRODUCTTOWISH:
                     if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
                         AddToWishlistEntity addToWishlistEntity = (AddToWishlistEntity) msg.obj;
@@ -302,8 +283,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 //                        activity.showToast(activity, 2);
                         activity.facebookWishTrack();
                         activity.trackAddWistList();
-                    } else {
-                        String errorMsg = (String) msg.obj;
+                    } else {String errorMsg = (String) msg.obj;
+
                         if (!JToolUtils.expireHandler(activity, errorMsg, activity.REQUESTCODE_LOGIN)) {
                             Toast.makeText(activity, errorMsg + "", Toast.LENGTH_LONG).show();
                         }
@@ -316,7 +297,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     }
                     if (activity.mDialog != null) {
                         activity.mDialog.dismiss();
-                    }
+       }
                     RequestErrorHelper requestErrorHelper = new RequestErrorHelper(activity);
                     requestErrorHelper.showNetWorkErrorToast(msg);
                     break;
@@ -1894,20 +1875,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 
         }
     }
-
-//    private void refreWishIconByPDPResult(String productId, int isLike, String itemId) {
-        //pdp 页面，isLike或itemId有变动，就刷新
-//        Iterator<SVRAppserviceProductRecommendedResultsItemReturnEntity> itemReturnEntityIterator = recommendedList.iterator();
-//        while (itemReturnEntityIterator.hasNext()) {
-//            SVRAppserviceProductRecommendedResultsItemReturnEntity entity = itemReturnEntityIterator.next();
-//            if (entity.getProductId().equals(productId)) {
-//                entity.setIs_like(isLike);
-//                entity.setItem_id(itemId);
-//                recommendedAdapter.notifyDataSetChanged();
-//                continue;
-//            }
-//        }
-//    }
     //点击加入购物车时发送数据
     private   boolean reAddCart;
     private void addToCartSendRequest() {
@@ -2040,9 +2007,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
             return object;
         }
-
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -2057,7 +2022,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         JLogUtils.i("googleGA_screen", "Product Detail Screen");
     }
-
     @Override
     protected void onPause() {
         JLogUtils.d(TAG, "onPause()");
