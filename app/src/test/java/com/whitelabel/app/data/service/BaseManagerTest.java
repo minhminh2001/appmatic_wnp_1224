@@ -1,13 +1,9 @@
 package com.whitelabel.app.data.service;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.preference.PreferHelper;
-import com.whitelabel.app.data.retrofit.AppApi;
-import com.whitelabel.app.data.retrofit.MockApi;
 import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.utils.JLogUtils;
@@ -25,7 +21,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import rx.observers.TestSubscriber;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 /**

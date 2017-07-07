@@ -4,8 +4,10 @@ import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import java.util.List;
 import rx.Observable;
@@ -57,13 +59,10 @@ public class CommodityManager  implements ICommodityManager{
          }
          return count;
     }
-
-
     @Override
     public Observable<List<AddressBook>> getAddressListCache(String userId) {
         return cacheHelper.getAddressListCache(userId);
     }
-
     @Override
     public Observable<CategoryDetailModel> getCategoryDetail(boolean isCache,String category,String sessionKey) {
         if(isCache){
@@ -80,7 +79,18 @@ public class CommodityManager  implements ICommodityManager{
                         public void call(CategoryDetailModel categoryDetailModel) {
                             cacheHelper.saveCategoryDetail(categoryDetailModel);
                         }
-                    });
+             });
         }
     }
+    @Override
+    public Observable<ProductDetailModel> getProductDetail(String sessionKey, String productId) {
+         return productApi.getProductDetail(sessionKey,productId)
+                 .map(new Func1<SVRAppserviceProductDetailReturnEntity, ProductDetailModel>() {
+             @Override
+             public ProductDetailModel call(SVRAppserviceProductDetailReturnEntity svrAppserviceProductDetailReturnEntity) {
+                 return svrAppserviceProductDetailReturnEntity.getResult();
+             }
+         });
+    }
+
 }

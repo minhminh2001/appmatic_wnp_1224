@@ -8,6 +8,7 @@ import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 
 import java.util.List;
@@ -49,5 +50,6 @@ public interface ProductApi {
    @POST("appservice/catalogSearch")
     public Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory();
 
-
+    @GET("appservice/product/detail")
+    public Observable<SVRAppserviceProductDetailReturnEntity> getProductDetail(@Query("session_key") String sessionKey,@Query("product_id") String productId);
 }

@@ -2,13 +2,13 @@ package com.whitelabel.app.data.service;
 
 import android.util.Log;
 
+import com.whitelabel.app.SessionKeyProvider;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.preference.PreferHelper;
-import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,12 +38,10 @@ import static org.junit.Assert.*;
 @PrepareForTest({Log.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class CommodityManagerTest {
-
     private CommodityManager mCommodityManager;
-
+    private String productId="427";
     @Mock
     PreferHelper preferHelper;
-
 
     @Before
     public void setUp(){
@@ -52,6 +50,18 @@ public class CommodityManagerTest {
         mCommodityManager=new CommodityManager(DataManager.getInstance().getProductApi(),preferHelper);
 
     }
+    @Test
+    public void getProductDetail() throws Exception {
+        TestSubscriber<ProductDetailModel> testSubscriber=new TestSubscriber<>();
+        mCommodityManager.getProductDetail("",productId).
+                subscribe(testSubscriber);
+        testSubscriber.assertNoErrors();
+        testSubscriber.assertCompleted();
+         ProductDetailModel productDetailModel=testSubscriber.getOnNextEvents().get(0);
+         Assert.assertNotNull(productDetailModel);
+         Assert.assertNotNull(productDetailModel.getId());
+    }
+
     @Test
     public void getAllCategoryManager() throws Exception {
 
@@ -72,7 +82,6 @@ public class CommodityManagerTest {
         TestSubscriber<CategoryDetailModel>  testSubscriber=TestSubscriber.create();
         mCommodityManager.getCategoryDetail(false,"4","").
                 subscribe(testSubscriber);
-
        testSubscriber.assertNoErrors();
        testSubscriber.assertCompleted();
         CategoryDetailModel categoryDetailModel= testSubscriber.getOnNextEvents().get(0);

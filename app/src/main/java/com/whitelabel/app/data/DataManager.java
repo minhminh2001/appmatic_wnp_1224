@@ -1,7 +1,7 @@
 package com.whitelabel.app.data;
 
 import com.whitelabel.app.data.preference.PreferHelper;
-import com.whitelabel.app.data.retrofit.AppApi;
+import com.whitelabel.app.data.retrofit.BaseApi;
 import com.whitelabel.app.data.retrofit.CheckoutApi;
 import com.whitelabel.app.data.retrofit.MockApi;
 import com.whitelabel.app.data.retrofit.MyAccoutApi;
@@ -15,7 +15,7 @@ public class DataManager {
     private static  DataManager dataManager;
     private PreferHelper  preferHelper;
     private CheckoutApi checkoutApi;
-    private  AppApi mAppApi;
+    private BaseApi mAppApi;
     private ProductApi  mProductApi;
     private MyAccoutApi mMyAccountApi;
     private static String mBaseUrl;
@@ -23,8 +23,8 @@ public class DataManager {
     private DataManager(){
     }
     public static DataManager getInstance(){
-        mBaseUrl="https://dev2.wnp.com.hk/";
-        mMockUrl="https://dev2.wnp.com.hk/";
+        mBaseUrl="http://192.168.1.233:9090/";
+        mMockUrl="http://192.168.1.233:8080/";
         if(dataManager==null){
             synchronized (DataManager.class){
                 dataManager=new DataManager();
@@ -65,10 +65,10 @@ public class DataManager {
             }
         return checkoutApi;
     }
-    public AppApi  getAppApi(){
+    public BaseApi getAppApi(){
         if(mAppApi==null){
             synchronized (DataManager.class){
-                mAppApi= new RetrofitHelper(mBaseUrl,mMockUrl).getDefaultRetrofit().create(AppApi.class);
+                mAppApi= new RetrofitHelper(mBaseUrl,mMockUrl).getDefaultRetrofit().create(BaseApi.class);
             }
         }
         return mAppApi;

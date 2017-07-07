@@ -19,13 +19,11 @@ public class AccountManager implements IAccountManager{
     public AccountManager(MyAccoutApi myAccoutApi){
         this.myAccoutApi=myAccoutApi;
     }
-
     @Override
     public Observable<ResponseModel>  deleteAddressById(final String sessionKey, String addressId) {
        return myAccoutApi.deleteAddressById(sessionKey,addressId)
                .compose(RxUtil.<ResponseModel>rxSchedulerHelper());
     }
-
     @Override
     public Observable<AddresslistReslut> getAddressList(final String sessionKey) {
         return myAccoutApi.getAddressList(sessionKey)
@@ -35,5 +33,15 @@ public class AccountManager implements IAccountManager{
                         return Observable.error(throwable);
                     }
                 });
+    }
+
+    @Override
+    public Observable<ResponseModel> addWishlist(String sessionKey, String productId) {
+        return myAccoutApi.addWish(sessionKey,productId);
+    }
+
+    @Override
+    public Observable<ResponseModel> deleteWishlist(String sessionKey, String itemId) {
+        return  myAccoutApi.deleteWishById(sessionKey,itemId);
     }
 }

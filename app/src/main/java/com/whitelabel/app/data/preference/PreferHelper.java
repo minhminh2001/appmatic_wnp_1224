@@ -30,7 +30,7 @@ import rx.observables.AsyncOnSubscribe;
  * Created by Administrator on 2017/1/3.
  */
 
-public class PreferHelper {
+public class PreferHelper  implements ICacheApi{
     private static  final String FILE_NAME="whtelabel";
     private static final String TABLE_CONFIG="config";
     private static final String TABLE_CURRENCY="currency";
