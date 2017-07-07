@@ -1,24 +1,12 @@
 package com.whitelabel.app.ui.common;
 
-import android.support.annotation.NonNull;
-
 import com.whitelabel.app.RxUnitTestTools;
-import com.whitelabel.app.data.DataManager;
-import com.whitelabel.app.data.service.AccountManager;
-import com.whitelabel.app.data.service.CommodityManager;
 import com.whitelabel.app.data.service.IAccountManager;
-import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.AddresslistReslut;
-import com.whitelabel.app.model.GOCurrencyEntity;
-import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.ResponseModel;
-import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
-import com.whitelabel.app.ui.start.StartContract;
-import com.whitelabel.app.ui.start.StartPresenterImpl;
 import com.whitelabel.app.utils.JLogUtils;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -26,15 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
-import rx.exceptions.OnErrorFailedException;
-
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by kevin on 2017/7/6.
