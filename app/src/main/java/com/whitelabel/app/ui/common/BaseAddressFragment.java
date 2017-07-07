@@ -19,6 +19,9 @@ import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.activity.EditAddressActivity;
 import com.whitelabel.app.adapter.AddressBookAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.data.DataManager;
+import com.whitelabel.app.data.service.AccountManager;
+import com.whitelabel.app.data.service.CommodityManager;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.utils.JLogUtils;
@@ -131,7 +134,7 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     @Override
     public void onRefresh() {
         String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-        mPresenter.getAddressListOnLine(sessionKey);
+        mPresenter.getAddressListOnLine(sessionKey,WhiteLabelApplication.getAppConfiguration().getUser().getId());
     }
     @Override
     public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
@@ -142,7 +145,9 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
             case 1:
                 showProgressDialog();
                 String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-                mPresenter.deleteAddressById(sessionKey,mAddressBookAdapter.getData().get(position).getAddressId());
+                mPresenter.deleteAddressById(sessionKey,
+                        mAddressBookAdapter.getData().get(position).getAddressId(),
+                WhiteLabelApplication.getAppConfiguration().getUser().getId());
                 break;
         }
         return false;
@@ -161,7 +166,10 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         if (getArguments() != null) {
             useCache = getArguments().getBoolean(EXTRA_USE_CACHE);
         }
-        return new BaseAddressPresenter(useCache);
+        return new BaseAddressPresenter(useCache,
+                new CommodityManager(DataManager.getInstance().getProductApi(),
+                        DataManager.getInstance().getPreferHelper()),
+                 new AccountManager(DataManager.getInstance().getMyAccountApi()),this);
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -179,12 +187,12 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
     @Override
     public void loadCachaData(List<AddressBook> addressBooks) {
             String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-            mPresenter.getAddressListOnLine(sessionKey);
+            mPresenter.getAddressListOnLine(sessionKey,WhiteLabelApplication.getAppConfiguration().getUser().getId());
             loadData(addressBooks);
     }
     public void requestCacheData(){
         String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-        mPresenter.getAddressListCache(sessionKey);
+        mPresenter.getAddressListCache(sessionKey,WhiteLabelApplication.getAppConfiguration().getUser().getId());
     }
     public void  requestData(){
         String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
@@ -193,7 +201,7 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         }else{
             showProgressDialog();
         }
-        mPresenter.getAddressListOnLine(sessionKey);
+        mPresenter.getAddressListOnLine(sessionKey,WhiteLabelApplication.getAppConfiguration().getUser().getId());
     }
     public void setSwipeListView() {
         SwipeMenuCreator creator = new SwipeMenuCreator() {

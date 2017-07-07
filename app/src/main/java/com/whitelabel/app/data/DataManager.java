@@ -23,8 +23,8 @@ public class DataManager {
     private DataManager(){
     }
     public static DataManager getInstance(){
-        mBaseUrl="http://192.168.1.233:9090/";
-        mMockUrl="http://192.168.1.233:8088/";
+        mBaseUrl="https://dev2.wnp.com.hk/";
+        mMockUrl="https://dev2.wnp.com.hk/";
         if(dataManager==null){
             synchronized (DataManager.class){
                 dataManager=new DataManager();

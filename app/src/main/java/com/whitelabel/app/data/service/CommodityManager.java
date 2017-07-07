@@ -1,12 +1,19 @@
 package com.whitelabel.app.data.service;
 
+import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.data.retrofit.ProductApi;
+import com.whitelabel.app.model.AddressBook;
+import com.whitelabel.app.model.ApiFaildException;
+import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceSaveBillingEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.RxUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -60,5 +67,10 @@ public class CommodityManager  implements ICommodityManager{
                 count+=tmp.getSelectedQty();
          }
          return count;
+    }
+
+    @Override
+    public Observable<List<AddressBook>> getAddressListCache(String userId) {
+        return cacheHelper.getAddressListCache(userId);
     }
 }
