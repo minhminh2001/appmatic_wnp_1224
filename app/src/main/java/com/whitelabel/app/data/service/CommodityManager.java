@@ -1,23 +1,16 @@
 package com.whitelabel.app.data.service;
 
-import android.util.Log;
-
 import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.data.retrofit.ProductApi;
+import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
-import com.whitelabel.app.model.SVRAppserviceSaveBillingEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
-import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.RxUtil;
-
 import java.util.List;
-
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2017/7/5.
@@ -64,6 +57,13 @@ public class CommodityManager  implements ICommodityManager{
          }
          return count;
     }
+
+
+    @Override
+    public Observable<List<AddressBook>> getAddressListCache(String userId) {
+        return cacheHelper.getAddressListCache(userId);
+    }
+
     @Override
     public Observable<CategoryDetailModel> getCategoryDetail(boolean isCache,String category,String sessionKey) {
         if(isCache){
