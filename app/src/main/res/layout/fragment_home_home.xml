@@ -51,6 +51,7 @@
     <ViewStub
         android:id="@+id/vs_offline"
         android:layout="@layout/connection_breaks"
+        android:visibility="gone"
         android:layout_below="@+id/rlHeaderBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

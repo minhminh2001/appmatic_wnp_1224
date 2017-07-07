@@ -100,6 +100,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
         }, new Action1<Throwable>() {
             @Override
             public void call(Throwable throwable) {
+                JLogUtils.i("ray","throwabel:"+throwable.getMessage());
             }
         });
     }

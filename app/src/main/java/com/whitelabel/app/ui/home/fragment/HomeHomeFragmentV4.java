@@ -17,6 +17,9 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.data.DataManager;
+import com.whitelabel.app.data.service.BaseManager;
+import com.whitelabel.app.data.service.CommodityManager;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
@@ -86,9 +89,27 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
         fragment.setArguments(args);
         return fragment;
     }
+
+    @Override
+    public void dissmissProgressDialog() {
+
+    }
+
+    @Override
+    public void showSwipeLayout() {
+
+    }
+
+    @Override
+    public void closeSwipeLayout() {
+
+    }
+
     @Override
     public HomeCategoryDetailContract.Presenter getPresenter() {
-        return new HomeCategoryDetailPresenterImpl();
+        return new HomeCategoryDetailPresenterImpl(new
+                CommodityManager(DataManager.getInstance().getProductApi(),DataManager.getInstance().getPreferHelper()),
+                new BaseManager(DataManager.getInstance().getMockApi(),DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),this);
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,11 +123,7 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public void onRefresh() {
         if (getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
-            String sessionKey = "";
-            if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-                sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-            }
-            mPresenter.getCategoryDetail(mCategoryId, sessionKey);
+            mPresenter.getCategoryDetail(mCategoryId);
         }
     }
     @Override
@@ -120,14 +137,7 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     }
     @Override
     public void requestData() {
-        if(mIndex==0) {
-            showProgressDialog();
-        }
-        String sessionKey="";
-        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
-            sessionKey=WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-        }
-        mPresenter.getCategoryDetail(mCategoryId,sessionKey);
+        mPresenter.getCategoryDetail(mCategoryId);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

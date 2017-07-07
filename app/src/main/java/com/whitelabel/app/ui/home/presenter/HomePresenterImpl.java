@@ -39,7 +39,6 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
                             mView.showRootView();
                             mView.hideOnlineErrorLayout();
                             mView.loadData(svrAppserviceCatalogSearchReturnEntity);
-
                             firstLoading=false;
                           }
                       }, new Action1<Throwable>() {
@@ -72,9 +71,9 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
         public void setShoppingCartCount(int count){
             if(mBaseManager.isSign()) {
                  int  sumCount= (int) (mBaseManager.getUser().getCartItemCount()+count);
-                mView.setShoppingCartCount(sumCount);
+                mView.setShoppingCartCount(10);
             }else{
-                mView.setShoppingCartCount(count);
+                mView.setShoppingCartCount(15);
             }
         }
 

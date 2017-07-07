@@ -70,7 +70,7 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        Fabric.with(this, new Crashlytics());
+//        Fabric.with(this, new Crashlytics());
         ImageView imageView= (ImageView) findViewById(R.id.start_logo_imageview);
         imageView.setImageResource(R.mipmap.icon_v1);
         mCallback=new INITApp(StartActivityV2.this, new MeInitCallBack(this));
@@ -118,6 +118,15 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
         }
         return true;
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mProgressDialog!=null){
+            mProgressDialog.dismiss();
+        }
+    }
+
     @Override
     protected void onDestroy() {
         if(mCallback!=null){

@@ -20,7 +20,6 @@
         android:layout_height="@dimen/shoppingcart_icon_num_wh"
         android:layout_alignParentTop="true"
         android:layout_marginTop="7dp"
-        android:text=""
         android:visibility="gone"
         android:gravity="center"
         android:background="@drawable/bg_cart_number"
