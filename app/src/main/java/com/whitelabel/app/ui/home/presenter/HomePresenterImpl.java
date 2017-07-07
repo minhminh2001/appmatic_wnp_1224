@@ -71,9 +71,9 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
         public void setShoppingCartCount(int count){
             if(mBaseManager.isSign()) {
                  int  sumCount= (int) (mBaseManager.getUser().getCartItemCount()+count);
-                mView.setShoppingCartCount(10);
+                mView.setShoppingCartCount(sumCount);
             }else{
-                mView.setShoppingCartCount(15);
+                mView.setShoppingCartCount(count);
             }
         }
 

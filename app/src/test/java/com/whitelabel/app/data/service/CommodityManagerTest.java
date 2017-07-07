@@ -1,5 +1,7 @@
 package com.whitelabel.app.data.service;
 
+import android.util.Log;
+
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.data.retrofit.ProductApi;
@@ -10,9 +12,14 @@ import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +34,9 @@ import static org.junit.Assert.*;
 /**
  * Created by Administrator on 2017/7/5.
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Log.class})
+@PowerMockIgnore("javax.net.ssl.*")
 public class CommodityManagerTest {
 
     private CommodityManager mCommodityManager;
@@ -37,6 +47,7 @@ public class CommodityManagerTest {
 
     @Before
     public void setUp(){
+        PowerMockito.mockStatic(Log.class);
         MockitoAnnotations.initMocks(this);
         mCommodityManager=new CommodityManager(DataManager.getInstance().getProductApi(),preferHelper);
 

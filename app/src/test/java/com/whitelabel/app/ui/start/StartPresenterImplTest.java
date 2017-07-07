@@ -1,5 +1,7 @@
 package com.whitelabel.app.ui.start;
 
+import android.util.Log;
+
 import com.whitelabel.app.RxUnitTestTools;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.model.GOCurrencyEntity;
@@ -8,10 +10,15 @@ import com.whitelabel.app.model.RemoteConfigResonseModel;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 import  static org.mockito.Mockito.verify;
 
 import java.util.Observable;
@@ -21,8 +28,9 @@ import static org.junit.Assert.*;
 /**
  * Created by Administrator on 2017/7/5.
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Log.class})
 public class StartPresenterImplTest {
-
     @Mock
     private IBaseManager iBaseManager;
     @Mock
@@ -31,6 +39,7 @@ public class StartPresenterImplTest {
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
+        PowerMockito.mockStatic(Log.class);
         RxUnitTestTools.openRxTools();
         startPresenter=new StartPresenterImpl(mView,iBaseManager);
     }

@@ -1,5 +1,7 @@
 package com.whitelabel.app.ui.home.presenter;
 
+import android.util.Log;
+
 import com.whitelabel.app.RxUnitTestTools;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
@@ -8,10 +10,16 @@ import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 import  static org.mockito.Mockito.verify;
 import java.util.Observable;
 
@@ -22,6 +30,9 @@ import static org.junit.Assert.*;
 /**
  * Created by Administrator on 2017/7/7.
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Log.class})
+@PowerMockIgnore("javax.net.ssl.*")
 public class HomeCategoryDetailPresenterImplTest {
     HomeCategoryDetailContract.Presenter presenter;
     @Mock
@@ -30,10 +41,10 @@ public class HomeCategoryDetailPresenterImplTest {
     IBaseManager iBaseManager;
     @Mock
     HomeCategoryDetailContract.View mView;
-
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
+        PowerMockito.mockStatic(Log.class);
         RxUnitTestTools.openRxTools();
         presenter=new HomeCategoryDetailPresenterImpl(iCommodityManager,iBaseManager,mView);
     }
