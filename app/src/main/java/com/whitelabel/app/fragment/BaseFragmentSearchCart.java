@@ -32,13 +32,20 @@ public class BaseFragmentSearchCart<T extends BasePresenter> extends com.whitela
     protected String TAG = "BaseFragmentSearchCart";
     protected boolean showSearch = true;
     protected boolean showCart = true;
+    protected boolean showSearchOptionMenu=true;
     MenuItem cartItem;
     MenuItem searchItem;
 
+    public void  setSearchOptionMenu(boolean enable){
+        showSearchOptionMenu=enable;
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search_shopping_cart, menu);
-        initCartMenu(menu);
+        if(showSearchOptionMenu) {
+            inflater.inflate(R.menu.menu_search_shopping_cart, menu);
+            initCartMenu(menu);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 

@@ -39,7 +39,6 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
                             mView.showRootView();
                             mView.hideOnlineErrorLayout();
                             mView.loadData(svrAppserviceCatalogSearchReturnEntity);
-
                             firstLoading=false;
                           }
                       }, new Action1<Throwable>() {

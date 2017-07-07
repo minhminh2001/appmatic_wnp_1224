@@ -40,22 +40,22 @@ public class JViewUtil {//Full screen transparent;getToolBarHeight
         listView.setLayoutParams(params);
     }
     public static void setTranslucentStatus(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window win = activity.getWindow();
-            WindowManager.LayoutParams winParams = win.getAttributes();
-            final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-            final int bit = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-            winParams.flags |= bit;
-            winParams.flags |= bits;
-            win.setAttributes(winParams);
-        }
-        SystemBarTintManager tintManager = new SystemBarTintManager(activity);
-
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(0);
-
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setNavigationBarTintResource(0);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            Window win = activity.getWindow();
+//            WindowManager.LayoutParams winParams = win.getAttributes();
+//            final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+//            final int bit = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
+//            winParams.flags |= bit;
+//            winParams.flags |= bits;
+//            win.setAttributes(winParams);
+//        }
+//        SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+//
+//        tintManager.setStatusBarTintEnabled(true);
+//        tintManager.setStatusBarTintResource(0);
+//
+//        tintManager.setNavigationBarTintEnabled(true);
+//        tintManager.setNavigationBarTintResource(0);
     }
 
     public static int getToolBarHeight(Context context) {

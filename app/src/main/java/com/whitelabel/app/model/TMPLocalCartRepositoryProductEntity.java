@@ -26,6 +26,12 @@ public class TMPLocalCartRepositoryProductEntity implements Serializable {
     private String vendorDisplayName;
     private String visibility;
     private String vendor_id;
+    public TMPLocalCartRepositoryProductEntity(){
+
+    }
+    public TMPLocalCartRepositoryProductEntity(long selectQty){
+        this.selectedQty=selectQty;
+    }
 
     public String getBrandId() {
         return brandId;

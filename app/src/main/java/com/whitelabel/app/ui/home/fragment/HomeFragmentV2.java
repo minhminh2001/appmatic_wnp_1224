@@ -1,18 +1,28 @@
 package com.whitelabel.app.ui.home.fragment;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.BaseManager;
@@ -26,6 +36,7 @@ import com.whitelabel.app.ui.home.presenter.HomePresenterImpl;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomDialog;
@@ -61,6 +72,13 @@ public class HomeFragmentV2 extends HomeBaseFragment implements HomeActivity.Hom
         if(getArguments()!=null){
             fragmentType=getArguments().getInt(PARAM1);
         }
+        setSearchOptionMenu(false);
+        if(mPresenter==null) {
+            mPresenter = new HomePresenterImpl(this, new
+                    CommodityManager(DataManager.getInstance().getProductApi(), DataManager.getInstance().getPreferHelper()),
+                    new BaseManager(DataManager.getInstance().getMockApi(), DataManager.getInstance().getAppApi(), DataManager.getInstance().getPreferHelper()));
+        }
+        setHasOptionsMenu(true);
     }
     public static HomeFragmentV2 newInstance(int fragmentType){
         HomeFragmentV2 homeHomeFragment=new HomeFragmentV2();
@@ -69,15 +87,44 @@ public class HomeFragmentV2 extends HomeBaseFragment implements HomeActivity.Hom
         homeHomeFragment.setArguments(bundle);
         return homeHomeFragment;
     }
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        mCommonCallback.setHomeSearchBarAndOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), ProductListActivity.class);
+                intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_HOME);
+                intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS);
+                getActivity().startActivity(intent);
+
+            }
+        });
+        inflater.inflate(R.menu.menu_home, menu);
+        MenuItem cartItem = menu.findItem(R.id.action_shopping_cart);
+        MenuItemCompat.setActionView(cartItem, R.layout.item_count);
+        View view = cartItem.getActionView();
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), HomeActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        ImageView ivImg= (ImageView) view.findViewById(R.id.iv_img);
+        JViewUtils.setNavBarIconColor(getActivity(),ivImg,R.drawable.action_cart);
+        JLogUtils.i("HomeFragmentV2","start");
+        mPresenter.getShoppingCount();
+    }
     @Override
     public void showRootView() {
         rlHome.setVisibility(View.VISIBLE);
     }
-
     @Override
     public void loadData(SVRAppserviceCatalogSearchReturnEntity data) {
             if(mFragments !=null&& mFragments.size()>0){
-                JLogUtils.i("ray","====================================================");
                 for(int i = 0; i< mFragments.size(); i++){
                     ((HomeHomeFragmentV3) mFragments.get(i)).onRefresh();
                 }
@@ -115,7 +162,7 @@ public class HomeFragmentV2 extends HomeBaseFragment implements HomeActivity.Hom
             requestErrorHelper.setResponseListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    requestData();
+            requestData();
                 }
             });
         }
@@ -128,7 +175,14 @@ public class HomeFragmentV2 extends HomeBaseFragment implements HomeActivity.Hom
     }
     @Override
     public void setShoppingCartCount(int count) {
+        JLogUtils.i("HomeFragmentV2","count:"+count);
         mCommonCallback.updateRightIconNum(R.id.action_shopping_cart, count);
+        MenuItem menuItem= mCommonCallback.getToolBar().getMenu().findItem(R.id.action_shopping_cart);
+        TextView textView= (TextView) menuItem.getActionView().findViewById(R.id.ctv_home_shoppingcart_num);
+        textView.setVisibility(View.VISIBLE);
+        textView.setBackground(JImageUtils.getThemeCircle(getActivity()));
+        textView.setText(count+"");
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -146,17 +200,11 @@ public class HomeFragmentV2 extends HomeBaseFragment implements HomeActivity.Hom
         piPageIndicatory.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         vpCategoryViewPager = (CustomHomeViewPager) mContainView.findViewById(R.id.chvpContainer);
         rlHome = mContainView.findViewById(R.id.rl_home);
-        rlHome.setVisibility(View.GONE);
         TAG = this.getClass().getSimpleName();
-//        if (getArguments() != null) {
-//            categoryId = (String) getArguments().getSerializable("data");
-//        }
-        mPresenter=new HomePresenterImpl(this,new
-                CommodityManager(DataManager.getInstance().getProductApi(),DataManager.getInstance().getPreferHelper()),
-                new BaseManager(DataManager.getInstance().getMockApi(),DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()));
+
         resetData();
         requestData();
-        setHasOptionsMenu(true);
+
     }
     public void resetData(){
 //        everythingIndex = 0;

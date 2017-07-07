@@ -16,7 +16,6 @@ import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 import java.util.List;
-
 import rx.Subscriber;
 import rx.Subscription;
 import rx.exceptions.OnErrorFailedException;

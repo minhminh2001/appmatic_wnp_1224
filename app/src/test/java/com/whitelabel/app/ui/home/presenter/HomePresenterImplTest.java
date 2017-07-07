@@ -1,5 +1,7 @@
 package com.whitelabel.app.ui.home.presenter;
 
+import android.util.Log;
+
 import com.whitelabel.app.RxUnitTestTools;
 import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CommodityManager;
@@ -10,10 +12,16 @@ import com.whitelabel.app.ui.home.HomeContract;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 import static  org.mockito.Mockito.verify;
 import java.util.Observable;
 
@@ -21,18 +29,21 @@ import java.util.Observable;
 /**
  * Created by Administrator on 2017/7/6.
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Log.class})
+@PowerMockIgnore("javax.net.ssl.*")
 public class HomePresenterImplTest {
     private HomePresenterImpl homePresenter;
     @Mock
     BaseManager baseManager;
     @Mock
     CommodityManager  commodityManager;
-
     @Mock
     HomeContract.View mView;
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
+        PowerMockito.mockStatic(Log.class);
         RxUnitTestTools.openRxTools();
         homePresenter=new HomePresenterImpl(mView,commodityManager,baseManager);
     }

@@ -1,25 +1,16 @@
 package com.whitelabel.app.data.service;
 
-import com.whitelabel.app.application.WhiteLabelApplication;
-import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.model.AddressBook;
-import com.whitelabel.app.model.ApiFaildException;
+import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
-import com.whitelabel.app.model.SVRAppserviceSaveBillingEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
-import com.whitelabel.app.utils.ErrorHandlerAction;
-import com.whitelabel.app.utils.RxUtil;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2017/7/5.
@@ -27,7 +18,7 @@ import rx.schedulers.Schedulers;
 public class CommodityManager  implements ICommodityManager{
     private ProductApi  productApi;
     private PreferHelper  cacheHelper;
-    private SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity;
+    public SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity;
     public CommodityManager(ProductApi productApi, PreferHelper preferHelper){
         this.productApi=productApi;
         cacheHelper=preferHelper;
@@ -36,7 +27,6 @@ public class CommodityManager  implements ICommodityManager{
     public Observable<SVRAppserviceCatalogSearchReturnEntity> getAllCategoryManager() {
         if(svrAppserviceCatalogSearchReturnEntity==null) {
             return productApi.getBaseCategory()
-                    .subscribeOn(Schedulers.io())
                     .doOnNext(new Action1<SVRAppserviceCatalogSearchReturnEntity>() {
                 @Override
                 public void call(SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity) {
@@ -50,7 +40,6 @@ public class CommodityManager  implements ICommodityManager{
     @Override
     public Observable<Integer> getLocalShoppingProductCount() {
         return cacheHelper.getShoppingCartProduct()
-                .subscribeOn(Schedulers.io())
         .flatMap(new Func1<List<TMPLocalCartRepositoryProductEntity>, Observable<Integer>>() {
             @Override
             public Observable<Integer> call(List<TMPLocalCartRepositoryProductEntity> tmpLocalCartRepositoryProductEntities) {
@@ -69,8 +58,29 @@ public class CommodityManager  implements ICommodityManager{
          return count;
     }
 
+
     @Override
     public Observable<List<AddressBook>> getAddressListCache(String userId) {
         return cacheHelper.getAddressListCache(userId);
+    }
+
+    @Override
+    public Observable<CategoryDetailModel> getCategoryDetail(boolean isCache,String category,String sessionKey) {
+        if(isCache){
+            return cacheHelper.getCategoryDetail(category);
+        }else {
+            return productApi.getCategoryDetail(category, sessionKey)
+                    .map(new Func1<ResponseModel<CategoryDetailModel>, CategoryDetailModel>() {
+                        @Override
+                        public CategoryDetailModel call(ResponseModel<CategoryDetailModel> categoryDetailModelResponseModel) {
+                            return categoryDetailModelResponseModel.getData();
+                        }
+                    }).doOnNext(new Action1<CategoryDetailModel>() {
+                        @Override
+                        public void call(CategoryDetailModel categoryDetailModel) {
+                            cacheHelper.saveCategoryDetail(categoryDetailModel);
+                        }
+                    });
+        }
     }
 }

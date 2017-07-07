@@ -110,7 +110,7 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
     }
     @Override
     public void onClick(View v) {
-        int DELAY = 250;
+        int DELAY = 300;
         switch (v.getId()) {
             case R.id.rl_drawer_home:
                 drawerLayout.closeDrawer(Gravity.LEFT);
