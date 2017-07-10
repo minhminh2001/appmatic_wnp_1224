@@ -34,8 +34,10 @@ import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.ui.home.HomeContract;
 import com.whitelabel.app.ui.home.presenter.HomePresenterImpl;
 import com.whitelabel.app.utils.GaTrackHelper;
+import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomButton;
@@ -175,13 +177,12 @@ public class HomeFragmentV2 extends HomeBaseFragment implements HomeActivity.Hom
     }
     @Override
     public void setShoppingCartCount(int count) {
-        JLogUtils.i("HomeFragmentV2","count:"+count);
         mCommonCallback.updateRightIconNum(R.id.action_shopping_cart, count);
         MenuItem menuItem= mCommonCallback.getToolBar().getMenu().findItem(R.id.action_shopping_cart);
         TextView textView= (TextView) menuItem.getActionView().findViewById(R.id.ctv_home_shoppingcart_num);
         textView.setVisibility(View.VISIBLE);
         textView.setBackground(JImageUtils.getThemeCircle(getActivity()));
-        textView.setText(count+"");
+        textView.setText(mPresenter.formatShoppingCount(count));
 
     }
     @Override

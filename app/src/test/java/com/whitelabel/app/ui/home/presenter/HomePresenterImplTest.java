@@ -33,6 +33,14 @@ import java.util.Observable;
 @PrepareForTest({Log.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class HomePresenterImplTest {
+    @Test
+    public void formatShoppingCount() throws Exception {
+            String formatCount= homePresenter.formatShoppingCount(99);
+            Assert.assertEquals(formatCount,"99");
+            String formatCount1=homePresenter.formatShoppingCount(100);
+            Assert.assertEquals(formatCount1,"99+");
+    }
+
     private HomePresenterImpl homePresenter;
     @Mock
     BaseManager baseManager;

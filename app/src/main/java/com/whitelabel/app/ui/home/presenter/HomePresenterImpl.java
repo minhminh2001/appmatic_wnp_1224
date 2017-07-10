@@ -49,7 +49,6 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
                       });
             addSubscrebe(subscription);
         }
-
        public void getShoppingCount(){
           Subscription  subscription=  mCommodityManager.getLocalShoppingProductCount()
                     .compose(RxUtil.<Integer>rxSchedulerHelper())
@@ -68,13 +67,23 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
             });
           addSubscrebe(subscription);
         }
+
+
+    @Override
+    public String formatShoppingCount(int count) {
+           if(count>99){
+               return "99+";
+           }else{
+               return count+"";
+           }
+    }
         public void setShoppingCartCount(int count){
             if(mBaseManager.isSign()) {
-                 int  sumCount= (int) (mBaseManager.getUser().getCartItemCount()+count);
-                mView.setShoppingCartCount(sumCount);
-            }else{
-                mView.setShoppingCartCount(count);
+                count= (int) (mBaseManager.getUser().getCartItemCount()+count);
             }
+             if(count!=0) {
+                 mView.setShoppingCartCount(count);
+             }
         }
 
 }

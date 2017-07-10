@@ -1,14 +1,12 @@
 package com.whitelabel.app.data.service;
 
 import android.util.Log;
-
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.preference.PreferHelper;
-import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,17 +18,12 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import  static  org.mockito.Mockito.verify;
-
 import rx.Observable;
 import rx.observers.TestSubscriber;
-
 import static org.junit.Assert.*;
-
 /**
  * Created by Administrator on 2017/7/5.
  */
@@ -38,23 +31,29 @@ import static org.junit.Assert.*;
 @PrepareForTest({Log.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class CommodityManagerTest {
-
     private CommodityManager mCommodityManager;
-
+    private String productId="427";
     @Mock
     PreferHelper preferHelper;
-
-
     @Before
     public void setUp(){
         PowerMockito.mockStatic(Log.class);
         MockitoAnnotations.initMocks(this);
         mCommodityManager=new CommodityManager(DataManager.getInstance().getProductApi(),preferHelper);
-
+    }
+    @Test
+    public void getProductDetail() throws Exception {
+        TestSubscriber<ProductDetailModel> testSubscriber=new TestSubscriber<>();
+        mCommodityManager.getProductDetail("",productId).
+                subscribe(testSubscriber);
+        testSubscriber.assertNoErrors();
+        testSubscriber.assertCompleted();
+         ProductDetailModel productDetailModel=testSubscriber.getOnNextEvents().get(0);
+         Assert.assertNotNull(productDetailModel);
+         Assert.assertNotNull(productDetailModel.getId());
     }
     @Test
     public void getAllCategoryManager() throws Exception {
-
         TestSubscriber<SVRAppserviceCatalogSearchReturnEntity> testSubscriber=new TestSubscriber<>();
         mCommodityManager.getAllCategoryManager()
                 .subscribe(testSubscriber);
@@ -72,7 +71,6 @@ public class CommodityManagerTest {
         TestSubscriber<CategoryDetailModel>  testSubscriber=TestSubscriber.create();
         mCommodityManager.getCategoryDetail(false,"4","").
                 subscribe(testSubscriber);
-
        testSubscriber.assertNoErrors();
        testSubscriber.assertCompleted();
         CategoryDetailModel categoryDetailModel= testSubscriber.getOnNextEvents().get(0);
