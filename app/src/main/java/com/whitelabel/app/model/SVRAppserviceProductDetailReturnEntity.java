@@ -6,6 +6,15 @@ package com.whitelabel.app.model;
 public class SVRAppserviceProductDetailReturnEntity extends SVRReturnEntity {
     private int status;
     private ProductDetailModel result;
+    private String errorMessage;
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     public int getStatus() {
         return status;

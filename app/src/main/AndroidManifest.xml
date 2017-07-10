@@ -141,6 +141,13 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:theme="@style/BackgroundWhiteTheme" />
+
+
+        <activity
+            android:name=".ui.productdetail.ProductDetailActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:theme="@style/BackgroundWhiteTheme" />
         <activity
             android:name=".activity.ShoppingCartActivity1"
             android:screenOrientation="portrait"

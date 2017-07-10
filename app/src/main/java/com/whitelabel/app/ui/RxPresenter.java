@@ -1,9 +1,7 @@
 package com.whitelabel.app.ui;
 
 
-import com.whitelabel.app.data.retrofit.ApiFaildException;
-import com.whitelabel.app.ui.BasePresenter;
-import com.whitelabel.app.ui.BaseView;
+import com.whitelabel.app.data.retrofit.ApiErrorException;
 import com.whitelabel.app.utils.JLogUtils;
 
 import rx.Subscription;
@@ -24,8 +22,8 @@ public class RxPresenter<T extends BaseView> implements BasePresenter<T> {
 
     public String getErrorMsg(Throwable throwable){
         String errorMsg="";
-        if (throwable instanceof ApiFaildException) {
-            ApiFaildException apiException = (ApiFaildException) throwable;
+        if (throwable instanceof ApiErrorException) {
+            ApiErrorException apiException = (ApiErrorException) throwable;
             errorMsg=apiException.getMessage();
         } else {
             errorMsg=throwable.getMessage();

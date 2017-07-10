@@ -50,6 +50,18 @@ public class ProductDetailModel implements Serializable {
     private String itemsLeft;
     private String vendorDisplayName;
     private String vendor_id;
+    private String uiDetailHtmlText;
+
+    public String getUiDetailHtmlText() {
+        return uiDetailHtmlText;
+    }
+    public void setUiDetailHtmlText(String uiDetailHtmlText) {
+        this.uiDetailHtmlText = uiDetailHtmlText;
+    }
+    public static String getTypeGroup() {
+        return TYPE_GROUP;
+    }
+
     private ArrayList<SVRAppserviceProductDetailResultProductDimensionReturnEntity> productDimension;
     private List<SVRAppserviceProductDetailResultPropertyReturnEntity> relatedProducts;
     public List<SVRAppserviceProductDetailResultPropertyReturnEntity> getRelatedProducts() {
@@ -64,8 +76,6 @@ public class ProductDetailModel implements Serializable {
     public void setProductDimension(ArrayList<SVRAppserviceProductDetailResultProductDimensionReturnEntity> productDimension) {
         this.productDimension = productDimension;
     }
-
-
     public String getSaveRm() {
         return saveRm;
     }

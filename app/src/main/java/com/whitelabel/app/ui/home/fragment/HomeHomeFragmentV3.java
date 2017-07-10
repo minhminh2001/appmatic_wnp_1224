@@ -32,6 +32,7 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.home.adapter.CategoryDetailVerticalAdapter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 import com.whitelabel.app.ui.home.presenter.HomeCategoryDetailPresenterImpl;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;

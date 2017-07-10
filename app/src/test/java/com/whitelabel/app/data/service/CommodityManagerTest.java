@@ -1,10 +1,14 @@
 package com.whitelabel.app.data.service;
 
 import android.util.Log;
+
+import com.whitelabel.app.ProductProvider;
+import com.whitelabel.app.SessionKeyProvider;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ProductDetailModel;
+import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import org.junit.Assert;
@@ -19,7 +23,10 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import  static  org.mockito.Mockito.verify;
 import rx.Observable;
 import rx.observers.TestSubscriber;
@@ -31,15 +38,20 @@ import static org.junit.Assert.*;
 @PrepareForTest({Log.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class CommodityManagerTest {
+
     private CommodityManager mCommodityManager;
     private String productId="427";
     @Mock
     PreferHelper preferHelper;
+    private String sessionKey;
+    private ProductDetailModel productDetailModel;
     @Before
     public void setUp(){
         PowerMockito.mockStatic(Log.class);
         MockitoAnnotations.initMocks(this);
         mCommodityManager=new CommodityManager(DataManager.getInstance().getProductApi(),preferHelper);
+        sessionKey=new SessionKeyProvider().getSession();
+        productDetailModel=new ProductProvider().getProduct(sessionKey);
     }
     @Test
     public void getProductDetail() throws Exception {
@@ -88,7 +100,28 @@ public class CommodityManagerTest {
                  .subscribe(testSubscriber);
           Integer integer= (Integer) testSubscriber.getOnNextEvents().get(0);
           Assert.assertTrue(integer==18);
+    }
+    @Test
+    public void addProductToShoppingCart() throws Exception {
+        Map<String,String>  map=new HashMap<>();
+        String simpleId="";
+        if("group".equals(productDetailModel.getType())){
+            simpleId=productDetailModel.getProperty().get(0).getProductId();
+        }else if("configurable".equals(productDetailModel.getType())){
+            simpleId=productDetailModel.getProperty().get(0).getChild()!=null?
+                    productDetailModel.getProperty().get(0).getChild().get(0).getProductId():productDetailModel.getProperty().get(0).getProductId();
+        }
+        map.put(simpleId,"1");
+        TestSubscriber<ResponseModel> testSubscriber=new TestSubscriber<>();
+        mCommodityManager.
+                 addProductToShoppingCart(sessionKey,productDetailModel.getId(),map)
+                 .subscribe(testSubscriber);
+        testSubscriber.assertNoErrors();
+        testSubscriber.assertCompleted();
+        ResponseModel responseModel=testSubscriber.getOnNextEvents().get(0);
+        Assert.assertTrue(responseModel.getStatus()>-1);
 
     }
+
 
 }

@@ -43,6 +43,7 @@ public class JDataUtils {
         return priceStr;
     }
 
+
     public static String formatThousand(String priceStr) {
         if (TextUtils.isEmpty(priceStr)) {
             return priceStr;

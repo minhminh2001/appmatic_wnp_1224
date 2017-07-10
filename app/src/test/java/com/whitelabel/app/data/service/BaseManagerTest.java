@@ -45,11 +45,11 @@ public class BaseManagerTest {
         when(preferHelper.getVersionNumber()).thenReturn("123");
         TestSubscriber<RemoteConfigResonseModel> subscriber=TestSubscriber.create();
         configService.getConfigInfo().subscribe(subscriber);
+        subscriber.assertNoErrors();
+        subscriber.assertCompleted();
         RemoteConfigResonseModel user = subscriber.getOnNextEvents()
                 .get(0);
         Assert.assertNotNull(user.getData().getUiStyle());
-        subscriber.assertNoErrors();
-        subscriber.assertCompleted();
     }
     @Test
     public void getCurrencyUnit() throws Exception {
