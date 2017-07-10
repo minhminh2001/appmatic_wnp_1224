@@ -22,14 +22,15 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     public static final String TYPE_CONFIGURABLE = "configurable";
     public static final String TYPE_SIMPLE = "simple";
     public static final String TYPE_GROUP="grouped";
-    private ProductDetailModel  mProductDetail;
+
+    private ProductDetailModel  mProduct;
     public ProductDetailPresenter(ProductDetailContract.View  view, ICommodityManager iCommodityManager, IBaseManager iBaseManager){
         this.mView=view;
         this.iCommodityManager=iCommodityManager;
         this.iBaseManager=iBaseManager;
     }
     public ProductDetailModel getProductData(){
-        return mProductDetail;
+        return mProduct;
     }
     @Override
     public void setDialogType(String type) {
@@ -59,6 +60,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
            @Override
            public void onNext(ProductDetailModel productDetailModel) {
                mView.dissmissProgressDialog();
+               mProduct=productDetailModel;
                mView.showContentLayout();
                mView.loadStaticData(productDetailModel);
                mView.clearUserSelectedProduct();

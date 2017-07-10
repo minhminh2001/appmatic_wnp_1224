@@ -26,6 +26,7 @@ import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CommodityManager;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
@@ -196,7 +197,6 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
             isVisible = false;
         }
     }
-
     @Override
     public void loadData(CategoryDetailModel categoryDetailModel) {
         if(getActivity()!=null) {
@@ -211,7 +211,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
                         productEntity=mAdapter.getData().getNewArrivalProducts().get((position-1));
                     }
                     Intent intent = new Intent();
-                    intent.setClass(getActivity(), ProductActivity.class);
+                    intent.setClass(getActivity(), ProductDetailActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("productId",productEntity.getProductId());
                     bundle.putString("from", "from_product_list");
