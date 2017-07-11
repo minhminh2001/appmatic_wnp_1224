@@ -9,7 +9,6 @@ import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.KeyValueBean;
-import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
 import com.whitelabel.app.model.ShoppingCartDeleteCellEntity;
 import com.whitelabel.app.model.ShoppingCartErrorMsgBean;
 import com.whitelabel.app.model.ShoppingCartListEntityCart;
@@ -28,7 +27,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 

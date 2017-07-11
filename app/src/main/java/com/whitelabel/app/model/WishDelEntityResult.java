@@ -8,6 +8,15 @@ public class WishDelEntityResult extends SVRReturnEntity {
     private Object params;
     private int status;
     private int wishListItemCount=0;
+    private String errorMessage;
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     public Object getParams() {
         return params;

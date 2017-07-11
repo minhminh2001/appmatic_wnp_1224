@@ -202,7 +202,6 @@ public class HomeFragmentV2 extends HomeBaseFragment implements HomeActivity.Hom
         vpCategoryViewPager = (CustomHomeViewPager) mContainView.findViewById(R.id.chvpContainer);
         rlHome = mContainView.findViewById(R.id.rl_home);
         TAG = this.getClass().getSimpleName();
-
         resetData();
         requestData();
 

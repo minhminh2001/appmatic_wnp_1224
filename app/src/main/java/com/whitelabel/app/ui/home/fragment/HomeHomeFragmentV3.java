@@ -211,7 +211,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
                         productEntity=mAdapter.getData().getNewArrivalProducts().get((position-1));
                     }
                     Intent intent = new Intent();
-                    intent.setClass(getActivity(), ProductDetailActivity.class);
+                    intent.setClass(getActivity(), ProductActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("productId",productEntity.getProductId());
                     bundle.putString("from", "from_product_list");

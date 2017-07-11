@@ -67,8 +67,6 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
             });
           addSubscrebe(subscription);
         }
-
-
     @Override
     public String formatShoppingCount(int count) {
            if(count>99){
@@ -76,8 +74,8 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
            }else{
                return count+"";
            }
-    }
-        public void setShoppingCartCount(int count){
+     }
+    public void setShoppingCartCount(int count){
             if(mBaseManager.isSign()) {
                 count= (int) (mBaseManager.getUser().getCartItemCount()+count);
             }

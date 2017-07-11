@@ -169,7 +169,7 @@ public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContra
         return new BaseAddressPresenter(useCache,
                 new CommodityManager(DataManager.getInstance().getProductApi(),
                         DataManager.getInstance().getPreferHelper()),
-                 new AccountManager(DataManager.getInstance().getMyAccountApi()),this);
+                 new AccountManager(DataManager.getInstance().getMyAccountApi(),DataManager.getInstance().getPreferHelper()),this);
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

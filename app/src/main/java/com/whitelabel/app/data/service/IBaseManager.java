@@ -21,4 +21,5 @@ public interface IBaseManager {
     public boolean  isSign();
     public GOUserEntity getUser();
     public  Observable<SVRAppServiceCustomerLoginReturnEntity>  emailLogin(String email,String password,String deviceToken,String versionNumber,String plat,String serviceVersion);
+    public void saveUser(GOUserEntity goUserEntity);
 }

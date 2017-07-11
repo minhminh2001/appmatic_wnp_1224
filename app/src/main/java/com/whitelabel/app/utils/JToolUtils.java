@@ -308,9 +308,8 @@ public class JToolUtils {
     public static Drawable getDrawable(int id){
         return ContextCompat.getDrawable(WhiteLabelApplication.getInstance().getBaseContext(), id);
     }
+   private static String SESSION_EXPIRED = "session expired,login again please";
     public static boolean  expireHandler(Activity context,String errorMsg,int requestCode){
-        String SESSION_EXPIRED = "session expired,login again please";
-
             if ((!JDataUtils.isEmpty(errorMsg)) && (errorMsg.contains(SESSION_EXPIRED))) {
 
                 Intent intent = new Intent();
@@ -321,6 +320,14 @@ public class JToolUtils {
                context.startActivityForResult(intent, requestCode);
                 return true;
             }
+        return false;
+    }
+
+
+    public static  boolean expireHandler(String errorMsg){
+        if(errorMsg.equals(SESSION_EXPIRED)){
+                return true;
+        }
         return false;
     }
     public static  void webViewFont(Context context,WebView mWebView,String str ,float textSize){

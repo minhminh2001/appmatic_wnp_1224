@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
-import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
+import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -23,10 +23,10 @@ import butterknife.ButterKnife;
  * Created by ray on 2017/5/23.
  */
 public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-  private  List<SVRAppserviceProductDetailResultPropertyReturnEntity> mProducts;
+  private  List<ProductPropertyModel> mProducts;
   private ImageLoader   mImageloader;
   private  OnItemClickListener mOnItemClickListener;
-  public BindProductAdapter( List<SVRAppserviceProductDetailResultPropertyReturnEntity> products,ImageLoader  imageLoader){
+  public BindProductAdapter(List<ProductPropertyModel> products, ImageLoader  imageLoader){
         this.mProducts=products;
         this.mImageloader=imageLoader;
   }
@@ -38,7 +38,7 @@ public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder,final  int position) {
         ItemViewHolder itemViewHolder= (ItemViewHolder) holder;
-        SVRAppserviceProductDetailResultPropertyReturnEntity  svrAppserviceProductDetailResultPropertyReturnEntity=mProducts.get(position);
+        ProductPropertyModel svrAppserviceProductDetailResultPropertyReturnEntity=mProducts.get(position);
         if(!TextUtils.isEmpty(   svrAppserviceProductDetailResultPropertyReturnEntity.getImage())) {
             JImageUtils.downloadImageFromServerByUrl(itemViewHolder.itemView.getContext(), mImageloader, itemViewHolder.ivImg,
                     svrAppserviceProductDetailResultPropertyReturnEntity.getImage(), JToolUtils.dip2px(itemViewHolder.itemView.getContext(),

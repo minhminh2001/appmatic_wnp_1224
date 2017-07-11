@@ -24,4 +24,5 @@ public interface ICacheApi {
      void saveCategoryDetail(CategoryDetailModel categoryDetailModel);
     rx.Observable<CategoryDetailModel> getCategoryDetail(final String categoryId);
     GOUserEntity getUser();
+    void saveUser(GOUserEntity goUserEntity);
 }

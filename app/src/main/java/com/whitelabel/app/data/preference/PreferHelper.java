@@ -149,6 +149,15 @@ public class PreferHelper  implements ICacheApi{
             return null;
         }
     }
+
+    @Override
+    public void saveUser(GOUserEntity goUserEntity) {
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("user_info", new Gson().toJson(goUserEntity));
+        editor.commit();
+    }
+
     public  void saveCategoryDetail(CategoryDetailModel categoryDetailModel){
         SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
         Gson gson=new Gson();

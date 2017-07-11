@@ -36,6 +36,12 @@ public class BaseManager implements IBaseManager {
         return cacheApi.getUser();
     }
 
+
+    @Override
+    public void saveUser(GOUserEntity goUserEntity) {
+        cacheApi.saveUser(goUserEntity);
+    }
+
     @Override
     public Observable<RemoteConfigResonseModel> getConfigInfo() {
         String userId= cacheApi.getVersionNumber();

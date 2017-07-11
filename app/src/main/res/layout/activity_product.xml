@@ -67,7 +67,7 @@
                     </TextView>
                 </RelativeLayout>
                 <LinearLayout
-                    android:id="@+id/viewGroup"
+                    android:id="@+id/ll_dots"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/product_details_viewpager_dot_margin_top"

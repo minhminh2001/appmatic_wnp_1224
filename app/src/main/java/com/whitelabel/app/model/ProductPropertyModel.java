@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by imaginato on 2015/7/8.
  */
-public class SVRAppserviceProductDetailResultPropertyReturnEntity implements Serializable {
+public class ProductPropertyModel implements Serializable {
     private String name;
     private String id;
     private String label;
@@ -24,7 +24,7 @@ public class SVRAppserviceProductDetailResultPropertyReturnEntity implements Ser
     private int inStock;
     private String image;
     private ArrayList<String> images;
-    private ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity> child;
+    private ArrayList<ProductPropertyModel> child;
     public String getName() {
         return name;
     }
@@ -177,11 +177,11 @@ public class SVRAppserviceProductDetailResultPropertyReturnEntity implements Ser
         this.images = images;
     }
 
-    public ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity> getChild() {
+    public ArrayList<ProductPropertyModel> getChild() {
         return child;
     }
 
-    public void setChild(ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity> child) {
+    public void setChild(ArrayList<ProductPropertyModel> child) {
         this.child = child;
     }
 }

@@ -14,7 +14,7 @@ import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.adapter.BindProductAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.BindProductResponseModel;
-import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
+import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -37,7 +37,7 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
     @BindView(R.id.tv_total_value)
     CustomTextView tvTotalValue;
     private ImageLoader mImageLoader;
-    private  List<SVRAppserviceProductDetailResultPropertyReturnEntity> mRelatedProducts;
+    private  List<ProductPropertyModel> mRelatedProducts;
     public final static String EXTRA_PRODUCTID = "product_id";
     public final static String EXTRA_PRODUCT_DATA = "product";
     private Dialog mDialog;
@@ -137,7 +137,7 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
     public void onClick() {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(BindProductActivity.this)) {
             StringBuilder stringBuilder = new StringBuilder();
-            for (SVRAppserviceProductDetailResultPropertyReturnEntity bean : mRelatedProducts) {
+            for (ProductPropertyModel bean : mRelatedProducts) {
                 if(bean.isSelected()) {
                     stringBuilder = stringBuilder.append(bean.getId()).append(",");
                 }

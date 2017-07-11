@@ -15,11 +15,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
-import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
+import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import java.util.List;
 /**
@@ -39,7 +38,7 @@ public class BindProductView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
     }
     int imageWidth;
-    public void initData(List<SVRAppserviceProductDetailResultPropertyReturnEntity>  products,ImageLoader imageLoader){
+    public void initData(List<ProductPropertyModel>  products, ImageLoader imageLoader){
         int padding = JToolUtils.dip2px(getContext(), 10);
         setPadding(padding, padding, padding,0);
         if(products==null||products.size()==0){
@@ -91,7 +90,7 @@ public class BindProductView extends RelativeLayout {
         tvTitle.setText(getContext().getResources().getString(R.string.productdetail_bind_title));
         return tvTitle;
     }
-    public View createProductView(SVRAppserviceProductDetailResultPropertyReturnEntity bean, ImageLoader imageLoader){
+    public View createProductView(ProductPropertyModel bean, ImageLoader imageLoader){
         LinearLayout view= (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_product_bind,null);
         ImageView ivImg= (ImageView) view.findViewById(R.id.iv_img);
         TextView tvBindPrice= (TextView) view.findViewById(R.id.tv_bind_price);

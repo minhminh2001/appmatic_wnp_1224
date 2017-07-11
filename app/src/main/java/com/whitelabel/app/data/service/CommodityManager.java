@@ -50,6 +50,7 @@ public class CommodityManager  implements ICommodityManager{
             return Observable.just(svrAppserviceCatalogSearchReturnEntity);
         }
     }
+
     @Override
     public Observable<Integer> getLocalShoppingProductCount() {
         return cacheHelper.getShoppingCartProduct()
@@ -122,7 +123,15 @@ public class CommodityManager  implements ICommodityManager{
             params.put("qty["+index+"]",idQtys.get(id));
             index++;
         }
-        return  productApi.addProductToShoppingCart(sessionKey,productId,params);
+        return  productApi.addProductToShoppingCart(sessionKey,productId,params)
+                .doOnNext(new Action1<ResponseModel>() {
+                    @Override
+                    public void call(ResponseModel responseModel) {
+                        if (responseModel.getStatus()==-1){
+                            Observable.error(new ApiException(responseModel.getErrorMessage()));
+                        }
+                    }
+                });
     }
 
 

@@ -1,17 +1,14 @@
 package com.whitelabel.app.data.retrofit;
 
-import com.google.gson.JsonObject;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
-import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.http.Field;

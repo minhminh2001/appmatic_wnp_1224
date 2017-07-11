@@ -52,7 +52,7 @@ import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailResultDetailReturnEntity;
-import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
+import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
@@ -443,9 +443,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         mIVHeaderBarWishlist.startAnimation(animation2);
     }
     class MyWheelPickerCallback extends WheelPickerCallback {
-        private List<SVRAppserviceProductDetailResultPropertyReturnEntity> mPropertyList;
+        private List<ProductPropertyModel> mPropertyList;
         private int mLevel;
-        public MyWheelPickerCallback(int level, List<SVRAppserviceProductDetailResultPropertyReturnEntity> propertyList) {
+        public MyWheelPickerCallback(int level, List<ProductPropertyModel> propertyList) {
             mLevel = level;
             mPropertyList = propertyList;
         }
@@ -466,7 +466,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             String childProductItemsLeft = "";
             long tmpProductMaxSaleQty = 0;
             if (newValue != null && newValue.getIndex() != -1) {
-                SVRAppserviceProductDetailResultPropertyReturnEntity entity = null;
+                ProductPropertyModel entity = null;
                 String attributeId = newValue.getValue();
                 JLogUtils.i(TAG, "attributeId：" + attributeId);
                 JLogUtils.i(TAG, "mLevel：" + mLevel);
@@ -603,7 +603,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         productTrans = (TextView) findViewById(R.id.product_trans);
 //        anim_mask_layout = createAnimLayout();
         viewPager = (ViewPager) findViewById(R.id.detail_viewpager);
-        group = (ViewGroup) findViewById(R.id.viewGroup);
+        group = (ViewGroup) findViewById(R.id.ll_dots);
         llBottomBar = (LinearLayout) findViewById(R.id.llBottomBar);
         ctvAddToCart = (CustomTextView) findViewById(R.id.ctvAddToCart);
         mRLAddToWishlistSmall = (RelativeLayout) findViewById(R.id.rl_addtowishlist_small);
@@ -949,8 +949,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             case R.id.ctv_product_attribute:
                 //根据Tag中的属性ID去查找当前属性集合
                 try {
-                    SVRAppserviceProductDetailResultPropertyReturnEntity propertyReturnEntitys = (SVRAppserviceProductDetailResultPropertyReturnEntity) v.getTag();
-                    List<SVRAppserviceProductDetailResultPropertyReturnEntity> propertyList = mProductDetailBean.getProperty();
+                    ProductPropertyModel propertyReturnEntitys = (ProductPropertyModel) v.getTag();
+                    List<ProductPropertyModel> propertyList = mProductDetailBean.getProperty();
                     WheelPickerEntity oldEntity = mAttributeEntity.getOldValue();
                     propertyList = getSvrAppserviceProductDetailResultPropertyReturnEntities(propertyReturnEntitys, propertyList);
                     for (int i = 0; i < propertyList.size(); i++) {
@@ -984,7 +984,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 break;
         }
     }
-    private void showWheelDialog(List<SVRAppserviceProductDetailResultPropertyReturnEntity> propertyList, String currAttributeValue) {
+    private void showWheelDialog(List<ProductPropertyModel> propertyList, String currAttributeValue) {
         mAttributeEntity.getArrayList().clear();
         WheelPickerEntity oldEntity = mAttributeEntity.getOldValue();
         ArrayList<WheelPickerEntity> list = mAttributeEntity.getArrayList();
@@ -995,7 +995,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
         }
         for (int i = 0; i < propertyList.size(); i++) {
-            SVRAppserviceProductDetailResultPropertyReturnEntity firstProperty = propertyList.get(i);
+            ProductPropertyModel firstProperty = propertyList.get(i);
             WheelPickerEntity mAttributePickerEntity = new WheelPickerEntity();
             mAttributePickerEntity.setIndex(i);
             mAttributePickerEntity.setValue(firstProperty.getId());
@@ -1006,9 +1006,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         JViewUtils.showWheelPickerOneDialog(this, mAttributeEntity);
     }
 
-    private List<SVRAppserviceProductDetailResultPropertyReturnEntity> getSvrAppserviceProductDetailResultPropertyReturnEntities(SVRAppserviceProductDetailResultPropertyReturnEntity propertyReturnEntitys, List<SVRAppserviceProductDetailResultPropertyReturnEntity> propertyList) {
+    private List<ProductPropertyModel> getSvrAppserviceProductDetailResultPropertyReturnEntities(ProductPropertyModel propertyReturnEntitys, List<ProductPropertyModel> propertyList) {
         for (int i = 0; i < propertyReturnEntitys.getLevel(); i++) {
-            SVRAppserviceProductDetailResultPropertyReturnEntity currProperty = (SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag();
+            ProductPropertyModel currProperty = (ProductPropertyModel) mAttributeViews.get(i).getTag();
             for (int z = 0; z < propertyList.size(); z++) {
                 if (currProperty.getId().equals(propertyList.get(z).getId())) {
                     propertyList = propertyList.get(z).getChild();
@@ -1308,7 +1308,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 ctvProductInStock.setText(getResources().getString(R.string.product_detail_instock));
             }
         } else if (ProductDetailModel.TYPE_CONFIGURABLE.equals(mProductDetailBean.getType())) {
-            ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity> productPropertyList = mProductDetailBean.getProperty();
+            ArrayList<ProductPropertyModel> productPropertyList = mProductDetailBean.getProperty();
             if (productPropertyList == null || productPropertyList.size() <= 0) {
                 // Product ImageList
                 if (mProductDetailBean.getImages() != null && mProductDetailBean.getImages().size() > 0) {
@@ -1333,7 +1333,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             if(mProductDetailBean.getImages()!=null) {
                 productImagesArrayList.addAll(mProductDetailBean.getImages());
             }
-            for(SVRAppserviceProductDetailResultPropertyReturnEntity bean:mProductDetailBean.getProperty() ){
+            for(ProductPropertyModel bean:mProductDetailBean.getProperty() ){
                 if(bean.getInStock()==1){
                     instock=true;
                     break;
@@ -1348,7 +1348,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
             updateProductDetailUIProductImage(productImagesArrayList);
         }
-        List<SVRAppserviceProductDetailResultPropertyReturnEntity>  products=mProductDetailBean.getRelatedProducts();
+        List<ProductPropertyModel>  products=mProductDetailBean.getRelatedProducts();
 //        findViewById(R.id.ll_bind_product).setVisibility(View.VISIBLE);
         if(products!=null&&products.size()>0) {
             products.add(0,mProductDetailBean.getProperty().get(0));
@@ -1359,7 +1359,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         initVisibleProduct();
     }
 
-    public void createAttributeView(int level, SVRAppserviceProductDetailResultPropertyReturnEntity bean) {
+    public void createAttributeView(int level, ProductPropertyModel bean) {
         if (level % 2 == 0) {
             llLayout = new LinearLayout(this);
             llLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -1779,9 +1779,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         llBottomBar.setLayoutParams(bottomBarLp);
     }
     public long getProductCount() {
-        List<SVRAppserviceProductDetailResultPropertyReturnEntity> attributeIds = new ArrayList<>();
+        List<ProductPropertyModel> attributeIds = new ArrayList<>();
         for (int i = 0; i < mAttributeViews.size(); i++) {
-            attributeIds.add((SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(i).getTag());
+            attributeIds.add((ProductPropertyModel) mAttributeViews.get(i).getTag());
         }
         long count = JStorageUtils.getProductCountByAttribute(ProductActivity.this, mProductDetailBean.getId(), attributeIds);
         JLogUtils.i(TAG, "count:" + count);
@@ -1882,8 +1882,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 idQtys=pcGroupConfig.getChildIdAndQty();
             }else if(mProductDetailBean.getType().equals(ProductDetailModel.TYPE_CONFIGURABLE)){
                 idQtys=new HashMap<>();
-                SVRAppserviceProductDetailResultPropertyReturnEntity bean=
-                        (SVRAppserviceProductDetailResultPropertyReturnEntity) mAttributeViews.get(mAttributeViews.size()-1).getTag();
+                ProductPropertyModel bean=
+                        (ProductPropertyModel) mAttributeViews.get(mAttributeViews.size()-1).getTag();
                 idQtys.put(bean.getProductId(),userSelectedProductQty+"");
             }else if(mProductDetailBean.getType().equals(ProductDetailModel.getTypeSimple())){
                 idQtys=new HashMap<>();

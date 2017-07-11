@@ -1,4 +1,4 @@
-import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
+import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.ui.productdetail.BindProductPresenterImpl;
 
 import org.junit.Assert;
@@ -22,12 +22,12 @@ public class BindProductTest {
     }
     @Test
     public  void   bindProductPresenter_checkProductIsSelected(){
-        List<SVRAppserviceProductDetailResultPropertyReturnEntity> beans=null;
+        List<ProductPropertyModel> beans=null;
         Assert.assertFalse(presenter.checkProductIsSelected(beans));
         beans=new ArrayList<>();
         Assert.assertFalse(presenter.checkProductIsSelected(beans));
-        SVRAppserviceProductDetailResultPropertyReturnEntity bean0=new SVRAppserviceProductDetailResultPropertyReturnEntity();
-        SVRAppserviceProductDetailResultPropertyReturnEntity bean=new SVRAppserviceProductDetailResultPropertyReturnEntity();
+        ProductPropertyModel bean0=new ProductPropertyModel();
+        ProductPropertyModel bean=new ProductPropertyModel();
         bean.setSelected(true);
         beans.add(bean0);
         beans.add(bean);
@@ -35,10 +35,10 @@ public class BindProductTest {
     }
     @Test
     public void bindProductPresenter_computeSumPrice(){
-        List<SVRAppserviceProductDetailResultPropertyReturnEntity> beans=new ArrayList<>();
-        SVRAppserviceProductDetailResultPropertyReturnEntity bean=new SVRAppserviceProductDetailResultPropertyReturnEntity();
+        List<ProductPropertyModel> beans=new ArrayList<>();
+        ProductPropertyModel bean=new ProductPropertyModel();
         bean.setFinalPrice("13.3");
-        SVRAppserviceProductDetailResultPropertyReturnEntity bean1=new SVRAppserviceProductDetailResultPropertyReturnEntity();
+        ProductPropertyModel bean1=new ProductPropertyModel();
         bean1.setFinalPrice("22.3");
         beans.add(bean);
         beans.add(bean1);

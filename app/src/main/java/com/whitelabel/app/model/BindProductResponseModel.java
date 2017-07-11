@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BindProductResponseModel implements Serializable {
     private  double totalPrice;
-    private List<SVRAppserviceProductDetailResultPropertyReturnEntity> relatedProducts;
+    private List<ProductPropertyModel> relatedProducts;
 
     public double getTotalPrice() {
         return totalPrice;
@@ -19,11 +19,11 @@ public class BindProductResponseModel implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public List<SVRAppserviceProductDetailResultPropertyReturnEntity> getRelatedProducts() {
+    public List<ProductPropertyModel> getRelatedProducts() {
         return relatedProducts;
     }
 
-    public void setRelatedProducts(List<SVRAppserviceProductDetailResultPropertyReturnEntity> relatedProducts) {
+    public void setRelatedProducts(List<ProductPropertyModel> relatedProducts) {
         this.relatedProducts = relatedProducts;
     }
 }

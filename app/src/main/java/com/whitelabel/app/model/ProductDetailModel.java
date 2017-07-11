@@ -42,7 +42,7 @@ public class ProductDetailModel implements Serializable {
     private ArrayList<SVRAppserviceProductDetailResultDetailReturnEntity> detail;
     private int isLike;
     private String itemId;
-    private ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity> property;
+    private ArrayList<ProductPropertyModel> property;
     private String url;
     private String canViewPdp;
     private String availability;
@@ -63,11 +63,11 @@ public class ProductDetailModel implements Serializable {
     }
 
     private ArrayList<SVRAppserviceProductDetailResultProductDimensionReturnEntity> productDimension;
-    private List<SVRAppserviceProductDetailResultPropertyReturnEntity> relatedProducts;
-    public List<SVRAppserviceProductDetailResultPropertyReturnEntity> getRelatedProducts() {
+    private List<ProductPropertyModel> relatedProducts;
+    public List<ProductPropertyModel> getRelatedProducts() {
         return relatedProducts;
     }
-    public void setRelatedProducts(List<SVRAppserviceProductDetailResultPropertyReturnEntity> relatedProducts) {
+    public void setRelatedProducts(List<ProductPropertyModel> relatedProducts) {
         this.relatedProducts = relatedProducts;
     }
     public ArrayList<SVRAppserviceProductDetailResultProductDimensionReturnEntity> getProductDimension() {
@@ -278,11 +278,11 @@ public class ProductDetailModel implements Serializable {
         this.itemId = itemId;
     }
 
-    public ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity> getProperty() {
+    public ArrayList<ProductPropertyModel> getProperty() {
         return property;
     }
 
-    public void setProperty(ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity> property) {
+    public void setProperty(ArrayList<ProductPropertyModel> property) {
         this.property = property;
     }
 }
