@@ -27,6 +27,7 @@ import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -235,7 +236,7 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(context, ProductActivity.class);
+                intent.setClass(context, ProductDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("productId", this.productId);
                 if (viewHolder.ivLeftProductImage.getDrawable() == null) {
@@ -249,7 +250,7 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
                         ActivityOptionsCompat aop = ActivityOptionsCompat.makeSceneTransitionAnimation(((Activity) context),
                                 viewHolder.ivLeftProductImage,
                                 context.getResources().getString(R.string.activity_image_trans));
-                        ActivityCompat.startActivityForResult((Activity) context, intent, ProductActivity.RESULT_WISH, aop.toBundle());
+                        ActivityCompat.startActivityForResult((Activity) context, intent, ProductDetailActivity.RESULT_WISH, aop.toBundle());
                     } else {
                         setBundleAndToPDP(intent, bundle);
                     }
@@ -380,7 +381,7 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(context, ProductActivity.class);
+                intent.setClass(context, ProductDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("productId", this.productId);
                 if (viewHolder.ivRightProductImage.getDrawable() == null) {
@@ -392,7 +393,7 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
                     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP && viewHolder.ivRightProductImage.getTag().toString().equals(rightProductImageUrl)) {
                         intent.putExtras(bundle);
                         ActivityOptionsCompat aop = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, viewHolder.ivRightProductImage, context.getResources().getString(R.string.activity_image_trans));
-                        ActivityCompat.startActivityForResult((Activity) context, intent, ProductActivity.RESULT_WISH, aop.toBundle());
+                        ActivityCompat.startActivityForResult((Activity) context, intent, ProductDetailActivity.RESULT_WISH, aop.toBundle());
                     } else {
                         setBundleAndToPDP(intent, bundle);
                     }
@@ -416,7 +417,7 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
 
     private void setBundleAndToPDP(Intent intent, Bundle bundle) {
         intent.putExtras(bundle);
-        ((BaseActivity) context).startActivityForResult(intent, ProductActivity.RESULT_WISH);
+        ((BaseActivity) context).startActivityForResult(intent, ProductDetailActivity.RESULT_WISH);
 //        ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
     }
 

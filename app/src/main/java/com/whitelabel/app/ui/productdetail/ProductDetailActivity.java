@@ -85,7 +85,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
     public static final int RESULT_WISH = 101;
     public static final int REQUEST_TOOLBAREXPAN = 1112;
     public static final int PRODUCT_PICTURE_REQUEST_CODE = 0x200;
-    private String TAG = "ProductActivity";
+    private String TAG = "ProductDetailActivity";
     private final int REQUESTCODE_LOGIN = 1000;
     private ViewGroup llDots;
     private BindProductView  bpvBindProduct;

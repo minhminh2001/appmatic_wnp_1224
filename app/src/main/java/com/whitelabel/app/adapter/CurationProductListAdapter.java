@@ -38,6 +38,7 @@ import com.whitelabel.app.model.SVRAppserviceLandingPagesDetailProductListItemRe
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -390,7 +391,7 @@ public class CurationProductListAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(this.curationActivity, ProductActivity.class);
+                        intent.setClass(this.curationActivity, ProductDetailActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("productId", this.productId);
                         if (finalViewHolder.ivLeftProductImage.getDrawable() == null) {
@@ -575,7 +576,7 @@ public class CurationProductListAdapter extends BaseAdapter {
                     public void onClick(View view) {
                         //PDP 页面  如果是商品的wish状态发生改变，需要返回时刷新此商品的wish状态
                         Intent intent = new Intent();
-                        intent.setClass(this.curationActivity, ProductActivity.class);
+                        intent.setClass(this.curationActivity, ProductDetailActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("productId", this.productId);
                         if (finalViewHolder.ivRightProductImage.getDrawable() == null) {

@@ -30,6 +30,7 @@ import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
 import com.whitelabel.app.model.TMPHelpCenterListToDetailEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.FragmentFactory;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
@@ -291,7 +292,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
             } else if (DEEPLINK_TYPE_PRODUCTDETAIL.equals(host)) {
                 String productId = getIntent().getData().getPath().replace("/", "");
                 Intent intent = new Intent();
-                intent.setClass(HomeActivity.this, ProductActivity.class);
+                intent.setClass(HomeActivity.this, ProductDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("productId", productId);
                 intent.putExtras(bundle);

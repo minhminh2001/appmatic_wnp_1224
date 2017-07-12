@@ -52,6 +52,7 @@ import com.whitelabel.app.model.ShoppingCartListEntityCart;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
@@ -453,7 +454,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             String visibility = entity.getVisibility();
             if (!TextUtils.isEmpty(visibility)) {
                 if (("1").equals(visibility)) {
-                    Intent it = new Intent(getActivity(), ProductActivity.class);
+                    Intent it = new Intent(getActivity(), ProductDetailActivity.class);
                     it.putExtra("productId", ((ShoppingCartListEntityCell) mProducts.get(i)).getProductId());
                     startActivity(it);
                     ((BaseActivity)getActivity()).startActivityTransitionAnim();

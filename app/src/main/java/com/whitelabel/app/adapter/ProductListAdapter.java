@@ -44,6 +44,7 @@ import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntit
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -345,7 +346,7 @@ public class ProductListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(productListActivity, ProductActivity.class);
+                intent.setClass(productListActivity, ProductDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("productId", this.productId);
                 if (finalViewHolder.ivLeftProductImage.getDrawable() == null) {
@@ -523,7 +524,7 @@ public class ProductListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(this.productListActivity, ProductActivity.class);
+                intent.setClass(this.productListActivity, ProductDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("productId", this.productId);
                 if (finalViewHolder.ivRightProductImage.getDrawable() == null) {

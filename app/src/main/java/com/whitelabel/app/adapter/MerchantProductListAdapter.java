@@ -39,6 +39,7 @@ import com.whitelabel.app.model.SVRAppserviceProductMerchantReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -334,7 +335,7 @@ public class MerchantProductListAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(merchantActivity, ProductActivity.class);
+                        intent.setClass(merchantActivity, ProductDetailActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("productId", this.productId);
                         if (finalViewHolder.ivLeftProductImage.getDrawable() == null) {
@@ -459,7 +460,7 @@ public class MerchantProductListAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent();
-                        intent.setClass(merchantActivity, ProductActivity.class);
+                        intent.setClass(merchantActivity, ProductDetailActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("productId", this.productId);
                         if (finalViewHolder.ivRightProductImage.getDrawable() == null) {

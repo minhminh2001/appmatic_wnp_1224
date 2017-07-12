@@ -28,6 +28,7 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.home.adapter.CategoryDetailHorizontalAdapter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 import com.whitelabel.app.ui.home.presenter.HomeCategoryDetailPresenterImpl;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomButton;
@@ -196,7 +197,7 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     }
     public void startProductDetailActivity( SVRAppserviceProductSearchResultsItemReturnEntity productEntity){
         Intent intent = new Intent();
-        intent.setClass(getActivity(), ProductActivity.class);
+        intent.setClass(getActivity(), ProductDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("productId",productEntity.getProductId());
         bundle.putString("from", "from_product_list");
