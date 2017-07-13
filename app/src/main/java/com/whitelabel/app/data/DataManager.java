@@ -7,6 +7,7 @@ import com.whitelabel.app.data.retrofit.MockApi;
 import com.whitelabel.app.data.retrofit.MyAccoutApi;
 import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.data.retrofit.RetrofitHelper;
+import com.whitelabel.app.data.retrofit.ShoppingCartApi;
 
 /**
  * Created by Administrator on 2017/1/3.
@@ -18,6 +19,8 @@ public class DataManager {
     private BaseApi mAppApi;
     private ProductApi  mProductApi;
     private MyAccoutApi mMyAccountApi;
+
+    private ShoppingCartApi mShoppingCartApi;
     private static String mBaseUrl;
     private static  String mMockUrl;
     private DataManager(){
@@ -32,6 +35,15 @@ public class DataManager {
         }
         return dataManager;
     }
+    public ShoppingCartApi getShoppingCartApi(){
+        if(mShoppingCartApi==null){
+            synchronized (DataManager.class){
+                mShoppingCartApi=new RetrofitHelper(mBaseUrl,mMockUrl).getDefaultRetrofit().create(ShoppingCartApi.class);
+            }
+        }
+        return mShoppingCartApi;
+    }
+
     public PreferHelper getPreferHelper(){
         if(preferHelper==null){
             synchronized (DataManager.class){

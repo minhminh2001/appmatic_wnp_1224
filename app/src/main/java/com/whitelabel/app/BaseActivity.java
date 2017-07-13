@@ -36,7 +36,8 @@ import com.whitelabel.app.widget.CustomButton;
 /**
  * Created by Administrator on 2016/10/6.
  */
-public class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView, SwipeBackActivityBase {
+public class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
+//    , SwipeBackActivityBase
     //requests
     protected static final int REQUEST_SHOPPINGCART = 10001;
     protected static final int REQUEST_SEARCH = 10002;
@@ -52,12 +53,12 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     public void transitionOnBackPressed() {
         super.onBackPressed();
     }
-    private SwipeBackActivityHelper mHelper;
+//    private SwipeBackActivityHelper mHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mHelper=new SwipeBackActivityHelper(this);
-        mHelper.onActivityCreate();
+//        mHelper=new SwipeBackActivityHelper(this);
+//        mHelper.onActivityCreate();
         mPresenter = getPresenter();
         if (mPresenter != null) {
             mPresenter.attachView(this);
@@ -75,31 +76,31 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mHelper.onPostCreate();
+//        mHelper.onPostCreate();
     }
 
-    @Override
-    public View findViewById(int id) {
-        View v = super.findViewById(id);
-        if (v == null && mHelper != null)
-            return mHelper.findViewById(id);
-        return v;
-    }
+//    @Override
+//    public View findViewById(int id) {
+//        View v = super.findViewById(id);
+//        if (v == null && mHelper != null)
+//            return mHelper.findViewById(id);
+//        return v;
+//    }
 
-    @Override
-    public SwipeBackLayout getSwipeBackLayout() {
-        return mHelper.getSwipeBackLayout();
-    }
-
-    @Override
-    public void setSwipeBackEnable(boolean enable) {
-        getSwipeBackLayout().setEnableGesture(enable);
-    }
-    @Override
-    public void scrollToFinishActivity() {
-        Utils.convertActivityToTranslucent(this);
-        getSwipeBackLayout().scrollToFinishActivity();
-    }
+//    @Override
+//    public SwipeBackLayout getSwipeBackLayout() {
+//        return mHelper.getSwipeBackLayout();
+//    }
+//
+//    @Override
+//    public void setSwipeBackEnable(boolean enable) {
+//        getSwipeBackLayout().setEnableGesture(enable);
+//    }
+//    @Override
+//    public void scrollToFinishActivity() {
+//        Utils.convertActivityToTranslucent(this);
+//        getSwipeBackLayout().scrollToFinishActivity();
+//    }
     public void setStatusBarColor(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();

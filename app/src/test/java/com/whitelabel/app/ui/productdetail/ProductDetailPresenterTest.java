@@ -4,6 +4,7 @@ import com.whitelabel.app.RxUnitTestTools;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
+import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.ProductDetailModel;
@@ -43,11 +44,14 @@ public class ProductDetailPresenterTest {
     IAccountManager  iAccountManager;
     @Mock
     ProductDetailContract.View  view;
+
+    @Mock
+    IShoppingCartManager iShoppingCartManager;
     @Before
     public void setUp(){
         RxUnitTestTools.openRxTools();
         MockitoAnnotations.initMocks(this);
-        presenter=new ProductDetailPresenter(view,iAccountManager,iCommodityManager,iBaseManager);
+        presenter=new ProductDetailPresenter(view,iAccountManager,iCommodityManager,iBaseManager,iShoppingCartManager);
     }
     @Test
     public void loadProductDetailData() throws Exception {
@@ -185,12 +189,12 @@ public class ProductDetailPresenterTest {
         ResponseModel responseModel= new ResponseModel();
         responseModel.setStatus(1);
         Mockito .when(view.getConfiguationProductSimpleId()).thenReturn("123");
-        Mockito.when(iCommodityManager.addProductToShoppingCart(any(String.class),any(String.class),any(Map.class))).thenReturn(rx.Observable.just(responseModel));
+        Mockito.when(iShoppingCartManager.addProductToShoppingCart(any(String.class),any(String.class),any(Map.class))).thenReturn(rx.Observable.just(responseModel));
         Mockito.when(view.getGroupProductParams()).thenReturn(map);
         presenter.setOutOfStock(false);
         presenter.setUserSelectedProductQty(1);
         presenter.addToCartClick();
-        verify( iCommodityManager).addProductToShoppingCart(any(String.class),any(String.class),any(Map.class));
+        verify( iShoppingCartManager).addProductToShoppingCart(any(String.class),any(String.class),any(Map.class));
     }
 
 

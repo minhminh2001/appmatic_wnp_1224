@@ -3,9 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whiteffffff">
-
     <RelativeLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <!--layout_top_bar-->
@@ -25,7 +23,6 @@
                     android:visibility="visible" />
             </RelativeLayout>
         </com.whitelabel.app.widget.CustomSwipefreshLayout>
-
         <!--BOTTOM BUTTON-->
         <LinearLayout
             android:id="@+id/ll_sc_checkout"
@@ -50,14 +47,10 @@
                 android:textSize="@dimen/button_font_size" />
         </LinearLayout>
     </RelativeLayout>
-
     <include layout="@layout/item_shopping_nothing" />
-
     <include
         layout="@layout/connection_breaks"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/rl_shoppingcart_top_bar" />
-
-
 </RelativeLayout>

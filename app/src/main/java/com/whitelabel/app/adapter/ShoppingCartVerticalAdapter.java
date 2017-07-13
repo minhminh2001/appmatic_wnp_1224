@@ -73,8 +73,6 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
     public void setItemOnClickListener(AdapterView.OnItemClickListener itemOnClickListener) {
         this.itemOnClickListener = itemOnClickListener;
     }
-
-
     public ShoppingCartVerticalAdapter(Context context, LinkedList<ShoppingCartListBase> products, ImageLoader imageLoader, ShoppingCartAdapterCallback callback) {
         super();
         JLogUtils.d(TAG, "init");

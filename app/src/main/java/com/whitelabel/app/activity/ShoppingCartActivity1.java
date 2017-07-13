@@ -40,8 +40,6 @@ public class ShoppingCartActivity1 extends com.whitelabel.app.BaseActivity {
             }
         });
     }
-
-
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);

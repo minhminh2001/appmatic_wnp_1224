@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <!--<item name="android:windowTranslucentStatus">true</item>-->
-        <item name="android:windowIsTranslucent">true</item>
+        <!--<item name="android:windowIsTranslucent">true</item>-->
     </style>
     <style name="AppThemeBlack" parent="AppTheme">
         <item name="android:windowBackground">@color/black000000</item>

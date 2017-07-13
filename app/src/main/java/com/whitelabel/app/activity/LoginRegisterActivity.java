@@ -203,7 +203,7 @@ public class LoginRegisterActivity extends com.whitelabel.app.BaseActivity imple
             }
         }
         InitMyDialog();
-        setSwipeBackEnable(false);
+//        setSwipeBackEnable(false);
     }
 
 

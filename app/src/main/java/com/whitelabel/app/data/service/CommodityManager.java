@@ -114,25 +114,7 @@ public class CommodityManager  implements ICommodityManager{
              }
          });
     }
-    @Override
-    public Observable<ResponseModel> addProductToShoppingCart(String sessionKey, String productId, Map<String,String> idQtys){
-        Map<String ,String> params=new HashMap<>();
-        int  index=0;
-        for(String id :idQtys.keySet()){
-            params.put("simpleId["+index+"]",id);
-            params.put("qty["+index+"]",idQtys.get(id));
-            index++;
-        }
-        return  productApi.addProductToShoppingCart(sessionKey,productId,params)
-                .doOnNext(new Action1<ResponseModel>() {
-                    @Override
-                    public void call(ResponseModel responseModel) {
-                        if (responseModel.getStatus()==-1){
-                            Observable.error(new ApiException(responseModel.getErrorMessage()));
-                        }
-                    }
-                });
-    }
+
 
 
     public String  getProductDetailHtml(ProductDetailModel productDetailModel) {

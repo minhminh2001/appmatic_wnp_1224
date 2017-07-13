@@ -50,7 +50,5 @@ public interface ProductApi {
     public Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory();
     @GET("appservice/product/detail")
     public Observable<SVRAppserviceProductDetailReturnEntity> getProductDetail(@Query("session_key") String sessionKey,@Query("product_id") String productId);
-    @FormUrlEncoded
-    @POST("appservice/cart/add")
-    public Observable<ResponseModel>  addProductToShoppingCart(@Field("session_key") String sessionKey,@Field("product_id") String productId,@FieldMap Map<String,String> param);
+
 }

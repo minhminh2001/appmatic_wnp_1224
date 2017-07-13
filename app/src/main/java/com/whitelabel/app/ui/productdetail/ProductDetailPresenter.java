@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
+import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.ProductDetailModel;
@@ -28,6 +29,7 @@ import rx.Subscription;
  */
 public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.View>implements ProductDetailContract.Presenter{
     private ICommodityManager iCommodityManager;
+    private IShoppingCartManager iShoppingCartManager;
     private IBaseManager  iBaseManager;
     private IAccountManager iAccountManager;
     private String mDialogType;
@@ -40,11 +42,12 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     public static final String DIALOG_TYPE_BOTTOM="from_product_list";
     private long currUserSelectedProductMaxStockQty;
     private boolean delayAddToCart;
-    public ProductDetailPresenter(ProductDetailContract.View  view,IAccountManager iAccountManager, ICommodityManager iCommodityManager, IBaseManager iBaseManager){
+    public ProductDetailPresenter(ProductDetailContract.View  view,IAccountManager iAccountManager, ICommodityManager iCommodityManager, IBaseManager iBaseManager,IShoppingCartManager iShoppingCartManager){
         this.mView=view;
         this.iCommodityManager=iCommodityManager;
         this.iBaseManager=iBaseManager;
         this.iAccountManager=iAccountManager;
+        this.iShoppingCartManager=iShoppingCartManager;
     }
 
 
@@ -312,7 +315,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     public void addToShoppingCart(Map<String,String> params){
         mView.showNornalProgressDialog();
         String sessionKey=iBaseManager.getUser().getSessionKey();
-        iCommodityManager.addProductToShoppingCart(sessionKey,mProduct.getId(),params)
+        iShoppingCartManager.addProductToShoppingCart(sessionKey,mProduct.getId(),params)
                 .compose(RxUtil.<ResponseModel>rxSchedulerHelper())
                 .subscribe(new Subscriber<ResponseModel>() {
                     @Override

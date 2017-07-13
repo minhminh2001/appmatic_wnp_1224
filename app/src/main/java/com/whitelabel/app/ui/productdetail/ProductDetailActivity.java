@@ -46,6 +46,7 @@ import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.AccountManager;
 import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CommodityManager;
+import com.whitelabel.app.data.service.ShoppingCartManager;
 import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.ProductPropertyModel;
@@ -70,27 +71,20 @@ import com.whitelabel.app.widget.CustomNestedScrollView;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.ProductChildListView;
 import com.whitelabel.app.widget.ToolBarAlphaBehavior;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-/**
- * Created by imaginato on 2015/6/10.
- */
 public class ProductDetailActivity extends com.whitelabel.app.BaseActivity implements ProductDetailCallback, OnPageChangeListener, View.OnClickListener ,ProductDetailContract.View{
-    //mGATrackTimeStart 加载pdp的时间，mGATrackAddCartTimeStart点击add to cart的时间
     public Long mGATrackTimeStart = 0L;
     public Long mGATrackAddCartTimeStart = 0L;
     public boolean mGATrackTimeEnable = false;
     public static final int RESULT_WISH = 101;
-    public static final int REQUEST_TOOLBAREXPAN = 1112;
     public static final int PRODUCT_PICTURE_REQUEST_CODE = 0x200;
     private String TAG = "ProductDetailActivity";
     private final int REQUESTCODE_LOGIN = 1000;
     private ViewGroup llDots;
     private BindProductView  bpvBindProduct;
-    private TextView productDetailBindTitle;
-    private TextView textView_num, oldprice, ctvAddToCart, price_textview,  ctvProductInStock, ctvProductOutOfStock, productUnavailable, productTrans, product_merchant;
+    private TextView textView_num, oldprice, ctvAddToCart, price_textview,  ctvProductInStock, ctvProductOutOfStock, productUnavailable, productTrans;
     private Dialog mDialog;
     private TextView ctvProductName, ctvProductBrand;
     private AppBarLayout appbar_layout;
@@ -110,7 +104,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
     private float userSelectedProductPriceFloat;
     private float userSelectedProductFinalPriceFloat;
     private int userSelectedProductInStock;
-//    private FrameLayout flSimpleConfig;
     private ProductChildListView pcGroupConfigView;
     private long userSelectedProductMaxStockQty;
     private LinearLayout llWebView;
@@ -118,7 +111,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
     private WebView mWebView;
     private Handler dataHandler=new Handler();
     private List<TextView> mAttributeViews = new ArrayList<>();
-//    private String shareTitle, shareContent, shareImgurl, shareLink;
     private ProductDetailContract.Presenter  presenter;
     private CustomNestedScrollView myScrollView;
     private View llCash, showView;
@@ -152,7 +144,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
     public void showErrorMessage(String errorMsg) {
         JViewUtils.showErrorToast(this,errorMsg+"");
     }
-
     @Override
     public void showContentLayout() {
        showView.setVisibility(View.VISIBLE);
@@ -171,7 +162,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
         super.onDestroy();
         onDestoryWebView(mWebView);
     }
-
     public void onDestoryWebView(WebView webView) {
         try {
             ViewParent parent = webView.getParent();
@@ -420,7 +410,9 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
         presenter=new ProductDetailPresenter(this,
                 new AccountManager(DataManager.getInstance().getMyAccountApi(),DataManager.getInstance().getPreferHelper()),
                 new CommodityManager(DataManager.getInstance().getProductApi(),DataManager.getInstance().getPreferHelper()),
-                new BaseManager(DataManager.getInstance().getMockApi(),DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()));
+                new BaseManager(DataManager.getInstance().getMockApi(),DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),
+                new ShoppingCartManager(DataManager.getInstance().getShoppingCartApi(),DataManager.getInstance().getPreferHelper())
+        );
         productId =  getIntent().getExtras().getString("productId");
         String  mFromProductList = getIntent().getExtras().getString("from");
         mProductFirstImageurl=getIntent().getExtras().getString("imageurl");
@@ -534,7 +526,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
         oldprice = (TextView) findViewById(R.id.old_price);
         price_textview = (TextView) findViewById(R.id.price_textview);
         oldprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-        product_merchant = (TextView) findViewById(R.id.product_merchant);
         ctvProductInStock = (TextView) findViewById(R.id.ctvProductInStock);
         ctvProductOutOfStock = (TextView) findViewById(R.id.ctvProductOutOfStock);
         productUnavailable = (TextView) findViewById(R.id.product_unavailable);
@@ -587,6 +578,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
         Intent intent = new Intent(ProductDetailActivity.this, ShoppingCartActivity1.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityForResult(intent, REQUEST_SHOPPINGCART);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -736,7 +728,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
               break;
         }
     }
-
     private void showWheelDialog(List<ProductPropertyModel> propertyList, String currAttributeValue) {
         mAttributeEntity.getArrayList().clear();
         WheelPickerEntity oldEntity = mAttributeEntity.getOldValue();
@@ -1001,7 +992,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
         ctvProductInStock.setVisibility(View.INVISIBLE);
         ctvProductOutOfStock.setVisibility(View.INVISIBLE);
     }
-
     private void updateProductDetailUIProductImage(final ArrayList<String> productImageUrlList) {
         if(productImageUrlList==null)return;
             mProductImagesArrayList.clear();
@@ -1077,13 +1067,9 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
     @NonNull
     private ImageView createTipView(int index) {
         ImageView imageViewTips = new ImageView(this);
-        try {
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(15, 15);
             lp.setMargins(5, 0, 5, 0);
             imageViewTips.setLayoutParams(lp);
-        } catch (Exception ex) {
-            JLogUtils.e(TAG, "initProductDetailUIDynamicContent", ex);
-        }
         if (index == 0) {
             imageViewTips.setBackground(JImageUtils.getThemeCircle(this));
         } else {

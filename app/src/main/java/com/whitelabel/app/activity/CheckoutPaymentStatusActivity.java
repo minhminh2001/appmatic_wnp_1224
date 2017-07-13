@@ -44,7 +44,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
             }
         });
         initData();
-        setSwipeBackEnable(false);
+//        setSwipeBackEnable(false);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
