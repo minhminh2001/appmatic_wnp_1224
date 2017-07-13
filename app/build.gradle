@@ -42,8 +42,8 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 23
+    buildToolsVersion "25.0.0"
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
