@@ -63,7 +63,7 @@ android {
     }
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 23
         applicationId rootProject.ext.android.applicationId
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
@@ -108,7 +108,7 @@ android {
     }
 }
 ext {
-    SUPPORT_LIB_VERSION = '25.0.1'
+    SUPPORT_LIB_VERSION = '23.0.1'
     BUTTERKNIFE_VERSION = '8.4.0'
     PLAY_SERVICE_VERSION = '9.4.0'
     RETROFIT2_VERSION = '2.1.0'
