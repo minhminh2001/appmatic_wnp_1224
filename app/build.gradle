@@ -162,7 +162,7 @@ dependencies {
     // Set this dependency to build and run UI Automator tests
 //    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+//    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
 //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 //    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
