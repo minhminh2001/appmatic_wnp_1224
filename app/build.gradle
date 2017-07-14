@@ -18,7 +18,7 @@ def coverageSourceDirs = [
         '../app/src/main/java'
 ]
 
-task jacocoTestReport(type: JacocoReport, dependsOn: ["testWnpDebugUnitTest", "createWnpDebugCoverageReport"]) {
+task jacocoTestReport(type: JacocoReport, dependsOn: ["testWnpDebugUnitTest"]) {
     group = "Reporting"
     description = "Generate Jacoco coverage reports"
     classDirectories = fileTree(
@@ -34,7 +34,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ["testWnpDebugUnitTest", "c
     executionData = files('../app/build/jacoco/testDebug.exec')
 
     reports {
-        xml.enabled = true
+        xml.enabled = false
         html.enabled = true
     }
 }

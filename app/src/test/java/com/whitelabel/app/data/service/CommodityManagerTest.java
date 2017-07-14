@@ -101,27 +101,7 @@ public class CommodityManagerTest {
           Integer integer= (Integer) testSubscriber.getOnNextEvents().get(0);
           Assert.assertTrue(integer==18);
     }
-    @Test
-    public void addProductToShoppingCart() throws Exception {
-        Map<String,String>  map=new HashMap<>();
-        String simpleId="";
-        if("group".equals(productDetailModel.getType())){
-            simpleId=productDetailModel.getProperty().get(0).getProductId();
-        }else if("configurable".equals(productDetailModel.getType())){
-            simpleId=productDetailModel.getProperty().get(0).getChild()!=null?
-                    productDetailModel.getProperty().get(0).getChild().get(0).getProductId():productDetailModel.getProperty().get(0).getProductId();
-        }
-        map.put(simpleId,"1");
-        TestSubscriber<ResponseModel> testSubscriber=new TestSubscriber<>();
-        mCommodityManager.
-                 addProductToShoppingCart(sessionKey,productDetailModel.getId(),map)
-                 .subscribe(testSubscriber);
-        testSubscriber.assertNoErrors();
-        testSubscriber.assertCompleted();
-        ResponseModel responseModel=testSubscriber.getOnNextEvents().get(0);
-        Assert.assertTrue(responseModel.getStatus()>-1);
 
-    }
 
 
 }
