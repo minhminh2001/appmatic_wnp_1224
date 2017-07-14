@@ -40,7 +40,7 @@ public class JDataUtilsTest {
     }
     @Test
     public  void jdataUtils_formatDouble(){
-        Assert.assertEquals(JDataUtils.formatDouble("3"),"4.00");
+        Assert.assertEquals(JDataUtils.formatDouble("3"),"3.00");
     }
 
     @Test
