@@ -6,6 +6,7 @@ import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ResponseModel;
+import com.whitelabel.app.model.ShoppingCartDeleteCellEntity;
 import com.whitelabel.app.model.ShoppingCartListEntityCart;
 import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
 
@@ -27,6 +28,7 @@ import static org.junit.Assert.*;
  */
 public class ShoppingCartManagerTest {
 
+
     ShoppingCartManager  shoppingCartManager;
     String sessionKey;
     @Mock
@@ -41,16 +43,7 @@ public class ShoppingCartManagerTest {
     }
     //coupon_code=test&platformId=2&remove=0&serviceVersion=1.0.5&session_key=7daca5d0571aa507ebcd9e2b3a2c6362&versionNumber=1.0.2&
 //    session_key=7eae4d1154d0f5587ad2802193ae08be&coupon_code=test&remove=0
-    @Test
-    public void getShoppingCartInfo() throws Exception {
-        TestSubscriber<ShoppingCartListEntityCart> testSubscriber=TestSubscriber.create();
-        shoppingCartManager.getShoppingCartInfo(sessionKey)
-                .subscribe(testSubscriber);
-        testSubscriber.assertNoErrors();
-        testSubscriber.assertCompleted();
-        ShoppingCartListEntityCart shoppingCartListEntityCart=testSubscriber.getOnNextEvents().get(0);
-        Assert.assertTrue(shoppingCartListEntityCart.getItems()!=null);
-    }
+
     @Test
     public void applyOrCancelVercherCode() throws Exception {
         TestSubscriber<ShoppingCartVoucherApplyEntity>  testSubscriber=TestSubscriber.create();
@@ -98,4 +91,58 @@ public class ShoppingCartManagerTest {
         ResponseModel responseModel=testSubscriber.getOnNextEvents().get(0);
         Assert.assertTrue(responseModel.getStatus()>-1);
     }
+
+
+    @Test
+    public void getShoppingCartInfo() throws Exception {
+        TestSubscriber<ShoppingCartListEntityCart> testSubscriber=TestSubscriber.create();
+        shoppingCartManager.getShoppingCartInfo(sessionKey)
+                .subscribe(testSubscriber);
+        testSubscriber.assertNoErrors();
+        testSubscriber.assertCompleted();
+        ShoppingCartListEntityCart shoppingCartListEntityCart=testSubscriber.getOnNextEvents().get(0);
+        Assert.assertTrue(shoppingCartListEntityCart.getItems()!=null);
+
+    }
+
+    @Test
+    public void setProductCountFromShoppingCart() throws Exception {
+
+
+        TestSubscriber<ShoppingCartListEntityCart> testSubscriber1=TestSubscriber.create();
+        shoppingCartManager.getShoppingCartInfo(sessionKey)
+                .subscribe(testSubscriber1);
+        ShoppingCartListEntityCart shoppingCartListEntityCart=testSubscriber1.getOnNextEvents().get(0);
+        String cellId="";
+        if(shoppingCartListEntityCart.getItems()!=null&&shoppingCartListEntityCart.getItems().length>0){
+            cellId=shoppingCartListEntityCart.getItems()[0].getId();
+        }
+        TestSubscriber<ShoppingCartDeleteCellEntity> testSubscriber=TestSubscriber.create();
+          shoppingCartManager.setProductCountFromShoppingCart(sessionKey,cellId,2)
+          .subscribe(testSubscriber);
+          testSubscriber.assertNoErrors();
+          testSubscriber.assertCompleted();
+          ShoppingCartDeleteCellEntity shoppingCartDeleteCellEntity=testSubscriber.getOnNextEvents().get(0);
+          Assert.assertTrue ( shoppingCartDeleteCellEntity.getStatus()==1);
+    }
+
+
+
+
+
+
+    @Test
+    public void deleteProductFromShoppingCart() throws Exception {
+        TestSubscriber<ShoppingCartDeleteCellEntity> testSubscriber=TestSubscriber.create();
+        shoppingCartManager.deleteProductFromShoppingCart(sessionKey,productDetailModel.getId())
+                .subscribe(testSubscriber);
+        testSubscriber.assertNoErrors();
+        testSubscriber.assertCompleted();
+        ShoppingCartDeleteCellEntity shoppingCartDeleteCellEntity= testSubscriber.getOnNextEvents().get(0);
+        Assert.assertTrue(shoppingCartDeleteCellEntity.getStatus()==1);
+    }
+
+
+
+
 }
