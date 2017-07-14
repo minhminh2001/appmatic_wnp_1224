@@ -49,6 +49,12 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude '.readme'
     }
+
+    testOptions {
+        unitTests.all {
+            setIgnoreFailures(true)
+        }
+    }
     configurations.all {
         resolutionStrategy.force 'com.android.support:support-annotations:23.0.1'
     }
