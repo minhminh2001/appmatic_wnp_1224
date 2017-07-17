@@ -44,7 +44,6 @@ public class ProductDetailPresenterTest {
     IAccountManager  iAccountManager;
     @Mock
     ProductDetailContract.View  view;
-
     @Mock
     IShoppingCartManager iShoppingCartManager;
     @Before

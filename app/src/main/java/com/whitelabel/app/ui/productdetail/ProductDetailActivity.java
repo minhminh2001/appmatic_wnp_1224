@@ -621,14 +621,16 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
     @Override
     public void onBackPressed() {
            getToolbar().setVisibility(View.GONE);
-            Intent intent = new Intent();
-            Bundle bundle = new Bundle();
-            bundle.putString("productId", this.productId);
-            bundle.putInt("isLike", presenter.getProductData().getIsLike());
-            bundle.putString("itemId", presenter.getProductData().getItemId());
-            bundle.putBoolean("needRefreshWhenBackPressed", needRefreshWhenBackPressed);
-            intent.putExtras(bundle);
-            setResult(Activity.RESULT_OK, intent);
+           if(presenter.getProductData()!=null) {
+               Intent intent = new Intent();
+               Bundle bundle = new Bundle();
+               bundle.putString("productId", this.productId);
+               bundle.putInt("isLike", presenter.getProductData().getIsLike());
+               bundle.putString("itemId", presenter.getProductData().getItemId());
+               bundle.putBoolean("needRefreshWhenBackPressed", needRefreshWhenBackPressed);
+               intent.putExtras(bundle);
+               setResult(Activity.RESULT_OK, intent);
+           }
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             if (ivProductImage.getDrawable() == null) {
                 super.onBackPressed();
@@ -1245,7 +1247,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
         mRLAddToWishlistSmall.setVisibility(View.VISIBLE);
         // if is liked , change button text.
         String addWishText = getString(R.string.product_detail_addtowishlist);
-        if (1 == mProductDetailBean.getIsLike()) {
+        if (1 == presenter.getProductData().getIsLike()) {
             addWishText = getString(R.string.product_detail_addedtowishlist);
         }
         ctvAddToCart.setText(addWishText);

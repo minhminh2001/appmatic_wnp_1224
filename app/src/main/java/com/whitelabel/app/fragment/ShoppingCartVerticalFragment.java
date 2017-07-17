@@ -65,6 +65,7 @@ import com.whitelabel.app.utils.SoftInputShownUtil;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -105,7 +106,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     public TextView tvShippingFree;
     private TextView tvVoucherWorld, tv_shoppingbottominfo_blank;
     public ShoppingCartVerticalAdapter adapter;
-    public LinkedList<ShoppingCartListBase> mProducts;
+    public ArrayList<ShoppingCartListBase> mProducts;
     private ShoppingCartListEntityCart mCar;
     private final int REQUESTCODE = 2000;
     private ShoppingCarDao mCarDao;
@@ -116,16 +117,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     public int fromType;
     private Dialog mDialog;
     private LinearLayout btnTry;
-    private final int VIEW_INIT_SHOW = 3;
-    private final int VIEW_INIT_HIDE = 4;
-    private final int VIEW_NOTHING_SHOW = 1;
-    private final int VIEW_NOTHING_HIDE = 2;
-    private final int VIEW_NOTNETWORK_SHOW = 5;
-    private final int VIEW_NOTNETWORK_HIDE = 6;
-    private final int VIEW_VOUCHER_SHOW = 7;
-    private final int VIEW_VOUCHER_HIDE = 8;
-    private final int STATUS_VOUCHERCODE_APPLY = 1;
-    private final int STATUS_VOUCHERCODE_CANCEL = 2;
     private String mCancelStr, mApplyStr;
     private String voucherCode = "";
     private RelativeLayout llBody;
@@ -142,7 +133,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private String mVoucherCode;
     private ImageLoader mImageLoader;
     private final static int VOUCHER_APPLY_HINT_SUCCESS = 101;
-    private final static int VOUCHER_APPLY_HINT_FIALD = 102;
     private final static int VOUCHER_APPLY_HINT_HIDE = 103;
     private TextView mTvGst;
 
@@ -388,7 +378,8 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         initListener();
     }
     public void initData(){
-        showOrHideView(VIEW_INIT_HIDE);
+        llCheckout.setVisibility(View.GONE);
+        swipeRefrshLayout.setVisibility(View.GONE);
         mHandler = new DataHandler(getActivity(), this);
         timeHandler = new Handler();
         mCarDao = new ShoppingCarDao(TAG, mHandler);
@@ -538,11 +529,10 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                             } else {
                                 fragment.gaTrackerApplyCode(fragment.UNAPPLIED);
                             }
-
                         } else {
                             ErrorMsgBean errorBean = (ErrorMsgBean) msg.obj;
                             if (!JToolUtils.expireHandler(activity, errorBean.getErrorMessage(), 2000)) {
-                                fragment.voucherCodeHintMsg(VOUCHER_APPLY_HINT_FIALD, errorBean.getErrorMessage());
+                                fragment.setVoucherFaildMessage(errorBean.getErrorMessage());
                             }
                         }
                         break;
@@ -631,93 +621,39 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         }
     }
 
-    public void voucherCodeHintMsg(int type, String errorMsg) {
-        if (type == VOUCHER_APPLY_HINT_SUCCESS) {
-            tvApplyImageAnim.setImageResource(R.mipmap.icon_shopping_cart_right);
-            tvApplyTextAnim.setTextColor(getResources().getColor(R.color.green_common));
-            String apply_hintNav = getResources().getString(R.string.apply_hint_green);
-            String apply_hint = apply_hintNav.replace("$voucherCode$", voucherCode);
-            tvApplyTextAnim.setText(apply_hint);
-            llApplyAnim.setVisibility(View.VISIBLE);
-        } else if (type == VOUCHER_APPLY_HINT_FIALD) {
-            tvApplyImageAnim.setImageResource(R.mipmap.icon_shopping_cart_error);
-            tvApplyTextAnim.setTextColor(getResources().getColor(R.color.redC1033D));
-            tvApplyTextAnim.setText(errorMsg);
-            llApplyAnim.setVisibility(View.VISIBLE);
-        } else if (type == VOUCHER_APPLY_HINT_HIDE) {
-            llApplyAnim.setVisibility(View.GONE);
-        }
+
+    public void setVoucherFaildMessage(String errorMsg){
+        tvApplyImageAnim.setImageResource(R.mipmap.icon_shopping_cart_error);
+        tvApplyTextAnim.setTextColor(getResources().getColor(R.color.redC1033D));
+        tvApplyTextAnim.setText(errorMsg);
+        llApplyAnim.setVisibility(View.VISIBLE);
     }
 
-    public void showOrHideView(int type) {
-        llCheckout.setTag(false);
-        if (type == VIEW_NOTHING_SHOW) {//1
-            llNothing.setVisibility(View.VISIBLE);
-            llCheckout.setVisibility(View.GONE);
-            swipeRefrshLayout.setVisibility(View.GONE);
-            showSearch = true;
-            getActivity().supportInvalidateOptionsMenu();
-        } else if (type == VIEW_NOTHING_HIDE) {//2
-            llNothing.setVisibility(View.GONE);
-            llCheckout.setVisibility(View.VISIBLE);
-            swipeRefrshLayout.setVisibility(View.VISIBLE);
-            showSearch = false;
-            getActivity().supportInvalidateOptionsMenu();
-        } else if (type == VIEW_INIT_HIDE) {//4
-            llCheckout.setVisibility(View.GONE);
-            swipeRefrshLayout.setVisibility(View.GONE);
-        } else if (type == VIEW_INIT_SHOW) {//3
-            llCheckout.setVisibility(View.VISIBLE);
-            swipeRefrshLayout.setVisibility(View.VISIBLE);
-        } else if (type == VIEW_NOTNETWORK_SHOW) {//5
-            connectionBreak.setVisibility(View.VISIBLE);
-        } else if (type == VIEW_NOTNETWORK_HIDE) {//6
-            connectionBreak.setVisibility(View.GONE);
-        } else if (type == VIEW_VOUCHER_SHOW) {//7
-            etVoucherApply.setText("");
-//            vVoucher.setVisibility(View.VISIBLE);
-        } else if (type == VIEW_VOUCHER_HIDE) {//8
-//            vVoucher.setVisibility(View.GONE);
-            llApplyAnim.setVisibility(View.GONE);
-        }
-    }
-    public void offlineHandler(ShoppingCartListEntityCart object) {
-        initShoppingCartData(object, true);
-    }
+
     public void setDiscountPrice(double disCount, String title) {
         llVoucherPrice.setVisibility(View.VISIBLE);
         tvVoucher.setText("-"+WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble((Math.abs(disCount)) + ""));
         tvVoucherWorld.setText(title);
     }
-
     private void initShoppingCartData(ShoppingCartListEntityCart cart, boolean isInit) {
-        if (getActivity() != null) {
-            if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-                if (!TextUtils.isEmpty(cart.getGst())) {
+        if (getActivity() == null)return ;
+             if (!TextUtils.isEmpty(cart.getGst())) {
                     mTvGst.setVisibility(View.VISIBLE);
                     mTvGst.setText("(" + cart.getGst().trim() + ")");
-                } else {
+              } else {
                     mTvGst.setText("");
-                }
-            } else {
-                mTvGst.setVisibility(View.GONE);
-            }
+             }
             tvSubtotal.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(cart.getSubTotal()));
             tvGrandTotal.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(cart.getGrandTotal()));
-            if (cart.getShipping() != null) {
-                tvShippingFree.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + cart.getShipping().getValue());
-            }
-            setButtonQty(cart.getSummaryQty());
             saveShoppingCartCount(cart.getSummaryQty());
             //discount
             if(cart.getShipping()!=null){
                 tvShoppingShippingFeeTitle.setText(cart.getShipping().getTitle());
-                tvShippingFree.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+JDataUtils.formatDouble(cart.getShipping().getValue()));
+                tvShippingFree.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+JDataUtils.formatDouble(cart.getShipping().getValue()));
                 tvShippingFree.setVisibility(View.VISIBLE);
             }
             if (cart.getDiscount() != null && !TextUtils.isEmpty(cart.getDiscount().getCouponCode())) {
-                switchVoucheStatus(cart.getDiscount().getCouponCode(), STATUS_VOUCHERCODE_CANCEL);
-                voucherCodeHintMsg(VOUCHER_APPLY_HINT_SUCCESS, cart.getDiscount().getCouponCode());
+                setLayoutHaveVercherCode(cart.getDiscount().getCouponCode());
                 if (!TextUtils.isEmpty(cart.getDiscount().getValue()) && !TextUtils.isEmpty(cart.getDiscount().getTitle())) {
                     setDiscountPrice(Double.parseDouble(cart.getDiscount().getValue()), cart.getDiscount().getTitle());
                 } else {
@@ -725,11 +661,9 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 }
             } else if (cart.getDiscount() != null) {
                 if ("1".equals(cart.getDiscount().getStopRulesProcessing())) {
-                    showOrHideView(VIEW_VOUCHER_HIDE);
+                    llApplyAnim.setVisibility(View.GONE);
                 } else {
-                    showOrHideView(VIEW_VOUCHER_SHOW);
-                    switchVoucheStatus("", STATUS_VOUCHERCODE_APPLY);
-                    voucherCodeHintMsg(VOUCHER_APPLY_HINT_HIDE, "");
+                    setLayoutNotHaveVercherCode();
                 }
                 if (!TextUtils.isEmpty(cart.getDiscount().getValue()) && !TextUtils.isEmpty(cart.getDiscount().getTitle())) {
                     setDiscountPrice(Double.parseDouble(cart.getDiscount().getValue()), cart.getDiscount().getTitle());
@@ -737,9 +671,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                     llVoucherPrice.setVisibility(View.GONE);
                 }
             } else {
-                showOrHideView(VIEW_VOUCHER_SHOW);
-                switchVoucheStatus("", STATUS_VOUCHERCODE_APPLY);
-                voucherCodeHintMsg(VOUCHER_APPLY_HINT_HIDE, "");
+                setLayoutNotHaveVercherCode();
                 llVoucherPrice.setVisibility(View.GONE);
             }
             if (isInit) {
@@ -748,7 +680,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 }
                 if (cart.getItems() != null) {
                     ShoppingCartListEntityCell[] items = cart.getItems();
-                    boolean isCampaignProduct = false;
                     for (ShoppingCartListEntityCell cell : items) {
                         if (cell.getQty() != null) {
                             cell.setCurrStockQty(Integer.parseInt(cell.getQty()) + cell.getStockQty() + "");
@@ -764,13 +695,10 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 adapter.notifyDataSetChanged();
             }
             if (mProducts != null && mProducts.size() > 1) {
-                showOrHideView(VIEW_NOTNETWORK_HIDE);
-                showOrHideView(VIEW_NOTHING_HIDE);
+                    setLayoutHaveProduct();
             } else {
-                showOrHideView(VIEW_NOTHING_SHOW);
-                showOrHideView(VIEW_NOTNETWORK_HIDE);
+                setLayoutNotHaveProduct();
             }
-        }
         if (mGATrackTimeEnable) {
             GaTrackHelper.getInstance().googleAnalyticsTimeStop(
                     GaTrackHelper.GA_TIME_CATEGORY_CHECKOUT, mGATrackTimeStart, "Cart Loading"
@@ -778,6 +706,24 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             mGATrackTimeEnable = false;
         }
     }
+    public void setLayoutHaveProduct(){
+        connectionBreak.setVisibility(View.GONE);
+        llNothing.setVisibility(View.GONE);
+        llCheckout.setVisibility(View.VISIBLE);
+        swipeRefrshLayout.setVisibility(View.VISIBLE);
+        showSearch = false;
+        getActivity().supportInvalidateOptionsMenu();
+    }
+    public void setLayoutNotHaveProduct(){
+        llNothing.setVisibility(View.VISIBLE);
+        llCheckout.setVisibility(View.GONE);
+        swipeRefrshLayout.setVisibility(View.GONE);
+        showSearch = true;
+        connectionBreak.setVisibility(View.GONE);
+    }
+
+
+
 
     public void saveShoppingCartCount(int num) {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
@@ -818,25 +764,29 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         super.onPause();
     }
 
-    public void switchVoucheStatus(String code, int type) {
-        if (STATUS_VOUCHERCODE_APPLY == type) {
-            tvApply.setText(mApplyStr);
-            JViewUtils.setSoildButtonGlobalStyle(getContext(),tvApply);
-            llApplyAnim.setVisibility(View.GONE);
-            etVoucherApply.setEnabled(true);
-            etVoucherApply.setText(voucherCode);
-        } else {
-            etVoucherApply.setText(code);
-            etVoucherApply.setEnabled(false);
-            clearVoucher.setVisibility(View.GONE);
-            tvApply.setText(mCancelStr);
-            tvApply.setBackground(getResources().getDrawable(R.drawable.big_button_style_black));
-        }
+    public  void  setLayoutHaveVercherCode(String code){
+        etVoucherApply.setText(code);
+        etVoucherApply.setEnabled(false);
+        clearVoucher.setVisibility(View.GONE);
+        tvApply.setText(mCancelStr);
+        tvApply.setBackground(getResources().getDrawable(R.drawable.big_button_style_black));
+        tvApplyImageAnim.setImageResource(R.mipmap.icon_shopping_cart_right);
+        tvApplyTextAnim.setTextColor(getResources().getColor(R.color.green_common));
+        String apply_hintNav = getResources().getString(R.string.apply_hint_green);
+        String apply_hint = apply_hintNav.replace("$voucherCode$", voucherCode);
+        tvApplyTextAnim.setText(apply_hint);
+        llApplyAnim.setVisibility(View.VISIBLE);
+    }
+    public void setLayoutNotHaveVercherCode(){
+        etVoucherApply.setText("");
+        tvApply.setText(mApplyStr);
+        JViewUtils.setSoildButtonGlobalStyle(getContext(),tvApply);
+        llApplyAnim.setVisibility(View.GONE);
+        etVoucherApply.setEnabled(true);
+        etVoucherApply.setText(voucherCode);
+        llApplyAnim.setVisibility(View.GONE);
     }
 
-    public void setButtonQty(int sunQty) {
-
-    }
     public LinkedList<ShoppingCartListBase> toShoppingCartList(ShoppingCartListBase[] cell) {
         LinkedList<ShoppingCartListBase> cells = new LinkedList<>();
         Collections.addAll(cells, cell);
@@ -881,7 +831,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 
 
     private void initAdapter() {
-        mProducts = new LinkedList<>();
+        mProducts = new ArrayList<>();
         adapter = new ShoppingCartVerticalAdapter(getActivity(), mProducts, mImageLoader, this);
         adapter.setItemOnClickListener(mItemListener);
         shoppingCartRecyclerView.setAdapter(adapter);

@@ -47,7 +47,6 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
     private ProductDao dao;
     public static String TAG;
     private HomeCommonCallback homeCommonCallback;
-
     private RequestErrorHelper requestErrorHelper;
 
     private View view, connectionLayout;

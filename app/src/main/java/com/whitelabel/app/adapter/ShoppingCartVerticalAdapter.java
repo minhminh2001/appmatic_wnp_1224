@@ -60,7 +60,7 @@ import java.util.List;
 public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
     public static int TYPE_CELL = 1;
     public static int TYPE_BODY = 2;
-    public LinkedList<ShoppingCartListBase> list;
+    public ArrayList<ShoppingCartListBase> list;
     private Context context;
     private Dialog mDialog;
     private ShoppingCartAdapterCallback callback;
@@ -73,10 +73,10 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
     public void setItemOnClickListener(AdapterView.OnItemClickListener itemOnClickListener) {
         this.itemOnClickListener = itemOnClickListener;
     }
-    public ShoppingCartVerticalAdapter(Context context, LinkedList<ShoppingCartListBase> products, ImageLoader imageLoader, ShoppingCartAdapterCallback callback) {
+    public ShoppingCartVerticalAdapter(Context context, ArrayList<ShoppingCartListBase> products, ImageLoader imageLoader, ShoppingCartAdapterCallback callback) {
         super();
         JLogUtils.d(TAG, "init");
-        this.list = new LinkedList<>();
+        this.list = new ArrayList<>();
         this.context = context;
         this.callback = callback;
         this.list = products;
@@ -107,7 +107,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         return TYPE_CELL;
     }
 
-    public void setData(LinkedList<ShoppingCartListBase> list) {
+    public void setData(ArrayList<ShoppingCartListBase> list) {
         this.list = list;
     }
 
@@ -476,7 +476,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         }
     }
 
-    public static List<TMPLocalCartRepositoryProductEntity> shoppingCarToTMPLocal(LinkedList<ShoppingCartListBase> list) {
+    public static List<TMPLocalCartRepositoryProductEntity> shoppingCarToTMPLocal(ArrayList<ShoppingCartListBase> list) {
         List<TMPLocalCartRepositoryProductEntity> beans = new ArrayList<TMPLocalCartRepositoryProductEntity>();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) instanceof ShoppingCartListEntityBody) {
@@ -638,7 +638,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         }
     };
 
-    public void calculationToatalPriceAndNum(LinkedList<ShoppingCartListBase> beans) {
+    public void calculationToatalPriceAndNum(ArrayList<ShoppingCartListBase> beans) {
         double total = 0;
         int qty = 0;
         for (int i = 0; i < beans.size(); i++) {

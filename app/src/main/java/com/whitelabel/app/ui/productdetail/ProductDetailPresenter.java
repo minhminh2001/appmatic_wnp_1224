@@ -15,6 +15,7 @@ import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RxUtil;
 import java.util.ArrayList;
@@ -122,6 +123,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     }
 
     public void showVisibleProduct(ProductDetailModel  productDetailModel){
+        try {
             if ("0".equals(productDetailModel.getVisibility())) {
                 mView.hideVisibleProduct();
                 return;
@@ -136,9 +138,13 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
             } else {
                 mView.showAvailabilityView();
             }
+        }catch (Exception ex){
+            ex.getStackTrace();
+        }
 
     }
     public void  loadPropertyView(ProductDetailModel productDetailModel){
+        try {
             ArrayList<String> productImages = new ArrayList<>();
             if (productDetailModel.getImages() != null && productDetailModel.getImages().size() > 0) {
                 productImages.addAll(productDetailModel.getImages());
@@ -154,6 +160,9 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                     mView.loadGroupProductView(productDetailModel, productImages);
                     break;
             }
+        }catch (Exception ex){
+            JLogUtils.i("ray","exception:"+ex.getStackTrace());
+        }
     }
     public void getShoppingCount(){
         Subscription  subscription=  iCommodityManager.getLocalShoppingProductCount()
@@ -336,5 +345,4 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                     }
                 });
     }
-
 }
