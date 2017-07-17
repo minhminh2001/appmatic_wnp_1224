@@ -4,7 +4,7 @@ import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.model.ApiFaildException;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.ResponseModel;
-import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
+import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.ExceptionParse;
@@ -38,10 +38,10 @@ public class BindProductPresenterImpl  extends RxPresenter<BindProductContract.V
         });
         addSubscrebe(subscription);
     }
-    public double  computeSumPrice(List<SVRAppserviceProductDetailResultPropertyReturnEntity> svrAppserviceProductDetailResultPropertyReturnEntities){
+    public double  computeSumPrice(List<ProductPropertyModel> svrAppserviceProductDetailResultPropertyReturnEntities){
             double  prices=0;
             for(int i=0;i<svrAppserviceProductDetailResultPropertyReturnEntities.size();i++){
-                SVRAppserviceProductDetailResultPropertyReturnEntity bean=
+                ProductPropertyModel bean=
                         svrAppserviceProductDetailResultPropertyReturnEntities.get(i);
                  if(bean.isSelected()){
                      try {
@@ -80,7 +80,7 @@ public class BindProductPresenterImpl  extends RxPresenter<BindProductContract.V
     }
 
     @Override
-    public boolean checkProductIsSelected(List<SVRAppserviceProductDetailResultPropertyReturnEntity> svrAppserviceProductDetailResultPropertyReturnEntities) {
+    public boolean checkProductIsSelected(List<ProductPropertyModel> svrAppserviceProductDetailResultPropertyReturnEntities) {
         if(svrAppserviceProductDetailResultPropertyReturnEntities!=null) {
             for (int i = 0; i < svrAppserviceProductDetailResultPropertyReturnEntities.size(); i++) {
                 if (svrAppserviceProductDetailResultPropertyReturnEntities.get(i).isSelected()) {

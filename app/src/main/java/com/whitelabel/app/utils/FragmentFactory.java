@@ -30,7 +30,7 @@ public class FragmentFactory {
         }else if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHomeType()==2){
             return HomeHomeFragmentV2.newInstance();
         }else if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHomeType()==3){
-            return HomeHomeFragment.newInstance(HomeHomeFragment.TYPE_FRAGMENT_VERTICAL);
+            return HomeFragmentV2.newInstance(HomeHomeFragment.TYPE_FRAGMENT_VERTICAL);
         }else if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHomeType()==4){
             return HomeFragmentV2.newInstance(HomeHomeFragment.TYPE_FRAGMENT_HORIZONTAL);
         }

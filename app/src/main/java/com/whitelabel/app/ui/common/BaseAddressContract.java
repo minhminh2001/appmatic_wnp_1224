@@ -23,9 +23,9 @@ public class BaseAddressContract {
         public void openSwipeLayout();
     }
     public interface  Presenter extends BasePresenter<BaseAddressContract.View> {
-        public  void  getAddressListCache(String sessionKey);
-        public void   getAddressListOnLine(String sessionKey);
-        public void   deleteAddressById(String sessionKey,String addressId);
+        public  void  getAddressListCache(String sessionKey,String userId);
+        public void   getAddressListOnLine(String sessionKey,String userId);
+        public void   deleteAddressById(String sessionKey,String addressId,String userId);
 
     }
 }

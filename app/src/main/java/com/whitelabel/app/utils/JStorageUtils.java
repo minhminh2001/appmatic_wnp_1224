@@ -14,7 +14,7 @@ import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.MyAccountOrderOuter;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceLandingPagesListLandingPageItemReturnEntity;
-import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
+import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 
 import java.lang.reflect.Type;
@@ -231,7 +231,7 @@ public class JStorageUtils {
 
 
 
-    public static  long getProductCountByAttribute(Context context,String id, List<SVRAppserviceProductDetailResultPropertyReturnEntity>attributeIds ){
+    public static  long getProductCountByAttribute(Context context,String id, List<ProductPropertyModel>attributeIds ){
         long productCount=0;
         JLogUtils.i(TAG,"id:"+id);
         SharedPreferences cartProductSP = context.getSharedPreferences("localStorageShoppingCartProductList", Context.MODE_PRIVATE);
@@ -269,7 +269,7 @@ public class JStorageUtils {
     }
 
 
-    private static boolean isExist(List<SVRAppserviceProductDetailResultPropertyReturnEntity> attributeIds, TMPLocalCartRepositoryProductEntity entity) {
+    private static boolean isExist(List<ProductPropertyModel> attributeIds, TMPLocalCartRepositoryProductEntity entity) {
         List<Boolean>  booleanList=new ArrayList<>();
         for(int z=0;z<attributeIds.size();z++){
             boolean isExitAttribute=false;

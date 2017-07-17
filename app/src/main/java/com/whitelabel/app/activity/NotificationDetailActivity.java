@@ -19,6 +19,7 @@ import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.model.NotificationCell;
 import com.whitelabel.app.model.NotificationReceivedEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -277,7 +278,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
                                     R.anim.activity_transition_exit_righttoleft);
                             finish();
                         } else {
-                            Intent it = new Intent(NotificationDetailActivity.this, ProductActivity.class);
+                            Intent it = new Intent(NotificationDetailActivity.this, ProductDetailActivity.class);
                             it.putExtra("productId", mBean.getProductId());
                             startActivity(it);
                         }

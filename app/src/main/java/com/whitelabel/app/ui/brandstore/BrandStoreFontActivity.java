@@ -36,6 +36,7 @@ import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.FilterSortHelper;
 import com.whitelabel.app.utils.JDataUtils;
@@ -420,13 +421,13 @@ public class BrandStoreFontActivity extends BaseActivitySearchCart<BrandStoreCon
             @Override
             public void onItemClick(BrandStoreAdapter.ItemViewHolder itemViewHolder, int position) {
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                    Intent intent = new Intent(BrandStoreFontActivity.this, ProductActivity.class);
+                    Intent intent = new Intent(BrandStoreFontActivity.this, ProductDetailActivity.class);
                     intent.putExtras(getProductBundle(mProducts.get(position)));
                     ActivityOptionsCompat aop = ActivityOptionsCompat.makeSceneTransitionAnimation(BrandStoreFontActivity.this,
                             itemViewHolder.ivProductImage, WhiteLabelApplication.getInstance().getString(R.string.activity_image_trans));
                     ActivityCompat.startActivityForResult(BrandStoreFontActivity.this, intent, MerchantStoreFrontActivity.RESULT_ADD_WISH, aop.toBundle());
                 } else {
-                    startNextActivityForResult(getProductBundle(mProducts.get(position)), ProductActivity.class, REQUEST_ADD_WISH, false);
+                    startNextActivityForResult(getProductBundle(mProducts.get(position)), ProductDetailActivity.class, REQUEST_ADD_WISH, false);
                 }
             }
         });

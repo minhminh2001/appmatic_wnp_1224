@@ -13,9 +13,12 @@ public class HomeCategoryDetailContract {
         public void showErrorMsg(String errorMsg);
          public void loadData(CategoryDetailModel categoryDetailModel);
          void closeRefreshLaout();
+         public void showProgressDialog();
+         public void dissmissProgressDialog();
+         public void showSwipeLayout();
+         public void closeSwipeLayout();
      }
     public  static interface Presenter extends BasePresenter<View>{
-       public void  getCategoryDetail(String categoryId,String sessionKey);
-
+       public void  getCategoryDetail(String categoryId);
     }
 }

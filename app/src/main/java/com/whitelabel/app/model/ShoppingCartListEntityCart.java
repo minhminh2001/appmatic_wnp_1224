@@ -6,7 +6,6 @@ import java.io.Serializable;
  * Created by Administrator on 2015/7/6.
  */
 public class ShoppingCartListEntityCart implements Serializable {
-
     private int summaryQty;
     private int canUseCampaign;//1 campaign ; 0 no campaign
     private String subTotal;

@@ -43,6 +43,7 @@ public class JDataUtils {
         return priceStr;
     }
 
+
     public static String formatThousand(String priceStr) {
         if (TextUtils.isEmpty(priceStr)) {
             return priceStr;
@@ -163,7 +164,10 @@ public class JDataUtils {
     }
 
     public  static boolean isEmpty(String str) {
-        return TextUtils.isEmpty(str);
+        if(str==null||"".equals(str)){
+            return true;
+        }
+        return false;
     }
 
     public  static boolean isEmpty(EditText et) {

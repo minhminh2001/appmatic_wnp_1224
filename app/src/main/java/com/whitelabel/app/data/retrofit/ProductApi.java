@@ -1,18 +1,18 @@
 package com.whitelabel.app.data.retrofit;
 
-import com.google.gson.JsonObject;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
-import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 
-import java.util.List;
+import java.util.Map;
 
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -48,6 +48,7 @@ public interface ProductApi {
     public Observable<ResponseModel> addBoughtTogether(@Field("relatedProductIds") String productIds,@Field("session_key") String sessionKey);
    @POST("appservice/catalogSearch")
     public Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory();
-
+    @GET("appservice/product/detail")
+    public Observable<SVRAppserviceProductDetailReturnEntity> getProductDetail(@Query("session_key") String sessionKey,@Query("product_id") String productId);
 
 }

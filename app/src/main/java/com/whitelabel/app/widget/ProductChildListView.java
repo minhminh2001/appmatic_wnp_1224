@@ -13,9 +13,8 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
-import com.whitelabel.app.model.SVRAppserviceProductDetailResultPropertyReturnEntity;
+import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JViewUtils;
 
@@ -23,8 +22,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.paypal.android.sdk.cu.l;
 
 /**
  * Created by ray on 2017/4/12.
@@ -38,9 +35,9 @@ public class ProductChildListView extends LinearLayout{
      public ProductChildListView(Context context, AttributeSet attributeSet){
          super(context,attributeSet);
      }
-    private  ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity>  mBeans;
+    private  ArrayList<ProductPropertyModel>  mBeans;
     private TextView tvTotal;
-    public void initProductChildListView(ArrayList<SVRAppserviceProductDetailResultPropertyReturnEntity>  beans){
+    public void initProductChildListView(ArrayList<ProductPropertyModel>  beans){
         tvNumbers=new ArrayList<>();
         setPadding(JScreenUtils.dip2px(getContext(),10),0,JScreenUtils.dip2px(getContext(),10),0);
         mBeans=beans;
@@ -48,7 +45,7 @@ public class ProductChildListView extends LinearLayout{
             return;
         }
         removeAllViews();
-        for(SVRAppserviceProductDetailResultPropertyReturnEntity bean : beans){
+        for(ProductPropertyModel bean : beans){
             addView(getProductView(bean));
         }
         addView(getLine());
@@ -98,7 +95,7 @@ public class ProductChildListView extends LinearLayout{
         view.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.v2_line));
         return view;
     }
-    private  View getProductView(final SVRAppserviceProductDetailResultPropertyReturnEntity bean){
+    private  View getProductView(final ProductPropertyModel bean){
         final View view = LayoutInflater.from(getContext()).inflate(R.layout.item_product_group, null);
         TextView textView = (TextView) view.findViewById(R.id.tv_child_name);
         TextView tvChildPrice = (TextView) view.findViewById(R.id.tv_child_price);

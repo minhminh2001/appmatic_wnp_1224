@@ -4,8 +4,8 @@ package com.whitelabel.app.data.retrofit;
  * Created by Administrator on 2017/1/3.
  */
 
-public class ApiFaildException extends Exception {
-    public ApiFaildException(String msg){
+public class ApiErrorException extends Exception {
+    public ApiErrorException(String msg){
         super(msg);
     }
 }

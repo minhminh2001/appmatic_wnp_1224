@@ -1,13 +1,13 @@
 package com.whitelabel.app.data.service;
 
 import com.google.gson.JsonObject;
-import com.whitelabel.app.data.preference.PreferHelper;
-import com.whitelabel.app.data.retrofit.AppApi;
+import com.whitelabel.app.data.preference.ICacheApi;
+import com.whitelabel.app.data.retrofit.BaseApi;
 import com.whitelabel.app.data.retrofit.MockApi;
 import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
-import com.whitelabel.app.model.UserModel;
+import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
 
 import rx.Observable;
 import rx.functions.Action1;
@@ -18,26 +18,33 @@ import rx.functions.Func1;
  */
 public class BaseManager implements IBaseManager {
     private MockApi mockApi;
-    private AppApi appApi;
-    private PreferHelper  preferHelper;
-    public BaseManager(MockApi mockApi , AppApi  appApi, PreferHelper preferHelper){
+    private BaseApi appApi;
+    private ICacheApi cacheApi;
+
+    public BaseManager(MockApi mockApi , BaseApi appApi, ICacheApi preferHelper){
         this.mockApi=mockApi;
         this.appApi=appApi;
-        this.preferHelper=preferHelper;
+        this.cacheApi =preferHelper;
     }
     @Override
     public boolean isSign() {
-        return preferHelper.getUser()==null?false:true;
+        return cacheApi.getUser()==null?false:true;
     }
 
     @Override
     public GOUserEntity getUser() {
-        return preferHelper.getUser();
+        return cacheApi.getUser();
+    }
+
+
+    @Override
+    public void saveUser(GOUserEntity goUserEntity) {
+        cacheApi.saveUser(goUserEntity);
     }
 
     @Override
     public Observable<RemoteConfigResonseModel> getConfigInfo() {
-        String userId=preferHelper.getVersionNumber();
+        String userId= cacheApi.getVersionNumber();
        return  mockApi.getConfigInfo(userId)
                     .onErrorResumeNext(new Func1<Throwable, Observable<? extends RemoteConfigResonseModel>>() {
                         @Override
@@ -47,7 +54,7 @@ public class BaseManager implements IBaseManager {
                     }).doOnNext(new Action1<RemoteConfigResonseModel>() {
                    @Override
                    public void call(RemoteConfigResonseModel remoteConfigResonseModel) {
-                       preferHelper.saveConfigInfo(remoteConfigResonseModel);
+                       cacheApi.saveConfigInfo(remoteConfigResonseModel);
                    }
                });
     }
@@ -61,7 +68,7 @@ public class BaseManager implements IBaseManager {
         }).doOnNext(new Action1<GOCurrencyEntity>() {
             @Override
             public void call(GOCurrencyEntity goCurrencyEntity) {
-                preferHelper.saveCurrency(goCurrencyEntity.getName());
+                cacheApi.saveCurrency(goCurrencyEntity.getName());
             }
         });
     }
@@ -77,5 +84,10 @@ public class BaseManager implements IBaseManager {
             ex.getStackTrace();
         }
         return goCurrencyEntity;
+    }
+
+    @Override
+    public Observable<SVRAppServiceCustomerLoginReturnEntity> emailLogin(String email, String password, String deviceToken,String appVersion,String platId,String serviceVersion) {
+        return appApi.emailLogin(email,password,deviceToken,appVersion,platId,serviceVersion);
     }
 }

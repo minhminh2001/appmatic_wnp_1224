@@ -24,6 +24,7 @@ import com.whitelabel.app.model.MyAccountOrderMiddle;
 import com.whitelabel.app.model.MyAccountOrderTrackingInfo;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -90,14 +91,14 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
                     String visibility = orderInner.getVisibility();
                     if (!TextUtils.isEmpty(visibility)) {
                         if (("1").equals(visibility)) {
-                            Intent it = new Intent(context, ProductActivity.class);
+                            Intent it = new Intent(context, ProductDetailActivity.class);
                             it.putExtra("productId", orderInner.getProductId());
                             ((BaseActivity) context).startActivity(it);
 //                            ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
 //                                    R.anim.activity_transition_exit_righttoleft);
                         }
                     } else {
-                        Intent it = new Intent(context, ProductActivity.class);
+                        Intent it = new Intent(context, ProductDetailActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("productId", orderInner.getProductId());
                         it.putExtras(bundle);

@@ -10,6 +10,15 @@ public class AddToWishlistEntity extends SVRReturnEntity {
     private int wishListItemCount;
     private String itemId;
     private Object params;
+    private String errorMessage;
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     public Object getParams() {
         return params;

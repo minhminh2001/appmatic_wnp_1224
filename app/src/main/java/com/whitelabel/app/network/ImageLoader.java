@@ -91,8 +91,8 @@ public class ImageLoader {
      */
     public void loadImage(String url, ImageView imageView, RequestListener<String, Bitmap> requestListener,
                           Drawable placeholderOverride, boolean crop) {
-        BitmapRequestBuilder request = beginImageLoad(url, requestListener, crop)
-                .animate(R.anim.image_fade_in);
+        BitmapRequestBuilder request = beginImageLoad(url, requestListener, crop);
+//                .animate(R.anim.image_fade_in);
         if (placeholderOverride != null) {
             request.placeholder(placeholderOverride);
         } else if (mPlaceHolderResId != -1) {

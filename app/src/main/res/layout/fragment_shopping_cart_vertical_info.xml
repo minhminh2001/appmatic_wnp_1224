@@ -4,42 +4,10 @@
     android:layout_height="wrap_content"
     android:background="@color/grayf0f0f0"
     >
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/tv_shoppingbottominfo_blank"/>
-
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/rl_campaign"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/tv_shoppingbottominfo_blank"-->
-        <!--android:visibility="gone">-->
-
-        <!--<ImageView-->
-            <!--android:id="@+id/iv_shoppingcart_campaign"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:background="@color/white"-->
-            <!--android:gravity="center"-->
-            <!--android:minHeight="50dp"-->
-            <!--android:scaleType="fitXY" />-->
-
-        <!--<com.whitelabel.app.widget.circularProgressView.CircularProgressView xmlns:app="http://schemas.android.com/apk/res-auto"-->
-            <!--android:id="@+id/progress_view"-->
-            <!--android:layout_width="30dp"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--app:cpv_animAutostart="true"-->
-            <!--app:cpv_indeterminate="true"-->
-            <!--app:cpv_thickness="2dp" />-->
-
-    <!--</RelativeLayout>-->
-    <!--voucher apply-->
-
     <LinearLayout
         android:id="@+id/ll_voucher_parent"
         android:layout_width="match_parent"
@@ -150,113 +118,6 @@
                 style="@style/font_family_robot_regular" />
         </LinearLayout>
     </LinearLayout>
-
-    <!--<LinearLayout-->
-        <!--android:id="@+id/ll_storeCredit"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/ll_voucher_parent"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:orientation="vertical"-->
-        <!--android:visibility="gone">-->
-
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@color/whiteFFFFFF"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:paddingBottom="2dp"-->
-            <!--android:paddingLeft="@dimen/button_padding_value">-->
-
-            <!--<com.whitelabel.app.widget.CustomTextView-->
-                <!--android:id="@+id/tv_storecredit_title"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginRight="20dp"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_toLeftOf="@+id/rl_storecredit"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:textSize="12sp"-->
-
-                <!--style="@style/font_family_robot_regular"></com.whitelabel.app.widget.CustomTextView>-->
-
-            <!--<com.whitelabel.app.widget.CustomTextView-->
-                <!--android:id="@+id/tv_rm"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/tv_storecredit_title"-->
-                <!--android:text="RM"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:textSize="12sp"-->
-                <!--style="@style/font_family_roboto_medium"></com.whitelabel.app.widget.CustomTextView>-->
-
-            <!--<com.whitelabel.app.widget.CustomTextView-->
-                <!--android:id="@+id/tv_storecredit_price"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/tv_storecredit_title"-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:layout_toRightOf="@+id/tv_rm"-->
-                <!--android:text="22,220"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:textSize="16sp"-->
-                <!--style="@style/font_family_roboto_medium"></com.whitelabel.app.widget.CustomTextView>-->
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/rl_storecredit"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@color/big_botton_white"-->
-                <!--android:paddingRight="@dimen/button_padding_value">-->
-
-                <!--<com.whitelabel.app.widget.CustomTextView-->
-                    <!--android:id="@+id/ctv_storecredit"-->
-                    <!--android:layout_width="80dp"-->
-                    <!--android:layout_height="42dp"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:background="@drawable/big_button_style_config"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="@string/redeem"-->
-                    <!--android:textColor="@color/whiteFFFFFF"-->
-                    <!--android:textSize="17dp"-->
-                    <!--style="@style/font_family_robot_regular" />-->
-            <!--</RelativeLayout>-->
-        <!--</RelativeLayout>-->
-
-
-        <!--&lt;!&ndash;hidden animation block&ndash;&gt;-->
-        <!--<LinearLayout-->
-            <!--android:id="@+id/ll_storeCredit_hint"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="2dp"-->
-            <!--android:paddingBottom="10dp"-->
-            <!--android:paddingTop="20dp"-->
-            <!--android:visibility="gone">-->
-
-            <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="top"-->
-                <!--android:layout_marginLeft="25dp"-->
-                <!--android:layout_marginTop="2.5dp"-->
-                <!--android:src="@mipmap/icon_shopping_cart_right" />-->
-
-            <!--<com.whitelabel.app.widget.CustomTextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:textColor="@color/green_common"-->
-                <!--android:text="@string/store_credit_success_hint"-->
-                <!--android:textSize="15sp"-->
-                <!--style="@style/font_family_robot_regular" />-->
-        <!--</LinearLayout>-->
-    <!--</LinearLayout>-->
-
     <RelativeLayout
         android:layout_marginTop="10dp"
         android:background="@color/whiteffffff"
@@ -451,7 +312,6 @@
         android:textSize="16sp"
         android:visibility="gone"
         style="@style/font_family_robot_regular" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="80dp"

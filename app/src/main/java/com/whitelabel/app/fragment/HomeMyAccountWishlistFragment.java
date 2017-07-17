@@ -26,6 +26,7 @@ import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.Wishlist;
 import com.whitelabel.app.model.WishlistEntityResult;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -300,7 +301,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String visibility = list.get(position).getVisibility();
                 if ((("1").equals(visibility))) {
-                    Intent it = new Intent(getActivity(), ProductActivity.class);
+                    Intent it = new Intent(getActivity(), ProductDetailActivity.class);
                     it.putExtra("productId", list.get(position).getProductId());
                     homeActivity.startActivity(it);
 //                    homeActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft,

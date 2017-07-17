@@ -3,6 +3,7 @@ package com.whitelabel.app.ui.home.fragment;
 import android.content.Intent;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,14 +21,19 @@ import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.data.DataManager;
+import com.whitelabel.app.data.service.BaseManager;
+import com.whitelabel.app.data.service.CommodityManager;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.home.adapter.CategoryDetailVerticalAdapter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 import com.whitelabel.app.ui.home.presenter.HomeCategoryDetailPresenterImpl;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
@@ -77,6 +83,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     public final static  String ARG_CATEGORY_ID="category_id";
     public final static  String ARG_CATEGORY_INDEX="category_index";
     private int mIndex;
+    private boolean isPrepared, isVisible, mHasLoadedOnce;
     /**
      * Use this factory method to creaøte a new instance of
      * this fragment using the provided parameters.
@@ -92,6 +99,27 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         fragment.setArguments(bundle);
         return fragment;
     }
+
+    @Override
+    public void dissmissProgressDialog() {
+        closeProgressDialog();
+    }
+
+    @Override
+    public void showSwipeLayout() {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                swipeContainer.setRefreshing(true);
+            }
+        });
+    }
+
+    @Override
+    public void closeSwipeLayout() {
+        swipeContainer.setRefreshing(false);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,9 +151,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         mImageLoader=new ImageLoader(getActivity());
         swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         swipeContainer.setOnRefreshListener(this);
-
     }
-
     private void initRecyclerView() {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView1.setLayoutManager(layoutManager);
@@ -135,11 +161,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public void onRefresh() {
         if (getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
-            String sessionKey = "";
-            if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-                sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-            }
-            mPresenter.getCategoryDetail(mCategoryId, sessionKey);
+            mPresenter.getCategoryDetail(mCategoryId);
         }
     }
     private final GridLayoutManager.SpanSizeLookup mTwoRowSpan = new GridLayoutManager.SpanSizeLookup() {
@@ -156,22 +178,13 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         if(getActivity()!=null)
         JViewUtils.showErrorToast(getActivity(),errorMsg);
     }
-
-    private boolean isPrepared, isVisible, mHasLoadedOnce;
     public void init() {
         if (!isPrepared || !isVisible || mHasLoadedOnce) {
             return;
         }
         mHasLoadedOnce = true;
-        String sessionKey="";
-        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
-            sessionKey=WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-        }
-        if(mIndex==0) {
-            showProgressDialog();
-        }
         initRecyclerView();
-        mPresenter.getCategoryDetail(mCategoryId,sessionKey);
+        mPresenter.getCategoryDetail(mCategoryId);
     }
 
     @Override
@@ -184,7 +197,6 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
             isVisible = false;
         }
     }
-
     @Override
     public void loadData(CategoryDetailModel categoryDetailModel) {
         if(getActivity()!=null) {
@@ -199,7 +211,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
                         productEntity=mAdapter.getData().getNewArrivalProducts().get((position-1));
                     }
                     Intent intent = new Intent();
-                    intent.setClass(getActivity(), ProductActivity.class);
+                    intent.setClass(getActivity(), ProductDetailActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("productId",productEntity.getProductId());
                     bundle.putString("from", "from_product_list");
@@ -226,6 +238,8 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     }
     @Override
     public HomeCategoryDetailContract.Presenter getPresenter() {
-        return  new HomeCategoryDetailPresenterImpl();
+        return  new HomeCategoryDetailPresenterImpl(new
+                CommodityManager(DataManager.getInstance().getProductApi(),DataManager.getInstance().getPreferHelper()),
+                new BaseManager(DataManager.getInstance().getMockApi(),DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),this);
     }
 }

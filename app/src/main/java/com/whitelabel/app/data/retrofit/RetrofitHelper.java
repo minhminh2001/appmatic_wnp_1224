@@ -6,6 +6,7 @@ import com.whitelabel.app.utils.JLogUtils;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Credentials;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -54,11 +55,15 @@ public class RetrofitHelper {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Request original = chain.request();
+                    HttpUrl url=original.url().newBuilder()
+                            .addEncodedQueryParameter("platformId","2")
+                            .addEncodedQueryParameter("versionNumber","1.0.1")
+                            .addEncodedQueryParameter("serviceVersion","1.0.5").build();
                     Request.Builder  builder1=original.newBuilder()
                             .header("API-VERSION", "v1")
                             .header("API-KEY", "L5M7aUpZRr2ChzDx")
                             .header("APP-KEY","APP-29710023052170613");
-                    Request request1=builder1.method(original.method(), original.body()).build();
+                    Request request1=builder1.method(original.method(), original.body()).url(url).build();
                     return chain.proceed(request1);
                 }
             });
