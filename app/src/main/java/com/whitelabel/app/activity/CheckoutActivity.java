@@ -39,6 +39,9 @@ import com.whitelabel.app.dao.CheckoutDao;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.dao.ShoppingCarDao;
+import com.whitelabel.app.data.DataManager;
+import com.whitelabel.app.data.service.BaseManager;
+import com.whitelabel.app.data.service.CheckoutManager;
 import com.whitelabel.app.fragment.CheckoutPaymentFragment;
 import com.whitelabel.app.fragment.CheckoutReviewFragment;
 import com.whitelabel.app.fragment.CheckoutShippingAddaddressFragment;
@@ -52,7 +55,10 @@ import com.whitelabel.app.model.SVRAppserviceSaveBillingEntity;
 import com.whitelabel.app.model.SVRAppserviceSaveOrderReturnEntity;
 import com.whitelabel.app.model.ShoppingDiscountBean;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.checkout.CheckoutContract;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressFragment;
+import com.whitelabel.app.ui.checkout.CheckoutPresenterImpl;
+import com.whitelabel.app.ui.checkout.PayPalPaymentActivity;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -67,7 +73,7 @@ import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
-public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
+public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutContract.Presenter> implements View.OnClickListener,CheckoutContract.View{
     public Long mGATrackCheckoutTimeStart = 0L;
     public boolean mGATrackCheckoutTimeEnable = false;
     public boolean mGATrackAddressToPaymentTimeEnable = false;
@@ -95,6 +101,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     String shippingFee = "";
     private AddressParameter addressParams;
     private String html;
+    public String paymentMethodCode;
+    public String molpayType;
+    private String paymethodType;//1 online 2credit 3.offline payment
+    private String bank;
     /**
      * record that if fragment has entered into payment module.
      * initialized value is true because it must be in shipping model in the beginning.
@@ -107,16 +117,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
      * and more than 1 : defaultAddressFragment or addAddressFragment
      */
     public ArrayList<Fragment> list_fragment_shipping;
-    /**
-     * server response data:
-     * 0: having no address,now it should use AddaddressFragment or edit an address.
-     * 1: having a default adrress,now it should use SelectaddressFragment without top imageButton and show just one address.
-     */
-//    public String addressConditionInShipping;
-    /**
-     * record the position of current module:(shipping,payment,review)
-     * from left to right -- 1,2,3
-     */
     private int currentModule = 1;
     /**
      * is "go back" operation or not
@@ -133,17 +133,17 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
     private MyAccountDao mAccountDao;
     private CheckoutDao mCheckoutDao;
     private ShoppingCarDao mShoppingCarDao;
-//    public String paymentMethodCode;
-//    public String molpayType;
-//    private int paymethodType;//1 online 2credit 3.offline payment
-//    private String bank;
-    /**
-     * send request to place order
-     */
     private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
     private ImageLoader mImageLoader;
     private PaypalHelper mPaypalHelper;
-//    static {
+
+    @Override
+    public CheckoutContract.Presenter getPresenter() {
+        return new CheckoutPresenterImpl(new BaseManager(DataManager.getInstance().getMockApi(),
+                DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),
+                new CheckoutManager(DataManager.getInstance().getCheckoutApi(),DataManager.getInstance().getPreferHelper()));
+    }
+    //    static {
 //        System.loadLibrary("gemfivelocal");
 //    }
     private void placeOrder() {
@@ -152,19 +152,31 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         btnContinue.setBackgroundResource(R.drawable.big_button_style_b8);
         mCheckoutDao.savePlaceOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey());
     }
-//
-//    public void IsOldVersion() {
-//        mCheckoutPaymentDialog = new CheckoutPaymentDialog(CheckoutActivity.this, R.style.loading_dialog, getResources().getString(R.string.dialog_checkout_text)).showDialog();
-//        btnContinue.setEnabled(false);
-//        btnContinue.setBackgroundResource(R.drawable.big_button_style_b8);
-//        new ProductDao(TAG, mHandler).checkVersion("2");
-//    }
+
+    @Override
+    public void showCheckProgressDialog() {
+        mCheckoutPaymentDialog = new CheckoutPaymentDialog(CheckoutActivity.this, R.style.loading_dialog, getResources().getString(R.string.dialog_checkout_text)).showDialog();
+    }
+    @Override
+    public void showNetErrorMessage() {
+        RequestErrorHelper requestErrorHelper=new RequestErrorHelper(this);
+        requestErrorHelper.showNetWorkErrorToast();
+    }
+    @Override
+    public void showFaildMessage(String faildMessage) {
+        JViewUtils.showMaterialDialog(this, "", faildMessage,null);
+    }
     public void closeCheckoutPaymentDialog() {
         if (mCheckoutPaymentDialog != null && mCheckoutPaymentDialog.isShowing()) {
             mCheckoutPaymentDialog.dismiss();
         }
     }
-    private PaypalHelper paypalHelper;
+    @Override
+    public void startPayPalPaymentActivity(String url) {
+        Intent intent=new Intent(this, PayPalPaymentActivity.class);
+        intent.putExtra(PayPalPaymentActivity.PAYMENT_URL,url);
+        startActivity(intent);
+    }
     /**
      * e
      * to record fragment(module) count
@@ -456,24 +468,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
                 JLogUtils.i("googleGA_screen", "Select Payment Screen");
                 break;
             case 3://place my order
-                mGATrackPlaceOrderToResultTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-                placeOrder();
-//                try {
-//                    GaTrackHelper.getInstance().googleAnalytics("Review Order Screen ", this);
-////                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getDiscount());
-////                    JLogUtils.i("CheckoutActivity","paymentSaveReturnEntity:"+paymentSaveReturnEntity.getShipping());
-//                    String discount = "";
-//                    String shippingFee = "";
-//                    if (paymentSaveReturnEntity.getDiscount() != null) {
-//                        discount = paymentSaveReturnEntity.getDiscount().get("value");
-//                    }
-//                    if (paymentSaveReturnEntity.getShipping() != null) {
-//                        shippingFee = paymentSaveReturnEntity.getShipping().get("value");
-//                    }
-//                    FirebaseEventUtils.getInstance().customizedBeginCheck(CheckoutActivity.this, discount, JDataUtils.formatDouble(paymentSaveReturnEntity.getGrandtotal()), JDataUtils.formatDouble(shippingFee));
-//                } catch (Exception ex) {
-//                    ex.getStackTrace();
-//                }
+//                mGATrackPlaceOrderToResultTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+//                placeOrder();
+                mPresenter.payPalPlaceOrder();
                 break;
         }
     }
@@ -576,18 +573,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         btnContinue.setEnabled(enable);
         if (enable) {
             JViewUtils.setSoildButtonGlobalStyle(this,btnContinue);
-//            btnContinue.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
-//            btnContinue.setBackgroundResource(R.drawable.big_button_style_config);
         } else {
             btnContinue.setBackgroundResource(R.drawable.big_button_style_b8);
         }
     }
-
-    public String paymentMethodCode;
-    public String molpayType;
-    private String paymethodType;//1 online 2credit 3.offline payment
-    private String bank;
-
     public void switReviewFragment(String molpayType, CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity, String code, String html, String type, String bank) {
         this.html = html;
         this.paymentMethodCode = code;
@@ -626,8 +615,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
 //                R.animator.fragment_slide_left_exit
 //        )
     }
-
-
     public void showProductDialog(String title, ArrayList<DialogProductBean> beans) {
         // The following item(s) in your cart cannot be delivered to your location
         final MaterialDialog mMaterialDialog = new MaterialDialog(CheckoutActivity.this);
@@ -656,92 +643,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         setButtonEnable(false);
         mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
         mCheckoutDao.saveBilling(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), shippingAddress,billingAddress);
-        //judge to show which fragment(module)
-//        switch (Integer.parseInt(addressConditionInShipping)) {
-//            case 0://It is adding new address or editing address,connect newAddressWebservice or editAddressWebService
-//                //we need to get params from addNewAddressFragment first.
-//                final CheckoutShippingAddaddressFragment addNewAddressFragment = (CheckoutShippingAddaddressFragment) getFragmentManager().findFragmentByTag("addNewAddressFragment");
-//                final CheckoutShippingAddaddressFragment editAddressFragment = (CheckoutShippingAddaddressFragment) getFragmentManager().findFragmentByTag("editAddressFragment");
-//                if (addNewAddressFragment != null) {
-//                    //then validate these params
-//                    addressParams = validateDatasOfNewAddressFragment(addNewAddressFragment, null);
-//                    if (addressParams == null) {//do not pass validation
-//                        return;
-//                    }
-//                    setButtonEnable(false);
-//                    addNewAddressFragment.tvErrorMsg.setText("");
-//                    //after validation:
-//                    mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
-//                    /**
-//                     * step1, send request to save address
-//                     */
-//                    mAccountDao.addressSave(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(),
-//                            addressParams.getFirstname(), addressParams.getLastname(), addressParams.getCountryId(), addressParams.getTelephone(), addressParams.getStreet0(),
-//                            addressParams.getStreet1(), addressParams.getPostcode(), addressParams.getCity(), addressParams.getRegion(), addressParams.getRegionId(), "0","0","");
-//                } else if (editAddressFragment != null && editAddressFragment.AllVerifyNotNull()) {
-//                    //then validate these params
-//                    addressParams = validateDatasOfNewAddressFragment(null, editAddressFragment);
-////                    String errorMsg = parameters.getUrlParams().get("validation_notpass_reason");
-//                    if (addressParams == null) {//do not pass validation
-//                        return;
-//                    }
-//                    addressParams.setAddressId(editAddressFragment.tvPhone_otheruse.getHint().toString());
-//                    mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
-//                    setButtonEnable(false);
-//                    editAddressFragment.tvErrorMsg.setText("");
-//                    mAccountDao.EditSave(addressParams.getAddressId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), addressParams.getFirstname(),
-//                            addressParams.getLastname(), addressParams.getCountryId(), addressParams.getTelephone(), addressParams.getStreet0(), addressParams.getStreet1(),
-//                            addressParams.getPostcode(), addressParams.getCity(), addressParams.getRegion(), addressParams.getRegionId(), null,"0","");
-//                } else {
-//                    if (editAddressFragment.AllVerifyNotNull()) {
-//                        Toast.makeText(CheckoutActivity.this, "failed to find and cast to Add new Address Fragment or edit address fragment", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//                break;
-//            case 1://It's in shipping select or default address module,
-//                try {
-//                    final Fragment fragment = getSupportFragmentManager().findFragmentByTag("defaultaddressFragment");
-////                    final CheckoutShippingDefaultaddressFragment defaultaddressFragment = (CheckoutShippingDefaultaddressFragment) getFragmentManager().findFragmentByTag("defaultaddressFragment");
-//                    final CheckoutShippingSelectaddressFragment selectaddressFragment;
-//                    Fragment defaultOrSelectFragment;
-//                    CheckoutShippingDefaultaddressFragment selectFragment = null;
-//                    JLogUtils.i("checkout-select-address-fragment:", "do not permit to continue");
-//                    CheckoutDefaultShippingAddress defaultShippingAddress = null;
-//                    if (fragment != null) {//maybe in select address fragment
-//                        if (fragment instanceof CheckoutShippingDefaultaddressFragment) {
-//                            CheckoutShippingDefaultaddressFragment defaultaddressFragment = (CheckoutShippingDefaultaddressFragment) fragment;
-//                            defaultShippingAddress = defaultaddressFragment.address;
-//                        }
-//                    } else {
-//                        Fragment fragment1 = getFragmentManager().findFragmentByTag("defaultAddressFragment");
-//                        selectFragment = (CheckoutShippingDefaultaddressFragment) fragment1;
-//                        defaultShippingAddress = selectFragment.mAddress;
-//                        if (defaultShippingAddress == null) {
-//                            Toast.makeText(CheckoutActivity.this, R.string.select_address, Toast.LENGTH_SHORT).show();
-//                            return;
-//                        }
-//                    }
-//                    addressParams = new AddressParameter();
-//                    addressParams.setAddressId(defaultShippingAddress.getAddressId());
-//                    addressParams.setFirstname(defaultShippingAddress.getFirstName());
-//                    addressParams.setLastname(defaultShippingAddress.getLastName());
-//                    addressParams.setCountryId(defaultShippingAddress.getCountryId());
-//                    addressParams.setStreet0(defaultShippingAddress.getStreet().get(0));
-//                    addressParams.setStreet1(defaultShippingAddress.getStreet().get(1));
-//                    addressParams.setPostcode(defaultShippingAddress.getPostcode());
-//                    addressParams.setCity(defaultShippingAddress.getCity());
-//                    addressParams.setRegionId(defaultShippingAddress.getRegionId());
-//                    addressParams.setRegion(defaultShippingAddress.getRegion());
-//                    addressParams.setTelephone(defaultShippingAddress.getTelephone());
-//                    mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
-//
-//                } catch (ClassCastException e) {
-//                    e.printStackTrace();
-//                }
-//                break;
-//            default:
-//                break;
-//        }
     }
 
     private static class DataHandler extends Handler {
@@ -1383,22 +1284,17 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity implements
         startActivity(intent);
         finish();
 //        overridePendingTransition(R.anim.activity_transition_enter_lefttoright, R.anim.activity_transition_exit_lefttoright);
-
     }
-
     public void saveShoppingCartCount(int num) {
         GOUserEntity userEntity = WhiteLabelApplication.getAppConfiguration().getUserInfo(CheckoutActivity.this);
         userEntity.setCartItemCount(num);
-        WhiteLabelApplication.getAppConfiguration().updateDate(CheckoutActivity.this, userEntity);
+        WhiteLabelApplication.getAppConfiguration().updateUserData(CheckoutActivity.this, userEntity);
     }
-
-
     @Override
     protected void onStart() {
         super.onStart();
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
         GaTrackHelper.getInstance().googleAnalyticsStartCheckout(CheckoutActivity.this, productIds, "checkout", 1);
-
     }
 
     @Override

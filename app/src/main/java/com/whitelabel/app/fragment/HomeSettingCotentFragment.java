@@ -103,7 +103,7 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (WhiteLabelApplication.getInstance().getAppConfiguration().isSignIn(getActivity())&&getActivity()!=null){
                     WhiteLabelApplication.getInstance().getAppConfiguration().getUser().setClosedSound(isChecked);
-                    WhiteLabelApplication.getInstance().getAppConfiguration().updateDate(getActivity(), WhiteLabelApplication.getInstance().getAppConfiguration().getUser());
+                    WhiteLabelApplication.getInstance().getAppConfiguration().updateUserData(getActivity(), WhiteLabelApplication.getInstance().getAppConfiguration().getUser());
                 }
             }
         });

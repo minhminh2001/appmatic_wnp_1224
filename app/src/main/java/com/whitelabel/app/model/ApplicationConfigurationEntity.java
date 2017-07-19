@@ -164,7 +164,7 @@ public class ApplicationConfigurationEntity {
     }
 
     //编辑个人信息后更新数据
-    public void updateDate(Context context, GOUserEntity user) {
+    public void updateUserData(Context context, GOUserEntity user) {
         this.user = user;
         SharedPreferences sharedPreferences = context.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -175,23 +175,23 @@ public class ApplicationConfigurationEntity {
     //update order number
     public void addToOrder(Context context) {
         this.user.setOrderCount(user.getOrderCount() + 1);
-        this.updateDate(context, user);
+        this.updateUserData(context, user);
     }
 
     //update wishlist number
     public void addToWishlist(Context context) {
         this.user.setWishListItemCount(user.getWishListItemCount() + 1);
-        this.updateDate(context, user);
+        this.updateUserData(context, user);
     }
 
     public void updateWishlist(Context context, int number) {
         this.user.setWishListItemCount(number);
-        this.updateDate(context, user);
+        this.updateUserData(context, user);
     }
 
     public void deleteWishlist(Context context) {
         this.user.setWishListItemCount(user.getWishListItemCount() - 1);
-        this.updateDate(context, user);
+        this.updateUserData(context, user);
     }
 
     public void signIn(Context context, SVRAppserviceCustomerFbLoginReturnEntity thirdPartyLoginReturnEntity) {

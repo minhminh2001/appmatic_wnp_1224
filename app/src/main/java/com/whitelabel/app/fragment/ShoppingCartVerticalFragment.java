@@ -729,7 +729,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
             GOUserEntity userEntity = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity());
             userEntity.setCartItemCount(num);
-            WhiteLabelApplication.getAppConfiguration().updateDate(getActivity(), userEntity);
+            WhiteLabelApplication.getAppConfiguration().updateUserData(getActivity(), userEntity);
         }
     }
 

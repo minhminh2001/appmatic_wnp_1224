@@ -45,6 +45,11 @@ public class RequestErrorHelper {
         }
     }
 
+
+    public void  showNetWorkErrorToast(){
+        Toast.makeText(mContent.get(), mContent.get().getResources().getString(R.string.Global_Error_Internet), Toast.LENGTH_LONG).show();
+    }
+
     public void showConnectionBreaks(Message msg) {
         if (mConnectionLayout.get() != null) {
             mConnectionLayout.get().setVisibility(View.VISIBLE);

@@ -80,7 +80,7 @@ public class ShoppingCarDao extends BaseHttp {
     }
     public void saveShoppingCartCount(Context context, int num) {
         GOUserEntity userEntity = WhiteLabelApplication.getAppConfiguration().getUserInfo(context);
-        WhiteLabelApplication.getAppConfiguration().updateDate(context, userEntity);
+        WhiteLabelApplication.getAppConfiguration().updateUserData(context, userEntity);
     }
     public void addProductToShoppingCart(String sessionKey, String productId, Map<String,String> idQtys) {
         params = new TreeMap<>();

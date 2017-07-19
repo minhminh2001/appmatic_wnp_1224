@@ -56,11 +56,6 @@
         <service
             android:name="com.paypal.android.sdk.payments.PayPalService"
             android:exported="false" />
-
-
-        　
-
-
         <!--  -->
         <service
             android:name="com.google.android.gms.analytics.AnalyticsService"
@@ -319,12 +314,13 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <activity android:name=".ui.brandstore.BrandStoreFontActivity" />
         <!-- <activity android:name="com.whitelabel.app.activity.PaypalActivity"></activity> -->
         <activity android:name=".ui.productdetail.BindProductActivity" />
         <activity android:name=".ui.checkout.CheckoutSelectAddressActivity" />
-        <activity android:name=".ui.shoppingcart.ShoppingCartActivity"></activity>
+        <activity android:name=".ui.shoppingcart.ShoppingCartActivity" />
+        <activity android:name=".ui.checkout.PayPalPaymentActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

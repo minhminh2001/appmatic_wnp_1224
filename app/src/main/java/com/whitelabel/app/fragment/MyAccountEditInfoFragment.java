@@ -170,7 +170,7 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                         user.setFirstName(JDataUtils.filterEmoji(firstName));
                         user.setLastName(JDataUtils.filterEmoji(lastName));
                         user.setEmail(mFragment.get().email.getText().toString().trim());
-                        WhiteLabelApplication.getAppConfiguration().updateDate(mActivity.get(), user);
+                        WhiteLabelApplication.getAppConfiguration().updateUserData(mActivity.get(), user);
                         mActivity.get().onBackPressed();
                     } else {
                         //isSaved  在onFoucsChangeListenter里作用，防止showWheelPickerOneDialog在点击save后自动弹出
