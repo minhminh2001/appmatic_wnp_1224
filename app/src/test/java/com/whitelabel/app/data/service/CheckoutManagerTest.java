@@ -5,6 +5,7 @@ import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.ui.checkout.model.PaypalPlaceOrderReponse;
+import com.whitelabel.app.ui.checkout.model.RequestOrderNumberResponse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,8 +21,10 @@ import static org.junit.Assert.*;
  * Created by Administrator on 2017/7/18.
  */
 public class CheckoutManagerTest {
+
+
     private CheckoutManager checkoutManager;
-    String sessionKey="8f4908eb6b88371d932d0e958573cc8b";
+    String sessionKey="d297c75c412e15458485b48c650b6fa9";
     @Mock
     ICacheApi iCacheApi;
     @Before
@@ -37,6 +40,17 @@ public class CheckoutManagerTest {
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         PaypalPlaceOrderReponse responseModel= testSubscriber.getOnNextEvents().get(0);
+        System.out.println("status:"+responseModel.getStatus());
+    }
+
+    @Test
+    public void requestOrderNumber() throws Exception {
+        TestSubscriber<RequestOrderNumberResponse> testSubscriber=TestSubscriber.create();
+        checkoutManager.requestOrderNumber(sessionKey).
+                subscribe(testSubscriber);
+        testSubscriber.assertNoErrors();
+        testSubscriber.assertCompleted();
+        RequestOrderNumberResponse responseModel= testSubscriber.getOnNextEvents().get(0);
         System.out.println("status:"+responseModel.getStatus());
     }
 

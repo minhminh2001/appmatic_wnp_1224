@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.whitelabel.app.R;
+import com.whitelabel.app.*;
 import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
@@ -31,7 +31,7 @@ import com.whitelabel.app.utils.RequestErrorHelper;
 import java.lang.ref.WeakReference;
 
 @SuppressWarnings("ALL")
-public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
+public class CheckoutPaymentStatusWrongFragment extends com.whitelabel.app.BaseFragment {
     private CheckoutPaymentStatusActivity checkoutPaymentStatusActivity;
     private TextView tvErrorMsg;
     private boolean isSend;
@@ -195,11 +195,6 @@ public class CheckoutPaymentStatusWrongFragment extends BaseFragment {
             );
             checkoutPaymentStatusActivity.mGATrackTimeEnable = false;
         }
-    }
-
-    @Override
-    public void onKeyDown(int keyCode, KeyEvent event) {
-
     }
     @Override
     public void onStart() {

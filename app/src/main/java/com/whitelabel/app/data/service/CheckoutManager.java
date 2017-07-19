@@ -6,7 +6,7 @@ import com.whitelabel.app.model.ApiException;
 import com.whitelabel.app.model.ApiFaildException;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.ui.checkout.model.PaypalPlaceOrderReponse;
-
+import com.whitelabel.app.ui.checkout.model.RequestOrderNumberResponse;
 import rx.Observable;
 import rx.functions.Action1;
 /**
@@ -18,6 +18,10 @@ public class CheckoutManager implements ICheckoutManager {
     public CheckoutManager(CheckoutApi  checkoutApi,ICacheApi iCacheApi){
         this.checkoutApi=checkoutApi;
         this.iCacheApi=iCacheApi;
+    }
+    @Override
+    public Observable<RequestOrderNumberResponse> requestOrderNumber(String sessionKey) {
+        return checkoutApi.requestOrderNumber(sessionKey);
     }
     @Override
     public Observable<PaypalPlaceOrderReponse> paypalPlaceOrder(String sessionKey) {

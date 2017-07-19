@@ -1,7 +1,4 @@
 package com.whitelabel.app.activity;
-
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -17,14 +14,14 @@ import com.whitelabel.app.fragment.CheckoutPaymentStatusRightFragment;
 import com.whitelabel.app.fragment.CheckoutPaymentStatusWrongFragment;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JViewUtils;
-
 import java.io.Serializable;
-
 public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
     public String html;
     private final int PAYMENTSUCESS = 1;
     private final int PAYMENTFAILURE = 2;
     public boolean isLuckDraw;
+    public boolean mGATrackTimeEnable = true;
+    public long mGATrackTimeStart;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +40,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        View view
-        =setRightTextMenuClickListener(
+        View view =setRightTextMenuClickListener(
                 getMenuInflater(),
                 R.menu.menu_shopping_cart,
                 menu,
@@ -72,20 +68,16 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
     protected boolean refreshNotification(int type, String id) {
         return false;
     }
-
     @Override
     protected void jumpHomePage() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
-//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
-
     @Override
     public void jumpHomePage(Serializable serializable) {
         jumpHomePage();
     }
-
     @Override
     protected void jumpCategoryTreePage() {
         Intent intent = new Intent(this, HomeActivity.class);
@@ -93,10 +85,8 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_CATEGORYTREE);
         intent.putExtras(bundle);
         startActivity(intent);
-//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
-
     @Override
     protected void jumpShoppingCartPage() {
         Intent intent = new Intent(this, HomeActivity.class);
@@ -104,10 +94,8 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
         intent.putExtras(bundle);
         startActivity(intent);
-//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
-
     @Override
     protected void jumpNotificationPage() {
         Intent intent = new Intent(this, HomeActivity.class);
@@ -115,10 +103,8 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_NOTIFICATION);
         intent.putExtras(bundle);
         startActivity(intent);
-//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
-
     @Override
     protected void jumpWistListPage() {
         Intent intent = new Intent(this, HomeActivity.class);
@@ -126,7 +112,6 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_WISHLIST);
         intent.putExtras(bundle);
         startActivity(intent);
-//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -137,7 +122,6 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle1.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_ORDER);
         i.putExtras(bundle1);
         startActivity(i);
-//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -148,7 +132,6 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SETTING);
         intent.putExtras(bundle);
         startActivity(intent);
-//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -159,7 +142,6 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_EDITPROFILE);
         intent.putExtras(bundle);
         startActivity(intent);
-//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
 
@@ -200,7 +182,6 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         startActivity(intent2);
         finish();
     }
-
     @Override
     protected void jumpStoreCreditPage() {
         Intent storeCreditIntent = new Intent(this, HomeActivity.class);
@@ -208,13 +189,8 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         storeCreditBundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_STORECREDIT);
         storeCreditIntent.putExtras(storeCreditBundle);
         startActivity(storeCreditIntent);
-//        overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         finish();
     }
-
-    public boolean mGATrackTimeEnable = true;
-    public long mGATrackTimeStart;
-
     private void initData() {
         Bundle bundle = getIntent().getExtras();
         mGATrackTimeStart = bundle.getLong("mGATrackTimeStart", 0);
@@ -224,7 +200,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         String orderNumber = bundle.getString("orderNumber");
         isLuckDraw = bundle.getBoolean("isLuckDraw", false);
         html = bundle.getString("html");
-        Fragment checkoutPaymentStatusFragment;
+        android.support.v4.app.Fragment checkoutPaymentStatusFragment;
         if ("1".equalsIgnoreCase(paymentStatus)) {
             checkoutPaymentStatusFragment = new CheckoutPaymentStatusRightFragment();
             checkoutPaymentStatusFragment.setArguments(bundle);
@@ -237,9 +213,8 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
             checkoutPaymentStatusFragment = new CheckoutPaymentStatusWrongFragment();
             checkoutPaymentStatusFragment.setArguments(bundle1);
             gaTrackerPayment(PAYMENTFAILURE);
-
         }
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.flContainer, checkoutPaymentStatusFragment).commit();
     }
     public void gaTrackerPayment(int type) {
@@ -257,10 +232,6 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         } catch (Exception ex) {
             ex.getStackTrace();
         }
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

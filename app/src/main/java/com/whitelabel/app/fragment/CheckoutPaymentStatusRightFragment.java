@@ -1,13 +1,9 @@
 package com.whitelabel.app.fragment;
-
-
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -17,57 +13,56 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.whitelabel.app.R;
+
+import com.whitelabel.app.*;
 import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.application.WhiteLabelApplication;
-import com.whitelabel.app.dao.CheckoutDao;
-import com.whitelabel.app.model.FacebookStoryEntity;
+import com.whitelabel.app.data.DataManager;
+import com.whitelabel.app.data.service.BaseManager;
+import com.whitelabel.app.data.service.CheckoutManager;
 import com.whitelabel.app.model.GOUserEntity;
-import com.whitelabel.app.model.GetAnimCodeEntity;
-import com.whitelabel.app.model.ShoppingDiscountBean;
+import com.whitelabel.app.ui.BasePresenter;
+import com.whitelabel.app.ui.checkout.CheckoutStatusRightContract;
+import com.whitelabel.app.ui.checkout.CheckoutStatusRightPresenter;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.GaTrackHelper;
-import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JShareUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomWebView;
-
-import java.lang.ref.WeakReference;
-
-public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements View.OnClickListener{
+public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseFragment<CheckoutStatusRightContract.Presenter> implements View.OnClickListener ,CheckoutStatusRightContract.View{
     private CheckoutPaymentStatusActivity checkoutPaymentStatusActivity;
     private CustomWebView wvHtml;
     private TextView tvShare;
     private View rlBackGroud;
     private int fromType=0;
     private View rlRoot;
+    TextView tvOrderNumber;
+    @Override
+    public CheckoutStatusRightContract.Presenter getPresenter() {
+        return new CheckoutStatusRightPresenter(new BaseManager(DataManager.getInstance().getMockApi(),
+                DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),
+                new CheckoutManager(DataManager.getInstance().getCheckoutApi(),DataManager.getInstance().getPreferHelper()));
+    }
+
+    @Override
+    public void showOrderNumber(String orderNumber) {
+        tvOrderNumber.setText(orderNumber);
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        shareHandler=new ShareHandler(getActivity(),CheckoutPaymentStatusRightFragment.this);
-//        FB_ERROR_NOINTERNET = getResources().getString(R.string.facebook_error_nointernet);
-//        FB_ERROR_UNINSTALLED = getResources().getString(R.string.facebook_error_notinstalled);
-//        FB_SHARED_OK = getResources().getString(R.string.facebook_success_ok);
-
         if (getArguments() != null){
-//            mDiscountBean = (ShoppingDiscountBean) getArguments().getSerializable("discountBean");
             fromType=getArguments().getInt("fromType");
         }
+        mPresenter.requestOrderNumber();
         AnimUtil.alpha_0_1_500(rlRoot);
         if(!TextUtils.isEmpty(checkoutPaymentStatusActivity.html)){
             String content=JToolUtils.replaceFont(checkoutPaymentStatusActivity.html);
             JToolUtils.webViewFont(WhiteLabelApplication.getInstance().getBaseContext(), wvHtml, content);
         }
-//        if(mDiscountBean!=null&&mDiscountBean.getIsShare()==1){
-//            tvShare.setVisibility(View.VISIBLE);
-//            mImageUrl=mDiscountBean.getShareImage();
-//            mDescription=mDiscountBean.getShareDescription();
-//            mLink=mDiscountBean.getShareLink();
-//            mTitle=mDiscountBean.getShareTitle();
-//        }
         WhiteLabelApplication.getAppConfiguration().addToOrder(checkoutPaymentStatusActivity);
         if(checkoutPaymentStatusActivity.mGATrackTimeEnable) {
             GaTrackHelper .getInstance().googleAnalyticsTimeStop(
@@ -78,30 +73,6 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
             checkoutPaymentStatusActivity.mGATrackTimeEnable = false;
         }
     }
-//    private PopupWindow popupWindow;
-//    private TextView rateNow,askMeLater,noThanks;
-//    private ShareDialog shareDialog;
-//    private CallbackManager callbackManager;
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        callbackManager.onActivityResult(requestCode, resultCode, data);
-//    }
-//    private void shareFacebook(){
-//        String link = mLink;
-//        String picture =mImageUrl;
-//        String applicationname = getResources().getString(R.string.app_name);
-//        FacebookStoryEntity entity = new FacebookStoryEntity();
-//        entity.setLink(link);
-//        entity.setApplicationName(applicationname);
-//        entity.setDescription(mDescription);
-//        entity.setName(mTitle);
-//        entity.setCaption(mTitle);
-//        entity.setPicture(picture);
-//        JShareUtils.publishFacebookStoryByNativeApp(checkoutPaymentStatusActivity, entity, shareDialog, shareHandler);
-//    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -153,6 +124,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
                     R.anim.activity_transition_exit_lefttoright);
         }
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,14 +134,13 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checkout_payment_status_right, container, false);
         View layout = view.findViewById(R.id.rl_root);
-        TextView tvOrderNumber = (TextView) view.findViewById(R.id.tv_checkout_payment_status_ordernumber);
+        tvOrderNumber = (TextView) view.findViewById(R.id.tv_checkout_payment_status_ordernumber);
         TextView tvEmail = (TextView) view.findViewById(R.id.tv_checkout_payment_status_email);
         tvEmail.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         tvShare= (TextView) view.findViewById(R.id.tv_share);
         rlRoot=view.findViewById(R.id.sv_content);
         rlBackGroud=view.findViewById(R.id.rlBackGroud);
         tvShare.setOnClickListener(this);
-//        myBoxGroup=view.findViewById(R.id.myBoxGroup);
         ImageView tvGoToShoppingCart = (ImageView) view.findViewById(R.id.iv_checkout_paymentstatus_goto_shoppingcart);
         tvGoToShoppingCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,8 +148,6 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
                 startShoppingCart();
             }
         });
-//        rlHeaderBarMenu= (RelativeLayout) view.findViewById(R.id.rlHeaderBarMenu);
-//    ;
         /////////////////////set orderNumber////////////////////
         Bundle bundle = getArguments();
         String orderNumber = bundle.getString("orderNumber");
@@ -232,9 +201,7 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
     public void onStart() {
         super.onStart();
     }
-    @Override
-    public void onKeyDown(int keyCode, KeyEvent event) {
-    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -248,7 +215,6 @@ public class CheckoutPaymentStatusRightFragment extends BaseFragment  implements
         public void run() {
             switch (v.getId()){
                 case R.id.tv_share:
-//                    shareFacebook();
                     break;
                 case R.id.tv_checkout_payment_status_right_continueshopping3:
                     Intent intent2 = new Intent(checkoutPaymentStatusActivity, HomeActivity.class);
