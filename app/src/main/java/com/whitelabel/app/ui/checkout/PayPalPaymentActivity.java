@@ -2,6 +2,8 @@ package com.whitelabel.app.ui.checkout;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -27,6 +29,7 @@ public class PayPalPaymentActivity extends com.whitelabel.app.BaseActivity {
         setContentView(R.layout.activity_pay_pal_payment);
         ButterKnife.bind(this);
         mUrl=getIntent().getStringExtra(PAYMENT_URL);
+        showProgressDialog();
         initToolbar();
         initWebView();
     }
@@ -41,15 +44,27 @@ public class PayPalPaymentActivity extends com.whitelabel.app.BaseActivity {
         }
         wvCheckoutPaymentRedirect.setWebViewClient(webViewClient);
         wvCheckoutPaymentRedirect.loadUrl(mUrl,null);
+        wvCheckoutPaymentRedirect.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                JLogUtils.i("ray","newProgress:"+newProgress);
+                if(newProgress>40){
+                    closeProgressDialog();
+                }
+            }
+        });
     }
     private WebViewClient  webViewClient=new WebViewClient(){
         private String paymentFaild="checkout/cart/";
         private String paymentSuccess="checkout/onepage/success/";
+        private String  firstAddress="cgi-bin/webscr";
 //        @Override
 //        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
 //            JLogUtils.i("ray","url:");
 //            return false;
 //        }
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             JLogUtils.i("PayPalPaymentActivity","url:"+url);
@@ -57,6 +72,8 @@ public class PayPalPaymentActivity extends com.whitelabel.app.BaseActivity {
                 startPaymentFaildActivity();
                 finish();
             }
+
+
             if(url.contains(paymentSuccess)){
                 startPaymentSuccessActivity();
                 finish();
@@ -81,5 +98,11 @@ public class PayPalPaymentActivity extends com.whitelabel.app.BaseActivity {
     private void initToolbar() {
         setTitle(getResources().getString(R.string.CHECKOUT));
         setLeftMenuIcon(JToolUtils.getDrawable(R.drawable.action_back));
+        setLeftMenuClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 }

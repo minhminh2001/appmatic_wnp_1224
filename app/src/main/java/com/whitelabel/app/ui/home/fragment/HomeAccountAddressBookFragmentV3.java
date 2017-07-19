@@ -103,6 +103,7 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {

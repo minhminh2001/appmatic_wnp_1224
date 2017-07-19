@@ -436,6 +436,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity imple
             int marginLeft = destWidth * 15 / 640;
             int dividerWidth = destWidth * 16 / 640;
             int destWidth = (this.destWidth - (2 * marginLeft) - dividerWidth) / 2;
+            JLogUtils.i("ProductDetailActivity","url:"+ivProductImage);
              JImageUtils.downloadImageFromServerByUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, mProductFirstImageurl, destWidth, destWidth);
         } else {
             ivProductImage.setAlpha(0.0f);

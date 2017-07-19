@@ -644,7 +644,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                     mTvGst.setText("");
              }
             tvSubtotal.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(cart.getSubTotal()));
-            tvGrandTotal.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(cart.getGrandTotal()));
+            tvGrandTotal.setText(" "+WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble(cart.getGrandTotal()));
             saveShoppingCartCount(cart.getSummaryQty());
             //discount
             if(cart.getShipping()!=null){

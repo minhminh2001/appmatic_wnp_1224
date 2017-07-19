@@ -22,6 +22,7 @@ import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.AccountManager;
 import com.whitelabel.app.data.service.CommodityManager;
+import com.whitelabel.app.fragment.BaseFragmentSearchCart;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.utils.JLogUtils;
@@ -45,7 +46,7 @@ import butterknife.Unbinder;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public abstract class BaseAddressFragment extends BaseFragment<BaseAddressContract.Presenter> implements BaseAddressContract.View, SwipeMenuListView.OnMenuItemClickListener, SwipeMenuListView.OnSwipeListener, AdapterView.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener {
+public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAddressContract.Presenter> implements BaseAddressContract.View, SwipeMenuListView.OnMenuItemClickListener, SwipeMenuListView.OnSwipeListener, AdapterView.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.mListView)
     SwipeMenuListView mListView;
     @BindView(R.id.swipe_container)

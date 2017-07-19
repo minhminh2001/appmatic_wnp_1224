@@ -922,7 +922,6 @@ public class OkHttpClientManager {
         public TrustManager[] prepareTrustManager(InputStream... certificates) {
             if (certificates == null || certificates.length <= 0) return null;
             try {
-
                 CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
                 KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
                 keyStore.load(null);
