@@ -9,10 +9,11 @@
     <string name="facebook_id">1287318627981888</string>
     <string name="api_version">v1</string>
     <string name="api_key">L5M7aUpZRr2ChzDx</string>
-    <string name="app_key">APP-83410052732170428</string>
+    <string name="app_key">APP-29710023052170613</string>
     <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8</string>
-    <string name="app_name">Evisu</string>
-    <string name="request_url">http://192.168.1.233:8899/</string>
-    <string name="image_base_url">http://192.168.1.233/</string>
+
+    <string name="app_name">WhiteLabel</string>
+    <string name="request_url">http://192.168.1.233:9090</string>
+    <string name="image_base_url">http://192.168.1.233:9090</string>
     <string name="mock_url">http://192.168.1.233:8088/</string>
 </resources>

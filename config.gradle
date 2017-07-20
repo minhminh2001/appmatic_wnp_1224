@@ -1,6 +1,6 @@
 ext {
     android = [
-               applicationId    : "com.whitelabel.app",
+               applicationId    : "com.wnp.app",
                versionCode      : 2,
                versionName      : "1.0.2"
     ]
