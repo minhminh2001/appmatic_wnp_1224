@@ -2,17 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.whitelabel.app">
-
     <uses-permission android:name="com.sonyericsson.home.permission.BROADCAST_BADGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
-    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
-    <!-- <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- Optional permission for reliable local dispatching on non-Google Play devices -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- App receives GCM messages. -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <!-- GCM requires a Google account. -->
@@ -34,13 +28,13 @@
         <!-- <meta-data -->
         <!-- android:name="com.facebook.sdk.ApplicationId" -->
         <!-- android:value="@string/facebook_app_id" /> -->
-        <receiver
-            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+            <!--android:name="com.google.android.gms.analytics.AnalyticsReceiver"-->
+            <!--android:enabled="true">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <!-- paypal -->
         <activity android:name="com.paypal.android.sdk.payments.PaymentActivity" />
@@ -53,31 +47,24 @@
         <activity android:name="com.paypal.android.sdk.payments.PayPalProfileSharingActivity" />
         <activity android:name="com.paypal.android.sdk.payments.ProfileSharingConsentActivity" />
 
-        <service
-            android:name="com.paypal.android.sdk.payments.PayPalService"
-            android:exported="false" />
-
-
-        　
-
 
         <!--  -->
-        <service
-            android:name="com.google.android.gms.analytics.AnalyticsService"
-            android:enabled="true"
-            android:exported="false" />
-        <service
-            android:name=".LeakAnalysisResultService"
-            android:exported="false" />
+        <!--<service-->
+            <!--android:name="com.google.android.gms.analytics.AnalyticsService"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="false" />-->
+        <!--<service-->
+            <!--android:name=".LeakAnalysisResultService"-->
+            <!--android:exported="false" />-->
 
-        <receiver
-            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:exported="true"
-            android:permission="android.permission.INSTALL_PACKAGES">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+            <!--android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"-->
+            <!--android:exported="true"-->
+            <!--android:permission="android.permission.INSTALL_PACKAGES">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.android.vending.INSTALL_REFERRER" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
         <!-- FACEBOOK -->
@@ -88,10 +75,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             tools:replace="android:theme" />
 
-        <provider
-            android:name="com.facebook.FacebookContentProvider"
-            android:authorities="com.facebook.app.FacebookContentProvider604176613049064"
-            android:exported="true" />
+        <!--<provider-->
+            <!--android:name="com.facebook.FacebookContentProvider"-->
+            <!--android:authorities="com.facebook.app.FacebookContentProvider604176613049064"-->
+            <!--android:exported="true" />-->
 
         <activity
             android:name=".ui.start.StartActivityV2"
@@ -127,7 +114,6 @@
             android:theme="@style/BlackgroundBalckTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -301,21 +287,10 @@
             android:enabled="true"
             android:exported="true" />
 
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="967ab5d94c3f9fda9e3bbf9adef59d05e74bcc41" />
-        <!-- <activity -->
-        <!-- android:name="com.whitelabel.app.qrscan.QrScanActivity" -->
-        <!-- android:screenOrientation="fullSensor" -->
-        <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" -->
-        <!-- tools:replace="screenOrientation" /> -->
-        <!-- <activity -->
-        <!-- android:name="com.whitelabel.app.qrscan.QrScanErrorActivity" -->
-        <!-- android:screenOrientation="portrait" /> -->
-        <!--
-     ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
+        <!--<meta-data-->
+            <!--android:name="io.fabric.ApiKey"-->
+            <!--android:value="967ab5d94c3f9fda9e3bbf9adef59d05e74bcc41" />-->
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
