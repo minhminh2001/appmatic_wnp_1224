@@ -100,8 +100,8 @@ public class HomeFragmentV2 extends HomeBaseFragment implements HomeActivity.Hom
                 getActivity().startActivity(intent);
 
             }
-        });
-        inflater.inflate(R.menu.menu_home, menu);
+        });inflater.inflate(R.menu.menu_home, menu);
+
         MenuItem cartItem = menu.findItem(R.id.action_shopping_cart);
         MenuItemCompat.setActionView(cartItem, R.layout.item_count);
         View view = cartItem.getActionView();

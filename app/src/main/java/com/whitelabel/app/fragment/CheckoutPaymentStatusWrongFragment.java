@@ -142,12 +142,7 @@ public class CheckoutPaymentStatusWrongFragment extends com.whitelabel.app.BaseF
         tvRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDialog = JViewUtils.showProgressDialog(getActivity());
-                if (!isLoading&&!isSend) {
-                    sendRequestToRecoverOrder();
-                } else if(!isLoading) {
                     startShoppingCart();
-                }
                 //checkoutPaymentStatusActivity.startNextActivity(null, ShoppingCartActivity.class, true);
             }
         });

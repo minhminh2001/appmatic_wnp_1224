@@ -11,14 +11,6 @@ buildscript {
         classpath 'com.google.gms:google-services:3.0.0'
 //        classpath  'com.newrelic.agent.android:agent-gradle-plugin:5.+'
     }
-//
-//    repositories {
-//        // You need to add the following repository to download the
-//        // new plugin.
-//        maven {
-//            url 'https://maven.google.com'
-//        }
-//    }
 
 }
 allprojects {
