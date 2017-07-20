@@ -36,7 +36,6 @@
     <com.whitelabel.app.widget.CustomTextView
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/rl_category_tree_group_tag"
-
         android:textColor="@color/black"
         android:textSize="16sp"
         android:id="@+id/tv_category_tree_group_name"
@@ -54,5 +53,5 @@
       android:id="@+id/iv_category_tree_group"
       android:scaleType="fitXY"
       android:layout_width="match_parent"
-      android:layout_height="150dp" />
+      android:layout_height="170dp" />
 </LinearLayout>

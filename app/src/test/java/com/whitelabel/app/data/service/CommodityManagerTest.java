@@ -38,7 +38,6 @@ import static org.junit.Assert.*;
 @PrepareForTest({Log.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class CommodityManagerTest {
-
     private CommodityManager mCommodityManager;
     private String productId="427";
     @Mock

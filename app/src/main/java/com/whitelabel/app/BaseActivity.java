@@ -267,7 +267,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     @Override
     public void onBackPressed() {
         finish();
-//        closeActivityTransitionAnim();
+        closeActivityTransitionAnim();
     }
 
     public void startNextActivity(Bundle bundle, Class<?> pClass, boolean finishFlag) {

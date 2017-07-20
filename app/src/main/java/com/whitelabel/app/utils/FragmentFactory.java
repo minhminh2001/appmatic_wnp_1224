@@ -33,7 +33,8 @@ public class FragmentFactory {
             return HomeFragmentV2.newInstance(HomeHomeFragment.TYPE_FRAGMENT_VERTICAL);
         }else if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHome()==4){
             return HomeFragmentV2.newInstance(HomeHomeFragment.TYPE_FRAGMENT_HORIZONTAL);
+        }else{
+            return HomeFragmentV2.newInstance(HomeHomeFragment.TYPE_FRAGMENT_VERTICAL);
         }
-        return new HomeHomeFragment();
     }
 }

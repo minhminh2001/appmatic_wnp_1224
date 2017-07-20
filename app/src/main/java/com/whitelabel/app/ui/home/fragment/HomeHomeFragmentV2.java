@@ -29,6 +29,7 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.home.HomeHomeContract;
 import com.whitelabel.app.ui.home.presenter.HomeHomePresenterImpl;
 import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomSpeedLayoutManager;
@@ -44,6 +45,7 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
 
     @BindView(R.id.rl_category_tree)
     RecyclerView rlCategoryTree;
+    private CategoryTreeExpandableAdapter mAdapter;
     private ImageLoader mImageLoader;
     public HomeHomeFragmentV2() {
         // Required empty public constructor
@@ -56,8 +58,8 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
      * @return A new instance of fragment HomeHomeFragmentV1.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeHomeFragmentV1 newInstance() {
-        HomeHomeFragmentV1 fragment = new HomeHomeFragmentV1();
+    public static HomeHomeFragmentV2 newInstance() {
+        HomeHomeFragmentV2 fragment = new HomeHomeFragmentV2();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -81,7 +83,6 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
         mHomePresenter.getSearchCategory();
     }
 
-    CategoryTreeExpandableAdapter mAdapter;
     public void initRecyclerView() {
         CustomSpeedLayoutManager linearLayoutManager = new CustomSpeedLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

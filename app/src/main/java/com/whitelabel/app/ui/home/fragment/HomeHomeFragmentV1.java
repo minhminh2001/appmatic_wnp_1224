@@ -30,6 +30,7 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.home.HomeHomeContract;
 import com.whitelabel.app.ui.home.presenter.HomeHomePresenterImpl;
 import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomSpeedLayoutManager;

@@ -15,7 +15,9 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.ExpandableRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -30,7 +32,6 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
     private final ImageLoader mImageLoader;
     private int mViewType;
     public final  static   int VIEW_HORIZONTAL=1;
-    public final static  int VIEW_VERTICAL=2;
     private ChildOnClick childOnClick;
     public interface ChildOnClick {
         void childOnClick(int position, Object ob, String parentId);
@@ -85,14 +86,14 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
         final int position = position2;
         if (holder instanceof GroupViewHolder) {
             GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
-            SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) getItem(position);
+            SVRAppserviceCatalogSearchCategoryItemReturnEntity entity =  getItem(position);
             groupViewHolder.tvCategoryTreeGroupName.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
             groupViewHolder.tvCategoryTreeGroupName.setText(entity.getName());
             if(TextUtils.isEmpty(entity.getImage())) {
                 groupViewHolder.ivCategoryTreeGroup.setVisibility(View.GONE);
             }else if (groupViewHolder.ivCategoryTreeGroup.getTag()== null || !groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage())) {
                 groupViewHolder.ivCategoryTreeGroup.setVisibility(View.VISIBLE);
-                JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, groupViewHolder.ivCategoryTreeGroup, entity.getImage());
+                JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, groupViewHolder.ivCategoryTreeGroup, entity.getImage(),640, JDataUtils.dp2Px(170));
                 groupViewHolder.ivCategoryTreeGroup.setTag(entity.getImage());
             }
                groupViewHolder.tv_category_tree_divi.setVisibility(View.GONE);
@@ -133,7 +134,6 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
                             @Override
                             public void onAnimationStart(Animation animation) {
                             }
-
                             @Override
                             public void onAnimationEnd(Animation animation) {
                                 arrow.setVisibility(View.GONE);
@@ -154,16 +154,13 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
                             @Override
                             public void onAnimationEnd(Animation animation) {
                             }
-
                             @Override
                             public void onAnimationRepeat(Animation animation) {
                             }
                         });
                     }
-
                 }
             });
-
         }
     }
 
