@@ -29,10 +29,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.molpay.molpayxdk.MOLPayActivity;
-import com.paypal.android.sdk.payments.PayPalPayment;
-import com.paypal.android.sdk.payments.PayPalService;
-import com.paypal.android.sdk.payments.PaymentActivity;
-import com.paypal.android.sdk.payments.PaymentConfirmation;
+
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.DialogProductAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -1242,40 +1239,41 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                 startNextActivity(null, ShoppingCartActivity1.class, true);
             }
             return;
-        } else if (requestCode == PaypalHelper.REQUEST_CODE_PAYMENT) {
-            if (resultCode == Activity.RESULT_OK) {
-                PaymentConfirmation confirm =
-                        data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-                if (confirm != null) {
-                    try {
-                        Log.i(TAG, confirm.toJSONObject().toString(4));
-                        Log.i(TAG, confirm.getPayment().toJSONObject().toString(4));
-                    } catch (JSONException e) {
-                        Log.e(TAG, "an extremely unlikely failure occurred: ", e);
-                    }
-                }
-                JSONObject jsonObject = confirm.getPayment().toJSONObject();
-                String productName = "PayPal-Android-SDK";
-                String currencyCode = "";
-                String amount = "";
-                String id = confirm.getProofOfPayment().getPaymentId();
-                String state = confirm.getProofOfPayment().getState();
-                String createTime = confirm.getProofOfPayment().getCreateTime();
-                try {
-                    currencyCode = jsonObject.getString("currency_code");
-                    amount = jsonObject.getString("amount");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
-                mCheckoutDao.changeOrderStatus(WhiteLabelApplication.getAppConfiguration().
-                                getUserInfo(this).getSessionKey(),
-                        order_id, paymethodType, productName, currencyCode, amount, id, state, createTime);
-            } else {
-//                    mDialog=JViewUtils.showProgressDialog(CheckoutActivity.this);
-                mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
-            }
         }
+//        else if (requestCode == PaypalHelper.REQUEST_CODE_PAYMENT) {
+//            if (resultCode == Activity.RESULT_OK) {
+//                PaymentConfirmation confirm =
+//                        data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+//                if (confirm != null) {
+//                    try {
+//                        Log.i(TAG, confirm.toJSONObject().toString(4));
+//                        Log.i(TAG, confirm.getPayment().toJSONObject().toString(4));
+//                    } catch (JSONException e) {
+//                        Log.e(TAG, "an extremely unlikely failure occurred: ", e);
+//                    }
+//                }
+//                JSONObject jsonObject = confirm.getPayment().toJSONObject();
+//                String productName = "PayPal-Android-SDK";
+//                String currencyCode = "";
+//                String amount = "";
+//                String id = confirm.getProofOfPayment().getPaymentId();
+//                String state = confirm.getProofOfPayment().getState();
+//                String createTime = confirm.getProofOfPayment().getCreateTime();
+//                try {
+//                    currencyCode = jsonObject.getString("currency_code");
+//                    amount = jsonObject.getString("amount");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
+//                mCheckoutDao.changeOrderStatus(WhiteLabelApplication.getAppConfiguration().
+//                                getUserInfo(this).getSessionKey(),
+//                        order_id, paymethodType, productName, currencyCode, amount, id, state, createTime);
+//            } else {
+////                    mDialog=JViewUtils.showProgressDialog(CheckoutActivity.this);
+//                mShoppingCarDao.sendRecoverOrder(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), order_id, "");
+//            }
+//        }
     }
 
 
@@ -1301,7 +1299,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
     @Override
     protected void onDestroy() {
-        stopService(new Intent(this, PayPalService.class));
+//        stopService(new Intent(this, PayPalService.class));
         if(mDialog!=null){
             mDialog.dismiss();
         }

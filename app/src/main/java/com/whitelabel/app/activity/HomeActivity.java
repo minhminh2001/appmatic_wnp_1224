@@ -276,7 +276,6 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         initFragment(savedInstanceState);
         redirectToFragmentByIntent(getIntent());
         redirectToInterfaceByDeepLink();
-//        setSwipeBackEnable(false);
     }
     private void redirectToInterfaceByDeepLink() {
         if (getIntent() != null && getIntent().getData() != null) {

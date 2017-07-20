@@ -25,13 +25,13 @@ public class FragmentFactory {
         return fragmentFactory;
     }
     public Fragment  getHomeFragment(){
-        if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHomeType()==1){
+        if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHome()==1){
             return HomeHomeFragmentV1.newInstance();
-        }else if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHomeType()==2){
+        }else if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHome()==2){
             return HomeHomeFragmentV2.newInstance();
-        }else if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHomeType()==3){
+        }else if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHome()==3){
             return HomeFragmentV2.newInstance(HomeHomeFragment.TYPE_FRAGMENT_VERTICAL);
-        }else if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHomeType()==4){
+        }else if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHome()==4){
             return HomeFragmentV2.newInstance(HomeHomeFragment.TYPE_FRAGMENT_HORIZONTAL);
         }
         return new HomeHomeFragment();

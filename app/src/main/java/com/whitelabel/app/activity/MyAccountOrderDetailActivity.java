@@ -21,8 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.paypal.android.sdk.payments.PaymentActivity;
-import com.paypal.android.sdk.payments.PaymentConfirmation;
+//import com.paypal.android.sdk.payments.PaymentActivity;
+//import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.MyAccountOrderDetailAdapter;
 import com.whitelabel.app.application.WhiteLabelApplication;
@@ -555,38 +555,39 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                 ex.getStackTrace();
             }
 
-        }else if(requestCode==PaypalHelper.REQUEST_CODE_PAYMENT){
-
-            if (resultCode == Activity.RESULT_OK) {
-                PaymentConfirmation confirm =
-                        data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-                if (confirm != null) {
-                    try {
-                        Log.i(TAG, confirm.toJSONObject().toString(4));
-                        Log.i(TAG, confirm.getPayment().toJSONObject().toString(4));
-                    } catch (JSONException e) {
-                        Log.e(TAG, "an extremely unlikely failure occurred: ", e);
-                    }
-                }
-                JSONObject jsonObject= confirm.getPayment().toJSONObject();
-                String productName="PayPal-Android-SDK";
-                String currencyCode="";
-                String amount="";
-                String id=confirm.getProofOfPayment().getPaymentId();
-                String state=confirm.getProofOfPayment().getState();
-                String createTime=confirm.getProofOfPayment().getCreateTime();
-                try {
-                    currencyCode=jsonObject.getString("currency_code");
-                    amount=jsonObject.getString("amount");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                mDialog=JViewUtils.showProgressDialog(this);
-                mCheckoutDao.changeOrderStatus(WhiteLabelApplication.getAppConfiguration().
-                                getUserInfo(this).getSessionKey(),
-                        mOrderNumber,mBean.getPaymentCode(),productName,currencyCode,amount,id,state,createTime);
-            }
         }
+//        else if(requestCode==PaypalHelper.REQUEST_CODE_PAYMENT){
+//
+//            if (resultCode == Activity.RESULT_OK) {
+//                PaymentConfirmation confirm =
+//                        data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+//                if (confirm != null) {
+//                    try {
+//                        Log.i(TAG, confirm.toJSONObject().toString(4));
+//                        Log.i(TAG, confirm.getPayment().toJSONObject().toString(4));
+//                    } catch (JSONException e) {
+//                        Log.e(TAG, "an extremely unlikely failure occurred: ", e);
+//                    }
+//                }
+//                JSONObject jsonObject= confirm.getPayment().toJSONObject();
+//                String productName="PayPal-Android-SDK";
+//                String currencyCode="";
+//                String amount="";
+//                String id=confirm.getProofOfPayment().getPaymentId();
+//                String state=confirm.getProofOfPayment().getState();
+//                String createTime=confirm.getProofOfPayment().getCreateTime();
+//                try {
+//                    currencyCode=jsonObject.getString("currency_code");
+//                    amount=jsonObject.getString("amount");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                mDialog=JViewUtils.showProgressDialog(this);
+//                mCheckoutDao.changeOrderStatus(WhiteLabelApplication.getAppConfiguration().
+//                                getUserInfo(this).getSessionKey(),
+//                        mOrderNumber,mBean.getPaymentCode(),productName,currencyCode,amount,id,state,createTime);
+//            }
+//        }
     }
 
 
