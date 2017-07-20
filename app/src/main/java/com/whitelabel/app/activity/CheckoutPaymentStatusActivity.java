@@ -22,11 +22,12 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
     public boolean isLuckDraw;
     public boolean mGATrackTimeEnable = true;
     public long mGATrackTimeStart;
+    public final static String EXTRA_ORDER_NUMBER="order_number";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_payment_status);
-         WhiteLabelApplication.getAppConfiguration().getUser().setCartItemCount(0);
+        WhiteLabelApplication.getAppConfiguration().getUser().setCartItemCount(0);
         WhiteLabelApplication.getAppConfiguration().updateUserData(this,WhiteLabelApplication.getAppConfiguration().getUser());
         setTitle(getResources().getString(R.string.PAYMENT_STATUS));
         setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.ic_action_menu));

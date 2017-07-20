@@ -9,7 +9,16 @@ import java.io.Serializable;
 public class PaypalPlaceOrderReponse implements Serializable {
     private int status;
     private String url;
+    private String orderNumber;
     private String errorMessage;
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
 
     public String getErrorMessage() {
         return errorMessage;

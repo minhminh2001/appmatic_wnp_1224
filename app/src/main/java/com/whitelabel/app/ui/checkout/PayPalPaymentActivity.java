@@ -11,6 +11,7 @@ import android.webkit.WebViewClient;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.BaseActivity;
+import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -23,6 +24,8 @@ public class PayPalPaymentActivity extends com.whitelabel.app.BaseActivity {
     WebView wvCheckoutPaymentRedirect;
     private String mUrl;
     public final static String  PAYMENT_URL="payment_url";
+    public final static String PAYMENT_ORDER_NUMBER="order_number";
+    private String orderNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +45,13 @@ public class PayPalPaymentActivity extends com.whitelabel.app.BaseActivity {
             cookieManager.setAcceptCookie(true);
             cookieManager.setAcceptThirdPartyCookies(wvCheckoutPaymentRedirect, true);
         }
+        orderNumber=getIntent().getStringExtra(PAYMENT_ORDER_NUMBER);
         wvCheckoutPaymentRedirect.setWebViewClient(webViewClient);
         wvCheckoutPaymentRedirect.loadUrl(mUrl,null);
         wvCheckoutPaymentRedirect.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                JLogUtils.i("ray","newProgress:"+newProgress);
                 if(newProgress>40){
                     closeProgressDialog();
                 }
@@ -58,7 +61,6 @@ public class PayPalPaymentActivity extends com.whitelabel.app.BaseActivity {
     private WebViewClient  webViewClient=new WebViewClient(){
         private String paymentFaild="checkout/cart/";
         private String paymentSuccess="checkout/onepage/success/";
-        private String  firstAddress="cgi-bin/webscr";
 //        @Override
 //        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
 //            JLogUtils.i("ray","url:");
@@ -81,14 +83,12 @@ public class PayPalPaymentActivity extends com.whitelabel.app.BaseActivity {
             return false;
         }
     };
-
     private void startPaymentSuccessActivity() {
         Bundle bundle = new Bundle();
         bundle.putString("payment_status", "1");
+        bundle.putString(CheckoutPaymentStatusActivity.EXTRA_ORDER_NUMBER,orderNumber);
         startNextActivity(bundle, CheckoutPaymentStatusActivity.class, true);
-
     }
-
     private void startPaymentFaildActivity() {
         Bundle bundle = new Bundle();
         bundle.putString("payment_status", "0");

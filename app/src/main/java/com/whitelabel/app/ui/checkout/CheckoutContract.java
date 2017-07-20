@@ -8,7 +8,7 @@ import com.whitelabel.app.ui.BaseView;
  */
 public interface CheckoutContract {
     public interface View extends BaseView{
-        public void startPayPalPaymentActivity(String url);
+        public void startPayPalPaymentActivity(String url,String orderNumber);
         public void showNetErrorMessage();
         public void showFaildMessage(String faildMessage);
         public void showCheckProgressDialog();

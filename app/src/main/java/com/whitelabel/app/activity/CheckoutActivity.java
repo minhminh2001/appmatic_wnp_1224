@@ -29,6 +29,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.molpay.molpayxdk.MOLPayActivity;
+import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
@@ -172,9 +173,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
         }
     }
     @Override
-    public void startPayPalPaymentActivity(String url) {
+    public void startPayPalPaymentActivity(String url,String orderNumber) {
         Intent intent=new Intent(this, PayPalPaymentActivity.class);
         intent.putExtra(PayPalPaymentActivity.PAYMENT_URL,url);
+        intent.putExtra(PayPalPaymentActivity.PAYMENT_ORDER_NUMBER,orderNumber);
         startActivity(intent);
     }
     /**

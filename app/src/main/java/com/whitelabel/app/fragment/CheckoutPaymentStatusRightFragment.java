@@ -57,7 +57,9 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
         if (getArguments() != null){
             fromType=getArguments().getInt("fromType");
         }
-        mPresenter.requestOrderNumber();
+        String orderNumber=getActivity().getIntent().getStringExtra(CheckoutPaymentStatusActivity.EXTRA_ORDER_NUMBER);
+        tvOrderNumber.setText(orderNumber);
+//        mPresenter.requestOrderNumber();
         AnimUtil.alpha_0_1_500(rlRoot);
         if(!TextUtils.isEmpty(checkoutPaymentStatusActivity.html)){
             String content=JToolUtils.replaceFont(checkoutPaymentStatusActivity.html);

@@ -53,6 +53,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
     private SwipeRefreshLayout swipeRefrshLayout;
     private MyAccountDao mMyAccountDao;
     private ImageLoader mImageLoader;
+    private DataHandler dataHandler;
     @Override
     public void onRefresh() {
         pageIndex = 1;
@@ -167,7 +168,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                 Intent intent0 = new Intent(homeActivity, MyAccountOrderDetailActivity.class);
                 intent0.putExtras(bundle);
                 homeActivity.startActivity(intent0);
-//                homeActivity.overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
             }
         });
     }
@@ -296,24 +296,21 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             super.handleMessage(msg);
         }
     }
-    private DataHandler dataHandler;
+
     /**
      * send request to server
      */
     private void sendRequest() {
         mMyAccountDao.getOrderList(WhiteLabelApplication.getAppConfiguration().getUserInfo(homeActivity).getSessionKey(), pageIndex + "", pageSize + "");
     }
-
     public ArrayList<MyAccountOrderOuter> initArray(List<MyAccountOrderOuter> array) {
         ArrayList<MyAccountOrderOuter> arrayList = new ArrayList<>();
         arrayList.addAll(array);
         return arrayList;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        onAccountFragment(getParentFragment());
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -340,7 +337,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         GaTrackHelper.getInstance().googleAnalytics("My Orders Screen", homeActivity);
         JLogUtils.i("googleGA_screen", "My Orders Screen ");
     }
-
     @Override
     public void onStop() {
         super.onStop();

@@ -124,7 +124,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private final int APPLIED = 1;
     private final int UNAPPLIED = 2;
     private final int REDEEM = 1;
-    private final int UNREDEEM = 2;
     private int currStatus;
     private final static int LOADING = 100;
     private final static int LOADSUCCESS = 101;
@@ -132,8 +131,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private Boolean mIsFromLogin = false;
     private String mVoucherCode;
     private ImageLoader mImageLoader;
-    private final static int VOUCHER_APPLY_HINT_SUCCESS = 101;
-    private final static int VOUCHER_APPLY_HINT_HIDE = 103;
     private TextView mTvGst;
 
     @Override

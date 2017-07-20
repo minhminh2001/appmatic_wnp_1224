@@ -43,7 +43,7 @@ public class CheckoutPresenterImpl extends RxPresenter<CheckoutContract.View> im
                     }
                     @Override
                     public void onNext(PaypalPlaceOrderReponse responseModel) {
-                        mView.startPayPalPaymentActivity(responseModel.getUrl());
+                        mView.startPayPalPaymentActivity(responseModel.getUrl(),responseModel.getOrderNumber());
                         mView.setButtonEnable(true);
                         mView.closeCheckoutPaymentDialog();
                     }
