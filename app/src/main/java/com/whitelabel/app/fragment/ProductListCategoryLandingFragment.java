@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -108,7 +109,11 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         view. setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoShoppingCartActivity();
+                if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                    gotoShoppingCartActivity();
+                }else{
+                    jumpLoginActivity();
+                }
             }
         });
         TextView textView= (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
@@ -135,11 +140,21 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             productListActivity.startActivityTransitionAnim();
         }
     }
+
+    private void jumpLoginActivity() {
+        Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
+        startActivityForResult(intent, 1000);
+        getActivity().overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.action_shopping_cart:
-                gotoShoppingCartActivity();
+                if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                    gotoShoppingCartActivity();
+                }else{
+                    jumpLoginActivity();
+                }
                 break;
             case R.id.action_search:
 

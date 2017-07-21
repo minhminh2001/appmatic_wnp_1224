@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
@@ -111,17 +112,26 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), HomeActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                    Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }else{
+                    jumpLoginActivity();
+                }
             }
         });
         ImageView ivImg= (ImageView) view.findViewById(R.id.iv_img);
         JViewUtils.setNavBarIconColor(getActivity(),ivImg,R.drawable.action_cart);
         JLogUtils.i("HomeFragmentV2","start");
         mPresenter.getShoppingCount();
+    }
+    private void jumpLoginActivity() {
+        Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
+        startActivityForResult(intent, 1000);
+        getActivity().overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
     }
     @Override
     public void showRootView() {

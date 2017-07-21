@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.CategoryTreeExpandableAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -114,16 +115,25 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment<HomeHomeContract.Presen
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), HomeActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                    Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }else{
+                    jumpLoginActivity();
+                }
             }
         });
         TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
         textView.setBackground(JImageUtils.getThemeCircle(getActivity()));
         JViewUtils.updateCartCount(textView, getCartItemCount());
+    }
+    private void jumpLoginActivity() {
+        Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
+        startActivityForResult(intent, 1000);
+        getActivity().overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
     }
     public long getCartItemCount() {
         long cartItemCount = 0;
