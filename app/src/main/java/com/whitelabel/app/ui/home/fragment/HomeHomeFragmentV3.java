@@ -16,13 +16,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.data.DataManager;
-import com.whitelabel.app.data.service.BaseManager;
-import com.whitelabel.app.data.service.CommodityManager;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
@@ -30,7 +26,6 @@ import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntit
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.home.adapter.CategoryDetailVerticalAdapter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
-import com.whitelabel.app.ui.home.presenter.HomeCategoryDetailPresenterImpl;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomButton;
@@ -41,7 +36,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -127,6 +121,8 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
                 presenterModule(new PresenterModule(getActivity())).build().inject(this);
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

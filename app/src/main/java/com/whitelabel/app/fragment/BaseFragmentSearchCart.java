@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whitelabel.app.*;
+import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -70,13 +71,21 @@ public class BaseFragmentSearchCart<T extends BasePresenter> extends com.whitela
                 launchSearch();
                 break;
             case R.id.action_shopping_cart:
-                launchShoppingCart();
+                if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                    launchShoppingCart();
+                }else{
+                    jumpLoginActivity();
+                }
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
+    private void jumpLoginActivity() {
+        Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
+        startActivityForResult(intent, 1000);
+        getActivity().overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
+    }
     @Override
     public void onStart() {
         super.onStart();
