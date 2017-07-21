@@ -31,7 +31,7 @@ public class CheckoutManagerTest {
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        checkoutManager=new CheckoutManager(DataManager.getInstance().getCheckoutApi(),iCacheApi);
+        checkoutManager=new CheckoutManager(DataManager.getInstance().getCheckoutApi());
     }
     @Test
     public void paypalPlaceOrder() throws Exception {

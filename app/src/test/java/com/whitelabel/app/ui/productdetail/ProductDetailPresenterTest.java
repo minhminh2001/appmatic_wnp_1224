@@ -50,7 +50,8 @@ public class ProductDetailPresenterTest {
     public void setUp(){
         RxUnitTestTools.openRxTools();
         MockitoAnnotations.initMocks(this);
-        presenter=new ProductDetailPresenter(view,iAccountManager,iCommodityManager,iBaseManager,iShoppingCartManager);
+        presenter=new ProductDetailPresenter(iAccountManager,iCommodityManager,iBaseManager,iShoppingCartManager);
+        presenter.attachView(view);
     }
     @Test
     public void loadProductDetailData() throws Exception {

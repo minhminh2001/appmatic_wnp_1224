@@ -36,10 +36,12 @@ public class BaseAddressPresenterTest {
         MockitoAnnotations.initMocks(this);
         RxUnitTestTools.openRxTools();
 
-        baseAddressPresenter=new BaseAddressPresenter(true,
+        baseAddressPresenter=new BaseAddressPresenter(
                 iCommodityManager,
-                iAccountManager,
-                mView);
+                iAccountManager
+                );
+        baseAddressPresenter.setUseCache(true);
+        baseAddressPresenter.attachView(mView);
         baseAddressPresenter.setJLogUtils(jLogUtils);
     }
 
