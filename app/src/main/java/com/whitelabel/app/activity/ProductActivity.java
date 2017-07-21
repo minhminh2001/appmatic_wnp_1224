@@ -41,7 +41,7 @@ import android.widget.Toast;
 
 import com.google.gson.internal.LinkedTreeMap;
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.ProductDetailCallback;
 import com.whitelabel.app.callback.WheelPickerCallback;

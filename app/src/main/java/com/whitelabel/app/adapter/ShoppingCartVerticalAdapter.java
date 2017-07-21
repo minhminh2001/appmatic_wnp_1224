@@ -3,7 +3,6 @@ package com.whitelabel.app.adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
@@ -22,8 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.ShoppingCartAdapterCallback;
 import com.whitelabel.app.dao.ShoppingCarDao;
 import com.whitelabel.app.model.ErrorMsgBean;
@@ -35,7 +33,6 @@ import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductOptionEntity;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -51,7 +48,6 @@ import com.whitelabel.app.widget.swipe.SwipeableAdapter;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

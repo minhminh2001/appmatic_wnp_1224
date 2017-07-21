@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.handler.INITApp;

@@ -41,7 +41,8 @@ public class StartPresenterImplTest {
         MockitoAnnotations.initMocks(this);
         PowerMockito.mockStatic(Log.class);
         RxUnitTestTools.openRxTools();
-        startPresenter=new StartPresenterImpl(mView,iBaseManager);
+        startPresenter=new StartPresenterImpl(iBaseManager);
+        startPresenter.attachView(mView);
     }
     @Test
     public void getConfigInfo() throws Exception {

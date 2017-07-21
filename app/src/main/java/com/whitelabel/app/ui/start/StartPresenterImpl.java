@@ -1,7 +1,7 @@
 package com.whitelabel.app.ui.start;
 
 import com.google.gson.JsonObject;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.model.GOCurrencyEntity;
@@ -10,7 +10,7 @@ import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 
-import java.util.Currency;
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Subscription;
@@ -35,9 +35,9 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                 mView.startNextActivity();
          }
     }
-    public StartPresenterImpl(StartContract.View view, IBaseManager configService){
+    @Inject
+    public StartPresenterImpl( IBaseManager configService){
         this.configService=configService;
-        this.mView=view;
     }
     @Override
     public void openApp(String sessionKey, String deviceToken) {

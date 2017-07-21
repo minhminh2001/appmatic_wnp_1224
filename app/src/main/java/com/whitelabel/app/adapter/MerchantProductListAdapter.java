@@ -1,6 +1,5 @@
 package com.whitelabel.app.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -23,11 +22,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
-import com.whitelabel.app.activity.ProductActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.dao.ShoppingCarDao;
@@ -38,7 +35,6 @@ import com.whitelabel.app.model.SVRAppserviceProductItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductMerchantReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;

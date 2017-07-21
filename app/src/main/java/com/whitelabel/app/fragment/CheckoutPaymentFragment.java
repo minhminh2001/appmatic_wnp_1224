@@ -1,6 +1,5 @@
 package com.whitelabel.app.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -41,7 +40,7 @@ import com.whitelabel.app.*;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.adapter.WheelPickerAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.WheelPickerCallback;
 import com.whitelabel.app.dao.CheckoutDao;
 import com.whitelabel.app.dao.OtherDao;

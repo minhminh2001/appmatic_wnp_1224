@@ -21,14 +21,13 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.CategoryTreeExpandableAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.home.HomeHomeContract;
-import com.whitelabel.app.ui.home.presenter.HomeHomePresenterImpl;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
@@ -38,11 +37,15 @@ import com.whitelabel.app.widget.ExpandableRecyclerAdapter;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
 
 
-public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeContract.View,HomeActivity.HomeFragmentCallback{
+public class HomeHomeFragmentV2 extends HomeBaseFragment<HomeHomeContract.Presenter> implements HomeHomeContract.View,HomeActivity.HomeFragmentCallback{
 
     @BindView(R.id.rl_category_tree)
     RecyclerView rlCategoryTree;
@@ -51,7 +54,11 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
     public HomeHomeFragmentV2() {
         // Required empty public constructor
     }
-
+    @Override
+    public void inject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(getActivity())).build().inject(this);
+    }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -66,22 +73,19 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
         return fragment;
     }
 
-    @Override
-    public HomeHomeContract.Presenter getPresenter() {
-        return new HomeHomePresenterImpl();
-    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public void requestData() {
         showProgressDialog();
-        mHomePresenter.attachView(this);
-        mHomePresenter.getSearchCategory();
+        mPresenter.attachView(this);
+        mPresenter.getSearchCategory();
     }
 
     public void initRecyclerView() {
@@ -165,14 +169,14 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
     public void showErrorMsg(String errormsg) {
         Toast.makeText(getActivity(), errormsg, Toast.LENGTH_SHORT).show();
     }
-    HomeHomeContract.Presenter mHomePresenter;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mCommonCallback.switchMenu(HomeCommonCallback.MENU_HOME);
         mImageLoader=new ImageLoader(getActivity());
         initRecyclerView();
-        mHomePresenter = getPresenter();
+//        mPresenter = getPresenter();
         requestData();
         setHasOptionsMenu(true);
     }
@@ -188,7 +192,6 @@ public class HomeHomeFragmentV2 extends HomeBaseFragment implements HomeHomeCont
         rlCategoryTree.setAdapter(mAdapter);
         mAdapter.setRecycleView(rlCategoryTree);
     }
-
     private CategoryTreeExpandableAdapter.ChildOnClick childOnClick = new CategoryTreeExpandableAdapter.ChildOnClick() {
         @Override
         public void childOnClick(int position, Object ob, String parentId) {

@@ -34,7 +34,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.CustomFocusChangeCallBack;
 import com.whitelabel.app.callback.GlobalCallBack;
 import com.whitelabel.app.callback.MyResultCallback;

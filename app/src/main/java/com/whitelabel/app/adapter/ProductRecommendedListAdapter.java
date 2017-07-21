@@ -19,8 +19,7 @@ import android.widget.RelativeLayout;
 
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.ProductActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.ProductDetailCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;

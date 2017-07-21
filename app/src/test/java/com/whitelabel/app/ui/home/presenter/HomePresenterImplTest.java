@@ -53,7 +53,8 @@ public class HomePresenterImplTest {
         MockitoAnnotations.initMocks(this);
         PowerMockito.mockStatic(Log.class);
         RxUnitTestTools.openRxTools();
-        homePresenter=new HomePresenterImpl(mView,commodityManager,baseManager);
+        homePresenter=new HomePresenterImpl(commodityManager,baseManager);
+        homePresenter.attachView(mView);
     }
     @Test
     public void getBaseCategory() throws Exception {

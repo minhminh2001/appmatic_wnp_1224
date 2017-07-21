@@ -1,9 +1,9 @@
 {
   "project_info": {
     "project_number": "364318508430",
-    "firebase_url": "https://gemfive-app.firebaseio.com",
-    "project_id": "gemfive-app",
-    "storage_bucket": "gemfive-app.appspot.com"
+    "firebase_url": "https://wnp-app.firebaseio.com",
+    "project_id": "wnp-app",
+    "storage_bucket": "gemfwnpive-app.appspot.com"
   },
   "client": [
     {

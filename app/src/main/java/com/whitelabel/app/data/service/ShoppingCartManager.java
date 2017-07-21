@@ -16,6 +16,8 @@ import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -26,6 +28,7 @@ import rx.functions.Func1;
 public class ShoppingCartManager implements IShoppingCartManager {
     private ShoppingCartApi shoppingCartApi;
     private ICacheApi  iCacheApi;
+    @Inject
     public ShoppingCartManager(ShoppingCartApi shoppingCartApi, ICacheApi iCacheApi) {
         this.shoppingCartApi = shoppingCartApi;
         this.iCacheApi = iCacheApi;

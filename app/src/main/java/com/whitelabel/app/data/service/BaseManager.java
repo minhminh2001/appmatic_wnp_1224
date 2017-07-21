@@ -9,6 +9,8 @@ import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -20,7 +22,7 @@ public class BaseManager implements IBaseManager {
     private MockApi mockApi;
     private BaseApi appApi;
     private ICacheApi cacheApi;
-
+    @Inject
     public BaseManager(MockApi mockApi , BaseApi appApi, ICacheApi preferHelper){
         this.mockApi=mockApi;
         this.appApi=appApi;

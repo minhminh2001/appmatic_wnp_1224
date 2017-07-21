@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.adapter.CheckoutShippingAddressAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.CheckoutDefaultShippingAddress;
 import com.whitelabel.app.model.CheckoutSelectShippingAddressEntity;

@@ -17,7 +17,7 @@ import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.MyAccountOrderDetailActivity;
 import com.whitelabel.app.adapter.OrderListRecyclerViewAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.bean.OrderBody;
 import com.whitelabel.app.bean.OrderTip;
 import com.whitelabel.app.dao.MyAccountDao;

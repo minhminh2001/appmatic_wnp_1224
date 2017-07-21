@@ -1,24 +1,21 @@
 package com.whitelabel.app.ui.common;
-import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
-import com.whitelabel.app.data.service.AccountManager;
 import com.whitelabel.app.data.service.IAccountManager;
-import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.AddresslistReslut;
 import com.whitelabel.app.model.ApiFaildException;
 import com.whitelabel.app.model.ResponseModel;
-import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 import java.util.List;
-import rx.Subscriber;
+
+import javax.inject.Inject;
+
 import rx.Subscription;
-import rx.exceptions.OnErrorFailedException;
 import rx.functions.Action1;
 /**
  * Created by Administrator on 2017/6/12.
@@ -28,13 +25,15 @@ public class BaseAddressPresenter extends RxPresenter<BaseAddressContract.View> 
     private IAccountManager iAccountManager;
     private boolean  useCache;
 
-    public BaseAddressPresenter(boolean  useCache,ICommodityManager iCommodityManager,
-                                IAccountManager iAccountManager,
-                                BaseAddressContract.View view){
+    public void setUseCache(boolean useCache){
         this.useCache=useCache;
+    }
+    @Inject
+    public BaseAddressPresenter(ICommodityManager iCommodityManager,
+                                IAccountManager iAccountManager
+                             ){
         this.iAccountManager=iAccountManager;
         this.iCommodityManager=iCommodityManager;
-        this.mView=view;
         jLogUtils=new JLogUtils();
     }
     @Override

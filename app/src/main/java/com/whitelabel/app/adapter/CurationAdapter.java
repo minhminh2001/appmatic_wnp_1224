@@ -19,7 +19,7 @@ import com.bumptech.glide.request.target.Target;
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductListActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceLandingPagesListLandingPageItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;

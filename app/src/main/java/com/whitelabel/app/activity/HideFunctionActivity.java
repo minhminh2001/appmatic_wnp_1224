@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.whitelabel.app.R;
 import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.adapter.SelectServiceAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.GetServiceEntity;
 import com.whitelabel.app.model.GetServiceListEntity;
 import com.whitelabel.app.model.SelectServiceEntity;

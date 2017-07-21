@@ -22,7 +22,7 @@ import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.activity.EditAddressActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.adapter.AddressBookAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.AddressDeleteCellEntity;

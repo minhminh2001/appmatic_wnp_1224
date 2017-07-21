@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.LoginRegisterDao;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;

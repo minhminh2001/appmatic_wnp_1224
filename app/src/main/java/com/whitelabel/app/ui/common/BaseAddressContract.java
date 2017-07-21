@@ -26,6 +26,7 @@ public class BaseAddressContract {
         public  void  getAddressListCache(String sessionKey,String userId);
         public void   getAddressListOnLine(String sessionKey,String userId);
         public void   deleteAddressById(String sessionKey,String addressId,String userId);
+        public void setUseCache(boolean use);
 
     }
 }

@@ -32,7 +32,7 @@ import com.molpay.molpayxdk.MOLPayActivity;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.DialogProductAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.CheckoutDao;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
@@ -139,7 +139,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     public CheckoutContract.Presenter getPresenter() {
         return new CheckoutPresenterImpl(new BaseManager(DataManager.getInstance().getMockApi(),
                 DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),
-                new CheckoutManager(DataManager.getInstance().getCheckoutApi(),DataManager.getInstance().getPreferHelper()));
+                new CheckoutManager(DataManager.getInstance().getCheckoutApi()));
     }
     //    static {
 //        System.loadLibrary("gemfivelocal");

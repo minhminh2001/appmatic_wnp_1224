@@ -1,6 +1,5 @@
 package com.whitelabel.app.ui.common;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,17 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.whitelabel.app.BaseFragment;
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.AddAddressActivity;
-import com.whitelabel.app.activity.EditAddressActivity;
 import com.whitelabel.app.adapter.AddressBookAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.AccountManager;
 import com.whitelabel.app.data.service.CommodityManager;
 import com.whitelabel.app.fragment.BaseFragmentSearchCart;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.network.BaseHttp;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomButton;
@@ -40,6 +36,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -162,16 +161,17 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
         setRetryTheme(view);
         return view;
     }
+
     @Override
-    public BaseAddressContract.Presenter getPresenter() {
+    public void inject() {
         if (getArguments() != null) {
             useCache = getArguments().getBoolean(EXTRA_USE_CACHE);
         }
-        return new BaseAddressPresenter(useCache,
-                new CommodityManager(DataManager.getInstance().getProductApi(),
-                        DataManager.getInstance().getPreferHelper()),
-                 new AccountManager(DataManager.getInstance().getMyAccountApi(),DataManager.getInstance().getPreferHelper()),this);
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(getActivity())).build().inject(this);
+        mPresenter.setUseCache(useCache);
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

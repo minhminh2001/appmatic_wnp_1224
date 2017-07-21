@@ -20,7 +20,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 import com.google.gson.Gson;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.NotificationDetailActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.NotificationReceivedEntity;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;

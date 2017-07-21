@@ -2,7 +2,7 @@ package com.whitelabel.app.utils;
 
 import android.support.v4.app.Fragment;
 
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.fragment.HomeHomeFragment;
 import com.whitelabel.app.ui.home.fragment.HomeFragmentV2;

@@ -13,7 +13,7 @@ import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.BaseFragment;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomCheckBox;
@@ -21,6 +21,9 @@ import com.whitelabel.app.widget.CustomTextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
 public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefaultAddressContract.Presenter>
         implements CheckoutDefaultAddressContract.View {
     @BindView(R.id.tv_shipping_address_change)
@@ -93,10 +96,14 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
         CheckoutDefaultAddressFragment fragment = new CheckoutDefaultAddressFragment();
         return fragment;
     }
+
     @Override
-    public CheckoutDefaultAddressContract.Presenter getPresenter() {
-        return new CheckoutDefaultAddressPresenter();
+    public void inject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(getActivity())).build().inject(this);
+
     }
+
     @Override
     public void showErrorMsg(String errorMsg) {
         JViewUtils.showErrorToast(getActivity(), errorMsg);

@@ -18,10 +18,11 @@ import com.whitelabel.app.*;
 import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
-import com.whitelabel.app.application.WhiteLabelApplication;
+
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CheckoutManager;
+
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.checkout.CheckoutStatusRightContract;
@@ -43,7 +44,7 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
     public CheckoutStatusRightContract.Presenter getPresenter() {
         return new CheckoutStatusRightPresenter(new BaseManager(DataManager.getInstance().getMockApi(),
                 DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),
-                new CheckoutManager(DataManager.getInstance().getCheckoutApi(),DataManager.getInstance().getPreferHelper()));
+                new CheckoutManager(DataManager.getInstance().getCheckoutApi()));
     }
 
     @Override

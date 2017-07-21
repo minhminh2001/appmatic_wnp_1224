@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.whitelabel.app.WhiteLabelApplication;
 
-import com.whitelabel.app.application.WhiteLabelApplication;
-
-import java.math.BigDecimal;
 
 /**
  * Created by ray on 2017/4/21.

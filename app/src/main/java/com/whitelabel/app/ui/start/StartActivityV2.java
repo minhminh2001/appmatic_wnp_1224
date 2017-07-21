@@ -6,13 +6,12 @@ import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.BaseManager;
@@ -21,7 +20,10 @@ import com.whitelabel.app.notification.RegistrationIntentService;
 import com.whitelabel.app.task.INITExecutor;
 import com.whitelabel.app.utils.JViewUtils;
 import java.lang.ref.WeakReference;
-import io.fabric.sdk.android.Fabric;
+
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
 /**
  * Created by imaginato on 2015/6/10.
  */
@@ -44,11 +46,13 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
                 finish();
         }
     }
+
     @Override
-    public StartContract.Presenter getPresenter() {
-        return new StartPresenterImpl(this,
-                new BaseManager(DataManager.getInstance().getMockApi(),DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()));
+    protected void initInject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(this)).build().inject(this);
     }
+
     static  class StartRunnable implements   Runnable{
         WeakReference<StartActivityV2> mActivity;
         public StartRunnable(StartActivityV2 start){

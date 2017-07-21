@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.bean.Wishlist;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.MyAccountOrderOuter;

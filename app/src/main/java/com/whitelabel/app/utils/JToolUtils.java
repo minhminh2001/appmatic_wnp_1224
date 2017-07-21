@@ -30,7 +30,7 @@ import android.widget.ListView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.BaseActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.fragment.BaseFragment;
 
 import java.io.ByteArrayInputStream;

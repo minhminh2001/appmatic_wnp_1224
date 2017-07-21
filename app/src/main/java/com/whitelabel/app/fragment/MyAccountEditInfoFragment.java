@@ -41,7 +41,7 @@ import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.MyAccountActivity;
 import com.whitelabel.app.activity.MyAccountChangePasswordActivity;
 import com.whitelabel.app.adapter.WheelPickerAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.WheelPickerCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.CountryRegions;

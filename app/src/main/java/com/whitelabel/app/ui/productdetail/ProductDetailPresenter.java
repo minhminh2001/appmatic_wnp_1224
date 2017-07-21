@@ -43,15 +43,12 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     public static final String DIALOG_TYPE_BOTTOM="from_product_list";
     private long currUserSelectedProductMaxStockQty;
     private boolean delayAddToCart;
-    public ProductDetailPresenter(ProductDetailContract.View  view,IAccountManager iAccountManager, ICommodityManager iCommodityManager, IBaseManager iBaseManager,IShoppingCartManager iShoppingCartManager){
-        this.mView=view;
+    public ProductDetailPresenter(IAccountManager iAccountManager, ICommodityManager iCommodityManager, IBaseManager iBaseManager,IShoppingCartManager iShoppingCartManager){
         this.iCommodityManager=iCommodityManager;
         this.iBaseManager=iBaseManager;
         this.iAccountManager=iAccountManager;
         this.iShoppingCartManager=iShoppingCartManager;
     }
-
-
     public long getCurrUserSelectedProductMaxStockQty() {
         return currUserSelectedProductMaxStockQty;
     }

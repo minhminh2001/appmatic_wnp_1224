@@ -17,10 +17,7 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
-import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 
 /**

@@ -1,4 +1,4 @@
-package com.whitelabel.app.application;
+package com.whitelabel.app;
 
 import android.content.Context;
 import android.support.multidex.MultiDex;
@@ -10,14 +10,14 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 import com.newrelic.agent.android.NewRelic;
-import com.whitelabel.app.GlobalData;
-import com.whitelabel.app.R;
 import com.whitelabel.app.exception.CrashHandler;
 import com.whitelabel.app.model.ApplicationConfigurationEntity;
 import com.whitelabel.app.model.PhoneConfigurationEntity;
 import com.whitelabel.app.network.HttpClientRequest;
 import com.whitelabel.app.utils.JToolUtils;
-import com.whitelabel.app.LeakCanaryForTest;
+
+import injection.components.ApplicationComponent;
+import injection.components.DaggerApplicationComponent;
 
 /**
  * Created by imaginato on 2015/6/10.
@@ -29,6 +29,14 @@ public class WhiteLabelApplication extends MultiDexApplication {
     private static ApplicationConfigurationEntity appConfiguration;
     private Tracker mTracker;
     private GoogleAnalytics analytics;
+    private static ApplicationComponent mApplicationComponent;
+    private void initializeComponents() {
+        mApplicationComponent = DaggerApplicationComponent
+                .Initializer.init(this);
+    }
+    public static ApplicationComponent getApplicationComponent(){
+        return mApplicationComponent;
+    }
     public static PhoneConfigurationEntity getPhoneConfiguration() {
         if (phoneConfiguration == null) {
             phoneConfiguration = PhoneConfigurationEntity.getInstance();
@@ -77,6 +85,7 @@ public class WhiteLabelApplication extends MultiDexApplication {
         } catch (Exception ex) {
             ex.getStackTrace();
         }
+        initializeComponents();
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(getApplicationContext());
     }

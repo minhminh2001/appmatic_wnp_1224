@@ -17,7 +17,7 @@ import com.whitelabel.app.activity.IFilterSortActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListFilterSortSortAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.listener.OnFilterSortFragmentListener;
 import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsSortItemReturnEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;

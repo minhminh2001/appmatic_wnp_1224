@@ -4,8 +4,6 @@ package com.whitelabel.app;
 //import com.squareup.leakcanary.AnalysisResult;
 //import com.squareup.leakcanary.HeapDump;
 //import com.squareup.leakcanary.LeakCanary;
-import com.whitelabel.app.application.WhiteLabelApplication;
-import com.whitelabel.app.utils.JLogUtils;
 
 /**
  * Created by Administrator on 2017/6/27.
