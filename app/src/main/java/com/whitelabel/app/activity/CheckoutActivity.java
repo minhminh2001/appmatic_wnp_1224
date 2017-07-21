@@ -71,6 +71,10 @@ import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
 public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutContract.Presenter> implements View.OnClickListener,CheckoutContract.View{
     public Long mGATrackCheckoutTimeStart = 0L;
     public boolean mGATrackCheckoutTimeEnable = false;
@@ -135,12 +139,19 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     private ImageLoader mImageLoader;
     private PaypalHelper mPaypalHelper;
 
+
     @Override
-    public CheckoutContract.Presenter getPresenter() {
-        return new CheckoutPresenterImpl(new BaseManager(DataManager.getInstance().getMockApi(),
-                DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),
-                new CheckoutManager(DataManager.getInstance().getCheckoutApi()));
+    protected void initInject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(this)).build().inject(this);
     }
+
+    //    @Override
+//    public CheckoutContract.Presenter getPresenter() {
+//        return new CheckoutPresenterImpl(new BaseManager(DataManager.getInstance().getMockApi(),
+//                DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),
+//                new CheckoutManager(DataManager.getInstance().getCheckoutApi()));
+//    }
     //    static {
 //        System.loadLibrary("gemfivelocal");
 //    }

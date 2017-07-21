@@ -7,8 +7,10 @@ import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICheckoutManager;
 import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.data.service.IShoppingCartManager;
+import com.whitelabel.app.ui.checkout.CheckoutContract;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressContract;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressPresenter;
+import com.whitelabel.app.ui.checkout.CheckoutPresenterImpl;
 import com.whitelabel.app.ui.common.BaseAddressContract;
 import com.whitelabel.app.ui.common.BaseAddressPresenter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
@@ -83,6 +85,11 @@ public class PresenterModule {
     @ActivityScope
     public  CheckoutDefaultAddressContract.Presenter provideCheckoutDefaultAddressPresenter(ICheckoutManager iCheckoutManager, IBaseManager iBaseManager){
         return new CheckoutDefaultAddressPresenter(iCheckoutManager,iBaseManager);
+    }
+    @Provides
+    @ActivityScope
+    public   CheckoutContract.Presenter provideCheckoutPresenter(ICheckoutManager iCheckoutManager, IBaseManager iBaseManager){
+        return new CheckoutPresenterImpl(iBaseManager,iCheckoutManager);
     }
 
 }

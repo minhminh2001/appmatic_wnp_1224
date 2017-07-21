@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.fragment.CheckoutPaymentStatusRightFragment;
