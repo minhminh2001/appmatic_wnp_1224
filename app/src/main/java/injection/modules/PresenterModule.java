@@ -2,14 +2,23 @@ package injection.modules;
 
 import android.app.Activity;
 
+import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
+import com.whitelabel.app.data.service.ICheckoutManager;
 import com.whitelabel.app.data.service.ICommodityManager;
+import com.whitelabel.app.data.service.IShoppingCartManager;
+import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressContract;
+import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressPresenter;
+import com.whitelabel.app.ui.common.BaseAddressContract;
+import com.whitelabel.app.ui.common.BaseAddressPresenter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 import com.whitelabel.app.ui.home.HomeContract;
 import com.whitelabel.app.ui.home.HomeHomeContract;
 import com.whitelabel.app.ui.home.presenter.HomeCategoryDetailPresenterImpl;
 import com.whitelabel.app.ui.home.presenter.HomeHomePresenterImpl;
 import com.whitelabel.app.ui.home.presenter.HomePresenterImpl;
+import com.whitelabel.app.ui.productdetail.ProductDetailContract;
+import com.whitelabel.app.ui.productdetail.ProductDetailPresenter;
 import com.whitelabel.app.ui.start.StartContract;
 import com.whitelabel.app.ui.start.StartPresenterImpl;
 
@@ -57,5 +66,23 @@ public class PresenterModule {
         return new HomeCategoryDetailPresenterImpl(iCommodityManager,iBaseManager);
     }
 
+    @Provides
+    @ActivityScope
+    public  ProductDetailContract.Presenter provideProductDetailPresenter(ICommodityManager iCommodityManager, IBaseManager iBaseManager, IAccountManager iAccountManager, IShoppingCartManager iShoppingCartManager){
+        return new ProductDetailPresenter(iAccountManager,iCommodityManager,iBaseManager,iShoppingCartManager);
+    }
+
+    @Provides
+    @ActivityScope
+    public  BaseAddressContract.Presenter provideAddressBasePresenter(ICommodityManager iCommodityManager, IAccountManager iAccountManager){
+        return new BaseAddressPresenter(iCommodityManager,iAccountManager);
+    }
+
+
+    @Provides
+    @ActivityScope
+    public  CheckoutDefaultAddressContract.Presenter provideCheckoutDefaultAddressPresenter(ICheckoutManager iCheckoutManager, IBaseManager iBaseManager){
+        return new CheckoutDefaultAddressPresenter(iCheckoutManager,iBaseManager);
+    }
 
 }

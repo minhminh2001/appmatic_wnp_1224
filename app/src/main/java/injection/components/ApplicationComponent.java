@@ -13,6 +13,7 @@ import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.data.retrofit.ShoppingCartApi;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
+import com.whitelabel.app.data.service.ICheckoutManager;
 import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.data.service.IShoppingCartManager;
 
@@ -40,6 +41,7 @@ public interface ApplicationComponent {
     ICommodityManager getICommodityManager();
     IAccountManager getIAccountManager();
     IShoppingCartManager getIShoppingCartManager();
+    ICheckoutManager getICheckoutManager();
     void inject(WhiteLabelApplication app);
     final class Initializer {
         private Initializer() {

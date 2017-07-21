@@ -13,6 +13,8 @@ import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import rx.Subscription;
 import rx.functions.Action1;
 /**
@@ -23,13 +25,15 @@ public class BaseAddressPresenter extends RxPresenter<BaseAddressContract.View> 
     private IAccountManager iAccountManager;
     private boolean  useCache;
 
-    public BaseAddressPresenter(boolean  useCache,ICommodityManager iCommodityManager,
-                                IAccountManager iAccountManager,
-                                BaseAddressContract.View view){
+    public void setUseCache(boolean useCache){
         this.useCache=useCache;
+    }
+    @Inject
+    public BaseAddressPresenter(ICommodityManager iCommodityManager,
+                                IAccountManager iAccountManager
+                             ){
         this.iAccountManager=iAccountManager;
         this.iCommodityManager=iCommodityManager;
-        this.mView=view;
         jLogUtils=new JLogUtils();
     }
     @Override

@@ -15,9 +15,11 @@ import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.data.retrofit.ShoppingCartApi;
 import com.whitelabel.app.data.service.AccountManager;
 import com.whitelabel.app.data.service.BaseManager;
+import com.whitelabel.app.data.service.CheckoutManager;
 import com.whitelabel.app.data.service.CommodityManager;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
+import com.whitelabel.app.data.service.ICheckoutManager;
 import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.data.service.ShoppingCartManager;
@@ -174,6 +176,11 @@ public class NetModule {
         return new CommodityManager(productApi,iCacheApi);
     }
 
+
+    @Provides
+    public ICheckoutManager providesICheckoutManager(CheckoutApi checkoutApi){
+            return new CheckoutManager(checkoutApi);
+    }
 
 
    @Provides

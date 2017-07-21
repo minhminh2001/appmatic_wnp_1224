@@ -5,11 +5,14 @@ import android.app.Fragment;
 
 
 import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressFragment;
+import com.whitelabel.app.ui.common.BaseAddressFragment;
 import com.whitelabel.app.ui.home.fragment.HomeFragmentV2;
 import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV1;
 import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV2;
 import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV3;
 import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV4;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.ui.start.StartActivityV2;
 
 import dagger.Component;
@@ -28,6 +31,10 @@ public interface PresenterComponent1 {
     void inject(HomeHomeFragmentV2 homeHomeFragmentV2);
     void inject(HomeHomeFragmentV3 homeHomeFragmentV3);
     void inject(HomeHomeFragmentV4 homeHomeFragmentV4);
+    void inject(ProductDetailActivity productDetailActivity);
+    void inject(BaseAddressFragment baseAddressFragment);
+    void inject(CheckoutDefaultAddressFragment checkoutDefaultAddressFragment);
     Activity getActivity();
+
 
 }
