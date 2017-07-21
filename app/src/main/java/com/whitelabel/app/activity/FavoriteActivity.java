@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.FavoriteAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.FavoriteSonEntity;
 import com.whitelabel.app.utils.JViewUtils;
 

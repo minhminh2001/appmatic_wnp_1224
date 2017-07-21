@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.whitelabel.app.BuildConfig;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.OtherDao;
 import com.whitelabel.app.utils.AppUtils;
 import com.whitelabel.app.utils.FirebaseEventUtils;

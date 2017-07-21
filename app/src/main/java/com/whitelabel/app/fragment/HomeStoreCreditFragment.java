@@ -20,7 +20,7 @@ import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CreditInstructionActivity;
 import com.whitelabel.app.adapter.StoreCreditAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.OtherDao;
 import com.whitelabel.app.model.StoreCreditBean;
 import com.whitelabel.app.model.StoreCreditItemBean;

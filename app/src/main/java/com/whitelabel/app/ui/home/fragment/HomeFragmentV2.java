@@ -2,8 +2,6 @@ package com.whitelabel.app.ui.home.fragment;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,7 +21,7 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ProductListActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CommodityManager;
@@ -34,10 +32,8 @@ import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.ui.home.HomeContract;
 import com.whitelabel.app.ui.home.presenter.HomePresenterImpl;
 import com.whitelabel.app.utils.GaTrackHelper;
-import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomButton;
@@ -46,10 +42,15 @@ import com.whitelabel.app.widget.CustomHomeViewPager;
 import com.whitelabel.app.widget.CustomTabCustomPageIndicator;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
 /**
  * Created by imaginato on 2015/7/17.
  */
-public class HomeFragmentV2 extends HomeBaseFragment implements HomeActivity.HomeFragmentCallback,HomeContract.View{
+public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> implements HomeActivity.HomeFragmentCallback,HomeContract.View{
     public Long mGATrackTimeStart = 0L;
     public boolean mGATrackTimeEnable = false;
     private View mContainView;
@@ -61,13 +62,20 @@ public class HomeFragmentV2 extends HomeBaseFragment implements HomeActivity.Hom
     private int currentCategoryFragmentIndex = 0;
     private Dialog mDialog;
     int categoryViewCount = 0;
-    private HomeContract.Presenter mPresenter;
+
     private View rlHome;
     private View ll_error;
     public  static  final  int TYPE_FRAGMENT_HORIZONTAL=1;
     public  static  final int TYPE_FRAGMENT_VERTICAL=2;
     private int  fragmentType;
     private final static String PARAM1="param1";
+
+    @Override
+    public void inject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(getActivity())).build().inject(this);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +83,6 @@ public class HomeFragmentV2 extends HomeBaseFragment implements HomeActivity.Hom
             fragmentType=getArguments().getInt(PARAM1);
         }
         setSearchOptionMenu(false);
-        if(mPresenter==null) {
-            mPresenter = new HomePresenterImpl(this, new
-                    CommodityManager(DataManager.getInstance().getProductApi(), DataManager.getInstance().getPreferHelper()),
-                    new BaseManager(DataManager.getInstance().getMockApi(), DataManager.getInstance().getAppApi(), DataManager.getInstance().getPreferHelper()));
-        }
         setHasOptionsMenu(true);
     }
     public static HomeFragmentV2 newInstance(int fragmentType){

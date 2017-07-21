@@ -1,8 +1,6 @@
 package com.whitelabel.app.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Paint;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,11 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.Wishlist;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;

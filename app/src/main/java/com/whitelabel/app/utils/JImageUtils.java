@@ -23,7 +23,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.network.ImageLoader;
 
 import java.io.ByteArrayOutputStream;

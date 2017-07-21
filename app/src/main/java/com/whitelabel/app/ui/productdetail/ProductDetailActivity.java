@@ -38,7 +38,7 @@ import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductDetailPictureActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.ProductDetailCallback;
 import com.whitelabel.app.callback.WheelPickerCallback;

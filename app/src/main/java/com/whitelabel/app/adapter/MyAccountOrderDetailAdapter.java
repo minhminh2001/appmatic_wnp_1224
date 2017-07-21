@@ -1,6 +1,5 @@
 package com.whitelabel.app.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,15 +14,12 @@ import android.widget.TextView;
 
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.MyAccountOrderDetailActivity;
-import com.whitelabel.app.activity.ProductActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.MyAccountOrderInner;
 import com.whitelabel.app.model.MyAccountOrderMiddle;
 import com.whitelabel.app.model.MyAccountOrderTrackingInfo;
 import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;

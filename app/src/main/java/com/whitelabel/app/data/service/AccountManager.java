@@ -10,6 +10,8 @@ import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.utils.RxUtil;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -21,6 +23,7 @@ import rx.schedulers.Schedulers;
 public class AccountManager implements IAccountManager{
     private MyAccoutApi  myAccoutApi;
     private ICacheApi iCacheApi;
+    @Inject
     public AccountManager(MyAccoutApi myAccoutApi,ICacheApi iCacheApi){
         this.myAccoutApi=myAccoutApi;
         this.iCacheApi=iCacheApi;

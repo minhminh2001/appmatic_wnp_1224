@@ -7,13 +7,12 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
-import com.whitelabel.app.model.UserModel;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -21,10 +20,7 @@ import com.whitelabel.app.utils.JLogUtils;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 import java.util.concurrent.Callable;
-
-import rx.observables.AsyncOnSubscribe;
 
 /**
  * Created by Administrator on 2017/1/3.
@@ -36,7 +32,6 @@ public class PreferHelper  implements ICacheApi{
     private static final String TABLE_CURRENCY="currency";
     public String  getVersionNumber(){
         RemoteConfigResonseModel.RetomeConfig config=getLocalConfigModel();
-        JLogUtils.i("ray","retomeconfig:"+config);
         String currentVersion="";
         if(config!=null){
             currentVersion=config.getVersion();
@@ -48,7 +43,6 @@ public class PreferHelper  implements ICacheApi{
         SharedPreferences  sharedPreferences= WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME,Context.MODE_PRIVATE);
         RemoteConfigResonseModel.RetomeConfig config=remoteConfigModel.getData();
         String  configStr=new Gson().toJson(config);
-        JLogUtils.i("ray","configStr:"+configStr);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TABLE_CONFIG,configStr);
         editor.commit();
@@ -149,7 +143,6 @@ public class PreferHelper  implements ICacheApi{
             return null;
         }
     }
-
     @Override
     public void saveUser(GOUserEntity goUserEntity) {
         SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
@@ -157,19 +150,16 @@ public class PreferHelper  implements ICacheApi{
         editor.putString("user_info", new Gson().toJson(goUserEntity));
         editor.commit();
     }
-
     public  void saveCategoryDetail(CategoryDetailModel categoryDetailModel){
         SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
         Gson gson=new Gson();
         String categoryStr=gson.toJson(categoryDetailModel);
         sharedPreferences.edit().putString("category"+categoryDetailModel.getCategory_id(),categoryStr).commit();;
     }
-
     public rx.Observable<CategoryDetailModel> getCategoryDetail(final String categoryId){
         return rx.Observable.fromCallable(new Callable<CategoryDetailModel>() {
             @Override
             public CategoryDetailModel call() throws Exception {
-                JLogUtils.i("ray","ThreadName:"+Thread.currentThread().getName());
                 SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
                 String  categoryStr=sharedPreferences.getString("category"+categoryId,"");
                 Gson gson=new Gson();

@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.OrderListRecyclerViewAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.utils.JLogUtils;
 
 import java.util.Timer;

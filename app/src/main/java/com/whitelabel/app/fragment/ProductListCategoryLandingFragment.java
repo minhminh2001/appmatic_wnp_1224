@@ -26,7 +26,7 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.listener.OnFilterSortFragmentListener;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;

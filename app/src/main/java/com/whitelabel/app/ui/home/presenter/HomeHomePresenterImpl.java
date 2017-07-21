@@ -1,6 +1,7 @@
 package com.whitelabel.app.ui.home.presenter;
 
 import com.whitelabel.app.data.DataManager;
+import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.model.ApiFaildException;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.ui.RxPresenter;
@@ -16,9 +17,14 @@ import rx.functions.Action1;
  */
 
 public class HomeHomePresenterImpl extends RxPresenter<HomeHomeContract.View> implements HomeHomeContract.Presenter {
+    private ICommodityManager iCommodityManager;
+    public  HomeHomePresenterImpl(ICommodityManager commodityManager){
+            this.iCommodityManager=commodityManager;
+    }
+
 
     public void getSearchCategory(){
-       Subscription  subscription= DataManager.getInstance().getProductApi().getCategoryList().
+       Subscription  subscription= iCommodityManager.getAllCategoryManager().
                 compose(RxUtil.<SVRAppserviceCatalogSearchReturnEntity>rxSchedulerHelper())
                 .subscribe(new Action1<SVRAppserviceCatalogSearchReturnEntity>() {
                     @Override

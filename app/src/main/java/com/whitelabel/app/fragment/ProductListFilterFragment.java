@@ -20,7 +20,7 @@ import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListFilterSortFilterBrandAdapter;
 import com.whitelabel.app.adapter.ProductListFilterSortFilterTypeAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.listener.OnFilterSortFragmentListener;
 import com.whitelabel.app.listener.OnRangeSeekBarChangeListener;
 import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsBrandItemReturnEntity;

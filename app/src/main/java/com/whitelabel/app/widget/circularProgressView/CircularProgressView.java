@@ -18,7 +18,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.WheelPickerAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.GlobalCallBack;
 import com.whitelabel.app.callback.MaterialDialogCallback;
 import com.whitelabel.app.callback.WheelPickerCallback;

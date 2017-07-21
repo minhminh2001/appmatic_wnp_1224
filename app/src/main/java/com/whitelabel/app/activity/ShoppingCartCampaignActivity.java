@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.ShoppingCartCampaignAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.ShoppingCartCampaignListEntity;
 import com.whitelabel.app.model.ShoppingCartCampaignListEntityReturn;

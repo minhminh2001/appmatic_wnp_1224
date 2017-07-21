@@ -8,6 +8,7 @@
 //}
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
+
 //apply plugin: 'io.fabric'
 //apply plugin: 'newrelic'
 apply plugin: "jacoco"
@@ -117,7 +118,8 @@ ext {
     BUTTERKNIFE_VERSION = '8.4.0'
     PLAY_SERVICE_VERSION = '9.4.0'
     RETROFIT2_VERSION = '2.1.0'
-    PERMISSION_VERSION = '2.3.1'
+    PERMISSION_VERSION = '2.4.0'
+    DAGGER_VERSION="2.6"
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -152,8 +154,8 @@ dependencies {
         transitive = true;
     }
     compile 'com.newrelic.agent.android:android-agent:5.+'
-    //Test framework
-    testCompile "org.robolectric:robolectric:3.0"
+    compile "com.google.dagger:dagger:$DAGGER_VERSION"
+    annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
     testCompile "org.powermock:powermock-module-junit4:1.6.2"
@@ -167,17 +169,13 @@ dependencies {
     // Set this dependency to build and run UI Automator tests
 //    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     compile 'com.android.support:support-v4:25.3.1'
-//    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    //    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
 //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 //    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
-//    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
-//        transitive = true;
-//    }
-//    debugCompile rootProject.ext.dependencies["leak_canary_bug"]
-//    releaseCompile  rootProject.ext.dependencies["leak_canary_release"]
-//    testCompile rootProject.ext.dependencies["leak_canary_test"]
+
 
 
 afterEvaluate {

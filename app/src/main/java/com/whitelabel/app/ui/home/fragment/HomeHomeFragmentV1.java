@@ -21,14 +21,13 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.CategoryTreeExpandableAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.home.HomeHomeContract;
-import com.whitelabel.app.ui.home.presenter.HomeHomePresenterImpl;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -36,16 +35,21 @@ import com.whitelabel.app.widget.CustomSpeedLayoutManager;
 import com.whitelabel.app.widget.ExpandableRecyclerAdapter;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
 
 
-public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeContract.View,HomeActivity.HomeFragmentCallback {
+public class HomeHomeFragmentV1 extends HomeBaseFragment<HomeHomeContract.Presenter> implements HomeHomeContract.View,HomeActivity.HomeFragmentCallback {
     @BindView(R.id.rl_category_tree)
     RecyclerView rlCategoryTree;
     private ImageLoader  mImageLoader;
     private CategoryTreeExpandableAdapter  mAdapter;
-    private  HomeHomeContract.Presenter mHomePresenter;
+
     public HomeHomeFragmentV1() {
         // Required empty public constructor
     }
@@ -63,9 +67,11 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeCont
         return fragment;
     }
     @Override
-    public HomeHomeContract.Presenter getPresenter() {
-        return new HomeHomePresenterImpl();
+    public void inject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(getActivity())).build().inject(this);
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,8 +92,7 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeCont
     @Override
     public void requestData() {
         showProgressDialog();
-        mHomePresenter.attachView(this);
-        mHomePresenter.getSearchCategory();
+        mPresenter.getSearchCategory();
     }
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         mCommonCallback.setHomeSearchBarAndOnClick(new View.OnClickListener() {
@@ -161,7 +166,6 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeCont
         mCommonCallback.switchMenu(HomeCommonCallback.MENU_HOME);
         mImageLoader=new ImageLoader(getActivity());
         initRecyclerView();
-        mHomePresenter = getPresenter();
         requestData();
         setHasOptionsMenu(true);
     }
@@ -191,7 +195,6 @@ public class HomeHomeFragmentV1 extends HomeBaseFragment implements HomeHomeCont
             }
             intent.putExtra("categoryId", entity.getId());
             ((BaseActivity)getActivity()).startActivity(intent);
-//            ((Activity) getActivity()).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
         }
     };
 }

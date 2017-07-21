@@ -18,11 +18,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.common.widget.swipeback.SwipeBackActivityBase;
-import com.common.widget.swipeback.SwipeBackActivityHelper;
-import com.common.widget.swipeback.SwipeBackLayout;
-import com.common.widget.swipeback.Utils;
-import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.BaseView;
 import com.whitelabel.app.utils.JImageUtils;
@@ -31,6 +26,7 @@ import com.whitelabel.app.utils.JViewUtils;
 
 import com.whitelabel.app.widget.CustomButton;
 
+import javax.inject.Inject;
 
 
 /**
@@ -47,6 +43,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     private Toolbar mToolbar;
     private RelativeLayout mHomeSearchBarRL;
     private RelativeLayout mTitleRL;
+    @Inject
     protected T mPresenter;
     private TextView tvTitleNum, tvTitle;
     private ImageView ivTitle;
@@ -60,6 +57,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
 //        mHelper=new SwipeBackActivityHelper(this);
 //        mHelper.onActivityCreate();
         mPresenter = getPresenter();
+        initInject();
         if (mPresenter != null) {
             mPresenter.attachView(this);
         }
@@ -78,29 +76,9 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         super.onPostCreate(savedInstanceState);
 //        mHelper.onPostCreate();
     }
+    protected void initInject(){
 
-//    @Override
-//    public View findViewById(int id) {
-//        View v = super.findViewById(id);
-//        if (v == null && mHelper != null)
-//            return mHelper.findViewById(id);
-//        return v;
-//    }
-
-//    @Override
-//    public SwipeBackLayout getSwipeBackLayout() {
-//        return mHelper.getSwipeBackLayout();
-//    }
-//
-//    @Override
-//    public void setSwipeBackEnable(boolean enable) {
-//        getSwipeBackLayout().setEnableGesture(enable);
-//    }
-//    @Override
-//    public void scrollToFinishActivity() {
-//        Utils.convertActivityToTranslucent(this);
-//        getSwipeBackLayout().scrollToFinishActivity();
-//    }
+    }
     public void setStatusBarColor(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();

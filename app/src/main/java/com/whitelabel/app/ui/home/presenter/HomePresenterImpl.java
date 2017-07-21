@@ -4,10 +4,15 @@ import android.util.Log;
 
 import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CommodityManager;
+import com.whitelabel.app.data.service.IBaseManager;
+import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.ui.home.HomeContract;
 import com.whitelabel.app.utils.RxUtil;
+
+import javax.inject.Inject;
+
 import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -16,12 +21,12 @@ import rx.functions.Action1;
  * Created by Administrator on 2017/7/5.
  */
 public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements HomeContract.Presenter{
-        private CommodityManager mCommodityManager;
-        private BaseManager mBaseManager;
+        private ICommodityManager mCommodityManager;
+        private IBaseManager mBaseManager;
         private String TAG="";
         private  boolean firstLoading=true;
-        public HomePresenterImpl(HomeContract.View  view,CommodityManager commodityManager,BaseManager  baseManager){
-            this.mView=view;
+        @Inject
+        public HomePresenterImpl(ICommodityManager commodityManager,IBaseManager  baseManager){
             TAG=this.getClass().getSimpleName();
             this.mBaseManager=baseManager;
             mCommodityManager=commodityManager;

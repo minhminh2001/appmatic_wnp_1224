@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.fragment.HomeCategoryTreeFragment;
 import com.whitelabel.app.fragment.HomeHelpCenterDetailFragment;

@@ -23,7 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 

@@ -21,11 +21,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.BaseActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.adapter.FlowViewAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.BannerModel;
 import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;

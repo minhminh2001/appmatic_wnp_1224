@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.GlobalData;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;

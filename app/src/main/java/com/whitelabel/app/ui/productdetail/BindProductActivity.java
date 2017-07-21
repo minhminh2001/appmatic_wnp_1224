@@ -12,7 +12,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.adapter.BindProductAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.network.ImageLoader;

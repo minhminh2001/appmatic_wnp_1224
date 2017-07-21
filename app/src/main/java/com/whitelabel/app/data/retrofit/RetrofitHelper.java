@@ -67,16 +67,6 @@ public class RetrofitHelper {
                     return chain.proceed(request1);
                 }
             });
-//        builder.addInterceptor(new BaseInterceptor());
-//        if(!TextUtils.isEmpty(GlobalData.authName)&&!TextUtils.isEmpty(GlobalData.authPwd)){
-//            builder.authenticator(new okhttp3.Authenticator() {
-//                @Override
-//                public Request authenticate(Route route, okhttp3.Response response) throws IOException {
-//                    String credential = Credentials.basic(GlobalData.authName, GlobalData.authPwd);
-//                    return response.request().newBuilder().header("Authorization", credential).build();
-//                }
-//            });
-//        }
         builder.connectTimeout(60, TimeUnit.SECONDS);
         builder.readTimeout(60, TimeUnit.SECONDS);
         builder.writeTimeout(60, TimeUnit.SECONDS);

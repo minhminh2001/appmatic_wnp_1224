@@ -25,7 +25,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.CheckoutDao;
 import com.whitelabel.app.model.FacebookStoryEntity;
 import com.whitelabel.app.model.GOUserEntity;

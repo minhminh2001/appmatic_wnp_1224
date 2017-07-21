@@ -31,11 +31,9 @@ public class HomeCategoryDetailPresenterImpl extends RxPresenter<HomeCategoryDet
 
     private ICommodityManager  iCommodityManager;
     private IBaseManager  iBaseManager;
-    private HomeCategoryDetailContract.View  mView;
 
-    public HomeCategoryDetailPresenterImpl(ICommodityManager iCommodityManager,IBaseManager iBaseManager,HomeCategoryDetailContract.View  mView){
+    public HomeCategoryDetailPresenterImpl(ICommodityManager iCommodityManager,IBaseManager iBaseManager){
         this.iCommodityManager=iCommodityManager;
-        this.mView=mView;
         this.iBaseManager=iBaseManager;
     }
     public void getCategoryDetail(final String categoryId){

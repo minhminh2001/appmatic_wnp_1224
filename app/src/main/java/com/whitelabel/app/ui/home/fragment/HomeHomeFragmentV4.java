@@ -15,8 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.activity.ProductActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CommodityManager;
@@ -36,6 +35,9 @@ import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomTextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -107,11 +109,18 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     }
 
     @Override
-    public HomeCategoryDetailContract.Presenter getPresenter() {
-        return new HomeCategoryDetailPresenterImpl(new
-                CommodityManager(DataManager.getInstance().getProductApi(),DataManager.getInstance().getPreferHelper()),
-                new BaseManager(DataManager.getInstance().getMockApi(),DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),this);
+    public void inject() {
+        super.inject();
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(getActivity())).build().inject(this);
     }
+
+    //    @Override
+//    public HomeCategoryDetailContract.Presenter getPresenter() {
+//        return new HomeCategoryDetailPresenterImpl(new
+//                CommodityManager(DataManager.getInstance().getProductApi(),DataManager.getInstance().getPreferHelper()),
+//                new BaseManager(DataManager.getInstance().getMockApi(),DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),this);
+//    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

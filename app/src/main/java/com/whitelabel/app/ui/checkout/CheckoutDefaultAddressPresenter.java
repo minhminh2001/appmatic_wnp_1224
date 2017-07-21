@@ -1,6 +1,6 @@
 package com.whitelabel.app.ui.checkout;
 
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.model.ApiFaildException;
 import com.whitelabel.app.model.ResponseModel;

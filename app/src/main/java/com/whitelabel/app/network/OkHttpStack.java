@@ -30,7 +30,7 @@ import android.webkit.WebSettings;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.HttpStack;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

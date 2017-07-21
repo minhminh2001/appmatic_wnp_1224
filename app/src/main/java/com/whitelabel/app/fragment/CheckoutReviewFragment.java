@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.whitelabel.app.*;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.adapter.CheckoutReviewShoppingCartAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.CheckoutPaymentReturnShippingAddress;
 import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.model.ShoppingCarStoreCreditBean;

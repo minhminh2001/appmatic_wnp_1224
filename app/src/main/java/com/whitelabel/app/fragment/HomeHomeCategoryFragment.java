@@ -19,7 +19,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.CurationActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.adapter.CurationAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.ZoomImageViewCallBack;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;

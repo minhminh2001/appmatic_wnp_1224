@@ -1,6 +1,6 @@
 package com.whitelabel.app.ui.brandstore;
 
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.ApiFaildException;

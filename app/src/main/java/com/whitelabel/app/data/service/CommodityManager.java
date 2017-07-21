@@ -3,6 +3,7 @@ package com.whitelabel.app.data.service;
 import android.text.TextUtils;
 
 import com.google.gson.internal.LinkedTreeMap;
+import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.model.AddressBook;
@@ -21,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -30,9 +33,10 @@ import rx.functions.Func1;
  */
 public class CommodityManager  implements ICommodityManager{
     private ProductApi  productApi;
-    private PreferHelper  cacheHelper;
+    private ICacheApi cacheHelper;
     public SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity;
-    public CommodityManager(ProductApi productApi, PreferHelper preferHelper){
+    @Inject
+    public CommodityManager(ProductApi productApi, ICacheApi preferHelper){
         this.productApi=productApi;
         cacheHelper=preferHelper;
     }

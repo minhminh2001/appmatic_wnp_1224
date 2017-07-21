@@ -3,7 +3,7 @@ package com.whitelabel.app.handler;
 import android.app.Activity;
 import android.os.Handler;
 
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.INITCallback;
 
 import java.lang.ref.WeakReference;

@@ -9,7 +9,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.analytics.ecommerce.Product;
 import com.google.android.gms.analytics.ecommerce.ProductAction;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 
 import java.util.ArrayList;

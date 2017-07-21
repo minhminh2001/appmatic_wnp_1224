@@ -20,16 +20,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.whitelabel.app.application.WhiteLabelApplication;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.BaseView;
 import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomButton;
 
+import javax.inject.Inject;
+
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView {
+    @Inject
     protected T mPresenter;
     private Toolbar mToolbar;
     private RelativeLayout mHomeSearchBarRL;
@@ -40,6 +41,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     @Override
     public void showProgressDialog() {
         mProgressDialog= JViewUtils.showProgressDialog(getActivity());
+    }
+
+    public void inject(){
+
     }
     @Override
     public void closeProgressDialog() {
@@ -56,6 +61,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter=getPresenter();
+        inject();
         if(mPresenter!=null){
             mPresenter.attachView(this);
         }

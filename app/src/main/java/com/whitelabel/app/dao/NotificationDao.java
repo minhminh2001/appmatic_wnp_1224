@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.NotificationAppOpenReturnEntity;
 import com.whitelabel.app.model.NotificationCell;

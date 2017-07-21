@@ -46,7 +46,7 @@ public class HomeCategoryDetailPresenterImplTest {
         MockitoAnnotations.initMocks(this);
         PowerMockito.mockStatic(Log.class);
         RxUnitTestTools.openRxTools();
-        presenter=new HomeCategoryDetailPresenterImpl(iCommodityManager,iBaseManager,mView);
+        presenter=new HomeCategoryDetailPresenterImpl(iCommodityManager,iBaseManager);
     }
     @Test
     public void getCategoryDetail() throws Exception {

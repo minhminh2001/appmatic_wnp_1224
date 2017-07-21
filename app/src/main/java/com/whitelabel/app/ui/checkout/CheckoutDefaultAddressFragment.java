@@ -13,7 +13,7 @@ import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.BaseFragment;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomCheckBox;

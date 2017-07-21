@@ -34,7 +34,7 @@ import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.DialogProductAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.CheckoutDao;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;

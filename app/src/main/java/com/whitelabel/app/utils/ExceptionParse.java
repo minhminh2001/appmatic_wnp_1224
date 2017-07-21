@@ -2,7 +2,7 @@ package com.whitelabel.app.utils;
 
 import com.whitelabel.app.R;
 import com.google.gson.JsonParseException;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.ApiException;
 import com.whitelabel.app.model.ApiFaildException;
 

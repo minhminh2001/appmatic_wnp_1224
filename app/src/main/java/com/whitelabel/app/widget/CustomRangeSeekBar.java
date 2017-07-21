@@ -15,7 +15,7 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.ImageView;
 
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.listener.OnRangeSeekBarChangeListener;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JScreenUtils;

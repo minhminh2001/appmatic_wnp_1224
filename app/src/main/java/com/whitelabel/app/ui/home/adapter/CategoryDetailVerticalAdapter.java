@@ -30,7 +30,7 @@ import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.adapter.FlowViewAdapter;
-import com.whitelabel.app.application.WhiteLabelApplication;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.dao.ShoppingCarDao;
