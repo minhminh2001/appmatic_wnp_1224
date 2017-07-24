@@ -704,10 +704,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         }
     }
 
-
-
-
-
     private static final class DataHandler extends Handler{
         private final WeakReference<LoginRegisterActivity> mActivity;
         private final WeakReference<LoginRegisterEmailLoginFragment> mFragment;
@@ -725,56 +721,27 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
             }
             switch (msg.what){
                 case ProductDao.REQUEST_CHECKVERSION:
-//                    if(msg.arg1!= ProductDao.RESPONSE_SUCCESS){
-//                        if(mActivity.get()!=null) {
-//                            JViewUtils.showMaterialDialog(mActivity.get(),mFragment.get().updateDiaTitle, mFragment.get().updateDiaHintmsg, mFragment.get().updateDiaBtnMsg, mFragment.get().updateListener, false);
-//                        }
-//                    }
                     break;
                 case MyAccountDao.REQUEST_EMAILLOGIN:
                     if(mFragment.get().mDialog!=null){mFragment.get(). mDialog.cancel();}
                     if(msg.arg1==MyAccountDao.RESPONSE_SUCCESS){
                         SharedPreferences shared = mActivity.get().getSharedPreferences("oldEmail", Activity.MODE_PRIVATE);
-
                         //成功后将数据放到Entity中
                         SVRAppServiceCustomerLoginReturnEntity loginReturnEntity = (SVRAppServiceCustomerLoginReturnEntity) msg.obj;
                         loginReturnEntity.setEmailLogin(true);
                         // WhiteLabelApplication.getAppConfiguration().signIn(loginReturnEntity);
                         loginReturnEntity.setLoginType(FirebaseEventUtils.lOGIN_EMAIL);
                         WhiteLabelApplication.getAppConfiguration().signIn(mActivity.get(), loginReturnEntity);
-
                         //跳转界面
                         if (loginReturnEntity.getConfirmation() == 1) {
-
                             mFragment.get().loginRegisterActivity.setSubEmail(mFragment.get().email.getText().toString().trim());
                             mFragment.get().clickEmailInfo.setVisibility(View.VISIBLE);
-
                         } else {
-//                            if (false) {
-//                                String testMessage = "sessionKey:" + loginReturnEntity.getSessionKey() + "\n" + "user id:" + loginReturnEntity.getId();
-//                                JViewUtils.showMessageDialog(mActivity.get(), testMessage, new OnMessageDialogListener() {
-//                                    private SVRAppServiceCustomerLoginReturnEntity loginReturnEntity;
-//
-//                                    public OnMessageDialogListener init(SVRAppServiceCustomerLoginReturnEntity a) {
-//                                        this.loginReturnEntity = a;
-//                                        return this;
-//                                    }
-//                                    @Override
-//                                    public void onOKClickListener(Object object) {
-//                                        Bundle mBundle = new Bundle();
-//                                        mBundle.putString("sessionKey", loginReturnEntity.getSessionKey());
-//                                        mActivity.get().startNextActivity(mBundle, HomeActivity.class, false);
-//                                        mActivity.get().finish();
-//                                    }
-//                                }.init(loginReturnEntity));
-//                            } else {
-//                                SendBoardUtil.sendNotificationBoard(mActivity.get(),SendBoardUtil.LOGINCODE,null);
                                 Bundle mBundle = new Bundle();
                                 mBundle.putString("sessionKey", loginReturnEntity.getSessionKey());
                                 boolean oldAccount=mFragment.get().email.getText().toString().equals(shared.getString("email",""));
-                                //  if(isStart||(!oldAccount&&fromSignOut)){
                                 if(mFragment.get().isStart){
-                                    mActivity.get().startNextActivity(mBundle, HomeActivity.class, false);
+                                    mActivity.get().startNextActivity(mBundle, HomeActivity.class, true);
                                 }else {
                                     Intent intent=new Intent();
                                     if(mActivity.get().addToWish){
@@ -783,8 +750,9 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                                         intent.putExtras(bundle);
                                     }
                                     mActivity.get().setResult(RESULTCODE,intent);
+                                    mActivity.get().finish();
                                 }
-                                mActivity.get().finish();
+
                             }
 //                        }
                         SharedPreferences.Editor editor2 = shared.edit();

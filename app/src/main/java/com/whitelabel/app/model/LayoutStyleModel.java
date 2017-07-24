@@ -1,6 +1,6 @@
 package com.whitelabel.app.model;
 
-        import java.io.Serializable;
+import java.io.Serializable;
 
 /**
  * Created by ray on 2017/5/3.
@@ -11,11 +11,9 @@ public class LayoutStyleModel implements Serializable {
     public int getHome() {
         return home;
     }
-
     public void setHome(int home) {
         this.home = home;
     }
-
     public int getProductDetailType() {
         return ProductDetailType;
     }

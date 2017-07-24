@@ -124,7 +124,6 @@ public class PhoneConfigurationEntity implements Serializable {
 
     public int getScreenWidth() {
 
-
         return screenWidth;
     }
 

@@ -22,7 +22,27 @@ public class CategoryDetailModel  implements Serializable {
         private String category_id;
         private String category_name;
         private String category_img;
-        private List<SVRAppserviceProductSearchResultsItemReturnEntity> newArrivalProducts;
+        private int image_width;
+        private int image_height;
+
+
+    public int getImage_width() {
+        return image_width;
+    }
+
+    public void setImage_width(int image_width) {
+        this.image_width = image_width;
+    }
+
+    public int getImage_height() {
+        return image_height;
+    }
+
+    public void setImage_height(int image_height) {
+        this.image_height = image_height;
+    }
+
+    private List<SVRAppserviceProductSearchResultsItemReturnEntity> newArrivalProducts;
         private List<SVRAppserviceProductSearchResultsItemReturnEntity> bestSellerProducts;
 
         public String getCategory_id() {

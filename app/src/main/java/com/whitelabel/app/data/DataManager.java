@@ -26,7 +26,7 @@ public class DataManager {
     }
     public static DataManager getInstance(){
         mBaseUrl="http://103.210.236.156:8088/";
-        mMockUrl="http://192.168.1.233:8088/";
+        mMockUrl="http://103.210.236.156:8088/";
         if(dataManager==null){
             synchronized (DataManager.class){
                 dataManager=new DataManager();

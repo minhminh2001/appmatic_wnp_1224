@@ -74,18 +74,18 @@ public class CommodityManagerTest {
         Assert.assertNotNull(svrAppserviceCatalogSearchReturnEntity);
         Assert.assertTrue(svrAppserviceCatalogSearchReturnEntity.getCategory().size()>0);
     }
+
     @Test
     public void getCategoryDetail()  throws Exception{
         mCommodityManager.getCategoryDetail(true,"1","1");
         verify(preferHelper).getCategoryDetail("1");
-
         TestSubscriber<CategoryDetailModel>  testSubscriber=TestSubscriber.create();
-        mCommodityManager.getCategoryDetail(false,"4","").
+        mCommodityManager.getCategoryDetail(false,"88","").
                 subscribe(testSubscriber);
        testSubscriber.assertNoErrors();
        testSubscriber.assertCompleted();
         CategoryDetailModel categoryDetailModel= testSubscriber.getOnNextEvents().get(0);
-        Assert.assertEquals(categoryDetailModel.getCategory_id(),"4");
+        Assert.assertEquals(categoryDetailModel.getCategory_id(),"88");
     }
     @Test
     public void getLocalShoppingProductCount() throws Exception {

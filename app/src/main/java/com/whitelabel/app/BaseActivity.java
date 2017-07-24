@@ -254,19 +254,19 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             intent.putExtras(bundle);
         }
         startActivity(intent);
-        startActivityTransitionAnim();
         if (finishFlag) {
             super.finish();
         }
+        startActivityTransitionAnim();
     }
 
     public    void   startActivityTransitionAnim(){
-        overridePendingTransition(R.anim.activity_transition_v2_enter_righttoleft,
-                R.anim.activity_transition_v2_exit_righttoleft);
+        overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+                R.anim.activity_transition_exit_righttoleft);
     }
 
     public void closeActivityTransitionAnim(){
-        overridePendingTransition(R.anim.activity_transition_v2_enter_lefttoright, R.anim.activity_transition_v2_exit_lefttoright);
+        overridePendingTransition(R.anim.activity_transition_enter_lefttoright, R.anim.activity_transition_exit_lefttoright);
     }
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {

@@ -37,19 +37,19 @@
         <!--</receiver>-->
 
         <!-- paypal -->
-        <activity android:name="com.paypal.android.sdk.payments.PaymentActivity" />
-        <activity android:name="com.paypal.android.sdk.payments.PaymentMethodActivity" />
-        <activity android:name="com.paypal.android.sdk.payments.PaymentConfirmActivity" />
-        <activity android:name="com.paypal.android.sdk.payments.LoginActivity" />
-        <activity android:name="com.paypal.android.sdk.payments.PayPalFuturePaymentActivity" />
-        <activity android:name="com.paypal.android.sdk.payments.FuturePaymentConsentActivity" />
-        <activity android:name="com.paypal.android.sdk.payments.FuturePaymentInfoActivity" />
-        <activity android:name="com.paypal.android.sdk.payments.PayPalProfileSharingActivity" />
-        <activity android:name="com.paypal.android.sdk.payments.ProfileSharingConsentActivity" />
+        <!--<activity android:name="com.paypal.android.sdk.payments.PaymentActivity" />-->
+        <!--<activity android:name="com.paypal.android.sdk.payments.PaymentMethodActivity" />-->
+        <!--<activity android:name="com.paypal.android.sdk.payments.PaymentConfirmActivity" />-->
+        <!--<activity android:name="com.paypal.android.sdk.payments.LoginActivity" />-->
+        <!--<activity android:name="com.paypal.android.sdk.payments.PayPalFuturePaymentActivity" />-->
+        <!--<activity android:name="com.paypal.android.sdk.payments.FuturePaymentConsentActivity" />-->
+        <!--<activity android:name="com.paypal.android.sdk.payments.FuturePaymentInfoActivity" />-->
+        <!--<activity android:name="com.paypal.android.sdk.payments.PayPalProfileSharingActivity" />-->
+        <!--<activity android:name="com.paypal.android.sdk.payments.ProfileSharingConsentActivity" />-->
 
-        <service
-            android:name="com.paypal.android.sdk.payments.PayPalService"
-            android:exported="false" />
+        <!--<service-->
+            <!--android:name="com.paypal.android.sdk.payments.PayPalService"-->
+            <!--android:exported="false" />-->
 
         <!--  -->
         <!--<service-->
@@ -96,6 +96,7 @@
         <activity
             android:name=".activity.LoginRegisterActivity"
             android:launchMode="singleTop"
+            android:theme="@style/BackgroundWhiteTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
 
@@ -113,8 +114,7 @@
             android:hardwareAccelerated="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:taskAffinity="com.whitelabel.app"
-            android:theme="@style/BlackgroundBalckTheme">
+            android:theme="@style/BackgroundWhiteTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

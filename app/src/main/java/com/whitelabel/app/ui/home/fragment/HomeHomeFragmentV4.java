@@ -168,7 +168,7 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     public void loadData(final CategoryDetailModel categoryDetailModel) {
          if(getActivity()!=null){
              CategoryDetailHorizontalAdapter mAdapter=
-                     new CategoryDetailHorizontalAdapter(categoryDetailModel,mImageLoader);
+                     new CategoryDetailHorizontalAdapter(getActivity(),categoryDetailModel,mImageLoader);
              mAdapter.setOnBestProductionItemClickListener(new CategoryDetailHorizontalAdapter.OnItemClickListener() {
                  @Override
                  public void onItemClick(RecyclerView.ViewHolder itemViewHolder, int position) {

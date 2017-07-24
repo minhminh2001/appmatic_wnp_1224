@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
@@ -18,6 +20,7 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.widget.ExpandableRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -32,7 +35,9 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
     private final ImageLoader mImageLoader;
     private int mViewType;
     public final  static   int VIEW_HORIZONTAL=1;
+    public final static  int VIEW_VERIVATE=2;
     private ChildOnClick childOnClick;
+    private double screenWidth=0;
     public interface ChildOnClick {
         void childOnClick(int position, Object ob, String parentId);
     }
@@ -43,6 +48,7 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
                                          ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> groupList, ImageLoader imageLoader,
                                          ChildOnClick childOnClick) {
         super(context, activity);
+        screenWidth= WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(activity);
         this.context = context;
         this.childOnClick = childOnClick;
         mImageLoader = imageLoader;
@@ -71,10 +77,12 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
                 View convertView =null;
                 if(mViewType==VIEW_HORIZONTAL){
                     convertView = LayoutInflater.from(context).inflate(R.layout.adapter_category_tree_group_item_hor, null);
+                    return new GroupViewHolder(convertView,VIEW_HORIZONTAL);
                 }else{
                     convertView = LayoutInflater.from(context).inflate(R.layout.adapter_category_tree_group_item, null);
+                    return new GroupViewHolder(convertView,VIEW_VERIVATE);
                 }
-                return new GroupViewHolder(convertView);
+
             case TYPE_CHILD:
             default:
                 View convertView2 = LayoutInflater.from(context).inflate(R.layout.adapter_category_tree_child_item, null);
@@ -89,14 +97,26 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
             SVRAppserviceCatalogSearchCategoryItemReturnEntity entity =  getItem(position);
             groupViewHolder.tvCategoryTreeGroupName.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
             groupViewHolder.tvCategoryTreeGroupName.setText(entity.getName());
+            int  imageHeight=JDataUtils.dp2Px(170);
+            if(groupViewHolder.mType==VIEW_HORIZONTAL){
+                imageHeight=(int)(entity.getImage_height()*(screenWidth/2/entity.getImage_width()));
+            }else if(entity.getImage_height()!=0&&entity.getImage_height()!=0){
+                imageHeight= (int) (entity.getImage_height()*(screenWidth/entity.getImage_width()));
+            }
+            LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) groupViewHolder.ivCategoryTreeGroup.getLayoutParams();
+//            if(params!=null) {
+                params.height = imageHeight;
+                groupViewHolder.ivCategoryTreeGroup.setLayoutParams(params);
+//            }
+
             if(TextUtils.isEmpty(entity.getImage())) {
                 groupViewHolder.ivCategoryTreeGroup.setVisibility(View.GONE);
             }else if (groupViewHolder.ivCategoryTreeGroup.getTag()== null || !groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage())) {
                 groupViewHolder.ivCategoryTreeGroup.setVisibility(View.VISIBLE);
-                JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, groupViewHolder.ivCategoryTreeGroup, entity.getImage(),640, JDataUtils.dp2Px(170));
+                JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, groupViewHolder.ivCategoryTreeGroup, entity.getImage());
                 groupViewHolder.ivCategoryTreeGroup.setTag(entity.getImage());
             }
-               groupViewHolder.tv_category_tree_divi.setVisibility(View.GONE);
+             groupViewHolder.tv_category_tree_divi.setVisibility(View.GONE);
             if (entity.isExpaned()) {
                 groupViewHolder.tvCategoryTreeLine.setVisibility(View.GONE);
             } else {
@@ -114,12 +134,30 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
             });
         }
     }
+
+    @Override
+    public void getMaxChildItem(Activity activity) {
+        int screenHeight= JScreenUtils.getScreenHeight(activity);
+        if(screenHeight>=2350){
+            maxChildItemCount=9;
+        }else if(screenHeight>=1900){
+            maxChildItemCount=8;
+        }else if(screenHeight>=1170){
+            maxChildItemCount=6;
+        }else if(screenHeight>=800){
+            maxChildItemCount=5;
+        }else if(screenHeight>=200){
+            maxChildItemCount=4;
+        }
+    }
+
     public class GroupViewHolder extends ExpandableRecyclerAdapter.HeaderViewHolder {
         public TextView tvCategoryTreeGroupName, tvCategoryTreeLine, tv_category_tree_divi;
         public ImageView ivCategoryTreeGroup;
-
-        public GroupViewHolder(View view) {
+        private int mType;
+        public GroupViewHolder(View view,int type) {
             super(view);
+            mType=type;
             tvCategoryTreeGroupName = (TextView) view.findViewById(R.id.tv_category_tree_group_name);
             ivCategoryTreeGroup = (ImageView) view.findViewById(R.id.iv_category_tree_group);
             tvCategoryTreeLine = (TextView) view.findViewById(R.id.tv_category_tree_line);

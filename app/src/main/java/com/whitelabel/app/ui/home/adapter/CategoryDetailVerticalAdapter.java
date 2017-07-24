@@ -139,6 +139,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
 
     MyAccountDao  myAccountDao;
     ProductDao mProductDao;
+    private double screenWidth;
     public CategoryDetailVerticalAdapter(Context context, CategoryDetailModel categoryDetailModel, ImageLoader loader) {
         this.categoryDetailModel = categoryDetailModel;
         mImageLoader = loader;
@@ -146,6 +147,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         String TAG = this.getClass().getSimpleName();
         myAccountDao = new MyAccountDao(TAG, dataHandler);
         mProductDao = new ProductDao(TAG, dataHandler);
+        screenWidth=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity) context);
     }
    public CategoryDetailModel getData(){
        return categoryDetailModel;
@@ -182,9 +184,10 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (categoryDetailModel == null) return;
-            int width = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity)
-                    headerViewHolder.detailViewpager.getContext());
-            int imageHeight = width * 240 / 490;
+            int imageHeight = (int) (categoryDetailModel.getImage_height() * (screenWidth/categoryDetailModel.getImage_width()));
+            if(imageHeight==0){
+                imageHeight= (int) (screenWidth*(240.0/640));
+            }
             headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
             if(categoryDetailModel.getNewArrivalProducts()==null||categoryDetailModel.getNewArrivalProducts().size()==0){
                 headerViewHolder.llNewArrivals.setVisibility(View.GONE);
@@ -522,8 +525,8 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         List<ImageView> imgs = new ArrayList<>();
         for (int i = 0; i < images.size(); i++) {
             ImageView imageView = new ImageView(context);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            JImageUtils.downloadImageFromServerByUrl(context, imageLoader, imageView, images.get(i), 640, 640 * 240 / 490);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            JImageUtils.downloadImageFromServerByUrl(context, imageLoader, imageView, images.get(i));
             imgs.add(imageView);
         }
         return imgs;

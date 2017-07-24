@@ -51,7 +51,7 @@
 </RelativeLayout>
   <ImageView
       android:id="@+id/iv_category_tree_group"
-      android:scaleType="fitXY"
+      android:scaleType="fitCenter"
       android:layout_width="match_parent"
-      android:layout_height="170dp" />
+      android:layout_height="175dp" />
 </LinearLayout>

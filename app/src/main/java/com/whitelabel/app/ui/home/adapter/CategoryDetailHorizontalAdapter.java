@@ -36,9 +36,11 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
     private final static int HEADER = 1;
     private final static int ITEM = 2;
     private final static int TITLE = 3;
-    public CategoryDetailHorizontalAdapter(CategoryDetailModel categoryDetailModel, ImageLoader imageLoader) {
+    private   double screenWidth;
+    public CategoryDetailHorizontalAdapter(Activity activity,CategoryDetailModel categoryDetailModel, ImageLoader imageLoader) {
         this.mImageLoader = imageLoader;
         mCategoryDetailModel = categoryDetailModel;
+        screenWidth=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(activity);
     }
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.line)
@@ -89,9 +91,10 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         if(holder instanceof  HeaderViewHolder){
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (mCategoryDetailModel == null) return;
-            int width = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity)
-                    headerViewHolder.detailViewpager.getContext());
-            int imageHeight = width * 240 / 490;
+            int imageHeight = (int) (mCategoryDetailModel.getImage_height() * (screenWidth/mCategoryDetailModel.getImage_width()));
+            if(imageHeight==0){
+                imageHeight= (int) (screenWidth*(240.0/640));
+            }
             headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
             if (TextUtils.isEmpty(mCategoryDetailModel.getCategory_img())) {
                 headerViewHolder.detailViewpager.setVisibility(View.VISIBLE);
@@ -140,7 +143,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         for (int i = 0; i < images.size(); i++) {
             ImageView imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            JImageUtils.downloadImageFromServerByUrl(context, imageLoader, imageView, images.get(i), 640, 640 * 240 / 490);
+            JImageUtils.downloadImageFromServerByUrl(context, imageLoader, imageView, images.get(i));
             imgs.add(imageView);
         }
         return imgs;

@@ -24,7 +24,7 @@ import java.util.List;
  */
 public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdapter.ListItem> extends RecyclerView.Adapter<ExpandableRecyclerAdapter.ViewHolder> {
     protected Context mContext;
-    private int maxChildItemCount=10;
+    protected int maxChildItemCount=10;
     protected List<T> allItems = new ArrayList<>();
     protected List<T> visibleItems = new ArrayList<>();
     private List<Integer> indexList = new ArrayList<>();
@@ -48,7 +48,7 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
         getMaxChildItem(activity);
     }
     //适配出当前屏幕适应多少个child Item
-    private void getMaxChildItem(Activity activity){
+    public void getMaxChildItem(Activity activity){
         int screenHeight=JScreenUtils.getScreenHeight(activity);
         if(screenHeight>=2350){
             maxChildItemCount=12;
@@ -167,7 +167,6 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
     }
     //展开收起互相切换
     public boolean toggleExpandedItems(int position, boolean notify) {
-        JLogUtils.i("ray","isExpanded(position):"+isExpanded(position));
         if (isExpanded(position)) {
             collapseItems(position, notify);
             return false;
@@ -191,7 +190,6 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
             //如果显示不全，尝试滚动recycleView
             try {
                 int position=visibleItems.indexOf(msg.obj);
-                JLogUtils.i("ray","handlerPostion:"+position);
                 if(position==0){
                     //第一个不需要滚动
                     return;
@@ -203,13 +201,14 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
                   }else if(getItem(position) instanceof  FilterItemModel){
                       children=((FilterItemModel)getItem(position)).getValues().size();
                   }
-                  JLogUtils.i("ray","maxChildItemCount:"+maxChildItemCount);
                 if (children< maxChildItemCount) {
                     tagPosition = position + children;
                 } else {
                     tagPosition = position+maxChildItemCount;
                 }
-                recyclerView.smoothScrollToPosition(tagPosition);
+                JLogUtils.i("ray","maxChildItemCount:"+maxChildItemCount);
+                JLogUtils.i("ray","tagPosition:"+tagPosition);
+                recyclerView.smoothScrollToPosition(9);
             }catch (Exception e){
                 e.printStackTrace();
             }

@@ -18,6 +18,24 @@ public class SVRAppserviceCatalogSearchCategoryItemReturnEntity extends Expandab
     private String brandName;
     private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> children=new ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity>();
     private int inStock;
+    private int image_width;
+    private int image_height;
+
+    public int getImage_width() {
+        return image_width;
+    }
+
+    public void setImage_width(int image_width) {
+        this.image_width = image_width;
+    }
+
+    public int getImage_height() {
+        return image_height;
+    }
+
+    public void setImage_height(int image_height) {
+        this.image_height = image_height;
+    }
 
     public String getBrandName() {
         return brandName;
