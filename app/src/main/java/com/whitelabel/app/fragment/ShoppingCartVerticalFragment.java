@@ -132,12 +132,10 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private String mVoucherCode;
     private ImageLoader mImageLoader;
     private TextView mTvGst;
-
     @Override
     public boolean getSwipeRefreshStatus() {
         return swipeRefrshLayout.isRefreshing();
     }
-
     @Override
     public void onRefresh() {
         //暂时没有用到
@@ -617,16 +615,12 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             JLogUtils.i("googleGA", "Remove Item From Cart");
         }
     }
-
-
     public void setVoucherFaildMessage(String errorMsg){
         tvApplyImageAnim.setImageResource(R.mipmap.icon_shopping_cart_error);
         tvApplyTextAnim.setTextColor(getResources().getColor(R.color.redC1033D));
         tvApplyTextAnim.setText(errorMsg);
         llApplyAnim.setVisibility(View.VISIBLE);
     }
-
-
     public void setDiscountPrice(double disCount, String title) {
         llVoucherPrice.setVisibility(View.VISIBLE);
         tvVoucher.setText("-"+WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble((Math.abs(disCount)) + ""));
@@ -718,10 +712,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         showSearch = true;
         connectionBreak.setVisibility(View.GONE);
     }
-
-
-
-
     public void saveShoppingCartCount(int num) {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
             GOUserEntity userEntity = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity());
@@ -729,14 +719,12 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             WhiteLabelApplication.getAppConfiguration().updateUserData(getActivity(), userEntity);
         }
     }
-
     public void updateShoppingData(int qty, String grandTotal, String total) {
         mCar.setSummaryQty(qty);
         mCar.setGrandTotal(grandTotal);
         mCar.setSubTotal(total);
         initShoppingCartData(mCar, false);
     }
-
     public void updateShoppingData(ShoppingCartDeleteCellEntity bean) {
         mCar.setDiscount(bean.getDiscount());
         mCar.setSubTotal(bean.getSubTotal());
@@ -750,7 +738,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         mCar.setStoreCredit(bean.getStoreCredit());
         initShoppingCartData(mCar, false);
     }
-
     @Override
     public void onPause() {
         //停止监听，并且将gapHeight归零
@@ -783,7 +770,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         etVoucherApply.setText(voucherCode);
         llApplyAnim.setVisibility(View.GONE);
     }
-
     public LinkedList<ShoppingCartListBase> toShoppingCartList(ShoppingCartListBase[] cell) {
         LinkedList<ShoppingCartListBase> cells = new LinkedList<>();
         Collections.addAll(cells, cell);
@@ -807,7 +793,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         }
     }
 //    private long currTime;
-
     private void sendRequest() {
         if (!swipeRefrshLayout.isRefreshing()) {
             showDialog();
@@ -818,15 +803,11 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         }
         mCarDao.getShoppingCarInfo(sessionKey);
     }
-
     private void showDialog() {
         if (getActivity() != null) {
             mDialog = JViewUtils.showProgressDialog(getActivity());
         }
     }
-
-
-
     private void initAdapter() {
         mProducts = new ArrayList<>();
         adapter = new ShoppingCartVerticalAdapter(getActivity(), mProducts, mImageLoader, this);
