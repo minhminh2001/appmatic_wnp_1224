@@ -18,9 +18,9 @@ public class StartContract {
 
       }
      public interface  Presenter extends BasePresenter<View>{
-         void getConfigInfo();
-         void openApp(String sessionKey,String deviceToken);
-         void getConfigInfo1();
+//         void getConfigInfo();
+//         void openApp(String sessionKey,String deviceToken);
+//         void getConfigInfo1();
          void  getConfigInfo(String sessionKey,String deviceToken);
          void setStartTime();
          void timeOutJudgment();

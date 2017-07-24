@@ -405,8 +405,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
 
     private void initListener() {
         btnTry.setOnClickListener(this);
-//        ivUpdate.setOnClickListener(this);
-//        rlShoppingcartTopGoback.setOnClickListener(this);
         tvApply.setOnClickListener(this);
         tvCheckout.setOnClickListener(this);
         llCheckout.setOnClickListener(this);

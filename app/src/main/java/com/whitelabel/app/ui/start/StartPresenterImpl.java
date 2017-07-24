@@ -39,47 +39,47 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
     public StartPresenterImpl( IBaseManager configService){
         this.configService=configService;
     }
-    @Override
-    public void openApp(String sessionKey, String deviceToken) {
-        Subscription  subscription= DataManager.getInstance().getAppApi().openApp(sessionKey,deviceToken)
-                .compose(RxUtil.<JsonObject>rxSchedulerHelper())
-                .map(new Func1<JsonObject, String>() {
-                    @Override
-                    public String call(JsonObject jsonObject) {
-                        String unit="";
-                        JsonObject  jsonObj= jsonObject.getAsJsonObject("data");
-                        unit=jsonObj.get("unit").getAsString();
-                        return unit;
-                    }
-                }).subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-                        WhiteLabelApplication.getAppConfiguration().getCurrency().setName(s);
-                        DataManager.getInstance().getPreferHelper().saveCurrency(s);
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        JLogUtils.i("ray","response:"+throwable.getMessage());
-                    }
-                });
-        addSubscrebe(subscription);
-    }
-    @Override
-    public void getConfigInfo1() {
-        Observable <RemoteConfigResonseModel> observable= configService.getConfigInfo();
-        observable.subscribe(new Action1<RemoteConfigResonseModel>() {
-            @Override
-            public void call(RemoteConfigResonseModel remoteConfigResonseModel) {
-                  WhiteLabelApplication.getAppConfiguration().initAppConfig(remoteConfigResonseModel.getData());
-                timeOutJudgment();
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-            }
-        });
-    }
+//    @Override
+//    public void openApp(String sessionKey, String deviceToken) {
+//        Subscription  subscription= DataManager.getInstance().getAppApi().openApp(sessionKey,deviceToken)
+//                .compose(RxUtil.<JsonObject>rxSchedulerHelper())
+//                .map(new Func1<JsonObject, String>() {
+//                    @Override
+//                    public String call(JsonObject jsonObject) {
+//                        String unit="";
+//                        JsonObject  jsonObj= jsonObject.getAsJsonObject("data");
+//                        unit=jsonObj.get("unit").getAsString();
+//                        return unit;
+//                    }
+//                }).subscribe(new Action1<String>() {
+//                    @Override
+//                    public void call(String s) {
+//                        WhiteLabelApplication.getAppConfiguration().getCurrency().setName(s);
+//                        DataManager.getInstance().getPreferHelper().saveCurrency(s);
+//                    }
+//                }, new Action1<Throwable>() {
+//                    @Override
+//                    public void call(Throwable throwable) {
+//                        JLogUtils.i("ray","response:"+throwable.getMessage());
+//                    }
+//                });
+//        addSubscrebe(subscription);
+//    }
+//    @Override
+//    public void getConfigInfo1() {
+//        Observable <RemoteConfigResonseModel> observable= configService.getConfigInfo();
+//        observable.subscribe(new Action1<RemoteConfigResonseModel>() {
+//            @Override
+//            public void call(RemoteConfigResonseModel remoteConfigResonseModel) {
+//                  WhiteLabelApplication.getAppConfiguration().initAppConfig(remoteConfigResonseModel.getData());
+//                timeOutJudgment();
+//            }
+//        }, new Action1<Throwable>() {
+//            @Override
+//            public void call(Throwable throwable) {
+//            }
+//        });
+//    }
     @Override
     public void getConfigInfo(String sessionKey,String deviceToken) {
         Observable openConfig= configService.getCurrencyUnit(sessionKey,deviceToken);
@@ -104,28 +104,28 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
             }
         });
     }
-    @Override
-    public void getConfigInfo() {
-       String currentVersionNumber= DataManager.getInstance().getPreferHelper().getVersionNumber();
-       Subscription subscription= DataManager.getInstance().
-                getMockApi().getConfigInfo(currentVersionNumber).
-                compose(RxUtil.<RemoteConfigResonseModel>rxSchedulerHelper())
-                .subscribe(new Action1<RemoteConfigResonseModel>() {
-                    @Override
-                    public void call(RemoteConfigResonseModel remoteConfigModel) {
-                        if (remoteConfigModel.getCode() == 1) {
-                            WhiteLabelApplication.getAppConfiguration().initAppConfig(
-                                    remoteConfigModel.getData());
-                            DataManager.getInstance().getPreferHelper().saveConfigInfo(remoteConfigModel);
-                        }
-                        timeOutJudgment();
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-
-                    }
-                });
-        addSubscrebe(subscription);
-    }
+//    @Override
+//    public void getConfigInfo() {
+//       String currentVersionNumber= DataManager.getInstance().getPreferHelper().getVersionNumber();
+//       Subscription subscription= DataManager.getInstance().
+//                getMockApi().getConfigInfo(currentVersionNumber).
+//                compose(RxUtil.<RemoteConfigResonseModel>rxSchedulerHelper())
+//                .subscribe(new Action1<RemoteConfigResonseModel>() {
+//                    @Override
+//                    public void call(RemoteConfigResonseModel remoteConfigModel) {
+//                        if (remoteConfigModel.getCode() == 1) {
+//                            WhiteLabelApplication.getAppConfiguration().initAppConfig(
+//                                    remoteConfigModel.getData());
+//                            DataManager.getInstance().getPreferHelper().saveConfigInfo(remoteConfigModel);
+//                        }
+//                        timeOutJudgment();
+//                    }
+//                }, new Action1<Throwable>() {
+//                    @Override
+//                    public void call(Throwable throwable) {
+//
+//                    }
+//                });
+//        addSubscrebe(subscription);
+//    }
 }

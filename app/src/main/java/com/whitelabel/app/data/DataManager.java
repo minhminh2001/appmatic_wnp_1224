@@ -19,14 +19,13 @@ public class DataManager {
     private BaseApi mAppApi;
     private ProductApi  mProductApi;
     private MyAccoutApi mMyAccountApi;
-
     private ShoppingCartApi mShoppingCartApi;
     private static String mBaseUrl;
     private static  String mMockUrl;
     private DataManager(){
     }
     public static DataManager getInstance(){
-        mBaseUrl="https://dev2.wnp.com.hk/";
+        mBaseUrl="http://103.210.236.156:8088/";
         mMockUrl="http://192.168.1.233:8088/";
         if(dataManager==null){
             synchronized (DataManager.class){
