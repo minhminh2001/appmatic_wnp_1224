@@ -141,7 +141,11 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     public void loadData(SVRAppserviceCatalogSearchReturnEntity data) {
             if(mFragments !=null&& mFragments.size()>0){
                 for(int i = 0; i< mFragments.size(); i++){
-                    ((HomeHomeFragmentV3) mFragments.get(i)).onRefresh();
+                    if(mFragments.get(i) instanceof HomeHomeFragmentV3){
+                        ((HomeHomeFragmentV3) mFragments.get(i)).onRefresh();
+                    }else if(mFragments.get(i) instanceof HomeHomeFragmentV4){
+                        ((HomeHomeFragmentV4) mFragments.get(i)).onRefresh();
+                    }
                 }
             }else {
               categoryArrayList = data.getCategory();
