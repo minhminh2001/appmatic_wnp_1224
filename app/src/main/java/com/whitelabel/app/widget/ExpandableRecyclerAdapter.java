@@ -206,9 +206,7 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
                 } else {
                     tagPosition = position+maxChildItemCount;
                 }
-                JLogUtils.i("ray","maxChildItemCount:"+maxChildItemCount);
-                JLogUtils.i("ray","tagPosition:"+tagPosition);
-                recyclerView.smoothScrollToPosition(9);
+                recyclerView.smoothScrollToPosition(tagPosition);
             }catch (Exception e){
                 e.printStackTrace();
             }
