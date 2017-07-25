@@ -9,14 +9,11 @@
 <string name="facebook_id">1287318627981888</string>
 <string name="api_version">v1</string>
 <string name="api_key">L5M7aUpZRr2ChzDx</string>
-<!-- 233 service  APP-29710023052170613
--->
-
 <string name="app_key">APP-29710023052170613</string>
 <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8</string>
 <string name="app_name">Wnp</string>
-    <!--https://dev2.wnp.com.hk/-->103.210.236.156:8088
+    <!--https://dev2.wnp.com.hk/ 103.210.236.156:8088-->
 <string name="request_url">http://103.210.236.156:8088/</string>
-<string name="image_base_url">https://dev2.wnp.com.hk/</string>
+<string name="image_base_url">https://imaginato.wnp.com.hk/</string>
 <string name="mock_url">http://103.210.236.156:8088/</string>
 </resources>

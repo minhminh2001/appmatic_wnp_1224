@@ -305,7 +305,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
             });
             if (JDataUtils.compare(leftProductFinalPriceFloat, leftProductPriceFloat) < 0) {
                 itemViewHolder.ctvProductPrice.setVisibility(View.VISIBLE);
-                itemViewHolder.ctvProductFinalPrice.setPadding(JDataUtils.dp2Px(9), 0, JDataUtils.dp2Px(9), 0);
+//                itemViewHolder.ctvProductFinalPrice.setPadding(JDataUtils.dp2Px(9), 0, JDataUtils.dp2Px(9), 0);
                 itemViewHolder.ctvProductPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductPriceFloat + ""));
                 itemViewHolder.ctvProductPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
             } else {
