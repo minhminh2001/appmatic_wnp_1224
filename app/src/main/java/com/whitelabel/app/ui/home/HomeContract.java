@@ -21,5 +21,6 @@ public class HomeContract {
         void  getBaseCategory();
         void   getShoppingCount();
         String formatShoppingCount(int count);
+        void getLocalBaseCategory();
     }
 }

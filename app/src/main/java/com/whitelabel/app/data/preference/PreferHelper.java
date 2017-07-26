@@ -12,6 +12,7 @@ import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
+import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JJsonUtils;
@@ -21,6 +22,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import rx.Observable;
 
 /**
  * Created by Administrator on 2017/1/3.
@@ -143,6 +146,7 @@ public class PreferHelper  implements ICacheApi{
             return null;
         }
     }
+
     @Override
     public void saveUser(GOUserEntity goUserEntity) {
         SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
@@ -170,5 +174,28 @@ public class PreferHelper  implements ICacheApi{
                 return categoryDetailModel;
             }
         });
+    }
+    @Override
+    public void saveBaseCategory(SVRAppserviceCatalogSearchReturnEntity allCategorys) {
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
+        Gson gson=new Gson();
+        String allCategoryStr=gson.toJson(allCategorys);
+        sharedPreferences.edit().
+                putString("allCategorys",allCategoryStr).commit();
+    }
+    @Override
+    public Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory() {
+       return  Observable.fromCallable(new Callable<SVRAppserviceCatalogSearchReturnEntity>() {
+           @Override
+           public SVRAppserviceCatalogSearchReturnEntity call() throws Exception {
+               SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
+               String allCategoryStr=sharedPreferences.getString("allCategorys","");
+               SVRAppserviceCatalogSearchReturnEntity entity=null;
+               if(!JDataUtils.isEmpty(allCategoryStr)){
+                    entity=new Gson().fromJson(allCategoryStr,SVRAppserviceCatalogSearchReturnEntity.class );
+               }
+               return entity;
+           }
+       });
     }
 }

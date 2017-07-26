@@ -34,7 +34,6 @@ import rx.functions.Func1;
 public class CommodityManager  implements ICommodityManager{
     private ProductApi  productApi;
     private ICacheApi cacheHelper;
-    public SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity;
     @Inject
     public CommodityManager(ProductApi productApi, ICacheApi preferHelper){
         this.productApi=productApi;
@@ -42,17 +41,13 @@ public class CommodityManager  implements ICommodityManager{
     }
     @Override
     public Observable<SVRAppserviceCatalogSearchReturnEntity> getAllCategoryManager() {
-        if(svrAppserviceCatalogSearchReturnEntity==null) {
             return productApi.getBaseCategory()
                     .doOnNext(new Action1<SVRAppserviceCatalogSearchReturnEntity>() {
                 @Override
                 public void call(SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity) {
-                    CommodityManager.this.svrAppserviceCatalogSearchReturnEntity = svrAppserviceCatalogSearchReturnEntity;
+                      cacheHelper.saveBaseCategory(svrAppserviceCatalogSearchReturnEntity);
                 }
             });
-        }else{
-            return Observable.just(svrAppserviceCatalogSearchReturnEntity);
-        }
     }
 
     @Override
@@ -98,6 +93,12 @@ public class CommodityManager  implements ICommodityManager{
              });
         }
     }
+
+    @Override
+    public Observable<SVRAppserviceCatalogSearchReturnEntity> getLocalCategoryManager() {
+        return cacheHelper.getBaseCategory();
+    }
+
     @Override
     public Observable<ProductDetailModel> getProductDetail(String sessionKey, String productId) {
          return productApi.getProductDetail(sessionKey,productId)
