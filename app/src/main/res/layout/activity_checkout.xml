@@ -166,6 +166,7 @@
     <com.whitelabel.app.widget.CustomScrollView
         android:id="@+id/sv_checkout_body"
         android:layout_width="match_parent"
+        android:scrollbars="none"
         android:layout_height="match_parent"
         android:layout_below="@id/tv_checkout_menu_below_line"
         android:fillViewport="true">

@@ -705,7 +705,10 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         JViewUtils.cleanCurrentViewFocus(AddAddressActivity.this);
         if (onblurAll(R.id.edit_addaddress_firstName) && onblurAll(R.id.edit_addaddress_lastName)  && onblurAll(R.id.edit_addaddresss_country)
                 && onblurAll(R.id.edit_addaddresss_address1)
-                && onblurAll(R.id.edit_addaddresss_city)  && onblurAll(R.id.edit_addaddresss_eg)&&onblurAll(R.id.edit_day_phone_eg)&&onblurAll(R.id.edit_addaddresss_state)) {
+                && onblurAll(R.id.edit_addaddresss_city)
+                && onblurAll(R.id.edit_addaddresss_eg)
+                &&onblurAll(R.id.edit_day_phone_eg)
+                &&onblurAll(R.id.edit_addaddresss_state)) {
 
             mDialog=JViewUtils.showProgressDialog(AddAddressActivity.this);
             String region="";
@@ -941,7 +944,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     public boolean onblurAll(int id){
         switch (id){
             case R.id.edit_addaddress_firstName:
-
                 CustomButtomLineRelativeLayout.setBottomLineActive(view_firstname_line,false);
                 firstNameText2.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 firstNameText2.setVisibility(View.VISIBLE);

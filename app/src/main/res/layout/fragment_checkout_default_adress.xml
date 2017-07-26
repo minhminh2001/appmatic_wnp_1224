@@ -1,15 +1,12 @@
-<ScrollView
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true">
-<RelativeLayout
         android:id="@+id/rl_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:paddingBottom="7dp"
+        android:paddingBottom="100dp"
         android:paddingTop="5dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -234,4 +231,3 @@
             style="@style/font_family_robot_regular" />
        </LinearLayout>
     </RelativeLayout>
-</ScrollView>
