@@ -63,14 +63,13 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     private int currentCategoryFragmentIndex = 0;
     private Dialog mDialog;
     int categoryViewCount = 0;
-
     private View rlHome;
     private View ll_error;
     public  static  final  int TYPE_FRAGMENT_HORIZONTAL=1;
     public  static  final int TYPE_FRAGMENT_VERTICAL=2;
     private int  fragmentType;
     private final static String PARAM1="param1";
-
+    private boolean isFirstLoading=true;
     @Override
     public void inject() {
         DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
@@ -139,6 +138,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     }
     @Override
     public void loadData(SVRAppserviceCatalogSearchReturnEntity data) {
+             isFirstLoading=false;
             if(mFragments !=null&& mFragments.size()>0){
                 for(int i = 0; i< mFragments.size(); i++){
                     if(mFragments.get(i) instanceof HomeHomeFragmentV3){
@@ -169,7 +169,11 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     }
     @Override
     public void requestData() {
-        mPresenter.getBaseCategory();
+        if(isFirstLoading) {
+            mPresenter.getBaseCategory();
+        }else{
+            mPresenter.getLocalBaseCategory();
+        }
     }
     @Override
     public void showOnlineErrorLayout() {
@@ -181,7 +185,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             requestErrorHelper.setResponseListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-            requestData();
+                       requestData();
                 }
             });
         }

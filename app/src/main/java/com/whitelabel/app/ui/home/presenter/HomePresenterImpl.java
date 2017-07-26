@@ -24,7 +24,7 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
         private ICommodityManager mCommodityManager;
         private IBaseManager mBaseManager;
         private String TAG="";
-        private  boolean firstLoading=true;
+
         @Inject
         public HomePresenterImpl(ICommodityManager commodityManager,IBaseManager  baseManager){
             TAG=this.getClass().getSimpleName();
@@ -32,9 +32,7 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
             mCommodityManager=commodityManager;
         }
         public void getBaseCategory(){
-              if(firstLoading) {
                   mView.showProgressDialog();
-              }
               Subscription subscription= mCommodityManager.getAllCategoryManager()
                       .compose(RxUtil.<SVRAppserviceCatalogSearchReturnEntity>rxSchedulerHelper())
                       .subscribe(new Action1<SVRAppserviceCatalogSearchReturnEntity>() {
@@ -44,7 +42,6 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
                             mView.showRootView();
                             mView.hideOnlineErrorLayout();
                             mView.loadData(svrAppserviceCatalogSearchReturnEntity);
-                            firstLoading=false;
                           }
                       }, new Action1<Throwable>() {
                           @Override
@@ -68,10 +65,34 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
                 @Override
                 public void onNext(Integer integer) {
                     setShoppingCartCount(integer);
+
                 }
             });
           addSubscrebe(subscription);
         }
+    @Override
+    public void getLocalBaseCategory() {
+          Subscription subscription= mCommodityManager.getLocalCategoryManager()
+                   .compose(RxUtil.<SVRAppserviceCatalogSearchReturnEntity>rxSchedulerHelper())
+                   .subscribe(new Subscriber<SVRAppserviceCatalogSearchReturnEntity>() {
+                       @Override
+                       public void onCompleted() {
+
+                       }
+                       @Override
+                       public void onError(Throwable e) {
+
+                       }
+
+                       @Override
+                       public void onNext(SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity) {
+                           mView.showRootView();
+                           mView.hideOnlineErrorLayout();
+                           mView.loadData(svrAppserviceCatalogSearchReturnEntity);
+                       }
+                   });
+        addSubscrebe(subscription);
+    }
     @Override
     public String formatShoppingCount(int count) {
            if(count>99){
@@ -88,5 +109,4 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
                  mView.setShoppingCartCount(count);
              }
         }
-
 }

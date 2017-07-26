@@ -21,5 +21,6 @@ public interface ICommodityManager {
     public Observable<List<AddressBook>> getAddressListCache(String userId);
     public Observable<CategoryDetailModel> getCategoryDetail(boolean isCache,String category,String sessionKey);
     public Observable<ProductDetailModel> getProductDetail(String sessionKey,String productId);
+    public Observable<SVRAppserviceCatalogSearchReturnEntity> getLocalCategoryManager();
 
 }

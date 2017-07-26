@@ -4,9 +4,11 @@ import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
+import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by Administrator on 2017/7/7.
@@ -25,4 +27,6 @@ public interface ICacheApi {
     rx.Observable<CategoryDetailModel> getCategoryDetail(final String categoryId);
     GOUserEntity getUser();
     void saveUser(GOUserEntity goUserEntity);
+    void saveBaseCategory(SVRAppserviceCatalogSearchReturnEntity allCategorys);
+    rx.Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory();
 }
