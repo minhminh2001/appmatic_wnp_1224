@@ -600,7 +600,8 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
     private void clickSave(){
         JViewUtils.cleanCurrentViewFocus(EditAddressActivity.this);
         if (onblurAll(R.id.edit_firstName_EditText) && onblurAll(R.id.edit_lastName_EditText)  && onblurAll(R.id.edit_address1_EditText)
-                && onblurAll(R.id.edit_city_EditText) && onblurAll(R.id.edit_country_EditText)  && onblurAll(R.id.edit_eg)&&onblurAll(R.id.edit_day_phone_eg)) {//&& onblurAll(R.id.edit_state_EditText)
+                && onblurAll(R.id.edit_city_EditText) && onblurAll(R.id.edit_country_EditText)  && onblurAll(R.id.edit_eg)
+                &&onblurAll(R.id.edit_day_phone_eg)&& onblurAll(R.id.edit_state_EditText)) {//
             mDialog=JViewUtils.showProgressDialog(EditAddressActivity.this);
             String region="";
             String region_id="";
@@ -1058,10 +1059,12 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
             case R.id.edit_state_EditText:
                 stateText2.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 stateText2.setVisibility(View.VISIBLE);
-                if(state.getText().toString().trim().equals("")){
+                if(stateText.getText().toString().trim().equals("")){
                     state.setHint("State");
                     stateText.clearAnimation();
                     myScrollView.scrollTo(0, 0);
+                    stateText2.setText(getResources().getString(R.string.required_field));
+                    stateText2.setTextColor(getResources().getColor(R.color.redC2060A));
                     return false;
                 }else{
                     stateText.clearAnimation();
