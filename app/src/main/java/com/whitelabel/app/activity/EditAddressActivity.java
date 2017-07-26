@@ -600,8 +600,10 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
     private void clickSave(){
         JViewUtils.cleanCurrentViewFocus(EditAddressActivity.this);
         if (onblurAll(R.id.edit_firstName_EditText) && onblurAll(R.id.edit_lastName_EditText)  && onblurAll(R.id.edit_address1_EditText)
-                && onblurAll(R.id.edit_city_EditText) && onblurAll(R.id.edit_country_EditText)  && onblurAll(R.id.edit_eg)
-                &&onblurAll(R.id.edit_day_phone_eg)&& onblurAll(R.id.edit_state_EditText)) {//
+                && onblurAll(R.id.edit_city_EditText) && onblurAll(R.id.edit_country_EditText)
+                && onblurAll(R.id.edit_eg)
+                &&onblurAll(R.id.edit_day_phone_eg)
+                && onblurAll(R.id.edit_state_EditText)) {//
             mDialog=JViewUtils.showProgressDialog(EditAddressActivity.this);
             String region="";
             String region_id="";

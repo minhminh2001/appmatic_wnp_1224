@@ -381,13 +381,11 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                      clearDayPhone.setVisibility(View.GONE);
                  }
              }
-
              @Override
              public void afterTextChanged(Editable s) {
 
              }
          });
-
         state= (EditText)findViewById(R.id.edit_addaddresss_state);
         eg= (EditText) findViewById(R.id.edit_addaddresss_eg);
         eg.addTextChangedListener(new TextWatcher() {
@@ -707,7 +705,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         JViewUtils.cleanCurrentViewFocus(AddAddressActivity.this);
         if (onblurAll(R.id.edit_addaddress_firstName) && onblurAll(R.id.edit_addaddress_lastName)  && onblurAll(R.id.edit_addaddresss_country)
                 && onblurAll(R.id.edit_addaddresss_address1)
-                && onblurAll(R.id.edit_addaddresss_city)  && onblurAll(R.id.edit_addaddresss_eg)&&onblurAll(R.id.edit_day_phone_eg)&&onblurAll(R.id.edit_state_EditText)) {
+                && onblurAll(R.id.edit_addaddresss_city)  && onblurAll(R.id.edit_addaddresss_eg)&&onblurAll(R.id.edit_day_phone_eg)&&onblurAll(R.id.edit_addaddresss_state)) {
 
             mDialog=JViewUtils.showProgressDialog(AddAddressActivity.this);
             String region="";
