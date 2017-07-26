@@ -707,7 +707,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         JViewUtils.cleanCurrentViewFocus(AddAddressActivity.this);
         if (onblurAll(R.id.edit_addaddress_firstName) && onblurAll(R.id.edit_addaddress_lastName)  && onblurAll(R.id.edit_addaddresss_country)
                 && onblurAll(R.id.edit_addaddresss_address1)
-                && onblurAll(R.id.edit_addaddresss_city)  && onblurAll(R.id.edit_addaddresss_eg)&&onblurAll(R.id.edit_day_phone_eg)) {
+                && onblurAll(R.id.edit_addaddresss_city)  && onblurAll(R.id.edit_addaddresss_eg)&&onblurAll(R.id.edit_day_phone_eg)&&onblurAll(R.id.edit_state_EditText)) {
 
             mDialog=JViewUtils.showProgressDialog(AddAddressActivity.this);
             String region="";
@@ -1086,11 +1086,12 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                 rl_addadd_state.setBottomLineActive(false);
                 stateText2.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 stateText2.setVisibility(View.VISIBLE);
-                if(state.getText().toString().trim().equals("")){
-
+                if(stateText.getText().toString().trim().equals("")){
                     stateText2.getLocationOnScreen(location);
                     srollto();
                     stateText.clearAnimation();
+                    stateText2.setText(getResources().getString(R.string.required_field));
+                    stateText2.setTextColor(getResources().getColor(R.color.redC2060A));
                     return false;
                 }else{
                     stateText.clearAnimation();
