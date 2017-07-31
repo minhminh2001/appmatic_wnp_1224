@@ -52,7 +52,6 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     public long getCurrUserSelectedProductMaxStockQty() {
         return currUserSelectedProductMaxStockQty;
     }
-
     public void setCurrUserSelectedProductMaxStockQty(long currUserSelectedProductMaxStockQty) {
         this.currUserSelectedProductMaxStockQty = currUserSelectedProductMaxStockQty;
     }
@@ -63,11 +62,9 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     public void setUserSelectedProductQty(int userSelectedProductQty){
         this.userSelectedProductQty=userSelectedProductQty;
     }
-
     public void setOutOfStock(boolean isOutOfStock){
         this.isOutOfStock=isOutOfStock;
     }
-
     public ProductDetailModel getProductData(){
         return mProduct;
     }
@@ -109,7 +106,6 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
        });
         addSubscrebe(subscription);
     }
-
     private void loadBindProductView(ProductDetailModel productDetailModel) {
         if (productDetailModel.getRelatedProducts() != null && productDetailModel.getRelatedProducts().size() > 0) {
             productDetailModel.getRelatedProducts().add(0, productDetailModel.getProperty().get(0));
@@ -193,15 +189,16 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
             if (mProduct.getIsLike() == 1&&!JDataUtils.isEmpty(mProduct.getItemId())) {
                 mView.setWishIconColorToBlank();
                 delteFromWishlistRequest(mProduct.getItemId());
+                mProduct.setIsLike(0);
             } else if(mProduct.getIsLike()==0){
                 mView.setWishIconColorToThemeColor();
                 addToWishlistRequest(mProduct.getId());
+                mProduct.setIsLike(1);
             }
          }else{
              mView.startLoginActivity();
          }
     }
-
     public void setmProduct(ProductDetailModel mProduct) {
         this.mProduct = mProduct;
     }
@@ -246,6 +243,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                              GOUserEntity goUserEntity= iBaseManager.getUser();
                              goUserEntity.setWishListItemCount(responseModel.getWishListItemCount());
                              iBaseManager.saveUser(goUserEntity);
+
                          }
                      }
                  });
