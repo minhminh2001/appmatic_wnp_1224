@@ -46,23 +46,29 @@ public class AccountManager implements IAccountManager{
     @Override
     public Observable<AddToWishlistEntity> addWishlist(String sessionKey, String productId) {
         return myAccoutApi.addWish(sessionKey,productId)
-                .doOnNext(new Action1<AddToWishlistEntity>() {
+                .flatMap(new Func1<AddToWishlistEntity,Observable<AddToWishlistEntity> >() {
                     @Override
-                    public void call(AddToWishlistEntity addToWishlistEntity) {
+                    public Observable<AddToWishlistEntity>  call(AddToWishlistEntity addToWishlistEntity) {
                         if(addToWishlistEntity.getStatus()==-1){
-                            Observable.error(new ApiException(addToWishlistEntity.getErrorMessage()));
+                          return  Observable.error(new ApiException(addToWishlistEntity.getErrorMessage()));
+                        }else{
+                            return Observable.just(addToWishlistEntity);
                         }
-                    }});
+                    }
+                });
     }
     @Override
     public Observable<WishDelEntityResult> deleteWishlist(String sessionKey, String itemId) {
         return  myAccoutApi.deleteWishById(sessionKey,itemId)
-                .doOnNext(new Action1<WishDelEntityResult>() {
+                .flatMap(new Func1<WishDelEntityResult, Observable<WishDelEntityResult> >() {
                     @Override
-                    public void call(WishDelEntityResult wishDelEntityResult) {
+                    public Observable<WishDelEntityResult>  call(WishDelEntityResult wishDelEntityResult) {
                         if(wishDelEntityResult.getStatus()==-1){
-                            Observable.error(new ApiException(wishDelEntityResult.getErrorMessage()));
+                           return  Observable.error(new ApiException(wishDelEntityResult.getErrorMessage()));
+                        }else{
+                            return Observable.just(wishDelEntityResult);
                         }
-                    }});
+                    }
+                });
     }
 }

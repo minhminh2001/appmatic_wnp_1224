@@ -4,7 +4,7 @@ package com.whitelabel.app.model;
  * Created by Administrator on 2017/1/26.
  */
 
-public class ApiException extends Exception {
+public class ApiException extends RuntimeException {
     private String errorMsg;
 
     public String getErrorMsg() {
@@ -15,5 +15,6 @@ public class ApiException extends Exception {
     }
     public ApiException(String error){
         super(error);
+        this.errorMsg=error;
     }
 }

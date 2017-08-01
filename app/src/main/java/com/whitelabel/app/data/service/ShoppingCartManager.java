@@ -36,9 +36,9 @@ public class ShoppingCartManager implements IShoppingCartManager {
     @Override
     public Observable<ShoppingCartListEntityCart> getShoppingCartInfo(String sessionKey) {
         return shoppingCartApi.getShoppingCartInfo(sessionKey).
-                map(new Func1<JsonObject, ShoppingCartListEntityCart>() {
+                flatMap(new Func1<JsonObject, Observable<ShoppingCartListEntityCart>>() {
             @Override
-            public ShoppingCartListEntityCart call(JsonObject jsonObject) {
+            public  Observable<ShoppingCartListEntityCart> call(JsonObject jsonObject) {
                 int status=jsonObject.get("status").getAsInt();
                 if(status==1) {
                     JsonObject jsonObject1 = jsonObject.getAsJsonObject("cart");
@@ -53,11 +53,10 @@ public class ShoppingCartManager implements IShoppingCartManager {
                             }
                         }
                     }
-                    return  shoppingCartListEntityCart;
+                    return  Observable.just(shoppingCartListEntityCart);
                 }else{
                     String errorMessage=jsonObject.get("errorMessage").getAsString();
-                    Observable.error(new ApiException(errorMessage));
-                    return null;
+                   return Observable.error(new ApiException(errorMessage));
                 }
             }
         }).doOnNext(new Action1<ShoppingCartListEntityCart>() {
@@ -79,17 +78,17 @@ public class ShoppingCartManager implements IShoppingCartManager {
             index++;
         }
         return  shoppingCartApi.addProductToShoppingCart(sessionKey,productId,params)
-                .doOnNext(new Action1<ResponseModel>() {
+                .flatMap(new Func1<ResponseModel, Observable<ResponseModel>>() {
                     @Override
-                    public void call(ResponseModel responseModel) {
-                        if (responseModel.getStatus()==-1){
-                            Observable.error(new ApiException(responseModel.getErrorMessage()));
+                    public Observable<ResponseModel> call(ResponseModel responseModel) {
+                        if(responseModel.getStatus()==-1){
+                                return Observable.error(new ApiException(responseModel.getErrorMessage()));
+                        }else{
+                            return Observable.just(responseModel);
                         }
                     }
-                });
+          });
     }
-
-
     @Override
     public Observable<ShoppingCartVoucherApplyEntity> applyOrCancelVercherCode(String sessionKey, String vercherCode, String state) {
         return shoppingCartApi.applyOrCancelVoucherCode(sessionKey,vercherCode,state);

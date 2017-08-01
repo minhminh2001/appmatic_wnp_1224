@@ -423,7 +423,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                         currentModule -= 1;
                         Fragment beforeFragment = list_fragment.get(list_fragment.size() - 1);
                         if (beforeFragment instanceof CheckoutPaymentFragment) {
-                            ((CheckoutPaymentFragment) (beforeFragment)).sendRequestToGetPaymentList(false);
+//                            ((CheckoutPaymentFragment) (beforeFragment)).sendRequestToGetPaymentList(false);
                         }
                     }
                     fragmentTransaction.hide(currentFragment);
@@ -756,7 +756,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                             } else {
                                 mActivity.get().fragmentTransaction.hide(mActivity.get().list_fragment.get(0));
                                 mActivity.get().fragmentTransaction.show(mActivity.get().checkoutPaymentFragment).commitAllowingStateLoss();
-                                ((CheckoutPaymentFragment) mActivity.get().checkoutPaymentFragment).sendRequestToGetPaymentList(true);
+//                                ((CheckoutPaymentFragment) mActivity.get().checkoutPaymentFragment).sendRequestToGetPaymentList(true);
                             }
                             mActivity.get().list_fragment.add(mActivity.get().checkoutPaymentFragment);
                             //change currentFragment(module)

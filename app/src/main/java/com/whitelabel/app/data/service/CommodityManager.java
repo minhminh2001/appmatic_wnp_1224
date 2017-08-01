@@ -102,20 +102,17 @@ public class CommodityManager  implements ICommodityManager{
     @Override
     public Observable<ProductDetailModel> getProductDetail(String sessionKey, String productId) {
          return productApi.getProductDetail(sessionKey,productId)
-                 .doOnNext(new Action1<SVRAppserviceProductDetailReturnEntity>() {
-                     @Override
-                     public void call(SVRAppserviceProductDetailReturnEntity svrAppserviceProductDetailReturnEntity) {
-                         if(svrAppserviceProductDetailReturnEntity.getStatus()==-1){
-                             Observable.error(new ApiException(svrAppserviceProductDetailReturnEntity.getErrorMessage()));
-                         }
-                     }
-                 })
-                 .map(new Func1<SVRAppserviceProductDetailReturnEntity, ProductDetailModel>() {
+                 .flatMap(new Func1<SVRAppserviceProductDetailReturnEntity, Observable<ProductDetailModel>>() {
              @Override
-             public ProductDetailModel call(SVRAppserviceProductDetailReturnEntity svrAppserviceProductDetailReturnEntity) {
-                 ProductDetailModel productDetailModel=svrAppserviceProductDetailReturnEntity.getResult();
-                 productDetailModel.setUiDetailHtmlText(getProductDetailHtml(productDetailModel));
-                 return productDetailModel;
+             public Observable<ProductDetailModel> call(SVRAppserviceProductDetailReturnEntity svrAppserviceProductDetailReturnEntity) {
+
+                 if(svrAppserviceProductDetailReturnEntity.getStatus()==-1){
+                    return  Observable.error(new ApiException(svrAppserviceProductDetailReturnEntity.getErrorMessage()));
+                 }else{
+                     ProductDetailModel productDetailModel=svrAppserviceProductDetailReturnEntity.getResult();
+                     productDetailModel.setUiDetailHtmlText(getProductDetailHtml(productDetailModel));
+                     return Observable.just(productDetailModel);
+                 }
              }
          });
     }

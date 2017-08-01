@@ -327,11 +327,11 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                     }
                     @Override
                     public void onError(Throwable e) {
-                        mView.dissmissProgressDialog();
-                        if(JToolUtils.expireHandler(ExceptionParse.parseException(e).getErrorMsg())){
-                            mView.startLoginActivity();
-                        }
-                        mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
+                            mView.dissmissProgressDialog();
+                            if (JToolUtils.expireHandler(ExceptionParse.parseException(e).getErrorMsg())) {
+                                mView.startLoginActivity();
+                            }
+                            mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
                     }
                     @Override
                     public void onNext(ResponseModel responseModel) {

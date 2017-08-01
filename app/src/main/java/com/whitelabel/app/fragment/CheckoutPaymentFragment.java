@@ -115,7 +115,6 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
     public final static  String PAYPAL="paypal_standard";
     private final static String CURRENT_YEAR = "2017";
     private String paymentType="";
-//    public int paymentType;
     private String molpayType;
     /*
      *0 means online banking; 1 means credit card
@@ -447,7 +446,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         mCheckoutDao = new CheckoutDao(checkoutActivity.TAG, mHandler);
         initDatePickerCallBack();
         initExipeDate();
-        sendRequestToGetPaymentList(true);
+//        sendRequestToGetPaymentList(true);
 
 //        maxError = checkoutActivity.getResources().getString(R.string.cod_error_max);
 //        minError = checkoutActivity.getResources().getString(R.string.code_error_min);
@@ -463,9 +462,9 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
 
 
     public void goneView() {
-        view_paymentmethod_line.setVisibility(View.INVISIBLE);
-        llPaymentMethod.setVisibility(View.INVISIBLE);
-        llPaymentMethodOnlineBanking.setVisibility(View.INVISIBLE);
+//        view_paymentmethod_line.setVisibility(View.INVISIBLE);
+//        llPaymentMethod.setVisibility(View.INVISIBLE);
+//        llPaymentMethodOnlineBanking.setVisibility(View.INVISIBLE);
         llPaymentMethodCreditCardBody.setVisibility(View.INVISIBLE);
         tvOnlinebankingBlankbottom.setVisibility(View.GONE);
         tvHtml.setVisibility(View.GONE);
@@ -1239,14 +1238,14 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
     /**
      * send Request To Get Payment List
      */
-    public void sendRequestToGetPaymentList(boolean resetPaymentType) {
-        goneView();
-//        if (resetPaymentType) {
-////            paymentType = CARDPAYMENT;
-//        }
-        mDialog = JViewUtils.showProgressDialog(getActivity());
-        offlineDao.getPaymentList(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
-    }
+//    public void sendRequestToGetPaymentList(boolean resetPaymentType) {
+//        goneView();
+////        if (resetPaymentType) {
+//////            paymentType = CARDPAYMENT;
+////        }
+//        mDialog = JViewUtils.showProgressDialog(getActivity());
+//        offlineDao.getPaymentList(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
+//    }
 
 
     @Override
@@ -1436,55 +1435,55 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
             llPaymentMethod.setOnClickListener(new View.OnClickListener() {
                                                    @Override
                                                    public void onClick(View v) {
-                                                       //cleanCurrentViewFocus  为了使 EditText 失去焦点，以便自动执行onFocusChange()
-                                                       JViewUtils.cleanCurrentViewFocus(getActivity());
-                                                       final ArrayList<WheelPickerEntity> list;
-                                                       final WheelPickerEntity oldEntity;
-                                                       list = new ArrayList<WheelPickerEntity>();
-                                                       for (int i = 0; i < methods.size(); i++) {
-                                                           WheelPickerEntity entity = new WheelPickerEntity();
-                                                           entity.setDisplay(methods.get(i).getLabel());
-                                                           entity.setValue(methods.get(i).getCode());
-                                                           list.add(entity);
-                                                       }
-                                                       try {
-                                                           if (paymentListEntity.getBanktransfer() != null) {
-                                                               WheelPickerEntity entity = new WheelPickerEntity();
-                                                               entity.setDisplay(paymentListEntity.getBanktransfer().getTitle());
-                                                               entity.setValue(paymentListEntity.getBanktransfer().getCode());
-                                                               list.add(entity);
-                                                           }
-                                                           if (paymentListEntity.getCashondelivery() != null) {
-                                                               WheelPickerEntity entity = new WheelPickerEntity();
-                                                               entity.setDisplay(paymentListEntity.getCashondelivery().getTitle());
-                                                               entity.setValue(paymentListEntity.getCashondelivery().getCode());
-                                                               list.add(entity);
-                                                           }
-                                                       } catch (Exception ex) {
-                                                           ex.getStackTrace();
-                                                       }
-                                                       oldEntity = new WheelPickerEntity();
-                                                       oldEntity.setDisplay(methods.get(0).getLabel());
-                                                       oldEntity.setValue(methods.get(0).getCode());
-                                                       //改变底部line颜色
-                                                       CustomButtomLineRelativeLayout.setRelativeBottomLineActive(view_paymentmethod_line, true);
-                                                       AnimUtil.rotateArrow(tvPaymentMethodArrow, true);
-
-                                                       ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-
-                                                       final WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
-
-                                                       final String payment = tvPaymentMethod.getText().toString();
-                                                       for (int i = 0; i < list.size(); i++) {
-                                                           if (list.get(i).getDisplay().equalsIgnoreCase(payment)) {
-                                                               oldEntity.setIndex(i);
-                                                               configEntity.setIndex(i);
-                                                           }
-                                                       }
-                                                       configEntity.setArrayList(list);
-                                                       configEntity.setOldValue(oldEntity);
-                                                       configEntity.setCallBack(paymentMethodCallback);
-                                                       JViewUtils.showWheelPickerOneDialog(checkoutActivity, configEntity);
+//                                                       //cleanCurrentViewFocus  为了使 EditText 失去焦点，以便自动执行onFocusChange()
+//                                                       JViewUtils.cleanCurrentViewFocus(getActivity());
+//                                                       final ArrayList<WheelPickerEntity> list;
+//                                                       final WheelPickerEntity oldEntity;
+//                                                       list = new ArrayList<WheelPickerEntity>();
+//                                                       for (int i = 0; i < methods.size(); i++) {
+//                                                           WheelPickerEntity entity = new WheelPickerEntity();
+//                                                           entity.setDisplay(methods.get(i).getLabel());
+//                                                           entity.setValue(methods.get(i).getCode());
+//                                                           list.add(entity);
+//                                                       }
+//                                                       try {
+//                                                           if (paymentListEntity.getBanktransfer() != null) {
+//                                                               WheelPickerEntity entity = new WheelPickerEntity();
+//                                                               entity.setDisplay(paymentListEntity.getBanktransfer().getTitle());
+//                                                               entity.setValue(paymentListEntity.getBanktransfer().getCode());
+//                                                               list.add(entity);
+//                                                           }
+//                                                           if (paymentListEntity.getCashondelivery() != null) {
+//                                                               WheelPickerEntity entity = new WheelPickerEntity();
+//                                                               entity.setDisplay(paymentListEntity.getCashondelivery().getTitle());
+//                                                               entity.setValue(paymentListEntity.getCashondelivery().getCode());
+//                                                               list.add(entity);
+//                                                           }
+//                                                       } catch (Exception ex) {
+//                                                           ex.getStackTrace();
+//                                                       }
+//                                                       oldEntity = new WheelPickerEntity();
+//                                                       oldEntity.setDisplay(methods.get(0).getLabel());
+//                                                       oldEntity.setValue(methods.get(0).getCode());
+//                                                       //改变底部line颜色
+//                                                       CustomButtomLineRelativeLayout.setRelativeBottomLineActive(view_paymentmethod_line, true);
+//                                                       AnimUtil.rotateArrow(tvPaymentMethodArrow, true);
+//
+//                                                       ctv_payment_method_lab.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+//
+//                                                       final WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
+//
+//                                                       final String payment = tvPaymentMethod.getText().toString();
+//                                                       for (int i = 0; i < list.size(); i++) {
+//                                                           if (list.get(i).getDisplay().equalsIgnoreCase(payment)) {
+//                                                               oldEntity.setIndex(i);
+//                                                               configEntity.setIndex(i);
+//                                                           }
+//                                                       }
+//                                                       configEntity.setArrayList(list);
+//                                                       configEntity.setOldValue(oldEntity);
+//                                                       configEntity.setCallBack(paymentMethodCallback);
+//                                                       JViewUtils.showWheelPickerOneDialog(checkoutActivity, configEntity);
                                                    }
                                                });
         /////////////////////////Credit Card Bank begin////////////////////////////
@@ -1796,97 +1795,98 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
 //        parameters.put("session_key", WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey());
         //we need to get params from paymentFragment first.
 
-        switch (paymentType){
-            case ONLINEPAYMENT:
-                bank = tvOnlineBankingPayWith.getText().toString();
-                paymentMethod = "molpay";
-                CharSequence tvOnlineBanking = tvOnlineBankingPayWith.getHint();
-                if (null == tvOnlineBanking || JDataUtils.isEmpty(tvOnlineBanking.toString().trim())) {
-                    //Toast.makeText(CheckoutActivity.this, "please choose a bank!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                molpayType = tvOnlineBanking.toString();
-                break;
-            case CARDPAYMENT:
-                paymentMethod = paymentType;
-                paymentCountry = "Malaysia";
-                Editable etCreditCardNumber = CheckoutPaymentFragment.this.etCreditCardNumber.getText();
-                if (etCreditCardNumber == null || JDataUtils.isEmpty(etCreditCardNumber.toString().trim())) {
-                    tvCreditCardNumberAnim.setText(getResources().getString(R.string.This_is_a_required_field));
-                    //tvCreditCardNumberAnim.setText(getResources().getString(R.string.payment_credit_card_anim_hint));
-                    tvCreditCardNumberAnim.setTextColor(getResources().getColor(R.color.red_common));
-                    //Toast.makeText(CheckoutActivity.this, "Please input your Credit Card Number !", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
-                    ccNumber = etCreditCardNumber.toString().replace(" ", "");
-//                parameters.put("payment[cc_number]", etCreditCardNumber.toString().replace(" ", ""));
-                }
-                Editable etCVC = CheckoutPaymentFragment.this.etCVC.getText();
-                if (etCVC == null || JDataUtils.isEmpty(etCVC.toString().trim())) {
-                    tvCVCAnim.setText(getResources().getString(R.string.This_is_a_required_field));
-                    tvCVCAnim.setTextColor(getResources().getColor(R.color.red_common));
-                    //Toast.makeText(CheckoutActivity.this, "Please input your CVC/CVV2 !", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
-                    ccId = etCVC.toString();
-//                parameters.put("payment[cc_cid]", etCVC.toString());
-                }
-                CharSequence tvSelectExpirationDate = CheckoutPaymentFragment.this.tvSelectExpirationDate.getText();
-                if (tvSelectExpirationDate == null || JDataUtils.isEmpty(tvSelectExpirationDate.toString().trim())) {
-                    tvExpirationDateHint.setText(getResources().getString(R.string.This_is_a_required_field));
-                    tvExpirationDateHint.setTextColor(getResources().getColor(R.color.red_common));
-                    return;
-                } else {
-                    String[] time = tvSelectExpirationDate.toString().split("-");
-                    ccExpMonth = time[0];
-                    ccExpYear = time[1];
-                }
-                Editable etNameoncard = CheckoutPaymentFragment.this.etNameoncard.getText();
-                if (etNameoncard == null || JDataUtils.isEmpty(etNameoncard.toString().trim())) {
-                    tvNameoncardAnim.setText(getResources().getString(R.string.This_is_a_required_field));
-                    tvNameoncardAnim.setTextColor(getResources().getColor(R.color.red_common));
-                    //Toast.makeText(CheckoutActivity.this, "Please input your Name On Card !", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
-                    ccOwner = etNameoncard.toString();
-                }
-                CharSequence tvCardType = CheckoutPaymentFragment.this.tvCardType.getHint();
-                if (tvCardType == null || JDataUtils.isEmpty(tvCardType.toString().trim()) || "Card Type".equalsIgnoreCase(tvCardType.toString())) {
-                    tvCardtypeHint.setText(getResources().getString(R.string.This_is_a_required_field));
-                    tvCardtypeHint.setTextColor(getResources().getColor(R.color.red_common));
-                    return;
-                } else {
-                    ccType = tvCardType.toString();
-                }
-                CharSequence tvIssuerBank = CheckoutPaymentFragment.this.tvIssuerBank.getHint();
-                if (tvIssuerBank == null || JDataUtils.isEmpty(tvIssuerBank.toString().trim()) || "Issuer Bank".equalsIgnoreCase(tvIssuerBank.toString())) {
-                    tvIssuerbankHint.setText(getResources().getString(R.string.This_is_a_required_field));
-                    tvIssuerbankHint.setTextColor(getResources().getColor(R.color.red_common));
-                    return;
-                } else {
-                    ccBank = tvIssuerBank.toString();
-                }
-                String secure_hash = GlobalData.checkoutHashKey + ccNumber + ccId + ccOwner + ccExpMonth + ccExpYear + ccBank;
-                JLogUtils.i("CheckoutPaymentFragment", "secure_hash:" + secure_hash);
-                ccSecureHash = JDataUtils.getMD5Result(secure_hash).toUpperCase();
-                break;
-            case OFFLINEPAYMENT:
-                code = paymentListEntity.getBanktransfer().getCode();
-                html = paymentListEntity.getBanktransfer().getContent();
-                paymentMethod = code;
-                break;
-            case CODPAYMENT:
-                if (paymentListEntity.getCashondelivery() != null) {
-                    code = paymentListEntity.getCashondelivery().getCode();
-                    html = paymentListEntity.getCashondelivery().getContent();
-                    JLogUtils.i("CheckoutPayment", code);
-                    paymentMethod = code;
-                }
-                break;
-            default:
-                paymentMethod= (String) tvPaymentMethod.getTag();
-                break;
-        }
+//        switch (paymentType){
+//            case ONLINEPAYMENT:
+//                bank = tvOnlineBankingPayWith.getText().toString();
+//                paymentMethod = "molpay";
+//                CharSequence tvOnlineBanking = tvOnlineBankingPayWith.getHint();
+//                if (null == tvOnlineBanking || JDataUtils.isEmpty(tvOnlineBanking.toString().trim())) {
+//                    //Toast.makeText(CheckoutActivity.this, "please choose a bank!", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                molpayType = tvOnlineBanking.toString();
+//                break;
+//            case CARDPAYMENT:
+//                paymentMethod = paymentType;
+//                paymentCountry = "Malaysia";
+//                Editable etCreditCardNumber = CheckoutPaymentFragment.this.etCreditCardNumber.getText();
+//                if (etCreditCardNumber == null || JDataUtils.isEmpty(etCreditCardNumber.toString().trim())) {
+//                    tvCreditCardNumberAnim.setText(getResources().getString(R.string.This_is_a_required_field));
+//                    //tvCreditCardNumberAnim.setText(getResources().getString(R.string.payment_credit_card_anim_hint));
+//                    tvCreditCardNumberAnim.setTextColor(getResources().getColor(R.color.red_common));
+//                    //Toast.makeText(CheckoutActivity.this, "Please input your Credit Card Number !", Toast.LENGTH_SHORT).show();
+//                    return;
+//                } else {
+//                    ccNumber = etCreditCardNumber.toString().replace(" ", "");
+////                parameters.put("payment[cc_number]", etCreditCardNumber.toString().replace(" ", ""));
+//                }
+//                Editable etCVC = CheckoutPaymentFragment.this.etCVC.getText();
+//                if (etCVC == null || JDataUtils.isEmpty(etCVC.toString().trim())) {
+//                    tvCVCAnim.setText(getResources().getString(R.string.This_is_a_required_field));
+//                    tvCVCAnim.setTextColor(getResources().getColor(R.color.red_common));
+//                    //Toast.makeText(CheckoutActivity.this, "Please input your CVC/CVV2 !", Toast.LENGTH_SHORT).show();
+//                    return;
+//                } else {
+//                    ccId = etCVC.toString();
+////                parameters.put("payment[cc_cid]", etCVC.toString());
+//                }
+//                CharSequence tvSelectExpirationDate = CheckoutPaymentFragment.this.tvSelectExpirationDate.getText();
+//                if (tvSelectExpirationDate == null || JDataUtils.isEmpty(tvSelectExpirationDate.toString().trim())) {
+//                    tvExpirationDateHint.setText(getResources().getString(R.string.This_is_a_required_field));
+//                    tvExpirationDateHint.setTextColor(getResources().getColor(R.color.red_common));
+//                    return;
+//                } else {
+//                    String[] time = tvSelectExpirationDate.toString().split("-");
+//                    ccExpMonth = time[0];
+//                    ccExpYear = time[1];
+//                }
+//                Editable etNameoncard = CheckoutPaymentFragment.this.etNameoncard.getText();
+//                if (etNameoncard == null || JDataUtils.isEmpty(etNameoncard.toString().trim())) {
+//                    tvNameoncardAnim.setText(getResources().getString(R.string.This_is_a_required_field));
+//                    tvNameoncardAnim.setTextColor(getResources().getColor(R.color.red_common));
+//                    //Toast.makeText(CheckoutActivity.this, "Please input your Name On Card !", Toast.LENGTH_SHORT).show();
+//                    return;
+//                } else {
+//                    ccOwner = etNameoncard.toString();
+//                }
+//                CharSequence tvCardType = CheckoutPaymentFragment.this.tvCardType.getHint();
+//                if (tvCardType == null || JDataUtils.isEmpty(tvCardType.toString().trim()) || "Card Type".equalsIgnoreCase(tvCardType.toString())) {
+//                    tvCardtypeHint.setText(getResources().getString(R.string.This_is_a_required_field));
+//                    tvCardtypeHint.setTextColor(getResources().getColor(R.color.red_common));
+//                    return;
+//                } else {
+//                    ccType = tvCardType.toString();
+//                }
+//                CharSequence tvIssuerBank = CheckoutPaymentFragment.this.tvIssuerBank.getHint();
+//                if (tvIssuerBank == null || JDataUtils.isEmpty(tvIssuerBank.toString().trim()) || "Issuer Bank".equalsIgnoreCase(tvIssuerBank.toString())) {
+//                    tvIssuerbankHint.setText(getResources().getString(R.string.This_is_a_required_field));
+//                    tvIssuerbankHint.setTextColor(getResources().getColor(R.color.red_common));
+//                    return;
+//                } else {
+//                    ccBank = tvIssuerBank.toString();
+//                }
+//                String secure_hash = GlobalData.checkoutHashKey + ccNumber + ccId + ccOwner + ccExpMonth + ccExpYear + ccBank;
+//                JLogUtils.i("CheckoutPaymentFragment", "secure_hash:" + secure_hash);
+//                ccSecureHash = JDataUtils.getMD5Result(secure_hash).toUpperCase();
+//                break;
+//            case OFFLINEPAYMENT:
+//                code = paymentListEntity.getBanktransfer().getCode();
+//                html = paymentListEntity.getBanktransfer().getContent();
+//                paymentMethod = code;
+//                break;
+//            case CODPAYMENT:
+//                if (paymentListEntity.getCashondelivery() != null) {
+//                    code = paymentListEntity.getCashondelivery().getCode();
+//                    html = paymentListEntity.getCashondelivery().getContent();
+//                    JLogUtils.i("CheckoutPayment", code);
+//                    paymentMethod = code;
+//                }
+//                break;
+//            default:
+//                paymentMethod= (String) tvPaymentMethod.getTag();
+//                break;
+//        }
+        paymentMethod="paypal_express";
         mDialog = JViewUtils.showProgressDialog(checkoutActivity);
         checkoutActivity.setButtonEnable(false);
         mCheckoutDao.savePayment(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),paymentMethod, molpayType, paymentCountry, ccNumber, ccId, ccExpMonth, ccExpYear, ccOwner, ccType, ccBank, ccSecureHash, nonce);

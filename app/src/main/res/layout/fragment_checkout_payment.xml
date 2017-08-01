@@ -33,12 +33,13 @@
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
                 style="@style/checkout_textview_size_content"
-                android:text="" />
+                android:text="@string/paypal_payment" />
 
             <ImageView
                 android:id="@+id/tv_checkout_payment_method_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 imaginato:srcCompat="@drawable/ic_arrow_drop_down_black_24dp"
@@ -415,6 +416,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
+                        android:visibility="gone"
                         android:src="@mipmap/arrow_down_fill" />
                 </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
             </LinearLayout>
@@ -422,6 +424,7 @@
                 android:id="@+id/paymentlist_image"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
+
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:adjustViewBounds="true"
@@ -470,7 +473,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
 
-    <com.whitelabel.app.widget.CustomTextView  style="@style/font_family_robot_regular"
+    <com.whitelabel.app.widget.CustomTextView
+        style="@style/font_family_robot_regular"
         android:id="@+id/tv_checkout_payment_onlinebanking_blankbottom"
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -479,17 +483,7 @@
         android:background="@color/whiteFFFFFF"
         android:visibility="gone" />
 
-    <LinearLayout
-        android:id="@+id/ll_paymen_abc"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/ll_checkout_payment_creditcard_body"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="192dp"
-        android:layout_marginStart="192dp"
-       />
+
     <View
     android:layout_below="@+id/tv_html"
     android:layout_width="match_parent"

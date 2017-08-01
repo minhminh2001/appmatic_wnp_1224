@@ -20,8 +20,6 @@ public class CheckoutManager implements ICheckoutManager {
     public CheckoutManager (CheckoutApi checkoutApi){
             this.checkoutApi=checkoutApi;
     }
-
-
     @Override
     public Observable<RequestOrderNumberResponse> requestOrderNumber(String sessionKey) {
         return checkoutApi.requestOrderNumber(sessionKey);
@@ -29,28 +27,27 @@ public class CheckoutManager implements ICheckoutManager {
     @Override
     public Observable<PaypalPlaceOrderReponse> paypalPlaceOrder(String sessionKey) {
         return checkoutApi.payPalPlaceOrder(sessionKey)
-                .doOnNext(new Action1<PaypalPlaceOrderReponse>() {
+                .flatMap(new Func1<PaypalPlaceOrderReponse, Observable<PaypalPlaceOrderReponse>>() {
                     @Override
-                    public void call(PaypalPlaceOrderReponse paypalPlaceOrderReponse) {
+                    public Observable<PaypalPlaceOrderReponse> call(PaypalPlaceOrderReponse paypalPlaceOrderReponse) {
                         if (paypalPlaceOrderReponse.getStatus() == -1) {
-                            Observable.error(new ApiException(paypalPlaceOrderReponse.getErrorMessage()));
+                            return Observable.error(new ApiException(paypalPlaceOrderReponse.getErrorMessage()));
+                        }else{
+                            return Observable.just(paypalPlaceOrderReponse);
                         }
                     }
                 });
     }
     @Override
     public Observable<CheckoutDefaultAddressResponse> getCheckoutDefaultAddress(String sessionKey) {
-        return checkoutApi.getDefaultAddress(sessionKey).doOnNext(new Action1<ResponseModel<CheckoutDefaultAddressResponse>>() {
+        return checkoutApi.getDefaultAddress(sessionKey)
+           .flatMap(new Func1<ResponseModel<CheckoutDefaultAddressResponse>, Observable<CheckoutDefaultAddressResponse>>() {
             @Override
-            public void call(ResponseModel<CheckoutDefaultAddressResponse> checkoutDefaultAddressResponseResponseModel) {
-                  if(checkoutDefaultAddressResponseResponseModel.getStatus()==-1){
-                      Observable.error(new ApiException(checkoutDefaultAddressResponseResponseModel.getErrorMessage()));
-                  }
-            }
-        }).map(new Func1<ResponseModel<CheckoutDefaultAddressResponse>, CheckoutDefaultAddressResponse>() {
-            @Override
-            public CheckoutDefaultAddressResponse call(ResponseModel<CheckoutDefaultAddressResponse> checkoutDefaultAddressResponseResponseModel) {
-                return checkoutDefaultAddressResponseResponseModel.getData();
+            public Observable<CheckoutDefaultAddressResponse> call(ResponseModel<CheckoutDefaultAddressResponse> checkoutDefaultAddressResponseResponseModel) {
+                if(checkoutDefaultAddressResponseResponseModel.getStatus()==-1){
+                    return Observable.error(new ApiException(checkoutDefaultAddressResponseResponseModel.getErrorMessage()));
+                }
+                return Observable.just(checkoutDefaultAddressResponseResponseModel.getData());
             }
         });
 

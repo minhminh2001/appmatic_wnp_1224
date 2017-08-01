@@ -143,6 +143,7 @@
     <string name="checkout_payment_dialog_text1">For Visa &#038; MasterCard holders, CVV is the special 3-digit printed next to the signature area, on the back of your card.</string>
     <string name="Qunatity">Quantity:&#160;</string>
     <!--checkout module-->
+    <string name="paypal_payment">Paypal Express Checkout</string>
     <string name="shipping">SHIPPING</string>
     <string name="payment">PAYMENT</string>
     <string name="review">REVIEW</string>

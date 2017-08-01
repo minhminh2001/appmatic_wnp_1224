@@ -429,7 +429,14 @@
                             android:textCursorDrawable="@null"
                             android:textSize="@dimen/editTextFontSize"
                             style="@style/font_family_robot_regular"/>
-
+                        <ImageView
+                            android:id="@+id/iv_clear_code"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:visibility="gone"
+                            imaginato:srcCompat="@drawable/ic_cancel_black_24dp" />
                     </RelativeLayout>
 
                     <com.whitelabel.app.widget.CustomTextView
@@ -494,16 +501,7 @@
                             imaginato:srcCompat="@drawable/ic_cancel_black_24dp"
                             android:visibility="gone"/>
 
-                        <ImageView
-                            android:id="@+id/iv_clear_code"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_marginBottom="50dp"
-                            android:visibility="gone"
-                            imaginato:srcCompat="@drawable/ic_cancel_black_24dp" />
+
                     </RelativeLayout>
 
                     <com.whitelabel.app.widget.CustomTextView
