@@ -101,7 +101,7 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
             if(groupViewHolder.mType==VIEW_HORIZONTAL){
                 imageHeight=(int)(entity.getImage_height()*(screenWidth/2/entity.getImage_width()));
             }else if(entity.getImage_height()!=0&&entity.getImage_height()!=0){
-                imageHeight= (int) (entity.getImage_height()*(screenWidth/entity.getImage_width()));
+                imageHeight= (int) (screenWidth*(348.0/750));
             }
             LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) groupViewHolder.ivCategoryTreeGroup.getLayoutParams();
 //            if(params!=null) {
@@ -113,7 +113,11 @@ public class CategoryTreeExpandableAdapter extends ExpandableRecyclerAdapter<SVR
                 groupViewHolder.ivCategoryTreeGroup.setVisibility(View.GONE);
             }else if (groupViewHolder.ivCategoryTreeGroup.getTag()== null || !groupViewHolder.ivCategoryTreeGroup.getTag().toString().equals(entity.getImage())) {
                 groupViewHolder.ivCategoryTreeGroup.setVisibility(View.VISIBLE);
-                JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, groupViewHolder.ivCategoryTreeGroup, entity.getImage());
+                if(groupViewHolder.mType==VIEW_HORIZONTAL){
+                    JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, groupViewHolder.ivCategoryTreeGroup, entity.getImage(),-1,-1);
+                }else{
+                    JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, groupViewHolder.ivCategoryTreeGroup, entity.getImage(), (int) screenWidth,imageHeight);
+                }
                 groupViewHolder.ivCategoryTreeGroup.setTag(entity.getImage());
             }
              groupViewHolder.tv_category_tree_divi.setVisibility(View.GONE);
