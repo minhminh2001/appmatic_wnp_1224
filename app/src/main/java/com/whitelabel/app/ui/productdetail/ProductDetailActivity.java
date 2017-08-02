@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,9 +37,11 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HelpCenterDetialActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
+import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.activity.ProductDetailPictureActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.adapter.ProductRecommendedListAdapter;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.ProductDetailCallback;
 import com.whitelabel.app.callback.WheelPickerCallback;
@@ -51,6 +54,7 @@ import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.model.ProductDetailModel;
+import com.whitelabel.app.model.SVRAppserviceProductRecommendedResultsItemReturnEntity;
 import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.network.ImageLoader;
@@ -69,6 +73,7 @@ import com.whitelabel.app.widget.CustomCoordinatorLayout;
 import com.whitelabel.app.widget.CustomDialog;
 import com.whitelabel.app.widget.CustomNestedScrollView;
 import com.whitelabel.app.widget.CustomTextView;
+import com.whitelabel.app.widget.FullyLinearLayoutManager;
 import com.whitelabel.app.widget.ProductChildListView;
 import com.whitelabel.app.widget.ToolBarAlphaBehavior;
 import java.util.ArrayList;
@@ -98,7 +103,9 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     private ViewPager viewPager;
     private CustomTextView tvProductSaverm;
     private RelativeLayout rlProductPrice;
+    private RecyclerView  lvProductRecommendList;
     private RelativeLayout rlProductQuantity, descriptionsRelative;
+    private ProductRecommendedListAdapter recommendedListAdapter;
     private String productId;
     private LinearLayout llLayout;
     private LinearLayout llAttribute;
@@ -129,6 +136,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     private ImageLoader mImageLoader;
     private final static  int BOTTONBAR_HEIGHT=80;
     private int destWidth;
+    private RelativeLayout rlProductrecommendLine;
     @Override
     public void showNornalProgressDialog() {
         mDialog = JViewUtils.showProgressDialog(ProductDetailActivity.this);
@@ -143,6 +151,15 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             mDialog.dismiss();
         }
     }
+    @Override
+    public void showProductRecommendLine() {
+        rlProductrecommendLine.setVisibility(View.VISIBLE);
+    }
+    @Override
+    public void updateRecommendData(ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity> results) {
+        recommendedListAdapter.updateData(results);
+    }
+
     @Override
     public void showErrorMessage(String errorMsg) {
         JViewUtils.showErrorToast(this,errorMsg+"");
@@ -408,6 +425,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
                 presenterModule(new PresenterModule(this)).build().inject(this);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -543,6 +561,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         llBottomBar.setOnClickListener(this);
         textView_num = (TextView) findViewById(R.id.detail_quantity_textview2);
         rlProductQuantity = (RelativeLayout) findViewById(R.id.rlProductQuantity);
+        lvProductRecommendList= (RecyclerView) findViewById(R.id.lvProductRecommendList);
         int destWidthColorSize = (WhiteLabelApplication.getPhoneConfiguration().getScreenWidth() - (JDataUtils.dp2Px(27))) / 2;
         int destHeightColorSize = JDataUtils.dp2Px(37);
         if (rlProductQuantity.getLayoutParams() != null) {
@@ -576,12 +595,23 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
                 }
             }
         });
+        lvProductRecommendList= (RecyclerView) findViewById(R.id.lvProductRecommendList);
+        FullyLinearLayoutManager manager = new FullyLinearLayoutManager(this);
+        manager.setItemPadding(18f);
+        manager.setSmoothScrollbarEnabled(true);
+        manager.setScrollEnabled(false);
+        lvProductRecommendList.setLayoutManager(manager);
+        lvProductRecommendList.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        lvProductRecommendList.setHasFixedSize(true);
+        lvProductRecommendList.setNestedScrollingEnabled(false);
+        recommendedListAdapter = new ProductRecommendedListAdapter(this, new ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity>(),
+                mImageLoader, this);
+        lvProductRecommendList.setAdapter(recommendedListAdapter);
     }
     private void gotoShoppingCartActivity() {
         Intent intent = new Intent(ProductDetailActivity.this, ShoppingCartActivity1.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityForResult(intent, REQUEST_SHOPPINGCART);
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -1158,8 +1188,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         // Stock
         userSelectedProductInStock = instock;
         mPresenter.setOutOfStock(false);
-        //if (0 == userSelectedProductInStock||"0"==mProductDetailBean.getAvailability()) { // out of stock
-        JLogUtils.i(TAG, "userSelectedProductInStock:" + userSelectedProductInStock);
         if (0 == userSelectedProductInStock) {
             rlProductQuantity.setVisibility(View.GONE);
             setAddCartButtonEnable(false);
@@ -1181,8 +1209,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             setAddCartButtonEnable(true);
             RelativeLayout.LayoutParams bottomBarLp = (RelativeLayout.LayoutParams) llBottomBar.getLayoutParams();
             long count = getProductCount();
-            JLogUtils.d(TAG, "maxSaleQty=" + maxSaleQty + "-------------stockqty=" + stockqty);
-//            TODO MAXQTY
             if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductDetailActivity.this)) {
                 userSelectedProductMaxStockQty = stockqty;//userSelectedProductMaxStockQty
                 mPresenter.setCurrUserSelectedProductMaxStockQty( stockqty); //判断加减的时候使用到的

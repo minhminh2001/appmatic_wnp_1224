@@ -2,6 +2,7 @@ package com.whitelabel.app.ui.productdetail;
 
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ProductPropertyModel;
+import com.whitelabel.app.model.SVRAppserviceProductRecommendedResultsItemReturnEntity;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.BaseView;
 
@@ -40,6 +41,8 @@ public interface ProductDetailContract {
         public void setProductCountView(long count);
         public Map<String,String> getGroupProductParams();
         public String getConfiguationProductSimpleId();
+        public void showProductRecommendLine();
+        public void updateRecommendData(ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity> results);
     }
     public interface Presenter extends BasePresenter<View>{
         void loadProductDetailData(String productId);

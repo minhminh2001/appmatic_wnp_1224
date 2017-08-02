@@ -53,12 +53,17 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
         this.productDetailCallback = productDetailCallback;
         mImageLoader = imageLoader;
     }
-
+    public void updateData(ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity>  entities){
+        list.clear();
+        if(entities!=null&&entities.size()>0){
+            list.addAll(entities);
+        }
+        notifyDataSetChanged();
+    }
     @Override
     public long getItemId(int position) {
         return position;
     }
-
     @Override
     public int getItemCount() {
         int size = list.size();
@@ -67,9 +72,7 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
         } else {
             return size / 2 + 1;
         }
-
     }
-
     @Override
     public int getItemViewType(int position) {
         return 1;

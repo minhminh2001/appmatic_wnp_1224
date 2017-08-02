@@ -11,6 +11,7 @@ import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ResponseModel;
+import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ExceptionParse;
@@ -339,5 +340,26 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                         mView.startShoppingCartActivity();
                     }
                 });
+    }
+    public void getRecommendProduct(String productId){
+          String sessionKey=iBaseManager.isSign()?iBaseManager.getUser().getSessionKey():"";
+          Subscription subscription=iCommodityManager.getProductRecommendList("1","4",productId,sessionKey)
+                  .compose(RxUtil.<SVRAppserviceProductRecommendedReturnEntity>rxSchedulerHelper())
+                  .subscribe(new Subscriber<SVRAppserviceProductRecommendedReturnEntity>() {
+                      @Override
+                      public void onCompleted() {
+                      }
+                      @Override
+                      public void onError(Throwable e) {
+                      }
+                      @Override
+                      public void onNext(SVRAppserviceProductRecommendedReturnEntity result) {
+                            if(result.getResults().size()>0){
+                                mView.showProductRecommendLine();
+                                mView.updateRecommendData(result.getResults());
+                            }
+                      }
+                  });
+            addSubscrebe(subscription);
     }
 }

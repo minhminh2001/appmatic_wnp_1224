@@ -14,6 +14,7 @@ import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailResultDetailReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.JDataUtils;
 
@@ -167,7 +168,6 @@ public class CommodityManager  implements ICommodityManager{
         htmlText = htmlText.replace("\u2028", " ");
         return htmlText;
     }
-
     public String getProductDimenSionV2Html(ArrayList<?> arrayList) {
         try {
             StringBuilder stringBuild = new StringBuilder("");
@@ -199,5 +199,9 @@ public class CommodityManager  implements ICommodityManager{
             e.printStackTrace();
         }
         return "";
+    }
+    @Override
+    public Observable<SVRAppserviceProductRecommendedReturnEntity> getProductRecommendList(String storeId, String limit, String productId, String sessionKey) {
+        return productApi.getRecommendedList(storeId,limit,productId,sessionKey);
     }
 }

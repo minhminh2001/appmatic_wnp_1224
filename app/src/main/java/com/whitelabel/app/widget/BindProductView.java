@@ -94,9 +94,9 @@ public class BindProductView extends RelativeLayout {
         LinearLayout view= (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_product_bind,null);
         ImageView ivImg= (ImageView) view.findViewById(R.id.iv_img);
         TextView tvBindPrice= (TextView) view.findViewById(R.id.tv_bind_price);
+        ivImg.getLayoutParams().height=imageWidth;
+        ivImg.getLayoutParams().width=imageWidth;
         if(!TextUtils.isEmpty(bean.getImage())){
-            ivImg.getLayoutParams().height=imageWidth;
-            ivImg.getLayoutParams().width=imageWidth;
             JImageUtils.downloadImageFromServerByUrl(getContext(), imageLoader, ivImg,
                     bean.getImage(),imageWidth,imageWidth);
         }

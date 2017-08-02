@@ -10,6 +10,7 @@ import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,6 +30,7 @@ import java.util.Map;
 
 import  static  org.mockito.Mockito.verify;
 import rx.Observable;
+import rx.Subscription;
 import rx.observers.TestSubscriber;
 import static org.junit.Assert.*;
 /**
@@ -38,6 +40,20 @@ import static org.junit.Assert.*;
 @PrepareForTest({Log.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class CommodityManagerTest {
+
+
+
+    @Test
+    public void getProductRecommendList() throws Exception {
+      TestSubscriber<SVRAppserviceProductRecommendedReturnEntity> testSubscriber=new TestSubscriber<>();
+        mCommodityManager.getProductRecommendList("1","4","352",sessionKey)
+                .subscribe(testSubscriber);
+        testSubscriber.assertNoErrors();
+        testSubscriber.assertCompleted();
+        SVRAppserviceProductRecommendedReturnEntity entity= testSubscriber.getOnNextEvents().get(0);
+        Assert.assertTrue(entity.getResults().size()>0);
+    }
+
     private CommodityManager mCommodityManager;
     private String productId="10775";
     @Mock

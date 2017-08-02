@@ -7,6 +7,7 @@ import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 
 import java.util.Map;
@@ -50,5 +51,9 @@ public interface ProductApi {
     public Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory();
     @GET("appservice/product/detail")
     public Observable<SVRAppserviceProductDetailReturnEntity> getProductDetail(@Query("session_key") String sessionKey,@Query("product_id") String productId);
-
+    @GET("appservice/product/recommendedlist")
+    public Observable<SVRAppserviceProductRecommendedReturnEntity>  getRecommendedList(@Query("store_id") String storeId,
+                                                                                       @Query("limit") String limit,
+                                                                                       @Query("product_id") String productId,
+                                                                                       @Query("session_key") String sessionKey);
 }

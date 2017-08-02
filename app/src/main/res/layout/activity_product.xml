@@ -184,52 +184,52 @@
                         android:orientation="vertical">
                     </LinearLayout>
                 </RelativeLayout>
-                <!--<LinearLayout-->
-                    <!--android:id="@+id/rl_productrecommend_body"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@+id/final_relativelayout"-->
-                    <!--android:background="@color/white"-->
-                    <!--android:orientation="vertical">-->
+                <LinearLayout
+                    android:id="@+id/rl_productrecommend_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/final_relativelayout"
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
-                    <!--<RelativeLayout-->
-                        <!--android:id="@+id/rl_productrecommend_line"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginBottom="10dp"-->
-                        <!--android:layout_marginLeft="@dimen/activity_pdp_margin"-->
-                        <!--android:layout_marginRight="@dimen/activity_pdp_margin"-->
-                        <!--android:layout_marginTop="5dp"-->
-                        <!--android:visibility="gone">-->
+                    <RelativeLayout
+                        android:id="@+id/rl_productrecommend_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="@dimen/activity_pdp_margin"
+                        android:layout_marginRight="@dimen/activity_pdp_margin"
+                        android:layout_marginTop="5dp"
+                        android:visibility="gone">
 
-                        <!--<View-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="1dp"-->
-                            <!--android:layout_centerVertical="true"-->
-                            <!--android:background="@color/greyE1E1E1"></View>-->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_centerVertical="true"
+                            android:background="@color/greyE1E1E1"></View>
 
-                        <!--<com.whitelabel.app.widget.CustomTextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_centerInParent="true"-->
-                            <!--android:background="@color/whiteFFFFFF"-->
-                            <!--android:paddingLeft="15dp"-->
-                            <!--android:paddingRight="15dp"-->
-                            <!--android:text="@string/product_detail_recommended_title"-->
-                            <!--android:textColor="@color/black000000"-->
-                            <!--android:textSize="14sp"-->
-                            <!--style="@style/font_family_robot_regular"/>-->
-                    <!--</RelativeLayout>-->
+                        <com.whitelabel.app.widget.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@color/whiteFFFFFF"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:text="@string/product_detail_recommended_title"
+                            android:textColor="@color/black000000"
+                            android:textSize="14sp"
+                            style="@style/font_family_robot_regular"/>
+                    </RelativeLayout>
 
-                    <!--&lt;!&ndash;<android.support.v7.widget.RecyclerView&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:id="@+id/lvProductRecommendList"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:divider="@null"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:dividerHeight="0dp"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:listSelector="@color/transparent00"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:scrollbars="none"/>&ndash;&gt;-->
-                <!--</LinearLayout>-->
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/lvProductRecommendList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="@null"
+                        android:dividerHeight="0dp"
+                        android:listSelector="@color/transparent00"
+                        android:scrollbars="none"/>
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
@@ -302,8 +302,6 @@
                 android:src="@mipmap/wishlist_purple_normal"
                 android:visibility="visible"/>
         </RelativeLayout>
-
-
         <!--Add to cart-->
         <!--backgroud 和 height 都在activity里改-->
         <LinearLayout
@@ -338,7 +336,6 @@
                     android:src="@mipmap/wishlist_white_normal"
                     android:visibility="visible"/>
             </RelativeLayout>
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

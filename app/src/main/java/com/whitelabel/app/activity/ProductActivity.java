@@ -282,7 +282,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                         activity.facebookWishTrack();
                         activity.trackAddWistList();
                     } else {String errorMsg = (String) msg.obj;
-
                         if (!JToolUtils.expireHandler(activity, errorMsg, activity.REQUESTCODE_LOGIN)) {
                             Toast.makeText(activity, errorMsg + "", Toast.LENGTH_LONG).show();
                         }
@@ -740,7 +739,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         getProductInfoFromIntent(bundle);
     }
-
     private void getProductInfoFromIntent(Bundle bundle) {
         mFromProductList = getIntent().getExtras().getString("from");
         if (bundle.getSerializable("product_info") != null) {
@@ -760,17 +758,17 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
     }
 
-//    public void refreshProductRecommended() {
-//        //推荐商品，随机加载4个
-//        // get data
-//        String storeId = WhiteLabelApplication.getAppConfiguration().getStoreView().getId();
-//        String sessionKey = "";
-//        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
-//            sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey();
-//        }
-//        String limit = "4";
-//        mProductDao.getProductRecommendList(storeId, limit, productId, sessionKey);
-//    }
+    public void refreshProductRecommended() {
+        //推荐商品，随机加载4个
+        // get data
+        String storeId = WhiteLabelApplication.getAppConfiguration().getStoreView().getId();
+        String sessionKey = "";
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
+            sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey();
+        }
+        String limit = "4";
+        mProductDao.getProductRecommendList(storeId, limit, productId, sessionKey);
+    }
 
     public long getCartItemCount() {
         long cartItemCount = 0;
