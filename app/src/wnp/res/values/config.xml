@@ -14,6 +14,6 @@
 <string name="app_name">Wnp</string>
     <!--https://dev2.wnp.com.hk/ 103.210.236.156:8088-->
 <string name="request_url">http://103.210.236.156:8088/</string>
-<string name="image_base_url">https://imaginato.wnp.com.hk/</string>
+<string name="image_base_url">https://dev2.wnp.com.hk/</string>
 <string name="mock_url">http://103.210.236.156:8088/</string>
 </resources>

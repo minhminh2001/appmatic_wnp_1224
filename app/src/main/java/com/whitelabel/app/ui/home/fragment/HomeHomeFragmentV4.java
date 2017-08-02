@@ -95,32 +95,19 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
 
     @Override
     public void dissmissProgressDialog() {
-
     }
-
     @Override
     public void showSwipeLayout() {
-
     }
-
     @Override
     public void closeSwipeLayout() {
-
     }
-
     @Override
     public void inject() {
         super.inject();
         DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
                 presenterModule(new PresenterModule(getActivity())).build().inject(this);
     }
-
-    //    @Override
-//    public HomeCategoryDetailContract.Presenter getPresenter() {
-//        return new HomeCategoryDetailPresenterImpl(new
-//                CommodityManager(DataManager.getInstance().getProductApi(),DataManager.getInstance().getPreferHelper()),
-//                new BaseManager(DataManager.getInstance().getMockApi(),DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),this);
-//    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

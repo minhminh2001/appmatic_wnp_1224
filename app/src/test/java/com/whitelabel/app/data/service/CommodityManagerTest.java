@@ -74,7 +74,6 @@ public class CommodityManagerTest {
         Assert.assertNotNull(svrAppserviceCatalogSearchReturnEntity);
         Assert.assertTrue(svrAppserviceCatalogSearchReturnEntity.getCategory().size()>0);
     }
-
     @Test
     public void getCategoryDetail()  throws Exception{
         mCommodityManager.getCategoryDetail(true,"1","1");

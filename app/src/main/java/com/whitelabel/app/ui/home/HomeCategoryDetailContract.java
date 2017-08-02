@@ -10,7 +10,7 @@ import com.whitelabel.app.ui.BaseView;
 
 public class HomeCategoryDetailContract {
      public   interface View extends BaseView{
-        public void showErrorMsg(String errorMsg);
+         public void showErrorMsg(String errorMsg);
          public void loadData(CategoryDetailModel categoryDetailModel);
          void closeRefreshLaout();
          public void showProgressDialog();

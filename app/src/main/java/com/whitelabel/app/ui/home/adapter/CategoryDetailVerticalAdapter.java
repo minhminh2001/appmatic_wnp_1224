@@ -190,10 +190,10 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (categoryDetailModel == null) return;
-            int imageHeight = (int) (categoryDetailModel.getImage_height() * (screenWidth/categoryDetailModel.getImage_width()));
-            if(imageHeight==0){
-                imageHeight= (int) (screenWidth*(240.0/640));
-            }
+//            int imageHeight = (int) (categoryDetailModel.getImage_height() * (screenWidth/categoryDetailModel.getImage_width()));
+//            if(imageHeight==0){
+                int  imageHeight= (int) (screenWidth*(348.0/750));
+//            }
             headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
             if(categoryDetailModel.getNewArrivalProducts()==null||categoryDetailModel.getNewArrivalProducts().size()==0){
                 headerViewHolder.llNewArrivals.setVisibility(View.GONE);
@@ -206,7 +206,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                 if (headerViewHolder.detailViewpager.getTag() == null) {
                     List<String> imgs=new ArrayList<>();
                     imgs.add(categoryDetailModel.getCategory_img());
-                    headerViewHolder.detailViewpager.setAdapter(new FlowViewAdapter(createImageViewList(headerViewHolder.itemView.getContext(), mImageLoader, imgs)));
+                    headerViewHolder.detailViewpager.setAdapter(new FlowViewAdapter(createImageViewList(headerViewHolder.itemView.getContext(), mImageLoader, imgs,imageHeight)));
                     headerViewHolder.detailViewpager.setTag("use");
                 }
             }
@@ -565,12 +565,12 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
 //        }
 //    }
 
-    private List<ImageView> createImageViewList(Context context, ImageLoader imageLoader, List<String> images) {
+    private List<ImageView> createImageViewList(Context context, ImageLoader imageLoader, List<String> images,int  imageHeight) {
         List<ImageView> imgs = new ArrayList<>();
         for (int i = 0; i < images.size(); i++) {
             ImageView imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            JImageUtils.downloadImageFromServerByUrl(context, imageLoader, imageView, images.get(i));
+            JImageUtils.downloadImageFromServerByUrl(context, imageLoader, imageView, images.get(i), (int) screenWidth,imageHeight);
             imgs.add(imageView);
         }
         return imgs;
