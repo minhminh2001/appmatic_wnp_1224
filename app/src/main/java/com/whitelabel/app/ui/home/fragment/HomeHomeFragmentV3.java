@@ -94,12 +94,10 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         fragment.setArguments(bundle);
         return fragment;
     }
-
     @Override
     public void dissmissProgressDialog() {
         closeProgressDialog();
     }
-
     @Override
     public void showSwipeLayout() {
         new Handler().post(new Runnable() {
@@ -109,21 +107,16 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
             }
         });
     }
-
     @Override
     public void closeSwipeLayout() {
         swipeContainer.setRefreshing(false);
     }
-
     @Override
     public void inject() {
         super.inject();
         DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
                 presenterModule(new PresenterModule(getActivity())).build().inject(this);
     }
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,7 +183,6 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         initRecyclerView();
         mPresenter.getCategoryDetail(mCategoryId);
     }
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
