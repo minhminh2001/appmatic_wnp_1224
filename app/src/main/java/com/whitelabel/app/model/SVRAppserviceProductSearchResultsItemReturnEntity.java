@@ -10,6 +10,7 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
     private String name;
     private String category;
     private String brand;
+    private int position;
     private String brandId;
     private String price;
     private String final_price;
@@ -19,6 +20,14 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
     private int isLike;
     private String item_id;
     private boolean syncnServering=false;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     public String getBrandId() {
         return brandId;
