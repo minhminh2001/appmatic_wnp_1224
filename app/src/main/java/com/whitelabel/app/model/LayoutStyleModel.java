@@ -9,7 +9,7 @@ public class LayoutStyleModel implements Serializable {
     private int home;
     private int ProductDetailType;
     public int getHome() {
-        return 4;
+        return home;
     }
     public void setHome(int home) {
         this.home = home;

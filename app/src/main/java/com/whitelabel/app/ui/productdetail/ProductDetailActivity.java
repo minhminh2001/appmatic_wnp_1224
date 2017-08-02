@@ -681,10 +681,10 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             }
             case R.id.bpv_bind_product:
                 Intent bindIntent=new Intent(ProductDetailActivity.this, BindProductActivity.class);
-                bindIntent.putExtra(BindProductActivity.EXTRA_PRODUCTID,mProductDetailBean.getId());
-                if(mProductDetailBean.getProperty()!=null&&mProductDetailBean.getProperty().size()>0){
+                bindIntent.putExtra(BindProductActivity.EXTRA_PRODUCTID,mPresenter.getProductData().getId());
+                if(mPresenter.getProductData().getProperty()!=null&&mPresenter.getProductData().getProperty().size()>0){
                      Bundle  bundle=new Bundle();
-                     bundle.putSerializable(BindProductActivity.EXTRA_PRODUCT_DATA,mProductDetailBean.getProperty().get(0));
+                     bundle.putSerializable(BindProductActivity.EXTRA_PRODUCT_DATA,mPresenter.getProductData().getProperty().get(0));
                      bindIntent.putExtras(bundle);
                 }
                 startActivity(bindIntent);
@@ -721,8 +721,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
                     showWheelDialog(propertyList, mAttributeViews.get(propertyReturnEntitys.getLevel()).getText().toString());
                 break;
             case R.id.ctvProductBrand:
-                if(mProductDetailBean!=null) {
-                    if(!"0".equals(mProductDetailBean.getBrandId())) {
+                if(mPresenter.getProductData()!=null) {
+                    if(!"0".equals(mPresenter.getProductData().getBrandId())) {
                         Bundle brandStoreIntent = new Bundle();
                         brandStoreIntent.putString(BrandStoreFontActivity.EXTRA_BRAND_ID, mPresenter.getProductData().getBrandId());
                         brandStoreIntent.putString(BrandStoreFontActivity.EXTRA_BRAND_NAME, mPresenter.getProductData().getBrand().toUpperCase());
@@ -1168,7 +1168,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
                 bottomBarLp.height = 0;
                 llBottomBar.setLayoutParams(bottomBarLp);
             }
-
             mPresenter.setCurrUserSelectedProductMaxStockQty(0);
             userSelectedProductMaxStockQty = 01;
             mPresenter.setUserSelectedProductQty(0);
