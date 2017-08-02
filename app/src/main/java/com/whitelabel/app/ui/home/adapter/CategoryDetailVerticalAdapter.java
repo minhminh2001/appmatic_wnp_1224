@@ -40,6 +40,7 @@ import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.common.WishlistObservable;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -62,7 +63,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-import static com.whitelabel.app.utils.AnimUtil.setWishIconColorToPurple;
+
 
 
 public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -310,7 +311,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                                     if(bean.getIsLike()==1){
                                         mProductDao.addProductListToWish(bean.getProductId(),WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
                                                 bean.getPosition());
-                                    }else{
+                                    }else if(bean.getItem_id()!=null){
                                         myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
                                                 bean.getItem_id(),bean.getPosition());
                                     }
@@ -346,29 +347,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     }
 
     private void setWishIconColorToBlank(final ImageView ivWishIcon) {
-        ivWishIcon.setVisibility(View.VISIBLE);
-        boolean repeatAnim = true;
-        ivWishIcon.setTag(repeatAnim);
-        ivWishIcon.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
-//        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
-        final ScaleAnimation animation2 = new ScaleAnimation(1f, 0f, 1f, 0f,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        animation2.setDuration(250);//设置动画持续时间
-        animation2.setFillAfter(false);//动画执行完后是否停留在执行完的状态
-        animation2.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                ivWishIcon.setVisibility(View.GONE);
-            }
 
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        ivWishIcon.startAnimation(animation2);
     }
     private void sendRequestToDeteleteCell(SVRAppserviceProductSearchResultsItemReturnEntity bean,ImageView ivWwishIcon, String itemId) {
         setWishIconColorToBlank(ivWwishIcon);
@@ -377,46 +356,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
 
 
 
-     public  class WishlistObservable implements Observable.OnSubscribe<SVRAppserviceProductSearchResultsItemReturnEntity>,View.OnClickListener{
-         private View  view;
-         private SVRAppserviceProductSearchResultsItemReturnEntity entity;
-         private ImageView  ivWishIcon;
-         private ImageView  ivWishIcon2;
-         private List<Subscriber<? super SVRAppserviceProductSearchResultsItemReturnEntity>> mSubscribers = new ArrayList<>();
-         public WishlistObservable(View view ,SVRAppserviceProductSearchResultsItemReturnEntity entity,ImageView ivWishIcon,ImageView ivWishIcon2){
-             this.view =view;
-             this.entity=entity;
-             this.ivWishIcon=ivWishIcon;
-             this.ivWishIcon2=ivWishIcon2;
-         }
 
-         @Override
-         public void call(Subscriber<? super SVRAppserviceProductSearchResultsItemReturnEntity> subscriber) {
-             mSubscribers.add(subscriber);
-             view.setOnClickListener(this);
-         }
-
-         @Override
-         public void onClick(View view) {
-             for(Subscriber subscriber1:mSubscribers){
-                 subscriber1.onNext(entity);
-             }
-             if (entity.getIsLike() == 1) {
-                 setWishIconColorToBlank(ivWishIcon);
-                 entity.setIsLike(0);
-             } else {
-                 if (WhiteLabelApplication.getAppConfiguration().isSignIn(view.getContext())) {
-                     entity.setIsLike(1);
-                     setWishIconColorToPurple(ivWishIcon, ivWishIcon2);
-                 } else {
-                     Intent intent = new Intent();
-                     intent.setClass(view.getContext(), LoginRegisterActivity.class);
-                     ((Activity)view.getContext()).startActivityForResult(intent, LoginRegisterActivity.REQUESTCODE_LOGIN);
-                     ((Activity)view.getContext()).overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
-                 }
-             }
-         }
-     }
 
     private void setMerchantName(final String merchantName, final String merchantId, final TextView ctvLeftCurationProductMerchant) {
         if (!TextUtils.isEmpty(merchantName)) {

@@ -174,7 +174,6 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
              recyclerView1.setOnTouchListener(new View.OnTouchListener() {
                  @Override
                  public boolean onTouch(View v, MotionEvent event) {
-                     JLogUtils.i("ray","MotionEvent:"+event);
                      return false;
                  }
              });

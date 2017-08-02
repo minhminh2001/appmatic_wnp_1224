@@ -37,6 +37,8 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
     private final static int ITEM = 2;
     private final static int TITLE = 3;
     private   double screenWidth;
+    private   OnItemClickListener bestSellersClickListener;
+    private OnItemClickListener newArrivalsClickListener;
     public CategoryDetailHorizontalAdapter(Activity activity,CategoryDetailModel categoryDetailModel, ImageLoader imageLoader) {
         this.mImageLoader = imageLoader;
         mCategoryDetailModel = categoryDetailModel;
@@ -52,8 +54,6 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
             ButterKnife.bind(this, view);
         }
     }
-    private   OnItemClickListener bestSellersClickListener;
-    private OnItemClickListener newArrivalsClickListener;
     public void setOnBestProductionItemClickListener(OnItemClickListener bestSellersClickListener){
         this.bestSellersClickListener=bestSellersClickListener;
     }
@@ -91,10 +91,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         if(holder instanceof  HeaderViewHolder){
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (mCategoryDetailModel == null) return;
-//            int imageHeight = (int) (mCategoryDetailModel.getImage_height() * (screenWidth/mCategoryDetailModel.getImage_width()));
-//            if(imageHeight==0){
             int   imageHeight= (int) (screenWidth*(348.0/750));
-//            }
             headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
             if (TextUtils.isEmpty(mCategoryDetailModel.getCategory_img())) {
                 headerViewHolder.detailViewpager.setVisibility(View.VISIBLE);
@@ -102,7 +99,8 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
                 if (headerViewHolder.detailViewpager.getTag() == null) {
                     List<String> imgs=new ArrayList<>();
                     imgs.add(mCategoryDetailModel.getCategory_img());
-                    headerViewHolder.detailViewpager.setAdapter(new FlowViewAdapter(createImageViewList(headerViewHolder.itemView.getContext(), mImageLoader, imgs,imageHeight)));
+                    headerViewHolder.detailViewpager.setAdapter(new FlowViewAdapter(createImageViewList(headerViewHolder.itemView.getContext(),
+                            mImageLoader, imgs,imageHeight)));
                     headerViewHolder.detailViewpager.setTag("use");
                 }
             }
