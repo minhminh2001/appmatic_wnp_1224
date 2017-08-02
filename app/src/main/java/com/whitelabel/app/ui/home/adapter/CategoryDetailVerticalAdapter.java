@@ -74,7 +74,9 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     private static final int TYPE_FOOTER = 9621147;
     private CategoryDetailModel categoryDetailModel;
     private final ImageLoader mImageLoader;
-
+    MyAccountDao  myAccountDao;
+    ProductDao mProductDao;
+    private double screenWidth;
     public interface OnFilterSortBarListener {
         void onSwitchViewClick(View view);
         void onFilterClick();
@@ -144,9 +146,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         }
     }
 
-    MyAccountDao  myAccountDao;
-    ProductDao mProductDao;
-    private double screenWidth;
+
     public CategoryDetailVerticalAdapter(Context context, CategoryDetailModel categoryDetailModel, ImageLoader loader) {
         this.categoryDetailModel = categoryDetailModel;
         mImageLoader = loader;

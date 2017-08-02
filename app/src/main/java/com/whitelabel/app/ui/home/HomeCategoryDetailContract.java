@@ -20,5 +20,7 @@ public class HomeCategoryDetailContract {
      }
     public  static interface Presenter extends BasePresenter<View>{
        public void  getCategoryDetail(String categoryId);
+
+       public void getOnlineCategoryDetail(String categoryId);
     }
 }

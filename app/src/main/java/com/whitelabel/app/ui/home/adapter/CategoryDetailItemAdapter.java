@@ -203,8 +203,7 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
             setWishIconColorToBlankNoAnim(itemViewHolder.ivLeftProductlistWishIcon);
         }
         final SVRAppserviceProductSearchResultsItemReturnEntity finalLeftProductEntity = leftProductEntity;
-
-
+        finalLeftProductEntity.setPosition(position);
         Observable<SVRAppserviceProductSearchResultsItemReturnEntity> observable=Observable.
                 create(new WishlistObservable(itemViewHolder.rlLeftProductlistWish,finalLeftProductEntity,
                         itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2));
@@ -218,7 +217,7 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
                         if(bean.getIsLike()==1){
                             mProductDao.addProductListToWish(bean.getProductId(),WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
                                     bean.getPosition());
-                        }else{
+                        }else if(!JDataUtils.isEmpty(bean.getItem_id())){
                             myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
                                     bean.getItem_id(),bean.getPosition());
                         }

@@ -158,7 +158,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public void onRefresh() {
         if (getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
-            mPresenter.getCategoryDetail(mCategoryId);
+            mPresenter.getOnlineCategoryDetail(mCategoryId);
         }
     }
     private final GridLayoutManager.SpanSizeLookup mTwoRowSpan = new GridLayoutManager.SpanSizeLookup() {

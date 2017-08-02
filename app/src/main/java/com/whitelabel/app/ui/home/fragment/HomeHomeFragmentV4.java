@@ -2,6 +2,7 @@ package com.whitelabel.app.ui.home.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -98,9 +99,16 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     }
     @Override
     public void showSwipeLayout() {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                swipeContainer.setRefreshing(true);
+            }
+        });
     }
     @Override
     public void closeSwipeLayout() {
+        swipeContainer.setRefreshing(false);
     }
     @Override
     public void inject() {
@@ -120,7 +128,7 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public void onRefresh() {
         if (getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
-            mPresenter.getCategoryDetail(mCategoryId);
+            mPresenter.getOnlineCategoryDetail(mCategoryId);
         }
     }
     @Override

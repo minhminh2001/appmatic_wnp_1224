@@ -41,33 +41,45 @@ public class HomeCategoryDetailPresenterImpl extends RxPresenter<HomeCategoryDet
        Subscription subscription= iCommodityManager.getCategoryDetail(true,categoryId,sessionKey)
                  .subscribeOn(Schedulers.io())
                  .observeOn(AndroidSchedulers.mainThread())
-                 .doOnNext(new Action1<CategoryDetailModel>() {
-                     @Override
-                     public void call(CategoryDetailModel categoryDetailModel) {
-//                         JLogUtils.i("ray","doOnNext_ThreadName:"+Thread.currentThread().getName());
-                            if(categoryDetailModel!=null){
-                             mView.loadData(categoryDetailModel);
-                         }
-                         mView.showSwipeLayout();
-                     }
-                 })
-                .observeOn(Schedulers.io())
-                 .flatMap(new Func1<CategoryDetailModel, Observable<CategoryDetailModel>>() {
-                     @Override
-                     public Observable<CategoryDetailModel> call(CategoryDetailModel categoryDetailModel) {
-                         return  iCommodityManager.getCategoryDetail(false,categoryId,sessionKey);
-                     }
-                 }).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<CategoryDetailModel>() {
+                 .subscribe(new Subscriber<CategoryDetailModel>() {
                     @Override
                     public void onCompleted() {
                     }
                     @Override
                     public void onError(Throwable e) {
+
+                     }
+                    @Override
+                    public void onNext(CategoryDetailModel categoryDetailModel) {
+                        if(categoryDetailModel!=null){
+                            mView.loadData(categoryDetailModel);
+                        }
+
+                        getOnlineCategoryDetail(categoryId);
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    @Override
+    public void getOnlineCategoryDetail(String categoryId) {
+        mView.showSwipeLayout();
+        final String sessionKey=iBaseManager.isSign()?iBaseManager.getUser().getSessionKey():"";
+       Subscription subscription= iCommodityManager.getCategoryDetail(false,categoryId,sessionKey)
+                .compose(RxUtil.<CategoryDetailModel>rxSchedulerHelper())
+                .subscribe(new Subscriber<CategoryDetailModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
                         mView.closeRefreshLaout();
                         mView.closeSwipeLayout();
-                        mView.showErrorMsg(e.getMessage());
+                        mView.showErrorMsg(ExceptionParse.parseException(e).getErrorMsg());
                     }
+
                     @Override
                     public void onNext(CategoryDetailModel categoryDetailModel) {
                         mView.closeSwipeLayout();
@@ -76,5 +88,4 @@ public class HomeCategoryDetailPresenterImpl extends RxPresenter<HomeCategoryDet
                 });
         addSubscrebe(subscription);
     }
-
 }

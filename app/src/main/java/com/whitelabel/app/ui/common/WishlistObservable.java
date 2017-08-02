@@ -39,12 +39,13 @@ public  class WishlistObservable implements Observable.OnSubscribe<SVRAppservice
          @Override
          public void onClick(View view) {
              if(!WhiteLabelApplication.getAppConfiguration().isSignIn(view.getContext())){
+                 Intent intent = new Intent();
+                 intent.setClass(view.getContext(), LoginRegisterActivity.class);
+                 ((Activity)view.getContext()).startActivityForResult(intent, LoginRegisterActivity.REQUESTCODE_LOGIN);
+                 ((Activity)view.getContext()).overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
                  return;
              }
-             Intent intent = new Intent();
-             intent.setClass(view.getContext(), LoginRegisterActivity.class);
-             ((Activity)view.getContext()).startActivityForResult(intent, LoginRegisterActivity.REQUESTCODE_LOGIN);
-             ((Activity)view.getContext()).overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
+
 
              for(Subscriber subscriber1:mSubscribers){
                  subscriber1.onNext(entity);
