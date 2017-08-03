@@ -669,18 +669,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
                intent.putExtras(bundle);
                setResult(Activity.RESULT_OK, intent);
            }
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            if (ivProductImage.getDrawable() == null) {
-                super.onBackPressed();
-            } else {
-                ivProductImage.setVisibility(View.VISIBLE);
-                viewPager.setVisibility(View.GONE);
-                ivProductImage.setAlpha(1f);
-                transitionOnBackPressed();
-            }
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
     }
     @Override
     public void setProductCountView(long count) {

@@ -7,12 +7,14 @@ import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.ui.RxPresenter;
+import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -81,26 +83,50 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
 //        });
 //    }
     @Override
-    public void getConfigInfo(String sessionKey,String deviceToken) {
-        Observable openConfig= configService.getCurrencyUnit(sessionKey,deviceToken);
-        Observable<RemoteConfigResonseModel> configObservable=configService.getConfigInfo();
-        Observable.merge(openConfig,configObservable).compose(RxUtil.rxSchedulerHelper()).subscribe(new Action1() {
+    public void getConfigInfo(final String sessionKey, final String deviceToken) {
+      Subscription subscription= configService.getConfigInfo()
+                .compose(RxUtil.<RemoteConfigResonseModel>rxSchedulerHelper())
+                .subscribe(new Subscriber<RemoteConfigResonseModel>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
+                            mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
+                        }
+                    }
+                    @Override
+                    public void onNext(RemoteConfigResonseModel remoteConfigResonseModel) {
+                        WhiteLabelApplication.getAppConfiguration().initAppConfig(
+                                remoteConfigResonseModel.getData());
+                       requestCurrency(sessionKey,deviceToken);
+                    }
+                });
+      addSubscrebe(subscription);
+    }
+
+
+    public void requestCurrency(String sessionkey,String deviceToken){
+        configService.getCurrencyUnit(sessionkey,deviceToken)
+        .compose(RxUtil.<GOCurrencyEntity>rxSchedulerHelper())
+        .subscribe(new Subscriber<GOCurrencyEntity>() {
             @Override
-            public void call(Object o) {
-                if(o instanceof RemoteConfigResonseModel){
-                    RemoteConfigResonseModel  remoteConfigResonseModel= (RemoteConfigResonseModel) o;
-                    WhiteLabelApplication.getAppConfiguration().initAppConfig(
-                            remoteConfigResonseModel.getData());
-                    timeOutJudgment();
-                }else if(o instanceof GOCurrencyEntity){
-                    GOCurrencyEntity currencyEntity= (GOCurrencyEntity) o;
-                    WhiteLabelApplication.getAppConfiguration().getCurrency().setName(currencyEntity.getName());
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR) {
+                    mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
                 }
             }
-        }, new Action1<Throwable>() {
+
             @Override
-            public void call(Throwable throwable) {
-                JLogUtils.i("ray","throwabel:"+throwable.getMessage());
+            public void onNext(GOCurrencyEntity goCurrencyEntity) {
+                WhiteLabelApplication.getAppConfiguration().getCurrency().setName(goCurrencyEntity.getName());
+                timeOutJudgment();
             }
         });
     }

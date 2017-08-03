@@ -82,7 +82,9 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
     }
     @Override
     public void refresh(boolean isRefresh) {
-        requestData();
+        if(isRefresh) {
+            requestData();
+        }
     }
     @Override
     public void addAddressBtnOnClick() {
