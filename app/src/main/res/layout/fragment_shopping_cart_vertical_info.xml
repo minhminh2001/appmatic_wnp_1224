@@ -20,6 +20,7 @@
             android:id="@+id/ll_voucher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginBottom="0dp"
             android:layout_marginTop="@dimen/shoppingcart_cell_left_top_padding"
             android:background="@color/whiteFFFFFF"

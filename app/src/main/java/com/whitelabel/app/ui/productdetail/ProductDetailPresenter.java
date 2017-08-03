@@ -56,7 +56,6 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     public void setCurrUserSelectedProductMaxStockQty(long currUserSelectedProductMaxStockQty) {
         this.currUserSelectedProductMaxStockQty = currUserSelectedProductMaxStockQty;
     }
-
     public long getUserSelectedProductQty(){
         return userSelectedProductQty;
     }
@@ -73,9 +72,8 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     public void setDialogType(String type) {
         this.mDialogType=type;
     }
-
     @Override
-    public void loadProductDetailData(String productId) {
+    public void loadProductDetailData(final String productId) {
        String session=iBaseManager.isSign()?iBaseManager.getUser().getSessionKey():"";
         if(DIALOG_TYPE_BOTTOM.equals(mDialogType)){
             mView.showBottomProgressDialog();
@@ -103,6 +101,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                loadPropertyView(productDetailModel);
                loadBindProductView(productDetailModel);
                showVisibleProduct(productDetailModel);
+//               getRecommendProduct(productId);
            }
        });
         addSubscrebe(subscription);
@@ -115,7 +114,6 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
             mView.hideBindProductView();
         }
     }
-
     public void showVisibleProduct(ProductDetailModel  productDetailModel){
         try {
             if ("0".equals(productDetailModel.getVisibility())) {
@@ -135,7 +133,6 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
         }catch (Exception ex){
             ex.getStackTrace();
         }
-
     }
     public void  loadPropertyView(ProductDetailModel productDetailModel){
         try {
@@ -180,9 +177,8 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
         if(iBaseManager.isSign()) {
             count= (int) (iBaseManager.getUser().getCartItemCount()+count);
         }
-        if(count!=0) {
             mView.setShoppingCartCount(count);
-        }
+
     }
     @Override
     public void wishListBtnClick() {

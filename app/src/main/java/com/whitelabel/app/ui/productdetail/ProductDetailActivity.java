@@ -83,7 +83,8 @@ import java.util.Map;
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
 
-public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<ProductDetailContract.Presenter> implements ProductDetailCallback, OnPageChangeListener, View.OnClickListener ,ProductDetailContract.View{
+public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<ProductDetailContract.Presenter>
+        implements ProductDetailCallback, OnPageChangeListener, View.OnClickListener ,ProductDetailContract.View{
     public Long mGATrackTimeStart = 0L;
     public Long mGATrackAddCartTimeStart = 0L;
     public boolean mGATrackTimeEnable = false;
@@ -159,7 +160,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     public void updateRecommendData(ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity> results) {
         recommendedListAdapter.updateData(results);
     }
-
     @Override
     public void showErrorMessage(String errorMsg) {
         JViewUtils.showErrorToast(this,errorMsg+"");
@@ -541,9 +541,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         mIVHeaderBarWishlist2.setOnClickListener(this);
         ivHeaderBarShare.setOnClickListener(this);
         rlProductPrice = (RelativeLayout) findViewById(R.id.rlProductPrice);
-        rlProductPrice.requestFocus();
-        rlProductPrice.setFocusableInTouchMode(true);
-        rlProductPrice.setFocusable(true);
+
         oldprice = (TextView) findViewById(R.id.old_price);
         price_textview = (TextView) findViewById(R.id.price_textview);
         oldprice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
@@ -552,6 +550,9 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         productUnavailable = (TextView) findViewById(R.id.product_unavailable);
         productTrans = (TextView) findViewById(R.id.product_trans);
         viewPager = (ViewPager) findViewById(R.id.detail_viewpager);
+        viewPager.requestFocus();
+        viewPager.setFocusableInTouchMode(true);
+        viewPager.setFocusable(true);
         llDots = (ViewGroup) findViewById(R.id.ll_dots);
         llBottomBar = (LinearLayout) findViewById(R.id.llBottomBar);
         ctvAddToCart = (CustomTextView) findViewById(R.id.ctvAddToCart);
