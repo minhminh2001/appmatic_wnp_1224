@@ -68,7 +68,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
         clistView = (CustomXListView) view.findViewById(R.id.lv_notification);
         rlEmpty = (LinearLayout) view.findViewById(R.id.rl_notification_empty);
         swipeContainer= (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
-        swipeContainer.setColorSchemeResources(R.color.colorAccent);
+        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         swipeContainer.setOnRefreshListener(this);
         return view;
     }
