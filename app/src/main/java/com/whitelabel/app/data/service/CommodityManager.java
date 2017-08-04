@@ -122,31 +122,31 @@ public class CommodityManager  implements ICommodityManager{
 
     public String  getProductDetailHtml(ProductDetailModel productDetailModel) {
         StringBuilder stringBuilder1 = new StringBuilder("");
-        if (productDetailModel.getShippingInfo() != null) {
-            stringBuilder1.append("<h3 class=\"text1\" ><B>SHIPPING INFO</B></h3>");
-            if (!JDataUtils.isEmpty(productDetailModel.getShippingInfo().getWestDeliversDays())) {
-                stringBuilder1.append(productDetailModel.getShippingInfo().getWestDeliversDays()).append("<br>");
-            }
-            if (!JDataUtils.isEmpty(productDetailModel.getShippingInfo().getEastDeliversDays())) {
-                stringBuilder1.append(productDetailModel.getShippingInfo().getEastDeliversDays()).append("<br>");
-            }
-            if (!JDataUtils.isEmpty(productDetailModel.getShippingInfo().getLocationNotDelivered())) {
-                stringBuilder1.append(productDetailModel.getShippingInfo().getLocationNotDelivered()).append("<br>");
-            }
-            String detailDelivery1 = productDetailModel.getShippingInfo().getDetailDelivery1();
-            if (!JDataUtils.isEmpty(detailDelivery1)) {
-                stringBuilder1.append(detailDelivery1).append("<br>");
-            }
-            String detailDelivery2 = productDetailModel.getShippingInfo().getDetailDelivery2();
-            if (!JDataUtils.isEmpty(detailDelivery2)) {
-                detailDelivery2 = detailDelivery2.replace("<li>", "");
-                detailDelivery2 = detailDelivery2.replace("</li>", "");
-                stringBuilder1.append(detailDelivery2).append("<br>");
-            }
-        }
+//        if (productDetailModel.getShippingInfo() != null) {
+//            stringBuilder1.append("<h3 class=\"text1\" ><B>SHIPPING INFO</B></h3>");
+//            if (!JDataUtils.isEmpty(productDetailModel.getShippingInfo().getWestDeliversDays())) {
+//                stringBuilder1.append(productDetailModel.getShippingInfo().getWestDeliversDays()).append("<br>");
+//            }
+//            if (!JDataUtils.isEmpty(productDetailModel.getShippingInfo().getEastDeliversDays())) {
+//                stringBuilder1.append(productDetailModel.getShippingInfo().getEastDeliversDays()).append("<br>");
+//            }
+//            if (!JDataUtils.isEmpty(productDetailModel.getShippingInfo().getLocationNotDelivered())) {
+//                stringBuilder1.append(productDetailModel.getShippingInfo().getLocationNotDelivered()).append("<br>");
+//            }
+//            String detailDelivery1 = productDetailModel.getShippingInfo().getDetailDelivery1();
+//            if (!JDataUtils.isEmpty(detailDelivery1)) {
+//                stringBuilder1.append(detailDelivery1).append("<br>");
+//            }
+//            String detailDelivery2 = productDetailModel.getShippingInfo().getDetailDelivery2();
+//            if (!JDataUtils.isEmpty(detailDelivery2)) {
+//                detailDelivery2 = detailDelivery2.replace("<li>", "");
+//                detailDelivery2 = detailDelivery2.replace("</li>", "");
+//                stringBuilder1.append(detailDelivery2).append("<br>");
+//            }
+//        }
         ArrayList<SVRAppserviceProductDetailResultDetailReturnEntity> arrayList = productDetailModel.getDetail();
         if (arrayList != null && arrayList.size() > 0) {
-            stringBuilder1.append("<h3 class=\"text1\" ><B>PRODUCT DETAILS</B></h3>");
+            stringBuilder1.append("<h3 class=\"text1\" ><B>Description</B></h3>");
             for (SVRAppserviceProductDetailResultDetailReturnEntity productdetailitem : arrayList) {
                 if ("productDimension".equals(productdetailitem.getCode())) {
                     stringBuilder1.append(getProductDimenSionV2Html(productdetailitem.getValueArray()));
@@ -156,15 +156,24 @@ public class CommodityManager  implements ICommodityManager{
                 if(!JDataUtils.isEmpty(label)){
                     label="<B class=\"text1\" >"+label+"</B><br> ";
                 }
-                stringBuilder1.append(label).append(productdetailitem.getValue()).append("<br><br>");
+                stringBuilder1.append(label).append(productdetailitem.getValue());
             }
         }
-        //将存在的特殊字符替换成空格或空
+        if(!JDataUtils.isEmpty(productDetailModel.getIngredients())){
+            stringBuilder1.append("<h3 class=\"text1\" ><B>Ingredients</B></h3>");
+            stringBuilder1.append(productDetailModel.getIngredients());
+        }
+
+        if(!JDataUtils.isEmpty(productDetailModel.getFeatures())){
+            stringBuilder1.append("<h3 class=\"text1\" ><B>Features</B></h3>");
+            stringBuilder1.append(productDetailModel.getFeatures());
+        }
+        stringBuilder1.append("<br><br>");
         String htmlText=stringBuilder1.toString();
         htmlText = htmlText.replaceAll("\u009D", "");
         htmlText = htmlText.replace("<br />\r\n<br />\r\n", "<br>\r\n");
         htmlText = htmlText.replace("<br />\n<br />\n", "<br>\r\n");
-        htmlText = htmlText.replace("\n", "<br>");
+        htmlText = htmlText.replace("\r\n", "");
         htmlText = htmlText.replace("\u2028", " ");
         return htmlText;
     }
@@ -173,7 +182,6 @@ public class CommodityManager  implements ICommodityManager{
             StringBuilder stringBuild = new StringBuilder("");
             if (arrayList != null && arrayList.size() > 0) {
                 stringBuild.append(" <table  border=\"0\" cellspacing=\"0\" cellpadding=\"0\">   ");
-
                 for (int i = 1; i <= arrayList.size(); i++) {
                     LinkedTreeMap linkedTreeMap = (LinkedTreeMap) arrayList.get(i - 1);
                     String dimenTitle = (String) linkedTreeMap.get("title");

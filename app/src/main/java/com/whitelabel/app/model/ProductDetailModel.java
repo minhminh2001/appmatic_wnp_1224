@@ -51,6 +51,24 @@ public class ProductDetailModel implements Serializable {
     private String vendorDisplayName;
     private String vendor_id;
     private String uiDetailHtmlText;
+    private  String ingredients;
+    private String features;
+
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public String getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(String features) {
+        this.features = features;
+    }
 
     public String getUiDetailHtmlText() {
         return uiDetailHtmlText;

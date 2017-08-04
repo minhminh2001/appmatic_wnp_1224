@@ -10,6 +10,7 @@ import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.ProductDetailModel;
+import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
@@ -101,7 +102,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                loadPropertyView(productDetailModel);
                loadBindProductView(productDetailModel);
                showVisibleProduct(productDetailModel);
-//               getRecommendProduct(productId);
+               getRecommendProduct(productId);
            }
        });
         addSubscrebe(subscription);
@@ -337,6 +338,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                     }
                 });
     }
+
     public void getRecommendProduct(String productId){
           String sessionKey=iBaseManager.isSign()?iBaseManager.getUser().getSessionKey():"";
           Subscription subscription=iCommodityManager.getProductRecommendList("1","4",productId,sessionKey)

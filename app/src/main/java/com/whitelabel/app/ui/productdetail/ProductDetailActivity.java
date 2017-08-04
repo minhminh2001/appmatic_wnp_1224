@@ -158,6 +158,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     }
     @Override
     public void updateRecommendData(ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity> results) {
+        JLogUtils.i("ray","results:"+results.size());
         recommendedListAdapter.updateData(results);
     }
     @Override
@@ -429,6 +430,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mImageLoader = new ImageLoader(this);
         mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         mGATrackTimeEnable = true;
         setContentView(R.layout.activity_product);
@@ -444,7 +446,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     private void initData() {
         setStatusBarColor(JToolUtils.getColor(R.color.transparent5000));
         TAG = TAG + JTimeUtils.getCurrentTimeLong();
-        mImageLoader = new ImageLoader(this);
+
         mAttributeEntity = new WheelPickerConfigEntity();
         mAttributeEntity.setArrayList(new ArrayList<WheelPickerEntity>());
         mAttributeEntity.setOldValue(new WheelPickerEntity());
@@ -517,6 +519,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         llWebView = (LinearLayout) findViewById(R.id.ll_webView);
         mWebView = getWebView();
         myScrollView = (CustomNestedScrollView) findViewById(R.id.myScroll);
+        rlProductrecommendLine= (RelativeLayout) findViewById(R.id.rl_productrecommend_line);
         ivProductImage = (ImageView) findViewById(R.id.ivProductImage);
         llAttribute = (LinearLayout) findViewById(R.id.ll_attribute);
         ivHeaderBarWishlist = (ImageView) findViewById(R.id.ivHeaderBarWishlist);

@@ -188,7 +188,8 @@
                     android:id="@+id/rl_productrecommend_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/final_relativelayout"
+                    android:paddingBottom="60dp"
+                    android:layout_below="@+id/detail_descriptions_RelativeLayout"
                     android:background="@color/white"
                     android:orientation="vertical">
 

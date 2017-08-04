@@ -108,7 +108,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
 
 
     public void requestCurrency(String sessionkey,String deviceToken){
-        configService.getCurrencyUnit(sessionkey,deviceToken)
+        Subscription subscription=  configService.getCurrencyUnit(sessionkey,deviceToken)
         .compose(RxUtil.<GOCurrencyEntity>rxSchedulerHelper())
         .subscribe(new Subscriber<GOCurrencyEntity>() {
             @Override
@@ -129,6 +129,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                 timeOutJudgment();
             }
         });
+        addSubscrebe(subscription);
     }
 //    @Override
 //    public void getConfigInfo() {
