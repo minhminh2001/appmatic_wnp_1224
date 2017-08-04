@@ -7,12 +7,13 @@ import java.io.Serializable;
  */
 public class NotificationReceivedEntity implements Serializable{
     private String title;
-    private String message;
+    private String body;
     private String deep_link;
     private String items_id;
     private String sent_at;
     private String banner;
     private String expiry_date;
+    private String code;
 
     public String getExpiry_date() {
         return expiry_date;
@@ -45,12 +46,20 @@ public class NotificationReceivedEntity implements Serializable{
         this.title = title;
     }
 
-    public String getMessage() {
-        return message;
+    public String getBody() {
+        return body;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getDeep_link() {

@@ -170,6 +170,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
         Bundle bundle = getIntent().getExtras();
         mDialog = JViewUtils.showProgressDialog(NotificationDetailActivity.this);
         String device_token= WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken();
+        String userId=WhiteLabelApplication.getAppConfiguration().getUser().getId();
         if (bundle != null && !JDataUtils.isEmpty(bundle.getString("where"))) {
             NotificationReceivedEntity entity = (NotificationReceivedEntity) bundle.getSerializable("data");
             if (entity != null) {
@@ -180,7 +181,9 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
                 setTitle(entity.getTitle());
             }
             isUnRead = true;
-            mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), itemId,"", "1",device_token);
+            notificationCode=entity.getCode();
+            mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), userId,notificationCode,
+                    "1",device_token);
         } else if (bundle != null) {
             NotificationCell notificationCell = (NotificationCell) bundle.getSerializable("data");
             isUnRead = notificationCell.getState() == 0 ? true : false;
@@ -190,7 +193,6 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
             }
             itemId = notificationCell.getId();
             notificationCode=notificationCell.getCode();
-            String userId=WhiteLabelApplication.getAppConfiguration().getUser().getId();
             mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
                     userId, notificationCell.getCode(),"1","");
         }

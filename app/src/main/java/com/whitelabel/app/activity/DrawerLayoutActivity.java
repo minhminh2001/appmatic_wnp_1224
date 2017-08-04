@@ -419,10 +419,10 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
             String sessionKey = "";
             boolean bool = DrawerLayoutActivity.this.refreshNotification(type, id);
             if (!bool) {
-                if (WhiteLabelApplication.getAppConfiguration().getUser() != null && WhiteLabelApplication.getAppConfiguration() != null) {
-                    sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-                }
-                mDao.getNotificationDetailCount(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
+//                if (WhiteLabelApplication.getAppConfiguration().getUser() != null && WhiteLabelApplication.getAppConfiguration() != null) {
+//                    sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+//                }
+//                mDao.getNotificationDetailCount(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
             }
         }
     };

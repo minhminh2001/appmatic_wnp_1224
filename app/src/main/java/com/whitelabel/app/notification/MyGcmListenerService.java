@@ -24,6 +24,7 @@ import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.NotificationReceivedEntity;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
+import com.whitelabel.app.utils.IncrementUntil;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 
@@ -64,6 +65,7 @@ public class MyGcmListenerService extends GcmListenerService {
     private static int requestId = 1;
     public void createNotification(String message) {
         final NotificationReceivedEntity entity = new Gson().fromJson(message, NotificationReceivedEntity.class);
+        entity.setItems_id(IncrementUntil.newInstance().incrementNum()+"");
 //        try {
 //            FirebaseEventUtils.getInstance().customizedNotificationReceive(getApplicationContext(), entity.getTitle());
 //        } catch (Exception ex) {
@@ -76,7 +78,7 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color())
                 .setSmallIcon(getNotificationIcon())
                 .setContentTitle(entity.getTitle())
-                .setContentText(entity.getMessage())
+                .setContentText(entity.getBody())
                 .setContentIntent(createIntent(entity))
                 .setAutoCancel(true)
                 .setTicker(entity.getTitle())
@@ -90,12 +92,11 @@ public class MyGcmListenerService extends GcmListenerService {
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
 
                     NotificationCompat.BigPictureStyle bps = new NotificationCompat.BigPictureStyle().bigPicture(resource);
-                    bps.setSummaryText(entity.getMessage());
+                    bps.setSummaryText(entity.getBody());
                     nb.setStyle(bps);
 
                     sendNotification(entity, nb);
                 }
-
                 @Override
                 public void onLoadFailed(Exception ex, Drawable errorDrawable) {
                     ex.getMessage();
@@ -107,7 +108,6 @@ public class MyGcmListenerService extends GcmListenerService {
             sendNotification(entity, nb);
         }
     }
-
     private PendingIntent createIntent(NotificationReceivedEntity entity) {
         Intent intent = new Intent(MyGcmListenerService.this, NotificationDetailActivity.class);
         Bundle bundle = new Bundle();
@@ -119,7 +119,6 @@ public class MyGcmListenerService extends GcmListenerService {
         requestId++;
         return pendingIntent;
     }
-
     private void sendNotification(NotificationReceivedEntity entity, NotificationCompat.Builder nb) {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         try {
@@ -141,12 +140,10 @@ public class MyGcmListenerService extends GcmListenerService {
             ex.printStackTrace();
             JLogUtils.e(TAG, ex.getMessage());
         }
-
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         nb.setSound(alarmSound, AudioManager.STREAM_MUSIC);
         NotificationManager notificationManager =
                 (NotificationManager) MyGcmListenerService.this.getSystemService(Context.NOTIFICATION_SERVICE);
-
         int notifyId = 0;
         String title = "null";
         try {
