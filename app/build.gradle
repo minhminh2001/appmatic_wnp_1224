@@ -76,17 +76,12 @@ android {
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
-
+    flavorDimensions "default"
     productFlavors {
         wnp {
-
+            dimension "default"
         }
-        whitelabel {
 
-        }
-        evisu {
-
-        }
     }
     signingConfigs {
         sign

@@ -51,7 +51,7 @@ public class NotificationDao extends BaseHttp {
      * @param read       set read  =0   auto set unread.
      *                   read=1  auto  set read
      */
-    public void getNotificationDetail(String sessionKey,String id,String read,String device_token){
+    public void getNotificationDetail(String sessionKey,String id,String code,String read,String device_token){
         params=new TreeMap<>();
         params.put("session_key",sessionKey);
         params.put("id",id);
@@ -59,7 +59,7 @@ public class NotificationDao extends BaseHttp {
         if(!TextUtils.isEmpty(device_token)) {
             params.put("device_token", device_token);
         }
-        requestHttp(HTTP_METHOD.GET,"appservice/notification/"+id,params,REQUEST_NOTIFICATIONDETAIL);
+        requestHttp(HTTP_METHOD.GET,"appservice/notification/"+id+"/"+code,params,REQUEST_NOTIFICATIONDETAIL);
     }
 
     public void getNotificationDetailCount(String session_key, String device_token) {
@@ -80,10 +80,11 @@ public class NotificationDao extends BaseHttp {
         if(WhiteLabelApplication.getAppConfiguration().getUser()!=null) {
             userId = WhiteLabelApplication.getAppConfiguration().getUser().getId();
         }
+
         params.put("page", page);
         params.put("pagesize", pagesize);
         params.put("device_token", device_token);
-        requestHttp(HTTP_METHOD.GET, "appservice/notification/list/12755", params, REQUEST_GETLIST, page);
+        requestHttp(HTTP_METHOD.GET, "appservice/notification/list/"+userId, params, REQUEST_GETLIST, page);
     }
 
     @Override
@@ -93,7 +94,6 @@ public class NotificationDao extends BaseHttp {
             case REQUEST_GETLIST:
                 if (isOkByCode(response)) {
                     SVRAppserviceNotificationListReturnEntity entity = JJsonUtils.parseJsonObj(response, SVRAppserviceNotificationListReturnEntity.class);
-                    JLogUtils.i("ray","SVRAppserviceNotificationListReturnEntity:"+entity);
                     entity.setPage(Integer.parseInt((String) object));
                     postHandler(REQUEST_GETLIST, entity, RESPONSE_SUCCESS);
                 } else {

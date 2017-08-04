@@ -13,6 +13,7 @@ public class NotificationCell implements Serializable{
     private int unread;
 //    private String sent_at;
     private String notification_id;
+    private int state;
     private String title;
     private String body;
     private String attached_link;
@@ -22,8 +23,17 @@ public class NotificationCell implements Serializable{
     private String productId;
     private String landingPageId;
     private String active;
+    private String code;
     private String banner;
     private String expiryTime;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public String getId() {
         return id;
@@ -66,6 +76,14 @@ public class NotificationCell implements Serializable{
         return landingPageId;
     }
 
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public void setLandingPageId(String landingPageId) {
         this.landingPageId = landingPageId;
     }
@@ -101,19 +119,6 @@ public class NotificationCell implements Serializable{
     public void setAttached_link_type(int attached_link_type) {
         this.attached_link_type = attached_link_type;
     }
-
-
-
-    public int getUnread() {
-        return unread;
-    }
-
-    public void setUnread(int unread) {
-        this.unread = unread;
-    }
-
-
-
     public String getNotification_id() {
         return notification_id;
     }

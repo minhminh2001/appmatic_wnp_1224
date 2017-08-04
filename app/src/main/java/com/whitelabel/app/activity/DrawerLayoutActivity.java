@@ -1,5 +1,6 @@
 package com.whitelabel.app.activity;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -372,6 +373,9 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
+        receiver = new NotificationReceiver(callback);
+        IntentFilter intentFilter = new IntentFilter(NotificationReceiver.ACTION);
+        registerReceiver(receiver, intentFilter);
 //        receiver = new NotificationReceiver(callback);
 //        IntentFilter intentFilter = new IntentFilter(NotificationReceiver.ACTION);
 //        registerReceiver(receiver, intentFilter);

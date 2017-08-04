@@ -64,8 +64,6 @@
                                 />
                         </RelativeLayout>
 
-
-
                         <LinearLayout
                             android:orientation="horizontal"
                             android:id="@+id/ll_googleLogin"

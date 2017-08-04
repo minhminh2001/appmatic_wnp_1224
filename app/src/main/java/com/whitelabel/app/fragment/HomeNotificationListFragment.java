@@ -185,20 +185,20 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
                                 fragment.list.clear();
                                 fragment.currType = fragment.SUCCESS;
                                 if (notificationListReturnEntity == null || notificationListReturnEntity.getData() == null ||
-                                   notificationListReturnEntity.getData().length == 0) {
+                                   notificationListReturnEntity.getData().getData().length == 0) {
                                     fragment.rlEmpty.setVisibility(View.VISIBLE);
                                 }
                             }
-                            fragment.unReadCount = notificationListReturnEntity.getNotification_unread_count();
+                            fragment.unReadCount = notificationListReturnEntity.getData().getUnreads();
                              mActivity.get().setTitleNum(fragment.unReadCount);
                             JLogUtils.d("jay","page="+fragment.page);
-                            JLogUtils.d("jay","length="+notificationListReturnEntity.getData().length);
-                            if (notificationListReturnEntity.getData().length > 0) {
+                            JLogUtils.d("jay","length="+notificationListReturnEntity.getData().getData().length);
+                            if (notificationListReturnEntity.getData().getData().length > 0) {
                                 fragment.clistView.setPullLoadEnable(true);
                                 fragment.page++;
                                 fragment.rlEmpty.setVisibility(View.INVISIBLE);
                                 //update adapter
-                                fragment.list.addAll(Arrays.asList(notificationListReturnEntity.getData()));
+                                fragment.list.addAll(Arrays.asList(notificationListReturnEntity.getData().getData()));
                                 fragment. adapter.notifyDataSetChanged();
                             } else {
                                 fragment.clistView.setPullLoadEnable(false);
@@ -225,7 +225,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
                                     }
                                 }
                                 if(!isexist){
-                                    cell.setUnread(1);
+                                    cell.setState(0);
                                     fragment.unReadCount++;
                                     fragment.mCommonCallback.setTitleNum(fragment.unReadCount);
                                     mActivity.get().setTitleNum(fragment.unReadCount);
@@ -256,18 +256,20 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
             super.handleMessage(msg);
         }
     }
-    public void  refresh(int type,String id){
+    public void  refresh(int type,String code){
         if(homeActivity!=null){
             JLogUtils.i(mCurrTag,"refresh(int type,String id)");
             if(type== SendBoardUtil.LOGINCODE){
                 page=1;
                 newSendRequestToGetList();
             }else if(type== SendBoardUtil.NOTIFICATION){
-                if(!TextUtils.isEmpty(id)&&currType==SUCCESS) {
-                    mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), id,"0","");
+                if(currType==SUCCESS) {
+                    String userId=WhiteLabelApplication.getAppConfiguration().getUser().getId();
+                    mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null :
+                            WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), userId,code,"0","");
                 }
             }else if(type==SendBoardUtil.READFLAG){
-                setRead(id);
+                setRead(code);
             }
           }
     }
@@ -277,14 +279,14 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
         if(list!=null&&!TextUtils.isEmpty(id)) {
             for (int i = 0; i < list.size(); i++) {
                 JLogUtils.i(TAG,"getItems_id:"+list.get(i).getId());
-                if(id.equals(list.get(i).getId())){
+                if(id.equals(list.get(i).getCode())){
                     JLogUtils.i(TAG,"right");
                     unReadCount--;
                     mCommonCallback.setTitleNum(unReadCount);
                     if(getActivity()!=null) {
                         BadgeUtils.setBadge(getActivity(), unReadCount);
                     }
-                    list.get(i).setUnread(0);
+                    list.get(i).setState(1);
                     break;
                 }
             }
@@ -301,14 +303,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
 
     @Override
     public void onStart() {
-//        if(isStop){
-//            JLogUtils.i(mCurrTag,"onStart()");
-//            newSendRequestToGetList();
-//        }
         super.onStart();
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, true);
-//        GaTrackHelper.getInstance().googleAnalytics("Notification list screen", homeActivity);
-//        JLogUtils.i("googleGA_screen", "Notification list screen");
     }
     @Override
     public void onStop() {
@@ -330,9 +325,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
     public void onLoadMore() {
 //        if(page!=1) {
             newSendRequestToGetList();
-//        }else{
-//            clistView.stopLoadMore();
-//        }
+
     }
     public void newSendRequestToGetList(){
             sendRequestToGetList();

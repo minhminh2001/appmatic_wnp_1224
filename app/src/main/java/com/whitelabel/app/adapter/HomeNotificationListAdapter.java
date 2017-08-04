@@ -61,15 +61,15 @@ public class HomeNotificationListAdapter extends BaseAdapter {
         viewHolder.tvTile.setText(title);
         viewHolder.tvTime.setText(notificationCell.getCreated_at());
 
-        if (notificationCell.getUnread() == 1) {//unRead
+        if (notificationCell.getState() == 1) {//Read
 //            convertView.setBackgroundColor(context.getResources().getColor(R.color.white));
-            convertView.setBackgroundResource(R.drawable.selector_helpcenterlist_and_notificationlist);
-            viewHolder.ivDot.setVisibility(View.VISIBLE);
-
-        } else {//Read
-//            convertView.setBackgroundColor(context.getResources().getColor(R.color.greyF8F8F8));
             convertView.setBackgroundResource(R.drawable.selector_helpcenterlist_and_notificationlist2);
             viewHolder.ivDot.setVisibility(View.INVISIBLE);
+
+        } else {//unRead
+//            convertView.setBackgroundColor(context.getResources().getColor(R.color.greyF8F8F8));
+            convertView.setBackgroundResource(R.drawable.selector_helpcenterlist_and_notificationlist);
+            viewHolder.ivDot.setVisibility(View.VISIBLE);
         }
         return convertView;
     }

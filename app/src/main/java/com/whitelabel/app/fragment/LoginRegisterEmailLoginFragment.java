@@ -467,7 +467,7 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         TextView forgotPassword = (TextView) contentView.findViewById(R.id.forgot_password);
         forgotPassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         //      bottomText=contentView.findViewById(R.id.bottomText);
-//        ivFacebookLogin.setOnClickListener(this);
+        ivFacebookLogin.setOnClickListener(this);
         sign_in.setOnClickListener(this);
         register.setOnClickListener(this);
         llGoogleLogin.setOnClickListener(this);

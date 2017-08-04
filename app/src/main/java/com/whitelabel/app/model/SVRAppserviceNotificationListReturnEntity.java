@@ -7,9 +7,8 @@ public class SVRAppserviceNotificationListReturnEntity extends SVRReturnEntity {
 
     private int code;
     private int page;
-    private NotificationCell [] data;
+    private NotificationListEntity  data;
 
-    private int notification_unread_count;
 
     public int getCode() {
         return code;
@@ -28,19 +27,11 @@ public class SVRAppserviceNotificationListReturnEntity extends SVRReturnEntity {
     }
 
 
-    public NotificationCell[] getData() {
+    public NotificationListEntity getData() {
         return data;
     }
 
-    public void setData(NotificationCell[] data) {
+    public void setData(NotificationListEntity data) {
         this.data = data;
-    }
-
-    public int getNotification_unread_count() {
-        return notification_unread_count;
-    }
-
-    public void setNotification_unread_count(int notification_unread_count) {
-        this.notification_unread_count = notification_unread_count;
     }
 }

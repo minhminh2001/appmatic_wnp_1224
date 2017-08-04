@@ -507,6 +507,10 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         });
     }
     public boolean refreshNotification(int type, String id) {
+        if (mCurrentFragment instanceof HomeNotificationListFragment) {
+            ((HomeNotificationListFragment) mCurrentFragment).refresh(type, id);
+            return true;
+        }
         return false;
     }
     @Override

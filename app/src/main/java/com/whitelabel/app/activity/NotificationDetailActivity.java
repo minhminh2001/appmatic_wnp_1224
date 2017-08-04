@@ -34,7 +34,6 @@ import com.whitelabel.app.widget.CustomTextView;
 import java.lang.ref.WeakReference;
 
 public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
-
     private CustomTextView webView_content;
     private Button btnOpen;
     private String attached_link;
@@ -47,8 +46,8 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
     private boolean isUnRead;
     private View connectionLayout;
     private RequestErrorHelper requestErrorHelper;
-//    private LinearLayout mLlBottomBar;
-    public static final int RESPONSECODE = 1000;
+    String itemId = "";
+    private String notificationTitle;
     private ImageLoader mImageLoader;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +60,11 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
         btnOpen = (Button) findViewById(R.id.notification_detail_open);
         tvNotiTitle = (TextView) findViewById(R.id.tv_nitititle);
         tvTime = (TextView) findViewById(R.id.tv_notification_time);
-//        mLlBottomBar = (LinearLayout) findViewById(R.id.llBottomBar);
-//        mLlBottomBar.setOnClickListener(this);
-//        ivBack.setOnClickListener(this);
         btnOpen.setOnClickListener(this);
-//        btnOpen.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
         JViewUtils.setSoildButtonGlobalStyle(this,btnOpen);
         DataHandler dataHandler = new DataHandler(this);
         mDao = new NotificationDao(TAG, dataHandler);
         initData();
-
         connectionLayout = findViewById(R.id.connectionBreaks);
         requestErrorHelper=new RequestErrorHelper(this,connectionLayout);
         LinearLayout tryAgain = (LinearLayout) findViewById(R.id.try_again);
@@ -81,10 +75,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
                 initData();
             }
         });
-
     }
-
-
     private void initToolBar() {
         setTitle("");
         setLeftMenuIcon(R.drawable.action_back);
@@ -131,14 +122,11 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
             }
         }
     }
-
     private static final class DataHandler extends Handler {
         private final WeakReference<NotificationDetailActivity> mActivity;
-
         public DataHandler(NotificationDetailActivity activity) {
             mActivity = new WeakReference<NotificationDetailActivity>(activity);
         }
-
         @Override
         public void handleMessage(Message msg) {
             if (mActivity.get() == null) {
@@ -162,7 +150,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
                     if (msg.arg1 == NotificationDao.RESPONSE_SUCCESS) {
                         mActivity.get().mBean = (NotificationCell) msg.obj;
                         if (mActivity.get().isUnRead) {
-                            SendBoardUtil.sendNotificationBoard(mActivity.get(), SendBoardUtil.READFLAG, mActivity.get().mBean.getId());
+                            SendBoardUtil.sendNotificationBoard(mActivity.get(), SendBoardUtil.READFLAG, mActivity.get().notificationCode);
                         }
                         mActivity.get().setUiData(mActivity.get().mBean);
                     } else {
@@ -177,10 +165,7 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
             super.handleMessage(msg);
         }
     }
-
-    String itemId = "";
-    private String notificationTitle;
-
+    private String notificationCode;
     private void initData() {
         Bundle bundle = getIntent().getExtras();
         mDialog = JViewUtils.showProgressDialog(NotificationDetailActivity.this);
@@ -195,40 +180,35 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
                 setTitle(entity.getTitle());
             }
             isUnRead = true;
-            mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), itemId, "1",device_token);
+            mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), itemId,"", "1",device_token);
         } else if (bundle != null) {
             NotificationCell notificationCell = (NotificationCell) bundle.getSerializable("data");
-//            try {
-//                FirebaseEventUtils.getInstance().customizedInAppNotificationOpen(NotificationDetailActivity.this, notificationCell.getTitle());
-//            } catch (Exception ex) {
-//                ex.getStackTrace();
-//            }
-            isUnRead = notificationCell.getUnread() == 1 ? true : false;
+            isUnRead = notificationCell.getState() == 0 ? true : false;
             if (!TextUtils.isEmpty(notificationCell.getTitle())) {
                 setTitle(notificationCell.getTitle());
                 notificationTitle = notificationCell.getTitle();
             }
             itemId = notificationCell.getId();
-            mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(), itemId, "1","");
+            notificationCode=notificationCell.getCode();
+            String userId=WhiteLabelApplication.getAppConfiguration().getUser().getId();
+            mDao.getNotificationDetail(WhiteLabelApplication.getAppConfiguration().getUser() == null ? null : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
+                    userId, notificationCell.getCode(),"1","");
         }
-
         try {
             NotificationManager manger = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
             manger.cancel(Integer.parseInt(itemId));
         } catch (Exception ex) {
             ex.getStackTrace();
         }
-
-        try {
-            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
-                    "Open Notification Detail",
-                    notificationTitle,
-                    Long.valueOf(itemId));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
+//                    "Open Notification Detail",
+//                    notificationTitle,
+//                    Long.valueOf(itemId));
+//        } catch (NumberFormatException e) {
+//            e.printStackTrace();
+//        }
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

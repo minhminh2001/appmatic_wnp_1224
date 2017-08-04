@@ -84,6 +84,7 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
     public void refresh(boolean isRefresh) {
         if(isRefresh) {
             requestData();
+
         }
     }
     @Override
