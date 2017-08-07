@@ -8,6 +8,7 @@ import com.whitelabel.app.ui.home.MainContract;
 import com.whitelabel.app.utils.RxUtil;
 
 import rx.Subscriber;
+import rx.Subscription;
 
 /**
  * Created by Administrator on 2017/8/7.
@@ -21,8 +22,9 @@ public class MainPresenterImpl extends RxPresenter<MainContract.View>implements 
     }
     @Override
     public void getNotificationUnReadCount() {
+        if(!iBaseManager.isSign())return ;
         String userId=iBaseManager.getUser().getId();
-        iAccountManager.getNotificationUnReadCount(userId)
+        Subscription subscription= iAccountManager.getNotificationUnReadCount(userId)
         .compose(RxUtil.<NotificationUnReadResponse>rxSchedulerHelper())
         .subscribe(new Subscriber<NotificationUnReadResponse>() {
             @Override
@@ -39,5 +41,6 @@ public class MainPresenterImpl extends RxPresenter<MainContract.View>implements 
 
             }
         });
+       addSubscrebe(subscription);
     }
 }
