@@ -322,10 +322,8 @@ public class JToolUtils {
             }
         return false;
     }
-
-
     public static  boolean expireHandler(String errorMsg){
-        if(SESSION_EXPIRED.equals(errorMsg)){
+        if((!JDataUtils.isEmpty(errorMsg)) && (errorMsg.contains(SESSION_EXPIRED))){
                 return true;
         }
         return false;

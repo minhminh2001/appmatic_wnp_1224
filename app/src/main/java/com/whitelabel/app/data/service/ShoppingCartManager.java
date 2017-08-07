@@ -82,7 +82,7 @@ public class ShoppingCartManager implements IShoppingCartManager {
                     @Override
                     public Observable<ResponseModel> call(ResponseModel responseModel) {
                         if(responseModel.getStatus()==-1){
-                                return Observable.error(new ApiException(responseModel.getErrorMessage()));
+                            return Observable.error(new ApiException(responseModel.getErrorMessage()));
                         }else{
                             return Observable.just(responseModel);
                         }

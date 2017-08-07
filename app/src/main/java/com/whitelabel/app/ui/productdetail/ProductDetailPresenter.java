@@ -329,6 +329,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                             if (JToolUtils.expireHandler(ExceptionParse.parseException(e).getErrorMsg())) {
                                 mView.startLoginActivity();
                             }
+                            JLogUtils.i("ray","errorMsg:"+ExceptionParse.parseException(e).getErrorMsg());
                             mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
                     }
                     @Override
