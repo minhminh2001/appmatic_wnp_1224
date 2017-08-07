@@ -178,8 +178,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
         if(iBaseManager.isSign()) {
             count= (int) (iBaseManager.getUser().getCartItemCount()+count);
         }
-            mView.setShoppingCartCount(count);
-
+        mView.setShoppingCartCount(count);
     }
     @Override
     public void wishListBtnClick() {
@@ -194,7 +193,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                 mProduct.setIsLike(1);
             }
          }else{
-             mView.startLoginActivity();
+             mView.startLoginActivity(false);
          }
     }
     public void setmProduct(ProductDetailModel mProduct) {
@@ -282,7 +281,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                 addToShoppingCart(params);
             }else{
                 delayAddToCart=true;
-                mView.startLoginActivity();
+                mView.startLoginActivity(false);
             }
         } else if(isOutOfStock) {
             wishListBtnClick();
@@ -327,7 +326,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                     public void onError(Throwable e) {
                             mView.dissmissProgressDialog();
                             if (JToolUtils.expireHandler(ExceptionParse.parseException(e).getErrorMsg())) {
-                                mView.startLoginActivity();
+                                mView.startLoginActivity(true);
                             }
                             JLogUtils.i("ray","errorMsg:"+ExceptionParse.parseException(e).getErrorMsg());
                             mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());

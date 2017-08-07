@@ -16,9 +16,11 @@ import com.whitelabel.app.ui.common.BaseAddressPresenter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 import com.whitelabel.app.ui.home.HomeContract;
 import com.whitelabel.app.ui.home.HomeHomeContract;
+import com.whitelabel.app.ui.home.MainContract;
 import com.whitelabel.app.ui.home.presenter.HomeCategoryDetailPresenterImpl;
 import com.whitelabel.app.ui.home.presenter.HomeHomePresenterImpl;
 import com.whitelabel.app.ui.home.presenter.HomePresenterImpl;
+import com.whitelabel.app.ui.home.presenter.MainPresenterImpl;
 import com.whitelabel.app.ui.productdetail.ProductDetailContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailPresenter;
 import com.whitelabel.app.ui.start.StartContract;
@@ -38,13 +40,11 @@ public class PresenterModule {
     public PresenterModule(Activity activity) {
         this.mActivity = activity;
     }
-
     @Provides
     @ActivityScope
     public Activity provideActivity() {
         return mActivity;
     }
-
     @Provides
     @ActivityScope
     public StartContract.Presenter  provideStartPresenter(IBaseManager configService){
@@ -55,32 +55,26 @@ public class PresenterModule {
     public HomeContract.Presenter  provideHomeFragmentV2Presenter(ICommodityManager iCommodityManager,IBaseManager configService){
         return new HomePresenterImpl(iCommodityManager,configService);
     }
-
     @Provides
     @ActivityScope
     public  HomeHomeContract.Presenter provideHomeHomeFragmentV1Presenter(ICommodityManager iCommodityManager){
         return new HomeHomePresenterImpl(iCommodityManager);
     }
-
     @Provides
     @ActivityScope
     public  HomeCategoryDetailContract.Presenter provideHomeHomeV3Presenter(ICommodityManager iCommodityManager,IBaseManager iBaseManager){
         return new HomeCategoryDetailPresenterImpl(iCommodityManager,iBaseManager);
     }
-
     @Provides
     @ActivityScope
     public  ProductDetailContract.Presenter provideProductDetailPresenter(ICommodityManager iCommodityManager, IBaseManager iBaseManager, IAccountManager iAccountManager, IShoppingCartManager iShoppingCartManager){
         return new ProductDetailPresenter(iAccountManager,iCommodityManager,iBaseManager,iShoppingCartManager);
     }
-
     @Provides
     @ActivityScope
     public  BaseAddressContract.Presenter provideAddressBasePresenter(ICommodityManager iCommodityManager, IAccountManager iAccountManager){
         return new BaseAddressPresenter(iCommodityManager,iAccountManager);
     }
-
-
     @Provides
     @ActivityScope
     public  CheckoutDefaultAddressContract.Presenter provideCheckoutDefaultAddressPresenter(ICheckoutManager iCheckoutManager, IBaseManager iBaseManager){
@@ -91,5 +85,9 @@ public class PresenterModule {
     public   CheckoutContract.Presenter provideCheckoutPresenter(ICheckoutManager iCheckoutManager, IBaseManager iBaseManager){
         return new CheckoutPresenterImpl(iBaseManager,iCheckoutManager);
     }
-
+    @Provides
+    @ActivityScope
+    public MainContract.Presenter provideMainPresenter(IBaseManager iBaseManager,IAccountManager iAccountManager){
+        return new MainPresenterImpl(iBaseManager,iAccountManager);
+    }
 }

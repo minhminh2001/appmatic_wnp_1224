@@ -30,6 +30,7 @@ import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
 import com.whitelabel.app.model.TMPHelpCenterListToDetailEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.ui.home.MainContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.FragmentFactory;
 import com.whitelabel.app.utils.JLogUtils;
@@ -38,7 +39,11 @@ import com.whitelabel.app.utils.JViewUtils;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragment.HomeCommonCallback {
+
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
+public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> implements HomeBaseFragment.HomeCommonCallback ,MainContract.View{
     public static final int FRAGMENT_TYPE_HOME_HOME = 0;    //Home;
     public static final int FRAGMENT_TYPE_HOME_MYACCOUNT = 1;   //Sign in;
     public static final int FRAGMENT_TYPE_HOME_HELPCENTERLIST = 3;  //Help Centre;
@@ -92,6 +97,23 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         if (!(mCurrentFragment instanceof HomeHomeFragment)) {
             switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_HOME, serializable);
         }
+    }
+
+    @Override
+    public void requestNotificationUnReadCount() {
+        mPresenter.getNotificationUnReadCount();
+    }
+
+
+    @Override
+    public void setNotificationUnReadCount(int unReadCount) {
+        setNotificationCount(unReadCount);
+    }
+
+    @Override
+    protected void initInject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(this)).build().inject(this);
     }
     @Override
     protected void jumpHomePage() {
@@ -276,6 +298,7 @@ public class HomeActivity extends DrawerLayoutActivity implements HomeBaseFragme
         initFragment(savedInstanceState);
         redirectToFragmentByIntent(getIntent());
         redirectToInterfaceByDeepLink();
+        requestNotificationUnReadCount();
     }
     private void redirectToInterfaceByDeepLink() {
         if (getIntent() != null && getIntent().getData() != null) {

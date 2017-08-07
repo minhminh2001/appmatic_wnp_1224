@@ -9,6 +9,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
@@ -24,6 +25,7 @@ import com.whitelabel.app.callback.NotificationCallback;
 import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.utils.BadgeUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JStorageUtils;
@@ -36,7 +38,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/10/3.
  */
-public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
+public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.whitelabel.app.BaseActivity<T> implements View.OnClickListener {
     private CustomCoordinatorLayout rootLayout;
     private AppBarLayout appbar_layout;
     private View flContainer;
@@ -73,8 +75,6 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
     protected abstract void jumpShippingServicePage();
     protected abstract void jumpAddressPage();
     protected abstract void jumpStoreCreditPage();
-
-
     private void setAppBarLayoutBehaviour() {
         AppBarLayout.Behavior behavior = new AppBarLayout.Behavior() {
             @Override
@@ -82,21 +82,17 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
                 // Trigger the following events if it is a vertical scrolling
                 return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL || super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
             }
-
             @Override
             public void onNestedScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
                 super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
-
                 // If I slowly reach the top, without fling, show the RecyclerView
                 int[] firstVisiblePositions = ((StaggeredGridLayoutManager) ((RecyclerView) target).getLayoutManager()).findFirstCompletelyVisibleItemPositions(null);
                 for (int position : firstVisiblePositions) {
                     if (position == 0) {
-//                        showRelatedTerms();
                         break;
                     }
                 }
             }
-
             @Override
             public boolean onNestedFling(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, float velocityX, float velocityY, boolean consumed) {
                 if (velocityY > 500) {
@@ -336,39 +332,53 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
         tvNotificationNum.setBackground(JImageUtils.getThemeCircle(this));
         tvWistNum.setBackground(JImageUtils.getThemeCircle(this));
     }
-    private static final class DataHandler extends Handler {
-        private WeakReference<DrawerLayoutActivity> mActivity;
+//    private static final class DataHandler extends Handler {
+//        private WeakReference<DrawerLayoutActivity> mActivity;
+//        public DataHandler(DrawerLayoutActivity activity) {
+//            mActivity = new WeakReference<>(activity);
+//        }
+//        @Override
+//        public void handleMessage(Message msg) {
+//            if (mActivity.get() == null) {
+//                return;
+//            }
+//            switch (msg.what) {
+//                case NotificationDao.REQUEST_NOTIFICATION_COUNT:
+//                    if (msg.arg1 == NotificationDao.RESPONSE_SUCCESS) {
+//                        Integer integer = (Integer) msg.obj;
+//                        if (integer > 0) {
+//                            if (integer > 99) {
+//                                mActivity.get().tvNotificationNum.setText("99+");
+//                            } else {
+//                                mActivity.get().tvNotificationNum.setText(String.valueOf(integer));
+//                            }
+//                            mActivity.get().tvNotificationNum.setVisibility(View.VISIBLE);
+//                        } else {
+//                            mActivity.get().tvNotificationNum.setVisibility(View.INVISIBLE);
+//                        }
+//                        BadgeUtils.setBadge(mActivity.get().getApplicationContext(), integer);
+//                    }
+//                    break;
+//            }
+//            super.handleMessage(msg);
+//        }
+//    }
 
-        public DataHandler(DrawerLayoutActivity activity) {
-            mActivity = new WeakReference<>(activity);
-        }
 
-        @Override
-        public void handleMessage(Message msg) {
-            if (mActivity.get() == null) {
-                return;
+
+    public void setNotificationCount(int  count){
+        if (count > 0) {
+            if (count > 99) {
+             tvNotificationNum.setText("99+");
+            } else {
+              tvNotificationNum.setText(String.valueOf(count));
             }
-            switch (msg.what) {
-                case NotificationDao.REQUEST_NOTIFICATION_COUNT:
-                    if (msg.arg1 == NotificationDao.RESPONSE_SUCCESS) {
-                        Integer integer = (Integer) msg.obj;
-                        if (integer > 0) {
-                            if (integer > 99) {
-                                mActivity.get().tvNotificationNum.setText("99+");
-                            } else {
-                                mActivity.get().tvNotificationNum.setText(String.valueOf(integer));
-                            }
-                            mActivity.get().tvNotificationNum.setVisibility(View.VISIBLE);
-                        } else {
-                            mActivity.get().tvNotificationNum.setVisibility(View.INVISIBLE);
-                        }
-                        BadgeUtils.setBadge(mActivity.get().getApplicationContext(), integer);
-                    }
-                    break;
-            }
-            super.handleMessage(msg);
+            tvNotificationNum.setVisibility(View.VISIBLE);
+        } else {
+           tvNotificationNum.setVisibility(View.INVISIBLE);
         }
     }
+    ActionBarDrawerToggle mActionDrawableToggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -389,19 +399,15 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
 //        SendBoardUtil.sendNotificationBoard(this, SendBoardUtil.READCODE, null);
         initLayout();
 //        setAppBarLayoutBehaviour();
-//        mActionDrawableToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.openDrawer, R.string.closeDrawer) {
-//            @Override
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-//                String sessionKey = "";
-//                if (WhiteLabelApplication.getAppConfiguration().getUser() != null && WhiteLabelApplication.getAppConfiguration() != null) {
-//                    sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-//                }
-//                mDao.getNotificationDetailCount(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
-//            }
-//        };
-//        getDrawerLayout().addDrawerListener(mActionDrawableToggle);
-//        mActionDrawableToggle.syncState();
+        mActionDrawableToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.openDrawer, R.string.closeDrawer) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                requestNotificationUnReadCount();
+            }
+        };
+        getDrawerLayout().addDrawerListener(mActionDrawableToggle);
+        mActionDrawableToggle.syncState();
     }
 
     @Override
@@ -411,22 +417,16 @@ public abstract class DrawerLayoutActivity extends com.whitelabel.app.BaseActivi
             unregisterReceiver(receiver);
         }
     }
-
-    private NotificationDao mDao;
     private NotificationCallback callback = new NotificationCallback() {
         @Override
         public void refreshNotification(int type, String id) {
-            String sessionKey = "";
             boolean bool = DrawerLayoutActivity.this.refreshNotification(type, id);
             if (!bool) {
-//                if (WhiteLabelApplication.getAppConfiguration().getUser() != null && WhiteLabelApplication.getAppConfiguration() != null) {
-//                    sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-//                }
-//                mDao.getNotificationDetailCount(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
+                requestNotificationUnReadCount();
             }
         }
     };
-
+    public abstract void requestNotificationUnReadCount();
     public void resetSate() {
         tvHome.setSelected(false);
         tvCategoryTree.setSelected(false);

@@ -630,7 +630,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
                         if(WhiteLabelApplication.getAppConfiguration().isSignIn(getApplicationContext())) {
                             gotoShoppingCartActivity();
                         }else{
-                            startLoginActivity();
+                            startLoginActivity(false);
                         }
                     }
                 });
@@ -1318,9 +1318,12 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
                 (ProductPropertyModel) mAttributeViews.get(mAttributeViews.size()-1).getTag();
         return bean.getProductId();
     }
-    public void  startLoginActivity(){
+    public void  startLoginActivity(boolean expire){
         Intent intent = new Intent();
         intent.setClass(ProductDetailActivity.this, LoginRegisterActivity.class);
+        if(expire){
+            intent.putExtra("expire", true);
+        }
         startActivityForResult(intent, REQUESTCODE_LOGIN);
         overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
     }

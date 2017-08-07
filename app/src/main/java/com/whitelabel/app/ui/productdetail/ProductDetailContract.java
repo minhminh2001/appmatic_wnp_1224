@@ -35,7 +35,7 @@ public interface ProductDetailContract {
         void setShoppingCartCount(int count);
         public void setWishIconColorToBlank();
         public void setWishIconColorToThemeColor();
-        public void startLoginActivity();
+        public void startLoginActivity(boolean expire);
         public void startShoppingCartActivity();
         public void showNoInventoryToast();
         public void setProductCountView(long count);

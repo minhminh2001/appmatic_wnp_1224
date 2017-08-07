@@ -5,6 +5,7 @@ import com.whitelabel.app.data.retrofit.MyAccoutApi;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.AddresslistReslut;
 import com.whitelabel.app.model.ApiException;
+import com.whitelabel.app.model.NotificationUnReadResponse;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
@@ -67,6 +68,22 @@ public class AccountManager implements IAccountManager{
                            return  Observable.error(new ApiException(wishDelEntityResult.getErrorMessage()));
                         }else{
                             return Observable.just(wishDelEntityResult);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public Observable<NotificationUnReadResponse> getNotificationUnReadCount(String userId) {
+        return myAccoutApi.getNotificationUnReadResponse(userId)
+                .flatMap(new Func1<ResponseModel<NotificationUnReadResponse>, Observable<NotificationUnReadResponse>>() {
+                    @Override
+                    public Observable<NotificationUnReadResponse> call
+                            (ResponseModel<NotificationUnReadResponse> bean) {
+                        if(bean.getCode()==1){
+                            return Observable.just(bean.getData());
+                        }else{
+                            return Observable.error(new ApiException(bean.getErrorMessage()));
                         }
                     }
                 });

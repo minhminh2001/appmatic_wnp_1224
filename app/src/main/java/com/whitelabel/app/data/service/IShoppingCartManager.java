@@ -1,17 +1,17 @@
 package com.whitelabel.app.data.service;
 
-import com.whitelabel.app.model.ResponseModel;
-import com.whitelabel.app.model.ShoppingCartDeleteCellEntity;
-import com.whitelabel.app.model.ShoppingCartListEntityCart;
-import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
+        import com.whitelabel.app.model.ResponseModel;
+        import com.whitelabel.app.model.ShoppingCartDeleteCellEntity;
+        import com.whitelabel.app.model.ShoppingCartListEntityCart;
+        import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
 
-import java.util.Map;
+        import java.util.Map;
 
-import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.POST;
-import rx.Observable;
+        import retrofit2.http.Field;
+        import retrofit2.http.FieldMap;
+        import retrofit2.http.FormUrlEncoded;
+        import retrofit2.http.POST;
+        import rx.Observable;
 
 /**
  * Created by Administrator on 2017/7/12.

@@ -38,6 +38,12 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         });
         initData();
     }
+
+    @Override
+    public void requestNotificationUnReadCount() {
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         View view =setRightTextMenuClickListener(

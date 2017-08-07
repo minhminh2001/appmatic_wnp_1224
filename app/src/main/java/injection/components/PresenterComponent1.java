@@ -36,5 +36,6 @@ public interface PresenterComponent1 {
     void inject(BaseAddressFragment baseAddressFragment);
     void inject(CheckoutDefaultAddressFragment checkoutDefaultAddressFragment);
     void inject(CheckoutActivity checkoutActivity);
+    void inject(HomeActivity homeActivity);
     Activity getActivity();
 }

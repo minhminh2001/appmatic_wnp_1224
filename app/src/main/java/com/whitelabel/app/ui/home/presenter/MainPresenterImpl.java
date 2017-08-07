@@ -1,0 +1,43 @@
+package com.whitelabel.app.ui.home.presenter;
+
+import com.whitelabel.app.data.service.IAccountManager;
+import com.whitelabel.app.data.service.IBaseManager;
+import com.whitelabel.app.model.NotificationUnReadResponse;
+import com.whitelabel.app.ui.RxPresenter;
+import com.whitelabel.app.ui.home.MainContract;
+import com.whitelabel.app.utils.RxUtil;
+
+import rx.Subscriber;
+
+/**
+ * Created by Administrator on 2017/8/7.
+ */
+public class MainPresenterImpl extends RxPresenter<MainContract.View>implements MainContract.Presenter{
+    private IBaseManager iBaseManager;
+    private IAccountManager iAccountManager;
+    public MainPresenterImpl(IBaseManager iBaseManager,IAccountManager iAccountManager){
+        this.iBaseManager=iBaseManager;
+        this.iAccountManager=iAccountManager;
+    }
+    @Override
+    public void getNotificationUnReadCount() {
+        String userId=iBaseManager.getUser().getId();
+        iAccountManager.getNotificationUnReadCount(userId)
+        .compose(RxUtil.<NotificationUnReadResponse>rxSchedulerHelper())
+        .subscribe(new Subscriber<NotificationUnReadResponse>() {
+            @Override
+            public void onCompleted() {
+
+            }
+            @Override
+            public void onError(Throwable e) {
+
+            }
+            @Override
+            public void onNext(NotificationUnReadResponse notificationUnReadResponse) {
+                mView.setNotificationUnReadCount(notificationUnReadResponse.getUnreads());
+
+            }
+        });
+    }
+}

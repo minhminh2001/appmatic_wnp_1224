@@ -2,6 +2,7 @@ package com.whitelabel.app.data.retrofit;
 
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.AddresslistReslut;
+import com.whitelabel.app.model.NotificationUnReadResponse;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
@@ -13,6 +14,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -32,4 +34,8 @@ public interface MyAccoutApi {
     @FormUrlEncoded
     @POST("appservice/wishlist/addToWishList")
     public rx.Observable<AddToWishlistEntity>  addWish(@Field("session_key")String sessionKey, @Field("product_id") String productId);
+
+    @GET("appservice/notification/unreads/{user_id}")
+    public rx.Observable<ResponseModel<NotificationUnReadResponse>>  getNotificationUnReadResponse(@Path("user_id") String userId);
+
 }
