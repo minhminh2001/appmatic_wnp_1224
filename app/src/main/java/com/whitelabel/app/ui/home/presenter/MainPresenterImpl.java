@@ -29,11 +29,9 @@ public class MainPresenterImpl extends RxPresenter<MainContract.View>implements 
         .subscribe(new Subscriber<NotificationUnReadResponse>() {
             @Override
             public void onCompleted() {
-
             }
             @Override
             public void onError(Throwable e) {
-
             }
             @Override
             public void onNext(NotificationUnReadResponse notificationUnReadResponse) {
