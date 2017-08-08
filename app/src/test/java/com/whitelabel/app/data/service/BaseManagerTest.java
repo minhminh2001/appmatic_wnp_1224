@@ -47,8 +47,7 @@ public class BaseManagerTest {
         configService.getConfigInfo().subscribe(subscriber);
         subscriber.assertNoErrors();
         subscriber.assertCompleted();
-        RemoteConfigResonseModel user = subscriber.getOnNextEvents()
-                .get(0);
+        RemoteConfigResonseModel user = subscriber.getOnNextEvents().get(0);
         Assert.assertNotNull(user.getData().getUiStyle());
     }
     @Test

@@ -81,7 +81,6 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
         INITExecutor.getInstance().execute(mCallback);
         mPresenter.setStartTime();
         mPresenter. getConfigInfo("","");
-//        setSwipeBackEnable(false);
     }
     static class MeInitCallBack extends   INITCallback{
         WeakReference<StartActivityV2> mStartActivity;
@@ -122,7 +121,6 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
         }
         return true;
     }
-
     @Override
     protected void onStop() {
         super.onStop();

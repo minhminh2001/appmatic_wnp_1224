@@ -22,13 +22,10 @@ import java.util.Map;
 import rx.observers.TestSubscriber;
 
 import static org.junit.Assert.*;
-
 /**
  * Created by Administrator on 2017/7/12.
  */
 public class ShoppingCartManagerTest {
-
-
     ShoppingCartManager  shoppingCartManager;
     String sessionKey;
     @Mock

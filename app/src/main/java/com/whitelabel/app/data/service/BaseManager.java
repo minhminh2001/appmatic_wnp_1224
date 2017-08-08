@@ -32,18 +32,14 @@ public class BaseManager implements IBaseManager {
     public boolean isSign() {
         return cacheApi.getUser()==null?false:true;
     }
-
     @Override
     public GOUserEntity getUser() {
         return cacheApi.getUser();
     }
-
-
     @Override
     public void saveUser(GOUserEntity goUserEntity) {
         cacheApi.saveUser(goUserEntity);
     }
-
     @Override
     public Observable<RemoteConfigResonseModel> getConfigInfo() {
         String userId= cacheApi.getVersionNumber();
@@ -62,7 +58,8 @@ public class BaseManager implements IBaseManager {
     }
     @Override
     public Observable<GOCurrencyEntity> getCurrencyUnit(String sessionKey, String deviceToken) {
-        return  appApi.openApp(sessionKey,deviceToken).flatMap(new Func1<JsonObject, Observable<GOCurrencyEntity>>() {
+        return  appApi.openApp(sessionKey,deviceToken).
+                flatMap(new Func1<JsonObject, Observable<GOCurrencyEntity>>() {
             @Override
             public Observable<GOCurrencyEntity> call(JsonObject jsonObject) {
                 return Observable.just(parseCurrentUnitJson(jsonObject));
@@ -74,7 +71,6 @@ public class BaseManager implements IBaseManager {
             }
         });
     }
-
     public GOCurrencyEntity  parseCurrentUnitJson(JsonObject jsonObject){
         GOCurrencyEntity  goCurrencyEntity=null;
         try {

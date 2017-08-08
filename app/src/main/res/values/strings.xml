@@ -9,6 +9,10 @@
     <string name="payment_creditcard_url">appservice/checkout/ccpayjump?session_key=%1$s&amp;orderId=%2$s&amp;appid=1</string>
     <string name="upload_file_path">appservice/order/uploadTransferProof</string>
     <string name="jump_market_uri">market://details?id=com.whitelabel.app</string>
+    <!-- one all -->
+    <string name="twitter_consumer_key">Jl6f81SYZMnwdNXc5NrjkFWgY</string>
+    <string name="twitter_consumer_secret">0WMBLTTbJnSzU3h7zGH4CHmkVV6oGgo9Dhdka5JTL4go1ZsBK1</string>
+    <string name="twitter_subdomain">ccwnp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string-array name="size_array">
         <item>S</item>
@@ -419,6 +423,9 @@
 
     <string name="login_google">Google</string>
     <string name="campaign_item_soldout">SOLD&#160;OUT</string>
+
+    <string name="login_twitter">Twitter</string>
+
 
 
     <string name="out_of_stock2">SOLD OUT</string>

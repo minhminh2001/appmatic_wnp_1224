@@ -33,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.common.utils.JViewUtil;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookAuthorizationException;
@@ -52,16 +53,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 //import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.whitelabel.app.R;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.whitelabel.app.*;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.FBGraphAPIUserEntity;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
+import com.whitelabel.app.ui.login.LoginFragmentContract;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
@@ -69,8 +72,10 @@ import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.OAError;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.SendBoardUtil;
+import com.whitelabel.app.utils.TwitterWrapper;
 import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
 import com.whitelabel.app.widget.NoUnderLineClickSpan;
 
@@ -80,10 +85,15 @@ import java.lang.ref.WeakReference;
 import java.net.URLEncoder;
 import java.util.Arrays;
 
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+import io.fabric.sdk.android.Fabric;
+
 /**
  * Created by imaginato on 2015/6/10.
  */
-public class LoginRegisterEmailLoginFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener,GoogleApiClient.OnConnectionFailedListener{
+public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFragment<LoginFragmentContract.Presenter>
+        implements View.OnClickListener, View.OnFocusChangeListener,GoogleApiClient.OnConnectionFailedListener,LoginFragmentContract.View{
     private final String TAG = "LoginRegisterEmailLoginFragment";
     private View contentView;
     private EditText email, password;
@@ -98,7 +108,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     private boolean sessionExpire;
     public final static  int RESULTCODE=1000;
     private Dialog mDialog;
-    private boolean existVending=false;
     private boolean isStart=false;
     private  MyAccountDao mMyAccountDao;
     private DataHandler dataHandler;
@@ -107,10 +116,16 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     private int resultTypeFinishLoadFacebookPictureInfo = -1;
     private FBGraphAPIUserEntity fbGraphAPIUserEntity;
     private CallbackManager facebookCallbackManager;
+    public final int RC_SIGN_IN=10010;
+    @Override
+    public void inject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(getActivity())).build().inject(this);
+    }
     private FacebookCallback<LoginResult> facebookCallback = new FacebookCallback<LoginResult>() {
         private ProfileTracker mProfileTracker;
         @Override
-        public void onSuccess(LoginResult loginResult) {
+        public void onSuccess(final LoginResult loginResult) {
             Profile facebookProfile = Profile.getCurrentProfile();
             if (facebookProfile == null || JDataUtils.isEmpty(facebookProfile.getId())) {
                 mProfileTracker = new ProfileTracker() {
@@ -121,16 +136,17 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                                 fbLoginError();
                                 return;
                             }
-                            mDialog=JViewUtils.showProgressDialog(loginRegisterActivity);
-                            fbGetFacebookUserInfoFromFB(profile2.getId());
+                            if(loginResult.getAccessToken()!=null) {
+                                mPresenter.requestOnallUser("facebook", loginResult.getAccessToken().getToken(), null);
+                            }
                             mProfileTracker.stopTracking();
                         }
                     }
                 };
                 mProfileTracker.startTracking();
             }else{
-                mDialog=JViewUtils.showProgressDialog(loginRegisterActivity);
-                fbGetFacebookUserInfoFromFB(facebookProfile.getId());
+                mPresenter.requestOnallUser("facebook",loginResult.getAccessToken().getToken(),null);
+//                fbGetFacebookUserInfoFromFB(facebookProfile.getId());
             }
         }
 
@@ -139,6 +155,8 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
             JLogUtils.i("Martin", "FacebookCallback=>onCancel2");
             fbLoginCancel();
         }
+
+
 
         @Override
         public void onError(FacebookException error) {
@@ -203,7 +221,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                             fbLoginResultResponse();
                             return;
                         }
-
                         if (fbGraphAPIUserEntity == null) {
                             fbGraphAPIUserEntity = new FBGraphAPIUserEntity();
                         }
@@ -218,8 +235,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                         JLogUtils.i(TAG,"fbInfoEntity.getTimezone():"+fbInfoEntity.getTimezone());
                         JLogUtils.i(TAG,"fbInfoEntity.getUpdated_time():"+fbInfoEntity.getUpdated_time());
                         JLogUtils.i(TAG,"fbInfoEntity.isVerified():"+fbInfoEntity.isVerified());
-
-
                         fbGraphAPIUserEntity.setId(fbInfoEntity.getId());
                         fbGraphAPIUserEntity.setEmail(fbInfoEntity.getEmail());
                         fbGraphAPIUserEntity.setFirst_name(fbInfoEntity.getFirst_name());
@@ -331,7 +346,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     }
 
     private void loginSuccess(SVRAppserviceCustomerFbLoginReturnEntity fbLoginReturnEntity) {
-
         if(getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
             WhiteLabelApplication.getAppConfiguration().signIn(loginRegisterActivity, fbLoginReturnEntity);
 //            if (false) {
@@ -436,6 +450,10 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
         FacebookSdk.sdkInitialize(loginRegisterActivity.getApplicationContext());
         facebookCallbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(facebookCallbackManager, facebookCallback);
+        String twitterConsumerKey=getString(R.string.twitter_consumer_key);
+        String twitterSecret=getString(R.string.twitter_consumer_secret);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(twitterConsumerKey, twitterSecret);
+        Fabric.with(getActivity(), new TwitterCore(authConfig));
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -662,7 +680,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
             case R.id.forgot_password:
                 loginRegisterActivity.setMyEmail(email.getText().toString().trim());
                 loginRegisterActivity.redirectToAttachedFragment(LoginRegisterActivity.FORGOTPASSWORD_FLAG, 1);
-
                 break;
             case R.id.clear_mail:
                 email.setText("");
@@ -671,16 +688,20 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
                 password.setText("");
                 break;
             case R.id.ll_googleLogin:
-                if(mGoogleApiClient.isConnected()) {
-                    mGoogleApiClient.clearDefaultAccountAndReconnect();
-//                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-//                    getActivity().startActivityForResult(signInIntent, RC_SIGN_IN);
-                }
+                TwitterWrapper.getInstance().login(getActivity(), new TwitterWrapper.LoginComplete() {
+                    @Override
+                    public void success(String accessToken, String secret) {
+                        mPresenter.requestOnallUser("twitter",accessToken,secret);
+                    }
+                    @Override
+                    public void failure(OAError error) {
+                    }
+                });
                 break;
         }
     }
 
-    public final int RC_SIGN_IN=10010;
+
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -713,7 +734,6 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
             mActivity=new WeakReference<LoginRegisterActivity>(activity);
             mFragment=new WeakReference<LoginRegisterEmailLoginFragment>(fragment);
         }
-
         @Override
         public void handleMessage(Message msg) {
             if(mActivity.get()==null||mFragment.get()==null){
@@ -1057,10 +1077,11 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
+        TwitterWrapper.getInstance().onActivityResult(requestCode, resultCode, data);
         JLogUtils.i(mCurrTag,"result:"+resultCode);
         if(getActivity()==null)return;
+
 //        if (requestCode == RC_SIGN_IN&&resultCode==getActivity().RESULT_OK) {
 //            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
 //            if (result.isSuccess()) {
@@ -1073,15 +1094,11 @@ public class LoginRegisterEmailLoginFragment extends Fragment implements View.On
 //        }
 //        }
     }
-
-
     private void ggUseInfoToLoginRemoteServer(String email,String firstName,String lastName,String id) {
         mDialog=JViewUtils.showProgressDialog(getActivity());
         mMyAccountDao.googleLogin(email, firstName, lastName, id, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
         loginRegisterActivity.setSubEmail(email);
     }
-
-
     @Override
     public void onStart() {
         super.onStart();

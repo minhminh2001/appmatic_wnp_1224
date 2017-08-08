@@ -11,6 +11,7 @@ import com.whitelabel.app.data.retrofit.BaseApi;
 import com.whitelabel.app.data.retrofit.CheckoutApi;
 import com.whitelabel.app.data.retrofit.MockApi;
 import com.whitelabel.app.data.retrofit.MyAccoutApi;
+import com.whitelabel.app.data.retrofit.OneAllApi;
 import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.data.retrofit.ShoppingCartApi;
 import com.whitelabel.app.data.service.AccountManager;
@@ -53,7 +54,8 @@ public class NetModule {
     private String appKey;
     private String versionNumber;
     private String serviceVersion;
-    public NetModule(String requestUrl, String mockUrl,String apiVersion,String apiKey,String appKey,String versionNumber,String serviceVersion){
+    private String oneAllUrl;
+    public NetModule(String requestUrl, String mockUrl,String apiVersion,String apiKey,String appKey,String versionNumber,String serviceVersion,String subdoMain){
         this.mRequestUri=requestUrl;
         this.mMockUrl=mockUrl;
         this.apiVersion=apiVersion;
@@ -61,6 +63,7 @@ public class NetModule {
         this.appKey=appKey;
         this.versionNumber=versionNumber;
         this.serviceVersion=serviceVersion;
+        oneAllUrl= String.format("https://%s.api.oneall.com", subdoMain);;
     }
     @Provides
     @Named("DefaultOkHttpClient")
@@ -124,6 +127,20 @@ public class NetModule {
                 .build();
         return retrofit;
     }
+
+    @Provides
+    @Named("OneAllRetroift")
+    public Retrofit provideOneAllRetrofit(Gson gson, @Named("DefaultOkHttpClient") OkHttpClient client){
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl(oneAllUrl)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        return retrofit;
+    }
+
+
     @Provides
     public CheckoutApi providesCheckoutApi(@Named("DefaultRetrofit") Retrofit retrofit){
         return retrofit.create(CheckoutApi.class);
@@ -153,6 +170,12 @@ public class NetModule {
     public BaseApi providesBaseApi(@Named("DefaultRetrofit") Retrofit retrofit){
         return retrofit.create(BaseApi.class);
     }
+
+    @Provides
+    public OneAllApi providesOneAllApi(@Named("OneAllRetroift") Retrofit retrofit){
+        return retrofit.create(OneAllApi.class);
+
+    }
     @Provides
     public ICacheApi  providesCacheApi(){
         return new PreferHelper();
@@ -167,8 +190,8 @@ public class NetModule {
           return new ShoppingCartManager(shoppingCartApi,iCacheApi);
     }
     @Provides
-    public IAccountManager  providesIAccountManager(MyAccoutApi myAccoutApi ,ICacheApi iCacheApi){
-        return new AccountManager(myAccoutApi,iCacheApi);
+    public IAccountManager  providesIAccountManager(MyAccoutApi myAccoutApi , ICacheApi iCacheApi, OneAllApi oneAllApi){
+        return new AccountManager(myAccoutApi,iCacheApi,oneAllApi);
     }
 
     @Provides

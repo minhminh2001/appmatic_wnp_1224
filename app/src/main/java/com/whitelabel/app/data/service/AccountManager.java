@@ -1,14 +1,20 @@
 package com.whitelabel.app.data.service;
 
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.data.retrofit.MyAccoutApi;
+import com.whitelabel.app.data.retrofit.OneAllApi;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.AddresslistReslut;
 import com.whitelabel.app.model.ApiException;
 import com.whitelabel.app.model.NotificationUnReadResponse;
+import com.whitelabel.app.model.ResponseConnection;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 
 import javax.inject.Inject;
@@ -24,10 +30,28 @@ import rx.schedulers.Schedulers;
 public class AccountManager implements IAccountManager{
     private MyAccoutApi  myAccoutApi;
     private ICacheApi iCacheApi;
+    private OneAllApi oneAllApi;
     @Inject
-    public AccountManager(MyAccoutApi myAccoutApi,ICacheApi iCacheApi){
+    public AccountManager(MyAccoutApi myAccoutApi,ICacheApi iCacheApi,OneAllApi oneAllApi){
         this.myAccoutApi=myAccoutApi;
         this.iCacheApi=iCacheApi;
+        this.oneAllApi=oneAllApi;
+    }
+    @Override
+    public Observable<ResponseConnection> getOneAllUser(String platform, String accessToken, String secret) {
+        com.whitelabel.app.model.NativeLoginRequest request = new com.whitelabel.app.model.NativeLoginRequest(platform, accessToken, secret);
+        return  oneAllApi.info(request)
+                .map(new Func1<JsonObject, ResponseConnection>() {
+                    @Override
+                    public ResponseConnection call(JsonObject jsonObject) {
+                        JsonObject  result=jsonObject.getAsJsonObject("response");
+                        JsonObject jsonObject1= result.getAsJsonObject("result");
+                        String resultStr=jsonObject1.toString();
+                        Gson gson=new Gson();
+                        ResponseConnection responseConnection=gson.fromJson(resultStr,ResponseConnection.class);
+                        return responseConnection;
+                    }
+                });
     }
     @Override
     public Observable<ResponseModel>  deleteAddressById(final String sessionKey, String addressId) {
@@ -72,7 +96,6 @@ public class AccountManager implements IAccountManager{
                     }
                 });
     }
-
     @Override
     public Observable<NotificationUnReadResponse> getNotificationUnReadCount(String userId) {
         return myAccoutApi.getNotificationUnReadResponse(userId)

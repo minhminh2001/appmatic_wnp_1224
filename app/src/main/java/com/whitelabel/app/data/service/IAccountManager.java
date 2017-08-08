@@ -3,6 +3,7 @@ package com.whitelabel.app.data.service;
         import com.whitelabel.app.model.AddToWishlistEntity;
         import com.whitelabel.app.model.AddresslistReslut;
         import com.whitelabel.app.model.NotificationUnReadResponse;
+        import com.whitelabel.app.model.ResponseConnection;
         import com.whitelabel.app.model.ResponseModel;
         import com.whitelabel.app.model.WishDelEntityResult;
 
@@ -17,4 +18,5 @@ public interface IAccountManager {
     public Observable<AddToWishlistEntity> addWishlist(String sessionKey, String productId);
     public Observable<WishDelEntityResult> deleteWishlist(String sessionKey, String productId);
     public Observable<NotificationUnReadResponse> getNotificationUnReadCount(String userId);
+    public Observable<ResponseConnection>  getOneAllUser(String  platform, String accessToken, String secret);
 }

@@ -106,7 +106,7 @@ public class ProductDetailPresenterTest {
     public void wishListBtnClick() throws Exception {
         Mockito.when(iBaseManager.isSign()).thenReturn(false);
         presenter.wishListBtnClick();
-        verify(view).startLoginActivity();
+        verify(view).startLoginActivity(false);
         Mockito.when(iBaseManager.isSign()).thenReturn(true);
 
         GOUserEntity goUserEntity=  new GOUserEntity();

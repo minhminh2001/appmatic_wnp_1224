@@ -21,6 +21,8 @@ import com.whitelabel.app.ui.home.presenter.HomeCategoryDetailPresenterImpl;
 import com.whitelabel.app.ui.home.presenter.HomeHomePresenterImpl;
 import com.whitelabel.app.ui.home.presenter.HomePresenterImpl;
 import com.whitelabel.app.ui.home.presenter.MainPresenterImpl;
+import com.whitelabel.app.ui.login.LoginFragmentContract;
+import com.whitelabel.app.ui.login.LoginFragmentPresenterImpl;
 import com.whitelabel.app.ui.productdetail.ProductDetailContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailPresenter;
 import com.whitelabel.app.ui.start.StartContract;
@@ -89,5 +91,12 @@ public class PresenterModule {
     @ActivityScope
     public MainContract.Presenter provideMainPresenter(IBaseManager iBaseManager,IAccountManager iAccountManager){
         return new MainPresenterImpl(iBaseManager,iAccountManager);
+    }
+
+
+    @Provides
+    @ActivityScope
+    public LoginFragmentContract.Presenter provideLoginFragment(IBaseManager iBaseManager, IAccountManager iAccountManager){
+        return new LoginFragmentPresenterImpl(iBaseManager,iAccountManager);
     }
 }

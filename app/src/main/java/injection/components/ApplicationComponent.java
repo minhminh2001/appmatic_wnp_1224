@@ -49,7 +49,7 @@ public interface ApplicationComponent {
         public static ApplicationComponent init(WhiteLabelApplication app) {
             return DaggerApplicationComponent.builder()
                     .applicationModule(new ApplicationModule(app)).netModule(new NetModule(GlobalData.serviceRequestUrl,GlobalData.mockUrl,GlobalData.
-                            apiVersion,GlobalData.apiKey,GlobalData.appKey,GlobalData.appVersion,GlobalData.serviceVersion))
+                            apiVersion,GlobalData.apiKey,GlobalData.appKey,GlobalData.appVersion,GlobalData.serviceVersion,GlobalData.oneAll_Subdomain))
                     .build();
         }
     }

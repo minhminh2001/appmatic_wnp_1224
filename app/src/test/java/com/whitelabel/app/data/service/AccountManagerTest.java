@@ -31,7 +31,7 @@ public class AccountManagerTest {
     public void setUp(){
         MockitoAnnotations.initMocks(this);
         RxUnitTestTools.openRxTools();
-        accountManager=new AccountManager(DataManager.getInstance().getMyAccountApi(),DataManager.getInstance().getPreferHelper());
+        accountManager=new AccountManager(DataManager.getInstance().getMyAccountApi(),DataManager.getInstance().getPreferHelper(),null);
         sessionKey=new SessionKeyProvider().getSession();
         productDetailModel=new ProductProvider().getProduct(sessionKey);
     }

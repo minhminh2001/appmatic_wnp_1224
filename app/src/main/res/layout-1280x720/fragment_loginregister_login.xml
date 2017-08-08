@@ -64,29 +64,26 @@
                         />
                 </RelativeLayout>
 
-
-
                 <LinearLayout
                     android:orientation="horizontal"
                     android:id="@+id/ll_googleLogin"
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
-                    android:visibility="gone"
                     android:gravity="center_vertical"
                     android:layout_height="48dp"
                     android:background="@drawable/btn_google_normal"
                     android:layout_width="0dp">
                     <ImageView
-                        android:layout_width="20dp"
-                        android:src="@mipmap/icon_google"
+                        android:layout_width="25dp"
+                        android:src="@drawable/ic_twitter"
                         android:layout_marginLeft="10dp"
-                        android:layout_height="20dp" />
+                        android:layout_height="25dp" />
                     <com.whitelabel.app.widget.CustomTextView
                         style="@style/font_family_robot_regular"
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="22dp"
                         android:textSize="16sp"
-                        android:text="@string/login_google"
+                        android:text="@string/login_twitter"
                         android:textColor="@color/grey6f6f6f"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
