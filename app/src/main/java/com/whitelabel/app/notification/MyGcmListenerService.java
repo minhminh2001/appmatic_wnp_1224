@@ -60,7 +60,7 @@ public class MyGcmListenerService extends GcmListenerService {
     }
     private int getNotificationIcon() {
         boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
-        return useWhiteIcon ? R.mipmap.icon_v1 : R.mipmap.icon_v1;
+        return useWhiteIcon ? R.drawable.icon_notification_5 : R.mipmap.icon_v1;
     }
     private static int requestId = 1;
     public void createNotification(String message) {
@@ -125,9 +125,8 @@ public class MyGcmListenerService extends GcmListenerService {
             AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             final int ringerMode = am.getRingerMode();
             /*
-      Create and show a simple notification containing the received GCM message.
-
-      */
+          Create and show a simple notification containing the received GCM message.
+          */
             int VIBRATE = 1;
             int SOUND = 2;
             if (ringerMode == VIBRATE) {

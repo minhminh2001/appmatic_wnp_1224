@@ -112,7 +112,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
             case R.id.rl_drawer_home:
                 drawerLayout.closeDrawer(Gravity.LEFT);
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HOME);
-
                 baseHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -420,10 +419,9 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     private NotificationCallback callback = new NotificationCallback() {
         @Override
         public void refreshNotification(int type, String id) {
-            boolean bool = DrawerLayoutActivity.this.refreshNotification(type, id);
-            if (!bool) {
-                requestNotificationUnReadCount();
-            }
+            DrawerLayoutActivity.this.refreshNotification(type, id);
+            requestNotificationUnReadCount();
+
         }
     };
     public abstract void requestNotificationUnReadCount();

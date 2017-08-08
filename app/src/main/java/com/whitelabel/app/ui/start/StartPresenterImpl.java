@@ -95,6 +95,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                         if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
                             mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
                         }
+                        JLogUtils.i("ray","errorMessage:"+e.getMessage());
                     }
                     @Override
                     public void onNext(RemoteConfigResonseModel remoteConfigResonseModel) {
@@ -113,7 +114,6 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
         .subscribe(new Subscriber<GOCurrencyEntity>() {
             @Override
             public void onCompleted() {
-
             }
 
             @Override
@@ -121,6 +121,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                 if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR) {
                     mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
                 }
+                JLogUtils.i("ray","errorMessage1:"+e.getMessage());
             }
 
             @Override
@@ -131,28 +132,4 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
         });
         addSubscrebe(subscription);
     }
-//    @Override
-//    public void getConfigInfo() {
-//       String currentVersionNumber= DataManager.getInstance().getPreferHelper().getVersionNumber();
-//       Subscription subscription= DataManager.getInstance().
-//                getMockApi().getConfigInfo(currentVersionNumber).
-//                compose(RxUtil.<RemoteConfigResonseModel>rxSchedulerHelper())
-//                .subscribe(new Action1<RemoteConfigResonseModel>() {
-//                    @Override
-//                    public void call(RemoteConfigResonseModel remoteConfigModel) {
-//                        if (remoteConfigModel.getCode() == 1) {
-//                            WhiteLabelApplication.getAppConfiguration().initAppConfig(
-//                                    remoteConfigModel.getData());
-//                            DataManager.getInstance().getPreferHelper().saveConfigInfo(remoteConfigModel);
-//                        }
-//                        timeOutJudgment();
-//                    }
-//                }, new Action1<Throwable>() {
-//                    @Override
-//                    public void call(Throwable throwable) {
-//
-//                    }
-//                });
-//        addSubscrebe(subscription);
-//    }
 }

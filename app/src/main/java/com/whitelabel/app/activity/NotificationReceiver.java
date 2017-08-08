@@ -24,8 +24,6 @@ public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
-            String sessionKey="";
-
             int type=intent.getIntExtra("type", SendBoardUtil.READCODE);
             String id=intent.getStringExtra("id");
             if(mCallback!=null){
