@@ -81,11 +81,11 @@ public class NetModule {
                         .addEncodedQueryParameter("platformId","2")
                         .addEncodedQueryParameter("versionNumber",versionNumber)
                         .addEncodedQueryParameter("serviceVersion",serviceVersion).build();
-                Request.Builder  builder1=original.newBuilder()
+                Request.Builder  builder1=original.newBuilder()   //addHeader（“Connection”，“close”）
                         .header("API-VERSION", apiVersion)
                         .header("API-KEY", apiKey)
                         .header("APP-KEY",appKey);
-                Request request1=builder1.method(original.method(), original.body()).url(url).build();
+                Request request1=builder1.method(original.method(),original.body()).url(url).build();
                 return chain.proceed(request1);
             }
         });

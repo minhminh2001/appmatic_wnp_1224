@@ -351,7 +351,6 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
                 categoryFragmentPosition = -1;
             }
         }
-        JLogUtils.i("ProductListProductListFragment", "=================categoryFragmentPosition===========" + categoryFragmentPosition);
         cxlvProductList = (CustomXListView) contentView.findViewById(R.id.cxlvProductList);
         showViewSwitch(false);
         rlNodata = (RelativeLayout) contentView.findViewById(R.id.rlNodata);
@@ -373,13 +372,6 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
 
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                //判断是否在加载,是则暂时不显示filterbar,加载完显示
-//                if (cxlvProductList.mPullLoading) {
-//                    if (isSlideToBottom(cxlvProductList)) {
-//                        JLogUtils.d("filter", "mPullLoading:" + true);
-//                        return;
-//                    }
-//                }
                 if(!mLandingFragment.mIsShowSwitchFilterBar){
                     return;
                 }
@@ -396,13 +388,6 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
                 if ((currentP * (param.getLimit() / 2) - firstVisibleItem) <= (param.getLimit() / 2 - 1) && TYPE == NONE) {
                     searchType = SEARCH_TYPE_LOADMORE;
                     cxlvProductList.setLoadMoreProgress();
-                    //强行隐藏Filter
-//                    mLandingFragment.filterSortBottomView.setFilterShow(1, new ProductListFilterHideCallBack() {
-//                        @Override
-//                        public void callBack() {
-//                        }
-//                    });
-//                    showConnectionLayout = false;
                     search();
                 }
                 if (view.getFirstVisiblePosition() == 0) {
@@ -489,12 +474,10 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
             limit = param.getLimit() * currentP + "";
             p = "1";
         }
-
         String order = param.getOrder();
         String dir = param.getDir();
         String brand = "";
         String categoryId = "";
-        JLogUtils.i(TAG, "brandId===============" + param.getBrandId());
         if (!JDataUtils.isEmpty(param.getBrandId())) {
             brand = param.getBrandId();
         } else {

@@ -5,6 +5,7 @@ import android.app.Fragment;
 
 
 import com.whitelabel.app.activity.CheckoutActivity;
+import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressFragment;
@@ -39,5 +40,6 @@ public interface PresenterComponent1 {
     void inject(CheckoutActivity checkoutActivity);
     void inject(HomeActivity homeActivity);
     void inject(LoginRegisterEmailLoginFragment fragment);
+    void inject(CheckoutPaymentStatusActivity activity);
     Activity getActivity();
 }

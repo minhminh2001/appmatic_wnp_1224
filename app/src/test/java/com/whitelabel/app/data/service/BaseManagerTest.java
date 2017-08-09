@@ -30,6 +30,10 @@ import static org.mockito.Mockito.when;
 @PrepareForTest({JLogUtils.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class BaseManagerTest {
+    @Test
+    public void getCurrencyUnit1() throws Exception {
+
+    }
 
     @Mock
     PreferHelper preferHelper;

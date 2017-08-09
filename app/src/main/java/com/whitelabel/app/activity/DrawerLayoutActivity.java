@@ -385,17 +385,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         receiver = new NotificationReceiver(callback);
         IntentFilter intentFilter = new IntentFilter(NotificationReceiver.ACTION);
         registerReceiver(receiver, intentFilter);
-//        receiver = new NotificationReceiver(callback);
-//        IntentFilter intentFilter = new IntentFilter(NotificationReceiver.ACTION);
-//        registerReceiver(receiver, intentFilter);
-//        DataHandler dataHandler = new DataHandler(this);
-//        mDao = new NotificationDao("NotificationReceiver", dataHandler);
-//        String sessionKey = "";
-//        if (WhiteLabelApplication.getAppConfiguration().getUser() != null && WhiteLabelApplication.getAppConfiguration() != null) {
-//            sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-//        }
-//        mDao.getNotificationDetailCount(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
-//        SendBoardUtil.sendNotificationBoard(this, SendBoardUtil.READCODE, null);
         initLayout();
 //        setAppBarLayoutBehaviour();
         mActionDrawableToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.openDrawer, R.string.closeDrawer) {

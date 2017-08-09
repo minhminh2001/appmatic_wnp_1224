@@ -28,12 +28,9 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
         this.context = context;
         AddressBookAdapter adapter = this;
     }
-
-
     public  List<AddressBook> getData(){
         return mAddressBook;
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view=convertView;

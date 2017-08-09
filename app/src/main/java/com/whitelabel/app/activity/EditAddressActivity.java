@@ -265,7 +265,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         dao=new MyAccountDao(TAG, dataHandler);
         View rlDefaultShipping = findViewById(R.id.rl_default_shipping);
         View rlDefaultBilling=findViewById(R.id.rl_default_billing);
-          cbDefaultBilling= (CustomCheckBox) findViewById(R.id.cb_billing_check);
+        cbDefaultBilling= (CustomCheckBox) findViewById(R.id.cb_billing_check);
         cbDefaultBilling.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         cbDefaultBilling.setChecked(false);
         addaddress_checkbox= (CustomCheckBox) findViewById(R.id.addaddress_checkbox);

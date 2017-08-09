@@ -11,10 +11,15 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.fragment.CheckoutPaymentStatusRightFragment;
 import com.whitelabel.app.fragment.CheckoutPaymentStatusWrongFragment;
+import com.whitelabel.app.ui.home.MainContract;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JViewUtils;
 import java.io.Serializable;
-public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
+
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
+public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity<MainContract.Presenter> implements MainContract.View {
     public String html;
     private final int PAYMENTSUCESS = 1;
     private final int PAYMENTFAILURE = 2;
@@ -38,10 +43,20 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity {
         });
         initData();
     }
+    @Override
+    protected void initInject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(this)).build().inject(this);
+    }
+
+    @Override
+    public void setNotificationUnReadCount(int unReadCount) {
+        setNotificationCount(unReadCount);
+    }
 
     @Override
     public void requestNotificationUnReadCount() {
-
+        mPresenter.getNotificationUnReadCount();
     }
 
     @Override

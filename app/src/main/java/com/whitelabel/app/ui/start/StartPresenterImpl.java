@@ -95,6 +95,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                         if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
                             mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
                         };
+                        JLogUtils.i("ray","errorMessage:"+e.getMessage());
                     }
                     @Override
                     public void onNext(RemoteConfigResonseModel remoteConfigResonseModel) {

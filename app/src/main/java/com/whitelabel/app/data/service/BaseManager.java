@@ -44,12 +44,7 @@ public class BaseManager implements IBaseManager {
     public Observable<RemoteConfigResonseModel> getConfigInfo() {
         String userId= cacheApi.getVersionNumber();
        return  mockApi.getConfigInfo(userId)
-                    .onErrorResumeNext(new Func1<Throwable, Observable<? extends RemoteConfigResonseModel>>() {
-                        @Override
-                        public Observable< ? extends  RemoteConfigResonseModel> call(Throwable throwable) {
-                            return Observable.error(throwable);
-                        }
-                    }).doOnNext(new Action1<RemoteConfigResonseModel>() {
+                   .doOnNext(new Action1<RemoteConfigResonseModel>() {
                    @Override
                    public void call(RemoteConfigResonseModel remoteConfigResonseModel) {
                        cacheApi.saveConfigInfo(remoteConfigResonseModel);

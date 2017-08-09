@@ -1,6 +1,4 @@
 package com.whitelabel.app.data.service;
-
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.whitelabel.app.data.preference.ICacheApi;
@@ -12,18 +10,11 @@ import com.whitelabel.app.model.ApiException;
 import com.whitelabel.app.model.NotificationUnReadResponse;
 import com.whitelabel.app.model.ResponseConnection;
 import com.whitelabel.app.model.ResponseModel;
-import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
-
 import javax.inject.Inject;
-
-import rx.Observable;
-import rx.functions.Action1;
+import rx.Observable;;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
 /**
  * Created by Administrator on 2017/7/5.
  */
@@ -109,6 +100,6 @@ public class AccountManager implements IAccountManager{
                             return Observable.error(new ApiException(bean.getErrorMessage()));
                         }
                     }
-                });
+         });
     }
 }
