@@ -50,7 +50,10 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude '.readme'
     }
-
+    aaptOptions {
+        cruncherEnabled = false
+        useNewCruncher=false
+    }
     testOptions {
         unitTests.all {
             setIgnoreFailures(true)
