@@ -41,17 +41,15 @@ import static org.junit.Assert.*;
 @PowerMockIgnore("javax.net.ssl.*")
 public class CommodityManagerTest {
 
-
-
     @Test
     public void getProductRecommendList() throws Exception {
       TestSubscriber<SVRAppserviceProductRecommendedReturnEntity> testSubscriber=new TestSubscriber<>();
-        mCommodityManager.getProductRecommendList("1","4","352",sessionKey)
+        mCommodityManager.getProductRecommendList("1","4","12363",sessionKey)
                 .subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
         SVRAppserviceProductRecommendedReturnEntity entity= testSubscriber.getOnNextEvents().get(0);
-        Assert.assertTrue(entity.getResults().size()>0);
+        Assert.assertTrue(entity.getResults()!=null);
     }
 
     private CommodityManager mCommodityManager;

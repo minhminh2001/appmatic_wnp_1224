@@ -14,7 +14,7 @@ public class ProductProvider {
     public ProductDetailModel  getProduct(String sessionKey){
        CommodityManager mCommodityManager=new CommodityManager(DataManager.getInstance().getProductApi(),DataManager.getInstance().getPreferHelper());
         TestSubscriber<ProductDetailModel> testSubscriber=new TestSubscriber<>();
-        mCommodityManager.getProductDetail(sessionKey,"428").
+        mCommodityManager.getProductDetail(sessionKey,"12332").
                 subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
         testSubscriber.assertCompleted();
