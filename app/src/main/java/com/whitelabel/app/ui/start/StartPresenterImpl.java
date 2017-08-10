@@ -1,11 +1,14 @@
 package com.whitelabel.app.ui.start;
 
+import android.support.v7.view.menu.MenuView;
+
 import com.google.gson.JsonObject;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
+import com.whitelabel.app.model.StartZipModel;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JLogUtils;
@@ -18,6 +21,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.functions.Func2;
 
 /**
  * Created by ray on 2017/4/5.
@@ -31,6 +35,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
     }
     public void timeOutJudgment(){
          long  offset=System.currentTimeMillis()-mStartTimeLong;
+          mView.startIntentService();
          if(offset<2000){
                 mView.postDelayed(offset);
          }else{
@@ -82,9 +87,46 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
 //            }
 //        });
 //    }
+//    @Override
+//    public void getConfigInfo(final String sessionKey, final String deviceToken) {
+//        Observable<RemoteConfigResonseModel> observable=  configService.getConfigInfo()
+//                .compose(RxUtil.<RemoteConfigResonseModel>rxSchedulerHelper());
+//        Observable<GOCurrencyEntity> observable1=  configService.getCurrencyUnit(sessionKey,deviceToken)
+//                .compose(RxUtil.<GOCurrencyEntity>rxSchedulerHelper());
+//        Subscription subscription=   Observable.zip(observable1, observable, new Func2< GOCurrencyEntity, RemoteConfigResonseModel,StartZipModel>() {
+//            @Override
+//            public StartZipModel call( GOCurrencyEntity goCurrencyEntity,RemoteConfigResonseModel remoteConfigResonseModel) {
+//                StartZipModel startZipModel=new StartZipModel();
+//                startZipModel.setRemoteConfigResonseModel(remoteConfigResonseModel);
+//                startZipModel.setGoCurrencyEntity(goCurrencyEntity);
+//                return startZipModel;
+//            }
+//        }).subscribe(new Subscriber<StartZipModel>() {
+//            @Override
+//            public void onCompleted() {
+//            }
+//            @Override
+//            public void onError(Throwable e) {
+//                JLogUtils.i("ray","error11:"+e.getMessage());
+//            }
+//            @Override
+//            public void onNext(StartZipModel startZipModel) {
+//                WhiteLabelApplication.getAppConfiguration().initAppConfig(
+//                        startZipModel.getRemoteConfigResonseModel().getData());
+//                WhiteLabelApplication.getAppConfiguration().getCurrency().setName(startZipModel.getGoCurrencyEntity().getName());
+//                timeOutJudgment();
+//            }
+//        });
+//
+//      addSubscrebe(subscription);
+//    }
+
+
+
+
     @Override
     public void getConfigInfo(final String sessionKey, final String deviceToken) {
-      Subscription subscription= configService.getConfigInfo()
+        Subscription subscription= configService.getConfigInfo()
                 .compose(RxUtil.<RemoteConfigResonseModel>rxSchedulerHelper())
                 .subscribe(new Subscriber<RemoteConfigResonseModel>() {
                     @Override
@@ -95,41 +137,41 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                         if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
                             mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
                         };
-                        JLogUtils.i("ray","errorMessage:"+e.getMessage());
+                        JLogUtils.i("ray","errorMessage1:"+e.getMessage());
                     }
                     @Override
                     public void onNext(RemoteConfigResonseModel remoteConfigResonseModel) {
                         WhiteLabelApplication.getAppConfiguration().initAppConfig(
                                 remoteConfigResonseModel.getData());
-                       requestCurrency(sessionKey,deviceToken);
+                        requestCurrency(sessionKey,deviceToken);
                     }
                 });
-      addSubscrebe(subscription);
+        addSubscrebe(subscription);
     }
 
 
     public void requestCurrency(String sessionkey,String deviceToken){
         Subscription subscription=  configService.getCurrencyUnit(sessionkey,deviceToken)
-        .compose(RxUtil.<GOCurrencyEntity>rxSchedulerHelper())
-        .subscribe(new Subscriber<GOCurrencyEntity>() {
-            @Override
-            public void onCompleted() {
-            }
+                .compose(RxUtil.<GOCurrencyEntity>rxSchedulerHelper())
+                .subscribe(new Subscriber<GOCurrencyEntity>() {
+                    @Override
+                    public void onCompleted() {
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR) {
-                    mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
-                }
-                JLogUtils.i("ray","errorMessage1:"+e.getMessage());
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR) {
+                            mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
+                        }
+                        JLogUtils.i("ray","errorMessage1:"+e.getMessage());
+                    }
 
-            @Override
-            public void onNext(GOCurrencyEntity goCurrencyEntity) {
-                WhiteLabelApplication.getAppConfiguration().getCurrency().setName(goCurrencyEntity.getName());
-                timeOutJudgment();
-            }
-        });
+                    @Override
+                    public void onNext(GOCurrencyEntity goCurrencyEntity) {
+                        WhiteLabelApplication.getAppConfiguration().getCurrency().setName(goCurrencyEntity.getName());
+                        timeOutJudgment();
+                    }
+                });
         addSubscrebe(subscription);
     }
 }

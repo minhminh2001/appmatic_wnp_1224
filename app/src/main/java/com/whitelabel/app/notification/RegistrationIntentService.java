@@ -52,6 +52,7 @@ public class RegistrationIntentService extends IntentService {
             WhiteLabelApplication.getPhoneConfiguration().setRegistrationToken(token);
             JLogUtils.i(TAG, "GCM Registration Token: " + token);
             // TODO: Implement this method to send any registration to your app's servers.
+
             if (token != null)
                 sendRegistrationToServer();
             // Subscribe to topic channels
@@ -62,6 +63,7 @@ public class RegistrationIntentService extends IntentService {
             // If an exception happens while fetching the new token or updating our registration data
             // on a third-party server, this ensures that we'll attempt the update at a later time.
             sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false).apply();
+            sendRegistrationToServer();
         }
         // Notify UI that registration has completed, so the progress indicator can be hidden.
 //        Intent registrationComplete = new Intent(QuickstartPreferences.REGISTRATION_COMPLETE);
@@ -74,33 +76,10 @@ public class RegistrationIntentService extends IntentService {
      * Modify this method to associate the user's GCM registration token with any server-side account
      * maintained by your application.
      *
-
      */
     private void sendRegistrationToServer() {
         String sessionKey= WhiteLabelApplication.getAppConfiguration().getUser() == null ? "" : WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
         new NotificationDao(TAG,dataHandler).sendRegistrationTokenToServer(sessionKey, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
-//
-//        SVRParameters parameter = new SVRParameters();
-//        parameter.put("session_key", );
-//        parameter.put("device_token", WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
-//        JLogUtils.i("RegistrationIntentService","device_token==============="+WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
-//        SVRNotificationAppOpen notificationAppOpenHandler = new SVRNotificationAppOpen(getBaseContext(), parameter);
-//        notificationAppOpenHandler.loadDatasFromServer(new SVRCallback() {
-//            @Override
-//            public void onSuccess(int resultCode, SVRReturnEntity result) {
-//                NotificationAppOpenReturnEntity notificationAppOpenReturnEntity = (NotificationAppOpenReturnEntity) result;
-//                if (notificationAppOpenReturnEntity.getStatus() == 1) {
-//                    JLogUtils.i("russell->RegistrationToken", "gcm's registration token has been post to server");
-//                } else {
-//                    JLogUtils.e("russell->RegistrationToken", "fail to post gcm's registration token to server");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(int resultCode, String errorMsg) {
-//                JLogUtils.e("russell->RegistrationToken", "fail to post gcm's registration token to server");
-//            }
-//        });
     }
 
     /**

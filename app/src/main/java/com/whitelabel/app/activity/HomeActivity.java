@@ -98,7 +98,6 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
             switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_HOME, serializable);
         }
     }
-
     @Override
     public void requestNotificationUnReadCount() {
         mPresenter.getNotificationUnReadCount();
@@ -295,10 +294,11 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
             public void onDrawerStateChanged(int newState) {
             }
         });
+//        requestNotificationUnReadCount();
         initFragment(savedInstanceState);
         redirectToFragmentByIntent(getIntent());
         redirectToInterfaceByDeepLink();
-        requestNotificationUnReadCount();
+
     }
     private void redirectToInterfaceByDeepLink() {
         if (getIntent() != null && getIntent().getData() != null) {

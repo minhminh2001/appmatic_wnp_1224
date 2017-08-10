@@ -105,7 +105,6 @@ public class ShoppingCartManagerTest {
     @Test
     public void setProductCountFromShoppingCart() throws Exception {
 
-
         TestSubscriber<ShoppingCartListEntityCart> testSubscriber1=TestSubscriber.create();
         shoppingCartManager.getShoppingCartInfo(sessionKey)
                 .subscribe(testSubscriber1);
@@ -122,12 +121,6 @@ public class ShoppingCartManagerTest {
           ShoppingCartDeleteCellEntity shoppingCartDeleteCellEntity=testSubscriber.getOnNextEvents().get(0);
           Assert.assertTrue ( shoppingCartDeleteCellEntity.getStatus()==1);
     }
-
-
-
-
-
-
     @Test
     public void deleteProductFromShoppingCart() throws Exception {
         TestSubscriber<ShoppingCartDeleteCellEntity> testSubscriber=TestSubscriber.create();

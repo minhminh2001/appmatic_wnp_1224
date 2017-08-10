@@ -8,6 +8,15 @@ import java.util.ArrayList;
 public class SVRAppserviceCatalogSearchReturnEntity extends SVRReturnEntity {
     private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> category;
     private long status;
+    private int code;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
 
     public ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> getCategory() {
         return category;

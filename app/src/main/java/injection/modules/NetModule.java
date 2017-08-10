@@ -1,5 +1,7 @@
 package injection.modules;
 
+import android.util.Log;
+
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
@@ -24,6 +26,9 @@ import com.whitelabel.app.data.service.ICheckoutManager;
 import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.data.service.ShoppingCartManager;
+import com.whitelabel.app.network.CommonInterceptor;
+import com.whitelabel.app.network.OkHttpClientManager;
+import com.whitelabel.app.utils.JLogUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -31,11 +36,13 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Authenticator;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.Route;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -69,32 +76,36 @@ public class NetModule {
     @Named("DefaultOkHttpClient")
     @Singleton
     public OkHttpClient provideDefaultOkHttpClient(){
-        final OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        builder.addInterceptor(loggingInterceptor);
-        builder.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-                HttpUrl url=original.url().newBuilder()
-                        .addEncodedQueryParameter("platformId","2")
-                        .addEncodedQueryParameter("versionNumber",versionNumber)
-                        .addEncodedQueryParameter("serviceVersion",serviceVersion).build();
-                Request.Builder  builder1=original.newBuilder()   //addHeader（“Connection”，“close”）
-                        .header("API-VERSION", apiVersion)
-                        .header("API-KEY", apiKey)
-                        .header("APP-KEY",appKey);
-                Request request1=builder1.method(original.method(),original.body()).url(url).build();
-                return chain.proceed(request1);
-            }
-        });
-        builder.connectTimeout(60, TimeUnit.SECONDS);
-        builder.readTimeout(60, TimeUnit.SECONDS);
-        builder.writeTimeout(60, TimeUnit.SECONDS);
-        builder.retryOnConnectionFailure(true);
-        OkHttpClient mOkHttpClient=builder.build();
-        return mOkHttpClient;
+//        final OkHttpClient.Builder builder = new OkHttpClient.Builder();
+//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        builder.addInterceptor(loggingInterceptor);
+//        builder.addInterceptor(new Interceptor() {
+//            @Override
+//            public Response intercept(Chain chain) throws IOException {
+//                Request original = chain.request();
+//
+//                HttpUrl url=original.url().newBuilder()
+//                        .addEncodedQueryParameter("platformId","2")
+//                        .addEncodedQueryParameter("versionNumber",versionNumber)
+//                        .addEncodedQueryParameter("serviceVersion",serviceVersion).build();
+//                Request.Builder  builder1=original.newBuilder()   //addHeader（“Connection”，“close”）
+//                        .header("API-VERSION", apiVersion)
+//                        .header("API-KEY", apiKey)
+//                        .header("APP-KEY",appKey);
+//                Request request1=builder1.method(original.method(),original.body()).
+//                        url(url).build();
+//                return chain.proceed(request1);
+//            }
+//        });
+//
+//
+//        builder.connectTimeout(60, TimeUnit.SECONDS);
+//        builder.readTimeout(60, TimeUnit.SECONDS);
+//        builder.writeTimeout(60, TimeUnit.SECONDS);
+//        builder.retryOnConnectionFailure(true);
+//        OkHttpClient mOkHttpClient=builder.build();
+        return OkHttpClientManager.getInstance().client().newBuilder().addInterceptor(new CommonInterceptor(apiKey,appKey,apiVersion,versionNumber,serviceVersion)).build();
     }
     @Provides
     @Singleton

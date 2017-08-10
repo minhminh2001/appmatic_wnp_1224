@@ -36,6 +36,7 @@ public class HomeBaseFragment<T extends BasePresenter> extends BaseFragmentSearc
         void switchMenu(int type);
         void updateRightIconNum(int itemId, long number);
         void setLeftMenuIcon(Drawable drawable);
+        void requestNotificationUnReadCount();
 
         Toolbar getToolBar();
 

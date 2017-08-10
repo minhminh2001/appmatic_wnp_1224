@@ -115,7 +115,7 @@ ext {
     SUPPORT_LIB_VERSION = '25.0.1'
     BUTTERKNIFE_VERSION = '8.4.0'
     PLAY_SERVICE_VERSION = '9.4.0'
-    RETROFIT2_VERSION = '2.1.0'
+    RETROFIT2_VERSION = '2.3.0'
     PERMISSION_VERSION = '2.4.0'
     DAGGER_VERSION="2.6"
 }
@@ -140,7 +140,7 @@ dependencies {
     compile "org.apache.httpcomponents:httpcore:4.4.4"
     compile "com.squareup.okio:okio:1.11.0"
     compile "com.github.bumptech.glide:glide:3.7.0"
-    compile "com.github.bumptech.glide:okhttp3-integration:1.4.0@aar"
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile "com.facebook.android:facebook-android-sdk:4.17.0"
     compile "com.molpay:molpay-mobile-xdk-android:3.3.0"
     compile "io.reactivex:rxjava:1.1.6"
@@ -151,8 +151,6 @@ dependencies {
     compile('com.twitter.sdk.android:twitter-core:1.6.0@aar') {
         transitive = true;
     }
-
-
     compile 'com.newrelic.agent.android:android-agent:5.+'
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"

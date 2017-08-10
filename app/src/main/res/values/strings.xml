@@ -564,7 +564,7 @@
     <string name="password_match">Please make sure your passwords match.</string>
     <string name="account_associated">If there is an account associated with&#160;</string>
     <string name="reset_password">, you will receive an email with a link to reset your password.</string>
-    <string name="process_email">Thank you for registering on Whitelabel. To complete your registration process, please check your email&#160;</string>
+    <string name="process_email">Thank you for registering on WNP APP. To complete your registration process, please check your email&#160;</string>
     <string name="to_confirm">to confirm.</string>
     <string name="register_whitelabel">Thank you for registering on</string>
     <string name="current_password">Invalid current password.</string>

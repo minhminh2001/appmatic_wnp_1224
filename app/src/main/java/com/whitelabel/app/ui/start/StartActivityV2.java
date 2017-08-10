@@ -48,11 +48,16 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
     }
 
     @Override
+    public void startIntentService() {
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
+    }
+
+    @Override
     protected void initInject() {
         DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
                 presenterModule(new PresenterModule(this)).build().inject(this);
     }
-
     static  class StartRunnable implements   Runnable{
         WeakReference<StartActivityV2> mActivity;
         public StartRunnable(StartActivityV2 start){
@@ -64,12 +69,10 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
             mActivity.get().startNextActivity();
         }
     }
-
     public void postDelayed(long deploy) {
         StartRunnable  startRunnable=  new StartRunnable(StartActivityV2.this);
         new Handler().postDelayed(startRunnable, (DELAY_TIME -deploy));
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,10 +102,10 @@ public class StartActivityV2 extends com.whitelabel.app.BaseActivity<StartContra
     @Override
     protected void onResume() {
         super.onResume();
-        if (checkInstallationPlayServices()) {
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-        }
+//        if (checkInstallationPlayServices()) {
+//            Intent intent = new Intent(this, RegistrationIntentService.class);
+//            startService(intent);
+//       }
     }
     private boolean checkInstallationPlayServices() {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();

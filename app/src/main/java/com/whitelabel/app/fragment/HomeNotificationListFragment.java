@@ -283,9 +283,9 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
                     JLogUtils.i(TAG,"right");
                     unReadCount--;
                     mCommonCallback.setTitleNum(unReadCount);
-                    if(getActivity()!=null) {
-                        BadgeUtils.setBadge(getActivity(), unReadCount);
-                    }
+//                    if(getActivity()!=null) {
+//                        BadgeUtils.setBadge(getActivity(), unReadCount);
+//                    }
                     list.get(i).setState(1);
                     break;
                 }

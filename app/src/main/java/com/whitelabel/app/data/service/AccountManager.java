@@ -11,6 +11,7 @@ import com.whitelabel.app.model.NotificationUnReadResponse;
 import com.whitelabel.app.model.ResponseConnection;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.WishDelEntityResult;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 import javax.inject.Inject;
 import rx.Observable;;
@@ -94,6 +95,7 @@ public class AccountManager implements IAccountManager{
                     @Override
                     public Observable<NotificationUnReadResponse> call
                             (ResponseModel<NotificationUnReadResponse> bean) {
+                        JLogUtils.i("ray","Thread1:"+Thread.currentThread().getName());
                         if(bean.getCode()==1){
                             return Observable.just(bean.getData());
                         }else{

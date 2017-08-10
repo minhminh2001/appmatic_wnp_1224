@@ -9,6 +9,8 @@ import com.whitelabel.app.utils.RxUtil;
 
 import rx.Subscriber;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2017/8/7.
@@ -25,7 +27,8 @@ public class MainPresenterImpl extends RxPresenter<MainContract.View>implements 
         if(!iBaseManager.isSign())return ;
         String userId=iBaseManager.getUser().getId();
         Subscription subscription= iAccountManager.getNotificationUnReadCount(userId)
-        .compose(RxUtil.<NotificationUnReadResponse>rxSchedulerHelper())
+        .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Subscriber<NotificationUnReadResponse>() {
             @Override
             public void onCompleted() {
@@ -36,7 +39,6 @@ public class MainPresenterImpl extends RxPresenter<MainContract.View>implements 
             @Override
             public void onNext(NotificationUnReadResponse notificationUnReadResponse) {
                 mView.setNotificationUnReadCount(notificationUnReadResponse.getUnreads());
-
             }
         });
        addSubscrebe(subscription);

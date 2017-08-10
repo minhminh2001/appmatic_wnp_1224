@@ -4,12 +4,16 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.ErrorMsgBean;
+import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.NotificationAppOpenReturnEntity;
 import com.whitelabel.app.model.NotificationCell;
 import com.whitelabel.app.model.SVRAppserviceNotificationListReturnEntity;
 import com.whitelabel.app.network.BaseHttp;
+import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
 
@@ -36,13 +40,17 @@ public class NotificationDao extends BaseHttp {
     public void notificationRead(String key, String id) {
         params = new TreeMap<>();
         params.put("session_key", key);
-        params.put("id", id);
+        if(!JDataUtils.isEmpty(id)) {
+            params.put("id", id);
+        }
         requestHttp(HTTP_METHOD.GET, "appsnotification/notification/read", params, REQUEST_NOTIFICATIONREAD);
     }
     public void sendRegistrationTokenToServer(String sessionKey, String deviceToken) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
-        params.put("device_token", deviceToken);
+        if(!JDataUtils.isEmpty(deviceToken)) {
+            params.put("device_token", deviceToken);
+        }
         requestHttp(HTTP_METHOD.POST, "appservice/app/open", params, REQUEST_SENDREGISTERATIONTOKEN);
     }
     /**
@@ -142,7 +150,17 @@ public class NotificationDao extends BaseHttp {
                 break;
             case REQUEST_SENDREGISTERATIONTOKEN:
 //                NotificationAppOpenReturnEntity notificationAppOpenReturnEntity =JJsonUtils.parseJsonObj(response,NotificationAppOpenReturnEntity.class);
-
+                GOCurrencyEntity goCurrencyEntity=null;
+                JsonObject jsonObject=new JsonParser().parse(response).getAsJsonObject();
+                try {
+                    JsonObject jsonObj = jsonObject.getAsJsonObject("data");
+                    String unit=jsonObj.get("unit").getAsString();
+                    goCurrencyEntity=new GOCurrencyEntity();
+                    goCurrencyEntity.setName(unit);
+                }catch (Exception ex){
+                    ex.getStackTrace();
+                }
+                WhiteLabelApplication.getAppConfiguration().getCurrency().setName(goCurrencyEntity.getName());
                 break;
         }
     }

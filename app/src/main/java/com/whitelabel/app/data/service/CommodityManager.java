@@ -17,6 +17,7 @@ import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JLogUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +47,7 @@ public class CommodityManager  implements ICommodityManager{
                     .doOnNext(new Action1<SVRAppserviceCatalogSearchReturnEntity>() {
                 @Override
                 public void call(SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity) {
+                    JLogUtils.i("ray","Thread:"+Thread.currentThread().getName());
                       cacheHelper.saveBaseCategory(svrAppserviceCatalogSearchReturnEntity);
                 }
             });

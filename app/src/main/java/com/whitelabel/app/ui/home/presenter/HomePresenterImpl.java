@@ -9,13 +9,17 @@ import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.ui.home.HomeContract;
+import com.whitelabel.app.utils.ExceptionParse;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 
 import javax.inject.Inject;
 
 import rx.Subscriber;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2017/7/5.
@@ -32,21 +36,29 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
             mCommodityManager=commodityManager;
         }
         public void getBaseCategory(){
-                  mView.showProgressDialog();
+               mView.showProgressDialog();
               Subscription subscription= mCommodityManager.getAllCategoryManager()
-                      .compose(RxUtil.<SVRAppserviceCatalogSearchReturnEntity>rxSchedulerHelper())
-                      .subscribe(new Action1<SVRAppserviceCatalogSearchReturnEntity>() {
+                      .subscribeOn(Schedulers.newThread())
+                      .observeOn(AndroidSchedulers.mainThread())
+                      .subscribe(new Subscriber<SVRAppserviceCatalogSearchReturnEntity>() {
                           @Override
-                          public void call(SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity) {
-                            mView.dissmissProgressDialog();
-                            mView.showRootView();
-                            mView.hideOnlineErrorLayout();
-                            mView.loadData(svrAppserviceCatalogSearchReturnEntity);
+                          public void onCompleted() {
+
                           }
-                      }, new Action1<Throwable>() {
+
                           @Override
-                          public void call(Throwable throwable) {
-                               mView.showOnlineErrorLayout();
+                          public void onError(Throwable e) {
+                              if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR) {
+                                  mView.showOnlineErrorLayout();
+                              }
+                          }
+
+                          @Override
+                          public void onNext(SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity) {
+                              mView.dissmissProgressDialog();
+                              mView.showRootView();
+                              mView.hideOnlineErrorLayout();
+                              mView.loadData(svrAppserviceCatalogSearchReturnEntity);
                           }
                       });
             addSubscrebe(subscription);
@@ -65,7 +77,6 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
                 @Override
                 public void onNext(Integer integer) {
                     setShoppingCartCount(integer);
-
                 }
             });
           addSubscrebe(subscription);
@@ -86,6 +97,7 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
 
                        @Override
                        public void onNext(SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity) {
+
                            mView.showRootView();
                            mView.hideOnlineErrorLayout();
                            mView.loadData(svrAppserviceCatalogSearchReturnEntity);
