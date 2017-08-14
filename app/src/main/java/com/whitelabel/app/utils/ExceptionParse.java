@@ -34,6 +34,7 @@ public class ExceptionParse {
         }else if(e instanceof ApiException){
             exception.setErrorType(ERROR.API_ERROR);
             ApiException apiException= (ApiException) e;
+            exception.setData(apiException.getCode());
             exception.setErrorMsg(apiException.getErrorMsg());
         }else{  //   error
 

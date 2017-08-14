@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -33,7 +32,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.common.utils.JViewUtil;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookAuthorizationException;
@@ -61,7 +59,7 @@ import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
-import com.whitelabel.app.model.FBGraphAPIUserEntity;
+import com.whitelabel.app.model.ThreePartAPIUserEntity;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
 import com.whitelabel.app.ui.login.LoginFragmentContract;
@@ -114,7 +112,7 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
     // Facebook
     private int resultTypeFinishLoadFacebookBasicInfo = -1;
     private int resultTypeFinishLoadFacebookPictureInfo = -1;
-    private FBGraphAPIUserEntity fbGraphAPIUserEntity;
+    private ThreePartAPIUserEntity threePartAPIUserEntity;
     private CallbackManager facebookCallbackManager;
     public final int RC_SIGN_IN=10010;
     @Override
@@ -158,6 +156,8 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
 
 
 
+
+
         @Override
         public void onError(FacebookException error) {
             JLogUtils.i("Martin", "FacebookCallback=>onError3-->" + error.getMessage());
@@ -178,7 +178,7 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
     }
 
     private void fbGetFacebookUserInfoFromFB(String facebookUserId) {
-        fbGraphAPIUserEntity = null;
+        threePartAPIUserEntity = null;
         fbGetFacebookUserBasicInfoFromFB(facebookUserId);
         fbGetFacebookUserPictureInfoFromFB(facebookUserId);
     }
@@ -215,14 +215,14 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
 
                         String responseJsonStr = responseJsonObject.toString();
                         JLogUtils.i("Martin", "fbGetFacebookUserBasicInfoFromFB->sucess->getJSONObject.toString()=>" + response.getJSONObject().toString());
-                        FBGraphAPIUserEntity fbInfoEntity = JJsonUtils.getFBGraphAPIUserEntityFromJson(responseJsonStr);
+                        ThreePartAPIUserEntity fbInfoEntity = JJsonUtils.getFBGraphAPIUserEntityFromJson(responseJsonStr);
                         if (fbInfoEntity == null || JDataUtils.isEmpty(fbInfoEntity.getId())) {
                             resultTypeFinishLoadFacebookBasicInfo = 0;
                             fbLoginResultResponse();
                             return;
                         }
-                        if (fbGraphAPIUserEntity == null) {
-                            fbGraphAPIUserEntity = new FBGraphAPIUserEntity();
+                        if (threePartAPIUserEntity == null) {
+                            threePartAPIUserEntity = new ThreePartAPIUserEntity();
                         }
                         JLogUtils.i(TAG,"fbInfoEntity.getId():"+fbInfoEntity.getId());
                         JLogUtils.i(TAG,"fbInfoEntity.getEmail():"+fbInfoEntity.getEmail());
@@ -235,17 +235,17 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
                         JLogUtils.i(TAG,"fbInfoEntity.getTimezone():"+fbInfoEntity.getTimezone());
                         JLogUtils.i(TAG,"fbInfoEntity.getUpdated_time():"+fbInfoEntity.getUpdated_time());
                         JLogUtils.i(TAG,"fbInfoEntity.isVerified():"+fbInfoEntity.isVerified());
-                        fbGraphAPIUserEntity.setId(fbInfoEntity.getId());
-                        fbGraphAPIUserEntity.setEmail(fbInfoEntity.getEmail());
-                        fbGraphAPIUserEntity.setFirst_name(fbInfoEntity.getFirst_name());
-                        fbGraphAPIUserEntity.setGender(fbInfoEntity.getGender());
-                        fbGraphAPIUserEntity.setLast_name(fbInfoEntity.getLast_name());
-                        fbGraphAPIUserEntity.setLink(fbInfoEntity.getLink());
-                        fbGraphAPIUserEntity.setLocale(fbInfoEntity.getLocale());
-                        fbGraphAPIUserEntity.setName(fbInfoEntity.getName());
-                        fbGraphAPIUserEntity.setTimezone(fbInfoEntity.getTimezone());
-                        fbGraphAPIUserEntity.setUpdated_time(fbInfoEntity.getUpdated_time());
-                        fbGraphAPIUserEntity.setVerified(fbInfoEntity.isVerified());
+                        threePartAPIUserEntity.setId(fbInfoEntity.getId());
+                        threePartAPIUserEntity.setEmail(fbInfoEntity.getEmail());
+                        threePartAPIUserEntity.setFirst_name(fbInfoEntity.getFirst_name());
+                        threePartAPIUserEntity.setGender(fbInfoEntity.getGender());
+                        threePartAPIUserEntity.setLast_name(fbInfoEntity.getLast_name());
+                        threePartAPIUserEntity.setLink(fbInfoEntity.getLink());
+                        threePartAPIUserEntity.setLocale(fbInfoEntity.getLocale());
+                        threePartAPIUserEntity.setName(fbInfoEntity.getName());
+                        threePartAPIUserEntity.setTimezone(fbInfoEntity.getTimezone());
+                        threePartAPIUserEntity.setUpdated_time(fbInfoEntity.getUpdated_time());
+                        threePartAPIUserEntity.setVerified(fbInfoEntity.isVerified());
                         resultTypeFinishLoadFacebookBasicInfo = 1;
                         fbLoginResultResponse();
 
@@ -255,8 +255,8 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
         parameters.putString("fields", "id,name,link,email,first_name,last_name,gender,locale,timezone,updated_time,verified");
         request.setParameters(parameters);
         request.executeAsync();
-
     }
+
     private void fbGetFacebookUserPictureInfoFromFB(String facebookUserId) {
         resultTypeFinishLoadFacebookPictureInfo = -1;
         Bundle parameters = new Bundle();
@@ -302,10 +302,10 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
                         } catch (Exception e) {
                             JLogUtils.e(TAG, "fbGetFacebookUserPictureInfoFromFB", e);
                         }
-                        if (fbGraphAPIUserEntity == null) {
-                            fbGraphAPIUserEntity = new FBGraphAPIUserEntity();
+                        if (threePartAPIUserEntity == null) {
+                            threePartAPIUserEntity = new ThreePartAPIUserEntity();
                         }
-                        fbGraphAPIUserEntity.setAvatarUrl(avatarUrl);
+                        threePartAPIUserEntity.setAvatarUrl(avatarUrl);
 
                         resultTypeFinishLoadFacebookPictureInfo = 1;
                         fbLoginResultResponse();
@@ -325,17 +325,16 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
             fbLoginError();
         }
     }
-
     private void fbUseInfoToLoginRemoteServer() {
         String fbHasEmail="";
-        if(JDataUtils.isEmpty(fbGraphAPIUserEntity.getEmail())){
+        if(JDataUtils.isEmpty(threePartAPIUserEntity.getEmail())){
             fbHasEmail="0";
             loginRegisterActivity.setSubEmail("");
         }else{
             fbHasEmail="1";
-            loginRegisterActivity.setSubEmail(fbGraphAPIUserEntity.getEmail());
+            loginRegisterActivity.setSubEmail(threePartAPIUserEntity.getEmail());
         }
-        mMyAccountDao.facebookLogin(fbGraphAPIUserEntity.getEmail(), fbHasEmail, fbGraphAPIUserEntity.getFirst_name(), fbGraphAPIUserEntity.getLast_name(), fbGraphAPIUserEntity.getId(), WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
+        mMyAccountDao.facebookLogin(threePartAPIUserEntity.getEmail(), fbHasEmail, threePartAPIUserEntity.getFirst_name(), threePartAPIUserEntity.getLast_name(), threePartAPIUserEntity.getId(), WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
     }
     private void fbLoginCancel() {
     }
@@ -344,8 +343,7 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
             JViewUtils.showToast(loginRegisterActivity, null, getString(R.string.FB_Login_tips_error));
         }
     }
-
-    private void loginSuccess(SVRAppserviceCustomerFbLoginReturnEntity fbLoginReturnEntity) {
+    public void loginSuccess(SVRAppserviceCustomerFbLoginReturnEntity fbLoginReturnEntity) {
         if(getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
             WhiteLabelApplication.getAppConfiguration().signIn(loginRegisterActivity, fbLoginReturnEntity);
 //            if (false) {
@@ -384,7 +382,6 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
                 loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
 //            }
         }
-
     }
 
     @Override
@@ -700,9 +697,6 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
                 break;
         }
     }
-
-
-
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         JLogUtils.i("ray","connectionResult:"+connectionResult.getErrorMessage());
@@ -714,7 +708,6 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
             imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
         }
         if(isStart||sessionExpire) {
-
             Intent i = new Intent(loginRegisterActivity, HomeActivity.class);
             loginRegisterActivity.startActivity(i);
             loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
@@ -723,6 +716,35 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
             loginRegisterActivity.finish();
             loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
         }
+    }
+    @Override
+    public void showNetErrorMessage() {
+        RequestErrorHelper requestErrorHelper=new RequestErrorHelper(getActivity());
+        requestErrorHelper.showNetWorkErrorToast();
+    }
+
+    @Override
+    public void jumpBoundEmailFragment(String givenName, String formatted, String familyName, String displayName, String identityToken, String userToken, String email, String provider) {
+       threePartAPIUserEntity = new ThreePartAPIUserEntity();
+       threePartAPIUserEntity.setGivenName(givenName);
+       threePartAPIUserEntity.setFormatted(formatted);
+       threePartAPIUserEntity.setFamilyName(familyName);
+       threePartAPIUserEntity.setDisplayName(displayName);
+       threePartAPIUserEntity.setIdentityToken(identityToken);
+       threePartAPIUserEntity.setUserToken(userToken);
+       threePartAPIUserEntity.setEmail(email);
+       threePartAPIUserEntity.setProvider(provider);
+       loginRegisterActivity.threePartAPIUserEntity=threePartAPIUserEntity;
+        loginRegisterActivity.redirectToAttachedFragment(LoginRegisterActivity.EMAIL_BOUND, 1);
+    }
+
+    @Override
+    public void showErrorMessage(String errorMessage) {
+        JViewUtils.showErrorToast(getActivity(),errorMessage);
+    }
+    @Override
+    public void showConfirmEmail() {
+        clickEmailInfo.setVisibility(View.VISIBLE);
     }
 
     private static final class DataHandler extends Handler{
@@ -821,12 +843,11 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
                     }else{
                         String errorMsg= (String) msg.obj;
                         if ( !JDataUtils.isEmpty(errorMsg) && errorMsg.contains(EMAIL_NEED)) {
-                            mActivity.get().fbGraphAPIUserEntity = mFragment.get().fbGraphAPIUserEntity;
+                            mActivity.get().threePartAPIUserEntity = mFragment.get().threePartAPIUserEntity;
                             mActivity.get().redirectToAttachedFragment(LoginRegisterActivity.EMAIL_BOUND, 1);
                         } else if(!JDataUtils.isEmpty(errorMsg) && errorMsg.contains(EMAIL_CONFIRMATION)){
                             mFragment.get().clickEmailInfo.setVisibility(View.VISIBLE);
                         }else {
-
                             if(!TextUtils.isEmpty(errorMsg)){
                                 JViewUtils.showErrorToast(mActivity.get(),errorMsg);
                             }
@@ -859,7 +880,7 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
                     }else{
                         String errorMsg= (String) msg.obj;
                         if ( !JDataUtils.isEmpty(errorMsg) && errorMsg.contains(EMAIL_NEED)) {
-                            mActivity.get().fbGraphAPIUserEntity = mFragment.get().fbGraphAPIUserEntity;
+                            mActivity.get().threePartAPIUserEntity = mFragment.get().threePartAPIUserEntity;
                             mActivity.get().redirectToAttachedFragment(LoginRegisterActivity.EMAIL_BOUND, 1);
                         } else if(!JDataUtils.isEmpty(errorMsg) && errorMsg.contains(EMAIL_CONFIRMATION)){
                             mFragment.get().clickEmailInfo.setVisibility(View.VISIBLE);

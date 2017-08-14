@@ -5,11 +5,11 @@ import java.io.Serializable;
 /**
  * Created by imaginato on 2015/7/10.
  */
-public class FBGraphAPIUserEntity implements Serializable {
+public class ThreePartAPIUserEntity implements Serializable {
     private String id;
     private String first_name;
     private int timezone; // 8
-    private String email;
+
     private boolean verified;
     private String name;
     private String locale; // "zh_CN"
@@ -18,6 +18,74 @@ public class FBGraphAPIUserEntity implements Serializable {
     private String gender; // The gender selected by this person, male or female. This value will be omitted if the gender is set to a custom value
     private String updated_time; // "2015-03-10T01:49:05+0000"
     private String avatarUrl;
+
+
+
+    private String givenName;
+    private String formatted;
+    private String familyName;
+    private String displayName;
+    private String identityToken;
+    private String userToken;
+    private String provider;
+    private String email;
+
+
+    public String getGivenName() {
+        return givenName;
+    }
+
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
+    }
+
+    public String getFormatted() {
+        return formatted;
+    }
+
+    public void setFormatted(String formatted) {
+        this.formatted = formatted;
+    }
+
+    public String getFamilyName() {
+        return familyName;
+    }
+
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getIdentityToken() {
+        return identityToken;
+    }
+
+    public void setIdentityToken(String identityToken) {
+        this.identityToken = identityToken;
+    }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
 
     public String getId() {
         return id;

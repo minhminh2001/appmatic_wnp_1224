@@ -93,7 +93,6 @@ public class OkHttpClientManager {
         }
         return mInstance;
     }
-
     //The only place where OkHttpClient is created in the application
     private OkHttpClient getOkHTTPClient() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -111,13 +110,11 @@ public class OkHttpClientManager {
                 }
             });
         }
-
         if (GlobalData.allowInvalidSSLTLS) {
             okHttpClientBuilder = ignoreCertificate(okHttpClientBuilder);
         }
         return okHttpClientBuilder.build();
     }
-
     private OkHttpClient.Builder ignoreCertificate(OkHttpClient.Builder okHttpClientBuilder) {
         // Create a trust manager that does not validate certificate chains
         X509TrustManager trustManager = new X509TrustManager() {
@@ -156,15 +153,12 @@ public class OkHttpClientManager {
             return okHttpClientBuilder;
         }
     }
-
     public GetDelegate getGetDelegate() {
         return mGetDelegate;
     }
-
     public PostDelegate getPostDelegate() {
         return mPostDelegate;
     }
-
     public static PostDelegate getHttpPostDelegate() {
         return getInstance().getPostDelegate();
     }

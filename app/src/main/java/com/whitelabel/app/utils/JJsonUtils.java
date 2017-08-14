@@ -2,7 +2,6 @@ package com.whitelabel.app.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.whitelabel.app.bean.Wishlist;
 import com.whitelabel.app.model.AddToCartEntity;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.AddressBook;
@@ -16,7 +15,7 @@ import com.whitelabel.app.model.CheckoutPaymentIssuerBankListEntity;
 import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.model.CheckoutSelectShippingAddressEntity;
 import com.whitelabel.app.model.CustomAnimEntity;
-import com.whitelabel.app.model.FBGraphAPIUserEntity;
+import com.whitelabel.app.model.ThreePartAPIUserEntity;
 import com.whitelabel.app.model.FavoriteEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.GetAnimCodeEntity;
@@ -883,15 +882,15 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static FBGraphAPIUserEntity getFBGraphAPIUserEntityFromJson(String jsonStr) {
+    public static ThreePartAPIUserEntity getFBGraphAPIUserEntityFromJson(String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
 
-        FBGraphAPIUserEntity entity = null;
+        ThreePartAPIUserEntity entity = null;
         try {
             Gson gson = new Gson();
-            entity = gson.fromJson(jsonStr, FBGraphAPIUserEntity.class);
+            entity = gson.fromJson(jsonStr, ThreePartAPIUserEntity.class);
         } catch (Exception ex) {
             JLogUtils.e(TAG, "getFBGraphAPIUserEntityFromJson", ex);
         }

@@ -14,8 +14,23 @@ public class SVRAppserviceCustomerFbLoginReturnEntity extends SVRReturnEntity {
     private String headImage;
     private int newsletterSubscribed;
     private long status;
+    private int code;
+    private String errorMessage;
     private long orderCount;
     private String loginType;
+    public int getCode() {
+        return code;
+    }
+    public void setCode(int code) {
+        this.code = code;
+    }
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
     public String getLoginType() {
         return loginType;

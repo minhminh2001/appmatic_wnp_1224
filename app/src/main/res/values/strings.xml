@@ -189,8 +189,8 @@
     <string name="Malaysia">Malaysia</string>
 
     <!-- email bound -->
-    <string name="loginregister_emailbound_header_title">Welcome To Whitelabel</string>
-    <string name="loginregister_emailbound_message">You\'re almost there!\nTo complete your Whitelabel registration, please enter your email address: (Don\'t worry, we will never share your private information with others)</string>
+    <string name="loginregister_emailbound_header_title">Welcome To Wnp</string>
+    <string name="loginregister_emailbound_message">You\'re almost there!\nTo complete your Wnp registration, please enter your email address: (Don\'t worry, we will never share your private information with others)</string>
     <string name="loginregister_emailbound_email_hint">Email</string>
     <string name="loginregister_emailbound_createaccount">CREATE ACCOUNT</string>
     <string name="loginregister_emailbound_tips_error_email_empty">This is a required field.</string>

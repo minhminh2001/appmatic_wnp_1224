@@ -32,6 +32,7 @@ import com.whitelabel.app.model.TMPHelpCenterListToDetailEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.ui.home.MainContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
+import com.whitelabel.app.utils.BadgeUtils;
 import com.whitelabel.app.utils.FragmentFactory;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
@@ -279,6 +280,7 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_home);
         resetMenuAndListenter();
+        BadgeUtils.clearBadge(this);
         getDrawerLayout().addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -294,11 +296,9 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
             public void onDrawerStateChanged(int newState) {
             }
         });
-//        requestNotificationUnReadCount();
         initFragment(savedInstanceState);
         redirectToFragmentByIntent(getIntent());
         redirectToInterfaceByDeepLink();
-
     }
     private void redirectToInterfaceByDeepLink() {
         if (getIntent() != null && getIntent().getData() != null) {

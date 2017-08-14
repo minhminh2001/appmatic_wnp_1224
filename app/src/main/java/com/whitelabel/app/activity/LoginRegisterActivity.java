@@ -23,7 +23,7 @@ import com.whitelabel.app.fragment.LoginRegisterEmailSendFragment;
 import com.whitelabel.app.fragment.LoginRegisterEmailSendSuccessFragment;
 import com.whitelabel.app.fragment.LoginRegisterRegisterSuccessFragment;
 import com.whitelabel.app.fragment.LoginRegisterResetPassFragment;
-import com.whitelabel.app.model.FBGraphAPIUserEntity;
+import com.whitelabel.app.model.ThreePartAPIUserEntity;
 import com.whitelabel.app.widget.CustomMyDialog;
 
 import java.lang.ref.WeakReference;
@@ -34,7 +34,6 @@ import java.util.ArrayList;
  */
 
 public class LoginRegisterActivity extends com.whitelabel.app.BaseActivity implements ToolBarFragmentCallback {
-
     public static final int REQUESTCODE_LOGIN = 1000;
     public static final int BACKAPP = -1;//退出
     public static final int EMAILLOGIN_FLAG = 0;//登录
@@ -44,7 +43,7 @@ public class LoginRegisterActivity extends com.whitelabel.app.BaseActivity imple
     public static final int SENDESUCCESS_FLAG = 4;//发送邮件成功
     public static final int REGISTERSUCCESS_FLAG = 5;//注册成功
     public static final int EMAIL_BOUND = 6;//facebook绑定邮箱
-    public FBGraphAPIUserEntity fbGraphAPIUserEntity;
+    public ThreePartAPIUserEntity threePartAPIUserEntity;
     private ArrayList<Fragment> attachedFragmentArray;//存放顺序固定
     private String subEmail = "";
     public boolean fromStart = false;

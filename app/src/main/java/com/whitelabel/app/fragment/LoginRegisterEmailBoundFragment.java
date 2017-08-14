@@ -23,13 +23,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.whitelabel.app.R;
+import com.whitelabel.app.*;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.LoginRegisterDao;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
+import com.whitelabel.app.ui.login.LoginFragmentContract;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -41,76 +41,105 @@ import com.whitelabel.app.widget.CustomTextView;
 
 import java.lang.ref.WeakReference;
 
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
 /**
  * Created by imaginato on 2015/6/25.
  */
-public class LoginRegisterEmailBoundFragment extends Fragment implements View.OnClickListener,View.OnFocusChangeListener {
+public class LoginRegisterEmailBoundFragment extends com.whitelabel.app.BaseFragment<LoginFragmentContract.Presenter> implements View.OnClickListener,View.OnFocusChangeListener,LoginFragmentContract.View {
     private LoginRegisterActivity loginRegisterActivity;
     private View contentView;
-
     private ImageView  clearSubmit;
     private CustomButtomLineRelativeLayout rl_emailbound_email;
     private CustomEditText cetEmail;
     private CustomTextView emptyAndfileEmail;
     private CustomTextView hasEmail;
     private final String TAG = "LoginRegisterEmailBoundFragment";
-    private LoginRegisterDao mDao;
+//    private LoginRegisterDao mDao;
     private ToolBarFragmentCallback toolBarFragmentCallback;
-
-    private static final class DataHandler extends android.os.Handler {
-        private final WeakReference<LoginRegisterActivity> mActivity;
-        private final WeakReference<LoginRegisterEmailBoundFragment> mFragment;
-
-        public DataHandler(LoginRegisterActivity activity,LoginRegisterEmailBoundFragment fragment) {
-            mActivity = new WeakReference<LoginRegisterActivity>(activity);
-            mFragment=new WeakReference<LoginRegisterEmailBoundFragment>(fragment);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            if(mActivity.get()==null||mFragment.get()==null){
-                return;
-            }
-//            if (mFragment.get().mDialog != null) {
-//                mFragment.get().mDialog.cancel();
-//            }
-            //   JViewUtils.dismissProgressBar(mActivity.get());
-            switch (msg.what){
-                case LoginRegisterDao.REQUEST_FBUSERINFO:
-                    if(msg.arg1==LoginRegisterDao.RESPONSE_SUCCESS) {
-                        WhiteLabelApplication.getAppConfiguration().signIn(mActivity.get(), (SVRAppserviceCustomerFbLoginReturnEntity) msg.obj);
-                    }
-                    break;
-                case LoginRegisterDao.REQUEST_BOUNDUSERINFO:
-                    if(msg.arg1==LoginRegisterDao.RESPONSE_SUCCESS) {
-                        if (mActivity.get() != null && !mActivity.get().checkIsFinished() && mFragment.get().isAdded()) {
-                            mActivity.get().setEmailConfirm(false);
-                            mFragment.get().fbUseInfoToLoginRemoteServer(mFragment.get().cetEmail.getText().toString().trim());
-                            mActivity.get().switchFragment(LoginRegisterActivity.EMAIL_BOUND, LoginRegisterActivity.REGISTERSUCCESS_FLAG);
-                        }
-                    }else{
-                        String EMAIL_NO_CONFIRMED = "This account is not confirmed";
-                        if ( mActivity.get() != null && ! mActivity.get().checkIsFinished() && mFragment.get().isAdded()) {
-                            mActivity.get().setEmailConfirm(true);
-                            JLogUtils.i("Martin", "emailBoundUseInfoToLoginRemoteServer -> onFailure -> "+ "errorMsg=>" + msg.obj.toString());
-                            if ((!JDataUtils.isEmpty(msg.obj.toString())) && (msg.obj.toString().contains(EMAIL_NO_CONFIRMED))) {
-                                mActivity.get().switchFragment(LoginRegisterActivity.EMAIL_BOUND, LoginRegisterActivity.REGISTERSUCCESS_FLAG);
-                            } else {
-                                mFragment.get().emailBoundLoginError(msg.obj.toString());
-                            }
-                        }
-                    }
-                    break;
-                case LoginRegisterDao.REQUEST_ERROR:
-                    Toast.makeText(mActivity.get(), mActivity.get().getString(R.string.Global_Error_Internet), Toast.LENGTH_LONG).show();
-                    mFragment.get().hasEmail.setVisibility(View.INVISIBLE);
-//                    mFragment.get().hasEmail.setText(mActivity.get().getString(R.string.please_check));
-                    break;
-            }
-            super.handleMessage(msg);
-        }
+    @Override
+    public void showNetErrorMessage() {
+        Toast.makeText(loginRegisterActivity, loginRegisterActivity.getString(R.string.Global_Error_Internet), Toast.LENGTH_LONG).show();
+        hasEmail.setVisibility(View.INVISIBLE);
+    }
+    @Override
+    public void jumpBoundEmailFragment(String givenName, String formatted, String familyName, String displayName, String identityToken, String userToken, String email, String provider) {
 
     }
+    @Override
+    public void showErrorMessage(String errorMessage) {
+        loginRegisterActivity. setEmailConfirm(true);
+        emailBoundLoginError(errorMessage);
+    }
+
+    @Override
+    public void showConfirmEmail() {
+        loginRegisterActivity. setEmailConfirm(true);
+        loginRegisterActivity.switchFragment(LoginRegisterActivity.EMAIL_BOUND, LoginRegisterActivity.REGISTERSUCCESS_FLAG);
+
+    }
+
+    @Override
+    public void loginSuccess(SVRAppserviceCustomerFbLoginReturnEntity fbLoginReturnEntity) {
+        loginRegisterActivity.setEmailConfirm(false);
+        loginRegisterActivity.switchFragment(LoginRegisterActivity.EMAIL_BOUND, LoginRegisterActivity.REGISTERSUCCESS_FLAG);
+    }
+
+//    private static final class DataHandler extends android.os.Handler {
+//        private final WeakReference<LoginRegisterActivity> mActivity;
+//        private final WeakReference<LoginRegisterEmailBoundFragment> mFragment;
+//
+//        public DataHandler(LoginRegisterActivity activity,LoginRegisterEmailBoundFragment fragment) {
+//            mActivity = new WeakReference<LoginRegisterActivity>(activity);
+//            mFragment=new WeakReference<LoginRegisterEmailBoundFragment>(fragment);
+//        }
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            if(mActivity.get()==null||mFragment.get()==null){
+//                return;
+//            }
+////            if (mFragment.get().mDialog != null) {
+////                mFragment.get().mDialog.cancel();
+////            }
+//            //   JViewUtils.dismissProgressBar(mActivity.get());
+//            switch (msg.what){
+//                case LoginRegisterDao.REQUEST_FBUSERINFO:
+//                    if(msg.arg1==LoginRegisterDao.RESPONSE_SUCCESS) {
+//                        WhiteLabelApplication.getAppConfiguration().signIn(mActivity.get(), (SVRAppserviceCustomerFbLoginReturnEntity) msg.obj);
+//                    }
+//                    break;
+//                case LoginRegisterDao.REQUEST_BOUNDUSERINFO:
+//                    if(msg.arg1==LoginRegisterDao.RESPONSE_SUCCESS) {
+//                        if (mActivity.get() != null && !mActivity.get().checkIsFinished() && mFragment.get().isAdded()) {
+//                            mActivity.get().setEmailConfirm(false);
+//                            mFragment.get().fbUseInfoToLoginRemoteServer(mFragment.get().cetEmail.getText().toString().trim());
+//                            mActivity.get().switchFragment(LoginRegisterActivity.EMAIL_BOUND, LoginRegisterActivity.REGISTERSUCCESS_FLAG);
+//                        }
+//                    }else{
+//                        String EMAIL_NO_CONFIRMED = "This account is not confirmed";
+//                        if ( mActivity.get() != null && ! mActivity.get().checkIsFinished() && mFragment.get().isAdded()) {
+//                            mActivity.get().setEmailConfirm(true);
+//                            JLogUtils.i("Martin", "emailBoundUseInfoToLoginRemoteServer -> onFailure -> "+ "errorMsg=>" + msg.obj.toString());
+//                            if ((!JDataUtils.isEmpty(msg.obj.toString())) && (msg.obj.toString().contains(EMAIL_NO_CONFIRMED))) {
+//                                mActivity.get().switchFragment(LoginRegisterActivity.EMAIL_BOUND, LoginRegisterActivity.REGISTERSUCCESS_FLAG);
+//                            } else {
+//                                mFragment.get().emailBoundLoginError(msg.obj.toString());
+//                            }
+//                        }
+//                    }
+//                    break;
+//                case LoginRegisterDao.REQUEST_ERROR:
+//                    Toast.makeText(mActivity.get(), mActivity.get().getString(R.string.Global_Error_Internet), Toast.LENGTH_LONG).show();
+//                    mFragment.get().hasEmail.setVisibility(View.INVISIBLE);
+////                    mFragment.get().hasEmail.setText(mActivity.get().getString(R.string.please_check));
+//                    break;
+//            }
+//            super.handleMessage(msg);
+//        }
+//
+//    }
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -119,7 +148,7 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
     }
     @Override
     public void onDestroy() {
-        mDao.cancelHttpByTag(TAG);
+//        mDao.cancelHttpByTag(TAG);
         super.onDestroy();
     }
 
@@ -169,6 +198,12 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
     }
 
     @Override
+    public void inject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(getActivity())).build().inject(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView = inflater.inflate(R.layout.fragment_loginregister_emailbound, null);
         return contentView;
@@ -184,8 +219,8 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
                 onClickLeftMenu(v);
             }
         });
-        DataHandler mHandler = new DataHandler(loginRegisterActivity, this);
-        mDao=new LoginRegisterDao(TAG, mHandler);
+//        DataHandler mHandler = new DataHandler(loginRegisterActivity, this);
+//        mDao=new LoginRegisterDao(TAG, mHandler);
         cetEmail = (CustomEditText) contentView.findViewById(R.id.cetEmail);
         rl_emailbound_email= (CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_emailbound_email);
         hasEmail= (CustomTextView) contentView.findViewById(R.id.hasEmail);
@@ -291,20 +326,19 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
 
     private void emailBoundUseInfoToLoginRemoteServer(String email) {
         loginRegisterActivity.setMyEmail(email);
-
-        String firstnameStr=loginRegisterActivity.fbGraphAPIUserEntity.getFirst_name();
-        String lastnameStr=loginRegisterActivity.fbGraphAPIUserEntity.getLast_name();
-        String fb_idStr= loginRegisterActivity.fbGraphAPIUserEntity.getId();
-        String device_token= WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken();
-
-        mDao.emailBoundUseInfoToLoginRemoteServer(email,firstnameStr,lastnameStr,fb_idStr,"0","1",device_token);
+        String givenName=loginRegisterActivity.threePartAPIUserEntity.getGivenName();
+        String formatted=loginRegisterActivity.threePartAPIUserEntity.getFormatted();
+        String familyName=loginRegisterActivity.threePartAPIUserEntity.getFamilyName();
+        String displayName=loginRegisterActivity.threePartAPIUserEntity.getDisplayName();
+        String identityToken=loginRegisterActivity.threePartAPIUserEntity.getIdentityToken();
+        String userToken=loginRegisterActivity.threePartAPIUserEntity.getUserToken();
+        String provider=loginRegisterActivity.threePartAPIUserEntity.getProvider();
+       mPresenter.loginFromServer(givenName,formatted,familyName,displayName,identityToken,userToken,email,provider,true,"1");
 
     }
 
     private void emailBoundLoginError(String msg) {
         hasEmail.setVisibility(View.VISIBLE);
-        JLogUtils.d("jay","msg"+msg);
-        JLogUtils.d("msg",msg);
         hasEmail.setText(msg);
        //JViewUtils.showToast(loginRegisterActivity, null, msg);
     }
@@ -319,12 +353,12 @@ public class LoginRegisterEmailBoundFragment extends Fragment implements View.On
     }
 
 
-    public void fbUseInfoToLoginRemoteServer(String eamil) {
-        String firstnameStr=loginRegisterActivity.fbGraphAPIUserEntity.getFirst_name();
-        String lastnameStr=loginRegisterActivity.fbGraphAPIUserEntity.getLast_name();
-        String fb_id=loginRegisterActivity.fbGraphAPIUserEntity.getId();
-        String device_token= WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken();
-        mDao.fbUseInfoToLoginRemoteServer(eamil,"1",firstnameStr,lastnameStr,fb_id,"1",device_token);
-
-    }
+//    public void fbUseInfoToLoginRemoteServer(String eamil) {
+//        String firstnameStr=loginRegisterActivity.threePartAPIUserEntity.getFirst_name();
+//        String lastnameStr=loginRegisterActivity.threePartAPIUserEntity.getLast_name();
+//        String fb_id=loginRegisterActivity.threePartAPIUserEntity.getId();
+//        String device_token= WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken();
+//        mDao.fbUseInfoToLoginRemoteServer(eamil,"1",firstnameStr,lastnameStr,fb_id,"1",device_token);
+//
+//    }
 }

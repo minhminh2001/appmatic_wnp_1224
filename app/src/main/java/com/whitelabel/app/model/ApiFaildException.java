@@ -8,7 +8,15 @@ public class ApiFaildException extends Exception {
     private int errorType;
     private String errorMsg;
     private Throwable throwable;
+    private Object data;
 
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
 
     public Throwable getThrowable() {
         return throwable;

@@ -5,6 +5,7 @@ import com.whitelabel.app.model.AddresslistReslut;
 import com.whitelabel.app.model.NotificationUnReadResponse;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 
 import java.util.Observable;
@@ -33,4 +34,15 @@ public interface MyAccoutApi {
     public rx.Observable<AddToWishlistEntity>  addWish(@Field("session_key")String sessionKey, @Field("product_id") String productId);
     @GET("appservice/notification/unreads/{user_id}")
     public rx.Observable<ResponseModel<NotificationUnReadResponse>>  getNotificationUnReadResponse(@Path("user_id") String userId);
+    @FormUrlEncoded
+    @POST("appservice/customer/oneallLogin")
+    public rx.Observable<SVRAppserviceCustomerFbLoginReturnEntity> threePartLogin(@Field("givenName") String  givenName
+            ,@Field("displayName") String displayName
+            ,@Field("formatted") String formatted
+            ,@Field("familyName") String familyName
+            ,@Field("email") String email
+            ,@Field("identity_token") String identityToken
+            ,@Field("user_token") String userToken
+            ,@Field("provider") String provider
+            ,@Field("boundEmail") String boundEmail );
 }

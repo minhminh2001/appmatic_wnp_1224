@@ -16,5 +16,5 @@ import rx.Observable;
 
 public interface OneAllApi {
     @PUT("/users.json")
-    Observable<JsonObject> info(@Body NativeLoginRequest requestBody);
+    Observable<ResponseConnection> info(@Body NativeLoginRequest requestBody);
 }
