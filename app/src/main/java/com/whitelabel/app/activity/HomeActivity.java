@@ -299,6 +299,7 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
         initFragment(savedInstanceState);
         redirectToFragmentByIntent(getIntent());
         redirectToInterfaceByDeepLink();
+        requestNotificationUnReadCount();
     }
     private void redirectToInterfaceByDeepLink() {
         if (getIntent() != null && getIntent().getData() != null) {

@@ -17,11 +17,8 @@ public class FacebookEventUtils {
     public final static String FACEBOOK_EVENT_SEARCH_FAILD="0";
     public final static String FACEBOOK_EVENT_CUSTOM_SAVE_SHIPPING_EVENT="Save Shipping Event";
     public final static String FACEBOOK_EVENT_CUSTOM_PLACE_ORDER="Place Order";
-
     public final static String FACEBOOK_EVENT_CUSTOM_PURCHASE_EVENT_FAIL="Purchase Event Fail";
-
     public final static String FACEBOOK_EVENT_CUSTOM_DEEPLINK="facebook_deep_link";
-
     private FacebookEventUtils() {
 
     }
@@ -110,10 +107,7 @@ public class FacebookEventUtils {
         parameters.putInt(AppEventsConstants.EVENT_PARAM_NUM_ITEMS, productNum);
         parameters.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, id);
         logger.logEvent(AppEventsConstants.EVENT_NAME_PURCHASED, price, parameters);
-
     }
-
-
 
     public void facebookEventSearch(Context context, String searchStr,String isSuccess) {
         AppEventsLogger logger = AppEventsLogger.newLogger(context);

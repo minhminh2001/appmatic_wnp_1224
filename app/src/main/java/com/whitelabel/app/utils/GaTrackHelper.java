@@ -18,11 +18,13 @@ import java.util.ArrayList;
  * Created by Administrator on 2016/6/22.
  */
 public class GaTrackHelper {
+    public static String GA_TIME_CATEGORY_IMPRESSION="Impression Screens Loading";
+    public static String GA_TIME_CATEGORY_CHECKOUT="Checkout Step";
+    public static String GA_TIME_CATEGORY_PAYMENT="Payment";
     public static GaTrackHelper gaTrackHelper;
     private  GaTrackHelper(){
 
     }
-
     public static GaTrackHelper getInstance(){
             if(gaTrackHelper==null){
                 synchronized (GaTrackHelper.class){
@@ -187,9 +189,7 @@ public class GaTrackHelper {
     }
 
 
-    public static String GA_TIME_CATEGORY_IMPRESSION="Impression Screens Loading";
-    public static String GA_TIME_CATEGORY_CHECKOUT="Checkout Step";
-    public static String GA_TIME_CATEGORY_PAYMENT="Payment";
+
     public Long googleAnalyticsTimeStart(){
         return SystemClock.elapsedRealtime();
     }

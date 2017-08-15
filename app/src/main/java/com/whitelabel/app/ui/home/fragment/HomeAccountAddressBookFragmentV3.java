@@ -42,12 +42,16 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
             AddressBook addressBook = addressBooks.get(i);
             if("1".equals(addressBook.getPrimaryShipping())&&"1".equals(addressBook.getPrimaryBilling())) {
                 AddressBook cloneObject= (AddressBook) addressBook.clone();
-                addressBook.setPrimaryBilling("0");
+                addressBook.setPrimaryShipping("0");
                 mBeans.add(0,addressBook);
-                cloneObject.setPrimaryShipping("0");
+                cloneObject.setPrimaryBilling("0");
                 mBeans.add(0,cloneObject);
             }else if("1".equals(addressBook.getPrimaryBilling())){
-                mBeans.add(0,addressBook);
+                if(mBeans.size()>0){
+                    mBeans.add(1, addressBook);
+                }else {
+                    mBeans.add(0, addressBook);
+                }
             }else if("1".equals(addressBook.getPrimaryShipping())){
                 mBeans.add(0,addressBook);
             } else{

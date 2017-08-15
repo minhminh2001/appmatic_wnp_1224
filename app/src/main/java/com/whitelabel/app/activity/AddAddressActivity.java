@@ -239,7 +239,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addaddress);
-
         DataHandler handler = new DataHandler(this);
         String TAG = this.getClass().getSimpleName();
         dao=new MyAccountDao(TAG, handler);

@@ -41,7 +41,6 @@ public class FirebaseEventUtils {
         bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY,handlerStr(itemCategory));
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM_LIST,bundle);
     }
-
     /**
      * pdp  page
      * @param itemId
@@ -59,8 +58,6 @@ public class FirebaseEventUtils {
         bundle.putString(FirebaseAnalytics.Param.CURRENCY,"MYR");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM,bundle);
     }
-
-
 
     public String handlerStr(String str){
 
@@ -95,7 +92,6 @@ public class FirebaseEventUtils {
         bundle.putString(FirebaseAnalytics.Param.CURRENCY,"MYR");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_TO_CART,bundle);
     }
-
     public void ecommerceBeginCheckout(Context context,String value){
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context.getApplicationContext());
         Bundle bundle = new Bundle();
@@ -103,9 +99,6 @@ public class FirebaseEventUtils {
         bundle.putString(FirebaseAnalytics.Param.VALUE,value);
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundle);
     }
-
-
-
     public void ecommercePurchase(Context context,String value,String shipping,String transactionId){
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context.getApplicationContext());
         Bundle bundle = new Bundle();
@@ -115,8 +108,6 @@ public class FirebaseEventUtils {
         bundle.putString(FirebaseAnalytics.Param.TRANSACTION_ID,transactionId);
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ECOMMERCE_PURCHASE, bundle);
     }
-
-
     public void ecommerceAddWishlist(Context context,String categroy,String name,String id,String price){
         FirebaseAnalytics  mFirebaseAnalytics = FirebaseAnalytics.getInstance(context.getApplicationContext());
         Bundle bundle = new Bundle();
