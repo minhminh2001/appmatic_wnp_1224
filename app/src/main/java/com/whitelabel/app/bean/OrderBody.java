@@ -17,7 +17,15 @@ public class OrderBody {
     private String vendor_id;
     private int isRPayment;
     private boolean isLast;
+    private String availability;
 
+    public String getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(String availability) {
+        this.availability = availability;
+    }
 
     public int getIsRPayment() {
         return isRPayment;

@@ -20,6 +20,7 @@ import com.whitelabel.app.model.MyAccountOrderTrackingInfo;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.RefreshLoadMoreRecyclerView;
@@ -59,6 +60,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     MyAccountOrderInner orderInners = orderlist[j].getItems()[k];
                     OrderBody orderBody = new OrderBody();
                     orderBody.setOrderNumber(myAccountOrderOuter.getOrderSn());
+                    orderBody.setAvailability(orderInners.getAvailability());
                     orderBody.setOrderCs(setCS(orderInners));
                     orderBody.setOrderImage(orderInners.getImage());
                     orderBody.setIsRPayment(myAccountOrderOuter.getIsRPayment());
@@ -178,6 +180,15 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 subOrderHolder.orderCS.setVisibility(View.VISIBLE);
                 subOrderHolder.orderCS.setText(orderBody.getOrderCs());
             }
+
+
+            if(!TextUtils.isEmpty(orderBody.getAvailability())&&!"1".equals(orderBody.getAvailability())){
+                subOrderHolder.tvUnavailable.setVisibility(View.VISIBLE);
+                subOrderHolder.tvTrans.setVisibility(View.VISIBLE);
+            }else{
+                subOrderHolder.tvUnavailable.setVisibility(View.GONE);
+                subOrderHolder.tvTrans.setVisibility(View.GONE);
+            }
             subOrderHolder.orderPrice.setText(JDataUtils.formatDouble(orderBody.getOrderPrice()));
             subOrderHolder.orderNum.setText("Quantity: " + orderBody.getOrderQuantity());
             subOrderHolder.orderNewStatus.setText(orderBody.getOrderTextStatus());
@@ -263,9 +274,12 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         LinearLayout llOrderRePayment;
         TextView orderName, orderCS, orderPrice, orderNum, orderStatus, orderNewStatus, orderMerName, tvRepayment;
         TextView rmTop;
+        TextView tvUnavailable;
+        TextView tvTrans;
 
         public SubOrderHolder(View view) {
             super(view);
+            tvUnavailable= (TextView) view.findViewById(R.id.order_detail_unavailable);
             orderImage = (ImageView) view.findViewById(R.id.iv_orderlist_new);
             orderName = (TextView) view.findViewById(R.id.tv_orderlist_new_name);
             orderCS = (TextView) view.findViewById(R.id.tv_orderlist_new_det);
@@ -277,6 +291,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             tvRepayment = (TextView) view.findViewById(R.id.tv_order_repayment);
             llOrderRePayment= (LinearLayout) view.findViewById(R.id.ll_order_repayment);
             rmTop= (TextView) view.findViewById(R.id.rm_top);
+            tvTrans= (TextView) view.findViewById(R.id.order_detail_trans);
 
         }
     }

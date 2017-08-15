@@ -13,8 +13,17 @@ public class MyAccountOrderOuter extends SVRReturnEntity implements Serializable
     private String totalFormatted;
     private String status;
     private int isRPayment;
+    private String availability;
     private String statusCode;
     private MyAccountOrderMiddle[] suborders;//MyAccountOrderMiddle
+
+    public String getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(String availability) {
+        this.availability = availability;
+    }
 
     public int getIsRPayment() {
         return isRPayment;
