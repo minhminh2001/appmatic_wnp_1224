@@ -52,6 +52,15 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
     public String getItem_id() {
         return item_id;
     }
+    private String itemId;
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
 
     public void setItem_id(String item_id) {
         this.item_id = item_id;

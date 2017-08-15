@@ -382,7 +382,7 @@ public class ProductListAdapter extends BaseAdapter {
         Observable<SVRAppserviceProductSearchResultsItemReturnEntity> observable=Observable.
                 create(new WishlistObservable(viewHolder.rlLeftProductlistWish,leftProductEntity,
                         viewHolder.ivLeftProductlistWishIcon, viewHolder.ivLeftProductlistWishIcon2));
-        observable.buffer(observable.debounce(1000, TimeUnit.MILLISECONDS))
+        observable.buffer(observable.debounce(800, TimeUnit.MILLISECONDS))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<SVRAppserviceProductSearchResultsItemReturnEntity>>() {
@@ -392,9 +392,9 @@ public class ProductListAdapter extends BaseAdapter {
                         if(bean.getIsLike()==1){
                             mProductDao.addProductListToWish(bean.getProductId(),WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
                                     bean.getPosition());
-                        }else if(bean.getItem_id()!=null){
+                        }else if(bean.getItemId()!=null){
                             myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
-                                    bean.getItem_id(),bean.getPosition());
+                                    bean.getItemId(),bean.getPosition());
                         }
                     }
                 });
@@ -572,7 +572,7 @@ public class ProductListAdapter extends BaseAdapter {
         Observable<SVRAppserviceProductSearchResultsItemReturnEntity> rightObservable=Observable.
                 create(new WishlistObservable(viewHolder.rlRightProductlistWish,rightProductEntity,
                         viewHolder.ivRightProductlistWishIcon, viewHolder.ivRightProductlistWishIcon2));
-        rightObservable.buffer(rightObservable.debounce(1000, TimeUnit.MILLISECONDS))
+        rightObservable.buffer(rightObservable.debounce(800, TimeUnit.MILLISECONDS))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<SVRAppserviceProductSearchResultsItemReturnEntity>>() {
@@ -582,9 +582,9 @@ public class ProductListAdapter extends BaseAdapter {
                         if(bean.getIsLike()==1){
                             mProductDao.addProductListToWish(bean.getProductId(),WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
                                     bean.getPosition());
-                        }else if(bean.getItem_id()!=null){
+                        }else if(bean.getItemId()!=null){
                             myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
-                                    bean.getItem_id(),bean.getPosition());
+                                    bean.getItemId(),bean.getPosition());
                         }
                     }
                 });
@@ -777,7 +777,7 @@ public class ProductListAdapter extends BaseAdapter {
                             return;
                         SVRAppserviceProductSearchResultsItemReturnEntity productEntity =
                                 (SVRAppserviceProductSearchResultsItemReturnEntity) mAdapter.get().productItemEntityArrayList.get(position);
-                        productEntity.setItem_id(addToWishlistEntity.getItemId());
+                        productEntity.setItemId(addToWishlistEntity.getItemId());
                         //update wishlist number
                         WhiteLabelApplication.getAppConfiguration().updateWishlist(mAdapter.get().productListActivity, addToWishlistEntity.getWishListItemCount());
                         try {
