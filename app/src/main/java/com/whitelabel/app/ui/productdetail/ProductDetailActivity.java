@@ -446,7 +446,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     private void initData() {
         setStatusBarColor(JToolUtils.getColor(R.color.transparent5000));
         TAG = TAG + JTimeUtils.getCurrentTimeLong();
-
         mAttributeEntity = new WheelPickerConfigEntity();
         mAttributeEntity.setArrayList(new ArrayList<WheelPickerEntity>());
         mAttributeEntity.setOldValue(new WheelPickerEntity());
