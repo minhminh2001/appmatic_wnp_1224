@@ -170,7 +170,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
        showView.setVisibility(View.VISIBLE);
        rlProductQuantity.setVisibility(View.VISIBLE);
        descriptionsRelative.setVisibility(View.VISIBLE);
-        ivHeaderBarShare.setVisibility(View.VISIBLE);
+       ivHeaderBarShare.setVisibility(View.VISIBLE);
         ivHeaderBarWishlist.setVisibility(View.VISIBLE);
         mIVHeaderBarWishlist.setVisibility(View.VISIBLE);
     }

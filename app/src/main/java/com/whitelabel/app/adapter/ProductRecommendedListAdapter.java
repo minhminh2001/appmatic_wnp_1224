@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
@@ -13,25 +15,38 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.callback.ProductDetailCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
+import com.whitelabel.app.dao.ShoppingCarDao;
+import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
+import com.whitelabel.app.model.AddToWishlistEntity;
+import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedResultsItemReturnEntity;
+import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomTextView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
@@ -51,8 +66,74 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
         this.context = context;
         this.list = arrayList;
         this.productDetailCallback = productDetailCallback;
+        DataHandler dataHandler = new DataHandler(context, this);
+        mProductDao = new ProductDao(TAG, dataHandler);
+        myAccountDao = new MyAccountDao(TAG, dataHandler);
         mImageLoader = imageLoader;
     }
+
+
+    private static final class DataHandler extends Handler {
+        private final WeakReference<ProductRecommendedListAdapter> mAdapter;
+        private final WeakReference<Context> mContext;
+
+        public DataHandler(Context context, ProductRecommendedListAdapter productRecommendedListAdapter) {
+            mAdapter = new WeakReference<ProductRecommendedListAdapter>(productRecommendedListAdapter);
+            mContext = new WeakReference<Context>(context);
+        }
+
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (mAdapter.get() == null || mContext.get() == null) {
+                return;
+            }
+
+            switch (msg.what) {
+                case MyAccountDao.REQUEST_DELETEWISHLIST:
+                    if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
+                        WishDelEntityResult wishDelEntityResult = (WishDelEntityResult) msg.obj;
+                        int position = Integer.parseInt(String.valueOf(wishDelEntityResult.getParams()));
+                        //update wishlist number
+                        WhiteLabelApplication.getAppConfiguration().updateWishlist(mContext.get(), wishDelEntityResult.getWishListItemCount());
+                    }
+                    break;
+                case ProductDao.REQUEST_ADDPRODUCTLISTTOWISH:
+                    if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
+                        AddToWishlistEntity addToWishlistEntity = (AddToWishlistEntity) msg.obj;
+                        int position = Integer.parseInt(String.valueOf(addToWishlistEntity.getParams()));
+                        SVRAppserviceProductRecommendedResultsItemReturnEntity productEntity = (SVRAppserviceProductRecommendedResultsItemReturnEntity) mAdapter.get().list.get(position);
+                        productEntity.setItem_id(addToWishlistEntity.getItemId());
+                        //update wishlist number
+                        WhiteLabelApplication.getAppConfiguration().updateWishlist(mContext.get(), addToWishlistEntity.getWishListItemCount());
+                        Bundle bundle = new Bundle();
+                        bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_WISHLIST);
+                        try {
+                            GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
+                                    "Add To Wishlist",
+                                    productEntity.getName(),
+                                    Long.valueOf(productEntity.getProductId()));
+                            JLogUtils.i("googleGA", "add to wishlist ");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        ErrorMsgBean bean = (ErrorMsgBean) msg.obj;
+                        if (!TextUtils.isEmpty(bean.getErrorMessage())) {
+                            Toast.makeText(mContext.get(), bean.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    break;
+                case MyAccountDao.ERROR:
+                case ProductDao.REQUEST_ERROR:
+                    RequestErrorHelper requestErrorHelper = new RequestErrorHelper(mContext.get());
+                    requestErrorHelper.showNetWorkErrorToast(msg);
+                    break;
+            }
+        }
+    }
+
+
     public void updateData(ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity>  entities){
         list.clear();
         if(entities!=null&&entities.size()>0){
@@ -83,9 +164,14 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
         View view = LayoutInflater.from(context).inflate(R.layout.adapter_productlist_gridlist_rowitem, null);
         return new ViewHolderImp(view);
     }
-
+    private void setWishIconColorToBlankNoAnim(ImageView ivWishIcon) {
+        ivWishIcon.setVisibility(View.GONE);
+        boolean repeatAnim = true;
+        ivWishIcon.setTag(repeatAnim);
+        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_normal_v2);
+    }
     @Override
-    public void onBindViewHolder(ViewHolderImp holder, int position) {
+    public void onBindViewHolder(ViewHolderImp holder,  int position) {
         final ViewHolderImp viewHolder = holder;
         position = position * 2;
         final int productListArrayListSize = list.size();
@@ -100,45 +186,20 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
             viewHolder.itemView.setVisibility(View.GONE);
             return;
         }
+
         // set merchant name
         if (!TextUtils.isEmpty(leftProductEntity.getVendorDisplayName())) {
             String soldBy = viewHolder.ctvLeftProductMerchant.getContext().getResources().getString(R.string.soldby);
-//            if (!TextUtils.isEmpty(leftProductEntity.getVendor_id())) {
-//                viewHolder.ctvLeftProductMerchant.setTextColor(context.getResources().getColor(R.color.purple92018d));
-//                SpannableStringBuilder ss = new SpannableStringBuilder(soldBy + " " + leftProductEntity.getVendorDisplayName());
-//                ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyB8B8B8)), 0, soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                viewHolder.ctvLeftProductMerchant.setText(ss);
-//                if (!"0".equals(leftProductEntity.getVendor_id())) {
-//                    viewHolder.ctvLeftProductMerchant.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Intent intent = new Intent(context, MerchantStoreFrontActivity.class);
-//                            Bundle bundle = new Bundle();
-//                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, leftProductEntity.getVendor_id());
-//                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, leftProductEntity.getVendorDisplayName());
-//                            intent.putExtras(bundle);
-//                            context.startActivity(intent);
-//                            ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
-//                        }
-//                    });
-//                } else {
-//                    viewHolder.ctvLeftProductMerchant.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Intent i = new Intent(context, HomeActivity.class);
-//                            context.startActivity(i);
-//                        }
-//                    });
-//                }
-//
-//            } else {
                 viewHolder.ctvLeftProductMerchant.setText(soldBy + " " + leftProductEntity.getVendorDisplayName());
                 viewHolder.ctvLeftProductMerchant.setTextColor(context.getResources().getColor(R.color.black));
-//            }
         } else {
             viewHolder.ctvLeftProductMerchant.setText("");
         }
-
+        if (leftProductEntity.getIs_like() == 1) {
+            setWishIconColorToPurpleNoAnim(viewHolder.ivLeftProductlistWishIcon);
+        } else {
+            setWishIconColorToBlankNoAnim(viewHolder.ivLeftProductlistWishIcon);
+        }
         final int phoneWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(((Activity) context));
         final int marginLeft = phoneWidth * 15 / 640;
         final int marginRight = marginLeft;
@@ -259,8 +320,17 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
                 }
             }
         }.init(context, leftProductEntity.getProductId()));
-
-
+          final int tempPosition = position;
+            viewHolder.rlLeftProductlistWish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (leftProductEntity.getIs_like() == 1) {
+                        sendRequestToDeteleteCell(viewHolder.ivLeftProductlistWishIcon, viewHolder.rlLeftProductlistWish, leftProductEntity.getItem_id(), tempPosition);
+                    } else {
+                        addtoWishlistsendRequest(leftProductEntity, viewHolder.rlLeftProductlistWish, viewHolder.ivLeftProductlistWishIcon, viewHolder.ivLeftProductlistWishIcon2, tempPosition);
+                    }
+                }
+            });
         ///// Right //////
         position = position + 1;
         if (position < 0 || productListArrayListSize <= position) {
@@ -277,43 +347,22 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
         if (!TextUtils.isEmpty(rightProductEntity.getVendorDisplayName())) {
             viewHolder.ctvRightProductMerchant.setTextColor(context.getResources().getColor(R.color.purple92018d));
             String soldBy = viewHolder.ctvRightProductMerchant.getContext().getResources().getString(R.string.soldby);
-//            if (!TextUtils.isEmpty(rightProductEntity.getVendor_id())) {
-//                viewHolder.ctvRightProductMerchant.setTextColor(context.getResources().getColor(R.color.purple92018d));
-//                SpannableStringBuilder ss = new SpannableStringBuilder(soldBy + " " + rightProductEntity.getVendorDisplayName());
-//                ss.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.greyB8B8B8)), 0, soldBy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                viewHolder.ctvRightProductMerchant.setText(ss);
-//                if(!"0".equals(rightProductEntity.getVendor_id())){
-//                    viewHolder.ctvRightProductMerchant.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Intent intent = new Intent(context, MerchantStoreFrontActivity.class);
-//                            Bundle bundle = new Bundle();
-//                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_ID, rightProductEntity.getVendor_id());
-//                            bundle.putString(MerchantStoreFrontActivity.BUNDLE_VENDOR_DISPLAY_NAME, rightProductEntity.getVendorDisplayName());
-//                            intent.putExtras(bundle);
-//                            context.startActivity(intent);
-//                            ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
-//                        }
-//                    });
-//                }else{
-//                    viewHolder.ctvRightProductMerchant.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            Intent i = new Intent(context, HomeActivity.class);
-//                            context.startActivity(i);
-//                            ((Activity) context).overridePendingTransition(R.anim.activity_transition_enter_righttoleft, R.anim.activity_transition_exit_righttoleft);
-//                        }
-//                    });
-//                }
-//
-//            } else {
                 viewHolder.ctvRightProductMerchant.setText(soldBy + " " + rightProductEntity.getVendorDisplayName());
                 viewHolder.ctvRightProductMerchant.setTextColor(context.getResources().getColor(R.color.black));
-//            }
-
         } else {
             viewHolder.ctvRightProductMerchant.setText("");
         }
+        final int tempRightPosition = position;
+        viewHolder.rlRightProductlistWish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rightProductEntity.getIs_like() == 1) {
+                    sendRequestToDeteleteCell(viewHolder.ivRightProductlistWishIcon, viewHolder.rlRightProductlistWish, rightProductEntity.getItem_id(), tempRightPosition);
+                } else {
+                    addtoWishlistsendRequest(rightProductEntity, viewHolder.rlRightProductlistWish, viewHolder.ivRightProductlistWishIcon, viewHolder.ivRightProductlistWishIcon2, tempRightPosition);
+                }
+            }
+        });
         viewHolder.llRightProduct.setVisibility(View.VISIBLE);
         RelativeLayout.LayoutParams rightImagelp = (RelativeLayout.LayoutParams) viewHolder.ivRightProductImage.getLayoutParams();
         if (rightImagelp != null) {
@@ -321,7 +370,11 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
             rightImagelp.height = destHeight;
             viewHolder.ivRightProductImage.setLayoutParams(rightImagelp);
         }
-
+        if (rightProductEntity.getIs_like() == 1) {
+            setWishIconColorToPurpleNoAnim(viewHolder.ivRightProductlistWishIcon);
+        } else {
+            setWishIconColorToBlankNoAnim(viewHolder.ivRightProductlistWishIcon);
+        }
         final String rightProductImageUrl = rightProductEntity.getSmallImage();
         if (!rightProductImageUrl.equals(String.valueOf(viewHolder.ivRightProductImage.getTag()))) {
             JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, viewHolder.ivRightProductImage, rightProductImageUrl, destWidth, destHeight);
@@ -402,8 +455,85 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
                 }
             }
         }.init(context, rightProductEntity.getProductId()));
+    }
 
+    private void sendRequestToDeteleteCell(ImageView ivWwishIcon, RelativeLayout rlCurationWish, String itemId, int tempPosition) {
+        list.get(tempPosition).setIs_like(0);
+        setWishIconColorToBlank(ivWwishIcon);
+        if (!TextUtils.isEmpty(list.get(tempPosition).getItem_id())) {
+            myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), itemId, tempPosition);
+        }
+    }
 
+    private void addtoWishlistsendRequest(SVRAppserviceProductRecommendedResultsItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
+            entity.setIs_like(1);
+            mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), tempPosition);
+            setWishIconColorToPurple(ivWwishIcon, ivWwishIcon2);
+        } else {
+            productDetailCallback.saveProductIdWhenJumpLoginPage(entity.getProductId());
+            Intent intent = new Intent();
+            intent.setClass(context, LoginRegisterActivity.class);
+            ((Activity) context).startActivityForResult(intent, LoginRegisterEmailLoginFragment.RESULTCODE);
+            ((Activity) context).overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
+        }
+    }
+    private void setWishIconColorToPurple(ImageView ivWishIcon, final ImageView ivWishIcon2) {
+        ivWishIcon2.setVisibility(View.VISIBLE);
+        ivWishIcon.setVisibility(View.VISIBLE);
+        boolean repeatAnim = false;
+        ivWishIcon.setTag(repeatAnim);
+        ivWishIcon.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(), R.mipmap.wishlist_purple_pressed_v2));
+        final ScaleAnimation animation2 = new ScaleAnimation(0.1f, 1f, 0.1f, 1f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation2.setDuration(250);//设置动画持续时间
+        animation2.setFillAfter(true);//动画执行完后是否停留在执行完的状态
+        animation2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        ivWishIcon.startAnimation(animation2);
+    }
+    private void setWishIconColorToPurpleNoAnim(ImageView ivWishIcon) {
+        ivWishIcon.setVisibility(View.VISIBLE);
+        ivWishIcon.setImageResource(R.mipmap.wishlist_purple_pressed_v2);
+        boolean repeatAnim = false;
+        ivWishIcon.setTag(repeatAnim);
+    }
+
+    private void setWishIconColorToBlank(final ImageView ivWishIcon) {
+        ivWishIcon.setVisibility(View.VISIBLE);
+        boolean repeatAnim = true;
+        ivWishIcon.setTag(repeatAnim);
+        ivWishIcon.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(), R.mipmap.wishlist_purple_pressed_v2));
+        final ScaleAnimation animation2 = new ScaleAnimation(1f, 0f, 1f, 0f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation2.setDuration(250);//设置动画持续时间
+        animation2.setFillAfter(false);//动画执行完后是否停留在执行完的状态
+        animation2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ivWishIcon.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        ivWishIcon.startAnimation(animation2);
     }
 
     private ProductListItemToProductDetailsEntity getProductListItemToProductDetailsEntity(SVRAppserviceProductRecommendedResultsItemReturnEntity e) {
@@ -429,9 +559,9 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
         public CustomTextView ctvLeftProductName, ctvRightProductName, ctvLeftProductBrand, ctvRightProductBrand,
                 ctvLeftProductPrice, ctvRightProductPrice, ctvLeftProductFinalPrice, ctvRightProductFinalPrice, ctvLeftProductMerchant, ctvRightProductMerchant;
         public View vProductListDivider;
-        private RelativeLayout rlLeftOutOfStock, rlRightOutOfStock;
+        private RelativeLayout rlLeftOutOfStock, rlRightOutOfStock,rlLeftProductlistWish,rlRightProductlistWish;
         private View itemView;
-
+        private ImageView ivLeftProductlistWishIcon,ivLeftProductlistWishIcon2,ivRightProductlistWishIcon,ivRightProductlistWishIcon2;
         public ViewHolderImp(View view) {
             super(view);
             itemView = view;
@@ -446,6 +576,10 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
             ctvLeftProductMerchant = (CustomTextView) llLeftProduct.findViewById(R.id.ctv_product_merchant);
             rlLeftOutOfStock = (RelativeLayout) llLeftProduct.findViewById(R.id.rl_product_list_out_of_stock);
 
+            rlLeftProductlistWish = (RelativeLayout) llLeftProduct.findViewById(R.id.rl_productlist_wish);
+            ivLeftProductlistWishIcon = (ImageView) llLeftProduct.findViewById(R.id.iv_productlist_wish_icon);
+            ivLeftProductlistWishIcon2 = (ImageView) llLeftProduct.findViewById(R.id.iv_productlist_wish_icon2);
+
             ivRightProductImage = (ImageView) llRightProduct.findViewById(R.id.ivProductImage);
             ctvRightProductName = (CustomTextView) llRightProduct.findViewById(R.id.ctvProductName);
             ctvRightProductBrand = (CustomTextView) llRightProduct.findViewById(R.id.ctvProductBrand);
@@ -453,6 +587,10 @@ public class ProductRecommendedListAdapter extends RecyclerView.Adapter<ProductR
             ctvRightProductFinalPrice = (CustomTextView) llRightProduct.findViewById(R.id.ctvProductFinalPrice);
             rlRightOutOfStock = (RelativeLayout) llRightProduct.findViewById(R.id.rl_product_list_out_of_stock);
             ctvRightProductMerchant = (CustomTextView) llRightProduct.findViewById(R.id.ctv_product_merchant);
+
+            rlRightProductlistWish = (RelativeLayout) llRightProduct.findViewById(R.id.rl_productlist_wish);
+            ivRightProductlistWishIcon = (ImageView) llRightProduct.findViewById(R.id.iv_productlist_wish_icon);
+            ivRightProductlistWishIcon2 = (ImageView) llRightProduct.findViewById(R.id.iv_productlist_wish_icon2);
 
         }
     }

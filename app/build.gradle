@@ -11,34 +11,36 @@ apply plugin: 'com.android.application'
 
 //apply plugin: 'io.fabric'
 //apply plugin: 'newrelic'
-apply plugin: "jacoco"
-jacoco {
-    toolVersion = "0.7.1.201405082137"
-}
-def coverageSourceDirs = [
-        '../app/src/main/java'
-]
+//apply plugin: "jacoco"
+//jacoco {
+//    toolVersion = "0.7.1.201405082137"
+//}
+//def coverageSourceDirs = [
+//        '../app/src/main/java'
+//]
+//
+//task jacocoTestReport(type: JacocoReport, dependsOn: ["testWnpDebugUnitTest"]) {
+//    group = "Reporting"
+//    description = "Generate Jacoco coverage reports"
+//    classDirectories = fileTree(
+//            dir: '../app/build/intermediates/classes/debug',
+//            excludes: ['**/R.class',
+//                       '**/R$*.class',
+//                       '**/*$ViewInjector*.*',
+//                       '**/BuildConfig.*',
+//                       '**/Manifest*.*']
+//    )
+//    additionalSourceDirs = files(coverageSourceDirs)
+//    sourceDirectories = files(coverageSourceDirs)
+//    executionData = files('../app/build/jacoco/testDebug.exec')
+//
+//    reports {
+//        xml.enabled = false
+//        html.enabled = true
+//    }
+//}
 
-task jacocoTestReport(type: JacocoReport, dependsOn: ["testWnpDebugUnitTest"]) {
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports"
-    classDirectories = fileTree(
-            dir: '../app/build/intermediates/classes/debug',
-            excludes: ['**/R.class',
-                       '**/R$*.class',
-                       '**/*$ViewInjector*.*',
-                       '**/BuildConfig.*',
-                       '**/Manifest*.*']
-    )
-    additionalSourceDirs = files(coverageSourceDirs)
-    sourceDirectories = files(coverageSourceDirs)
-    executionData = files('../app/build/jacoco/testDebug.exec')
 
-    reports {
-        xml.enabled = false
-        html.enabled = true
-    }
-}
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
