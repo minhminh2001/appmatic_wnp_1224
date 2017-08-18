@@ -1084,7 +1084,14 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                     egText2.setTextColor(getResources().getColor(R.color.redC2060A));
                     myScrollView.scrollTo(0,0);
                     return false;
-                }else{
+                }else if(eg.getText().toString().length()<7) {
+                    eg.setHint(getResources().getString(R.string.eg123));
+                    egText.clearAnimation();
+                    //验证字段
+                    egText2.setText(getResources().getString(R.string.address_phone_error_hint));
+                    egText2.setTextColor(getResources().getColor(R.color.redC2060A));
+                    return false;
+                } else{
                     egText.clearAnimation();
                 }
                 break;
@@ -1099,7 +1106,13 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                     tvDayPhone2.setText(getResources().getString(R.string.required_field));
                     tvDayPhone2.setTextColor(getResources().getColor(R.color.redC2060A));
                     return false;
-                }else{
+                }else if(etDayPhone.getText().toString().length()<7){
+                    etDayPhone.setHint(getResources().getString(R.string.address_day_phone));
+                    tvDayPhone.clearAnimation();
+                    tvDayPhone2.setText(getResources().getString(R.string.address_phone_error_hint));
+                    tvDayPhone2.setTextColor(getResources().getColor(R.color.redC2060A));
+                    return false;
+                } else{
                     tvDayPhone.clearAnimation();
                 }
                 break;

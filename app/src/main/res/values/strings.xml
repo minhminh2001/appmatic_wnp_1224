@@ -551,6 +551,7 @@
 
     <!-- String in code-->
     <string name="required_field">This is a required field.</string>
+
     <string name="enter_characters">Please enter 4 or more characters. </string>
     <string name="t">T:&#160;</string>
     <string name="size">Size</string>
@@ -711,12 +712,12 @@
     <string name="api_version">v1</string>
     <string name="api_key">L5M7aUpZRr2ChzDx</string>
     <string name="app_key">APP-29710023052170613</string>
-    <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bbd5e7d8</string>
+    <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bb5de7d8</string>
     <string name="app_name">Wnp</string>
     <!--https://dev2.wnp.com.hk/ 103.210.236.156:8088-->
     <string name="request_url">http://103.210.236.156:8088/</string>
     <string name="image_base_url">https://dev2.wnp.com.hk/</string>
     <string name="mock_url">http://103.210.236.156:8088/</string>
 
-
+    <string name="address_phone_error_hint">More than 6 digits please.</string>
 </resources>

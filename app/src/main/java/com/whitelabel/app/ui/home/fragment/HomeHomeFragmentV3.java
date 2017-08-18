@@ -226,7 +226,9 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         entity.setBrand(e.getBrand());
         entity.setCategory(e.getCategory());
         entity.setFinalPrice(e.getFinal_price());
-        entity.setInStock(Integer.parseInt(e.getInStock()));
+        if(e.getInStock()!=null) {
+            entity.setInStock(Integer.parseInt(e.getInStock()));
+        }
         entity.setName(e.getName());
         entity.setPrice(e.getPrice());
         entity.setVendorDisplayName(e.getVendorDisplayName());

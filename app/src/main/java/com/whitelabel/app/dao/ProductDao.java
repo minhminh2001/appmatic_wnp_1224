@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.whitelabel.app.model.AddToWishlistEntity;
@@ -229,7 +230,7 @@ public class ProductDao extends BaseHttp {
     }
 
     public void productSearch(String storeId, String p, String limit, String order, String dir,
-                              String brand, String categoryId, String modelType, String q, String price, String sessionKey,String key) {
+                              String brand, String categoryId, String modelType, String q, String price, String sessionKey,String key,String fromPage) {
         params = new TreeMap<>();
         params.put("store_id", storeId);
         params.put("p", p);
@@ -258,6 +259,9 @@ public class ProductDao extends BaseHttp {
         }
         if (!TextUtils.isEmpty(sessionKey)) {
             params.put("session_key", sessionKey);
+        }
+        if(!TextUtils.isEmpty(fromPage)){
+            params.put("pageType",fromPage);
         }
         JLogUtils.d("response","params="+params.toString());
         requestHttp(HTTP_METHOD.POST, "appservice/product/search", params, REQUEST_PRODUCTSEARCH);

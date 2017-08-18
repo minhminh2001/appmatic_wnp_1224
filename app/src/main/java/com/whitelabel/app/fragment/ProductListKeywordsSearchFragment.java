@@ -857,10 +857,10 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         //传入session是为判断产品是否被wish
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
             mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q, price,
-                    WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),""
+                    WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),"","search"
                    );
         } else {
-            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q, price, "", "");
+            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q, price, "", "","search");
         }
 
     }

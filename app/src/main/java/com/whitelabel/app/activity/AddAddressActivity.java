@@ -948,7 +948,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                 firstNameText2.setVisibility(View.VISIBLE);
                 if(firstName.getText().toString().trim().equals("")){
                     firstName.setHint(getResources().getString(R.string.first_name));
-
                     firstNameText2.getLocationOnScreen(location);
                     srollto();
 
@@ -1102,12 +1101,20 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                 egText2.setVisibility(View.VISIBLE);
                 if(eg.getText().toString().trim().equals("")){
                     eg.setHint(getResources().getString(R.string.eg123));
-
                     egText2.getLocationOnScreen(location);
                     srollto();
                     egText.clearAnimation();
                     //验证字段
                     egText2.setText(getResources().getString(R.string.required_field));
+                    egText2.setTextColor(getResources().getColor(R.color.redC2060A));
+                    return false;
+                }else if(eg.getText().toString().length()<7) {
+                    eg.setHint(getResources().getString(R.string.eg123));
+                    egText2.getLocationOnScreen(location);
+                    srollto();
+                    egText.clearAnimation();
+                    //验证字段
+                    egText2.setText(getResources().getString(R.string.address_phone_error_hint));
                     egText2.setTextColor(getResources().getColor(R.color.redC2060A));
                     return false;
                 }else{
@@ -1125,6 +1132,15 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                     tvDayPhone.clearAnimation();
                     //验证字段
                     tvDayPhone2.setText(getResources().getString(R.string.required_field));
+                    tvDayPhone2.setTextColor(getResources().getColor(R.color.redC2060A));
+                    return false;
+                }else if(etDayPhone.getText().toString().length()<7){
+                    etDayPhone.setHint(getResources().getString(R.string.address_day_phone));
+                    tvDayPhone2.getLocationOnScreen(location);
+                    srollto();
+                    tvDayPhone.clearAnimation();
+                    //验证字段
+                    tvDayPhone2.setText(getResources().getString(R.string.address_phone_error_hint));
                     tvDayPhone2.setTextColor(getResources().getColor(R.color.redC2060A));
                     return false;
                 }else{

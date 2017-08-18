@@ -63,7 +63,9 @@ public class CheckoutReviewShoppingCartAdapter extends BaseAdapter {
         TextView tvQuantity = (TextView) convertView.findViewById(R.id.tv_checkout_review_shoppingcart_cell_quantity);
         TextView tvPrice = (TextView) convertView.findViewById(R.id.tv_checkout_review_shoppingcart_cell_price);
         ImageView image = (ImageView) convertView.findViewById(R.id.image_checkout_review_shoppingcart_cell);
-
+        TextView tvUnavailabel= (TextView) convertView.findViewById(R.id.tv_unavailable);
+        TextView tvLeftTran= (TextView) convertView.findViewById(R.id.tv_left_tran);
+        TextView tvRightTran= (TextView) convertView.findViewById(R.id.tv_right_tran);
         tvBrand.setText(sc.getBrand() == null ? "BRAND" : sc.getBrand().toUpperCase());
         tvProductName.setText(sc.getName());
         tvQuantity.setText(sc.getQty());
@@ -73,6 +75,16 @@ public class CheckoutReviewShoppingCartAdapter extends BaseAdapter {
         } else {
             ctv_revieworder_merchant.setText("");
         }
+        if (TextUtils.isEmpty(sc.getAvailability())||("1").equals(sc.getAvailability())){
+                tvUnavailabel.setVisibility(View.GONE);
+                tvLeftTran.setVisibility(View.GONE);
+                tvRightTran.setVisibility(View.GONE);
+        }else{
+                tvUnavailabel.setVisibility(View.VISIBLE);
+                tvLeftTran.setVisibility(View.VISIBLE);
+                tvRightTran.setVisibility(View.VISIBLE);
+        }
+
         //colors and size
         ArrayList<HashMap<String, String>> colorAndSizes = sc.getOptions();
         if (colorAndSizes != null && colorAndSizes.size() > 0) {
