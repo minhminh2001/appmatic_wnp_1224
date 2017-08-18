@@ -29,12 +29,14 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical"
+            android:layout_marginTop="@dimen/login_margin_top"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="22dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:layout_height="wrap_content">
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -120,6 +122,7 @@
 
 
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="fill_parent"
                 android:layout_height="70dp">
 
@@ -162,6 +165,7 @@
                     android:id="@+id/view1"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/line_height"
+                    android:visibility="gone"
                     android:background="@color/edittext_line" />
 
                 <com.whitelabel.app.widget.CustomTextView

@@ -45,8 +45,6 @@ public  class WishlistObservable implements Observable.OnSubscribe<SVRAppservice
                  ((Activity)view.getContext()).overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
                  return;
              }
-
-
              for(Subscriber subscriber1:mSubscribers){
                  subscriber1.onNext(entity);
              }

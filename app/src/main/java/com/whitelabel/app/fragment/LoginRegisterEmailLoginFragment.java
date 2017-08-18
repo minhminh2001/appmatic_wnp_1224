@@ -147,7 +147,6 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
 //                fbGetFacebookUserInfoFromFB(facebookProfile.getId());
             }
         }
-
         @Override
         public void onCancel() {
             JLogUtils.i("Martin", "FacebookCallback=>onCancel2");

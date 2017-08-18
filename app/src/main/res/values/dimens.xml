@@ -25,7 +25,6 @@
     <dimen name="activity_pdp_margin">11dp</dimen>
     <dimen name="product_details_viewpager_height">360dp</dimen>
     <dimen name="product_details_viewpager_dot_margin_top">350dp</dimen>
-
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -35,7 +34,6 @@
     <dimen name="button_font_size">16sp</dimen>
     <dimen name="button_padding_value">16dp</dimen>
     <!--shopping cart params-->
-
     <dimen name="shoppingcart_cell_left_top_padding">10dp</dimen>
     <!--checkout params-->
     <dimen name="checkout_left_right_padidng">1dp</dimen>
@@ -57,26 +55,20 @@
     <dimen name="orderdetail_line_space">1dp</dimen>
     <dimen name="orderdetail_line_height">25dp</dimen>
     <dimen name="myAccount_lineHeight">0.8dp</dimen>
-
-
     <!--myaccount order params-->
-
     <dimen name="setting_item_margin_left">15dp</dimen>
     <dimen name="setting_item_height">48dp</dimen>
     <dimen name="setting_item_text_size">14sp</dimen>
-
     <!--add address table margain left-->
     <dimen name="table_lable_ani_margain_bottom">10dp</dimen>
     <dimen name="table_lable_margain_bottom">5dp</dimen>
     <dimen name="table_lable_margain_top">5dp</dimen>
     <dimen name="table_margain_left">0dp</dimen>
-
     <!--Landing banner-->
     <dimen name="landing_banner_font_size_4_add_marginleft">23dp</dimen>
     <dimen name="landing_banner_font_size_4_add_margintop">7dp</dimen>
     <dimen name="landing_banner_font_size_low4_add_marginleft">23dp</dimen>
     <dimen name="landing_banner_font_size_low4_add_margintop">5dp</dimen>
-
     <!--clock-->
     <dimen name="curation_time_marg">5dp</dimen>
     <dimen name="curation_time_marg_ban">2.5dp</dimen>
@@ -85,12 +77,9 @@
     <dimen name="shoppingcart_icon_num_wh">18dp</dimen>
     <dimen name="shoppingcart_icon_num_margin_top">7dp</dimen>
     <dimen name="shoppingcart_icon_num_margin_right">9dp</dimen>
-
     <dimen name="payment_CV_desc_undertext_size">11sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-
     <dimen name="slideto_top_bty_margin">20dp</dimen>
-
     <dimen name="banktransfer_left_right_margin">10dp</dimen>
     <!-- CustomEditTextPaddingRight-->
     <dimen name="customEditText_paddingRight_v2_firstName">22dp</dimen>
@@ -100,8 +89,7 @@
     <dimen name="multi_switch_button_thumb_ripple_size">42dp</dimen>
     <dimen name="multi_switch_button_thumb_solid_inset">11dp</dimen>
     <dimen name="statusbar_height">0dp</dimen>
-
     <dimen name="switch_view_and_filter_bar_height">40dp</dimen>
-
     <dimen name="scroll_height">1px</dimen>
+    <dimen name="login_margin_top">22dp</dimen>
 </resources>
