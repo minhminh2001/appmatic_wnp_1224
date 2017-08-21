@@ -81,7 +81,9 @@ public class CheckoutDao extends BaseHttp {
         if (!TextUtils.isEmpty(addressParameter.getStreet0())) {
             params.put("shipping[street][0]", addressParameter.getStreet0());
         }
-
+        if(!TextUtils.isEmpty(addressParameter.getFax())){
+            params.put("shipping[fax]",addressParameter.getFax());
+        }
 
         if (!TextUtils.isEmpty(addressParameter.getStreet1())) {
             params.put("shipping[street][1]", addressParameter.getStreet1());
@@ -181,6 +183,10 @@ public class CheckoutDao extends BaseHttp {
         if (shippingAddress.getStreet().size()>1&&!TextUtils.isEmpty(shippingAddress.getStreet().get(1))) {
             params.put("shipping[street][1]", shippingAddress.getStreet().get(1));
         }
+        if(!TextUtils.isEmpty(shippingAddress.getFax())){
+//            params.put("shipping[fax")
+        }
+
 
         if (!TextUtils.isEmpty(shippingAddress.getPostcode())) {
             params.put("shipping[postcode]", shippingAddress.getPostcode());

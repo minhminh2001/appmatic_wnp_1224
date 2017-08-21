@@ -61,7 +61,6 @@
         android:textColor="@color/black"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
-        android:text="test"
         style="@style/font_family_robot_regular"
         android:layout_marginRight="10dp"
         android:singleLine="true"/>
@@ -69,7 +68,7 @@
     <com.whitelabel.app.widget.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="text2"
+
         android:lineSpacingExtra="0.5dp"
         android:textSize="14sp"
         android:textColor="@color/black"
@@ -88,7 +87,7 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:textColor="@color/black"
-        android:text="@string/price"
+
         android:id="@+id/wishlist_textView3"
         android:layout_below="@+id/wishlist_textView1"
         android:layout_alignLeft="@+id/wishlist_textView1"
@@ -101,7 +100,7 @@
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:layout_marginTop="-2.7dp"
-        android:text="@string/price"
+
         android:lineSpacingExtra="0.1dp"
         android:textColor="@color/black"
         android:id="@+id/wishlist_textView4"
@@ -116,7 +115,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:text="text"
+
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
         android:textColor="@color/purple92018d"

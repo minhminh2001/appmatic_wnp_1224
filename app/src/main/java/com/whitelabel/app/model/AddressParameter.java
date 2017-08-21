@@ -18,6 +18,15 @@ public class AddressParameter implements Serializable{
     private String regionId;
     private String defaultShipping;
     private String addressId;
+    private String fax;
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
 
     public String getAddressId() {
         return addressId;
