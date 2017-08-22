@@ -304,6 +304,9 @@
         <activity android:name=".ui.shoppingcart.ShoppingCartActivity" />
         <activity android:name=".ui.checkout.PayPalPaymentActivity"
             android:screenOrientation="portrait"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="967ab5d94c3f9fda9e3bbf9adef59d05e74bcc41" />
     </application>
 
 </manifest>

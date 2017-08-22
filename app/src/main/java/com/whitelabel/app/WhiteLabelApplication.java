@@ -5,6 +5,7 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import com.android.volley.Request;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
@@ -18,6 +19,7 @@ import com.whitelabel.app.utils.JToolUtils;
 
 import injection.components.ApplicationComponent;
 import injection.components.DaggerApplicationComponent;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by imaginato on 2015/6/10.
@@ -70,6 +72,7 @@ public class WhiteLabelApplication extends MultiDexApplication {
     public void onCreate() {
         MultiDex.install(this);
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         NewRelic.withApplicationToken(
                 "AAd06a20384063c34e4b1ab1ade0f956323ffa6de4"
         ).start(this);

@@ -138,73 +138,73 @@ public class CustomMyDialog extends Dialog {
             this.itemAdapter = itemAdapter;
             return this;
         }
-        public CustomDialog create() {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            // instantiate the dialog with the custom Theme
-            final CustomDialog dialog = new CustomDialog(context,R.style.alertDialog,"");
-            View layout = inflater.inflate(R.layout.dialog_normal_layout, null);
-            dialog.addContentView(layout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            //title
-            if(!TextUtils.isEmpty(title)) {
-                TextView titleView=(TextView) layout.findViewById(R.id.title);
-                titleView.setText(title);
-                titleView.setVisibility(View.VISIBLE);
-            }
-
-            //confirm button
-            if (positiveButtonText != null) {
-                ((TextView) layout.findViewById(R.id.positiveButton)).setText(positiveButtonText);
-                if (positiveButtonClickListener != null) {
-                    ( layout.findViewById(R.id.positiveButton)).setOnClickListener(new View.OnClickListener() {
-                                public void onClick(View v) {
-                                    positiveButtonClickListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-                                }
-                            });
-                }
-            } else {
-                layout.findViewById(R.id.positiveButton).setVisibility(View.GONE);
-            }
-            //cancel button
-            if (negativeButtonText != null) {
-                ((TextView) layout.findViewById(R.id.negativeButton)).setText(negativeButtonText);
-                if (negativeButtonClickListener != null) {
-                    ( layout.findViewById(R.id.negativeButton)).setOnClickListener(new View.OnClickListener() {
-                                public void onClick(View v) {
-                                    negativeButtonClickListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-                                }
-                            });
-                }
-            } else {
-                layout.findViewById(R.id.negativeButton).setVisibility(View.GONE);
-            }
-            //message
-            if (message != null) {
-                ((TextView) layout.findViewById(R.id.message)).setText(message);
-            } else if (contentView != null) {
-                ((LinearLayout) layout.findViewById(R.id.content))
-                        .removeAllViews();
-                ((LinearLayout) layout.findViewById(R.id.content))
-                        .addView(contentView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
-            }
-            //list
-            if(  (mItems!=null&&mItems.size()>0)||itemAdapter!=null) {
-                layout.findViewById(R.id.ll_listview).setVisibility(View.VISIBLE);
-                layout.findViewById(R.id.content).setVisibility(View.GONE);
-                ListView listview=(ListView)layout.findViewById(R.id.listview);
-                if(this.itemAdapter!=null){
-                    listview.setAdapter(this.itemAdapter);
-                }else{
-                    listview.setAdapter(new ItemAdapter(dialog.getContext(),mItems));
-                }
-                listview.setOnItemClickListener(mItemListener);
-            }
-
-            dialog.setContentView(layout);
-            return dialog;
-        }
+//        public CustomDialog create() {
+//            LayoutInflater inflater = (LayoutInflater) context
+//                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            // instantiate the dialog with the custom Theme
+//            final CustomDialog dialog = new CustomDialog(context,R.style.alertDialog,"");
+//            View layout = inflater.inflate(R.layout.dialog_normal_layout, null);
+//            dialog.addContentView(layout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+//                    ViewGroup.LayoutParams.WRAP_CONTENT));
+//
+//            //title
+//            if(!TextUtils.isEmpty(title)) {
+//                TextView titleView=(TextView) layout.findViewById(R.id.title);
+//                titleView.setText(title);
+//                titleView.setVisibility(View.VISIBLE);
+//            }
+//
+//            //confirm button
+//            if (positiveButtonText != null) {
+//                ((TextView) layout.findViewById(R.id.positiveButton)).setText(positiveButtonText);
+//                if (positiveButtonClickListener != null) {
+//                    ( layout.findViewById(R.id.positiveButton)).setOnClickListener(new View.OnClickListener() {
+//                                public void onClick(View v) {
+//                                    positiveButtonClickListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+//                                }
+//                            });
+//                }
+//            } else {
+//                layout.findViewById(R.id.positiveButton).setVisibility(View.GONE);
+//            }
+//            //cancel button
+//            if (negativeButtonText != null) {
+//                ((TextView) layout.findViewById(R.id.negativeButton)).setText(negativeButtonText);
+//                if (negativeButtonClickListener != null) {
+//                    ( layout.findViewById(R.id.negativeButton)).setOnClickListener(new View.OnClickListener() {
+//                                public void onClick(View v) {
+//                                    negativeButtonClickListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+//                                }
+//                            });
+//                }
+//            } else {
+//                layout.findViewById(R.id.negativeButton).setVisibility(View.GONE);
+//            }
+//            //message
+//            if (message != null) {
+//                ((TextView) layout.findViewById(R.id.message)).setText(message);
+//            } else if (contentView != null) {
+//                ((LinearLayout) layout.findViewById(R.id.content))
+//                        .removeAllViews();
+//                ((LinearLayout) layout.findViewById(R.id.content))
+//                        .addView(contentView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+//            }
+//            //list
+//            if(  (mItems!=null&&mItems.size()>0)||itemAdapter!=null) {
+//                layout.findViewById(R.id.ll_listview).setVisibility(View.VISIBLE);
+//                layout.findViewById(R.id.content).setVisibility(View.GONE);
+//                ListView listview=(ListView)layout.findViewById(R.id.listview);
+//                if(this.itemAdapter!=null){
+//                    listview.setAdapter(this.itemAdapter);
+//                }else{
+//                    listview.setAdapter(new ItemAdapter(dialog.getContext(),mItems));
+//                }
+//                listview.setOnItemClickListener(mItemListener);
+//            }
+//
+//            dialog.setContentView(layout);
+//            return dialog;
+//        }
     }
 
     public static class ItemAdapter extends ArrayAdapter<String> {

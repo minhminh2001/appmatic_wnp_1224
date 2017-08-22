@@ -1,15 +1,17 @@
-//buildscript {
-//    repositories {
-//        maven { url 'https://maven.fabric.io/public' }
-//    }
-//    dependencies {
-//        classpath 'io.fabric.tools:gradle:1+'
-//    }
-//}
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
-//apply plugin: 'io.fabric'
 //apply plugin: 'newrelic'
 //apply plugin: "jacoco"
 //jacoco {
@@ -94,7 +96,7 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.sign
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -174,6 +176,9 @@ dependencies {
 //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 //    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+        transitive = true;
+    }
 }
 
 

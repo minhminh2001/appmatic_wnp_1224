@@ -106,9 +106,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
             }
         }else if(holder instanceof  ViewHolder){
           ViewHolder viewHolder= (ViewHolder) holder;
-            if(position==2){
-                viewHolder.tvTxt.setText(viewHolder.itemView.getContext().getResources().getString(R.string.home_new_arrivals));
-            }
+           viewHolder.tvTxt.setText(viewHolder.itemView.getContext().getResources().getString(R.string.home_best_sellers));
         }else if(holder instanceof ItemViewHolder){
             CategoryDetailItemAdapter mCategoryDetailAdapater=null;
             if(position==1){

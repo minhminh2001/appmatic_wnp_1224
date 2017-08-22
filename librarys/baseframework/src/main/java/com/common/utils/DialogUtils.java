@@ -30,61 +30,62 @@ public class DialogUtils {
      * 自定义弹窗询问带title
      * @return
      */
-    public static  Dialog showCustomDialog(Context context , String title,String message,String btnLeft, String btnRight, android.content.DialogInterface.OnClickListener  btnLeftListener,android.content.DialogInterface.OnClickListener  btnRightListener){
-        Dialog dialog=null;
-        CustomMyDialog.Builder builder = new CustomMyDialog .Builder(context);
-        if(!TextUtils.isEmpty(title)){
-            builder.setTitle(title);
-        }
-        builder.setMessage(message);
-        builder.setPositiveButton(btnLeft, btnLeftListener);
-        builder.setNegativeButton(btnRight, btnRightListener);
-        dialog = builder.create();
-        Window win = dialog.getWindow();
-        win.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams lp = win.getAttributes();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        win.setAttributes(lp);
-        dialog.setCancelable(false);
-        win.setWindowAnimations(R.style.alertDialogAnim);
-        dialog.show();
-        return dialog;
-    }
+//    public static  Dialog showCustomDialog(Context context , String title,String message,String btnLeft, String btnRight, android.content.DialogInterface.OnClickListener  btnLeftListener,android.content.DialogInterface.OnClickListener  btnRightListener){
+//        Dialog dialog=null;
+//        CustomMyDialog.Builder builder = new CustomMyDialog .Builder(context);
+//        if(!TextUtils.isEmpty(title)){
+//            builder.setTitle(title);
+//        }
+//        builder.setMessage(message);
+//        builder.setPositiveButton(btnLeft, btnLeftListener);
+//        builder.setNegativeButton(btnRight, btnRightListener);
+//        dialog = builder.create();
+//        Window win = dialog.getWindow();
+//        win.getDecorView().setPadding(0, 0, 0, 0);
+//        WindowManager.LayoutParams lp = win.getAttributes();
+//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//        win.setAttributes(lp);
+//        dialog.setCancelable(false);
+//        win.setWindowAnimations(R.style.alertDialogAnim);
+//        dialog.show();
+//        return dialog;
+//    }
     /**
      * 自定义弹窗询问
      * @return
      */
-    public static  Dialog showCustomDialog(Context context , String message,String btnLeft, String btnRight, android.content.DialogInterface.OnClickListener  btnLeftListener,android.content.DialogInterface.OnClickListener  btnRightListener){
-        return showCustomDialog(context,"",message,btnLeft,btnRight,btnLeftListener,btnRightListener);
-    }
+//    public static  Dialog showCustomDialog(Context context , String message,String btnLeft, String btnRight, android.content.DialogInterface.OnClickListener  btnLeftListener,android.content.DialogInterface.OnClickListener  btnRightListener){
+//        return showCustomDialog(context,"",message,btnLeft,btnRight,btnLeftListener,btnRightListener);
+//        return null;
+//    }
     /**
      * 自定义弹窗询问
      * @return
      */
-    public static  Dialog showCustomListDialog(Context context ,
-                                               String btnRight, android.content.DialogInterface.OnClickListener btnOnClickListener,
-                                               List<String> list, AdapterView.OnItemClickListener onItemClickListener, ArrayAdapter<String> adapter
-                                               ){
-
-        CustomMyDialog.Builder builder = new CustomMyDialog .Builder(context);
-
-        builder.setNegativeButton(btnRight, btnOnClickListener);
-        builder.setItems(list,onItemClickListener);
-        builder.setItemAdapter(adapter);
-
-        Dialog dialog = builder.create();
-        Window win = dialog.getWindow();
-        win.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams lp = win.getAttributes();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-        win.setAttributes(lp);
-        dialog.setCancelable(true);
-        win.setWindowAnimations(R.style.alertDialogAnim);
-        dialog.show();
-        return dialog;
-    }
+//    public static  Dialog showCustomListDialog(Context context ,
+//                                               String btnRight, android.content.DialogInterface.OnClickListener btnOnClickListener,
+//                                               List<String> list, AdapterView.OnItemClickListener onItemClickListener, ArrayAdapter<String> adapter
+//                                               ){
+//
+//        CustomMyDialog.Builder builder = new CustomMyDialog .Builder(context);
+//
+//        builder.setNegativeButton(btnRight, btnOnClickListener);
+//        builder.setItems(list,onItemClickListener);
+//        builder.setItemAdapter(adapter);
+//
+//        Dialog dialog = builder.create();
+//        Window win = dialog.getWindow();
+//        win.getDecorView().setPadding(0, 0, 0, 0);
+//        WindowManager.LayoutParams lp = win.getAttributes();
+//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//        win.setAttributes(lp);
+//        dialog.setCancelable(true);
+//        win.setWindowAnimations(R.style.alertDialogAnim);
+//        dialog.show();
+//        return dialog;
+//    }
     /**
      * 默认弹窗询问
      * @return

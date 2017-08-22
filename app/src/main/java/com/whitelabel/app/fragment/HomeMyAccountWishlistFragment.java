@@ -70,6 +70,8 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
     public void onRefresh() {
         currentPage = 1;
         sendRequest();
+        Intent intent=new Intent();
+
     }
 
     @Override
@@ -106,6 +108,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     private final static class DataHandler extends Handler {
