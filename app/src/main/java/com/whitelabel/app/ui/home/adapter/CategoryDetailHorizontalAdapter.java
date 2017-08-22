@@ -110,11 +110,11 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         }else if(holder instanceof ItemViewHolder){
             CategoryDetailItemAdapter mCategoryDetailAdapater=null;
             if(position==1){
-                mCategoryDetailAdapater=new CategoryDetailItemAdapter(holder.itemView.getContext(),mCategoryDetailModel.getBestSellerProducts(),mImageLoader);
-                mCategoryDetailAdapater.setOnItemClickLitener(bestSellersClickListener);
-            }else{
                 mCategoryDetailAdapater=new CategoryDetailItemAdapter(holder.itemView.getContext(),mCategoryDetailModel.getNewArrivalProducts(),mImageLoader);
                 mCategoryDetailAdapater.setOnItemClickLitener(newArrivalsClickListener);
+            }else{
+                mCategoryDetailAdapater=new CategoryDetailItemAdapter(holder.itemView.getContext(),mCategoryDetailModel.getBestSellerProducts(),mImageLoader);
+                mCategoryDetailAdapater.setOnItemClickLitener(bestSellersClickListener);
             }
             ItemViewHolder  itemViewHolder= (ItemViewHolder) holder;
             itemViewHolder.rvCategory.setVisibility(View.VISIBLE);

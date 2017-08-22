@@ -145,8 +145,6 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
             }
         }
     }
-
-
     public CategoryDetailVerticalAdapter(Context context, CategoryDetailModel categoryDetailModel, ImageLoader loader) {
         this.categoryDetailModel = categoryDetailModel;
         mImageLoader = loader;
@@ -329,7 +327,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                     JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
             setMerchantName(leftProductEntity.getVendorDisplayName(), leftProductEntity.getVendor_id(), itemViewHolder.ctvCurationProductMerchant);
         }else if(holder instanceof ViewHolder){
-            ViewHolder viewHolder= (ViewHolder) holder;
+              ViewHolder viewHolder= (ViewHolder) holder;
                 viewHolder.tvTxt.setText(viewHolder.itemView.getContext().getResources().getString(R.string.home_best_sellers));
         }
     }
