@@ -13,6 +13,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.BaseActivity;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
+import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 
@@ -25,13 +26,16 @@ public class PayPalPaymentActivity extends com.whitelabel.app.BaseActivity {
     private String mUrl;
     public final static String  PAYMENT_URL="payment_url";
     public final static String PAYMENT_ORDER_NUMBER="order_number";
+    public final static String EXTRA_DATA="extra_bean";
     private String orderNumber;
+    private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_pal_payment);
         ButterKnife.bind(this);
         mUrl=getIntent().getStringExtra(PAYMENT_URL);
+        paymentSaveReturnEntity= (CheckoutPaymentSaveReturnEntity) getIntent().getExtras().getSerializable(EXTRA_DATA);
         showProgressDialog();
         initToolbar();
         initWebView();
@@ -87,6 +91,7 @@ public class PayPalPaymentActivity extends com.whitelabel.app.BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putString("payment_status", "1");
         bundle.putString(CheckoutPaymentStatusActivity.EXTRA_ORDER_NUMBER,orderNumber);
+        bundle.putSerializable("paymentSaveReturnEntity",paymentSaveReturnEntity);
         startNextActivity(bundle, CheckoutPaymentStatusActivity.class, true);
     }
     private void startPaymentFaildActivity() {
@@ -94,6 +99,8 @@ public class PayPalPaymentActivity extends com.whitelabel.app.BaseActivity {
         bundle.putString("payment_status", "0");
         startNextActivity(bundle, CheckoutPaymentStatusActivity.class, true);
     }
+
+
 
     private void initToolbar() {
         setTitle(getResources().getString(R.string.CHECKOUT));

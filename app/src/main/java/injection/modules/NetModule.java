@@ -20,10 +20,12 @@ import com.whitelabel.app.data.service.AccountManager;
 import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CheckoutManager;
 import com.whitelabel.app.data.service.CommodityManager;
+import com.whitelabel.app.data.service.GoogleAnalyticsManager;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICheckoutManager;
 import com.whitelabel.app.data.service.ICommodityManager;
+import com.whitelabel.app.data.service.IGoogleAnalyticsManager;
 import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.data.service.ShoppingCartManager;
 import com.whitelabel.app.network.CommonInterceptor;
@@ -190,6 +192,11 @@ public class NetModule {
     @Provides
     public ICacheApi  providesCacheApi(){
         return new PreferHelper();
+    }
+
+    @Provides
+    public IGoogleAnalyticsManager providesGoogleAnalyticsManager(GoogleAnalyticsManager googleAnalyticsManager){
+        return googleAnalyticsManager;
     }
 
     @Provides

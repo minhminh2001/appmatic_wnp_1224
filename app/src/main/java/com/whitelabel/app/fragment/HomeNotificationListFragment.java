@@ -303,6 +303,8 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
 
     @Override
     public void onStart() {
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, true);
+        GaTrackHelper.getInstance().googleAnalytics("Notification list screen", homeActivity);
         super.onStart();
     }
     @Override
@@ -310,6 +312,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
         super.onStop();
 //        page=1;
         boolean isStop = true;
+
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, false);
     }
     @Override

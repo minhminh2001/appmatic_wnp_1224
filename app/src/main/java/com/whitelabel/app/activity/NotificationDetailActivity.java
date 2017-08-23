@@ -202,14 +202,14 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
         } catch (Exception ex) {
             ex.getStackTrace();
         }
-//        try {
-//            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
-//                    "Open Notification Detail",
-//                    notificationTitle,
-//                    Long.valueOf(itemId));
-//        } catch (NumberFormatException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            GaTrackHelper.getInstance().googleAnalyticsEvent("Notification",
+                    "Open Notification Detail",
+                    notificationTitle,
+                    Long.valueOf(itemId));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
     @Override
     public void onClick(View v) {
@@ -295,6 +295,6 @@ public class NotificationDetailActivity extends com.whitelabel.app.BaseActivity 
     @Override
     protected void onStop() {
         super.onStop();
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
     }
 }

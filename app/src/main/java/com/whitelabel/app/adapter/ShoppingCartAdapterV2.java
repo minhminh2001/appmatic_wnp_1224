@@ -324,9 +324,8 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
                     "Remove Item From Cart",
                     name,
                     Long.valueOf(productId));
-            GaTrackHelper.getInstance().googleAnalyticsAddCart(context, productId, name);
+            GaTrackHelper.getInstance().googleAnalyticsAddCart( productId, name);
             GaTrackHelper.getInstance().googleAnalyticsDeleteCart(context, productId, name);
-            JLogUtils.i("googleGA", "Remove Item From Cart");
         } catch (Exception e) {
             e.printStackTrace();
         }

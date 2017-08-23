@@ -340,7 +340,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     "Add To Cart",
                     mProductDetailBean.getName(),
                     Long.valueOf(mProductDetailBean.getId()));
-            GaTrackHelper.getInstance().googleAnalyticsAddCart(this,
+            GaTrackHelper.getInstance().googleAnalyticsAddCart(
                     productId, mProductDetailBean.getName());
             FacebookEventUtils.getInstance().facebookEventAddedToCart(this, productId, userSelectedProductFinalPriceFloat * userSelectedProductQty);
             FirebaseEventUtils.getInstance().ecommerceAddToCart(this, userSelectedProductQty + "", mProductDetailBean.getCategory(),
@@ -2006,8 +2006,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         JLogUtils.d(TAG, "onStart()");
         try {
             GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
-            GaTrackHelper.getInstance().googleAnalyticsProductDetail(this, productId);
-            GaTrackHelper.getInstance().googleAnalyticsProductDetail(getApplicationContext(), productId);
+            GaTrackHelper.getInstance().googleAnalyticsProductDetail( productId);
+
 
         } catch (Exception ex) {
             ex.getStackTrace();

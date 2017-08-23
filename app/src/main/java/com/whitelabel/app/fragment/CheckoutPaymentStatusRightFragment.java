@@ -23,12 +23,14 @@ import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CheckoutManager;
 
+import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.checkout.CheckoutStatusRightContract;
 import com.whitelabel.app.ui.checkout.CheckoutStatusRightPresenter;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.GaTrackHelper;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomWebView;
@@ -132,6 +134,7 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+    private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -165,7 +168,16 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
         if (user != null) {
             tvEmail.setText(user.getEmail());
         }
+        paymentSaveReturnEntity = (CheckoutPaymentSaveReturnEntity) bundle.getSerializable("paymentSaveReturnEntity");
         tvOrderNumber.setText(orderNumber);
+       try {
+           GaTrackHelper.getInstance().googleAnalyticsCheckoutSuccess(getActivity(),
+                   paymentSaveReturnEntity.getReviewOrder(),
+                   orderNumber, Double.parseDouble(paymentSaveReturnEntity.getGrandtotal()),
+                   Double.parseDouble(paymentSaveReturnEntity.getShipping().get("value")));
+       }catch (Exception ex){
+           ex.getStackTrace();
+       }
         TextView tvContinueShopping = (TextView) view.findViewById(R.id.tv_checkout_payment_status_right_continueshopping);
         tvContinueShopping.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,6 +214,7 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
     }
     @Override
     public void onStart() {
+
         super.onStart();
     }
 

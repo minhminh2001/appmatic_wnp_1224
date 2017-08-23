@@ -80,7 +80,7 @@ public class GaTrackHelper {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
     //ga  add card
-    public void googleAnalyticsAddCart(Context context,String id,String name){
+    public void googleAnalyticsAddCart(String id,String name){
         Product gaProduct =new Product();
         gaProduct.setId(id);
         gaProduct.setName(name);
@@ -95,7 +95,7 @@ public class GaTrackHelper {
 
 
 
-    public void googleAnalyticsProductDetail(Context context,String id){
+    public void googleAnalyticsProductDetail(String id){
         Product product=new Product();
         product.setId(id);
         ProductAction productAction=new ProductAction(ProductAction.ACTION_DETAIL);

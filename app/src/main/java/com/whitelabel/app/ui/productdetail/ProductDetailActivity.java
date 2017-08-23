@@ -673,6 +673,13 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
            }
         super.onBackPressed();
     }
+
+    public void trackAddWishList(){
+        GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
+                "Add To Wishlist",
+                mPresenter.getProductData().getName(), Long.valueOf(mProductDetailBean.getId()));
+    }
+
     @Override
     public void setProductCountView(long count) {
         textView_num.setText(count+"");
@@ -1356,7 +1363,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     protected void onStart() {
         super.onStart();
             GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
-            GaTrackHelper.getInstance().googleAnalyticsProductDetail(this, productId);
+
     }
     @Override
     protected void onPause() {

@@ -208,6 +208,6 @@ public class CheckoutPaymentStatusWrongFragment extends com.whitelabel.app.BaseF
     @Override
     public void onStop() {
         super.onStop();
-//        GaTrackHelper.getInstance().googleAnalyticsReportActivity(checkoutPaymentStatusActivity, false);
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(checkoutPaymentStatusActivity, false);
     }
 }

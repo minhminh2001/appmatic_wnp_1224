@@ -184,7 +184,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     public void startPayPalPaymentActivity(String url,String orderNumber) {
         Intent intent=new Intent(this, PayPalPaymentActivity.class);
         intent.putExtra(PayPalPaymentActivity.PAYMENT_URL,url);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable(PayPalPaymentActivity.EXTRA_DATA,paymentSaveReturnEntity);
         intent.putExtra(PayPalPaymentActivity.PAYMENT_ORDER_NUMBER,orderNumber);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
     /**

@@ -464,7 +464,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                     "Remove Item From Cart",
                     name,
                     Long.valueOf(productId));
-            GaTrackHelper.getInstance().googleAnalyticsAddCart(context, productId, name);
+            GaTrackHelper.getInstance().googleAnalyticsAddCart( productId, name);
             GaTrackHelper.getInstance().googleAnalyticsDeleteCart(context, productId, name);
             JLogUtils.i("googleGA", "Remove Item From Cart");
         } catch (Exception e) {

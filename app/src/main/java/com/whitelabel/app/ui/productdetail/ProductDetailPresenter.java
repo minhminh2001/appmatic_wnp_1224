@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
+import com.whitelabel.app.data.service.IGoogleAnalyticsManager;
 import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.GOUserEntity;
@@ -16,6 +17,7 @@ import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ExceptionParse;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -35,6 +37,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     private IShoppingCartManager iShoppingCartManager;
     private IBaseManager  iBaseManager;
     private IAccountManager iAccountManager;
+    private IGoogleAnalyticsManager iGoogleAnalyticsManager;
     private String mDialogType;
     public static final String TYPE_CONFIGURABLE = "configurable";
     public static final String TYPE_SIMPLE = "simple";
@@ -45,11 +48,12 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     public static final String DIALOG_TYPE_BOTTOM="from_product_list";
     private long currUserSelectedProductMaxStockQty;
     private boolean delayAddToCart;
-    public ProductDetailPresenter(IAccountManager iAccountManager, ICommodityManager iCommodityManager, IBaseManager iBaseManager,IShoppingCartManager iShoppingCartManager){
+    public ProductDetailPresenter(IAccountManager iAccountManager, ICommodityManager iCommodityManager, IBaseManager iBaseManager,IShoppingCartManager iShoppingCartManager,IGoogleAnalyticsManager iGoogleAnalyticsManager){
         this.iCommodityManager=iCommodityManager;
         this.iBaseManager=iBaseManager;
         this.iAccountManager=iAccountManager;
         this.iShoppingCartManager=iShoppingCartManager;
+        this.iGoogleAnalyticsManager=iGoogleAnalyticsManager;
     }
     public long getCurrUserSelectedProductMaxStockQty() {
         return currUserSelectedProductMaxStockQty;
@@ -99,6 +103,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                mView.showContentLayout();
                mView.loadStaticData(productDetailModel);
                mView.clearUserSelectedProduct();
+               iGoogleAnalyticsManager.googleAnalyticsProductDetail(productDetailModel.getId());
                loadPropertyView(productDetailModel);
                loadBindProductView(productDetailModel);
                showVisibleProduct(productDetailModel);
@@ -190,12 +195,14 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
             } else if(mProduct.getIsLike()==0){
                 mView.setWishIconColorToThemeColor();
                 addToWishlistRequest(mProduct.getId());
+                iGoogleAnalyticsManager.googleAnalyticsEvent(IGoogleAnalyticsManager.CATEGORY_PROCDUCT,IGoogleAnalyticsManager.ACTION_ADDWISH,mProduct.getName(),mProduct.getId());
                 mProduct.setIsLike(1);
             }
          }else{
              mView.startLoginActivity(false);
          }
     }
+
     public void setmProduct(ProductDetailModel mProduct) {
         this.mProduct = mProduct;
     }
@@ -315,6 +322,8 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     }
     public void addToShoppingCart(Map<String,String> params){
         mView.showNornalProgressDialog();
+        iGoogleAnalyticsManager.googleAnalyticsEvent(IGoogleAnalyticsManager.CATEGORY_PROCDUCT,IGoogleAnalyticsManager.ACTION_ADDTOCART,mProduct.getName(),mProduct.getId());
+        iGoogleAnalyticsManager.googleAnalyticsAddCart(mProduct.getId(),mProduct.getName());
         String sessionKey=iBaseManager.getUser().getSessionKey();
         iShoppingCartManager.addProductToShoppingCart(sessionKey,mProduct.getId(),params)
                 .compose(RxUtil.<ResponseModel>rxSchedulerHelper())

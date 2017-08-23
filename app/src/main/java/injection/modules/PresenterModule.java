@@ -6,6 +6,7 @@ import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICheckoutManager;
 import com.whitelabel.app.data.service.ICommodityManager;
+import com.whitelabel.app.data.service.IGoogleAnalyticsManager;
 import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.ui.checkout.CheckoutContract;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressContract;
@@ -69,8 +70,8 @@ public class PresenterModule {
     }
     @Provides
     @ActivityScope
-    public  ProductDetailContract.Presenter provideProductDetailPresenter(ICommodityManager iCommodityManager, IBaseManager iBaseManager, IAccountManager iAccountManager, IShoppingCartManager iShoppingCartManager){
-        return new ProductDetailPresenter(iAccountManager,iCommodityManager,iBaseManager,iShoppingCartManager);
+    public  ProductDetailContract.Presenter provideProductDetailPresenter(ICommodityManager iCommodityManager, IBaseManager iBaseManager, IAccountManager iAccountManager, IShoppingCartManager iShoppingCartManager, IGoogleAnalyticsManager iGoogleAnalyticsManager){
+        return new ProductDetailPresenter(iAccountManager,iCommodityManager,iBaseManager,iShoppingCartManager,iGoogleAnalyticsManager);
     }
     @Provides
     @ActivityScope

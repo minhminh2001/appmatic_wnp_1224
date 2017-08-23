@@ -12,10 +12,10 @@
     <!--<string name="ga_trackingId">UA-67366527-3</string>-->
 
     <!--The name of your app, used in the app name dimension in your reports.-->
-    <string name="ga_appName">gemfive</string>
+    <string name="ga_appName">wnp</string>
 
     <!--The version of your application, used in the app version dimension within your reports.-->
-    <string name="ga_appVersion">1.1.7</string>
+    <string name="ga_appVersion">1..0.1</string>
 
 
     <string name="ga_logLevel">verbose</string>
