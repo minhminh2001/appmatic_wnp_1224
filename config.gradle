@@ -1,6 +1,6 @@
 ext {
     android = [
-               applicationId    : "com.wnp.app",
+               applicationId    : "com.imaginato.wnp",
                versionCode      : 2,
                versionName      : "1.0.2"
     ]
