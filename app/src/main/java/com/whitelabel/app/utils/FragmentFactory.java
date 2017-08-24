@@ -26,9 +26,9 @@ public class FragmentFactory {
     }
     public Fragment  getHomeFragment(){
         if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHome()==1){
-            return HomeFragmentV2.newInstance(HomeHomeFragment.TYPE_FRAGMENT_HORIZONTAL);
-        }else if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHome()==2){
             return HomeFragmentV2.newInstance(HomeHomeFragment.TYPE_FRAGMENT_VERTICAL);
+        }else if(WhiteLabelApplication.getAppConfiguration().getLayoutStyle().getHome()==2){
+            return HomeFragmentV2.newInstance(HomeHomeFragment.TYPE_FRAGMENT_HORIZONTAL);
         }else{
             return HomeFragmentV2.newInstance(HomeHomeFragment.TYPE_FRAGMENT_VERTICAL);
         }

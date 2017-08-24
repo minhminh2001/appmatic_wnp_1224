@@ -701,13 +701,11 @@
 
     <string name="checkout_bill_diffent">Bill to different address</string>
   <!--config-->
-    <string name="ga_tracking_id_test">UA-72586399-2</string>
-    <string name="ga_tracking_id_live">UA-62438602-3</string>
     <string name="gcm_sender_id">451033162681</string>
     <string name="facebook_app_id_test">1586589871584877</string>
     <string name="facebook_app_id_live">1287318627981888</string>
     <string name="service_url">http://192.168.1.233/</string>
-    <string name="ga_track_id">UA-72586399-2</string>
+    <string name="ga_track_id">UA -105181188-1</string>
     <string name="facebook_id">1287318627981888</string>
     <string name="api_version">v1</string>
     <string name="api_key">L5M7aUpZRr2ChzDx</string>
