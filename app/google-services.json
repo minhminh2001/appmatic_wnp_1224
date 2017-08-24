@@ -1,39 +1,40 @@
 {
   "project_info": {
-    "project_number": "671307757571",
-    "firebase_url": "https://wnp-test.firebaseio.com",
-    "project_id": "wnp-test",
-    "storage_bucket": "wnp-test.appspot.com"
+    "project_number": "751479473564",
+    "project_id": "firebase-wnp-test"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:671307757571:android:4ceee5a726b67fbd",
+        "mobilesdk_app_id": "1:751479473564:android:4ceee5a726b67fbd",
         "android_client_info": {
           "package_name": "com.imaginato.wnp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "671307757571-1uq3dsgonngbm606uq4rbfcghdmbi53l.apps.googleusercontent.com",
+          "client_id": "751479473564-otnf91ollvcmb3l630t349gmlb9v15gq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBX_uguVTWA1cg6cSLXxqSeadlbUpXkB_4"
+          "current_key": "AIzaSyByxJAqh0vM6p4-kGHkew2nYTrgwe4aygE"
         }
       ],
       "services": {
         "analytics_service": {
-          "status": 1
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-105181188-1"
+          }
         },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 2
+          "status": 1
         }
       }
     }

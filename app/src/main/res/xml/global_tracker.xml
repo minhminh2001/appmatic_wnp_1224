@@ -15,7 +15,7 @@
     <string name="ga_appName">wnp</string>
 
     <!--The version of your application, used in the app version dimension within your reports.-->
-    <string name="ga_appVersion">1..0.1</string>
+    <string name="ga_appVersion">1.0.1</string>
 
 
     <string name="ga_logLevel">verbose</string>
@@ -29,7 +29,7 @@
     <bool name="ga_reportUncaughtExceptions">true</bool>
 
     <!--Flag to enable or writing of debug information to the log, useful for troubleshooting your implementation.-->
-    <bool name="ga_debug">true</bool>
+    <bool name="ga_debug">false</bool>
 
   <screenName name="com.whitelabel.app.activity.ProductActivity">Product Detail Screen</screenName>
   <screenName name="com.whitelabel.app.activity.CurationActivity">Curation Landing Screen</screenName>

@@ -95,14 +95,14 @@ public class WhiteLabelApplication extends MultiDexApplication {
     public  GoogleAnalytics getAnalyticInstance() {
         if (analytics == null) {
             analytics = GoogleAnalytics.getInstance(this);
+
         }
         return analytics;
     }
-    public Tracker getAnalyticTracherInstance(Context context) {
+    public Tracker getAnalyticTracherInstance() {
         if (mTracker == null) {
             getAnalyticInstance();
             mTracker = analytics.newTracker(GlobalData.gaTrackId);
-            //Tracker mTracker = analytics.newTracker(R.xml.global_tracker);
             analytics.getLogger()
                     .setLogLevel(Logger.LogLevel.VERBOSE);
             mTracker.setAppVersion(JToolUtils.getAppVersion());

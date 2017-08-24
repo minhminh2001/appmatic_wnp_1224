@@ -250,8 +250,8 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
 //            });
 
             //Set Datas to last four RM number
-            tvSubtotal.setText(paymentSaveReturnEntity.getSubtotal());
-            tvShippingfee.setText(paymentSaveReturnEntity.getShipping() == null ? WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+" 0.00" : paymentSaveReturnEntity.getShipping().get("value"));
+            tvSubtotal.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+paymentSaveReturnEntity.getSubtotal());
+            tvShippingfee.setText(paymentSaveReturnEntity.getShipping() == null ? WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+" 0.00" : WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+paymentSaveReturnEntity.getShipping().get("value"));
             //Voucher or Discount
             if (null != paymentSaveReturnEntity.getDiscount() && paymentSaveReturnEntity.getDiscount().size() > 0) {
                 if (JDataUtils.isEmpty(paymentSaveReturnEntity.getDiscount().get("title"))) {
@@ -259,10 +259,10 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
                 } else {
                     tvVoucherTitle.setText(paymentSaveReturnEntity.getDiscount().get("title"));
                 }
-                tvVoucher.setText(paymentSaveReturnEntity.getDiscount().get("value"));
+                tvVoucher.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+paymentSaveReturnEntity.getDiscount().get("value"));
                 rlVoucherText.setVisibility(View.VISIBLE);
             }
-            tvGrandTotal.setText(" " + paymentSaveReturnEntity.getGrandtotal());
+            tvGrandTotal.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + paymentSaveReturnEntity.getGrandtotal());
 
 //        } catch (Exception e) {
 //            /**

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
@@ -69,7 +70,7 @@ public class CheckoutReviewShoppingCartAdapter extends BaseAdapter {
         tvBrand.setText(sc.getBrand() == null ? "BRAND" : sc.getBrand().toUpperCase());
         tvProductName.setText(sc.getName());
         tvQuantity.setText(sc.getQty());
-        tvPrice.setText(sc.getPrice());
+        tvPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" "+sc.getPrice());
         if (!TextUtils.isEmpty(sc.getVendorDisplayName())) {
             ctv_revieworder_merchant.setText(context.getResources().getString(R.string.soldby) + " " + sc.getVendorDisplayName());
         } else {
