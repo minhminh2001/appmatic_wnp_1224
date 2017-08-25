@@ -43,10 +43,12 @@ public class CheckoutDefaultAddressPresenter extends RxPresenter<CheckoutDefault
                     public void onError(Throwable e) {
                         mView.showErrorMsg(ExceptionParse.parseException(e).getErrorMsg());
                     }
-
                     @Override
                     public void onNext(CheckoutDefaultAddressResponse checkoutDefaultAddressResponse) {
                         mView.dissmissProgressDialog();
+                        if(!checkoutDefaultAddressResponse.getPrimaryShipping().getAddressId().equals(checkoutDefaultAddressResponse.getPrimaryBilling().getAddressId())){
+                            mView.hideBillToDefferentLayout();
+                        }
                         mView.showData(checkoutDefaultAddressResponse.getPrimaryShipping(),checkoutDefaultAddressResponse.getPrimaryBilling());
                     }
                 });

@@ -113,6 +113,12 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     }
 
     @Override
+    public void hideBillToDefferentLayout() {
+        llCheckbox.setVisibility(View.INVISIBLE);
+        llBillingAddress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void showData(AddressBook  shippingAddress,AddressBook billingAddress) {
         if(shippingAddress==null&&billingAddress==null){
             Intent intent=new Intent(getActivity(), AddAddressActivity.class);
@@ -132,6 +138,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             }
             if (mPrimaryShipping.getStreet().size() > 1
                     && !TextUtils.isEmpty(mPrimaryShipping.getStreet().get(1))) {
+                tvShippingAddressAddress2.setVisibility(View.VISIBLE);
                 tvShippingAddressAddress2.setText(mPrimaryShipping.getStreet().get(1));
             } else {
                 tvShippingAddressAddress2.setVisibility(View.GONE);
@@ -159,6 +166,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             }
             if (mPrimaryBilling.getStreet().size() > 1 &&
                     !TextUtils.isEmpty(mPrimaryBilling.getStreet().get(1))) {
+                tvBillingAddressAddress2.setVisibility(View.VISIBLE);
                 tvBillingAddressAddress2.setText(mPrimaryBilling.getStreet().get(1));
             } else {
                 tvBillingAddressAddress2.setVisibility(View.GONE);
