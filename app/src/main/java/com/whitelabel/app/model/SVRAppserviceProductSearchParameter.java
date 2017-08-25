@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by imaginato on 2015/7/13.
  */
 public class SVRAppserviceProductSearchParameter implements Serializable {
-    public static final int PAGENUM=10;
+    public static final int PAGENUM=20;
     private String store_id;
     private int p;
     private int limit;
