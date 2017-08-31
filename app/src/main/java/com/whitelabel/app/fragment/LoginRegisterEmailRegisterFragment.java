@@ -212,7 +212,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                 }
             }
             if(!existVending){
-                Uri uri = Uri.parse("http://play.google.com/store/apps/details?id=com.whitelabel.app");
+                Uri uri = Uri.parse("http://play.google.com/store/apps/details?id=com.wnp.app");
                 Intent it = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(it);
                 existVending=false;

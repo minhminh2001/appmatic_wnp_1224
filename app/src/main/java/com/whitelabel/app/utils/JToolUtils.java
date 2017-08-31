@@ -102,7 +102,7 @@ public class JToolUtils {
     }
     public static void showAPKKeyHash(Activity activity) {
         try {
-            PackageInfo info = activity.getPackageManager().getPackageInfo("com.whitelabel.app", PackageManager.GET_SIGNATURES);
+            PackageInfo info = activity.getPackageManager().getPackageInfo("com.wnp.app", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());

@@ -8,7 +8,7 @@
     <string name="download_image_path">appservice/image/index</string>
     <string name="payment_creditcard_url">appservice/checkout/ccpayjump?session_key=%1$s&amp;orderId=%2$s&amp;appid=1</string>
     <string name="upload_file_path">appservice/order/uploadTransferProof</string>
-    <string name="jump_market_uri">market://details?id=com.whitelabel.app</string>
+    <string name="jump_market_uri">market://details?id=com.wnp.app</string>
     <!-- one all -->
     <string name="twitter_consumer_key">Jl6f81SYZMnwdNXc5NrjkFWgY</string>
     <string name="twitter_consumer_secret">0WMBLTTbJnSzU3h7zGH4CHmkVV6oGgo9Dhdka5JTL4go1ZsBK1</string>
@@ -401,7 +401,7 @@
     <!-- settings-->
     <string name="settings">Settings</string>
     <string name="menu">MENU</string>
-    <string name="receive_newsletter">Receive newsletters from Whitelabel</string>
+    <string name="receive_newsletter">Receive newsletters from Wnp</string>
     <string name="setting_rate">Rate us in Google Play store</string>
     <string name="setting_version">Version</string>
     <string name="sign_out">SIGN OUT</string>
@@ -437,7 +437,7 @@
 
     <string name="order_detail_confirm">BANK TRANSFER CONFIRMATION</string>
     <string name="bank_transafer_confirm">Bank Transfer Confirmation</string>
-    <string name="bank_transafer_thank">Thank you for shopping at Whitelabel</string>
+    <string name="bank_transafer_thank">Thank you for shopping at Wnp</string>
     <string name="bank_transafer_world">When you have successfully made your Bank Transfer, please provide your payment confirmation details here so that we can process your order immediately.</string>
     <string name="bank_from">Bank Transferred From</string>
     <string name="order_detail_order_number">Order Number</string>
@@ -473,13 +473,13 @@
 
     <string name="Oops_Sorry">Oops,Sorry!</string>
     <string name="This_promotion_has_been_fully_redeemed">This promotion has been \n fully redeemed.</string>
-    <string name="Stay_tuned_for_more_exciting">Stay tuned for more exciting \n offers on Whitelabel.</string>
+    <string name="Stay_tuned_for_more_exciting">Stay tuned for more exciting \n offers on Wnp.</string>
 
     <string name="added_to_wishlist">Added to wishlist.</string>
     <string name="added_error">Add failure.</string>
     <string name="are_you_sure_you_want">Are you sure you want to quit this app?</string>
     <string name="are_you_sure_you_want_signout">Are you sure you want to sign out?</string>
-    <string name="transfer_amount">Whitelabel Amount</string>
+    <string name="transfer_amount">Wnp Amount</string>
     <string name="transfer_date">Date Of Transfer</string>
 
 
@@ -493,10 +493,10 @@
     <string name="dialog_cod_hint">Kindly update your cart</string>
 
     <!-- <string name="please_check">Please check the network connection</string>-->
-    <string name="cod_error_address">This payment option is not available for the selected delivery address. Kindly refer to the Whitelabel\'s Payment FAQ for more info. </string>
+    <string name="cod_error_address">This payment option is not available for the selected delivery address. Kindly refer to the Wnp\'s Payment FAQ for more info. </string>
     <string name="shipping_returns">Shipping &amp; Delivery</string>
 
-    <string name="app_rate_text1">Love using Whitelabel?</string>
+    <string name="app_rate_text1">Love using Wnp?</string>
     <string name="app_rate_text2">Please rate us in the Google Play.</string>
     <string name="play_store_url">http://play.google.com/store/apps/details?id=%1$s</string>
 
@@ -567,7 +567,7 @@
     <string name="reset_password">, you will receive an email with a link to reset your password.</string>
     <string name="process_email">Thank you for registering on WNP APP. To complete your registration process, please check your email&#160;</string>
     <string name="to_confirm">to confirm.</string>
-    <string name="register_whitelabel">Thank you for registering on</string>
+    <string name="register_whitelabel">Thank you for registering on Wnp</string>
     <string name="current_password">Invalid current password.</string>
     <string name="password_empty">New password field cannot be empty.</string>
     <string name="confirmation_password">The confirmation is not the new password.</string>
@@ -678,10 +678,10 @@
 
     <!-- permission text -->
     <string name="permission_error_title">Permission Denied</string>
-    <string name="permission_error_camera_content">Please allow Whitelabel to access your device\'s camera in SETTINGS</string>
-    <string name="permission_error_storage_content">Please allow Whitelabel to access your device\'s storage in SETTINGS</string>
-    <string name="banktransfer_permission_camera_rationale">Whitelabel needs to access your device\'s camera</string>
-    <string name="banktransfer_permission_album_rationale">Whitelabel needs to access your device\'s storage</string>
+    <string name="permission_error_camera_content">Please allow Wnp to access your device\'s camera in SETTINGS</string>
+    <string name="permission_error_storage_content">Please allow Wnp to access your device\'s storage in SETTINGS</string>
+    <string name="banktransfer_permission_camera_rationale">Wnp needs to access your device\'s camera</string>
+    <string name="banktransfer_permission_album_rationale">Wnp needs to access your device\'s storage</string>
     <string name="switch_view_bar_results">&#160;results</string>
 
     <string name="product_detail_total">Total:</string>
