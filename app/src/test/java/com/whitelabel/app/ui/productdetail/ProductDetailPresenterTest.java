@@ -4,6 +4,7 @@ import com.whitelabel.app.RxUnitTestTools;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
+import com.whitelabel.app.data.service.IGoogleAnalyticsManager;
 import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.GOUserEntity;
@@ -46,11 +47,13 @@ public class ProductDetailPresenterTest {
     ProductDetailContract.View  view;
     @Mock
     IShoppingCartManager iShoppingCartManager;
+    @Mock
+    IGoogleAnalyticsManager iGoogleAnalyticsManager;
     @Before
     public void setUp(){
         RxUnitTestTools.openRxTools();
         MockitoAnnotations.initMocks(this);
-        presenter=new ProductDetailPresenter(iAccountManager,iCommodityManager,iBaseManager,iShoppingCartManager);
+        presenter=new ProductDetailPresenter(iAccountManager,iCommodityManager,iBaseManager,iShoppingCartManager,iGoogleAnalyticsManager);
         presenter.attachView(view);
     }
     @Test
