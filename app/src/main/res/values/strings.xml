@@ -701,7 +701,7 @@
 
     <string name="checkout_bill_diffent">Bill to different address</string>
   <!--config-->
-    <string name="gcm_sender_id">451033162681</string>
+    <string name="gcm_sender_id">399952816616</string>
     <string name="facebook_app_id_test">1586589871584877</string>
     <string name="facebook_app_id_live">1287318627981888</string>
     <string name="service_url">http://192.168.1.233/</string>
