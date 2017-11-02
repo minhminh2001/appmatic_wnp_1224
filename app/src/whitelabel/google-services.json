@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:364318508430:android:bccf0e43b77ec6f3",
         "android_client_info": {
-          "package_name": "com.imaginato.appmatic"
+          "package_name": "com.whitelabel.app"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "364318508430-82cdu2h7knoto2o2uutnh9o6gonedrub.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.imaginato.appmatic",
+            "package_name": "com.whitelabel.app",
             "certificate_hash": "5017F7CA29CD3326F9D59E45E215F00362167AD8"
           }
         },
@@ -47,7 +47,7 @@
               "client_id": "364318508430-fiogd01i0cpfkhcl7b36d3d9na41d0hu.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.imaginato.appmatic"
+                "bundle_id": "com.whitelabel.app"
               }
             },
             {
