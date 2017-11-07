@@ -2,7 +2,7 @@ package com.whitelabel.app.network;
 
 import android.text.TextUtils;
 
-import com.android.bitglobal.tool.L;
+import com.whitelabel.app.utils.logger.Logger;
 
 import java.io.IOException;
 
@@ -54,7 +54,7 @@ public class LoggingInterceptor {
                 double time = (t2 - t1) / 1e6d;
                 switch (request.method()) {
                     case "GET":
-                        L.d(
+                        Logger.d(
                                 String.format("GET " + F_REQUEST_WITHOUT_BODY + F_RESPONSE_WITH_BODY,
                                         request.url(),
                                         time,
@@ -64,7 +64,7 @@ public class LoggingInterceptor {
                                         stringifyResponseBody(bodyString)));
                         break;
                     case "POST":
-                        L.d(
+                        Logger.d(
                                 String.format("POST " + F_REQUEST_WITH_BODY + F_RESPONSE_WITH_BODY,
                                         request.url(),
                                         time,
@@ -75,7 +75,7 @@ public class LoggingInterceptor {
                                         stringifyResponseBody(bodyString)));
                         break;
                     case "PUT":
-                        L.d(
+                        Logger.d(
                                 String.format("PUT " + F_REQUEST_WITH_BODY + F_RESPONSE_WITH_BODY,
                                         request.url(),
                                         time,
@@ -86,7 +86,7 @@ public class LoggingInterceptor {
                                         stringifyResponseBody(bodyString)));
                         break;
                     case "DELETE":
-                        L.d(
+                        Logger.d(
                                 String.format("DELETE " + F_REQUEST_WITHOUT_BODY + F_RESPONSE_WITHOUT_BODY,
                                         request.url(),
                                         time,
