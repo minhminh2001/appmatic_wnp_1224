@@ -17,9 +17,10 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.FlowViewAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JLogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,47 +32,49 @@ import butterknife.ButterKnife;
  * Created by ray on 2017/5/9.
  */
 public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private CategoryDetailModel mCategoryDetailModel;
+    private CategoryDetailNewModel mCategoryDetailModel;
     private final ImageLoader mImageLoader;
     private final static int HEADER = 1;
     private final static int ITEM = 2;
     private final static int TITLE = 3;
     private   double screenWidth;
-    private   OnItemClickListener bestSellersClickListener;
-    private OnItemClickListener newArrivalsClickListener;
-    public CategoryDetailHorizontalAdapter(Activity activity,CategoryDetailModel categoryDetailModel, ImageLoader imageLoader) {
+    private   OnItemClickListener onProductClick;
+
+    public ArrayList<String> titles=new ArrayList<>();
+    public CategoryDetailHorizontalAdapter(Activity activity, CategoryDetailNewModel categoryDetailModel, ImageLoader imageLoader) {
         this.mImageLoader = imageLoader;
-        mCategoryDetailModel = categoryDetailModel;
+        this.mCategoryDetailModel = categoryDetailModel;
         screenWidth=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(activity);
     }
-    static class ViewHolder extends RecyclerView.ViewHolder {
+
+    static class TitleViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.line)
         View line;
         @BindView(R.id.tv_txt)
         TextView tvTxt;
-        ViewHolder(View view) {
+        TitleViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
     }
-    public void setOnBestProductionItemClickListener(OnItemClickListener bestSellersClickListener){
-        this.bestSellersClickListener=bestSellersClickListener;
+    public void setOnProductItemClickListener(OnItemClickListener bestSellersClickListener){
+        this.onProductClick=bestSellersClickListener;
     }
-    public void setOnNewArrivalsItemClickListener(OnItemClickListener  newArrivalsClickListener){
-        this.newArrivalsClickListener=newArrivalsClickListener;
-    }
+
+
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
             return HEADER;
-        } else if (position == 2) {
+        } else if (position%2==1) {
             return TITLE;
         } else {
             return ITEM;
         }
     }
     public interface OnItemClickListener {
-        void onItemClick(RecyclerView.ViewHolder itemViewHolder, int position);
+
+        void onItemClick(RecyclerView.ViewHolder itemViewHolder,int parentPosition, int childPosition);
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -80,7 +83,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
             return new HeaderViewHolder(view);
         } else if (viewType == TITLE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_base_sellers, null);
-            return new ViewHolder(view);
+            return new TitleViewHolder(view);
         } else {
             View recyclerView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_head_curation, null);
             return new ItemViewHolder(recyclerView);
@@ -104,35 +107,52 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
                     headerViewHolder.detailViewpager.setTag("use");
                 }
             }
-        }else if(holder instanceof  ViewHolder){
-          ViewHolder viewHolder= (ViewHolder) holder;
-           viewHolder.tvTxt.setText(viewHolder.itemView.getContext().getResources().getString(R.string.home_best_sellers));
+        }else if(holder instanceof TitleViewHolder){
+            TitleViewHolder viewHolder= (TitleViewHolder) holder;
+            if (mCategoryDetailModel.getCarousels()!=null && !mCategoryDetailModel.getCarousels().isEmpty()){
+                List<CategoryDetailNewModel.CarouselsBean> carousels = mCategoryDetailModel.getCarousels();
+                int size=carousels.size();
+                //title position like 1 3 5 7 9,base this index(from 0 start) to get list's title
+                int newPosition=(position + 1) / 2 - 1;
+                if (position>0&&newPosition<size){
+                    CategoryDetailNewModel.CarouselsBean carouselsBean = mCategoryDetailModel.getCarousels().get(newPosition);
+                    if (carouselsBean !=null && carouselsBean.getTitle()!=null){
+                        viewHolder.tvTxt.setText(carouselsBean.getTitle());
+                    }
+                }
+            }
+
         }else if(holder instanceof ItemViewHolder){
             CategoryDetailItemAdapter mCategoryDetailAdapater=null;
-            if(position==1){
-                mCategoryDetailAdapater=new CategoryDetailItemAdapter(holder.itemView.getContext(),mCategoryDetailModel.getNewArrivalProducts(),mImageLoader);
-                mCategoryDetailAdapater.setOnItemClickLitener(newArrivalsClickListener);
-            }else{
-                mCategoryDetailAdapater=new CategoryDetailItemAdapter(holder.itemView.getContext(),mCategoryDetailModel.getBestSellerProducts(),mImageLoader);
-                mCategoryDetailAdapater.setOnItemClickLitener(bestSellersClickListener);
-            }
-            ItemViewHolder  itemViewHolder= (ItemViewHolder) holder;
-            itemViewHolder.rvCategory.setVisibility(View.VISIBLE);
-            itemViewHolder.rvCategory.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    return false;
+            if (mCategoryDetailModel.getCarousels()!=null && !mCategoryDetailModel.getCarousels().isEmpty()){
+                List<CategoryDetailNewModel.CarouselsBean> carousels = mCategoryDetailModel.getCarousels();
+                int size=carousels.size();
+                //item position such as 2,4,6,8 transform to true list's position
+                int newPosition=position/2-1;
+                if (position>0&&newPosition<size){
+                    mCategoryDetailAdapater=new CategoryDetailItemAdapter(holder.itemView.getContext(),newPosition,carousels.get(newPosition).getItems(),mImageLoader);
+                    mCategoryDetailAdapater.setOnItemClickLitener(onProductClick);
+                    ItemViewHolder  itemViewHolder= (ItemViewHolder) holder;
+                    itemViewHolder.rvCategory.setVisibility(View.VISIBLE);
+                    itemViewHolder.rvCategory.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            return false;
+                        }
+                    });
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(itemViewHolder.itemView.getContext());
+                    linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    itemViewHolder.rvCategory.setLayoutManager(linearLayoutManager);
+                    itemViewHolder.rvCategory.setAdapter(mCategoryDetailAdapater);
                 }
-            });
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(itemViewHolder.itemView.getContext());
-            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            itemViewHolder.rvCategory.setLayoutManager(linearLayoutManager);
-            itemViewHolder.rvCategory.setAdapter(mCategoryDetailAdapater);
+            }
         }
     }
+
+    //header + (title+Rcy)*5count
     @Override
     public int getItemCount() {
-        return 4;
+        return 1+2*5;
     }
     private List<ImageView> createImageViewList(Context context, ImageLoader imageLoader, List<String> images,int imageHeight) {
         List<ImageView> imgs = new ArrayList<>();

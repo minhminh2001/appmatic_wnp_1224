@@ -4,6 +4,7 @@ import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
@@ -40,8 +41,8 @@ public interface ProductApi {
     public  Observable<AddToWishlistEntity> addWishList(@Field("session_key") String sessionKey, @Field("product_id") String productId);
     @GET("appservice/catalogSearch")
     public Observable<SVRAppserviceCatalogSearchReturnEntity>  getCategoryList();
-    @GET("appservice/category/categoryDetail")
-    public Observable<ResponseModel<CategoryDetailModel>>  getCategoryDetail(@Query("category_id") String categoryId ,@Query("session_key") String sessionKey);
+    @GET("appservice/category/menuDetail")
+    public Observable<ResponseModel<CategoryDetailNewModel>>  getCategoryDetail(@Query("menu_id") String categoryId , @Query("session_key") String sessionKey);
     @GET("appservice/product/getRelatedProducts")
     public  Observable<ResponseModel<BindProductResponseModel>>  getRelateProducts(@Query("productId") String productId);
     @FormUrlEncoded

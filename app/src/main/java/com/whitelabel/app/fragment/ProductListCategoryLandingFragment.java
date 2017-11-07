@@ -517,7 +517,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             if (categoryArrayList != null && position >= 0 && categoryArrayList.size() > position) {
                 SVRAppserviceCatalogSearchCategoryItemReturnEntity category = categoryArrayList.get(position);
                 if (category != null) {
-                    categoryId = category.getId();
+                    categoryId = category.getMenu_id();
                     brandId = category.getBrandId();
                     brandName=category.getBrandName();
 

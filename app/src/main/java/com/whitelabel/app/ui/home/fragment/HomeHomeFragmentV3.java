@@ -21,6 +21,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
@@ -164,7 +165,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     private final GridLayoutManager.SpanSizeLookup mTwoRowSpan = new GridLayoutManager.SpanSizeLookup() {
         @Override
         public int getSpanSize(int position) {
-            if (position == 0 ||position==mAdapter.getNewArrivalProductSize()+1) {
+            if (position == 0 ||mAdapter.isTitleIndex(position)) {
                 return 2;
             }
             return 1;
@@ -194,18 +195,15 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         }
     }
     @Override
-    public void loadData(CategoryDetailModel categoryDetailModel) {
+    public void loadData(CategoryDetailNewModel categoryDetailModel) {
         if(getActivity()!=null) {
             mAdapter = new CategoryDetailVerticalAdapter(getActivity(), categoryDetailModel, mImageLoader);
             mAdapter.setOnItemClickLitener(new CategoryDetailVerticalAdapter.OnItemClickLitener() {
                 @Override
                 public void onItemClick(CategoryDetailVerticalAdapter.ItemViewHolder itemViewHolder, int position) {
                     SVRAppserviceProductSearchResultsItemReturnEntity productEntity =null;
-                    if(position>mAdapter.getData().getNewArrivalProducts().size()){
-                        productEntity=mAdapter.getData().getBestSellerProducts().get((position-mAdapter.getData().getNewArrivalProducts().size()-2));
-                    }else{
-                        productEntity=mAdapter.getData().getNewArrivalProducts().get((position-1));
-                    }
+
+                    productEntity=mAdapter.getAllItemLists().get(position);
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), ProductDetailActivity.class);
                     Bundle bundle = new Bundle();

@@ -19,6 +19,7 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
     private String vendorDisplayName;
     private int isLike;
     private String item_id;
+    private String maxSaleQty;
     private boolean syncnServering=false;
 
     public int getPosition() {
@@ -152,5 +153,36 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
 
     public void setInStock(String inStock) {
         this.inStock = inStock;
+    }
+
+    public String getMaxSaleQty() {
+        return maxSaleQty;
+    }
+
+    public void setMaxSaleQty(String maxSaleQty) {
+        this.maxSaleQty = maxSaleQty;
+    }
+
+    @Override
+    public String toString() {
+        return "SVRAppserviceProductSearchResultsItemReturnEntity{" +
+                "productId='" + productId + '\'' +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", brand='" + brand + '\'' +
+                ", position=" + position +
+                ", brandId='" + brandId + '\'' +
+                ", price='" + price + '\'' +
+                ", final_price='" + final_price + '\'' +
+                ", smallImage='" + smallImage + '\'' +
+                ", inStock='" + inStock + '\'' +
+                ", vendorDisplayName='" + vendorDisplayName + '\'' +
+                ", isLike=" + isLike +
+                ", item_id='" + item_id + '\'' +
+                ", maxSaleQty='" + maxSaleQty + '\'' +
+                ", syncnServering=" + syncnServering +
+                ", itemId='" + itemId + '\'' +
+                ", vendor_id='" + vendor_id + '\'' +
+                '}';
     }
 }

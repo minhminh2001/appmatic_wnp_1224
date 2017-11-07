@@ -16,8 +16,6 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,7 +25,6 @@ import android.widget.Toast;
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.adapter.FlowViewAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -35,7 +32,7 @@ import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.dao.ShoppingCarDao;
 import com.whitelabel.app.model.AddToWishlistEntity;
-import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
@@ -47,18 +44,19 @@ import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JToolUtils;
-import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomTextView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -70,13 +68,17 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     private static final int TYPE_TWOROW_ITEM = 256478;
     private static final int TYPE_SINGLEROW_ITEM = 256123;
     private static final int TYPE_HEADER = 10000;
-    private static final int TYPE_MIDDLE = 20000;
+    private static final int TYPE_TITLE = 20000;
     private static final int TYPE_FOOTER = 9621147;
-    private CategoryDetailModel categoryDetailModel;
+    private CategoryDetailNewModel categoryDetailModel;
     private final ImageLoader mImageLoader;
     MyAccountDao  myAccountDao;
     ProductDao mProductDao;
     private double screenWidth;
+    int rcyListSize;
+    Map<Integer,Integer> childCountMaps=new HashMap<>();
+    List<SVRAppserviceProductSearchResultsItemReturnEntity> allItemLists=new ArrayList<>();
+    List<Integer> titleLists=new ArrayList<>();
     public interface OnFilterSortBarListener {
         void onSwitchViewClick(View view);
         void onFilterClick();
@@ -110,13 +112,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                     if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
                         AddToWishlistEntity addToWishlistEntity = (AddToWishlistEntity) msg.obj;
                         int position = Integer.parseInt(String.valueOf(addToWishlistEntity.getParams()));
-                        SVRAppserviceProductSearchResultsItemReturnEntity productEntity =null;
-                        int bestcount=mAdapter.get().categoryDetailModel.getNewArrivalProducts().size();
-                                if(position>mAdapter.get().categoryDetailModel.getNewArrivalProducts().size()){
-                                    productEntity=mAdapter.get().categoryDetailModel.getBestSellerProducts().get((position-bestcount-2));
-                                }else{
-                                    productEntity=mAdapter.get().categoryDetailModel.getNewArrivalProducts().get((position-1));
-                                }
+                        SVRAppserviceProductSearchResultsItemReturnEntity productEntity=mAdapter.get().allItemLists.get(position);
                         productEntity.setItem_id(addToWishlistEntity.getItemId());
                         //update wishlist number
                         WhiteLabelApplication.getAppConfiguration().updateWishlist(mContext.get(), addToWishlistEntity.getWishListItemCount());
@@ -145,7 +141,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
             }
         }
     }
-    public CategoryDetailVerticalAdapter(Context context, CategoryDetailModel categoryDetailModel, ImageLoader loader) {
+    public CategoryDetailVerticalAdapter(Context context, CategoryDetailNewModel categoryDetailModel, ImageLoader loader) {
         this.categoryDetailModel = categoryDetailModel;
         mImageLoader = loader;
         DataHandler dataHandler = new DataHandler(context, this);
@@ -153,12 +149,54 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         myAccountDao = new MyAccountDao(TAG, dataHandler);
         mProductDao = new ProductDao(TAG, dataHandler);
         screenWidth=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity) context);
+//        getRcyListSize();
+        createAllItemAndCreateTitleIndex();
     }
-   public CategoryDetailModel getData(){
+
+    private void createAllItemAndCreateTitleIndex(){
+        if (categoryDetailModel!=null && categoryDetailModel.getCarousels()!=null && !categoryDetailModel.getCarousels().isEmpty()) {
+            int firstTitle=1;
+            int titleIndex=firstTitle;
+            allItemLists.clear();
+            titleLists.clear();
+            titleLists.add(firstTitle);
+            SVRAppserviceProductSearchResultsItemReturnEntity entiy =new SVRAppserviceProductSearchResultsItemReturnEntity();
+            entiy.setName("header");
+            //add header
+            allItemLists.add(entiy);
+            for (int i=0;i<categoryDetailModel.getCarousels().size();i++){
+                SVRAppserviceProductSearchResultsItemReturnEntity bean =new SVRAppserviceProductSearchResultsItemReturnEntity();
+                List<CategoryDetailNewModel.CarouselsBean> carousels = categoryDetailModel.getCarousels();
+                bean.setName(carousels.get(i).getTitle());
+                //add Title
+                allItemLists.add(bean);
+                List<SVRAppserviceProductSearchResultsItemReturnEntity> items = carousels.get(i).getItems();
+                allItemLists.addAll(items);
+                //if lastPosition don't add titleIndex
+                if (i==carousels.size()-1){
+                    break;
+                }
+                //create Title's Index and save
+                titleIndex+=items.size()+1;
+                titleLists.add(titleIndex);
+            }
+        }
+    }
+
+    public boolean isTitleIndex(int position){
+        if (titleLists!=null && !titleLists.isEmpty()){
+            return titleLists.contains(position);
+        }else {
+            return false;
+        }
+    }
+
+   public CategoryDetailNewModel getData(){
        return categoryDetailModel;
    }
-    public int getNewArrivalProductSize() {
-        return categoryDetailModel.getNewArrivalProducts().size();
+
+    public List<SVRAppserviceProductSearchResultsItemReturnEntity> getAllItemLists() {
+        return allItemLists;
     }
 
     @Override
@@ -166,9 +204,9 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         if (viewType == TYPE_HEADER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_category_detail_header, null);
             return new HeaderViewHolder(view);
-        }else if (viewType == TYPE_MIDDLE) {
+        }else if (viewType == TYPE_TITLE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_base_sellers, null);
-            return new ViewHolder(view);
+            return new TitleViewHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_curation_productlist_item, null);
             return new ItemViewHolder(view);
@@ -178,12 +216,15 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     public int getItemViewType(int position) {
         if (position == 0) {
             return TYPE_HEADER;
-        } else if (position == categoryDetailModel.getNewArrivalProducts().size() + 1) {
-            return TYPE_MIDDLE;
+        } else if (isTitleIndex(position)) {
+            return TYPE_TITLE;
         } else {
             return TYPE_TWOROW_ITEM;
         }
+
     }
+
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof HeaderViewHolder) {
@@ -194,11 +235,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                 int  imageHeight= (int) (screenWidth*(348.0/750));
 //            }
             headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
-            if(categoryDetailModel.getNewArrivalProducts()==null||categoryDetailModel.getNewArrivalProducts().size()==0){
-                headerViewHolder.llNewArrivals.setVisibility(View.GONE);
-            }else{
-                headerViewHolder.llNewArrivals.setVisibility(View.VISIBLE);
-            }
+
             if (TextUtils.isEmpty(categoryDetailModel.getCategory_img())) {
                 headerViewHolder.detailViewpager.setVisibility(View.VISIBLE);
             } else {
@@ -213,122 +250,125 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
             final ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             SVRAppserviceProductSearchResultsItemReturnEntity leftProductEntity = null;
             int  finalPostion=0;
-            if (position > (categoryDetailModel.getNewArrivalProducts().size())) {
-                leftProductEntity = categoryDetailModel.getBestSellerProducts().get(position - 2 - categoryDetailModel.getNewArrivalProducts().size());
-                finalPostion=position-2;
-            } else {
-                leftProductEntity = categoryDetailModel.getNewArrivalProducts().get(position - 1);
-                finalPostion=position-1;
-            }
-            int destWidth = JScreenUtils.dip2px(itemViewHolder.itemView.getContext(), 100);
-            int destHeight = JScreenUtils.dip2px(itemViewHolder.itemView.getContext(), 120);
-            int phoneWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity) itemViewHolder.itemView.getContext());
-            int marginLeft = JDataUtils.dp2Px(10);
-            destWidth = (phoneWidth - (marginLeft * 2)) / 2;
-            destHeight = destWidth;
-            RelativeLayout.LayoutParams leftImagelp = (RelativeLayout.LayoutParams) itemViewHolder.ivProductImage.getLayoutParams();
-            if (leftImagelp != null) {
-                leftImagelp.width = LinearLayout.LayoutParams.MATCH_PARENT;
-                leftImagelp.height = destHeight;
-                itemViewHolder.ivProductImage.setLayoutParams(leftImagelp);
-            }
-            final String leftProductImageUrl = leftProductEntity.getSmallImage();
-            // load left image
-            if (itemViewHolder.ivProductImage.getTag() != null) {
-                if (!itemViewHolder.ivProductImage.getTag().toString().equals(leftProductImageUrl)) {
+            if (!titleLists.isEmpty() && !allItemLists.isEmpty() && position<allItemLists.size()){
+                leftProductEntity =allItemLists.get(position);
+                finalPostion=position-titleLists.size();
+                int destWidth = JScreenUtils.dip2px(itemViewHolder.itemView.getContext(), 100);
+                int destHeight = JScreenUtils.dip2px(itemViewHolder.itemView.getContext(), 120);
+                int phoneWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity) itemViewHolder.itemView.getContext());
+                int marginLeft = JDataUtils.dp2Px(10);
+                destWidth = (phoneWidth - (marginLeft * 2)) / 2;
+                destHeight = destWidth;
+                RelativeLayout.LayoutParams leftImagelp = (RelativeLayout.LayoutParams) itemViewHolder.ivProductImage.getLayoutParams();
+                if (leftImagelp != null) {
+                    leftImagelp.width = LinearLayout.LayoutParams.MATCH_PARENT;
+                    leftImagelp.height = destHeight;
+                    itemViewHolder.ivProductImage.setLayoutParams(leftImagelp);
+                }
+
+                final String leftProductImageUrl = leftProductEntity.getSmallImage();
+                String leftProductName = leftProductEntity.getName();
+                itemViewHolder.ctvProductName.setText(leftProductName);
+                ///////////////////////russell////////////////////////
+                if ("1".equals(leftProductEntity.getInStock())) {
+                    itemViewHolder.rlProductListOutOfStock.setVisibility(View.GONE);
+                } else {
+                    itemViewHolder.rlProductListOutOfStock.setVisibility(View.VISIBLE);
+                }
+                String leftProductBrand = leftProductEntity.getBrand();
+                // load left image
+                if (itemViewHolder.ivProductImage.getTag() != null) {
+                    if (!itemViewHolder.ivProductImage.getTag().toString().equals(leftProductImageUrl)) {
+                        JImageUtils.downloadImageFromServerByUrl(itemViewHolder.itemView.getContext(), mImageLoader, itemViewHolder.ivProductImage, leftProductImageUrl, destWidth, destHeight);
+                        itemViewHolder.ivProductImage.setTag(leftProductImageUrl);
+                    }
+                } else {
                     JImageUtils.downloadImageFromServerByUrl(itemViewHolder.itemView.getContext(), mImageLoader, itemViewHolder.ivProductImage, leftProductImageUrl, destWidth, destHeight);
                     itemViewHolder.ivProductImage.setTag(leftProductImageUrl);
                 }
-            } else {
-                JImageUtils.downloadImageFromServerByUrl(itemViewHolder.itemView.getContext(), mImageLoader, itemViewHolder.ivProductImage, leftProductImageUrl, destWidth, destHeight);
-                itemViewHolder.ivProductImage.setTag(leftProductImageUrl);
-            }
-            itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(onItemClickLitener!=null){
-                        onItemClickLitener.onItemClick(itemViewHolder,position);
-                    }
+                if (!JDataUtils.isEmpty(leftProductBrand)) {
+                    leftProductBrand = leftProductBrand.toUpperCase();
                 }
-            });
+                if (!TextUtils.isEmpty(leftProductBrand)) {
+                    itemViewHolder.ctvProductBrand.setText(leftProductBrand);
+                } else {
+                    itemViewHolder.ctvProductBrand.setVisibility(View.GONE);
+                }
 
-            if(finalPostion%2==1){
-                itemViewHolder.itemView.setPadding(JDataUtils.dp2Px(10),0,JDataUtils.dp2Px(10),JDataUtils.dp2Px(10));
-            }
-
-            String leftProductName = leftProductEntity.getName();
-            itemViewHolder.ctvProductName.setText(leftProductName);
-            ///////////////////////russell////////////////////////
-            if ("1".equals(leftProductEntity.getInStock())) {
-                itemViewHolder.rlProductListOutOfStock.setVisibility(View.GONE);
-            } else {
-                itemViewHolder.rlProductListOutOfStock.setVisibility(View.VISIBLE);
-            }
-            String leftProductBrand = leftProductEntity.getBrand();
-            if (!JDataUtils.isEmpty(leftProductBrand)) {
-                leftProductBrand = leftProductBrand.toUpperCase();
-            }
-            if (!TextUtils.isEmpty(leftProductBrand)) {
-                itemViewHolder.ctvProductBrand.setText(leftProductBrand);
-            } else {
-                itemViewHolder.ctvProductBrand.setVisibility(View.GONE);
-            }
-
-            float leftProductPriceFloat = 0.0f;
-            String leftProductPrice = leftProductEntity.getPrice();
-
-            float leftProductFinalPriceFloat = 0.0f;
-            String leftProductFinalPrice = leftProductEntity.getFinal_price();
-            try {
-                leftProductFinalPriceFloat = Float.parseFloat(leftProductFinalPrice);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            try {
-                leftProductPriceFloat = Float.parseFloat(leftProductPrice);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            if (leftProductEntity.getIsLike() == 1) {
-                setWishIconColorToPurpleNoAnim(itemViewHolder.ivLeftProductlistWishIcon);
-            } else {
-                setWishIconColorToBlankNoAnim(itemViewHolder.ivLeftProductlistWishIcon);
-            }
-            final SVRAppserviceProductSearchResultsItemReturnEntity finalLeftProductEntity = leftProductEntity;
-            finalLeftProductEntity.setPosition(position);
-            Observable<SVRAppserviceProductSearchResultsItemReturnEntity> observable=Observable.
-                    create(new WishlistObservable(itemViewHolder.rlLeftProductlistWish,finalLeftProductEntity,
-                            itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2));
-            observable.buffer(observable.debounce(1000, TimeUnit.MILLISECONDS))
-                    .subscribeOn(Schedulers.computation())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<List<SVRAppserviceProductSearchResultsItemReturnEntity>>() {
-                        @Override
-                        public void call(List<SVRAppserviceProductSearchResultsItemReturnEntity> beans) {
-                                    SVRAppserviceProductSearchResultsItemReturnEntity bean=beans.get(beans.size()-1);
-                                    if(bean.getIsLike()==1){
-                                        mProductDao.addProductListToWish(bean.getProductId(),WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
-                                                bean.getPosition());
-                                    }else if(bean.getItem_id()!=null){
-                                        myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
-                                                bean.getItem_id(),bean.getPosition());
-                                    }
+                itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(onItemClickLitener!=null){
+                            onItemClickLitener.onItemClick(itemViewHolder,position);
                         }
-                    });
-            if (JDataUtils.compare(leftProductFinalPriceFloat, leftProductPriceFloat) < 0) {
-                itemViewHolder.ctvProductPrice.setVisibility(View.VISIBLE);
+                    }
+                });
+
+                if(finalPostion%2==1){
+                    itemViewHolder.itemView.setPadding(JDataUtils.dp2Px(10),0,JDataUtils.dp2Px(10),JDataUtils.dp2Px(10));
+                }
+
+                float leftProductPriceFloat = 0.0f;
+                String leftProductPrice = leftProductEntity.getPrice();
+
+                float leftProductFinalPriceFloat = 0.0f;
+                String leftProductFinalPrice = leftProductEntity.getFinal_price();
+                try {
+                    leftProductFinalPriceFloat = Float.parseFloat(leftProductFinalPrice);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                try {
+                    leftProductPriceFloat = Float.parseFloat(leftProductPrice);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                if (leftProductEntity.getIsLike() == 1) {
+                    setWishIconColorToPurpleNoAnim(itemViewHolder.ivLeftProductlistWishIcon);
+                } else {
+                    setWishIconColorToBlankNoAnim(itemViewHolder.ivLeftProductlistWishIcon);
+                }
+                final SVRAppserviceProductSearchResultsItemReturnEntity finalLeftProductEntity = leftProductEntity;
+                finalLeftProductEntity.setPosition(position);
+                Observable<SVRAppserviceProductSearchResultsItemReturnEntity> observable=Observable.
+                        create(new WishlistObservable(itemViewHolder.rlLeftProductlistWish,finalLeftProductEntity,
+                                itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2));
+                observable.buffer(observable.debounce(1000, TimeUnit.MILLISECONDS))
+                        .subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<List<SVRAppserviceProductSearchResultsItemReturnEntity>>() {
+                            @Override
+                            public void call(List<SVRAppserviceProductSearchResultsItemReturnEntity> beans) {
+                                SVRAppserviceProductSearchResultsItemReturnEntity bean=beans.get(beans.size()-1);
+                                if(bean.getIsLike()==1){
+                                    mProductDao.addProductListToWish(bean.getProductId(),WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
+                                            bean.getPosition());
+                                }else if(bean.getItem_id()!=null){
+                                    myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
+                                            bean.getItem_id(),bean.getPosition());
+                                }
+                            }
+                        });
+                if (JDataUtils.compare(leftProductFinalPriceFloat, leftProductPriceFloat) < 0) {
+                    itemViewHolder.ctvProductPrice.setVisibility(View.VISIBLE);
 //                itemViewHolder.ctvProductFinalPrice.setPadding(JDataUtils.dp2Px(9), 0, JDataUtils.dp2Px(9), 0);
-                itemViewHolder.ctvProductPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductPriceFloat + ""));
-                itemViewHolder.ctvProductPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-            } else {
-                itemViewHolder.ctvProductPrice.setVisibility(View.GONE);
+                    itemViewHolder.ctvProductPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " + JDataUtils.formatDouble(leftProductPriceFloat + ""));
+                    itemViewHolder.ctvProductPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+                } else {
+                    itemViewHolder.ctvProductPrice.setVisibility(View.GONE);
+                }
+                itemViewHolder.ctvProductFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " +
+                        JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
+                setMerchantName(leftProductEntity.getVendorDisplayName(), leftProductEntity.getVendor_id(), itemViewHolder.ctvCurationProductMerchant);
             }
-            itemViewHolder.ctvProductFinalPrice.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName() + " " +
-                    JDataUtils.formatDouble(leftProductFinalPriceFloat + ""));
-            setMerchantName(leftProductEntity.getVendorDisplayName(), leftProductEntity.getVendor_id(), itemViewHolder.ctvCurationProductMerchant);
-        }else if(holder instanceof ViewHolder){
-              ViewHolder viewHolder= (ViewHolder) holder;
-                viewHolder.tvTxt.setText(viewHolder.itemView.getContext().getResources().getString(R.string.home_best_sellers));
+
+
+
+        }else if(holder instanceof TitleViewHolder){
+            TitleViewHolder viewHolder= (TitleViewHolder) holder;
+            if (position<allItemLists.size()){
+                viewHolder.tvTxt.setText(allItemLists.get(position).getName());
+            }
         }
     }
     private void setWishIconColorToBlankNoAnim(ImageView ivWishIcon) {
@@ -411,14 +451,10 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     }
     @Override
     public int getItemCount() {
-        int offset=1;
-        if(categoryDetailModel.getBestSellerProducts().size()!=0){
-            offset+=1;
-        }
-        return categoryDetailModel.getBestSellerProducts().size() + categoryDetailModel.getNewArrivalProducts().size()+offset;
+        return allItemLists.isEmpty()?1:allItemLists.size();
     }
 //
-//    static class HeaderViewHolder extends RecyclerView.ViewHolder {
+//    static class HeaderViewHolder extends RecyclerView.TitleViewHolder {
 //        @BindView(R.id.detail_viewpager)
 //        ViewPager viewPager;
 //        @BindView(R.id.ll_tips)
@@ -513,13 +549,13 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         }
         return imgs;
     }
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class TitleViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.line)
         View line;
         @BindView(R.id.tv_txt)
         TextView tvTxt;
 
-        ViewHolder(View view) {
+        TitleViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }

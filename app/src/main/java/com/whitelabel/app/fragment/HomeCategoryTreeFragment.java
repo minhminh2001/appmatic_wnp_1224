@@ -110,7 +110,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
             for (SVRAppserviceCatalogSearchCategoryItemReturnEntity twoItem : oneItem.getChildren()) {
                 //需求隐藏 Gem Brands 的ALL  GEM Brands 的
                 boolean isGemBrands = false;
-                if (!TextUtils.isEmpty(twoItem.getName()) && gemBradns.equals(twoItem.getName().replace(" ", "").toUpperCase())) {
+                if (!TextUtils.isEmpty(twoItem.getMenu_title()) && gemBradns.equals(twoItem.getMenu_title().replace(" ", "").toUpperCase())) {
                     isGemBrands = true;
                 }
                 if (!isGemBrands) {

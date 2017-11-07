@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
@@ -154,22 +155,24 @@ public class PreferHelper  implements ICacheApi{
         editor.putString("user_info", new Gson().toJson(goUserEntity));
         editor.commit();
     }
-    public  void saveCategoryDetail(CategoryDetailModel categoryDetailModel){
+
+    @Override
+    public  void saveCategoryDetail(String menuId,CategoryDetailNewModel categoryDetailModel){
         SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
         Gson gson=new Gson();
         String categoryStr=gson.toJson(categoryDetailModel);
-        sharedPreferences.edit().putString("category"+categoryDetailModel.getCategory_id(),categoryStr).commit();;
+        sharedPreferences.edit().putString("category"+menuId,categoryStr).commit();;
     }
-    public rx.Observable<CategoryDetailModel> getCategoryDetail(final String categoryId){
-        return rx.Observable.fromCallable(new Callable<CategoryDetailModel>() {
+    public rx.Observable<CategoryDetailNewModel> getCategoryDetail(final String categoryId){
+        return rx.Observable.fromCallable(new Callable<CategoryDetailNewModel>() {
             @Override
-            public CategoryDetailModel call() throws Exception {
+            public CategoryDetailNewModel call() throws Exception {
                 SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
                 String  categoryStr=sharedPreferences.getString("category"+categoryId,"");
                 Gson gson=new Gson();
-                CategoryDetailModel categoryDetailModel=null;
+                CategoryDetailNewModel categoryDetailModel=null;
                 if(categoryStr!=null&&!"".equals(categoryStr)) {
-                    categoryDetailModel = gson.fromJson(categoryStr, CategoryDetailModel.class);
+                    categoryDetailModel = gson.fromJson(categoryStr, CategoryDetailNewModel.class);
                 }
                 return categoryDetailModel;
             }

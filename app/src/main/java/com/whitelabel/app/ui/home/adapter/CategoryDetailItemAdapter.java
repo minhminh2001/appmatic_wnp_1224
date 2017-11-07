@@ -61,10 +61,13 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
     private List<SVRAppserviceProductSearchResultsItemReturnEntity> mBeans;
     private ImageLoader mImageLoader;
     private MyAccountDao myAccountDao;
+    //click which CarouselsBean'list
+    private int parentPosition;
 
-    public CategoryDetailItemAdapter(Context context,List<SVRAppserviceProductSearchResultsItemReturnEntity> beans,ImageLoader imageLoader) {
+    public CategoryDetailItemAdapter(Context context,int position,List<SVRAppserviceProductSearchResultsItemReturnEntity> beans,ImageLoader imageLoader) {
         mBeans = beans;
         mImageLoader=imageLoader;
+        this.parentPosition=position;
         String TAG = "CategoryDetailItemAdapter";
         mProductDao = new ProductDao(TAG, new DataHandler(context,this));
         myAccountDao = new MyAccountDao(TAG, new DataHandler(context,this));
@@ -162,7 +165,7 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
             @Override
             public void onClick(View v) {
                 if(onItemClickLitener!=null){
-                    onItemClickLitener.onItemClick(itemViewHolder,position);
+                    onItemClickLitener.onItemClick(itemViewHolder,parentPosition,position);
                 }
             }
         });
@@ -308,7 +311,12 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
     }
     @Override
     public int getItemCount() {
-        return mBeans.size();
+        if (mBeans!=null){
+            return mBeans.size();
+        }else {
+            return 0;
+        }
+
     }
 
     static class ItemViewHolder extends  RecyclerView.ViewHolder {
