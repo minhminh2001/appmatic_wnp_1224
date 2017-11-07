@@ -362,6 +362,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="enter_email_address">Email</string>
+    <string name="et_phone_number">Phone Number</string>
     <string name="retype_password">Re-type Password</string>
     <string name="by_creating">By creating an account, you agree to </string>
     <string name="and">  and  </string>
@@ -709,11 +710,11 @@
     <string name="facebook_id">1287318627981888</string>
     <string name="api_version">v1</string>
     <string name="api_key">eyKOW06BPBqbe3qe</string>
-    <string name="app_key">APP-66410023807170908</string>
+    <string name="app_key">APP-53910061550170911</string>
     <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bb5de7d8</string>
     <string name="app_name">Wnp</string>
     <!--https://dev2.wnp.com.hk/ 103.210.236.156:8088-->
-    <string name="request_url">http://mis.appmatic.io/</string>
+    <string name="request_url">https://dev2.wnp.com.hk/</string>
     <string name="image_base_url">https://dev2.wnp.com.hk/</string>
     <string name="mock_url">http://mis.appmatic.io/</string>
 

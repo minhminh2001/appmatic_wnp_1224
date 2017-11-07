@@ -8,552 +8,623 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent">
-
-<RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp">
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:id="@+id/rrr">
-        <View
-            android:id="@+id/view1"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@color/greyE1E1E1" />
         <RelativeLayout
-            android:id="@+id/rl_register_name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/view1">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/ll_name2"
+            <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/table_lable_margain_bottom"
-                android:orientation="horizontal">
+                android:layout_height="fill_parent"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp">
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                    <com.whitelabel.app.widget.CustomTextView
-                        style="@style/font_family_robot_regular"
-                        android:id="@+id/firstName_text2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/table_margain_left"
-                        android:textColor="@color/label_saved"
-                        android:textSize="@dimen/labelTextFontSize"
-                        android:text="@string/first_name"
-                        android:visibility="invisible" />
-                    <com.whitelabel.app.widget.CustomTextView
-                        android:layout_below="@+id/firstName_text2"
-                        style="@style/font_family_robot_regular"
-                        android:id="@+id/firstName_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/table_margain_left"
-                        android:text="@string/first_name"
-                        android:textSize="@dimen/labelTextFontSize"
-                        android:textColor="@color/colorAccent"
-                        android:visibility="invisible" />
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:id="@+id/rrr">
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/greyE1E1E1" />
                     <RelativeLayout
-                        android:layout_below="@+id/firstName_text2"
-                        android:layout_width="match_parent"
+                        android:id="@+id/rl_register_name"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/table_lable_margain_bottom"
-                        android:layout_marginTop="@dimen/table_lable_margain_top"
-                        android:layout_marginLeft="@dimen/table_margain_left">
-                        <com.whitelabel.app.widget.CustomEditText
-                            style="@style/font_family_robot_regular"
-                            android:id="@+id/firstName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:hint="@string/first_name"
-                            android:paddingRight="@dimen/customEditText_paddingRight_v2_firstName"
-                            android:singleLine="true"
-                            android:textCursorDrawable="@null"
-                            android:textColorHint="@color/hint"
-                            android:textSize="@dimen/editTextFontSize"
-                            android:textColor="@color/editColor"
-                            android:imeOptions="actionNext"
-                            android:nextFocusForward="@+id/lastName"/>
-                        <ImageView
-                            android:id="@+id/clearFirst"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@mipmap/text_elimination"
-                            android:layout_marginRight="5dp"
-                            android:visibility="gone"/>
-                        <ImageView
-                            android:id="@+id/img1"
-                            android:layout_alignParentRight="true"
-                            android:layout_width="@dimen/image_right_size"
-                            android:layout_height="@dimen/image_right_size"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="5dp"
-                            android:src="@mipmap/right"
-                            android:visibility="invisible" />
-                    </RelativeLayout>
+                        android:layout_below="@+id/view1">
 
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <com.whitelabel.app.widget.CustomTextView
-                        style="@style/font_family_robot_regular"
-                        android:id="@+id/lastName_text2"
-                        android:layout_width="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        <LinearLayout
+                            android:id="@+id/ll_name2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/table_lable_margain_bottom"
+                            android:orientation="horizontal">
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+                                <com.whitelabel.app.widget.CustomTextView
+                                    style="@style/font_family_robot_regular"
+                                    android:id="@+id/firstName_text2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/table_margain_left"
+                                    android:textColor="@color/label_saved"
+                                    android:textSize="@dimen/labelTextFontSize"
+                                    android:text="@string/first_name"
+                                    android:visibility="invisible" />
+                                <com.whitelabel.app.widget.CustomTextView
+                                    android:layout_below="@+id/firstName_text2"
+                                    style="@style/font_family_robot_regular"
+                                    android:id="@+id/firstName_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/table_margain_left"
+                                    android:text="@string/first_name"
+                                    android:textSize="@dimen/labelTextFontSize"
+                                    android:textColor="@color/colorAccent"
+                                    android:visibility="invisible" />
+                                <RelativeLayout
+                                    android:layout_below="@+id/firstName_text2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                                    android:layout_marginTop="@dimen/table_lable_margain_top"
+                                    android:layout_marginLeft="@dimen/table_margain_left">
+                                    <com.whitelabel.app.widget.CustomEditText
+                                        style="@style/font_family_robot_regular"
+                                        android:id="@+id/firstName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@null"
+                                        android:hint="@string/first_name"
+                                        android:paddingRight="@dimen/customEditText_paddingRight_v2_firstName"
+                                        android:singleLine="true"
+                                        android:textCursorDrawable="@null"
+                                        android:textColorHint="@color/hint"
+                                        android:textSize="@dimen/editTextFontSize"
+                                        android:textColor="@color/editColor"
+                                        android:imeOptions="actionNext"
+                                        android:nextFocusForward="@+id/lastName"/>
+                                    <ImageView
+                                        android:id="@+id/clearFirst"
+                                        android:layout_width="16dp"
+                                        android:layout_height="16dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:background="@mipmap/text_elimination"
+                                        android:layout_marginRight="5dp"
+                                        android:visibility="gone"/>
+                                    <ImageView
+                                        android:id="@+id/img1"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_width="@dimen/image_right_size"
+                                        android:layout_height="@dimen/image_right_size"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginRight="5dp"
+                                        android:src="@mipmap/right"
+                                        android:visibility="invisible" />
+                                </RelativeLayout>
+
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+                                <com.whitelabel.app.widget.CustomTextView
+                                    style="@style/font_family_robot_regular"
+                                    android:id="@+id/lastName_text2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0dp"
+                                    android:textColor="@color/label_saved"
+                                    android:textSize="@dimen/labelTextFontSize"
+                                    android:text="@string/last_name"
+                                    android:visibility="invisible" />
+                                <com.whitelabel.app.widget.CustomTextView
+                                    android:layout_below="@+id/lastName_text2"
+                                    style="@style/font_family_robot_regular"
+                                    android:id="@+id/lastName_text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="@string/last_name"
+                                    android:textSize="@dimen/labelTextFontSize"
+                                    android:textColor="@color/colorAccent"
+                                    android:visibility="invisible" />
+                                <RelativeLayout
+                                    android:layout_below="@+id/lastName_text2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                                    android:layout_marginTop="@dimen/table_lable_margain_top"
+                                    android:layout_marginLeft="5dp">
+                                    <com.whitelabel.app.widget.CustomEditText
+                                        style="@style/font_family_robot_regular"
+                                        android:id="@+id/lastName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@null"
+                                        android:hint="@string/last_name"
+                                        android:textSize="@dimen/editTextFontSize"
+                                        android:textColor="@color/editColor"
+                                        android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                                        android:singleLine="true"
+                                        android:textCursorDrawable="@null"
+                                        android:textColorHint="@color/hint"
+                                        />
+                                    <ImageView
+                                        android:id="@+id/clearLastName"
+                                        android:layout_width="16dp"
+                                        android:layout_height="16dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:background="@mipmap/text_elimination"
+                                        android:visibility="gone"/>
+
+                                    <ImageView
+                                        android:id="@+id/img2"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_width="@dimen/image_right_size"
+                                        android:layout_height="@dimen/image_right_size"
+                                        android:layout_centerVertical="true"
+                                        android:src="@mipmap/right"
+                                        android:visibility="invisible" />
+                                </RelativeLayout>
+
+                            </RelativeLayout>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_alignParentBottom="true"
+                            android:layout_height="wrap_content">
+                            <View
+                                android:id="@+id/view_firstname_line"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/line_height"
+                                android:layout_marginTop="0dp"
+                                android:background="@color/edittext_line" />
+                            <View
+                                android:id="@+id/view_lastname_line"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/line_height"
+                                android:layout_marginTop="0dp"
+                                android:background="@color/edittext_line" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
+                    <View
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="@dimen/line_height"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:textColor="@color/label_saved"
-                        android:textSize="@dimen/labelTextFontSize"
-                        android:text="@string/last_name"
-                        android:visibility="invisible" />
-                    <com.whitelabel.app.widget.CustomTextView
-                        android:layout_below="@+id/lastName_text2"
-                        style="@style/font_family_robot_regular"
-                        android:id="@+id/lastName_text"
-                        android:layout_width="wrap_content"
+                        android:layout_alignTop="@+id/rl_register_name"
+                        android:layout_alignBottom="@+id/rl_register_name"
+                        android:background="@color/edittext_line"></View>
+                    <!--email-->
+                    <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                        android:id="@+id/rl_register_email"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="@string/last_name"
-                        android:textSize="@dimen/labelTextFontSize"
-                        android:textColor="@color/colorAccent"
-                        android:visibility="invisible" />
-                    <RelativeLayout
-                        android:layout_below="@+id/lastName_text2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/table_lable_margain_bottom"
-                        android:layout_marginTop="@dimen/table_lable_margain_top"
-                        android:layout_marginLeft="5dp">
-                        <com.whitelabel.app.widget.CustomEditText
-                            style="@style/font_family_robot_regular"
-                            android:id="@+id/lastName"
+                        android:layout_below="@+id/rl_register_name">
+                        <!--tag1-->
+                        <RelativeLayout
+                            android:id="@+id/rl_email_edit_line"
+                            android:layout_below="@+id/email_text2"
+                            android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                            android:layout_marginLeft="@dimen/table_margain_left"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:hint="@string/last_name"
-                            android:textSize="@dimen/editTextFontSize"
-                            android:textColor="@color/editColor"
-                            android:paddingRight="@dimen/customEditText_paddingRight_v2"
-                            android:singleLine="true"
-                            android:textCursorDrawable="@null"
-                            android:textColorHint="@color/hint"
+                            android:layout_marginTop="@dimen/table_lable_margain_top">
+                            <com.whitelabel.app.widget.CustomEditText
+                                style="@style/font_family_robot_regular"
+                                android:id="@+id/email"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="@string/enter_email_address"
+                                android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                                android:singleLine="true"
+                                android:textCursorDrawable="@null"
+                                android:textSize="@dimen/editTextFontSize"
+                                android:textColor="@color/editColor"
+                                android:textColorHint="@color/hint"
+                                android:layout_weight="1"/>
+                            <ImageView
+                                android:id="@+id/clearMail"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentRight="true"
+                                android:background="@mipmap/text_elimination"
+                                android:visibility="gone"/>
+                            <ImageView
+                                android:id="@+id/img3"
+                                android:layout_width="@dimen/image_right_size"
+                                android:layout_height="@dimen/image_right_size"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentRight="true"
+                                android:src="@mipmap/right"
+                                android:visibility="invisible" />
+                        </RelativeLayout>
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:id="@+id/email_text"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/email_text2"
+                            android:layout_marginLeft="@dimen/table_margain_left"
+                            android:text="@string/enter_email_address"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:textColor="@color/colorAccent"
+                            android:visibility="invisible" />
+
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:id="@+id/email_text2"
+                            android:layout_width="fill_parent"
+                            android:layout_marginTop="@dimen/table_lable_margain_bottom"
+                            android:layout_marginLeft="@dimen/table_margain_left"
+                            android:layout_height="wrap_content"
+                            android:text="@string/enter_email_address"
+                            android:textColor="@color/label_saved"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:visibility="invisible" />
+
+                    </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+                    <!--phone number-->
+                    <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                        android:id="@+id/rl_phone_number"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rl_register_email">
+                        <!--tag1-->
+                        <RelativeLayout
+                            android:id="@+id/rl_phone_edit_line"
+                            android:layout_below="@+id/tv_phone_text2"
+                            android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                            android:layout_marginLeft="@dimen/table_margain_left"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/table_lable_margain_top">
+                            <com.whitelabel.app.widget.CustomEditText
+                                style="@style/font_family_robot_regular"
+                                android:id="@+id/et_phone_number"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="@string/et_phone_number"
+                                android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                                android:singleLine="true"
+                                android:textSize="@dimen/editTextFontSize"
+                                android:textColor="@color/editColor"
+                                android:textCursorDrawable="@null"
+                                android:textColorHint="@color/hint"
+                                android:layout_weight="1"/>
+                            <ImageView
+                                android:id="@+id/iv_clear_phone"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentRight="true"
+                                android:background="@mipmap/text_elimination"
+                                android:visibility="gone"/>
+                            <ImageView
+                                android:id="@+id/iv_phone_correct"
+                                android:layout_width="@dimen/image_right_size"
+                                android:layout_height="@dimen/image_right_size"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentRight="true"
+                                android:src="@mipmap/right"
+                                android:visibility="invisible" />
+                        </RelativeLayout>
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:id="@+id/tv_phone_text"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_phone_text2"
+                            android:layout_marginLeft="@dimen/table_margain_left"
+                            android:text="@string/enter_email_address"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:textColor="@color/colorAccent"
+                            android:visibility="invisible" />
+
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:id="@+id/tv_phone_text2"
+                            android:layout_width="fill_parent"
+                            android:layout_marginTop="@dimen/table_lable_margain_bottom"
+                            android:layout_marginLeft="@dimen/table_margain_left"
+                            android:layout_height="wrap_content"
+                            android:text="@string/enter_email_address"
+                            android:textColor="@color/label_saved"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:visibility="invisible" />
+                    </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+                    <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                        android:id="@+id/rl_register_pwd"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rl_phone_number">
+
+                        <RelativeLayout
+                            android:layout_below="@+id/password_text2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                            android:layout_marginTop="@dimen/table_lable_margain_top">
+                            <com.whitelabel.app.widget.CustomEditText
+                                style="@style/font_family_robot_regular"
+                                android:id="@+id/password"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="@string/enter_password"
+                                android:singleLine="true"
+                                android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                                android:textCursorDrawable="@null"
+                                android:textSize="@dimen/editTextFontSize"
+                                android:textColor="@color/editColor"
+                                android:textColorHint="@color/hint"
+                                android:inputType="textPassword"
+                                android:layout_weight="1"/>
+                            <ImageView
+                                android:id="@+id/clearPassword"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:background="@mipmap/text_elimination"
+                                android:visibility="gone"/>
+                            <ImageView
+                                android:id="@+id/img4"
+                                android:layout_width="@dimen/image_right_size"
+                                android:layout_height="@dimen/image_right_size"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@mipmap/right"
+                                android:visibility="invisible" />
+                        </RelativeLayout>
+
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:id="@+id/password_text"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/password_text2"
+                            android:layout_marginLeft="@dimen/table_margain_left"
+                            android:text="@string/enter_password"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:textColor="@color/colorAccent"
+                            android:visibility="invisible" />
+
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:layout_marginTop="@dimen/table_lable_margain_bottom"
+                            android:id="@+id/password_text2"
+                            android:layout_marginLeft="@dimen/table_margain_left"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/enter_password"
+                            android:textColor="@color/label_saved"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:visibility="invisible" />
+
+                    </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+                    <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                        android:id="@+id/rl_register_repwd"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rl_register_pwd">
+
+                        <RelativeLayout
+                            android:layout_below="@+id/re_password_text2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/table_margain_left"
+                            android:layout_marginBottom="@dimen/table_lable_margain_bottom"
+                            android:layout_marginTop="@dimen/table_lable_margain_top">
+
+                            <com.whitelabel.app.widget.CustomEditText
+                                style="@style/font_family_robot_regular"
+                                android:id="@+id/re_password"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="@string/retype_password"
+                                android:singleLine="true"
+                                android:textCursorDrawable="@null"
+                                android:textSize="@dimen/editTextFontSize"
+                                android:textColor="@color/editColor"
+                                android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                                android:textColorHint="@color/hint"
+                                android:password="true"
+                                android:layout_weight="1"/>
+                            <ImageView
+                                android:id="@+id/clearRePassword"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:background="@mipmap/text_elimination"
+                                android:visibility="gone"/>
+
+                            <ImageView
+                                android:id="@+id/img5"
+                                android:layout_width="@dimen/image_right_size"
+                                android:layout_height="@dimen/image_right_size"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@mipmap/right"
+                                android:visibility="invisible" />
+                        </RelativeLayout>
+
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:id="@+id/re_password_text"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/re_password_text2"
+                            android:layout_marginLeft="@dimen/table_margain_left"
+                            android:text="@string/retype_password"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:textColor="@color/colorAccent"
+                            android:visibility="invisible" />
+
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:layout_marginTop="@dimen/table_lable_margain_bottom"
+                            android:layout_marginLeft="@dimen/table_margain_left"
+                            android:id="@+id/re_password_text2"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/label_saved"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:text="@string/retype_password"
+                            android:visibility="invisible" />
+
+                    </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/relative6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rl_register_repwd"
+                        android:layout_marginTop="22dp">
+
+                        <!--<CheckBox-->
+                        <!--android:id="@+id/checkbox"-->
+                        <!--android:layout_marginLeft="-5dp"-->
+                        <!--android:visibility="gone"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textColor="@color/grayText"-->
+                        <!--android:checked="true"/>-->
+                        <com.whitelabel.app.widget.CustomCheckBox
+                            android:id="@+id/checkbox2"
+                            android:layout_centerVertical="true"
+                            imaginato:color_checked="@color/colorAccent"
+                            imaginato:color_unchecked_stroke="@color/color_checkbox_unchecked"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"/>
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/checkBox1"
+                            android:textColor="@color/grayText"
+                            android:layout_toRightOf="@+id/checkbox2"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginLeft="5dp"
+                            android:id="@+id/checkbox_text1"
                             />
-                        <ImageView
-                            android:id="@+id/clearLastName"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@mipmap/text_elimination"
-                            android:visibility="gone"/>
-
-                        <ImageView
-                            android:id="@+id/img2"
-                            android:layout_alignParentRight="true"
-                            android:layout_width="@dimen/image_right_size"
-                            android:layout_height="@dimen/image_right_size"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/right"
-                            android:visibility="invisible" />
                     </RelativeLayout>
-
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/error"
+                        android:layout_below="@+id/relative6"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:visibility="invisible"
+                        android:textColor="@color/redC2060A"
+                        />
+                    <com.whitelabel.app.widget.CustomButton
+                        style="@style/font_family_roboto_medium"
+                        android:id="@+id/sign_up"
+                        android:layout_width="fill_parent"
+                        android:layout_height="48dp"
+                        android:layout_below="@+id/relative6"
+                        android:layout_marginTop="42dp"
+                        android:background="@drawable/big_button_style_config"
+                        android:text="@string/register"
+                        android:textColor="@color/buttonTextColorPrimary"
+                        android:textSize="16sp"
+                        />
                 </RelativeLayout>
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rrr"
+                    android:layout_marginTop="30dp"
+                    android:orientation="vertical"
+                    android:id="@+id/linear2">
 
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:id="@+id/tv_register_hint"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/by_creating" />
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        >
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/TermsOfUserPrivacyPolicy1"
+                            android:id="@+id/t1"/>
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/and"
+                            android:id="@+id/t2"
+                            android:layout_toRightOf="@+id/t1"/>
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/TermsOfUserPrivacyPolicy2"
+                            android:id="@+id/t3"
+                            android:layout_toRightOf="@+id/t2"/>
+                    </RelativeLayout>
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_height="wrap_content">
-                <View
-                    android:id="@+id/view_firstname_line"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/line_height"
-                    android:layout_marginTop="0dp"
-                    android:background="@color/edittext_line" />
-                <View
-                    android:id="@+id/view_lastname_line"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/line_height"
-                    android:layout_marginTop="0dp"
-                    android:background="@color/edittext_line" />
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/linear2"
+                    android:layout_marginTop="15dp"
+                    >
 
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/already_have_an_account"
+                        android:textColor="@color/black000000"
+                        />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:id="@+id/sign_in"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/SignInNow"
+                        android:textColor="@color/appColorPrimary" />
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
-        <View
-            android:layout_centerHorizontal="true"
-            android:layout_width="@dimen/line_height"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/rl_register_name"
-            android:layout_alignBottom="@+id/rl_register_name"
-            android:background="@color/edittext_line"></View>
-        <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
-            android:id="@+id/rl_register_email"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_register_name">
-            <!--tag1-->
-            <RelativeLayout
-                android:id="@+id/rl_email_edit_line"
-                android:layout_below="@+id/email_text2"
-                android:layout_marginBottom="@dimen/table_lable_margain_bottom"
-                android:layout_marginLeft="@dimen/table_margain_left"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/table_lable_margain_top">
-                <com.whitelabel.app.widget.CustomEditText
-                    style="@style/font_family_robot_regular"
-                    android:id="@+id/email"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="@string/enter_email_address"
-                    android:paddingRight="@dimen/customEditText_paddingRight_v2"
-                    android:singleLine="true"
-                    android:textCursorDrawable="@null"
-                    android:textSize="@dimen/editTextFontSize"
-                    android:textColor="@color/editColor"
-                    android:textColorHint="@color/hint"
-                    android:layout_weight="1"/>
-                <ImageView
-                    android:id="@+id/clearMail"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:background="@mipmap/text_elimination"
-                    android:visibility="gone"/>
-                <ImageView
-                    android:id="@+id/img3"
-                    android:layout_width="@dimen/image_right_size"
-                    android:layout_height="@dimen/image_right_size"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:src="@mipmap/right"
-                    android:visibility="invisible" />
-            </RelativeLayout>
-            <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_robot_regular"
-                android:id="@+id/email_text"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/email_text2"
-                android:layout_marginLeft="@dimen/table_margain_left"
-                android:text="@string/enter_email_address"
-                android:textSize="@dimen/labelTextFontSize"
-                android:textColor="@color/colorAccent"
-                android:visibility="invisible" />
-
-            <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_robot_regular"
-                android:id="@+id/email_text2"
-                android:layout_width="fill_parent"
-                android:layout_marginTop="@dimen/table_lable_margain_bottom"
-                android:layout_marginLeft="@dimen/table_margain_left"
-                android:layout_height="wrap_content"
-                android:text="@string/enter_email_address"
-                android:textColor="@color/label_saved"
-                android:textSize="@dimen/labelTextFontSize"
-                android:visibility="invisible" />
-
-        </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
-
-        <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
-            android:id="@+id/rl_register_pwd"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_register_email">
-
-            <RelativeLayout
-                android:layout_below="@+id/password_text2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/table_lable_margain_bottom"
-                android:layout_marginTop="@dimen/table_lable_margain_top">
-                <com.whitelabel.app.widget.CustomEditText
-                    style="@style/font_family_robot_regular"
-                    android:id="@+id/password"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="@string/enter_password"
-                    android:singleLine="true"
-                    android:paddingRight="@dimen/customEditText_paddingRight_v2"
-                    android:textCursorDrawable="@null"
-                    android:textSize="@dimen/editTextFontSize"
-                    android:textColor="@color/editColor"
-                    android:textColorHint="@color/hint"
-                    android:inputType="textPassword"
-                    android:layout_weight="1"/>
-                <ImageView
-                    android:id="@+id/clearPassword"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@mipmap/text_elimination"
-                    android:visibility="gone"/>
-                <ImageView
-                    android:id="@+id/img4"
-                    android:layout_width="@dimen/image_right_size"
-                    android:layout_height="@dimen/image_right_size"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/right"
-                    android:visibility="invisible" />
-            </RelativeLayout>
-
-            <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_robot_regular"
-                android:id="@+id/password_text"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/password_text2"
-                android:layout_marginLeft="@dimen/table_margain_left"
-                android:text="@string/enter_password"
-                android:textSize="@dimen/labelTextFontSize"
-                android:textColor="@color/colorAccent"
-                android:visibility="invisible" />
-
-            <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_robot_regular"
-                android:layout_marginTop="@dimen/table_lable_margain_bottom"
-                android:id="@+id/password_text2"
-                android:layout_marginLeft="@dimen/table_margain_left"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/enter_password"
-                android:textColor="@color/label_saved"
-                android:textSize="@dimen/labelTextFontSize"
-                android:visibility="invisible" />
-
-        </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
-
-        <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
-            android:id="@+id/rl_register_repwd"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_register_pwd">
-
-            <RelativeLayout
-                android:layout_below="@+id/re_password_text2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/table_margain_left"
-                android:layout_marginBottom="@dimen/table_lable_margain_bottom"
-                android:layout_marginTop="@dimen/table_lable_margain_top">
-
-                <com.whitelabel.app.widget.CustomEditText
-                    style="@style/font_family_robot_regular"
-                    android:id="@+id/re_password"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="@string/retype_password"
-                    android:singleLine="true"
-                    android:textCursorDrawable="@null"
-                    android:textSize="@dimen/editTextFontSize"
-                    android:textColor="@color/editColor"
-                    android:paddingRight="@dimen/customEditText_paddingRight_v2"
-                    android:textColorHint="@color/hint"
-                    android:password="true"
-                    android:layout_weight="1"/>
-                <ImageView
-                    android:id="@+id/clearRePassword"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@mipmap/text_elimination"
-                    android:visibility="gone"/>
-
-                <ImageView
-                    android:id="@+id/img5"
-                    android:layout_width="@dimen/image_right_size"
-                    android:layout_height="@dimen/image_right_size"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/right"
-                    android:visibility="invisible" />
-            </RelativeLayout>
-
-            <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_robot_regular"
-                android:id="@+id/re_password_text"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/re_password_text2"
-                android:layout_marginLeft="@dimen/table_margain_left"
-                android:text="@string/retype_password"
-                android:textSize="@dimen/labelTextFontSize"
-                android:textColor="@color/colorAccent"
-                android:visibility="invisible" />
-
-            <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_robot_regular"
-                android:layout_marginTop="@dimen/table_lable_margain_bottom"
-                android:layout_marginLeft="@dimen/table_margain_left"
-                android:id="@+id/re_password_text2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/label_saved"
-                android:textSize="@dimen/labelTextFontSize"
-                android:text="@string/retype_password"
-                android:visibility="invisible" />
-
-        </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relative6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_register_repwd"
-        android:layout_marginTop="22dp">
-
-        <!--<CheckBox-->
-            <!--android:id="@+id/checkbox"-->
-            <!--android:layout_marginLeft="-5dp"-->
-            <!--android:visibility="gone"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textColor="@color/grayText"-->
-            <!--android:checked="true"/>-->
-        <com.whitelabel.app.widget.CustomCheckBox
-            android:id="@+id/checkbox2"
-            android:layout_centerVertical="true"
-            imaginato:color_checked="@color/colorAccent"
-            imaginato:color_unchecked_stroke="@color/color_checkbox_unchecked"
-            android:layout_width="24dp"
-            android:layout_height="24dp"/>
-        <com.whitelabel.app.widget.CustomTextView
-            style="@style/font_family_robot_regular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/checkBox1"
-            android:textColor="@color/grayText"
-            android:layout_toRightOf="@+id/checkbox2"
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="5dp"
-            android:id="@+id/checkbox_text1"
-            />
-    </RelativeLayout>
-    <com.whitelabel.app.widget.CustomTextView
-        style="@style/font_family_robot_regular"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/error"
-        android:layout_below="@+id/relative6"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:layout_marginTop="5dp"
-        android:visibility="invisible"
-        android:textColor="@color/redC2060A"
-        />
-    <com.whitelabel.app.widget.CustomButton
-        style="@style/font_family_roboto_medium"
-        android:id="@+id/sign_up"
-        android:layout_width="fill_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/relative6"
-        android:layout_marginTop="42dp"
-        android:background="@drawable/big_button_style_config"
-        android:text="@string/register"
-        android:textColor="@color/buttonTextColorPrimary"
-        android:textSize="16sp"
-        />
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rrr"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical"
-        android:id="@+id/linear2">
-
-        <com.whitelabel.app.widget.CustomTextView
-            style="@style/font_family_robot_regular"
-            android:id="@+id/tv_register_hint"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/by_creating" />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center"
-            >
-            <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_robot_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/TermsOfUserPrivacyPolicy1"
-                android:id="@+id/t1"/>
-            <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_robot_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/and"
-                android:id="@+id/t2"
-                android:layout_toRightOf="@+id/t1"/>
-            <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_robot_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/TermsOfUserPrivacyPolicy2"
-                android:id="@+id/t3"
-                android:layout_toRightOf="@+id/t2"/>
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_below="@+id/linear2"
-        android:layout_marginTop="15dp"
-        >
-
-        <com.whitelabel.app.widget.CustomTextView
-            style="@style/font_family_robot_regular"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/already_have_an_account"
-            android:textColor="@color/black000000"
-            />
-
-        <com.whitelabel.app.widget.CustomTextView
-            style="@style/font_family_robot_regular"
-            android:id="@+id/sign_in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/SignInNow"
-            android:textColor="@color/appColorPrimary" />
-    </LinearLayout>
-</RelativeLayout>
-</RelativeLayout>
     </ScrollView>
 </LinearLayout>

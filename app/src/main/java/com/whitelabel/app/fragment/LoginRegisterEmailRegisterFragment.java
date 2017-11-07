@@ -496,10 +496,13 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
                     break;
                 case R.id.email:
+                    //down(xml top) customtextview
                     emailText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-
+                    //parent relativeLayout
                     rl_register_email.setBottomLineActive(true);
+                    //top(xml down) customtextview
                     emailText2.setText(getResources().getString(R.string.loginregister_emailbound_email_hint));
+                    //customEdit
                     if (email.getText().length()!=0)
                         clearMail.setVisibility(View.VISIBLE);
                     else
