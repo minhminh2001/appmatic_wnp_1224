@@ -179,6 +179,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
+    compile 'com.orhanobut:logger:2.1.1'
 }
 
 

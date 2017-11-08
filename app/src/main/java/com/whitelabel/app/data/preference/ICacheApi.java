@@ -2,6 +2,7 @@ package com.whitelabel.app.data.preference;
 
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
@@ -23,8 +24,8 @@ public interface ICacheApi {
     void  saveAddressList(String userId,List<AddressBook> beans);
     rx.Observable<List<TMPLocalCartRepositoryProductEntity>> getShoppingCartProduct();
     rx.Observable<List<AddressBook>> getAddressListCache(final String userId);
-     void saveCategoryDetail(CategoryDetailModel categoryDetailModel);
-    rx.Observable<CategoryDetailModel> getCategoryDetail(final String categoryId);
+     void saveCategoryDetail(String menuId,CategoryDetailNewModel categoryDetailModel);
+    rx.Observable<CategoryDetailNewModel> getCategoryDetail(final String categoryId);
     GOUserEntity getUser();
     void saveUser(GOUserEntity goUserEntity);
     void saveBaseCategory(SVRAppserviceCatalogSearchReturnEntity allCategorys);

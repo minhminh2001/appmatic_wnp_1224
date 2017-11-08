@@ -11,6 +11,9 @@ import java.util.ArrayList;
 public class SVRAppserviceCatalogSearchCategoryItemReturnEntity extends ExpandableRecyclerAdapter.ListItem implements Serializable {
     private String id;
     private String brandId;
+    private String menu_id;
+    private String menu_type;
+    private String menu_title;
     private int level;
     private String name;
     private String url;
@@ -61,6 +64,30 @@ public class SVRAppserviceCatalogSearchCategoryItemReturnEntity extends Expandab
         this.brandId = brandId;
     }
 
+    public String getMenu_id() {
+        return menu_id;
+    }
+
+    public void setMenu_id(String menu_id) {
+        this.menu_id = menu_id;
+    }
+
+    public String getMenu_type() {
+        return menu_type;
+    }
+
+    public void setMenu_type(String menu_type) {
+        this.menu_type = menu_type;
+    }
+
+    public String getMenu_title() {
+        return menu_title;
+    }
+
+    public void setMenu_title(String menu_title) {
+        this.menu_title = menu_title;
+    }
+
     public int getLevel() {
         return level;
     }
@@ -74,7 +101,7 @@ public class SVRAppserviceCatalogSearchCategoryItemReturnEntity extends Expandab
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.menu_title = name;
     }
 
     public String getUrl() {

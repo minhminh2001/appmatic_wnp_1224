@@ -265,9 +265,9 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     public Fragment  createFragmentByIndex(int  index){
         Fragment fragment=null;
         if(fragmentType==TYPE_FRAGMENT_HORIZONTAL){
-            fragment=HomeHomeFragmentV4.newInstance(index, categoryArrayList.get(index).getId());
+            fragment=HomeHomeFragmentV4.newInstance(index, categoryArrayList.get(index).getMenu_id());
         }else if(fragmentType==TYPE_FRAGMENT_VERTICAL){
-            fragment=HomeHomeFragmentV3.newInstance(index, categoryArrayList.get(index).getId());
+            fragment=HomeHomeFragmentV3.newInstance(index, categoryArrayList.get(index).getMenu_id());
         }
         return fragment;
     }
@@ -305,7 +305,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
                 position = position % categoryArrayListSize;
                 SVRAppserviceCatalogSearchCategoryItemReturnEntity category = categoryArrayList.get(position);
                 if (category != null) {
-                    categoryName = category.getName();
+                    categoryName = category.getMenu_title();
                 }
             }
             return categoryName;
