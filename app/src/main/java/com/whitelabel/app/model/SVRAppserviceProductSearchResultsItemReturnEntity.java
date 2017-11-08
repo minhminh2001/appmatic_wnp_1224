@@ -11,6 +11,8 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
     private String category;
     private String brand;
     private int position;
+    //header title item
+    private int type;
     private String brandId;
     private String price;
     private String final_price;
@@ -28,6 +30,14 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getBrandId() {

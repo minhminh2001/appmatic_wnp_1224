@@ -161,7 +161,7 @@ public class PreferHelper  implements ICacheApi{
         SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
         Gson gson=new Gson();
         String categoryStr=gson.toJson(categoryDetailModel);
-        sharedPreferences.edit().putString("category"+menuId,categoryStr).commit();;
+        sharedPreferences.edit().putString("category"+menuId,categoryStr).commit();
     }
     public rx.Observable<CategoryDetailNewModel> getCategoryDetail(final String categoryId){
         return rx.Observable.fromCallable(new Callable<CategoryDetailNewModel>() {

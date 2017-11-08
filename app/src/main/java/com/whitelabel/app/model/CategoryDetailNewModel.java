@@ -70,6 +70,18 @@ public class CategoryDetailNewModel implements Serializable {
         this.category_id = category_id;
     }
 
+    @Override
+    public String toString() {
+        return "CategoryDetailNewModel{" +
+                "category_img='" + category_img + '\'' +
+                ", image_width=" + image_width +
+                ", image_height=" + image_height +
+                ", category_name='" + category_name + '\'' +
+                ", category_id='" + category_id + '\'' +
+                ", carousels=" + carousels +
+                '}';
+    }
+
     public static class CarouselsBean {
         /**
          * title : Cat Stuff We Love
@@ -77,6 +89,24 @@ public class CategoryDetailNewModel implements Serializable {
          */
 
         private String title;
+        private int position;
+        private int type;
+        public int getPosition() {
+            return position;
+        }
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
         private List<SVRAppserviceProductSearchResultsItemReturnEntity> items;
 
         public String getTitle() {
@@ -95,7 +125,15 @@ public class CategoryDetailNewModel implements Serializable {
             this.items = items;
         }
 
-
+        @Override
+        public String toString() {
+            return "CarouselsBean{" +
+                    "title='" + title + '\'' +
+                    ", position=" + position +
+                    ", type=" + type +
+                    ", items=" + items +
+                    '}';
+        }
     }
 }
 

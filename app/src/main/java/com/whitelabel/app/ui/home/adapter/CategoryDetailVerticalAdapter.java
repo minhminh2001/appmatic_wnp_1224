@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whitelabel.app.BaseActivity;
+import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
@@ -65,11 +66,6 @@ import rx.schedulers.Schedulers;
 
 
 public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final int TYPE_TWOROW_ITEM = 256478;
-    private static final int TYPE_SINGLEROW_ITEM = 256123;
-    private static final int TYPE_HEADER = 10000;
-    private static final int TYPE_TITLE = 20000;
-    private static final int TYPE_FOOTER = 9621147;
     private CategoryDetailNewModel categoryDetailModel;
     private final ImageLoader mImageLoader;
     MyAccountDao  myAccountDao;
@@ -201,10 +197,10 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_HEADER) {
+        if (viewType == GlobalData.HEADER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_category_detail_header, null);
             return new HeaderViewHolder(view);
-        }else if (viewType == TYPE_TITLE) {
+        }else if (viewType == GlobalData.TITLE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_base_sellers, null);
             return new TitleViewHolder(view);
         } else {
@@ -215,11 +211,11 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
-            return TYPE_HEADER;
+            return GlobalData.HEADER;
         } else if (isTitleIndex(position)) {
-            return TYPE_TITLE;
+            return GlobalData.TITLE;
         } else {
-            return TYPE_TWOROW_ITEM;
+            return GlobalData.ITEM;
         }
 
     }
