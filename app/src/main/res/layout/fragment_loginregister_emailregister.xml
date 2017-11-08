@@ -8,13 +8,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp">
                 <RelativeLayout
@@ -37,6 +34,7 @@
                         android:layout_below="@+id/view1">
 
                         <LinearLayout
+                            android:baselineAligned="false"
                             android:id="@+id/ll_name2"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
@@ -208,7 +206,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/rl_register_name"
                         android:layout_alignBottom="@+id/rl_register_name"
-                        android:background="@color/edittext_line"></View>
+                        android:background="@color/edittext_line"/>
                     <!--email-->
                     <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
                         android:id="@+id/rl_register_email"
@@ -237,7 +235,7 @@
                                 android:textColor="@color/editColor"
                                 android:textCursorDrawable="@null"
                                 android:textColorHint="@color/hint"
-                                android:layout_weight="1"/>
+                                />
                             <ImageView
                                 android:id="@+id/clearMail"
                                 android:layout_width="16dp"
@@ -300,14 +298,15 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
-                                android:hint="@string/et_phone_number"
+                                android:hint="@string/enter_phone_number"
                                 android:paddingRight="@dimen/customEditText_paddingRight_v2"
+                                android:inputType="number"
                                 android:singleLine="true"
                                 android:textSize="@dimen/editTextFontSize"
                                 android:textColor="@color/editColor"
                                 android:textCursorDrawable="@null"
                                 android:textColorHint="@color/hint"
-                                android:layout_weight="1"/>
+                                />
                             <ImageView
                                 android:id="@+id/iv_clear_phone"
                                 android:layout_width="16dp"
@@ -332,7 +331,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tv_phone_text2"
                             android:layout_marginLeft="@dimen/table_margain_left"
-                            android:text="@string/enter_email_address"
+                            android:text="@string/enter_phone_number"
                             android:textSize="@dimen/labelTextFontSize"
                             android:textColor="@color/colorAccent"
                             android:visibility="invisible" />
@@ -344,7 +343,7 @@
                             android:layout_marginTop="@dimen/table_lable_margain_bottom"
                             android:layout_marginLeft="@dimen/table_margain_left"
                             android:layout_height="wrap_content"
-                            android:text="@string/enter_email_address"
+                            android:text="@string/enter_phone_number"
                             android:textColor="@color/label_saved"
                             android:textSize="@dimen/labelTextFontSize"
                             android:visibility="invisible" />
@@ -374,8 +373,8 @@
                                 android:textColor="@color/editColor"
                                 android:textCursorDrawable="@null"
                                 android:textColorHint="@color/hint"
-                                android:password="true"
-                                android:layout_weight="1"/>
+                                android:inputType="textPassword"
+                                />
                             <ImageView
                                 android:id="@+id/clearPassword"
                                 android:layout_width="16dp"
@@ -446,8 +445,8 @@
                                 android:textColor="@color/editColor"
                                 android:paddingRight="@dimen/customEditText_paddingRight_v2"
                                 android:textColorHint="@color/hint"
-                                android:password="true"
-                                android:layout_weight="1"/>
+                                android:inputType="textPassword"
+                                />
                             <ImageView
                                 android:id="@+id/clearRePassword"
                                 android:layout_width="16dp"
@@ -625,6 +624,5 @@
                 </LinearLayout>
             </RelativeLayout>
 
-        </RelativeLayout>
     </ScrollView>
 </LinearLayout>
