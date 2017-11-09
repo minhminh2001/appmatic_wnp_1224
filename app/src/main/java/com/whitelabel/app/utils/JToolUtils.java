@@ -27,11 +27,13 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.BaseActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.fragment.BaseFragment;
+import com.whitelabel.app.utils.logger.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -433,5 +435,12 @@ public class JToolUtils {
             e.printStackTrace();
         }
         return version;
+    }
+
+    //test use : print object
+    public static void printObject(Object object){
+        Gson gson=new Gson();
+        String result = gson.toJson(object);
+        Logger.e("object json:"+result);
     }
 }

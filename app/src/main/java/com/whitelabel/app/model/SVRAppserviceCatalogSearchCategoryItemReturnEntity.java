@@ -15,6 +15,7 @@ public class SVRAppserviceCatalogSearchCategoryItemReturnEntity extends Expandab
     private String menu_type;
     private String menu_title;
     private int level;
+    //all name replace menu_title
     private String name;
     private String url;
     private String image;
@@ -97,7 +98,7 @@ public class SVRAppserviceCatalogSearchCategoryItemReturnEntity extends Expandab
     }
 
     public String getName() {
-        return name;
+        return menu_title;
     }
 
     public void setName(String name) {
