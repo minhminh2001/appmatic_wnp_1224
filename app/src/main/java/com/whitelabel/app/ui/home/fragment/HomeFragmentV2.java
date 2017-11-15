@@ -23,15 +23,11 @@ import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.data.DataManager;
-import com.whitelabel.app.data.service.BaseManager;
-import com.whitelabel.app.data.service.CommodityManager;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.ui.home.HomeContract;
-import com.whitelabel.app.ui.home.presenter.HomePresenterImpl;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -42,8 +38,6 @@ import com.whitelabel.app.widget.CustomDialog;
 import com.whitelabel.app.widget.CustomHomeViewPager;
 import com.whitelabel.app.widget.CustomTabCustomPageIndicator;
 import java.util.ArrayList;
-
-import javax.inject.Inject;
 
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
@@ -265,9 +259,9 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     public Fragment  createFragmentByIndex(int  index){
         Fragment fragment=null;
         if(fragmentType==TYPE_FRAGMENT_HORIZONTAL){
-            fragment=HomeHomeFragmentV4.newInstance(index, categoryArrayList.get(index).getMenu_id());
+            fragment=HomeHomeFragmentV4.newInstance(index, categoryArrayList.get(index).getMenuId());
         }else if(fragmentType==TYPE_FRAGMENT_VERTICAL){
-            fragment=HomeHomeFragmentV3.newInstance(index, categoryArrayList.get(index).getMenu_id());
+            fragment=HomeHomeFragmentV3.newInstance(index, categoryArrayList.get(index).getMenuId());
         }
         return fragment;
     }
@@ -305,7 +299,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
                 position = position % categoryArrayListSize;
                 SVRAppserviceCatalogSearchCategoryItemReturnEntity category = categoryArrayList.get(position);
                 if (category != null) {
-                    categoryName = category.getMenu_title();
+                    categoryName = category.getMenuTitle();
                 }
             }
             return categoryName;

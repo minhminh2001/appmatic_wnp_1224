@@ -233,7 +233,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             allCategory.setName(getString(R.string.productlist_categorylanding_allcategory));
             allCategory.setLevel(entity.getLevel());
             allCategory.setChildren(null);
-            allCategoryName = entity.getName();
+            allCategoryName = entity.getMenuTitle();
             if (!JDataUtils.isEmpty(allCategoryName)) {
                 allCategoryName = allCategoryName.toUpperCase();
             }
@@ -517,7 +517,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             if (categoryArrayList != null && position >= 0 && categoryArrayList.size() > position) {
                 SVRAppserviceCatalogSearchCategoryItemReturnEntity category = categoryArrayList.get(position);
                 if (category != null) {
-                    categoryId = category.getMenu_id();
+                    categoryId = category.getId();
                     brandId = category.getBrandId();
                     brandName=category.getBrandName();
 

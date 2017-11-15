@@ -94,9 +94,10 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
         allData.clear();
         if (categoryEntity != null && categoryEntity.getCategory() != null && categoryEntity.getCategory().size() > 0) {
             for (SVRAppserviceCatalogSearchCategoryItemReturnEntity entity : categoryEntity.getCategory()) {
-                if (!entity.getChildren().isEmpty()) {
-                    allData.add((SVRAppserviceCatalogSearchCategoryItemReturnEntity) JToolUtils.cloneObject(entity));
-                }
+                //last position result children is empty,lead last postion don't visible
+//                if (!entity.getChildren().isEmpty()) {
+                allData.add((SVRAppserviceCatalogSearchCategoryItemReturnEntity) JToolUtils.cloneObject(entity));
+//                }
             }
             ll_category_tree_main.setVisibility(View.VISIBLE);
         } else {
@@ -110,7 +111,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
             for (SVRAppserviceCatalogSearchCategoryItemReturnEntity twoItem : oneItem.getChildren()) {
                 //需求隐藏 Gem Brands 的ALL  GEM Brands 的
                 boolean isGemBrands = false;
-                if (!TextUtils.isEmpty(twoItem.getMenu_title()) && gemBradns.equals(twoItem.getMenu_title().replace(" ", "").toUpperCase())) {
+                if (!TextUtils.isEmpty(twoItem.getMenuTitle()) && gemBradns.equals(twoItem.getMenuTitle().replace(" ", "").toUpperCase())) {
                     isGemBrands = true;
                 }
                 if (!isGemBrands) {
@@ -191,7 +192,6 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvRootCategory.setLayoutManager(linearLayoutManager);
-
         categoryTreeRootAdapter = new CategoryTreeRootAdapter(getContext(), allData,
                 new CategoryTreeRootAdapter.ItemClick() {
                     @Override
@@ -218,6 +218,8 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
         rvRootCategory.setAdapter(categoryTreeRootAdapter);
 
     }
+
+
 
 
     public void startHomeHomeFragment(String categoryId) {
