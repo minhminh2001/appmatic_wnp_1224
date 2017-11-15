@@ -233,7 +233,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             allCategory.setName(getString(R.string.productlist_categorylanding_allcategory));
             allCategory.setLevel(entity.getLevel());
             allCategory.setChildren(null);
-            allCategoryName = entity.getName();
+            allCategoryName = entity.getMenuTitle();
             if (!JDataUtils.isEmpty(allCategoryName)) {
                 allCategoryName = allCategoryName.toUpperCase();
             }

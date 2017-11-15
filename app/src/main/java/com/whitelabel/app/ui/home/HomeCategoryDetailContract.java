@@ -1,6 +1,7 @@
 package com.whitelabel.app.ui.home;
 
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.BaseView;
 
@@ -11,7 +12,7 @@ import com.whitelabel.app.ui.BaseView;
 public class HomeCategoryDetailContract {
      public   interface View extends BaseView{
          public void showErrorMsg(String errorMsg);
-         public void loadData(CategoryDetailModel categoryDetailModel);
+         public void loadData(CategoryDetailNewModel categoryDetailModel);
          void closeRefreshLaout();
          public void showProgressDialog();
          public void dissmissProgressDialog();

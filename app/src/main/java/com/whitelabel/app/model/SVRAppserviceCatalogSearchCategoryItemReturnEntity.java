@@ -1,5 +1,6 @@
 package com.whitelabel.app.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.whitelabel.app.widget.ExpandableRecyclerAdapter;
 
 import java.io.Serializable;
@@ -11,7 +12,14 @@ import java.util.ArrayList;
 public class SVRAppserviceCatalogSearchCategoryItemReturnEntity extends ExpandableRecyclerAdapter.ListItem implements Serializable {
     private String id;
     private String brandId;
+    @SerializedName("menu_id")
+    private String menuId;
+    @SerializedName("menu_type")
+    private String menuType;
+    @SerializedName("menu_title")
+    private String menuTitle;
     private int level;
+    //all name replace menu_title
     private String name;
     private String url;
     private String image;
@@ -61,6 +69,30 @@ public class SVRAppserviceCatalogSearchCategoryItemReturnEntity extends Expandab
         this.brandId = brandId;
     }
 
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getMenuType() {
+        return menuType;
+    }
+
+    public void setMenuType(String menuType) {
+        this.menuType = menuType;
+    }
+
+    public String getMenuTitle() {
+        return menuTitle;
+    }
+
+    public void setMenuTitle(String menuTitle) {
+        this.menuTitle = menuTitle;
+    }
+
     public int getLevel() {
         return level;
     }
@@ -70,11 +102,11 @@ public class SVRAppserviceCatalogSearchCategoryItemReturnEntity extends Expandab
     }
 
     public String getName() {
-        return name;
+        return menuTitle;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.menuTitle = name;
     }
 
     public String getUrl() {

@@ -11,6 +11,8 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
     private String category;
     private String brand;
     private int position;
+    //header title item
+    private int type;
     private String brandId;
     private String price;
     private String final_price;
@@ -19,6 +21,7 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
     private String vendorDisplayName;
     private int isLike;
     private String item_id;
+    private String maxSaleQty;
     private boolean syncnServering=false;
 
     public int getPosition() {
@@ -27,6 +30,14 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getBrandId() {
@@ -152,5 +163,36 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
 
     public void setInStock(String inStock) {
         this.inStock = inStock;
+    }
+
+    public String getMaxSaleQty() {
+        return maxSaleQty;
+    }
+
+    public void setMaxSaleQty(String maxSaleQty) {
+        this.maxSaleQty = maxSaleQty;
+    }
+
+    @Override
+    public String toString() {
+        return "SVRAppserviceProductSearchResultsItemReturnEntity{" +
+                "productId='" + productId + '\'' +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", brand='" + brand + '\'' +
+                ", position=" + position +
+                ", brandId='" + brandId + '\'' +
+                ", price='" + price + '\'' +
+                ", final_price='" + final_price + '\'' +
+                ", smallImage='" + smallImage + '\'' +
+                ", inStock='" + inStock + '\'' +
+                ", vendorDisplayName='" + vendorDisplayName + '\'' +
+                ", isLike=" + isLike +
+                ", item_id='" + item_id + '\'' +
+                ", maxSaleQty='" + maxSaleQty + '\'' +
+                ", syncnServering=" + syncnServering +
+                ", itemId='" + itemId + '\'' +
+                ", vendor_id='" + vendor_id + '\'' +
+                '}';
     }
 }

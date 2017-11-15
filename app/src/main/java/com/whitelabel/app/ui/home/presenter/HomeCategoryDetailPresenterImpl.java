@@ -7,6 +7,7 @@ import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.model.ApiFaildException;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
@@ -41,7 +42,7 @@ public class HomeCategoryDetailPresenterImpl extends RxPresenter<HomeCategoryDet
        Subscription subscription= iCommodityManager.getCategoryDetail(true,categoryId,sessionKey)
                  .subscribeOn(Schedulers.io())
                  .observeOn(AndroidSchedulers.mainThread())
-                 .subscribe(new Subscriber<CategoryDetailModel>() {
+                 .subscribe(new Subscriber<CategoryDetailNewModel>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -50,7 +51,7 @@ public class HomeCategoryDetailPresenterImpl extends RxPresenter<HomeCategoryDet
 
                      }
                     @Override
-                    public void onNext(CategoryDetailModel categoryDetailModel) {
+                    public void onNext(CategoryDetailNewModel categoryDetailModel) {
                         if(categoryDetailModel!=null){
                             mView.loadData(categoryDetailModel);
                         }
@@ -66,8 +67,8 @@ public class HomeCategoryDetailPresenterImpl extends RxPresenter<HomeCategoryDet
         mView.showSwipeLayout();
         final String sessionKey=iBaseManager.isSign()?iBaseManager.getUser().getSessionKey():"";
        Subscription subscription= iCommodityManager.getCategoryDetail(false,categoryId,sessionKey)
-                .compose(RxUtil.<CategoryDetailModel>rxSchedulerHelper())
-                .subscribe(new Subscriber<CategoryDetailModel>() {
+                .compose(RxUtil.<CategoryDetailNewModel>rxSchedulerHelper())
+                .subscribe(new Subscriber<CategoryDetailNewModel>() {
                     @Override
                     public void onCompleted() {
 
@@ -81,7 +82,7 @@ public class HomeCategoryDetailPresenterImpl extends RxPresenter<HomeCategoryDet
                     }
 
                     @Override
-                    public void onNext(CategoryDetailModel categoryDetailModel) {
+                    public void onNext(CategoryDetailNewModel categoryDetailModel) {
                         mView.closeSwipeLayout();
                         mView.loadData(categoryDetailModel);
                     }

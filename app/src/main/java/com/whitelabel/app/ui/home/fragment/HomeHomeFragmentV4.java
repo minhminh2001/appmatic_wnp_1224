@@ -22,6 +22,7 @@ import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CommodityManager;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
@@ -160,22 +161,20 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
             JViewUtils.showErrorToast(getActivity(),errorMsg);
     }
     @Override
-    public void loadData(final CategoryDetailModel categoryDetailModel) {
+    public void loadData(final CategoryDetailNewModel categoryDetailModel) {
          if(getActivity()!=null){
              CategoryDetailHorizontalAdapter mAdapter=
                      new CategoryDetailHorizontalAdapter(getActivity(),categoryDetailModel,mImageLoader);
-             mAdapter.setOnBestProductionItemClickListener(new CategoryDetailHorizontalAdapter.OnItemClickListener() {
+
+             mAdapter.setOnProductItemClickListener(new CategoryDetailHorizontalAdapter.OnItemClickListener() {
                  @Override
-                 public void onItemClick(RecyclerView.ViewHolder itemViewHolder, int position) {
-                     startProductDetailActivity(categoryDetailModel.getBestSellerProducts().get(position));
+                 public void onItemClick(RecyclerView.ViewHolder itemViewHolder, int parentPosition, int childPosition) {
+                     startProductDetailActivity(categoryDetailModel.getCarousels().get(parentPosition).getItems().get(childPosition));
                  }
              });
-             mAdapter.setOnNewArrivalsItemClickListener(new CategoryDetailHorizontalAdapter.OnItemClickListener() {
-                 @Override
-                 public void onItemClick(RecyclerView.ViewHolder itemViewHolder, int position) {
-                     startProductDetailActivity(categoryDetailModel.getNewArrivalProducts().get(position));
-                 }
-             });
+
+
+
              LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
              recyclerView1.setLayoutManager(linearLayoutManager);
              recyclerView1.setAdapter(mAdapter);

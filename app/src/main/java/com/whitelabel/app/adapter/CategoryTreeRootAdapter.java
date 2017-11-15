@@ -45,7 +45,7 @@ public class CategoryTreeRootAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder viewHolder=(ViewHolder)holder;
         SVRAppserviceCatalogSearchCategoryItemReturnEntity entity=allData.get(position);
-        viewHolder.tvCategoryTreeRootName.setText(entity.getName());
+        viewHolder.tvCategoryTreeRootName.setText(entity.getMenuTitle());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

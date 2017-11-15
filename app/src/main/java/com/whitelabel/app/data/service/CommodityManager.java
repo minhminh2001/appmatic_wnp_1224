@@ -9,6 +9,7 @@ import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.ApiException;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
@@ -78,20 +79,20 @@ public class CommodityManager  implements ICommodityManager{
         return cacheHelper.getAddressListCache(userId);
     }
     @Override
-    public Observable<CategoryDetailModel> getCategoryDetail(boolean isCache,String category,String sessionKey) {
+    public Observable<CategoryDetailNewModel> getCategoryDetail(boolean isCache, final String categoryId, String sessionKey) {
         if(isCache){
-            return cacheHelper.getCategoryDetail(category);
+            return cacheHelper.getCategoryDetail(categoryId);
         }else {
-            return productApi.getCategoryDetail(category, sessionKey)
-                    .map(new Func1<ResponseModel<CategoryDetailModel>, CategoryDetailModel>() {
+            return productApi.getCategoryDetail(categoryId, sessionKey)
+                    .map(new Func1<ResponseModel<CategoryDetailNewModel>, CategoryDetailNewModel>() {
                         @Override
-                        public CategoryDetailModel call(ResponseModel<CategoryDetailModel> categoryDetailModelResponseModel) {
+                        public CategoryDetailNewModel call(ResponseModel<CategoryDetailNewModel> categoryDetailModelResponseModel) {
                             return categoryDetailModelResponseModel.getData();
                         }
-                    }).doOnNext(new Action1<CategoryDetailModel>() {
+                    }).doOnNext(new Action1<CategoryDetailNewModel>() {
                         @Override
-                        public void call(CategoryDetailModel categoryDetailModel) {
-                            cacheHelper.saveCategoryDetail(categoryDetailModel);
+                        public void call(CategoryDetailNewModel categoryDetailModel) {
+                            cacheHelper.saveCategoryDetail(categoryId,categoryDetailModel);
                   }
              });
         }
