@@ -195,6 +195,7 @@
     <string name="loginregister_emailbound_createaccount">CREATE ACCOUNT</string>
     <string name="loginregister_emailbound_tips_error_email_empty">This is a required field.</string>
     <string name="loginregister_emailbound_tips_error_email_format">Please enter a valid email address. For example johndoe@domain.com.</string>
+    <string name="loginregister_emailbound_tips_error_phone_number_format">Please enter a valid phone number.Longer than 7, less than 15</string>
 
     <!-- My Account -->
     <string name="myorder_detail_instruction">*Orders placed after 5pm or at the weekend, including public holidays, will be processed the next working day.</string>
@@ -362,7 +363,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="enter_email_address">Email</string>
-    <string name="et_phone_number">Phone Number</string>
+    <string name="enter_phone_number">Phone Number</string>
     <string name="retype_password">Re-type Password</string>
     <string name="by_creating">By creating an account, you agree to </string>
     <string name="and">  and  </string>

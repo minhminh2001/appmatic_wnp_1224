@@ -11,7 +11,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -58,12 +60,12 @@ import java.util.List;
 
 @SuppressWarnings("ALL")
 public class LoginRegisterEmailRegisterFragment extends Fragment implements View.OnFocusChangeListener,View.OnClickListener{
-    private EditText firstName,lastName,email,password,re_password;
-    private TextView firstNameText,lastNameText,emailText,passwordText,re_passwordText;
-    private TextView firstNameText2,lastNameText2,emailText2,passwordText2,re_passwordText2;
-    private ImageView img1,img2,img3,img4,img5,clearFirst,clearLastName,clearMail,clearPassword,clearRePassword;
+    private EditText firstName,lastName,email,et_phone_number,password,re_password;
+    private TextView firstNameText,lastNameText,emailText,tv_phone_text,passwordText,re_passwordText;
+    private TextView firstNameText2,lastNameText2,emailText2,tv_phone_text2,passwordText2,re_passwordText2;
+    private ImageView img1,img2,img3,img4,img5,iv_phone_correct,clearFirst,clearLastName,clearMail,iv_clear_phone,clearPassword,clearRePassword;
     private boolean isClickRegister=true;
-    private CustomButtomLineRelativeLayout rl_register_email,rl_register_pwd,rl_register_repwd;
+    private CustomButtomLineRelativeLayout rl_register_email,rl_phone_number,rl_register_pwd,rl_register_repwd;
     private View view_firstname_line,view_lastname_line;
     private TextView error;
     private CustomCheckBox checkBox;
@@ -105,6 +107,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         firstName.setText("");
         lastName.setText("");
         email.setText("");
+        et_phone_number.setText("");
         password.setText("");
         re_password.setText("");
     }
@@ -276,6 +279,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
             }
         });
         rl_register_email= (CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_register_email);
+        rl_phone_number= (CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_phone_number);
         rl_register_pwd= (CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_register_pwd);
         rl_register_repwd= (CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_register_repwd);
         view_firstname_line= (View) contentView.findViewById(R.id.view_firstname_line);
@@ -284,16 +288,19 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         firstNameText= (TextView) contentView.findViewById(R.id.firstName_text);
         lastNameText= (TextView) contentView.findViewById(R.id.lastName_text);
         emailText= (TextView) contentView.findViewById(R.id.email_text);
+        tv_phone_text= (TextView) contentView.findViewById(R.id.tv_phone_text);
         passwordText= (TextView) contentView.findViewById(R.id.password_text);
         re_passwordText= (TextView) contentView.findViewById(R.id.re_password_text);
         firstName= (EditText) contentView.findViewById(R.id.firstName);
         lastName= (EditText) contentView. findViewById(R.id.lastName);
         email = (EditText) contentView. findViewById(R.id.email);
+        et_phone_number = (EditText) contentView. findViewById(R.id.et_phone_number);
         password= (EditText) contentView.findViewById(R.id.password);
         re_password= (EditText) contentView.findViewById(R.id.re_password);
         firstNameText2= (TextView) contentView.findViewById(R.id.firstName_text2);
         lastNameText2= (TextView) contentView.findViewById(R.id.lastName_text2);
         emailText2= (TextView) contentView.findViewById(R.id.email_text2);
+        tv_phone_text2= (TextView) contentView.findViewById(R.id.tv_phone_text2);
         passwordText2= (TextView) contentView.findViewById(R.id.password_text2);
         re_passwordText2= (TextView) contentView.findViewById(R.id.re_password_text2);
         img1= (ImageView) contentView.findViewById(R.id.img1);
@@ -301,12 +308,15 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         img3= (ImageView) contentView.findViewById(R.id.img3);
         img4= (ImageView) contentView.findViewById(R.id.img4);
         img5= (ImageView) contentView.findViewById(R.id.img5);
+        iv_phone_correct= (ImageView) contentView.findViewById(R.id.iv_phone_correct);
         clearFirst=(ImageView)contentView.findViewById(R.id.clearFirst);
         clearFirst.setOnClickListener(this);
         clearLastName=(ImageView)contentView.findViewById(R.id.clearLastName);
         clearLastName.setOnClickListener(this);
         clearMail=(ImageView)contentView.findViewById(R.id.clearMail);
         clearMail.setOnClickListener(this);
+        iv_clear_phone=(ImageView)contentView.findViewById(R.id.iv_clear_phone);
+        iv_clear_phone.setOnClickListener(this);
         clearPassword=(ImageView)contentView.findViewById(R.id.clearPassword);
         clearPassword.setOnClickListener(this);
         clearRePassword=(ImageView)contentView.findViewById(R.id.clearRePassword);
@@ -315,6 +325,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         firstName.setOnFocusChangeListener(this);
         lastName.setOnFocusChangeListener(this);
         email.setOnFocusChangeListener(this);
+        et_phone_number.setOnFocusChangeListener(this);
         password.setOnFocusChangeListener(this);
         re_password.setOnFocusChangeListener(this);
         TextView sign_in = (TextView) contentView.findViewById(R.id.sign_in);
@@ -346,6 +357,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 //        t3.setOnClickListener(this);
         TAG=this.getClass().getSimpleName();
         email.setInputType(EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        et_phone_number.setInputType( InputType.TYPE_CLASS_NUMBER);
         if(loginRegisterActivity.getIntent()!=null&&loginRegisterActivity.getIntent().getExtras()!=null){
             String activityAata = loginRegisterActivity.getIntent().getExtras().getString("Activity");//读出数据
             if ("start".equals(activityAata)) {
@@ -533,6 +545,42 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                         }
                     });
                     break;
+                case R.id.et_phone_number:
+                    tv_phone_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+                    rl_phone_number.setBottomLineActive(true);
+                    tv_phone_text.setText(getResources().getString(R.string.enter_phone_number));
+                    tv_phone_text2.setText(getResources().getString(R.string.enter_phone_number));
+                    if (et_phone_number.getText().length()!=0){
+                        iv_clear_phone.setVisibility(View.VISIBLE);
+                    }else {
+                        iv_clear_phone.setVisibility(View.GONE);
+                    }
+                    if(et_phone_number.getText().toString().trim().equals("")) {
+                        tv_phone_text2.setVisibility(View.INVISIBLE);
+                        et_phone_number.setHint("");
+                        tv_phone_text.startAnimation(set);
+                    }else{
+                        tv_phone_text2.setTextColor(ContextCompat.getColor(getActivity(),R.color.colorAccent));
+                    }
+                    iv_phone_correct.setVisibility(View.INVISIBLE);
+                    et_phone_number.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            if (s.length() != 0&&et_phone_number.isFocused()) {
+                                iv_clear_phone.setVisibility(View.VISIBLE);
+                            }else {
+                                iv_clear_phone.setVisibility(View.GONE);
+                            }
+                        }
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
+                    break;
                 case R.id.password:
                     passwordText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
 
@@ -583,7 +631,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                         re_password.setHint("");
                         re_passwordText.startAnimation(set);
                     }else{
-                        re_passwordText2.setTextColor(getResources().getColor(R.color.colorAccent));
+                        re_passwordText2.setTextColor(ContextCompat.getColor(getActivity(),R.color.colorAccent));
                     }
                     img5.setVisibility(View.INVISIBLE);
 //                    img5_error.setVisibility(View.INVISIBLE);
@@ -610,6 +658,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
             clearFirst.setVisibility(View.GONE);
             clearLastName.setVisibility(View.GONE);
             clearMail.setVisibility(View.GONE);
+            iv_clear_phone.setVisibility(View.GONE);
             clearPassword.setVisibility(View.GONE);
             clearRePassword.setVisibility(View.GONE);
         }
@@ -682,6 +731,31 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                         //邮箱格式不正确
                         emailText2.setTextColor(getResources().getColor(R.color.redC2060A));
                         emailText2.setText(getResources().getString(R.string.loginregister_emailbound_tips_error_email_format));
+                        return false;
+                    }
+                }
+                break;
+            case R.id.et_phone_number:
+                rl_phone_number.setBottomLineActive(false);
+                tv_phone_text2.setTextColor(ContextCompat.getColor(getActivity(),R.color.label_saved));
+                tv_phone_text2.setVisibility(View.VISIBLE);
+                if(et_phone_number.getText().toString().trim().equals("")) {
+                    et_phone_number.setHint(getResources().getString(R.string.enter_phone_number));
+                    tv_phone_text.clearAnimation();
+
+//                    img3_error.setVisibility(View.VISIBLE);
+                    iv_phone_correct.setVisibility(View.INVISIBLE);
+                    tv_phone_text2.setTextColor(ContextCompat.getColor(getActivity(),R.color.redC2060A));
+                    tv_phone_text2.setText(getResources().getString(R.string.required_field));
+                    return false;
+                }else{
+                    tv_phone_text.clearAnimation();
+
+                    if(!JDataUtils.isPhoneNumber(et_phone_number.getText().toString())){
+//                        img3_error.setVisibility(View.VISIBLE);
+                        iv_phone_correct.setVisibility(View.INVISIBLE);
+                        tv_phone_text2.setTextColor(ContextCompat.getColor(getActivity(),R.color.redC2060A));
+                        tv_phone_text2.setText(getResources().getString(R.string.loginregister_emailbound_tips_error_phone_number_format));
                         return false;
                     }
                 }
@@ -763,14 +837,14 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
             case R.id.sign_up:
                 JViewUtils.cleanCurrentViewFocus(getActivity());
                 error.setText("");
-                if(onblur(R.id.firstName) && onblur(R.id.lastName)&&onblur(R.id.email) &&onblur(R.id.password)&&onblur(R.id.re_password)) {
+                if(onblur(R.id.firstName) && onblur(R.id.lastName)&&onblur(R.id.email) &&onblur(R.id.et_phone_number)&&onblur(R.id.password)&&onblur(R.id.re_password)) {
                     mDialog= JViewUtils.showProgressDialog(loginRegisterActivity);
                     //隐藏软盘
                     inputMethodManager = (InputMethodManager)loginRegisterActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(email.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     String checkBox_numbel=checkBox.isChecked()?"1":"0";
                     mAccountDao.registerUser(firstName.getText().toString().trim(),lastName.getText().toString().trim(),
-                            email.getText().toString().trim(),password.getText().toString().trim(),checkBox_numbel, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
+                            email.getText().toString().trim(),et_phone_number.getText().toString().trim(),password.getText().toString().trim(),checkBox_numbel, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
 
                 }
                 break;
@@ -799,6 +873,9 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                 break;
             case R.id.clearMail:
                 email.setText("");
+                break;
+            case R.id.iv_clear_phone:
+                et_phone_number.setText("");
                 break;
             case R.id.clearRePassword:
                 re_password.setText("");

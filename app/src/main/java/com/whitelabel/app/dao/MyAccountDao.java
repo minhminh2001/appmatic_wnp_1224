@@ -166,7 +166,7 @@ public class MyAccountDao extends BaseHttp {
         params.put("max", max);
         requestHttp(BaseHttp.HTTP_METHOD.GET, "appservice/order/history", params, REQUEST_ORDERLIST);
     }
-    public void registerUser(String firstname, String lastname, String email, String password, String subscribed, String deviceToken) {
+    public void registerUser(String firstname, String lastname, String email,String tel, String password, String subscribed, String deviceToken) {
         params = new TreeMap<>();
         if (TextUtils.isEmpty(firstname)) {
             params.put("firstname", "");
@@ -183,6 +183,11 @@ public class MyAccountDao extends BaseHttp {
             params.put("email", "");
         } else {
             params.put("email", email);
+        }
+        if (TextUtils.isEmpty(tel)) {
+            params.put("customer_telephone", "");
+        } else {
+            params.put("customer_telephone", tel);
         }
         if (TextUtils.isEmpty(password)) {
             params.put("password", "");
