@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,8 +67,10 @@ import com.whitelabel.app.widget.CustomSwipefreshLayout;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,9 +97,10 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private TextView tvApply;
     private EditText etVoucherApply;
     public TextView tvGrandTotal;
-    public TextView tvErrorMsg;
     public LinearLayout llNothing;
     public LinearLayout llCheckout;
+    public LinearLayout llTopError;
+    public TextView tvErrorMsg;
     public TextView tvCheckout;
     private LinearLayout llApplyAnim;
     private TextView tvNullApplyHint;
@@ -132,6 +136,8 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private String mVoucherCode;
     private ImageLoader mImageLoader;
     private TextView mTvGst;
+    //order page to add cart back net callback errorMessage
+    private String backOrderErrorMessage="";
     @Override
     public boolean getSwipeRefreshStatus() {
         return swipeRefrshLayout.isRefreshing();
@@ -256,6 +262,9 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         llCheckout = (LinearLayout) view.findViewById(R.id.ll_sc_checkout);
         tvCheckout = (TextView) view.findViewById(R.id.tv_sc_checkout);
         connectionBreak = view.findViewById(R.id.connectionBreaks);
+        tvErrorMsg = (TextView) view.findViewById(R.id.tv_shopping_cart_error_msg);
+        llTopError = (LinearLayout) view.findViewById(R.id.ll_shopping_cart_error);
+
         requestErrorHelper = new RequestErrorHelper(getContext(), connectionBreak);
         btnTry = (LinearLayout) view.findViewById(R.id.try_again);
         swipeRefrshLayout = (CustomSwipefreshLayout) view.findViewById(R.id.swipe_container);
@@ -319,7 +328,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         etVoucherApply = (EditText) view.findViewById(R.id.et_shoppingcart_voucher_apply);
         tvGrandTotal = (TextView) view.findViewById(R.id.tv_shoppingcart_grandtotal);
         mTvGst = (TextView) view.findViewById(R.id.tv_shoppingcart_gst);
-        tvErrorMsg = (TextView) view.findViewById(R.id.tv_shoppingcart_errormsg);
         llApplyAnim = (LinearLayout) view.findViewById(R.id.ll_shoppingcart_apply_anim);
         tvNullApplyHint = (TextView) view.findViewById(R.id.tv_shoppingcart_null_apply_hint);
         tvApplyImageAnim = (ImageView) view.findViewById(R.id.tv_shoppingcart_apply_image_anim);
@@ -490,6 +498,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                             fragment.mCar = (ShoppingCartListEntityCart) msg.obj;
                             fragment.initShoppingCartData(fragment.mCar, true);
                             fragment.mCarDao.saveShoppingCartCount(activity, fragment.mCar.getSummaryQty());
+
                             if (fragment.mApplyStr.equalsIgnoreCase(fragment.tvApply.getText().toString()) && fragment.mIsFromLogin && !TextUtils.isEmpty(fragment.mVoucherCode)) {
                                 postDelayed(new Runnable() {
                                     @Override
@@ -583,6 +592,22 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             mDialog.dismiss();
         }
     }
+
+    private void showTopError(boolean isShowError){
+        if (isShowError){
+            if (TextUtils.isEmpty(backOrderErrorMessage)){
+                llTopError.setVisibility(View.GONE);
+            }else {
+                llTopError.setVisibility(View.VISIBLE);
+                llTopError.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.red_cart_shopping_error));
+                tvErrorMsg.setTextColor(ContextCompat.getColor(getActivity(),R.color.white));
+                tvErrorMsg.setText(backOrderErrorMessage);
+            }
+        }else {
+            llTopError.setVisibility(View.GONE);
+        }
+
+    }
     public void gaTrackerRedeem(int type) {
         if (getActivity() != null) {
             String action = "";
@@ -663,6 +688,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 setLayoutNotHaveVercherCode();
                 llVoucherPrice.setVisibility(View.GONE);
             }
+            judgeProductItemToCheckoutIsGreyOrNormal(cart);
             if (isInit) {
                 if (mProducts != null) {
                     mProducts.clear();
@@ -695,6 +721,40 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             mGATrackTimeEnable = false;
         }
     }
+
+    /**
+     * base productList check item ,if inStock is 0,then checkout button show grey and non-ckick,otherwise show normal style
+     */
+    private void judgeProductItemToCheckoutIsGreyOrNormal(ShoppingCartListEntityCart cart) {
+        int noStockCont=0;
+        if (cart!=null){
+            if (cart.getItems()!=null&&cart.getItems().length>0){
+                ShoppingCartListEntityCell[] items = cart.getItems();
+                List<ShoppingCartListEntityCell> cells= Arrays.asList(items);
+                if (!cells.isEmpty()){
+                    for (int i=0;i<cells.size();i++){
+                        ShoppingCartListBase shoppingCartListBase = cells.get(i);
+                        if (shoppingCartListBase instanceof ShoppingCartListEntityCell){
+                            ShoppingCartListEntityCell cell= cells.get(i);
+                            if ("0".equals(cell.getInStock()) || "1".equals(cell.getHasError())){
+                                noStockCont++;
+                            }
+                        }
+                    }
+                    if (noStockCont>=1){
+                        tvCheckout.setBackgroundColor(getActivity().getResources().getColor(R.color.grayf0f0f0));
+                        tvCheckout.setEnabled(false);
+                        showTopError(true);
+                    }else {
+                        JViewUtils.setSoildButtonGlobalStyle(getActivity(),tvCheckout);
+                        tvCheckout.setEnabled(true);
+                        showTopError(false);
+                    }
+                }
+            }
+        }
+    }
+
     public void setLayoutHaveProduct(){
         connectionBreak.setVisibility(View.GONE);
         llNothing.setVisibility(View.GONE);
@@ -735,6 +795,58 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         mCar.setStoreCreditMessage(bean.getStoreCreditMessage());
         mCar.setStoreCredit(bean.getStoreCredit());
         initShoppingCartData(mCar, false);
+    }
+
+    //from shoppingCartVerticalAdapter callback--delete item
+    public void deleteShoppingData(ShoppingCartDeleteCellEntity bean,int position){
+        //delete position item
+        JToolUtils.printObject(mCar);
+        mCar.setItems(deleteCellItem(mCar.getItems(),position));
+        JToolUtils.printObject(mCar);
+        mCar.setDiscount(bean.getDiscount());
+        mCar.setSubTotal(bean.getSubTotal());
+        mCar.setGrandTotal(bean.getGrandTotal());
+        mCar.setShipping(bean.getShipping());
+        mCar.setCanUseCampaign(bean.getCanUseCampaign());
+        mCar.setSummaryQty(bean.getSummaryQty());
+        mCar.setPopupText(bean.getPopupText());
+        mCar.setAndroidCampBanner(bean.getAndroidCampBanner());
+        mCar.setStoreCreditMessage(bean.getStoreCreditMessage());
+        mCar.setStoreCredit(bean.getStoreCredit());
+        initShoppingCartData(mCar, false);
+    }
+//    private ShoppingCartListEntityCell[] deleteCellItem(ShoppingCartListEntityCell[] items,int pos){
+//        if (items!=null&&items.length>0){
+//            int index=items.length;
+//            index--;
+//            for(int i=pos;i<index;i++){
+//                items[i]=items[i+1];
+//            }
+//            items[index]=null;
+//        }
+//        return items;
+//    }
+
+    /**
+     *
+     * @param items
+     * @param index index from 0 start
+     * @return
+     */
+    public ShoppingCartListEntityCell[] deleteCellItem(ShoppingCartListEntityCell[] items, int index) {
+        if (items!=null&&items.length>0) {
+            ShoppingCartListEntityCell b[] = new ShoppingCartListEntityCell[items.length - 1];
+            for (int i = 0; i < b.length; i++) {
+                if (i < index) {
+                    b[i] = items[i];
+                } else {
+                    b[i] = items[i + 1];
+                }
+            }
+            return b;
+        }else {
+            return null;
+        }
     }
     @Override
     public void onPause() {
@@ -836,6 +948,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         //  参数来源于newInstance的赋值
         if (getArguments() != null) {
             fromType = getArguments().getInt(ARG_PARAM1, FROM_OTHER);
+            backOrderErrorMessage = getArguments().getString(HomeMyAccountOrdersFragment.ORDER_ERROR_MESSAGE, "");
             mGATrackTimeStart = getArguments().getLong("mGATrackTimeStart", 0);
             mGATrackTimeEnable = true;
         }

@@ -202,6 +202,8 @@
     <string name="ChangePassword">Change Password</string>
     <string name="You_have_no_orders_placed">You have no orders placed.</string>
     <string name="Order_Number">Order No.</string>
+    <string name="Order_Date">Order Date:</string>
+    <string name="Order_Status">Order Status:</string>
     <string name="Products">Products</string>
     <string name="Shipping_Address">Shipping Address: </string>
     <string name="Quantity__">Quantity:&#160;</string>

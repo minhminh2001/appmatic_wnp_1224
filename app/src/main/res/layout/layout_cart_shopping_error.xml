@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_shopping_cart_error"
+    android:layout_width="match_parent"
+    android:padding="5dp"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/iv_shopping_cart_icon"
+        android:layout_margin="5dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@mipmap/ic_shopping_cart_error_mark_top"
+        />
+    <TextView
+        android:id="@+id/tv_shopping_cart_error_msg"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:textSize="12sp"
+        android:text="sasdasssssssssssssssssssddddd"
+        android:textColor="@color/white"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+</LinearLayout>

@@ -180,6 +180,7 @@ dependencies {
         transitive = true;
     }
     compile 'com.orhanobut:logger:2.1.1'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 }
 
 

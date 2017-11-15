@@ -1,0 +1,15 @@
+<Button
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/btn_order_list_item_addtocart"
+    style="@style/font_family_roboto_medium"
+    android:layout_width="wrap_content"
+    android:layout_height="26dp"
+    android:layout_alignParentRight="true"
+    android:layout_below="@id/v_device_line"
+    android:layout_marginBottom="6dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="6dp"
+    android:background="@drawable/bg_normal_circular"
+    android:text="@string/product_detail_addtocart"
+    android:textColor="@color/buttonTextColorPrimary"
+    android:textSize="13sp" />

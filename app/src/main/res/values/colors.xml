@@ -11,6 +11,7 @@
     <color name="redC2060A">#C2060A</color>
     <color name="red_common">#C1033D</color>
     <color name="redC1033D">#C1033D</color>
+    <color name="red_cart_shopping_error">#e24256</color>
 
     <!-- 透明 -->
     <color name="purple66006e">#66006e</color>

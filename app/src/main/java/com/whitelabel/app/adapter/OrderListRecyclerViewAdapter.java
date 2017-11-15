@@ -1,11 +1,14 @@
 package com.whitelabel.app.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +23,6 @@ import com.whitelabel.app.model.MyAccountOrderTrackingInfo;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.RefreshLoadMoreRecyclerView;
@@ -36,11 +38,12 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     private static final int TYPE_ITEM = 256478;
     private static final int TYPE_BODY_ITEM = 10000;
     private static final int TYPE_FOOTER = 9621147;
-    private Context context;
+    private final Context context;
     private boolean loadMore;
-    private ArrayList dataList;
+    private final ArrayList dataList;
     private final ImageLoader mImageLoader;
 
+    @SuppressWarnings("unchecked")
     public ArrayList getDataList(ArrayList dataList) {
         ArrayList arrayList = new ArrayList();
         for (int i = 0; i < dataList.size(); i++) {
@@ -49,6 +52,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             orderTip.setOrderNumber(myAccountOrderOuter.getOrderSn());
             orderTip.setOrderDate(myAccountOrderOuter.getDate());
             orderTip.setOrderSttus(myAccountOrderOuter.getStatus());
+            orderTip.setOrderId(myAccountOrderOuter.getOrderId());
             arrayList.add(orderTip);
             MyAccountOrderMiddle[] orderlist = myAccountOrderOuter.getSuborders();
             for (int j = 0; j < orderlist.length; j++) {
@@ -71,6 +75,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     orderBody.setOrderStatusCode(myAccountOrderOuter.getStatusCode());
                     orderBody.setMerchantName(orderInners.getVendorDisplayName());
                     orderBody.setVendor_id(orderInners.getVendor_id());
+                    orderBody.setOrderId(myAccountOrderOuter.getOrderId());
                     if(trackingInfo!=null){
                         orderBody.setTrickingTitle(trackingInfo.getTitle());
                         orderBody.setTrickingUrl(trackingInfo.getUrl());
@@ -104,9 +109,11 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
+            @SuppressLint("InflateParams")
             View view = LayoutInflater.from(context).inflate(R.layout.order_list_item, null);
             return new OrderListholder(view);
         } else if (viewType == TYPE_BODY_ITEM) {
+            @SuppressLint("InflateParams")
             View view = LayoutInflater.from(context).inflate(R.layout.fragment_myorder_list_new_item1, null);
             return new SubOrderHolder(view);
         }
@@ -130,6 +137,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         return loadMore;
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {//相当于getView
         ArrayList arrayList = getDataList(dataList);
@@ -159,7 +167,20 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             subOrderHolder.orderImage.setTag(orderBody.getOrderImage());
             subOrderHolder.rmTop.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+"");
             subOrderHolder.orderName.setText(orderBody.getOrderName());
-
+            //add to cart button
+            if (orderBody.isLast()){
+                subOrderHolder.btnOrderListItemAddtocart.setVisibility(View.VISIBLE);
+                GradientDrawable myGrad = (GradientDrawable)subOrderHolder.btnOrderListItemAddtocart.getBackground();
+                myGrad.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+            }else {
+                subOrderHolder.btnOrderListItemAddtocart.setVisibility(View.GONE);
+            }
+            subOrderHolder.btnOrderListItemAddtocart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onOrderViewItemClickListener.onItemClick(v, position);
+                }
+            });
             if (orderBody.getIsRPayment()==0||!orderBody.isLast()) {
                 subOrderHolder.llOrderRePayment.setVisibility(View.GONE);
             } else {
@@ -204,7 +225,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             subOrderHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onOrderViewItemClickListener.onItemClick(subOrderHolder.itemView, position);
+                    onOrderViewItemClickListener.onItemClick(view, position);
                 }
             });
         }
@@ -216,9 +237,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     }//这里要考虑到头尾部，多以要加2
 
     /**
-     * 根据位置判断这里该用哪个ViewHolder
-     *
-     * @param position
+     * @param position 根据位置判断这里该用哪个ViewHolder
      * @return
      */
     @Override
@@ -236,20 +255,13 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         }
     }
 
-    protected boolean isPositonFooter(int position) {//这里的position从0算起
-        if (getDataList(dataList) == null && position == 1) return true;//如果没有item
-        return position == getDataList(dataList).size();//如果有item(也许为0)
+    private boolean isPositonFooter(int position) {//这里的position从0算起
+        //如果没有item
+        return getDataList(dataList) == null && position == 1 || position == getDataList(dataList).size();
     }
 
-    //
-    protected class VHHeader extends RecyclerView.ViewHolder {
-        public VHHeader(View headerView) {
-            super(headerView);
-        }
-    }
-
-    protected class VHFooter extends RecyclerView.ViewHolder {
-        public RefreshLoadMoreRecyclerView.CustomDragRecyclerFooterView
+    class VHFooter extends RecyclerView.ViewHolder {
+        public final RefreshLoadMoreRecyclerView.CustomDragRecyclerFooterView
                 footerView;
 
         public VHFooter(View itemView) {
@@ -259,7 +271,9 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     public static class OrderListholder extends RecyclerView.ViewHolder {
-        private TextView orderNumber, orderDate, orderStatus;
+        private final TextView orderNumber;
+        private final TextView orderDate;
+        private final TextView orderStatus;
 
         public OrderListholder(View view) {
             super(view);
@@ -270,12 +284,20 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     public static class SubOrderHolder extends RecyclerView.ViewHolder {
-        ImageView orderImage;
-        LinearLayout llOrderRePayment;
-        TextView orderName, orderCS, orderPrice, orderNum, orderStatus, orderNewStatus, orderMerName, tvRepayment;
-        TextView rmTop;
-        TextView tvUnavailable;
-        TextView tvTrans;
+        final ImageView orderImage;
+        final LinearLayout llOrderRePayment;
+        final TextView orderName;
+        final TextView orderCS;
+        final TextView orderPrice;
+        final TextView orderNum;
+        final TextView orderStatus;
+        final TextView orderNewStatus;
+        final TextView orderMerName;
+        final TextView tvRepayment;
+        final TextView rmTop;
+        final TextView tvUnavailable;
+        final TextView tvTrans;
+        final Button btnOrderListItemAddtocart;
 
         public SubOrderHolder(View view) {
             super(view);
@@ -292,11 +314,12 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             llOrderRePayment= (LinearLayout) view.findViewById(R.id.ll_order_repayment);
             rmTop= (TextView) view.findViewById(R.id.rm_top);
             tvTrans= (TextView) view.findViewById(R.id.order_detail_trans);
+            btnOrderListItemAddtocart= (Button) view.findViewById(R.id.btn_order_list_item_addtocart);
 
         }
     }
 
-    public String setCS(MyAccountOrderInner orderInners) {
+    private String setCS(MyAccountOrderInner orderInners) {
         StringBuilder str = new StringBuilder();
         ArrayList<HashMap<String, String>> colorAndSizes = orderInners.getOptions();
         if (colorAndSizes != null && colorAndSizes.size() > 0) {

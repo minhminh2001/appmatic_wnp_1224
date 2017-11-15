@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:imaginato="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@drawable/ripple_with_no_mash">
 
     <RelativeLayout
         android:id="@+id/order_info2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple_with_no_mash">
+        >
 
         <RelativeLayout
             android:id="@+id/iv_orderlist_new1"
@@ -21,14 +20,14 @@
                 android:layout_width="85dp"
                 android:layout_height="85dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp" />
 
             <com.whitelabel.app.widget.CustomTextView
                 android:id="@+id/order_detail_unavailable"
+                style="@style/font_family_roboto_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                style="@style/font_family_roboto_medium"
                 android:background="@color/transparentgray9A"
                 android:paddingBottom="5dp"
                 android:paddingLeft="5dp"
@@ -37,39 +36,37 @@
                 android:text="UNAVAILABLE"
                 android:textColor="@color/whiteffffff"
                 android:textSize="10sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/order_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_orderlist_new1"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_alignTop="@+id/iv_orderlist_new1"
             android:layout_toRightOf="@+id/iv_orderlist_new1"
             android:orientation="vertical">
 
             <com.whitelabel.app.widget.CustomTextView
                 android:id="@+id/order_product_id"
+                style="@style/font_family_robot_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:visibility="gone"
-                style="@style/font_family_robot_regular"
-                />
+                android:visibility="gone" />
 
             <com.whitelabel.app.widget.CustomTextView
                 android:id="@+id/order_product_brand"
+                style="@style/font_family_robot_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:visibility="gone"
-                style="@style/font_family_robot_regular"
-                />
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,7 +75,8 @@
 
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_orderlist_new_name"
-                    android:layout_width="wrap_content"
+                    style="@style/font_family_robot_regular"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
@@ -87,9 +85,7 @@
                     android:minLines="1"
                     android:text="@string/short_anorak"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
-                    style="@style/font_family_robot_regular"
-                    />
+                    android:textSize="12sp" />
 
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_orderlist_new_qty"
@@ -99,18 +95,18 @@
                     android:text="10"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="12sp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
 
             <com.whitelabel.app.widget.CustomTextView
                 android:id="@+id/tv_orderlist_new_det"
+                style="@style/font_family_robot_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Qunatity"
                 android:textColor="@color/black000000"
                 android:textSize="12sp"
-                android:visibility="visible"
-                style="@style/font_family_robot_regular"/>
+                android:visibility="visible" />
             <!--order list 和 orderdetail 共用；所有的字体 的size 在orderDetailAdapter会被重写-->
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -119,114 +115,134 @@
 
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/rm_top"
+                    style="@style/font_family_roboto_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="false"
                     android:text="@string/RM"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
-                    style="@style/font_family_roboto_medium"/>
+                    android:textSize="12sp" />
 
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_orderlist_new_pri"
+                    style="@style/font_family_roboto_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/rm_top"
                     android:text="@string/Qunatity"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
-                    style="@style/font_family_roboto_medium"
-                    />
+                    android:textSize="12sp" />
             </RelativeLayout>
 
             <com.whitelabel.app.widget.CustomTextView
                 android:id="@+id/tv_orderlist_new_ext"
+                style="@style/font_family_robot_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Qunatity"
                 android:textColor="@color/black"
-                android:textSize="12sp"
-                style="@style/font_family_robot_regular"
-                />
+                android:textSize="12sp" />
 
             <com.whitelabel.app.widget.CustomTextView
                 android:id="@+id/tv_orderlist_new_mername"
+                style="@style/font_family_robot_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
+                android:clickable="true"
                 android:paddingBottom="2dp"
                 android:paddingTop="2dp"
+                android:singleLine="true"
                 android:text=""
-                android:clickable="true"
                 android:textColor="@color/purple92018d"
                 android:textSize="12sp"
-                style="@style/font_family_robot_regular"
-                />
-                <LinearLayout
-                    android:id="@+id/ll_order_status"
+                android:focusable="true" />
+
+            <LinearLayout
+                android:id="@+id/ll_order_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/order_status"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="1dp"
+                    android:background="@drawable/order_item_status_process"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="gone" />
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_orderlist_new_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <com.whitelabel.app.widget.CustomTextView
-                        android:id="@+id/order_status"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:visibility="gone"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="1dp"
-                        android:background="@drawable/order_item_status_process"
-                        android:textAppearance="?android:attr/textAppearanceSmall"/>
-                    <com.whitelabel.app.widget.CustomTextView
-                        android:id="@+id/tv_orderlist_new_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="Vold"
-                        android:maxLines="1"
-                        android:textColor="@color/black000000"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                    android:layout_marginRight="10dp"
+                    android:maxLines="1"
+                    android:text="Vold"
+                    android:textColor="@color/black000000"
+                    android:textSize="12sp" />
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
+
     <View
         android:id="@+id/v_device_line"
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
+        android:layout_height="1dp"
         android:layout_below="@+id/order_info2"
-        android:background="@color/greyF8F8F8"
-        android:layout_height="1dp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/greyF3F3F3" />
+
+    <Button
+        android:id="@+id/btn_order_list_item_addtocart"
+        style="@style/font_family_roboto_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/v_device_line"
+        android:layout_marginBottom="6dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_normal_circular"
+        android:text="@string/product_detail_addtocart"
+        android:textColor="@color/buttonTextColorPrimary"
+        android:textSize="13sp" />
+
     <LinearLayout
         android:id="@+id/ll_order_repayment"
         android:layout_width="wrap_content"
-        android:paddingBottom="12dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/v_device_line"
-        android:visibility="gone"
-        android:layout_height="wrap_content">
-    <com.whitelabel.app.widget.CustomTextView
-        android:layout_marginTop="12dp"
-        android:id="@+id/tv_order_repayment"
-        android:layout_width="80dp"
-        android:layout_height="30dp"
-        android:background="@drawable/view_tracking_info"
-        android:gravity="center"
-        android:imeActionId="@+id/order_tracking"
-        android:clickable="true"
-        android:layout_marginRight="11dp"
-        android:text="@string/myorder_btn_repayment"
-        android:textColor="@color/whiteFFFFFF"
-        android:textSize="14sp"
-        android:layout_marginBottom="2dp"
-        android:layout_alignParentRight="true"/>
+        android:paddingBottom="12dp"
+        android:visibility="gone">
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_order_repayment"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="11dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/view_tracking_info"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/myorder_btn_repayment"
+            android:textColor="@color/whiteFFFFFF"
+            android:textSize="14sp"
+            android:focusable="true" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/order_detail_trans"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="125dp"
-        android:layout_alignTop="@+id/order_info2"
         android:layout_alignBottom="@+id/order_info2"
+        android:layout_alignTop="@+id/order_info2"
         android:background="@color/tranwhite"
         android:textAppearance="?android:attr/textAppearanceLarge"
-   />
+        android:visibility="gone" />
 </RelativeLayout>
