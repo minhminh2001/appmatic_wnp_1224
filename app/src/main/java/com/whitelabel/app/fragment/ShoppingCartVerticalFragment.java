@@ -742,7 +742,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                         }
                     }
                     if (noStockCont>=1){
-                        tvCheckout.setBackgroundColor(getActivity().getResources().getColor(R.color.grayf0f0f0));
+                        tvCheckout.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.grayf0f0f0));
                         tvCheckout.setEnabled(false);
                         showTopError(true);
                     }else {
@@ -835,15 +835,15 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
      */
     public ShoppingCartListEntityCell[] deleteCellItem(ShoppingCartListEntityCell[] items, int index) {
         if (items!=null&&items.length>0) {
-            ShoppingCartListEntityCell b[] = new ShoppingCartListEntityCell[items.length - 1];
-            for (int i = 0; i < b.length; i++) {
+            ShoppingCartListEntityCell cells[] = new ShoppingCartListEntityCell[items.length - 1];
+            for (int i = 0; i < cells.length; i++) {
                 if (i < index) {
-                    b[i] = items[i];
+                    cells[i] = items[i];
                 } else {
-                    b[i] = items[i + 1];
+                    cells[i] = items[i + 1];
                 }
             }
-            return b;
+            return cells;
         }else {
             return null;
         }

@@ -58,13 +58,15 @@ public class OrderListRecyclerViewTextAdapter extends RecyclerView.Adapter<Recyc
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+
         if (holder instanceof OrderListholder){
+            OrderListholder orderHolder= (OrderListholder) holder;
             MyAccountOrderOuter myAccountOrderOuter = data.get(position);
-            ((OrderListholder) holder).tv_order_no.setText(this.mContext.getString(R.string.Order_Number)+":"+myAccountOrderOuter.getOrderSn());
-            ((OrderListholder) holder).tv_order_date.setText(this.mContext.getString(R.string.Order_Date)+myAccountOrderOuter.getDate());
-            ((OrderListholder) holder).tv_order_total.setText(this.mContext.getString(R.string.product_detail_total)+myAccountOrderOuter.getTotalFormatted());
-            ((OrderListholder) holder).tv_order_status.setText(this.mContext.getString(R.string.Order_Status)+myAccountOrderOuter.getStatus());
-            ((OrderListholder) holder).rl_parent_info.setOnClickListener(new View.OnClickListener() {
+            orderHolder.tvOrderNo.setText(this.mContext.getString(R.string.Order_Number)+":"+myAccountOrderOuter.getOrderSn());
+            orderHolder.tvOrderDate.setText(this.mContext.getString(R.string.Order_Date)+myAccountOrderOuter.getDate());
+            orderHolder.tvOrderTotal.setText(this.mContext.getString(R.string.product_detail_total)+myAccountOrderOuter.getTotalFormatted());
+            orderHolder.tvOrderStatus.setText(this.mContext.getString(R.string.Order_Status)+myAccountOrderOuter.getStatus());
+            orderHolder.rlParentInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (onOrderTextViewItemClickListener!=null){
@@ -107,15 +109,15 @@ public class OrderListRecyclerViewTextAdapter extends RecyclerView.Adapter<Recyc
 
     public static class OrderListholder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_order_no)
-        TextView tv_order_no;
+        TextView tvOrderNo;
         @BindView(R.id.tv_order_date)
-        TextView tv_order_date;
+        TextView tvOrderDate;
         @BindView(R.id.tv_order_total)
-        TextView tv_order_total;
+        TextView tvOrderTotal;
         @BindView(R.id.tv_order_status)
-        TextView tv_order_status;
+        TextView tvOrderStatus;
         @BindView(R.id.rl_parent_info)
-        RelativeLayout rl_parent_info;
+        RelativeLayout rlParentInfo;
         public OrderListholder(View view) {
             super(view);
             ButterKnife.bind(this,view);
