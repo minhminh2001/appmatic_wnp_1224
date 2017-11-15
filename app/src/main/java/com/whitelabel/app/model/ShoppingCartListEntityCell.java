@@ -32,6 +32,9 @@ public class ShoppingCartListEntityCell extends ShoppingCartListBase implements 
     private String visibility;
     private String vendorDisplayName;
     private String vendor_id;
+    private String type;
+    private String has_error;
+    private String error_message;
 
     public String getBrandId() {
         return brandId;
@@ -243,5 +246,29 @@ public class ShoppingCartListEntityCell extends ShoppingCartListBase implements 
 
     public void setIsCampaignProduct(int isCampaignProduct) {
         this.isCampaignProduct = isCampaignProduct;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getHasError() {
+        return has_error;
+    }
+
+    public void setHasError(String has_error) {
+        this.has_error = has_error;
+    }
+
+    public String getErrorMessage() {
+        return error_message;
+    }
+
+    public void setErrorMessage(String error_message) {
+        this.error_message = error_message;
     }
 }

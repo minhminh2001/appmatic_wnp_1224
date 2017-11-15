@@ -18,6 +18,7 @@ public class OrderBody {
     private int isRPayment;
     private boolean isLast;
     private String availability;
+    private String orderId;
 
     public String getAvailability() {
         return availability;
@@ -147,5 +148,13 @@ public class OrderBody {
 
     public void setOrderTextStatus(String orderTextStatus) {
         this.orderTextStatus = orderTextStatus;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 }

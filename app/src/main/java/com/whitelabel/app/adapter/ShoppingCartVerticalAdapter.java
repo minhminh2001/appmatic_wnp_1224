@@ -1,11 +1,13 @@
 package com.whitelabel.app.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -54,13 +56,13 @@ import java.util.List;
  * Created by Administrator on 2016/1/27.
  */
 public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
-    public static int TYPE_CELL = 1;
-    public static int TYPE_BODY = 2;
-    public ArrayList<ShoppingCartListBase> list;
-    private Context context;
+    private static final int TYPE_CELL = 1;
+    public static final int TYPE_BODY = 2;
+    private ArrayList<ShoppingCartListBase> list;
+    private final Context context;
     private Dialog mDialog;
-    private ShoppingCartAdapterCallback callback;
-    private ShoppingCarDao mShoppingCartDao;
+    private final ShoppingCartAdapterCallback callback;
+    private final ShoppingCarDao mShoppingCartDao;
     private final static String TAG = "ShoppingCartVerticalAdapter";
     private final ImageLoader mImageLoader;
 
@@ -84,6 +86,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 1) {
             //TYPE_CELL=1 为 product item
+            @SuppressLint("InflateParams")
             View view = LayoutInflater.from(context).inflate(R.layout.activity_shopping_cart_vertical_cell, null);
             return new ViewHolder(view);
         } else {
@@ -107,7 +110,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         this.list = list;
     }
 
-    public ShoppingCartListEntityCell getItem(int position) {
+    private ShoppingCartListEntityCell getItem(int position) {
         return (ShoppingCartListEntityCell) list.get(position);
     }
 
@@ -116,13 +119,15 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         return list.size();
     }
 
+    @SuppressWarnings("deprecation")
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof InfoViewHolder) {
             //如果不是 product item,则直接return,因其view已在fragment里加载完毕了。
             return;
         }
-        final ShoppingCartListEntityCell sc = (ShoppingCartListEntityCell) getItem(position);
+        final ShoppingCartListEntityCell sc = getItem(position);
 
         final ViewHolder viewHolder = (ViewHolder) holder;
 
@@ -137,8 +142,16 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             viewHolder.tvOutOfStock.setVisibility(View.INVISIBLE);
             viewHolder.tvAllBarrier.setVisibility(View.INVISIBLE);
             viewHolder.tvAllBarrier2.setVisibility(View.INVISIBLE);
+            if ("1".equals(sc.getHasError())){
+                //have stock & have error message show error message
+                viewHolder.llShoppingCartError.setVisibility(View.VISIBLE);
+                viewHolder.ivShoppingCartIcon.setBackgroundResource(R.mipmap.ic_checkout_error_mark_item);
+                ((ViewHolder) holder).tvShoppingCartErrorMsg.setTextColor(ContextCompat.getColor(context,R.color.red_cart_shopping_error));
+                ((ViewHolder) holder).tvShoppingCartErrorMsg.setText(sc.getErrorMessage());
+            }
         } else {
             viewHolder.tvOutOfStock.setVisibility(View.VISIBLE);
+            viewHolder.llShoppingCartError.setVisibility(View.GONE);
         }
         viewHolder.tvProductBland.setText(sc.getBrand());
         viewHolder.tvProductBland.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +182,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                 }
                 viewHolder.swipeShoppingCart.close();
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                assert imm != null;
                 imm.hideSoftInputFromWindow(viewHolder.itemView.getWindowToken(), 0);
                 ShoppingCartListEntityCell bean = (ShoppingCartListEntityCell) list.get(position);
                 if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
@@ -269,16 +283,12 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         viewHolder.tvCount.setText(sc.getQty());
         //colors and size
         ArrayList<HashMap<String, String>> productAttributes = sc.getOptions();
-/**
- * api colorAndSizes=[{value=Free Size, label=Size}, {value=Blue, label=Color}]
- live  colorAndSizes=[{Size=Free Size}, {Color=Blue}]
- */
 
         viewHolder.tvColorAndSize.setText("");
         if (productAttributes != null && productAttributes.size() > 0) {
             viewHolder.tvColorAndSize.setVisibility(View.VISIBLE);
             StringBuilder attributeStr = new StringBuilder();
-            if (productAttributes != null && productAttributes.size() > 0) {
+            if (productAttributes.size() > 0) {
                 for (int z = 0; z < productAttributes.size(); z++) {
                     for (String key : productAttributes.get(z).keySet()) {
                         attributeStr.append(productAttributes.get(z).get(key)).append(" | ");
@@ -352,6 +362,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             //底部是否需要贴底
             ViewTreeObserver vto = viewHolder.itemView.getViewTreeObserver();
             vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @SuppressWarnings("deprecation")
                 @Override
                 public void onGlobalLayout() {
                     viewHolder.itemView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
@@ -386,11 +397,11 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
     public void setInitBlankView(boolean init){
         initBlankView=init;
     }
-    public boolean getInitBlankView(){
+    private boolean getInitBlankView(){
         return initBlankView;
     }
 
-    public int getViewHeight(View view){
+    private int getViewHeight(View view){
         if(view instanceof LinearLayout){
             view.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         }else{
@@ -405,17 +416,32 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        View view;
-        TextView tvOutOfStock, tvShoppingcartSplit;
-        TextView unavailable;
-        TextView tvProductName, tvProductBland;
-        TextView tvColorAndSize, tvPrice, tvFinalPrice, tvShoppingcartCellPoint1, tvShoppingcartCellPoint2, tvShoppingcartCellPoint3;
-        ImageView imageView, ivShoppingCartDelete;
-        TextView tvCount;
-        TextView tvCheckMername, tvAllBarrier, tvAllBarrier2;
-        SwipeLayout swipeShoppingCart;
-        RelativeLayout rlShoppingCartCellContent, rlShoppingcartCountSub, rlShoppingcartCountPlus;
-        LinearLayout llShoppingcartCellPoint;
+        final View view;
+        final TextView tvOutOfStock;
+        final TextView tvShoppingcartSplit;
+        final TextView unavailable;
+        final TextView tvProductName;
+        final TextView tvProductBland;
+        final TextView tvColorAndSize;
+        final TextView tvPrice;
+        final TextView tvFinalPrice;
+        final TextView tvShoppingcartCellPoint1;
+        final TextView tvShoppingcartCellPoint2;
+        final TextView tvShoppingcartCellPoint3;
+        final ImageView imageView;
+        final ImageView ivShoppingCartDelete;
+        final TextView tvCount;
+        final TextView tvCheckMername;
+        final TextView tvAllBarrier;
+        final TextView tvAllBarrier2;
+        final LinearLayout llShoppingCartError;
+        final ImageView ivShoppingCartIcon;
+        final TextView tvShoppingCartErrorMsg;
+        final SwipeLayout swipeShoppingCart;
+        final RelativeLayout rlShoppingCartCellContent;
+        final RelativeLayout rlShoppingcartCountSub;
+        final RelativeLayout rlShoppingcartCountPlus;
+        final LinearLayout llShoppingcartCellPoint;
 
         public ViewHolder(View view) {
             super(view);
@@ -443,10 +469,13 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             tvShoppingcartSplit = (TextView) view.findViewById(R.id.tv_shoppingcart_split);
             rlShoppingcartCountSub = (RelativeLayout) view.findViewById(R.id.rl_shoppingcart_count_sub);
             rlShoppingcartCountPlus = (RelativeLayout) view.findViewById(R.id.rl_shoppingcart_count_plus);
+            llShoppingCartError = (LinearLayout) view.findViewById(R.id.ll_shopping_cart_error);
+            ivShoppingCartIcon = (ImageView) view.findViewById(R.id.iv_shopping_cart_icon);
+            tvShoppingCartErrorMsg = (TextView) view.findViewById(R.id.tv_shopping_cart_error_msg);
         }
     }
 
-    public void gaTrackerDeleteFromCart(String name, String productId) {
+    private void gaTrackerDeleteFromCart(String name, String productId) {
         try {
             GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
                     "Remove Item From Cart",
@@ -458,7 +487,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         }
     }
 
-    public void gaTrackerIncresaseQuantity(String name, String productId) {
+    private void gaTrackerIncresaseQuantity(String name, String productId) {
         try {
             GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
                     "Remove Item From Cart",
@@ -473,14 +502,14 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
     }
 
     public static List<TMPLocalCartRepositoryProductEntity> shoppingCarToTMPLocal(ArrayList<ShoppingCartListBase> list) {
-        List<TMPLocalCartRepositoryProductEntity> beans = new ArrayList<TMPLocalCartRepositoryProductEntity>();
+        List<TMPLocalCartRepositoryProductEntity> beans = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) instanceof ShoppingCartListEntityBody) {
                 continue;
             }
             TMPLocalCartRepositoryProductEntity bean = new TMPLocalCartRepositoryProductEntity();
             ShoppingCartListEntityCell cell = (ShoppingCartListEntityCell) list.get(i);
-            ArrayList<TMPLocalCartRepositoryProductOptionEntity> options = new ArrayList<TMPLocalCartRepositoryProductOptionEntity>();
+            ArrayList<TMPLocalCartRepositoryProductOptionEntity> options = new ArrayList<>();
             bean.setProductId(cell.getProductId());
             bean.setPrice(cell.getPrice());
             bean.setBrandId(cell.getBrandId());
@@ -533,7 +562,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         return beans;
     }
 
-    private View.OnClickListener addListener = new View.OnClickListener() {
+    private final View.OnClickListener addListener = new View.OnClickListener() {
         private ShoppingCartVerticalAdapter mShoppingCartVerticalAdapter;
 
         public View.OnClickListener init(ShoppingCartVerticalAdapter adapter) {
@@ -598,7 +627,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             }
         }
     }.init(this);
-    private View.OnClickListener subtractListener = new View.OnClickListener() {
+    private final View.OnClickListener subtractListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             int position = (Integer) v.getTag();
@@ -634,7 +663,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         }
     };
 
-    public void calculationToatalPriceAndNum(ArrayList<ShoppingCartListBase> beans) {
+    private void calculationToatalPriceAndNum(ArrayList<ShoppingCartListBase> beans) {
         double total = 0;
         int qty = 0;
         for (int i = 0; i < beans.size(); i++) {
@@ -658,7 +687,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
 //            shoppingCartActivity.tvGrandTotal.setText("RM " + JDataUtils.formatDoubleWithSpecifiedDecimals(total));
     }
 
-    public void closeDialog() {
+    private void closeDialog() {
         if (mDialog != null) {
             mDialog.cancel();
         }
@@ -669,8 +698,8 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         private final WeakReference<Context> mContext;
 
         public DataHandler(Context context, ShoppingCartVerticalAdapter shoppingCartAdapterCallback) {
-            mAdapter = new WeakReference<ShoppingCartVerticalAdapter>(shoppingCartAdapterCallback);
-            mContext = new WeakReference<Context>(context);
+            mAdapter = new WeakReference<>(shoppingCartAdapterCallback);
+            mContext = new WeakReference<>(context);
         }
 
 
@@ -756,7 +785,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                     if (msg.arg1 == ShoppingCarDao.RESPONSE_SUCCESS) {
                         final ShoppingCartDeleteCellEntity shoppingCartDeleteCell = (ShoppingCartDeleteCellEntity) msg.obj;
                         int position = Integer.parseInt((String) shoppingCartDeleteCell.getParam());
-                        if (shoppingCartDeleteCell != null && (shoppingCartDeleteCell.getStatus() == 1)) {//success
+                        if (shoppingCartDeleteCell.getStatus() == 1) {//success
                             ShoppingCartListEntityCell cell = null;
                             try {
 
@@ -766,11 +795,12 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                                 ex.getStackTrace();
                             }
                             try {
+                                assert cell != null;
                                 if (cell.getIsCampaignProduct() == 1) {
                                     shoppingCartDeleteCell.setIsCampaignProduct(true);
                                 }
                                 mAdapter.get().list.remove(position);
-                                mAdapter.get().callback.updateShoppingData(shoppingCartDeleteCell);
+                                mAdapter.get().callback.deleteShoppingData(shoppingCartDeleteCell,position);
                                 mAdapter.get().notifyDataSetChanged();
 //                                if (mAdapter.get().list.size() == 0) {
 //                                    mAdapter.get().bodyView.setVisibility(View.GONE);

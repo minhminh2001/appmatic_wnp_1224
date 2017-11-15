@@ -16,8 +16,12 @@
                 android:id="@+id/ll_body"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <include layout="@layout/layout_cart_shopping_error"
+                    android:id="@+id/ll_shopping_cart_error"/>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/hlv_shoppingcart"
+                    android:layout_below="@id/ll_shopping_cart_error"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="visible" />
@@ -37,7 +41,7 @@
             <com.whitelabel.app.widget.CustomTextView
                 android:id="@+id/tv_sc_checkout"
                 style="@style/font_family_roboto_medium"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/button_touch_height"
                 android:layout_weight="1"
                 android:background="@drawable/big_button_style_config"

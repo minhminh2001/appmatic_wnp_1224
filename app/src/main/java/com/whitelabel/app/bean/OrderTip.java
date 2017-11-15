@@ -8,6 +8,7 @@ public class OrderTip {
     private String OrderNumber;
     private String OrderDate;
     private String OrderSttus;
+    private String OrderId;
 
     public int getType() {
         return type;
@@ -39,5 +40,13 @@ public class OrderTip {
 
     public void setOrderSttus(String orderSttus) {
         OrderSttus = orderSttus;
+    }
+
+    public String getOrderId() {
+        return OrderId;
+    }
+
+    public void setOrderId(String orderId) {
+        OrderId = orderId;
     }
 }

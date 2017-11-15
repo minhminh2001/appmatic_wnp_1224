@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl_parent_info"
+    android:background="@drawable/ripple_with_no_mash">
+
+        <LinearLayout
+            android:id="@+id/ll_order_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_order_no"
+                style="@style/font_family_robot_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/Order_Number"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_order_date"
+                style="@style/font_family_robot_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/Order_Date"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_order_total"
+                style="@style/font_family_robot_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/product_detail_total"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_order_status"
+                style="@style/font_family_robot_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/Order_Status"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="14dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/icon_right" />
+
+    <View
+        android:layout_below="@id/ll_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/greyF3F3F3" />
+</RelativeLayout>

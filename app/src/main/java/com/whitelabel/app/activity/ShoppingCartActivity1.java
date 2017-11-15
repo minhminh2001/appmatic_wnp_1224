@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.fragment.HomeMyAccountOrdersFragment;
 import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
 import com.whitelabel.app.utils.JLogUtils;
@@ -18,6 +19,7 @@ import com.whitelabel.app.utils.JViewUtils;
 public class ShoppingCartActivity1 extends com.whitelabel.app.BaseActivity {
     private final static String TAG = "ShoppingCartActivity1";
     private ShoppingCartBaseFragment fragment;
+    private String errorMessage="";
     private int type;
 
     @Override
@@ -51,16 +53,20 @@ public class ShoppingCartActivity1 extends com.whitelabel.app.BaseActivity {
     }
 
     private void initIntent() {
-        type = getIntent().getIntExtra("type", 0);
+        if (getIntent()!=null){
+            type = getIntent().getIntExtra("type", 0);
+            errorMessage=getIntent().getStringExtra(HomeMyAccountOrdersFragment.ORDER_ERROR_MESSAGE);
+        }
+
     }
 
     private void initFragment() {
         fragment = ShoppingCartVerticalFragment.newInstance(ShoppingCartBaseFragment.FROM_OTHER, 0L);
+        Bundle bundle=new Bundle();
+        bundle.putString(HomeMyAccountOrdersFragment.ORDER_ERROR_MESSAGE,errorMessage);
+        fragment.setArguments(bundle);
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.mParent, fragment).commit();
     }
-
-
-
 
 }
