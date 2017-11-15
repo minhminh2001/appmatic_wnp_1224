@@ -40,7 +40,6 @@ import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
-import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomTabCustomPageIndicator;
 import com.whitelabel.app.widget.FilterSortBottomView;
 
@@ -234,7 +233,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             allCategory.setName(getString(R.string.productlist_categorylanding_allcategory));
             allCategory.setLevel(entity.getLevel());
             allCategory.setChildren(null);
-            allCategoryName = entity.getMenu_title();
+            allCategoryName = entity.getMenuTitle();
             if (!JDataUtils.isEmpty(allCategoryName)) {
                 allCategoryName = allCategoryName.toUpperCase();
             }

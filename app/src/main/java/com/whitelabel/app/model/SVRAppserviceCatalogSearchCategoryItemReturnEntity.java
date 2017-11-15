@@ -1,5 +1,6 @@
 package com.whitelabel.app.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.whitelabel.app.widget.ExpandableRecyclerAdapter;
 
 import java.io.Serializable;
@@ -11,9 +12,12 @@ import java.util.ArrayList;
 public class SVRAppserviceCatalogSearchCategoryItemReturnEntity extends ExpandableRecyclerAdapter.ListItem implements Serializable {
     private String id;
     private String brandId;
-    private String menu_id;
-    private String menu_type;
-    private String menu_title;
+    @SerializedName("menu_id")
+    private String menuId;
+    @SerializedName("menu_type")
+    private String menuType;
+    @SerializedName("menu_title")
+    private String menuTitle;
     private int level;
     //all name replace menu_title
     private String name;
@@ -65,28 +69,28 @@ public class SVRAppserviceCatalogSearchCategoryItemReturnEntity extends Expandab
         this.brandId = brandId;
     }
 
-    public String getMenu_id() {
-        return menu_id;
+    public String getMenuId() {
+        return menuId;
     }
 
-    public void setMenu_id(String menu_id) {
-        this.menu_id = menu_id;
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
     }
 
-    public String getMenu_type() {
-        return menu_type;
+    public String getMenuType() {
+        return menuType;
     }
 
-    public void setMenu_type(String menu_type) {
-        this.menu_type = menu_type;
+    public void setMenuType(String menuType) {
+        this.menuType = menuType;
     }
 
-    public String getMenu_title() {
-        return menu_title;
+    public String getMenuTitle() {
+        return menuTitle;
     }
 
-    public void setMenu_title(String menu_title) {
-        this.menu_title = menu_title;
+    public void setMenuTitle(String menuTitle) {
+        this.menuTitle = menuTitle;
     }
 
     public int getLevel() {
@@ -98,11 +102,11 @@ public class SVRAppserviceCatalogSearchCategoryItemReturnEntity extends Expandab
     }
 
     public String getName() {
-        return menu_title;
+        return menuTitle;
     }
 
     public void setName(String name) {
-        this.menu_title = name;
+        this.menuTitle = name;
     }
 
     public String getUrl() {
