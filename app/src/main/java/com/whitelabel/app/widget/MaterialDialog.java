@@ -56,10 +56,21 @@ public class MaterialDialog {
     private int pId = -1, nId = -1;
     private String pText, nText;
     View.OnClickListener pListener, nListener;
+    private int mHeight;
+    private int mWidth;
 
 
     public MaterialDialog(Context context) {
         this.mContext = context;
+    }
+    public MaterialDialog(Context context,int height) {
+        this.mContext = context;
+        this.mHeight=height;
+    }
+    public MaterialDialog(Context context,int width,int height) {
+        this.mContext = context;
+        this.mWidth=width;
+        this.mHeight=height;
     }
 
 
@@ -253,7 +264,15 @@ public class MaterialDialog {
 
             mAlertDialogWindow = mAlertDialog.getWindow();
             WindowManager.LayoutParams  p = mAlertDialogWindow.getAttributes();
-            p.width= JDataUtils.dp2Px(280);
+
+            if (getmHeight()!=0){
+                p.height=JDataUtils.dp2Px(getmHeight());
+            }
+            if (getmWidth()==0){
+                p.width= JDataUtils.dp2Px(280);
+            }else {
+                p.width= JDataUtils.dp2Px(getmWidth());
+            }
             mAlertDialogWindow.setAttributes(p);
             View contentView = LayoutInflater.from(mContext)
                     .inflate(
@@ -565,6 +584,8 @@ public class MaterialDialog {
         }
 
 
+
+
         /**
          * 动态测量list view item的高度
          */
@@ -616,7 +637,20 @@ public class MaterialDialog {
         return nText == null || nText.isEmpty();
     }
 
+    public int getmHeight() {
+        return mHeight;
+    }
 
+    public void setmHeight(int mHeight) {
+        this.mHeight = mHeight;
+    }
 
+    public int getmWidth() {
+        return mWidth;
+    }
+
+    public void setmWidth(int mWidth) {
+        this.mWidth = mWidth;
+    }
 }
 

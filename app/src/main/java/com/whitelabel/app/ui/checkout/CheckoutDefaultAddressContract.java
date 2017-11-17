@@ -6,6 +6,9 @@ import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CheckoutDefaultShippingAddress;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.BaseView;
+import com.whitelabel.app.ui.checkout.model.CheckoutDefaultAddressResponse;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/6/9.
@@ -22,7 +25,7 @@ public interface CheckoutDefaultAddressContract  {
          public void hideBillToDefferentLayout();
          public void showErrorMsg(String errorMsg);
 
-         public void showData(AddressBook shippingAddress, AddressBook billingAddress);
+         public void showData(AddressBook shippingAddress, AddressBook billingAddress,List<CheckoutDefaultAddressResponse.ShippingMethodBean> shippingMethod);
      }
 
      public interface  Presenter extends BasePresenter<View>{

@@ -11,7 +11,7 @@ import rx.Observable;
  * Created by Administrator on 2017/7/18.
  */
 public interface ICheckoutManager {
-    public Observable<PaypalPlaceOrderReponse> paypalPlaceOrder(String sessionKey);
+    public Observable<PaypalPlaceOrderReponse> paypalPlaceOrder(String sessionKey,String orderComment,String appVersion);
 
     public Observable<RequestOrderNumberResponse> requestOrderNumber(String sessionKey);
 

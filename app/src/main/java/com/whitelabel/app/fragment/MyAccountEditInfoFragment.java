@@ -303,9 +303,9 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
                             String MyBrithday = birthdayStr[2] + "-" + mFragment.get().mothMap.get(birthdayStr[1]) + "-" + birthdayStr[0];
                             mFragment.get().birthday.setText(MyBrithday);
                         }
-                        if (mFragment.get().customerList.getGender().equals("1")) {
+                        if (mFragment.get().customerList.getGender().equals("123")||mFragment.get().customerList.getGender().equals("1")) {
                             mFragment.get().gender.setText("Male");
-                        } else if (mFragment.get().customerList.getGender().equals("2")) {
+                        } else if (mFragment.get().customerList.getGender().equals("124")||mFragment.get().customerList.getGender().equals("2")) {
                             mFragment.get().gender.setText("Female");
                         } else {
                             mFragment.get().gender.setText("");
@@ -389,11 +389,11 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             // SVRParameters parameters = new SVRParameters();
             if (gender.getText().toString().trim().equals("Male")) {
                 // parameters.put("gender", "1");
-                genderStr = "1";
+                genderStr = "123";
             }
             if (gender.getText().toString().trim().equals("Female")) {
                 // parameters.put("gender", "2");
-                genderStr = "2";
+                genderStr = "124";
 
             }
 
@@ -1259,10 +1259,10 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
         ww0.setValue("0");
         WheelPickerEntity ww1 = new WheelPickerEntity();
         ww1.setDisplay("Male");
-        ww1.setValue("1");
+        ww1.setValue("123");
         WheelPickerEntity ww2 = new WheelPickerEntity();
         ww2.setDisplay("Female");
-        ww2.setValue("2");
+        ww2.setValue("124");
         wheel.add(ww0);
         wheel.add(ww1);
         wheel.add(ww2);

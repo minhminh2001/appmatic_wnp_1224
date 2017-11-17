@@ -25,8 +25,8 @@ public class CheckoutManager implements ICheckoutManager {
         return checkoutApi.requestOrderNumber(sessionKey);
     }
     @Override
-    public Observable<PaypalPlaceOrderReponse> paypalPlaceOrder(String sessionKey) {
-        return checkoutApi.payPalPlaceOrder(sessionKey)
+    public Observable<PaypalPlaceOrderReponse> paypalPlaceOrder(String sessionKey,String orderComment,String appVersion) {
+        return checkoutApi.payPalPlaceOrder(sessionKey,orderComment,appVersion)
                 .flatMap(new Func1<PaypalPlaceOrderReponse, Observable<PaypalPlaceOrderReponse>>() {
                     @Override
                     public Observable<PaypalPlaceOrderReponse> call(PaypalPlaceOrderReponse paypalPlaceOrderReponse) {

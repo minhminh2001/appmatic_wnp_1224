@@ -1,5 +1,6 @@
 package com.whitelabel.app.fragment;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,15 +26,19 @@ import com.whitelabel.app.data.service.CheckoutManager;
 
 import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.model.GOUserEntity;
+import com.whitelabel.app.model.SkipToAppStoreMarket;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.checkout.CheckoutStatusRightContract;
 import com.whitelabel.app.ui.checkout.CheckoutStatusRightPresenter;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomWebView;
+import com.whitelabel.app.widget.MaterialDialog;
+
 public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseFragment<CheckoutStatusRightContract.Presenter> implements View.OnClickListener ,CheckoutStatusRightContract.View{
     private CheckoutPaymentStatusActivity checkoutPaymentStatusActivity;
     private CustomWebView wvHtml;
@@ -42,6 +47,8 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
     private int fromType=0;
     private View rlRoot;
     TextView tvOrderNumber;
+    //just show one rate flag
+    boolean isFirstShowPage=false;
     @Override
     public CheckoutStatusRightContract.Presenter getPresenter() {
         return new CheckoutStatusRightPresenter(new BaseManager(DataManager.getInstance().getMockApi(),
@@ -210,11 +217,12 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
             tvContinueShopping.setVisibility(View.VISIBLE);
             JViewUtils.setStrokeButtonGlobalStyle(getActivity(), tvCheckOrder);
             JViewUtils.setSoildButtonGlobalStyle(getActivity(), tvContinueShopping);
+
+            showMarkToAppStoreDialog(getActivity());
         return view;
     }
     @Override
     public void onStart() {
-
         super.onStart();
     }
 
@@ -244,6 +252,55 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
                      checkoutPaymentStatusActivity.startActivityTransitionAnim();
                     checkoutPaymentStatusActivity.finish();
                     break;
+            }
+        }
+    }
+
+    //if Finsish  a order to show this dialog
+    public void showMarkToAppStoreDialog(Context context) {
+        if (!isFirstShowPage){
+            isFirstShowPage=true;
+
+            boolean isDifferSevenDays=false;
+            //first
+            SkipToAppStoreMarket market = JStorageUtils.getFirstOrderAndMarkTime();
+            if (market.isAfterFirstOrder()&&market.getTime()!=0){
+                long result = System.currentTimeMillis() - market.getTime();
+                //two time calcu greater than 7 again show dialog
+                if (result/1000/60/24>7){
+                    isDifferSevenDays=true;
+                }
+            }
+            if (!market.isAfterFirstOrder()||isDifferSevenDays){
+                final MaterialDialog mMaterialDialog = new MaterialDialog(context,280);
+                View view = LayoutInflater.from(context).inflate(R.layout.dialog_mark_app_store, null);
+                TextView tvMarkTitle= (TextView) view.findViewById(R.id.tv_mark_title);
+                String title = context.getResources().getString(R.string.payment_mark_title);
+                String addAppNameTitle = String.format(title, context.getResources().getString(R.string.app_name));
+                tvMarkTitle.setText(addAppNameTitle);
+                TextView tvRateUsNow= (TextView) view.findViewById(R.id.tv_payment_rate_us_now);
+                TextView tvRateCancel= (TextView) view.findViewById(R.id.tv_payment_rate_cancel);
+                JViewUtils.setSoildButtonGlobalStyle(getActivity(), tvRateUsNow);
+                JViewUtils.setStrokeButtonGlobalStyle(getActivity(), tvRateCancel);
+                tvRateUsNow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        JToolUtils.openPlayStore();
+                        JStorageUtils.saveFinishOrderAndMarkTime(0);
+                        mMaterialDialog.dismiss();
+                    }
+                });
+                tvRateCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMaterialDialog.dismiss();
+                        if (!JStorageUtils.getFirstOrderAndMarkTime().isAfterFirstOrder()){
+                            JStorageUtils.saveFinishOrderAndMarkTime(System.currentTimeMillis());
+                        }
+                    }
+                });
+                mMaterialDialog.setContentView(view);
+                mMaterialDialog.show();
             }
         }
     }
