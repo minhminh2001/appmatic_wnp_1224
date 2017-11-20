@@ -662,37 +662,6 @@ public class JStorageUtils {
         return click;
     }
 
-    //finish to View Dialog and calcu click cancel btn timeStamp
-    public  static void saveFinishOrderAndMarkTime(long currentTime){
-        try {
-            SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            Gson gson = new Gson();
-            SkipToAppStoreMarket market=new SkipToAppStoreMarket();
-            market.setAfterFirstOrder(true);
-            market.setTime(currentTime);
-            String marketString = gson.toJson(market);
-            editor.putString(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG, marketString);
-            editor.commit();
-        }catch (Exception ex){
-            ex.getStackTrace();
-        }
-    }
-
-    public static SkipToAppStoreMarket getFirstOrderAndMarkTime(){
-        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG, Context.MODE_PRIVATE);
-        String beanStr=sharedPreferences.getString(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG, "");
-        SkipToAppStoreMarket market=new SkipToAppStoreMarket();
-        if (TextUtils.isEmpty(beanStr)){
-            market.setTime(0);
-            market.setAfterFirstOrder(false);
-        }else {
-            market = new Gson().fromJson(beanStr, SkipToAppStoreMarket.class);
-        }
-        return market;
-    }
-
-
 }
 
 

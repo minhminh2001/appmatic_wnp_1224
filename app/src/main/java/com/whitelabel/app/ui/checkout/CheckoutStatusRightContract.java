@@ -1,5 +1,6 @@
 package com.whitelabel.app.ui.checkout;
 
+import com.whitelabel.app.model.SkipToAppStoreMarket;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.BaseView;
 
@@ -17,6 +18,7 @@ public interface CheckoutStatusRightContract {
 
 
         public void requestOrderNumber();
-
+        public void saveFinishOrderAndMarkTime(long currentTime);
+        public SkipToAppStoreMarket getFirstOrderAndMarkTime();
     }
 }

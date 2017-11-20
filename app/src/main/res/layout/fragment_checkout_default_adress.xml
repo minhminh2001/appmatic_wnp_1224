@@ -20,6 +20,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <!--<RadioButton-->
+                <!--android:id="@+id/rb_choice_address_check"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:background="@null"-->
+                <!--android:button="@null"-->
+                <!--android:text="asdasdasd"-->
+                <!--android:drawableLeft="@drawable/cb_address_checkout"-->
+                <!--android:drawablePadding="8dp"-->
+                <!--android:textSize="14sp"-->
+                <!--android:layout_height="30dp" />-->
 
         </RadioGroup>
 

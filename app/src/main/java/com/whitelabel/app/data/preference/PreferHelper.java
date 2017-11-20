@@ -14,6 +14,7 @@ import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
+import com.whitelabel.app.model.SkipToAppStoreMarket;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JJsonUtils;
@@ -34,6 +35,7 @@ public class PreferHelper  implements ICacheApi{
     private static  final String FILE_NAME="whtelabel";
     private static final String TABLE_CONFIG="config";
     private static final String TABLE_CURRENCY="currency";
+    public static final String IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG ="IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG";
     public String  getVersionNumber(){
         RemoteConfigResonseModel.RetomeConfig config=getLocalConfigModel();
         String currentVersion="";
@@ -200,5 +202,34 @@ public class PreferHelper  implements ICacheApi{
                return entity;
            }
        });
+    }
+
+    @Override
+    public void saveFinishOrderAndMarkTime(long currentTime) {
+//        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        SkipToAppStoreMarket market=new SkipToAppStoreMarket();
+        market.setAfterFirstOrder(true);
+        market.setTime(currentTime);
+        String marketString = gson.toJson(market);
+        AppPrefs.putString(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG,marketString);
+//        editor.putString(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG, marketString);
+//        editor.commit();
+    }
+
+    @Override
+    public SkipToAppStoreMarket getFirstOrderAndMarkTime() {
+//        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG, Context.MODE_PRIVATE);
+//        String beanStr=sharedPreferences.getString(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG, "");
+        String beanStr=AppPrefs.getString(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG,"");
+        SkipToAppStoreMarket market=new SkipToAppStoreMarket();
+        if (TextUtils.isEmpty(beanStr)){
+            market.setTime(0);
+            market.setAfterFirstOrder(false);
+        }else {
+            market = new Gson().fromJson(beanStr, SkipToAppStoreMarket.class);
+        }
+        return market;
     }
 }

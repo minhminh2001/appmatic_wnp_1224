@@ -5,8 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.BaseFragment;
@@ -23,6 +21,7 @@ import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.ui.checkout.model.CheckoutDefaultAddressResponse;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomCheckBox;
@@ -86,8 +85,12 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     RelativeLayout rlRoot;
     @BindView(R.id.rg_address_way_select)
     RadioGroup radioGroup;
+//    @BindView(R.id.rb_choice_address_check)
+//    RadioButton rbCheckAddress;
     public final static  int REQUEST_BILLING_ADDRESS=1000;
     public final static  int REQUEST_SHIPPING_ADDRESS=2000;
+    private static final int SHIP_TO_ME_CODE=1;
+    private static final int PICK_UP_IN_STORE_CODE=2;
     // TODO: Rename parameter arguments, choose names that match
     private Dialog mProgressDialog;
     private AddressBook mPrimaryBilling;
@@ -145,8 +148,18 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
         }
         rlRoot.setVisibility(View.VISIBLE);
         if (shippingMethod!=null && !shippingMethod.isEmpty()){
+            radioGroup.removeAllViews();
             for (final CheckoutDefaultAddressResponse.ShippingMethodBean shippingMethodBean:shippingMethod){
                 addRadioButtonToGroup(shippingMethodBean);
+            }
+            for(int i = 0 ;i < radioGroup.getChildCount();i++){
+                RadioButton rb = (RadioButton)radioGroup.getChildAt(i);
+                if(rb.isChecked()){
+                    int code= (int) rb.getTag();
+                    baseRadioCodeToCheckClick(code);
+//                curentClickShipping= (int) rb.getTag();
+                    break;
+                }
             }
         }
         if(shippingAddress!=null) {
@@ -207,62 +220,54 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     }
 
     private void addRadioButtonToGroup(final CheckoutDefaultAddressResponse.ShippingMethodBean shippingMethodBean){
-        final RadioButton tempButton = new RadioButton(getActivity());
-        tempButton.setBackground(null);   // set RadioButton background image set  null
-        tempButton.setButtonDrawable(getActivity().getResources().getDrawable(android.R.color.transparent));
-        Drawable selectDrawable = getResources().getDrawable(R.drawable.cb_address_checkout);
-        //The first 0 is the distance from the left and right, the second 0 is the distance from the bottom, the third 69, the fourth width
-        selectDrawable.setBounds(0, 0, JToolUtils.dip2px(getActivity(), 15), JToolUtils.dip2px(getActivity(), 15));
-        //Set the Drawable to appear on the left, top, right, and bottom of text
-        tempButton.setCompoundDrawablesWithIntrinsicBounds(selectDrawable, null, null, null);
-        //Set the spacing between RadioButton and text
-        tempButton.setCompoundDrawablePadding(JToolUtils.dip2px(getActivity(), 8));
-        tempButton.setText(shippingMethodBean.getTitle());
-        //Set the spacing between the RadioButton and the parent control
-        tempButton.setPadding(JToolUtils.dip2px(getActivity(), 3), JToolUtils.dip2px(getActivity(), 12), 0, 0);
-        tempButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        tempButton.setGravity(Gravity.CENTER);
-        tempButton.setTag(shippingMethodBean.getCode());
-        tempButton.setId(1011+shippingMethodBean.getOrder());
+        RadioButton rbCheckAddress= (RadioButton) LayoutInflater.from(getActivity()).inflate(R.layout.layout_radiobutton_select_address,null);
         //if checked is 1,this item be checked
+        rbCheckAddress.setText(shippingMethodBean.getTitle());
+        rbCheckAddress.setTag(shippingMethodBean.getCode());
         if (1==shippingMethodBean.getChecked()){
-            tempButton.setChecked(true);
-//                currencyRadioG.check(tempButton.getId());
+            rbCheckAddress.setChecked(true);
+            Drawable pressIcon = JImageUtils.getThemeIcon(getActivity(),R.drawable.icon_cb_selected);
+            rbCheckAddress.setCompoundDrawablesWithIntrinsicBounds(pressIcon, null, null, null);
+        }else {
+            rbCheckAddress.setChecked(false);
+            Drawable normalIcon = JImageUtils.getDarkThemeIcon(getActivity(), R.drawable.icon_cb_selected);
+            rbCheckAddress.setCompoundDrawablesWithIntrinsicBounds(normalIcon, null, null, null);
         }
-        tempButton.setOnClickListener(new View.OnClickListener() {
+        rbCheckAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RadioButton radioButton= (RadioButton) v;
-                String title = radioButton.getText().toString();
+                int currentCode= (int) radioButton.getTag();
                 //Pick up in store just show bill address
-                baseRadioTitleToCheckClick(title);
-                curentClickShipping= (int) radioButton.getTag();
+                baseRadioCodeToCheckClick(currentCode);
+                for(int i = 0 ;i < radioGroup.getChildCount();i++){
+                    RadioButton rb = (RadioButton)radioGroup.getChildAt(i);
+                    Drawable normalIcon = JImageUtils.getDarkThemeIcon(getActivity(), R.drawable.icon_cb_selected);
+                    rb.setCompoundDrawablesWithIntrinsicBounds(normalIcon, null, null, null);
+                }
+                Drawable pressIcon = JImageUtils.getThemeIcon(getActivity(),R.drawable.icon_cb_selected);
+                radioButton.setCompoundDrawablesWithIntrinsicBounds(pressIcon, null, null, null);
             }
         });
-        radioGroup.addView(tempButton, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        //check which rb check and do something
-        for(int i = 0 ;i < radioGroup.getChildCount();i++){
-            RadioButton rb = (RadioButton)radioGroup.getChildAt(i);
-            if(rb.isChecked()){
-                String title=rb.getText().toString();
-                baseRadioTitleToCheckClick(title);
-                curentClickShipping= (int) rb.getTag();
-                break;
-            }
-        }
+        radioGroup.addView(rbCheckAddress, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
     }
 
-    private void baseRadioTitleToCheckClick(String rbTitle){
-        //Pick up in store (just show llBilling)
-        if (rbTitle.contains("store")){
-            llShippingAddress.setVisibility(View.GONE);
-            llCheckbox.setVisibility(View.GONE);
-            llBillingAddress.setVisibility(View.VISIBLE);
+
+    private void baseRadioCodeToCheckClick(int addressCode){
+        switch(addressCode){
             //Ship to me (show all address)
-        }else if (rbTitle.contains("Ship")){
-            llShippingAddress.setVisibility(View.VISIBLE);
-            llCheckbox.setVisibility(View.VISIBLE);
-            llBillingAddress.setVisibility(View.VISIBLE);
+            case SHIP_TO_ME_CODE:
+                llShippingAddress.setVisibility(View.VISIBLE);
+                llCheckbox.setVisibility(View.VISIBLE);
+                llBillingAddress.setVisibility(View.VISIBLE);
+                break;
+            //Pick up in store (just show llBilling)
+            case PICK_UP_IN_STORE_CODE:
+                llShippingAddress.setVisibility(View.GONE);
+                llCheckbox.setVisibility(View.GONE);
+                llBillingAddress.setVisibility(View.VISIBLE);
+                break;
         }
     }
     @Override

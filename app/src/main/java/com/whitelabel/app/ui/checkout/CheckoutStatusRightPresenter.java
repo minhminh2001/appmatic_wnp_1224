@@ -2,6 +2,7 @@ package com.whitelabel.app.ui.checkout;
 
    import com.whitelabel.app.data.service.IBaseManager;
    import com.whitelabel.app.data.service.ICheckoutManager;
+   import com.whitelabel.app.model.SkipToAppStoreMarket;
    import com.whitelabel.app.ui.RxPresenter;
    import com.whitelabel.app.ui.checkout.model.RequestOrderNumberResponse;
    import com.whitelabel.app.utils.RxUtil;
@@ -37,4 +38,15 @@ public class CheckoutStatusRightPresenter extends RxPresenter<CheckoutStatusRigh
                     }
                 });
     }
+
+    @Override
+    public void saveFinishOrderAndMarkTime(long currentTime) {
+        iCheckoutManager.saveFinishOrderAndMarkTime(currentTime);
+    }
+
+    @Override
+    public SkipToAppStoreMarket getFirstOrderAndMarkTime() {
+        return iCheckoutManager.getFirstOrderAndMarkTime();
+    }
+
 }

@@ -1,8 +1,10 @@
 package com.whitelabel.app.data.service;
 
+import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.data.retrofit.CheckoutApi;
 import com.whitelabel.app.model.ApiException;
 import com.whitelabel.app.model.ResponseModel;
+import com.whitelabel.app.model.SkipToAppStoreMarket;
 import com.whitelabel.app.ui.checkout.model.CheckoutDefaultAddressResponse;
 import com.whitelabel.app.ui.checkout.model.PaypalPlaceOrderReponse;
 import com.whitelabel.app.ui.checkout.model.RequestOrderNumberResponse;
@@ -17,8 +19,10 @@ import rx.functions.Func1;
 
 public class CheckoutManager implements ICheckoutManager {
     private CheckoutApi checkoutApi;
-    public CheckoutManager (CheckoutApi checkoutApi){
-            this.checkoutApi=checkoutApi;
+    private ICacheApi cacheHelper;
+    public CheckoutManager (CheckoutApi checkoutApi, ICacheApi preferHelper){
+        this.checkoutApi=checkoutApi;
+        this.cacheHelper=preferHelper;
     }
     @Override
     public Observable<RequestOrderNumberResponse> requestOrderNumber(String sessionKey) {
@@ -51,5 +55,15 @@ public class CheckoutManager implements ICheckoutManager {
             }
         });
 
+    }
+
+    @Override
+    public void saveFinishOrderAndMarkTime(long currentTime) {
+        cacheHelper.saveFinishOrderAndMarkTime(currentTime);
+    }
+
+    @Override
+    public SkipToAppStoreMarket getFirstOrderAndMarkTime() {
+        return cacheHelper.getFirstOrderAndMarkTime();
     }
 }

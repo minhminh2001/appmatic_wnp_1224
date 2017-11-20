@@ -1,4 +1,4 @@
-package com.whitelabel.app.fragment;
+package com.whitelabel.app.ui.checkout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +24,7 @@ import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CheckoutManager;
 
+import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
 import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.SkipToAppStoreMarket;
@@ -53,7 +54,7 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
     public CheckoutStatusRightContract.Presenter getPresenter() {
         return new CheckoutStatusRightPresenter(new BaseManager(DataManager.getInstance().getMockApi(),
                 DataManager.getInstance().getAppApi(),DataManager.getInstance().getPreferHelper()),
-                new CheckoutManager(DataManager.getInstance().getCheckoutApi()));
+                new CheckoutManager(DataManager.getInstance().getCheckoutApi(),DataManager.getInstance().getPreferHelper()));
     }
 
     @Override
@@ -263,11 +264,12 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
 
             boolean isDifferSevenDays=false;
             //first
-            SkipToAppStoreMarket market = JStorageUtils.getFirstOrderAndMarkTime();
+//            SkipToAppStoreMarket market = JStorageUtils.getFirstOrderAndMarkTime();
+            SkipToAppStoreMarket market=mPresenter.getFirstOrderAndMarkTime();
             if (market.isAfterFirstOrder()&&market.getTime()!=0){
                 long result = System.currentTimeMillis() - market.getTime();
-                //two time calcu greater than 7 again show dialog
-                if (result/1000/60/24>7){
+
+                if (isThan7Days(result)){
                     isDifferSevenDays=true;
                 }
             }
@@ -286,7 +288,8 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
                     @Override
                     public void onClick(View v) {
                         JToolUtils.openPlayStore();
-                        JStorageUtils.saveFinishOrderAndMarkTime(0);
+//                        JStorageUtils.saveFinishOrderAndMarkTime(0);
+                        mPresenter.saveFinishOrderAndMarkTime(0);
                         mMaterialDialog.dismiss();
                     }
                 });
@@ -294,14 +297,22 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
                     @Override
                     public void onClick(View v) {
                         mMaterialDialog.dismiss();
-                        if (!JStorageUtils.getFirstOrderAndMarkTime().isAfterFirstOrder()){
-                            JStorageUtils.saveFinishOrderAndMarkTime(System.currentTimeMillis());
+                        if (!mPresenter.getFirstOrderAndMarkTime().isAfterFirstOrder()){
+                            mPresenter.saveFinishOrderAndMarkTime(System.currentTimeMillis());
                         }
+//                        if (!JStorageUtils.getFirstOrderAndMarkTime().isAfterFirstOrder()){
+//                            JStorageUtils.saveFinishOrderAndMarkTime(System.currentTimeMillis());
+//                        }
                     }
                 });
                 mMaterialDialog.setContentView(view);
                 mMaterialDialog.show();
             }
         }
+    }
+
+    //two time calcu greater than 7 again show dialog
+    private boolean isThan7Days(long time){
+       return time/1000/60/24>7;
     }
 }

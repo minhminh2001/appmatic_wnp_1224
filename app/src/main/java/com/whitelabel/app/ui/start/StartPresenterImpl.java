@@ -1,14 +1,9 @@
 package com.whitelabel.app.ui.start;
 
-import android.support.v7.view.menu.MenuView;
-
-import com.google.gson.JsonObject;
 import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
-import com.whitelabel.app.model.StartZipModel;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JLogUtils;
@@ -16,12 +11,8 @@ import com.whitelabel.app.utils.RxUtil;
 
 import javax.inject.Inject;
 
-import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.functions.Func2;
 
 /**
  * Created by ray on 2017/4/5.
@@ -39,7 +30,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
          if(offset<2000){
                 mView.postDelayed(offset);
          }else{
-                mView.startNextActivity();
+                mView.startGuidePage();
          }
     }
     @Inject
