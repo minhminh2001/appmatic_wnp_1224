@@ -206,22 +206,16 @@ public class PreferHelper  implements ICacheApi{
 
     @Override
     public void saveFinishOrderAndMarkTime(long currentTime) {
-//        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG, Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         SkipToAppStoreMarket market=new SkipToAppStoreMarket();
         market.setAfterFirstOrder(true);
         market.setTime(currentTime);
         String marketString = gson.toJson(market);
         AppPrefs.putString(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG,marketString);
-//        editor.putString(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG, marketString);
-//        editor.commit();
     }
 
     @Override
     public SkipToAppStoreMarket getFirstOrderAndMarkTime() {
-//        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG, Context.MODE_PRIVATE);
-//        String beanStr=sharedPreferences.getString(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG, "");
         String beanStr=AppPrefs.getString(IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG,"");
         SkipToAppStoreMarket market=new SkipToAppStoreMarket();
         if (TextUtils.isEmpty(beanStr)){
