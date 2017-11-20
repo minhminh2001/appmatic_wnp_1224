@@ -127,7 +127,7 @@ public class HideFunctionActivity extends com.whitelabel.app.BaseActivity implem
                         intent.putExtras(bundle);
                         startActivity(intent);
                         finish();
-//                        startNextActivity(null, StartActivity.class, true);
+//                        startGuidePage(null, StartActivity.class, true);
                         clickList=false;
                     }else{
                         Toast.makeText(this,"Please select the server",Toast.LENGTH_SHORT).show();

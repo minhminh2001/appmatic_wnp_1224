@@ -105,7 +105,7 @@ public class WhiteLabelApplication extends MultiDexApplication {
             mTracker = analytics.newTracker(GlobalData.gaTrackId);
             analytics.getLogger()
                     .setLogLevel(Logger.LogLevel.VERBOSE);
-            mTracker.setAppVersion(JToolUtils.getAppVersion());
+            mTracker.setAppVersion(JToolUtils.getAppVersionName());
             mTracker.enableExceptionReporting(true);
             mTracker.enableAdvertisingIdCollection(true);
             mTracker.enableAutoActivityTracking(false);

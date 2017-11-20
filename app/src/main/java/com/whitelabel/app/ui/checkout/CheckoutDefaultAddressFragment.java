@@ -1,6 +1,7 @@
 package com.whitelabel.app.ui.checkout;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -8,16 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.BaseFragment;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
+import com.whitelabel.app.ui.checkout.model.CheckoutDefaultAddressResponse;
+import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomCheckBox;
 import com.whitelabel.app.widget.CustomTextView;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -72,13 +83,20 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     LinearLayout llBillingAddress;
     @BindView(R.id.rl_root)
     RelativeLayout rlRoot;
+    @BindView(R.id.rg_address_way_select)
+    RadioGroup radioGroup;
+//    @BindView(R.id.rb_choice_address_check)
+//    RadioButton rbCheckAddress;
     public final static  int REQUEST_BILLING_ADDRESS=1000;
     public final static  int REQUEST_SHIPPING_ADDRESS=2000;
+    private static final int SHIP_TO_ME_CODE=1;
+    private static final int PICK_UP_IN_STORE_CODE=2;
     // TODO: Rename parameter arguments, choose names that match
     private Dialog mProgressDialog;
     private AddressBook mPrimaryBilling;
     private AddressBook  mPrimaryShipping;
     public final static  int REQUEST_ADD_ADDRESS_CODE=10000;
+    public int curentClickShipping;
     public AddressBook getPrimaryShipping() {
         return mPrimaryShipping;
     }
@@ -119,7 +137,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     }
 
     @Override
-    public void showData(AddressBook  shippingAddress,AddressBook billingAddress) {
+    public void showData(AddressBook  shippingAddress,AddressBook billingAddress,List<CheckoutDefaultAddressResponse.ShippingMethodBean> shippingMethod) {
         if(shippingAddress==null&&billingAddress==null){
             Intent intent=new Intent(getActivity(), AddAddressActivity.class);
             intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT,false);
@@ -129,6 +147,21 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             return;
         }
         rlRoot.setVisibility(View.VISIBLE);
+        if (shippingMethod!=null && !shippingMethod.isEmpty()){
+            radioGroup.removeAllViews();
+            for (final CheckoutDefaultAddressResponse.ShippingMethodBean shippingMethodBean:shippingMethod){
+                addRadioButtonToGroup(shippingMethodBean);
+            }
+            for(int i = 0 ;i < radioGroup.getChildCount();i++){
+                RadioButton rb = (RadioButton)radioGroup.getChildAt(i);
+                if(rb.isChecked()){
+                    int code= (int) rb.getTag();
+                    baseRadioCodeToCheckClick(code);
+//                curentClickShipping= (int) rb.getTag();
+                    break;
+                }
+            }
+        }
         if(shippingAddress!=null) {
             mPrimaryShipping=shippingAddress;
             tvShippingAddressFirstname.setText(mPrimaryShipping.getFirstName());
@@ -183,6 +216,58 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             tvBillingAddressCountry.setText(mPrimaryBilling.getCountry());
             tvBillingAddressTelephone.setText(getActivity().getResources().getString(R.string.address_mobile_number) + " : " + mPrimaryBilling.getTelephone());
             tvBillingAddressDayTelephone.setText(getActivity().getResources().getString(R.string.day_time_contact) + " : " + mPrimaryBilling.getFax());
+        }
+    }
+
+    private void addRadioButtonToGroup(final CheckoutDefaultAddressResponse.ShippingMethodBean shippingMethodBean){
+        RadioButton rbCheckAddress= (RadioButton) LayoutInflater.from(getActivity()).inflate(R.layout.layout_radiobutton_select_address,null);
+        //if checked is 1,this item be checked
+        rbCheckAddress.setText(shippingMethodBean.getTitle());
+        rbCheckAddress.setTag(shippingMethodBean.getCode());
+        if (1==shippingMethodBean.getChecked()){
+            rbCheckAddress.setChecked(true);
+            Drawable pressIcon = JImageUtils.getThemeIcon(getActivity(),R.drawable.icon_cb_selected);
+            rbCheckAddress.setCompoundDrawablesWithIntrinsicBounds(pressIcon, null, null, null);
+        }else {
+            rbCheckAddress.setChecked(false);
+            Drawable normalIcon = JImageUtils.getDarkThemeIcon(getActivity(), R.drawable.icon_cb_selected);
+            rbCheckAddress.setCompoundDrawablesWithIntrinsicBounds(normalIcon, null, null, null);
+        }
+        rbCheckAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RadioButton radioButton= (RadioButton) v;
+                int currentCode= (int) radioButton.getTag();
+                //Pick up in store just show bill address
+                baseRadioCodeToCheckClick(currentCode);
+                for(int i = 0 ;i < radioGroup.getChildCount();i++){
+                    RadioButton rb = (RadioButton)radioGroup.getChildAt(i);
+                    Drawable normalIcon = JImageUtils.getDarkThemeIcon(getActivity(), R.drawable.icon_cb_selected);
+                    rb.setCompoundDrawablesWithIntrinsicBounds(normalIcon, null, null, null);
+                }
+                Drawable pressIcon = JImageUtils.getThemeIcon(getActivity(),R.drawable.icon_cb_selected);
+                radioButton.setCompoundDrawablesWithIntrinsicBounds(pressIcon, null, null, null);
+            }
+        });
+        radioGroup.addView(rbCheckAddress, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+    }
+
+
+    private void baseRadioCodeToCheckClick(int addressCode){
+        switch(addressCode){
+            //Ship to me (show all address)
+            case SHIP_TO_ME_CODE:
+                llShippingAddress.setVisibility(View.VISIBLE);
+                llCheckbox.setVisibility(View.VISIBLE);
+                llBillingAddress.setVisibility(View.VISIBLE);
+                break;
+            //Pick up in store (just show llBilling)
+            case PICK_UP_IN_STORE_CODE:
+                llShippingAddress.setVisibility(View.GONE);
+                llCheckbox.setVisibility(View.GONE);
+                llBillingAddress.setVisibility(View.VISIBLE);
+                break;
         }
     }
     @Override
@@ -258,10 +343,10 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQUEST_SHIPPING_ADDRESS&&resultCode==CheckoutSelectAddressActivity.RESULT_CODE){
                 AddressBook addressBook= (AddressBook) data.getExtras().getSerializable("data");
-                   showData(addressBook,null);
+                   showData(addressBook,null,null);
         }else if(requestCode==REQUEST_BILLING_ADDRESS&&resultCode==CheckoutSelectAddressActivity.RESULT_CODE){
                 AddressBook  addressBook= (AddressBook) data.getExtras().getSerializable("data");
-                showData(null,addressBook);
+                showData(null,addressBook,null);
         }else if(requestCode==REQUEST_ADD_ADDRESS_CODE&&resultCode==AddAddressActivity.RESULT_CODE){
             openProgressDialog();
             mPresenter.getDefaultAddress();

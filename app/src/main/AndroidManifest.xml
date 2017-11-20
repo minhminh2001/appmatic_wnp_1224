@@ -14,7 +14,7 @@
     <application
         android:name=".WhiteLabelApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/icon_v1"
+        android:icon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
 
         <!-- tools:replace="android:name" -->

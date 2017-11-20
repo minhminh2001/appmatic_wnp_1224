@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/tv_mark_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="@string/payment_mark_title"/>
+    <com.whitelabel.app.widget.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:text="@string/payment_mark_message"/>
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/tv_payment_rate_us_now"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/btn_purple_border"
+        android:gravity="center"
+        android:text="@string/payment_rate_us_now"
+        android:textColor="@drawable/btn_text_purple"
+        android:textSize="@dimen/button_font_size"
+        style="@style/font_family_robot_regular"/>
+
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/tv_payment_rate_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/button_style_purple"
+        android:gravity="center"
+        android:text="@string/payment_rate_cancel"
+        android:textColor="@color/whiteFFFFFF"
+        android:textSize="@dimen/button_font_size"
+        style="@style/font_family_roboto_medium"
+        />
+
+</LinearLayout>

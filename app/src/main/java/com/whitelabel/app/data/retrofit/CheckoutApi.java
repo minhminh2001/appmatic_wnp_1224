@@ -23,7 +23,7 @@ public interface CheckoutApi {
     public Observable<ResponseModel<CheckoutDefaultAddressResponse>> getDefaultAddress(@Query("session_key") String sessionKey);
     @FormUrlEncoded
     @POST("appservice/checkout/paypalPlaceOrder")
-    public Observable<PaypalPlaceOrderReponse>  payPalPlaceOrder(@Field("session_key") String sessionKey);
+    public Observable<PaypalPlaceOrderReponse>  payPalPlaceOrder(@Field("session_key") String sessionKey,@Field("order_comments") String orderComments,@Field("app_version") String appVersion);
 
     @GET("appservice/checkout/success")
     public Observable<RequestOrderNumberResponse>  requestOrderNumber(@Query("session_key") String sessionKey);

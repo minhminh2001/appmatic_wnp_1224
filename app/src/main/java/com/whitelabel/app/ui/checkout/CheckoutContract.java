@@ -16,7 +16,7 @@ public interface CheckoutContract {
         public void setButtonEnable(boolean enable);
     }
     public interface  Presenter extends BasePresenter<View>{
-        public void payPalPlaceOrder();
+        public void payPalPlaceOrder(String orderComment);
 
     }
 }

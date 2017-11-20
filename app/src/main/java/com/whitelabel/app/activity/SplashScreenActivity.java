@@ -206,9 +206,9 @@ public class SplashScreenActivity extends com.whitelabel.app.BaseActivity {
 //                Bundle mBundle = new Bundle();
 //                mBundle.putString("Activity", "start");//压入数据
 //                if(hasData) {
-//                    startNextActivity(mBundle, HomeActivity.class, true);
+//                    startGuidePage(mBundle, HomeActivity.class, true);
 //                }else {
-//                    startNextActivity(mBundle, FavoriteActivity.class, true);
+//                    startGuidePage(mBundle, FavoriteActivity.class, true);
 //                }
 //            }
 //
@@ -216,7 +216,7 @@ public class SplashScreenActivity extends com.whitelabel.app.BaseActivity {
 //            public void onFailure(int resultCode, String errorMsg) {
 //                if (!JDataUtils.errorMsgHandler(SplashScreenActivity.this, errorMsg)) {
 //                    if ((!JDataUtils.isEmpty(errorMsg)) && (errorMsg.contains("session expired,login again please"))) {
-//                        startNextActivity(null, FavoriteActivity.class, true);
+//                        startGuidePage(null, FavoriteActivity.class, true);
 //                        return;
 //                    }
 //                    Toast.makeText(SplashScreenActivity.this, "error " + resultCode + " " + errorMsg, Toast.LENGTH_LONG).show();

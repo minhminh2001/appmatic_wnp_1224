@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rb_choice_address_check"
+    android:layout_width="match_parent"
+    android:background="@null"
+    android:button="@null"
+    android:drawablePadding="8dp"
+    android:padding="4dp"
+    android:textSize="14sp"
+    android:layout_height="30dp"
+    >
+
+</RadioButton>

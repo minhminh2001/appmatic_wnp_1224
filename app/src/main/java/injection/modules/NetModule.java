@@ -219,8 +219,8 @@ public class NetModule {
 
 
     @Provides
-    public ICheckoutManager providesICheckoutManager(CheckoutApi checkoutApi){
-            return new CheckoutManager(checkoutApi);
+    public ICheckoutManager providesICheckoutManager(CheckoutApi checkoutApi,ICacheApi iCacheApi){
+            return new CheckoutManager(checkoutApi,iCacheApi);
     }
 
 

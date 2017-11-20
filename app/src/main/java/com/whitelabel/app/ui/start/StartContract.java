@@ -13,7 +13,7 @@ public class StartContract {
 //            void delayStart();
             void showErrorMessage(String errorMsg);
             void  postDelayed(long  deploy);
-            void  startNextActivity();
+            void startGuidePage();
             void startIntentService();
 
 

@@ -483,7 +483,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
             case 3://place my order
 //                mGATrackPlaceOrderToResultTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
 //                placeOrder();
-                mPresenter.payPalPlaceOrder();
+                mPresenter.payPalPlaceOrder(((CheckoutReviewFragment)checkoutReviewFragment).getOrderComment());
                 break;
         }
     }
@@ -653,9 +653,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
         mGATrackAddressToPaymentTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         AddressBook shippingAddress= ((CheckoutDefaultAddressFragment)checkoutDefaultAddressFragment).getPrimaryShipping();
         AddressBook   billingAddress=((CheckoutDefaultAddressFragment)checkoutDefaultAddressFragment).getPrimaryBilling();
+        int shippingCode=((CheckoutDefaultAddressFragment)checkoutDefaultAddressFragment).curentClickShipping;
         setButtonEnable(false);
         mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);
-        mCheckoutDao.saveBilling(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), shippingAddress,billingAddress);
+        mCheckoutDao.saveBilling(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), shippingAddress,billingAddress,shippingCode);
     }
 
     private static class DataHandler extends Handler {

@@ -15,6 +15,7 @@ import com.whitelabel.app.model.MyAccountOrderOuter;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceLandingPagesListLandingPageItemReturnEntity;
 import com.whitelabel.app.model.ProductPropertyModel;
+import com.whitelabel.app.model.SkipToAppStoreMarket;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 
 import java.lang.reflect.Type;
@@ -26,6 +27,8 @@ import java.util.List;
  */
 public class JStorageUtils {
     private static final String TAG = "JStorageUtils";
+
+    public static final String IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG ="IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG";
     public static void saveNotificaitionState(Context context,String str){
 
         try {
@@ -591,7 +594,7 @@ public class JStorageUtils {
     public static void saveAppVersion(){
         SharedPreferences shared = WhiteLabelApplication.getInstance().getSharedPreferences("AppVersion", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = shared.edit();
-        editor.putString("appVersion", JToolUtils.getAppVersion());
+        editor.putString("appVersion", JToolUtils.getAppVersionName());
         editor.apply();
     }
     public static String getAppVersion(){
@@ -658,6 +661,7 @@ public class JStorageUtils {
         }
         return click;
     }
+
 }
 
 
