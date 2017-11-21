@@ -276,6 +276,7 @@
 
 
     <string name="home_home_category_gempicks"> PICKS</string>
+    <string name="shop_by_brand_start_with">Start With %1$s </string>
 
     <!-- Curation -->
     <string name="curation_title">Curation</string>
