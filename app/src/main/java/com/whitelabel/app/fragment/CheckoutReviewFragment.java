@@ -3,10 +3,13 @@ package com.whitelabel.app.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -43,6 +46,8 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
     private View rlStoreCredit;
     private TextView tvStoreCreditTitle;
     private TextView tvStoreCreditValue;
+    private EditText etCheckoutReviewOrderComment;
+    private String orderComment;
     /**
      * ...
      * <p>
@@ -107,6 +112,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
         //address container
         llShippingAddress = (LinearLayout) view.findViewById(R.id.ll_checkout_review_address);
         llBillingAddress= (LinearLayout) view.findViewById(R.id.ll_checkout_review_billling_address);
+        etCheckoutReviewOrderComment= (EditText) view.findViewById(R.id.et_checkout_review_order_comment);
         initData();
         tvWord.setFocusable(true);
         tvWord.setFocusableInTouchMode(true);
@@ -397,6 +403,22 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
 //            );
 //            checkoutActivity.mGATrackPaymentToReviewTimeEnable = false;
 //        }
+        etCheckoutReviewOrderComment.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                orderComment=etCheckoutReviewOrderComment.getText().toString().trim();
+            }
+        });
     }
 
     @NonNull
@@ -455,5 +477,10 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
 
     public CheckoutPaymentSaveReturnEntity getPaymentSaveReturnEntity() {
         return paymentSaveReturnEntity;
+    }
+
+    //provider CheckoutAcitivity
+    public String getOrderComment() {
+        return orderComment;
     }
 }

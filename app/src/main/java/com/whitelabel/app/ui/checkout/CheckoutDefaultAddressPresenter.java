@@ -49,7 +49,7 @@ public class CheckoutDefaultAddressPresenter extends RxPresenter<CheckoutDefault
                         if(!checkoutDefaultAddressResponse.getPrimaryShipping().getAddressId().equals(checkoutDefaultAddressResponse.getPrimaryBilling().getAddressId())){
                             mView.hideBillToDefferentLayout();
                         }
-                        mView.showData(checkoutDefaultAddressResponse.getPrimaryShipping(),checkoutDefaultAddressResponse.getPrimaryBilling());
+                        mView.showData(checkoutDefaultAddressResponse.getPrimaryShipping(),checkoutDefaultAddressResponse.getPrimaryBilling(),checkoutDefaultAddressResponse.getShippingMethod());
                     }
                 });
         addSubscrebe(subscription);

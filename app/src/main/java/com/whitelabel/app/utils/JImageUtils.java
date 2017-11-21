@@ -25,6 +25,7 @@ import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.utils.logger.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -137,6 +138,21 @@ public class JImageUtils {
                 ColorStateList.valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color()));
         return wrappedDrawable;
     }
+
+    public static Drawable getDarkThemeIcon(Context context,int drawable){
+        Drawable drawable1=ContextCompat.getDrawable(context, drawable);
+        final Drawable wrappedDrawable = DrawableCompat.wrap(drawable1);
+        DrawableCompat.setTintList(wrappedDrawable,
+                ColorStateList.valueOf(ContextCompat.getColor(context,R.color.greyDCDCDC)));
+        return wrappedDrawable;
+    }
+
+    public static Drawable getThemeDrawableColor(int resource) {
+        final Drawable wrappedDrawable = DrawableCompat.wrap(WhiteLabelApplication.getInstance().getResources().getDrawable(resource));
+        DrawableCompat.setTintList(wrappedDrawable, ColorStateList.valueOf(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color()));
+        return wrappedDrawable;
+    }
+
 
     /**
      * @param context

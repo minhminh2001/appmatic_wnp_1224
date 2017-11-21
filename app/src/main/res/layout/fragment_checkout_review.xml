@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:paddingLeft="10dp"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginBottom="@dimen/checkout_line_space"
         android:gravity="center_vertical"
         android:text="@string/checkout_shipping_address"
@@ -52,6 +53,7 @@
         android:gravity="center_vertical"
         android:text="@string/checkout_billing_address"
         android:paddingTop="16sp"
+        android:visibility="gone"
         android:paddingBottom="16sp"
         android:textSize="16sp"
         android:textColor="@color/black000000" />
@@ -86,6 +88,7 @@
         android:layout_marginBottom="@dimen/checkout_line_space"
         android:gravity="center_vertical"
         android:text="@string/Payment_Method"
+        android:visibility="gone"
         android:textSize="16sp"
         android:textColor="@color/black000000" />
     <View
@@ -301,6 +304,7 @@
                 android:textSize="12sp"
                 android:layout_gravity="center_horizontal" />
             <LinearLayout
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -338,6 +342,23 @@
                 android:text="@string/Grand_Total_below_description"
                 android:textColor="@color/gray888888"
                 android:textSize="12sp"/>
+            <EditText
+                android:id="@+id/et_checkout_review_order_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:gravity="top|left"
+                android:maxLines="8"
+                android:minLines="5"
+                android:padding="6dp"
+                android:scrollbars="vertical"
+                android:textSize="14sp"
+                android:background="@drawable/et_checkout_review_comment_bg"
+                android:hint="@string/checkout_review_common_et_hint"/>
+            <View
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
 
         </LinearLayout>
     </RelativeLayout>

@@ -165,6 +165,7 @@
     <string name="payment_method_CREDIT_DEBITCARD">Credit &amp; Debit Card</string>
     <string name="dialog_checkout_text">Thank you for your confirmation.\n Please do not close this mobile application while we are processing your payment.</string>
     <string name="payment_status_wrong">Maybe something went wrong during \n the payment process. \n Please try again.</string>
+    <string name="checkout_review_common_et_hint">Order Comment</string>
 
     <string name="payment_molpay_hint">We are processing your payment, please wait.</string>
     <string name="This_is_a_required_field">This is a required field.</string>
@@ -187,6 +188,10 @@
     <string name="CONTINUE_SHOPPING">CONTINUE SHOPPING</string>
     <string name="Payment_channel_is_incorrect">Payment channel is incorrect</string>
     <string name="Malaysia">Malaysia</string>
+    <string name="payment_mark_title">Love using \"%1$s\" app?</string>
+    <string name="payment_mark_message">Please rate us in the App Store</string>
+    <string name="payment_rate_us_now">Rate Us Now</string>
+    <string name="payment_rate_cancel">Cancel</string>
 
     <!-- email bound -->
     <string name="loginregister_emailbound_header_title">Welcome To Wnp</string>
@@ -723,4 +728,7 @@
     <string name="mock_url">http://mis.appmatic.io/</string>
 
     <string name="address_phone_error_hint">More than 6 digits please.</string>
+    <string name="market_url">market://details?id=</string>
+    <string name="playstore_url">https://play.google.com/store/apps/details?id=</string>
+
 </resources>

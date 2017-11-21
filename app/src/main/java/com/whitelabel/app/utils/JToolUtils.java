@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationManagerCompat;
@@ -424,9 +425,7 @@ public class JToolUtils {
     }
 
 
-
-
-    public static String getAppVersion() {
+    public static String getAppVersionName() {
         String version = "0";
         try {
             version = WhiteLabelApplication.getInstance().getPackageManager().getPackageInfo(
@@ -437,10 +436,68 @@ public class JToolUtils {
         return version;
     }
 
+    public static String getAppVersionCode(){
+        String versionCode="0";
+        try {
+            versionCode=WhiteLabelApplication.getInstance().getPackageManager().getPackageInfo(WhiteLabelApplication.getInstance().getPackageName(),0).versionCode+"";
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
+
     //test use : print object
     public static void printObject(Object object){
         Gson gson=new Gson();
         String result = gson.toJson(object);
         Logger.e("object json:"+result);
+    }
+
+    /**
+     * get android system version
+     * @return  android system version
+     */
+    public static String getSystemVersion() {
+        return android.os.Build.VERSION.RELEASE;
+    }
+
+    /**
+     * get system model
+     * @return  system model
+     */
+    public static String getSystemModel() {
+        return android.os.Build.MODEL;
+    }
+
+    /**
+     * get phone brand
+     * @return  phone brand
+     */
+    public static String getDeviceBrand() {
+        return android.os.Build.BRAND;
+    }
+
+    //open app google market to mark
+    public static void openPlayStore() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(
+                new StringBuilder(
+                        WhiteLabelApplication.getInstance().getResources().getString(R.string.market_url)).append(WhiteLabelApplication.getInstance().getPackageName())
+                        .toString()
+        )); //跳转到应用市场，非Google Play市场一般情况也实现了这个接口
+        //检查安装应用市场
+        if (intent.resolveActivity(WhiteLabelApplication.getInstance().getPackageManager()) != null) { //可以接收
+            WhiteLabelApplication.getInstance().startActivity(intent);
+        } else { //浏览器
+            intent.setData(Uri.parse(
+                    new StringBuilder(
+                            WhiteLabelApplication.getInstance().getResources().getString(R.string.playstore_url)).append(WhiteLabelApplication.getInstance().getPackageName())
+                            .toString()
+            ));
+            if (intent.resolveActivity(WhiteLabelApplication.getInstance().getPackageManager()) != null) { //有浏览器
+                WhiteLabelApplication.getInstance().startActivity(intent);
+            }
+        }
     }
 }

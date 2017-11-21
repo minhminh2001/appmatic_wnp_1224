@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.fragment.CheckoutPaymentStatusRightFragment;
+import com.whitelabel.app.ui.checkout.CheckoutPaymentStatusRightFragment;
 import com.whitelabel.app.fragment.CheckoutPaymentStatusWrongFragment;
 import com.whitelabel.app.ui.home.MainContract;
 import com.whitelabel.app.utils.GaTrackHelper;

@@ -1,233 +1,283 @@
-
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/rl_root"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:paddingBottom="100dp"
-        android:paddingTop="5dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
-        <LinearLayout
-            android:id="@+id/ll_shipping_address"
-            android:layout_width="match_parent"
-            android:layout_toLeftOf="@+id/AddAddress_select_button"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="5dp"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.whitelabel.app.widget.CustomTextView
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:textStyle="bold"
-                    android:text="@string/checkout_shipping_address"
-                    android:layout_height="wrap_content"/>
-                <com.whitelabel.app.widget.CustomTextView
-                    android:id="@+id/tv_shipping_address_change"
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/checkout_address_change"
-                    android:layout_height="wrap_content"/>
-            </RelativeLayout>
+    android:id="@+id/rl_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="100dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="5dp"
+    android:visibility="visible">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
-
-                <com.whitelabel.app.widget.CustomTextView
-                    android:id="@+id/tv_shipping_address_firstname"
-                    style="@style/font_family_roboto_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black000000"
-                    android:textSize="15sp" />
-
-                <com.whitelabel.app.widget.CustomTextView
-                    android:id="@+id/tv_shipping_address_lastname"
-                    style="@style/font_family_roboto_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="@color/black000000"
-                    android:textSize="15sp"
-                    />
-            </LinearLayout>
-
-            <com.whitelabel.app.widget.CustomTextView
-                android:id="@+id/tv_shipping_address_address1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@string/address1"
-                android:textColor="@color/black000000"
-                android:textSize="14sp"
-                style="@style/font_family_robot_regular" />
-            <com.whitelabel.app.widget.CustomTextView
-                android:id="@+id/tv_shipping_address_address2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textColor="@color/black000000"
-                android:textSize="14sp"
-                style="@style/font_family_robot_regular" />
-            <com.whitelabel.app.widget.CustomTextView
-                android:id="@+id/tv_shipping_address_citystatepostcode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textColor="@color/black000000"
-                android:textSize="14sp"
-                style="@style/font_family_robot_regular" />
-            <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_robot_regular"
-                android:id="@+id/tv_shipping_address_country"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@string/Malaysia"
-                android:textColor="@color/black000000"
-                android:textSize="14sp" />
-            <com.whitelabel.app.widget.CustomTextView
-                android:id="@+id/tv_shipping_address_telephone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textColor="@color/black000000"
-                android:textSize="14sp"
-                style="@style/font_family_robot_regular" />
-            <com.whitelabel.app.widget.CustomTextView
-                android:id="@+id/tv_shipping_address_day_telephone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textColor="@color/black000000"
-                android:textSize="14sp"
-                style="@style/font_family_robot_regular" />
-        </LinearLayout>
-       <LinearLayout
-           android:id="@+id/ll_checkbox"
-           android:layout_below="@+id/ll_shipping_address"
-           android:layout_width="match_parent"
-           android:layout_marginTop="15dp"
-           android:gravity="center_vertical"
-           android:orientation="horizontal"
-           android:layout_height="wrap_content">
-           <com.whitelabel.app.widget.CustomCheckBox
-               android:id="@+id/cb_bill_address"
-               android:layout_width="20dp"
-               android:layout_height="20dp" />
-           <com.whitelabel.app.widget.CustomTextView
-               android:layout_marginLeft="10dp"
-                android:textColor="@color/black"
-               android:text="@string/checkout_bill_diffent"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"/>
-       </LinearLayout>
     <LinearLayout
-        android:layout_below="@+id/ll_checkbox"
-        android:id="@+id/ll_billing_address"
+        android:id="@+id/ll_address_way"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_toLeftOf="@+id/AddAddress_select_button"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/rg_address_way_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--<RadioButton-->
+                <!--android:id="@+id/rb_choice_address_check"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:background="@null"-->
+                <!--android:button="@null"-->
+                <!--android:text="asdasdasd"-->
+                <!--android:drawableLeft="@drawable/cb_address_checkout"-->
+                <!--android:drawablePadding="8dp"-->
+                <!--android:textSize="14sp"-->
+                <!--android:layout_height="30dp" />-->
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_shipping_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_address_way"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/AddAddress_select_button"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <com.whitelabel.app.widget.CustomTextView
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
-                android:textStyle="bold"
-                android:text="@string/checkout_billing_address"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/checkout_shipping_address"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
             <com.whitelabel.app.widget.CustomTextView
-                android:id="@+id/tv_billing_address_change"
-                android:textColor="@color/black"
+                android:id="@+id/tv_shipping_address_change"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="@string/checkout_address_change"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/black" />
         </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
+
             <com.whitelabel.app.widget.CustomTextView
-                android:id="@+id/tv_billing_address_firstname"
+                android:id="@+id/tv_shipping_address_firstname"
+                style="@style/font_family_roboto_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black000000"
-                android:textSize="15sp"
-                style="@style/font_family_roboto_medium" />
+                android:textSize="15sp" />
+
             <com.whitelabel.app.widget.CustomTextView
-                android:id="@+id/tv_billing_address_lastname"
+                android:id="@+id/tv_shipping_address_lastname"
+                style="@style/font_family_roboto_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/black000000"
-                android:textSize="15sp"
-                style="@style/font_family_roboto_medium" />
+                android:textSize="15sp" />
         </LinearLayout>
+
         <com.whitelabel.app.widget.CustomTextView
-            android:id="@+id/tv_billing_address_address1"
+            android:id="@+id/tv_shipping_address_address1"
+            style="@style/font_family_robot_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="@string/address1"
             android:textColor="@color/black000000"
-            android:textSize="14sp"
-            style="@style/font_family_robot_regular" />
+            android:textSize="14sp" />
+
         <com.whitelabel.app.widget.CustomTextView
-            android:id="@+id/tv_billing_address_address2"
+            android:id="@+id/tv_shipping_address_address2"
+            style="@style/font_family_robot_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textColor="@color/black000000"
-            android:textSize="14sp"
-            style="@style/font_family_robot_regular" />
+            android:textSize="14sp" />
+
         <com.whitelabel.app.widget.CustomTextView
-            android:id="@+id/tv_billing_address_citystatepostcode"
+            android:id="@+id/tv_shipping_address_citystatepostcode"
+            style="@style/font_family_robot_regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textColor="@color/black000000"
-            android:textSize="14sp"
-            style="@style/font_family_robot_regular" />
+            android:textSize="14sp" />
+
         <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_shipping_address_country"
             style="@style/font_family_robot_regular"
-            android:id="@+id/tv_billing_address_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="@string/Malaysia"
             android:textColor="@color/black000000"
             android:textSize="14sp" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_shipping_address_telephone"
+            style="@style/font_family_robot_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/black000000"
+            android:textSize="14sp" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_shipping_address_day_telephone"
+            style="@style/font_family_robot_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/black000000"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_shipping_address"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.whitelabel.app.widget.CustomCheckBox
+            android:id="@+id/cb_bill_address"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/checkout_bill_diffent"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_billing_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_checkbox"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/AddAddress_select_button"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/checkout_billing_address"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_billing_address_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/checkout_address_change"
+                android:textColor="@color/black" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_billing_address_firstname"
+                style="@style/font_family_roboto_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black000000"
+                android:textSize="15sp" />
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_billing_address_lastname"
+                style="@style/font_family_roboto_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/black000000"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_billing_address_address1"
+            style="@style/font_family_robot_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@string/address1"
+            android:textColor="@color/black000000"
+            android:textSize="14sp" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_billing_address_address2"
+            style="@style/font_family_robot_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/black000000"
+            android:textSize="14sp" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_billing_address_citystatepostcode"
+            style="@style/font_family_robot_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/black000000"
+            android:textSize="14sp" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_billing_address_country"
+            style="@style/font_family_robot_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@string/Malaysia"
+            android:textColor="@color/black000000"
+            android:textSize="14sp" />
+
         <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/tv_billing_address_telephone"
+            style="@style/font_family_robot_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textColor="@color/black000000"
-            android:textSize="14sp"
-            style="@style/font_family_robot_regular" />
+            android:textSize="14sp" />
+
         <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/tv_billing_address_day_telephone"
+            style="@style/font_family_robot_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textColor="@color/black000000"
-            android:textSize="14sp"
-            style="@style/font_family_robot_regular" />
-       </LinearLayout>
-    </RelativeLayout>
+            android:textSize="14sp" />
+    </LinearLayout>
+</RelativeLayout>

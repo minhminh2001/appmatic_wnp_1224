@@ -2,7 +2,6 @@ package com.whitelabel.app;
 
 import android.content.Context;
 
-import com.bumptech.glide.Glide;
 import com.whitelabel.app.utils.JToolUtils;
 /**
  * Created by Administrator on 2016/12/20.
@@ -48,7 +47,7 @@ public class GlobalData {
 //        authName = context.getResources().getString(R.string.auth_name);
 //        authPwd = context.getResources().getString(R.string.auth_pwd);
         gcmSendId = context.getResources().getString(R.string.gcm_sender_id);
-        appVersion = JToolUtils.getAppVersion();
+        appVersion = JToolUtils.getAppVersionName();
         oneAll_Subdomain=context.getResources().getString(R.string.twitter_subdomain);
         appKey=context.getResources().getString(R.string.app_key);
         gaTrackId=context.getResources().getString(R.string.ga_track_id);

@@ -159,7 +159,7 @@ public class CheckoutDao extends BaseHttp {
         params.put("billing[use_for_shipping]", "1");
         requestHttp(HTTP_METHOD.POST, "appservice/checkout/saveBilling", params, REQUEST_SAVEBILLING);
     }
-    public void saveBilling(String session, AddressBook shippingAddress, AddressBook billingAddress) {
+    public void saveBilling(String session, AddressBook shippingAddress, AddressBook billingAddress,int shippingCode) {
         params = new TreeMap<>();
         params.put("session_key", session);
         if (!TextUtils.isEmpty(shippingAddress.getAddressId())) {
@@ -211,6 +211,8 @@ public class CheckoutDao extends BaseHttp {
         }
         params.put("shipping[save_in_address_book]", "1");
         params.put("shipping[same_as_billing]", "1");
+
+        params.put("use_for_shipping", String.valueOf(shippingCode));
 
         if (!TextUtils.isEmpty(billingAddress.getAddressId())) {
             params.put("billing_address_id", billingAddress.getAddressId());

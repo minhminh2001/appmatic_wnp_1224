@@ -143,7 +143,7 @@ public class CheckoutPaymentStatusWrongFragment extends com.whitelabel.app.BaseF
             @Override
             public void onClick(View v) {
                     startShoppingCart();
-                //checkoutPaymentStatusActivity.startNextActivity(null, ShoppingCartActivity.class, true);
+                //checkoutPaymentStatusActivity.startGuidePage(null, ShoppingCartActivity.class, true);
             }
         });
 

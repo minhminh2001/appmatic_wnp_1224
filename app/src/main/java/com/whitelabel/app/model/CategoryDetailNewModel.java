@@ -21,6 +21,7 @@ public class CategoryDetailNewModel implements Serializable {
     private String category_name;
     private String category_id;
     private List<CarouselsBean> carousels;
+    private List<BannersBean> banners;
 
     public String getCategory_img() {
         return category_img;
@@ -70,6 +71,14 @@ public class CategoryDetailNewModel implements Serializable {
         this.category_id = category_id;
     }
 
+    public List<BannersBean> getBanners() {
+        return banners;
+    }
+
+    public void setBanners(List<BannersBean> banners) {
+        this.banners = banners;
+    }
+
     @Override
     public String toString() {
         return "CategoryDetailNewModel{" +
@@ -80,6 +89,54 @@ public class CategoryDetailNewModel implements Serializable {
                 ", category_id='" + category_id + '\'' +
                 ", carousels=" + carousels +
                 '}';
+    }
+
+    public static class BannersBean{
+        private String image;
+        private int image_width;
+        private int image_height;
+        private String type;
+        private String key;
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        public int getImageWidth() {
+            return image_width;
+        }
+
+        public void setImageWidth(int image_width) {
+            this.image_width = image_width;
+        }
+
+        public int getImageHeight() {
+            return image_height;
+        }
+
+        public void setImageHeight(int image_height) {
+            this.image_height = image_height;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
     }
 
     public static class CarouselsBean {

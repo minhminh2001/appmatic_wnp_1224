@@ -6,6 +6,7 @@ import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
+import com.whitelabel.app.model.SkipToAppStoreMarket;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 
 import java.util.List;
@@ -30,4 +31,6 @@ public interface ICacheApi {
     void saveUser(GOUserEntity goUserEntity);
     void saveBaseCategory(SVRAppserviceCatalogSearchReturnEntity allCategorys);
     rx.Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory();
+    void saveFinishOrderAndMarkTime(long currentTime);
+    SkipToAppStoreMarket getFirstOrderAndMarkTime();
 }

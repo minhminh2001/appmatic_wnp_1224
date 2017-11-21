@@ -5,6 +5,7 @@ import com.whitelabel.app.model.ApiFaildException;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.ui.checkout.model.PaypalPlaceOrderReponse;
 import com.whitelabel.app.utils.ExceptionParse;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RxUtil;
 import rx.Subscriber;
 import rx.Subscription;
@@ -20,11 +21,11 @@ public class CheckoutPresenterImpl extends RxPresenter<CheckoutContract.View> im
         this.iCheckoutManager=iCheckoutManager;
     }
     @Override
-    public void payPalPlaceOrder() {
+    public void payPalPlaceOrder(String orderComment) {
         mView.showCheckProgressDialog();
         mView.setButtonEnable(false);
         String sessionKey=iBaseManager.getUser().getSessionKey();
-        Subscription subscription= iCheckoutManager.paypalPlaceOrder(sessionKey)
+        Subscription subscription= iCheckoutManager.paypalPlaceOrder(sessionKey,orderComment,getPaypalOrderVersion())
                 .compose(RxUtil.<PaypalPlaceOrderReponse>rxSchedulerHelper())
                 .subscribe(new Subscriber<PaypalPlaceOrderReponse>() {
                     @Override
@@ -49,5 +50,22 @@ public class CheckoutPresenterImpl extends RxPresenter<CheckoutContract.View> im
                     }
                 });
         addSubscrebe(subscription);
+    }
+
+    /**
+     * format like iPhone11.1_1.0.0(13)
+     * brand +system verson+appVersionName +appVersionCode
+     * @return
+     */
+    public String getPaypalOrderVersion(){
+        StringBuilder builder=new StringBuilder();
+        builder.append(JToolUtils.getDeviceBrand());
+        builder.append(JToolUtils.getSystemVersion());
+        builder.append("_");
+        builder.append(JToolUtils.getAppVersionName());
+        builder.append("(");
+        builder.append(JToolUtils.getAppVersionCode());
+        builder.append(")");
+        return builder.toString();
     }
 }

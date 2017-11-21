@@ -21,10 +21,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import  static org.mockito.Mockito.verify;
 
-import java.util.Observable;
-
-import static org.junit.Assert.*;
-
 /**
  * Created by Administrator on 2017/7/5.
  */
@@ -69,6 +65,6 @@ public class StartPresenterImplTest {
         startPresenter.setStartTime();
         Thread.sleep(2300);
         startPresenter.timeOutJudgment();
-        verify(mView).startNextActivity();
+        verify(mView).startGuidePage();
     }
 }
