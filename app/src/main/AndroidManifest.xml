@@ -29,11 +29,11 @@
         <!-- android:name="com.facebook.sdk.ApplicationId" -->
         <!-- android:value="@string/facebook_app_id" /> -->
         <!--<receiver-->
-            <!--android:name="com.google.android.gms.analytics.AnalyticsReceiver"-->
-            <!--android:enabled="true">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />-->
-            <!--</intent-filter>-->
+        <!--android:name="com.google.android.gms.analytics.AnalyticsReceiver"-->
+        <!--android:enabled="true">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />-->
+        <!--</intent-filter>-->
         <!--</receiver>-->
 
         <!-- paypal -->
@@ -48,25 +48,25 @@
         <!--<activity android:name="com.paypal.android.sdk.payments.ProfileSharingConsentActivity" />-->
 
         <!--<service-->
-            <!--android:name="com.paypal.android.sdk.payments.PayPalService"-->
-            <!--android:exported="false" />-->
+        <!--android:name="com.paypal.android.sdk.payments.PayPalService"-->
+        <!--android:exported="false" />-->
 
         <!--  -->
         <!--<service-->
-            <!--android:name="com.google.android.gms.analytics.AnalyticsService"-->
-            <!--android:enabled="true"-->
-            <!--android:exported="false" />-->
+        <!--android:name="com.google.android.gms.analytics.AnalyticsService"-->
+        <!--android:enabled="true"-->
+        <!--android:exported="false" />-->
         <!--<service-->
-            <!--android:name=".LeakAnalysisResultService"-->
-            <!--android:exported="false" />-->
+        <!--android:name=".LeakAnalysisResultService"-->
+        <!--android:exported="false" />-->
 
         <!--<receiver-->
-            <!--android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"-->
-            <!--android:exported="true"-->
-            <!--android:permission="android.permission.INSTALL_PACKAGES">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.android.vending.INSTALL_REFERRER" />-->
-            <!--</intent-filter>-->
+        <!--android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"-->
+        <!--android:exported="true"-->
+        <!--android:permission="android.permission.INSTALL_PACKAGES">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="com.android.vending.INSTALL_REFERRER" />-->
+        <!--</intent-filter>-->
         <!--</receiver>-->
 
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
@@ -79,9 +79,9 @@
             tools:replace="android:theme" />
 
         <!--<provider-->
-            <!--android:name="com.facebook.FacebookContentProvider"-->
-            <!--android:authorities="com.facebook.app.FacebookContentProvider604176613049064"-->
-            <!--android:exported="true" />-->
+        <!--android:name="com.facebook.FacebookContentProvider"-->
+        <!--android:authorities="com.facebook.app.FacebookContentProvider604176613049064"-->
+        <!--android:exported="true" />-->
 
         <activity
             android:name=".ui.start.StartActivityV2"
@@ -129,6 +129,11 @@
                 <!-- gemfive://landingpage/1111 -->
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.home.activity.ShopBrandActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BackgroundWhiteTheme" />
         <activity
             android:name=".activity.ProductActivity"
             android:launchMode="singleTop"
@@ -291,8 +296,8 @@
             android:exported="true" />
 
         <!--<meta-data-->
-            <!--android:name="io.fabric.ApiKey"-->
-            <!--android:value="967ab5d94c3f9fda9e3bbf9adef59d05e74bcc41" />-->
+        <!--android:name="io.fabric.ApiKey"-->
+        <!--android:value="967ab5d94c3f9fda9e3bbf9adef59d05e74bcc41" />-->
 
         <meta-data
             android:name="com.google.android.gms.version"
