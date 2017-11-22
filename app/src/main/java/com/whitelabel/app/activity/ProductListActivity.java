@@ -18,6 +18,7 @@ import com.whitelabel.app.fragment.ProductListKeywordsSearchFragment;
 import com.whitelabel.app.listener.OnSingleClickListener;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
+import com.whitelabel.app.model.TMPProductListListPageEntity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.CustomTextView;
@@ -44,6 +45,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     public final static String INTENT_DATA_PREVTYPE = "prevType";
     public final static String INTENT_DATA_FRAGMENTTYPE = "fragmentType";
     public final static String INTENT_DATA_CATEGORYID = "categoryEntity";
+    public final static String INTENT_CATEGORY_ID = "categoryId";
     private final static String CURRENT_INDEX = "position";
     public final static int INTENT_DATA_PREVTYPE_VALUE_MAINCATEGOTY = 1;
     public final static int INTENT_DATA_PREVTYPE_VALUE_HOME = 2;
@@ -69,6 +71,8 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     private int prevType;
     private int fragmentType;
     public String categoryId;
+    public String keyWord;
+    private TMPProductListListPageEntity tmpProductListListPageEntity;
     public LinearLayout llToolBar;
     public RelativeLayout rlBottomBar, rlBottomBarFilter, rlBottomBarSort;
     private TextView tvSortAnimate, tvFilterAnimate;
@@ -170,7 +174,11 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
                     //firebaseTrack
                     viewListTrack(searchCategoryEntity.getName());
                 }
-                categoryId = intent.getStringExtra("categoryId");
+                categoryId = intent.getStringExtra(INTENT_CATEGORY_ID);
+                keyWord = intent.getStringExtra(ProductListKeywordsSearchFragment.FROM_OTHER_PAGE_KEYWORD);
+                tmpProductListListPageEntity=new TMPProductListListPageEntity();
+                tmpProductListListPageEntity.setCategoryId(categoryId);
+                tmpProductListListPageEntity.setKeyWord(keyWord);
             } catch (Exception ex) {
                 JLogUtils.e(TAG, "onCreate", ex);
             }
@@ -181,7 +189,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         mAttachedFragmentList = new ArrayList<>();
         fragmentSequenceArray = new ArrayList<>();
         initFragment();
-        switchFragment(-1, fragmentType, categoryId);
+        switchFragment(-1, fragmentType, tmpProductListListPageEntity);
     }
 
 

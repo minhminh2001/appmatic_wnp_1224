@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public class TMPProductListListPageEntity implements Serializable {
     private int searchType;
+    private String categoryId;
+    private String keyWord;
 
     public TMPProductListListPageEntity() {
         searchType = ProductListKeywordsSearchFragment.SEARCH_TYPE_KEYWORDS;
@@ -21,4 +23,21 @@ public class TMPProductListListPageEntity implements Serializable {
     public void setSearchType(int searchType) {
         this.searchType = searchType;
     }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
 }

@@ -31,6 +31,7 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomSpeedLayoutManager;
 import com.whitelabel.app.widget.ExpandableRecyclerAdapter;
@@ -199,12 +200,18 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
                         categoryTreeRootAdapter.currentRootPosition = position;
                         categoryTreeRootAdapter.notifyDataSetChanged();
                         SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = allData.get(position);
-                        if (!HomeHomeFragment.isCategory(entity)) {
-                            //点击 GEMdeals去主页
-                            startHomeHomeFragment(entity.getId());
-                        } else {
-                            switchCategoryList(categoryTreeRootAdapter.currentRootPosition);
+                        if (position==allData.size()-1){//last one
+                            SVRAppserviceCatalogSearchCategoryItemReturnEntity returnEntity = allData.get(position);
+                            PageIntentUtils.skipToBrandListPage(getActivity(),returnEntity.getMenuId(),returnEntity.getMenuTitle());
+                        }else {
+                            if (!HomeHomeFragment.isCategory(entity)) {
+                                //点击 GEMdeals去主页
+                                startHomeHomeFragment(entity.getId());
+                            } else {
+                                switchCategoryList(categoryTreeRootAdapter.currentRootPosition);
+                            }
                         }
+
                     }
                 });
         //默认选中第一个category entity

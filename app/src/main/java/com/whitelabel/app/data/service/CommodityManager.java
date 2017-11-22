@@ -16,6 +16,7 @@ import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailResultDetailReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
+import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -37,6 +38,7 @@ import rx.functions.Func1;
 public class CommodityManager  implements ICommodityManager{
     private ProductApi  productApi;
     private ICacheApi cacheHelper;
+
     @Inject
     public CommodityManager(ProductApi productApi, ICacheApi preferHelper){
         this.productApi=productApi;
@@ -96,6 +98,27 @@ public class CommodityManager  implements ICommodityManager{
                   }
              });
         }
+    }
+
+    @Override
+    public Observable<ShopBrandResponse> getShopBrandDetail(boolean isCache,String menuId, String sessionKey) {
+        if (isCache){
+            return cacheHelper.getShopBrandDetail();
+        }else {
+            return productApi.getShopBrandDetail(menuId,sessionKey)
+                    .map(new Func1<ResponseModel<ShopBrandResponse>, ShopBrandResponse>() {
+                        @Override
+                        public ShopBrandResponse call(ResponseModel<ShopBrandResponse> shopBrandResponseResponseModel) {
+                            return shopBrandResponseResponseModel.getData();
+                        }
+                    }).doOnNext(new Action1<ShopBrandResponse>() {
+                        @Override
+                        public void call(ShopBrandResponse shopBrandResponse) {
+                            cacheHelper.saveShopBrandDetail(shopBrandResponse);
+                        }
+                    });
+        }
+
     }
 
     @Override

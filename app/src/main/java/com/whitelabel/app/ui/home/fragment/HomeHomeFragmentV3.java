@@ -19,8 +19,8 @@ import android.widget.RelativeLayout;
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.fragment.HomeBaseFragment;
-import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
@@ -29,6 +29,7 @@ import com.whitelabel.app.ui.home.adapter.CategoryDetailVerticalAdapter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomTextView;
@@ -95,6 +96,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         fragment.setArguments(bundle);
         return fragment;
     }
+
     @Override
     public void dissmissProgressDialog() {
         closeProgressDialog();
@@ -195,12 +197,12 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         }
     }
     @Override
-    public void loadData(CategoryDetailNewModel categoryDetailModel) {
+    public void loadData(final CategoryDetailNewModel categoryDetailModel) {
         if(getActivity()!=null) {
             mAdapter = new CategoryDetailVerticalAdapter(getActivity(), categoryDetailModel, mImageLoader);
-            mAdapter.setOnItemClickLitener(new CategoryDetailVerticalAdapter.OnItemClickLitener() {
+            mAdapter.setOnVerticalItemClickLitener(new IHomeItemClickListener.IVerticalItemClickLitener() {
                 @Override
-                public void onItemClick(CategoryDetailVerticalAdapter.ItemViewHolder itemViewHolder, int position) {
+                public void onItemClick(RecyclerView.ViewHolder itemViewHolder, int position) {
                     SVRAppserviceProductSearchResultsItemReturnEntity productEntity =null;
 
                     productEntity=mAdapter.getAllItemLists().get(position);
@@ -212,8 +214,14 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
                     bundle.putSerializable("product_info", getProductListItemToProductDetailsEntity(productEntity));
                     bundle.putString("imageurl", productEntity.getSmallImage());
                     intent.putExtras(bundle);
-                     getContext().startActivity(intent);
+                    getContext().startActivity(intent);
                     ((BaseActivity)getActivity()).startActivityTransitionAnim();
+                }
+            });
+            mAdapter.setOnHeaderClick(new IHomeItemClickListener.IHeaderItemClickListener() {
+                @Override
+                public void onItemClick(RecyclerView.ViewHolder headerViewHolder, int position) {
+                    PageIntentUtils.skipToSerachPage(getActivity(),categoryDetailModel.getBanners().get(position));
                 }
             });
             recyclerView1.setAdapter(mAdapter);

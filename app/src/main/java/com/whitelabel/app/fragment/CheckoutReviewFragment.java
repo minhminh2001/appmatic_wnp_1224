@@ -246,7 +246,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
             productName = paymentSaveReturnEntity.getReviewOrder().get(0).getName();
             checkoutReviewShoppingCartAdapter.notifyDataSetChanged();
             // click not jump
-//            lvShoppingCart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            lvShoppingCart.setOnItemClickListener(new AdapterView.IHorizontalItemClickListener() {
 //                @Override
 //                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                    Intent it = new Intent(getActivity(), ProductActivity.class);
@@ -334,7 +334,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
 //                productName = paymentSaveReturnEntity.getReviewOrder().get(0).getName();
 //                checkoutReviewShoppingCartAdapter.notifyDataSetChanged();
 //
-//                lvShoppingCart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                lvShoppingCart.setOnItemClickListener(new AdapterView.IHorizontalItemClickListener() {
 //                    @Override
 //                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                        Intent it = new Intent(getActivity(), ProductActivity.class);

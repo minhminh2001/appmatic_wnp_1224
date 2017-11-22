@@ -17,21 +17,17 @@ import android.widget.LinearLayout;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.data.DataManager;
-import com.whitelabel.app.data.service.BaseManager;
-import com.whitelabel.app.data.service.CommodityManager;
+import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.fragment.HomeBaseFragment;
-import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.home.adapter.CategoryDetailHorizontalAdapter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
-import com.whitelabel.app.ui.home.presenter.HomeCategoryDetailPresenterImpl;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomTextView;
@@ -50,6 +46,9 @@ import injection.modules.PresenterModule;
 public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContract.Presenter> implements HomeActivity.HomeFragmentCallback,SwipeRefreshLayout.OnRefreshListener,HomeCategoryDetailContract.View {
     public final static String ARG_CATEGORY_ID = "category_id";
     public final static String ARG_CATEGORY_INDEX = "category_index";
+    public final static String SHOP_BRAND_MENU_ID = "816";
+    public final static String LAST_TAB_INDICATOR_INDEX = "2";
+    public final static String ARG_CATEGORY_NAME = "SHOP BY BRAND";
     @BindView(R.id.recyclerView1)
     RecyclerView recyclerView1;
 //    @BindView(R.id.v_view)
@@ -123,9 +122,9 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
         if (getArguments() != null) {
             mCategoryId = (String) getArguments().get(ARG_CATEGORY_ID);
             mIndex = getArguments().getInt(ARG_CATEGORY_INDEX);
-
         }
     }
+
     @Override
     public void onRefresh() {
         if (getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
@@ -165,16 +164,19 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
          if(getActivity()!=null){
              CategoryDetailHorizontalAdapter mAdapter=
                      new CategoryDetailHorizontalAdapter(getActivity(),categoryDetailModel,mImageLoader);
-
-             mAdapter.setOnProductItemClickListener(new CategoryDetailHorizontalAdapter.OnItemClickListener() {
+             mAdapter.setOnProductItemClickListener(new IHomeItemClickListener.IHorizontalItemClickListener() {
                  @Override
                  public void onItemClick(RecyclerView.ViewHolder itemViewHolder, int parentPosition, int childPosition) {
                      startProductDetailActivity(categoryDetailModel.getCarousels().get(parentPosition).getItems().get(childPosition));
                  }
              });
-
-
-
+            mAdapter.setOnHeaderClick(new IHomeItemClickListener.IHeaderItemClickListener() {
+                @Override
+                public void onItemClick(RecyclerView.ViewHolder headerViewHolder, int position) {
+                    CategoryDetailNewModel.BannersBean bannersBean = categoryDetailModel.getBanners().get(position);
+                    PageIntentUtils.skipToSerachPage(getActivity(),bannersBean);
+                }
+            });
              LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity());
              recyclerView1.setLayoutManager(linearLayoutManager);
              recyclerView1.setAdapter(mAdapter);

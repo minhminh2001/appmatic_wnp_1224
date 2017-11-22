@@ -33,6 +33,7 @@ import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEnti
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
+import com.whitelabel.app.model.TMPProductListListPageEntity;
 import com.whitelabel.app.utils.FilterSortHelper;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
@@ -40,6 +41,7 @@ import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomTabCustomPageIndicator;
 import com.whitelabel.app.widget.FilterSortBottomView;
 
@@ -211,7 +213,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         FrameLayout flFilterSortContainer = (FrameLayout) mContentView.findViewById(R.id.flFilterSortContainer);
         flFilterSortContainer.setOnClickListener(this);
         if(getArguments()!=null) {
-            categoryId = (String) getArguments().getSerializable("data");
+            TMPProductListListPageEntity tmpProductListListPageEntity = (TMPProductListListPageEntity) getArguments().getSerializable("data");
+            categoryId=tmpProductListListPageEntity.getCategoryId();
         }
         String allCategoryName = null;
         int parentCategoryIndex = 0;

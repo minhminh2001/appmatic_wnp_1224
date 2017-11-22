@@ -18,10 +18,12 @@ import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 import com.whitelabel.app.ui.home.HomeContract;
 import com.whitelabel.app.ui.home.HomeHomeContract;
 import com.whitelabel.app.ui.home.MainContract;
+import com.whitelabel.app.ui.home.ShopBrandContract;
 import com.whitelabel.app.ui.home.presenter.HomeCategoryDetailPresenterImpl;
 import com.whitelabel.app.ui.home.presenter.HomeHomePresenterImpl;
 import com.whitelabel.app.ui.home.presenter.HomePresenterImpl;
 import com.whitelabel.app.ui.home.presenter.MainPresenterImpl;
+import com.whitelabel.app.ui.home.presenter.ShopBrandPresenterImpl;
 import com.whitelabel.app.ui.login.LoginFragmentContract;
 import com.whitelabel.app.ui.login.LoginFragmentPresenterImpl;
 import com.whitelabel.app.ui.productdetail.ProductDetailContract;
@@ -100,4 +102,11 @@ public class PresenterModule {
     public LoginFragmentContract.Presenter provideLoginFragment(IBaseManager iBaseManager, IAccountManager iAccountManager){
         return new LoginFragmentPresenterImpl(iBaseManager,iAccountManager);
     }
+
+    @Provides
+    @ActivityScope
+    public ShopBrandContract.Presenter provideShopBrandPresenter(ICommodityManager iCommodityManager,IBaseManager iBaseManager){
+        return new ShopBrandPresenterImpl(iCommodityManager,iBaseManager);
+    }
+
 }

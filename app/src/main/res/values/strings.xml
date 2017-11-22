@@ -571,7 +571,7 @@
     <string name="postal_code">Postal Code</string>
     <string name="success">success</string>
     <string name="nine">99+</string>
-    <string name="enter_characters_ignored">"Please enter 6 or more characters. Leading or trailing spaces will be ignored."</string>
+    <string name="enter_characters_ignored">"Please enter 4 or more characters. Leading or trailing spaces will be ignored."</string>
     <string name="password_match">Please make sure your passwords match.</string>
     <string name="account_associated">If there is an account associated with&#160;</string>
     <string name="reset_password">, you will receive an email with a link to reset your password.</string>

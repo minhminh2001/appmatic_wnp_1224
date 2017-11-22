@@ -277,7 +277,7 @@ public class JDataUtils {
             return false;
         }
 
-        return password.length() >= 6;
+        return password.length() >= 4;
     }
 
     public static boolean isPassword(EditText et) {

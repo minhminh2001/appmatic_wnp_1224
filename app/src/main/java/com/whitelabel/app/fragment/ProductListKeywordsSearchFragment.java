@@ -74,6 +74,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     public static final String SUGGESTION_ROW_TYPE_PRODUCT = "product";
     public static final String SUGGESTION_ROW_TYPE_MODEL_TYPE = "model_type";
     public static final int SUGGESTION_KEYWORD_TIMEOUT = 500;
+    public static final String FROM_OTHER_PAGE_KEYWORD = "FROM_OTHER_PAGE_KEYWORD";
     private final String TAG = "ProductListKeywordsSearchFragment";
     protected ProductListActivity productListActivity;
     private RequestErrorHelper requestErrorHelper;
@@ -119,6 +120,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     private ImageView mTopViewToggleIV;
     private RelativeLayout mTopFilterAndSortBarRL;
     private boolean mIsShowSwitchFilterBar;
+    private String fromOtherPageKeyWord ="";
+    private String fromOtherPageCategoryId ="";
 
     @Override
     public void onAttach(Context context) {
@@ -313,6 +316,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         Bundle bundle = getArguments();
         if (bundle != null) {
             productListListPageEntity = (TMPProductListListPageEntity) bundle.getSerializable("data");
+            fromOtherPageKeyWord = productListListPageEntity.getKeyWord();
+            fromOtherPageCategoryId =productListListPageEntity.getCategoryId();
         }
         RelativeLayout rlContainer = (RelativeLayout) mContentView.findViewById(R.id.rlContainer);
         RelativeLayout mBackRL = (RelativeLayout) mContentView.findViewById(R.id.rl_back);
@@ -483,6 +488,13 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
                         @Override
                         public void run() {
                             JViewUtils.showKeyboard(keywords);
+                            if (!TextUtils.isEmpty(fromOtherPageKeyWord)){
+                                cetKeywords.setText(fromOtherPageKeyWord);
+                                search();
+                            }
+                            if (!TextUtils.isEmpty(fromOtherPageCategoryId)){
+                                search();
+                            }
                         }
                     }, 200);
                 }
@@ -545,7 +557,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 //        mSearchSuggestionAdapter = new SearchSuggestionAdapter(getActivity(), mSuggestionsArrayList);
 //        mSuggestionListView.setAdapter(mSearchSuggestionAdapter);
 ////        startFilter();
-//        mSuggestionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        mSuggestionListView.setOnItemClickListener(new AdapterView.IHorizontalItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                onSuggestionItemClick(((SuggestsEntity) mSearchSuggestionAdapter.getItem(position)), true);
@@ -792,6 +804,9 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             if (!JDataUtils.isEmpty(cetKeywords)) {
                 keywords = cetKeywords.getText().toString().trim();
             }
+            if (!TextUtils.isEmpty(fromOtherPageCategoryId)){
+                productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setCategory_id(fromOtherPageCategoryId);
+            }
             productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ(keywords);
         } else if (SEARCH_TYPE_REFRESH == getSearchType()) {
             mDialog = JViewUtils.showProgressDialog(productListActivity);
@@ -856,11 +871,11 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         }
         //传入session是为判断产品是否被wish
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q, price,
+            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q,q ,price,
                     WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),"","search"
                    );
         } else {
-            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q, price, "", "","search");
+            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q,q, price, "", "","search");
         }
 
     }

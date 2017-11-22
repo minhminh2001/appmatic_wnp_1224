@@ -6,6 +6,7 @@ import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
+import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.SkipToAppStoreMarket;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 
@@ -33,4 +34,6 @@ public interface ICacheApi {
     rx.Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory();
     void saveFinishOrderAndMarkTime(long currentTime);
     SkipToAppStoreMarket getFirstOrderAndMarkTime();
+    rx.Observable<ShopBrandResponse> getShopBrandDetail();
+    void saveShopBrandDetail(ShopBrandResponse shopBrandResponse);
 }
