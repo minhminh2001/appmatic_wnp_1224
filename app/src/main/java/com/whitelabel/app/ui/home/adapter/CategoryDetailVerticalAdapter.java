@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whitelabel.app.BaseActivity;
-import com.whitelabel.app.GlobalData;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
@@ -199,10 +199,10 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == GlobalData.HEADER) {
+        if (viewType == Const.HEADER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_category_detail_header, null);
             return new HeaderViewHolder(view);
-        }else if (viewType == GlobalData.TITLE) {
+        }else if (viewType == Const.TITLE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_base_sellers, null);
             return new TitleViewHolder(view);
         } else {
@@ -213,11 +213,11 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
-            return GlobalData.HEADER;
+            return Const.HEADER;
         } else if (isTitleIndex(position)) {
-            return GlobalData.TITLE;
+            return Const.TITLE;
         } else {
-            return GlobalData.ITEM;
+            return Const.ITEM;
         }
 
     }

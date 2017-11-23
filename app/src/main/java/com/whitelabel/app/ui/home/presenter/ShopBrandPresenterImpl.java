@@ -1,16 +1,13 @@
 package com.whitelabel.app.ui.home.presenter;
 
-import com.whitelabel.app.GlobalData;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
-import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.ui.RxPresenter;
-import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 import com.whitelabel.app.ui.home.ShopBrandContract;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.RxUtil;
-import com.whitelabel.app.utils.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +16,6 @@ import javax.inject.Inject;
 
 import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by ray on 2017/4/13.
@@ -66,7 +61,6 @@ public class ShopBrandPresenterImpl extends RxPresenter<ShopBrandContract.View> 
         addSubscrebe(subscription);
     }
 
-
     private ArrayList<ShopBrandResponse.BrandsBean.ItemsBean> createTitleAndItemList(List<ShopBrandResponse.BrandsBean> brandsBeans) {
         int currentTitlePosition = 0;
         int currentItemPosition;
@@ -79,9 +73,10 @@ public class ShopBrandPresenterImpl extends RxPresenter<ShopBrandContract.View> 
                 if (i==0){
                     currentTitlePosition=i;
                 }else {
+                    //this currentTitlePosition after first,second and third titlePosition ... = currentTitlePositon + last list's size + 1 ,to create next new TitlePosition
                     currentTitlePosition=currentTitlePosition+brandsBeans.get(i-1).getItems().size() +1 ;
                 }
-                itemsBean.setItemType(GlobalData.HEADER);
+                itemsBean.setItemType(Const.HEADER);
                 itemsBean.setPosition(currentTitlePosition);
                 lists.add(itemsBean);
                 if (brandsBean.getItems()!=null && !brandsBean.getItems().isEmpty()){
@@ -89,7 +84,7 @@ public class ShopBrandPresenterImpl extends RxPresenter<ShopBrandContract.View> 
                     for (int j=0;j<items.size();j++){
                         ShopBrandResponse.BrandsBean.ItemsBean itemsBeanChild = items.get(j);
                         ShopBrandResponse.BrandsBean.ItemsBean itemsChildBean=new ShopBrandResponse.BrandsBean.ItemsBean();
-                        itemsChildBean.setItemType(GlobalData.ITEM);
+                        itemsChildBean.setItemType(Const.ITEM);
                         itemsChildBean.setTitle(itemsBeanChild.getTitle());
                         itemsChildBean.setIcon(itemsBeanChild.getIcon());
                         itemsChildBean.setLink(itemsBeanChild.getLink());
@@ -108,7 +103,7 @@ public class ShopBrandPresenterImpl extends RxPresenter<ShopBrandContract.View> 
         ArrayList lists=new ArrayList<>();
         if (brandsBeans!=null && !brandsBeans.isEmpty()){
             for (ShopBrandResponse.BrandsBean.ItemsBean itemsBean:brandsBeans){
-                if (GlobalData.HEADER==itemsBean.getItemType()){
+                if (Const.HEADER==itemsBean.getItemType()){
                     ShopBrandResponse.BrandsBean.ItemsBean bean=new ShopBrandResponse.BrandsBean.ItemsBean();
                     bean.setTitle(itemsBean.getTitle());
                     bean.setPosition(itemsBean.getPosition());

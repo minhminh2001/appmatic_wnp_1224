@@ -233,12 +233,13 @@ public class JDataUtils {
         return phone.matches("^\\d{8,11}$");
     }
 
-    //7<length<15, only digits
+    //, only digits  length>=7
     public static boolean isPhoneNumber(String phone) {
         if (isEmpty(phone)) {
             return false;
         }
-        return phone.matches("^\\d{7,15}$");
+//        return phone.matches("^\\d{7,15}$");
+        return phone.length()>=7;
     }
 
     public static boolean isPhone(EditText et) {

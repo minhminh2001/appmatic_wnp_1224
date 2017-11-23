@@ -143,6 +143,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rl_drawer_notification"
+                android:visibility="gone"
                 android:paddingLeft="16sp"
                 android:paddingRight="16sp"
                 android:layout_width="match_parent"

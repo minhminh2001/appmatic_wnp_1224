@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.whitelabel.app.GlobalData;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.IHomeItemClickListener;
@@ -56,7 +56,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         if (mCategoryDetailModel!=null && mCategoryDetailModel.getCarousels()!=null && !mCategoryDetailModel.getCarousels().isEmpty()){
             this.carousels.clear();
             List<CategoryDetailNewModel.CarouselsBean> carousels = mCategoryDetailModel.getCarousels();
-            addCarouselsBean("header",GlobalData.HEADER,0,null);
+            addCarouselsBean("header", Const.HEADER,0,null);
             int titlePosition;
             int itemPosition=0;
             //header already add 1 so i from 1 start
@@ -66,9 +66,9 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
                 itemPosition=titlePosition+1;
 
                 CategoryDetailNewModel.CarouselsBean carouselsBean = carousels.get(i-1);
-                addCarouselsBean(carouselsBean.getTitle(),GlobalData.TITLE,titlePosition,null);
+                addCarouselsBean(carouselsBean.getTitle(),Const.TITLE,titlePosition,null);
                 if (carouselsBean.getItems()!=null&&!carouselsBean.getItems().isEmpty()){
-                   addCarouselsBean(carouselsBean.getTitle(),GlobalData.ITEM,itemPosition,carouselsBean.getItems());
+                   addCarouselsBean(carouselsBean.getTitle(),Const.ITEM,itemPosition,carouselsBean.getItems());
                 }
             }
         }
@@ -103,15 +103,15 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemViewType(int position) {
-        return  !this.carousels.isEmpty()?this.carousels.get(position).getType():GlobalData.HEADER;
+        return  !this.carousels.isEmpty()?this.carousels.get(position).getType():Const.HEADER;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == GlobalData.HEADER) {
+        if (viewType == Const.HEADER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_category_detail_header, null);
             return new HeaderViewHolder(view);
-        } else if (viewType == GlobalData.TITLE) {
+        } else if (viewType == Const.TITLE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_base_sellers, null);
             return new TitleViewHolder(view);
         } else {

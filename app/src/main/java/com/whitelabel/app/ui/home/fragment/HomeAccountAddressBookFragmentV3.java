@@ -27,6 +27,7 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
      *
      * @return A new instance of fragment HomeAccountAddressBookFragmentV3.
      */
+    private List<AddressBook> addressBooks=new ArrayList<>();
     // TODO: Rename and change types and number of parameters
     public static HomeAccountAddressBookFragmentV3 newInstance(boolean useCache) {
         HomeAccountAddressBookFragmentV3 fragment = new HomeAccountAddressBookFragmentV3();
@@ -37,6 +38,7 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
     }
     @Override
     public List<AddressBook> handlerAddressData(List<AddressBook> addressBooks) {
+        this.addressBooks=addressBooks;
          ArrayList<AddressBook> mBeans = new ArrayList<AddressBook>();
         for (int i = 0; i < addressBooks.size(); i++) {
             AddressBook addressBook = addressBooks.get(i);
@@ -94,7 +96,7 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
     @Override
     public void addAddressBtnOnClick() {
         Intent intent=new Intent(getActivity(), AddAddressActivity.class);
-        intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT,true);
+        intent.putExtra(AddAddressActivity.EXTRA_ADDRESS_LIST_SIZE,this.addressBooks.size());
         getParentFragment().startActivityForResult(intent,REQUEST_ADD_ADDRESS);
         ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }

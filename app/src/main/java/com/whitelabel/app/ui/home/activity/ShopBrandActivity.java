@@ -10,12 +10,10 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.whitelabel.app.BaseActivity;
-import com.whitelabel.app.GlobalData;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.callback.WheelPickerCallback;
-import com.whitelabel.app.fragment.ProductListKeywordsSearchFragment;
 import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
@@ -103,7 +101,7 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
             @Override
             public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
                 int type = rcvBrandList.getAdapter().getItemViewType(position);
-                if ( GlobalData.HEADER == type) {
+                if ( Const.HEADER == type) {
                     return 3;
                 } else{
                     return 1;
@@ -116,7 +114,7 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (!titlesAnditems.isEmpty() && titlesAnditems.size()>position){
                     ShopBrandResponse.BrandsBean.ItemsBean itemsBean = titlesAnditems.get(position);
-                    if (GlobalData.ITEM==itemsBean.getItemType()){
+                    if (Const.ITEM==itemsBean.getItemType()){
 //                        skipToSearchPage(position);
                         PageIntentUtils.skipToSerachPage(mContext,itemsBean);
                     }
@@ -133,7 +131,6 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
 
     @Override
     public void loadData(List<ShopBrandResponse.BrandsBean.ItemsBean> itemsBean) {
-        this.titlesAnditems.clear();
         this.titlesAnditems=itemsBean;
         recycViewAdapter.setNewData(this.titlesAnditems);
         recycViewAdapter.notifyDataSetChanged();
@@ -141,7 +138,6 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
 
     @Override
     public void loadTitleData(List<ShopBrandResponse.BrandsBean.ItemsBean> itemsBean) {
-        titles.clear();
         titles=itemsBean;
         initTopBrandSelect();
     }

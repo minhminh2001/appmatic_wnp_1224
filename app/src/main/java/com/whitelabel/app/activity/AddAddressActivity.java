@@ -94,6 +94,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     private MyAccountDao dao;
     private int height;
     public final static  String  EXTRA_USE_DEFAULT="use_default";
+    public final static  String  EXTRA_ADDRESS_LIST_SIZE="address_list_size";
     private int[] location = new int[2];
     private static class DataHandler extends Handler{
         private final WeakReference<AddAddressActivity> mActivity;
@@ -243,10 +244,13 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         String TAG = this.getClass().getSimpleName();
         dao=new MyAccountDao(TAG, handler);
         initToolBar();
-        boolean firstAdd = getIntent().getBooleanExtra(EXTRA_USE_DEFAULT, true);
-        if(!firstAdd){
-            findViewById(R.id.relative14).setVisibility(View.GONE);
-            findViewById(R.id.rl_default_billing).setVisibility(View.GONE);
+//        boolean firstAdd = getIntent().getBooleanExtra(EXTRA_USE_DEFAULT, true);
+        if (getIntent()!=null){
+            int addressSize = getIntent().getIntExtra(EXTRA_ADDRESS_LIST_SIZE,0);
+            if (addressSize==0){
+                findViewById(R.id.relative14).setVisibility(View.GONE);
+                findViewById(R.id.rl_default_billing).setVisibility(View.GONE);
+            }
         }
         v_add_phone_line=findViewById(R.id.v_add_phone_line);
         vAddDayPhoneLine=findViewById(R.id.v_add_day_phone_line);

@@ -148,7 +148,7 @@
     <string name="Qunatity">Quantity:&#160;</string>
     <!--checkout module-->
     <string name="paypal_payment">Paypal Express Checkout</string>
-    <string name="shipping">SHIPPING</string>
+    <string name="shipping">ADDRESS</string>
     <string name="payment">PAYMENT</string>
     <string name="review">REVIEW</string>
     <string name="CONTINUE">CONTINUE</string>

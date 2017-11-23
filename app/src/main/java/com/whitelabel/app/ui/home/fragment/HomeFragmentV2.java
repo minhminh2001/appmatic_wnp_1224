@@ -332,7 +332,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     };
 
     private void skipBrandPage(int index){
-        if (!categoryArrayList.isEmpty() && categoryArrayList.size()>0 && index==categoryArrayList.size()-1){
+        if (categoryArrayList.size()>0 && index==categoryArrayList.size()-1){
             vpCategoryViewPager.setCurrentItem(0);
             String menuId = categoryArrayList.get(index).getMenuId();
             PageIntentUtils.skipToBrandListPage(getActivity(),menuId,categoryName);
