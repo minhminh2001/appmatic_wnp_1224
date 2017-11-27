@@ -755,7 +755,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 //                        img3_error.setVisibility(View.VISIBLE);
                         iv_phone_correct.setVisibility(View.INVISIBLE);
                         tv_phone_text2.setTextColor(ContextCompat.getColor(getActivity(),R.color.redC2060A));
-                        tv_phone_text2.setText(getResources().getString(R.string.loginregister_emailbound_tips_error_phone_number_format));
+                        tv_phone_text2.setText(getResources().getString(R.string.address_phone_error_hint));
                         return false;
                     }
                 }

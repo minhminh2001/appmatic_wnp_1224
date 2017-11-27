@@ -9,6 +9,7 @@ import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
+import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.WishDelEntityResult;
 
 import java.util.Map;
@@ -43,6 +44,8 @@ public interface ProductApi {
     public Observable<SVRAppserviceCatalogSearchReturnEntity>  getCategoryList();
     @GET("appservice/category/menuDetail")
     public Observable<ResponseModel<CategoryDetailNewModel>>  getCategoryDetail(@Query("menu_id") String categoryId , @Query("session_key") String sessionKey);
+    @GET("appservice/category/menuDetail")
+    public Observable<ResponseModel<ShopBrandResponse>>  getShopBrandDetail(@Query("menu_id") String categoryId , @Query("session_key") String sessionKey);
     @GET("appservice/product/getRelatedProducts")
     public  Observable<ResponseModel<BindProductResponseModel>>  getRelateProducts(@Query("productId") String productId);
     @FormUrlEncoded

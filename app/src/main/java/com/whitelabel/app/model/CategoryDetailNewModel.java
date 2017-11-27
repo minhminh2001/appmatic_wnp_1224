@@ -91,7 +91,7 @@ public class CategoryDetailNewModel implements Serializable {
                 '}';
     }
 
-    public static class BannersBean{
+    public static class BannersBean implements Serializable{
         private String image;
         private int image_width;
         private int image_height;

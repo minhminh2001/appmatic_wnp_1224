@@ -7,13 +7,6 @@ import com.whitelabel.app.utils.JToolUtils;
  * Created by Administrator on 2016/12/20.
  */
 public class GlobalData {
-    //recyclerview diff data type
-    public final static int HEADER = 1;
-    public final static int TITLE = 2;
-    public final static int ITEM = 3;
-    public final static int FOOTER = 4;
-
-
     public static String oneAll_Subdomain="";
     public static String appVersion = "";
     public static String serviceVersion = "";

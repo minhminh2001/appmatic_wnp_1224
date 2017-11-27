@@ -230,7 +230,7 @@ public class ProductDao extends BaseHttp {
     }
 
     public void productSearch(String storeId, String p, String limit, String order, String dir,
-                              String brand, String categoryId, String modelType, String q, String price, String sessionKey,String key,String fromPage) {
+                              String brand, String categoryId, String modelType, String q,String keywords, String price, String sessionKey,String key,String fromPage) {
         params = new TreeMap<>();
         params.put("store_id", storeId);
         params.put("p", p);
@@ -252,7 +252,10 @@ public class ProductDao extends BaseHttp {
             params.put("model_type", modelType);
         }
         if (!TextUtils.isEmpty(q)) {
-            params.put("keywords", q);
+            params.put("q", q);
+        }
+        if (!TextUtils.isEmpty(keywords)) {
+            params.put("keywords", keywords);
         }
         if (!TextUtils.isEmpty(price)) {
             params.put("price", price);

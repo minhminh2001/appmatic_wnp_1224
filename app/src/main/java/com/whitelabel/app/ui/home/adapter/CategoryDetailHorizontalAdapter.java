@@ -2,10 +2,8 @@ package com.whitelabel.app.ui.home.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,16 +13,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.whitelabel.app.GlobalData;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
-import com.whitelabel.app.adapter.FlowViewAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.utils.GlideImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.logger.Logger;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +38,11 @@ import butterknife.ButterKnife;
 public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private CategoryDetailNewModel mCategoryDetailModel;
     private final ImageLoader mImageLoader;
+    public static final int NORMAL_BANNER_DELAY_TIME=3000;
 
     private   double screenWidth;
-    private   OnItemClickListener onProductClick;
+    private IHomeItemClickListener.IHorizontalItemClickListener onProductClick;
+    private IHomeItemClickListener.IHeaderItemClickListener onHeaderClick;
     List<CategoryDetailNewModel.CarouselsBean> carousels=new ArrayList<>();
     public CategoryDetailHorizontalAdapter(Activity activity, CategoryDetailNewModel categoryDetailModel, ImageLoader imageLoader) {
         this.mImageLoader = imageLoader;
@@ -54,7 +56,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         if (mCategoryDetailModel!=null && mCategoryDetailModel.getCarousels()!=null && !mCategoryDetailModel.getCarousels().isEmpty()){
             this.carousels.clear();
             List<CategoryDetailNewModel.CarouselsBean> carousels = mCategoryDetailModel.getCarousels();
-            addCarouselsBean("header",GlobalData.HEADER,0,null);
+            addCarouselsBean("header", Const.HEADER,0,null);
             int titlePosition;
             int itemPosition=0;
             //header already add 1 so i from 1 start
@@ -64,9 +66,9 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
                 itemPosition=titlePosition+1;
 
                 CategoryDetailNewModel.CarouselsBean carouselsBean = carousels.get(i-1);
-                addCarouselsBean(carouselsBean.getTitle(),GlobalData.TITLE,titlePosition,null);
+                addCarouselsBean(carouselsBean.getTitle(),Const.TITLE,titlePosition,null);
                 if (carouselsBean.getItems()!=null&&!carouselsBean.getItems().isEmpty()){
-                   addCarouselsBean(carouselsBean.getTitle(),GlobalData.ITEM,itemPosition,carouselsBean.getItems());
+                   addCarouselsBean(carouselsBean.getTitle(),Const.ITEM,itemPosition,carouselsBean.getItems());
                 }
             }
         }
@@ -91,25 +93,25 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
             ButterKnife.bind(this, view);
         }
     }
-    public void setOnProductItemClickListener(OnItemClickListener bestSellersClickListener){
+    public void setOnProductItemClickListener(IHomeItemClickListener.IHorizontalItemClickListener bestSellersClickListener){
         this.onProductClick=bestSellersClickListener;
     }
 
+    public void setOnHeaderClick(IHomeItemClickListener.IHeaderItemClickListener onHeaderClick) {
+        this.onHeaderClick = onHeaderClick;
+    }
 
     @Override
     public int getItemViewType(int position) {
-        return  !this.carousels.isEmpty()?this.carousels.get(position).getType():GlobalData.HEADER;
+        return  !this.carousels.isEmpty()?this.carousels.get(position).getType():Const.HEADER;
     }
-    public interface OnItemClickListener {
 
-        void onItemClick(RecyclerView.ViewHolder itemViewHolder,int parentPosition, int childPosition);
-    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == GlobalData.HEADER) {
+        if (viewType == Const.HEADER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_category_detail_header, null);
             return new HeaderViewHolder(view);
-        } else if (viewType == GlobalData.TITLE) {
+        } else if (viewType == Const.TITLE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_base_sellers, null);
             return new TitleViewHolder(view);
         } else {
@@ -120,18 +122,30 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof  HeaderViewHolder){
-            HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
+            final HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (mCategoryDetailModel == null) return;
             int   imageHeight= (int) (screenWidth*(348.0/750));
             headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
-            if (TextUtils.isEmpty(mCategoryDetailModel.getCategory_img())) {
+            if (mCategoryDetailModel.getBanners().isEmpty()) {
                 headerViewHolder.detailViewpager.setVisibility(View.VISIBLE);
             } else {
                 if (headerViewHolder.detailViewpager.getTag() == null) {
                     List<String> imgs=new ArrayList<>();
-                    imgs.add(mCategoryDetailModel.getCategory_img());
-                    headerViewHolder.detailViewpager.setAdapter(new FlowViewAdapter(createImageViewList(headerViewHolder.itemView.getContext(),
-                            mImageLoader, imgs,imageHeight)));
+//                    imgs.add(mCategoryDetailModel.getCategory_img());
+//                    headerViewHolder.detailViewpager.setAdapter(new FlowViewAdapter(createImageViewList(headerViewHolder.itemView.getContext(),
+//                            mImageLoader, imgs,imageHeight)));
+                    imgs.addAll(createImageUrlList(headerViewHolder.itemView.getContext(),mCategoryDetailModel.getBanners(),imageHeight));
+                    headerViewHolder.detailViewpager.setImages(imgs)
+                            .setImageLoader(new GlideImageLoader())
+                            .setBannerStyle(BannerConfig.NOT_INDICATOR)
+                            .setDelayTime(NORMAL_BANNER_DELAY_TIME)
+                            .setOnBannerListener(new OnBannerListener() {
+                                @Override
+                                public void OnBannerClick(int i) {
+                                    onHeaderClick.onItemClick(headerViewHolder,i);
+                                }
+                            })
+                            .start();
                     headerViewHolder.detailViewpager.setTag("use");
                 }
             }
@@ -179,9 +193,21 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         }
         return imgs;
     }
+
+    private List<String> createImageUrlList(Context context, List<CategoryDetailNewModel.BannersBean> images,int  imageHeight) {
+        List<String> imgs = new ArrayList<>();
+        for (int i = 0; i < images.size(); i++) {
+            CategoryDetailNewModel.BannersBean bannersBeanResponse = images.get(i);
+            String norUrl=bannersBeanResponse.getImage();
+            String imageServerUrlByWidthHeight = JImageUtils.getImageServerUrlByWidthHeight(context, norUrl, (int) screenWidth, imageHeight);
+            imgs.add(imageServerUrlByWidthHeight);
+        }
+        return imgs;
+    }
+
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.detail_viewpager)
-        ViewPager detailViewpager;
+        Banner detailViewpager;
         @BindView(R.id.ll_tips)
         LinearLayout llTips;
         @BindView(R.id.rl_switch_img)
@@ -203,4 +229,6 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
             ButterKnife.bind(this, view);
         }
     }
+
+
 }

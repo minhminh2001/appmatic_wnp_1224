@@ -14,6 +14,7 @@ import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
+import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.SkipToAppStoreMarket;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.JDataUtils;
@@ -36,6 +37,7 @@ public class PreferHelper  implements ICacheApi{
     private static final String TABLE_CONFIG="config";
     private static final String TABLE_CURRENCY="currency";
     public static final String IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG ="IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG";
+    public static final String SHOP_BRAND_DETAIL ="SHOP_BRAND_DETAIL";
     public String  getVersionNumber(){
         RemoteConfigResonseModel.RetomeConfig config=getLocalConfigModel();
         String currentVersion="";
@@ -225,5 +227,29 @@ public class PreferHelper  implements ICacheApi{
             market = new Gson().fromJson(beanStr, SkipToAppStoreMarket.class);
         }
         return market;
+    }
+
+    @Override
+    public Observable<ShopBrandResponse> getShopBrandDetail() {
+        return rx.Observable.fromCallable(new Callable<ShopBrandResponse>() {
+            @Override
+            public ShopBrandResponse call() throws Exception {
+                String shopStr=AppPrefs.getString(SHOP_BRAND_DETAIL,"");
+                Gson gson=new Gson();
+                ShopBrandResponse shopBrandResponse=null;
+                if(!TextUtils.isEmpty(shopStr)) {
+                    shopBrandResponse = gson.fromJson(shopStr, ShopBrandResponse.class);
+                }
+                return shopBrandResponse;
+            }
+        });
+    }
+
+    @Override
+    public void saveShopBrandDetail(ShopBrandResponse shopBrandResponse) {
+        Gson gson = new Gson();
+        ShopBrandResponse response=new ShopBrandResponse();
+        String marketString = gson.toJson(response);
+        AppPrefs.putString(SHOP_BRAND_DETAIL,marketString);
     }
 }

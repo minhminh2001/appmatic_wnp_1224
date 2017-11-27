@@ -3,7 +3,6 @@ package com.whitelabel.app.ui.home.adapter;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
@@ -20,8 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.dao.ShoppingCarDao;
@@ -133,9 +132,9 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_curation_productlist_item, null);
         return new ItemViewHolder(view);
     }
-    private CategoryDetailHorizontalAdapter.OnItemClickListener   onItemClickLitener;
+    private IHomeItemClickListener.IHorizontalItemClickListener onItemClickLitener;
 
-    public  void setOnItemClickLitener(CategoryDetailHorizontalAdapter.OnItemClickListener  onItemClickLitener){
+    public  void setOnItemClickLitener(IHomeItemClickListener.IHorizontalItemClickListener onItemClickLitener){
         this.onItemClickLitener=onItemClickLitener;
     }
     @Override

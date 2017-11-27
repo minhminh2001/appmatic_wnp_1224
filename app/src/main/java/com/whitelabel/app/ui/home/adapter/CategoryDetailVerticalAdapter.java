@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -23,12 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whitelabel.app.BaseActivity;
-import com.whitelabel.app.GlobalData;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
-import com.whitelabel.app.adapter.FlowViewAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.dao.ShoppingCarDao;
@@ -40,13 +39,16 @@ import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.common.WishlistObservable;
 import com.whitelabel.app.utils.GaTrackHelper;
+import com.whitelabel.app.utils.GlideImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JToolUtils;
-import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomTextView;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -197,10 +199,10 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == GlobalData.HEADER) {
+        if (viewType == Const.HEADER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_category_detail_header, null);
             return new HeaderViewHolder(view);
-        }else if (viewType == GlobalData.TITLE) {
+        }else if (viewType == Const.TITLE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_base_sellers, null);
             return new TitleViewHolder(view);
         } else {
@@ -211,11 +213,11 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
-            return GlobalData.HEADER;
+            return Const.HEADER;
         } else if (isTitleIndex(position)) {
-            return GlobalData.TITLE;
+            return Const.TITLE;
         } else {
-            return GlobalData.ITEM;
+            return Const.ITEM;
         }
 
     }
@@ -224,7 +226,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof HeaderViewHolder) {
-            HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
+            final HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (categoryDetailModel == null) return;
 //            int imageHeight = (int) (categoryDetailModel.getImage_height() * (screenWidth/categoryDetailModel.getImage_width()));
 //            if(imageHeight==0){
@@ -232,13 +234,26 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
 //            }
             headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
 
-            if (TextUtils.isEmpty(categoryDetailModel.getCategory_img())) {
+            if (categoryDetailModel.getBanners().isEmpty()) {
                 headerViewHolder.detailViewpager.setVisibility(View.VISIBLE);
             } else {
                 if (headerViewHolder.detailViewpager.getTag() == null) {
                     List<String> imgs=new ArrayList<>();
-                    imgs.add(categoryDetailModel.getCategory_img());
-                    headerViewHolder.detailViewpager.setAdapter(new FlowViewAdapter(createImageViewList(headerViewHolder.itemView.getContext(), mImageLoader, imgs,imageHeight)));
+//                    imgs.add(categoryDetailModel.getCategory_img());
+                    //                    headerViewHolder.detailViewpager.setAdapter(new FlowViewAdapter(createImageViewList(headerViewHolder.itemView.getContext(), mImageLoader, imgs,imageHeight)));
+                    imgs.addAll(createImageUrlList(headerViewHolder.itemView.getContext(),categoryDetailModel.getBanners(),imageHeight));
+                    headerViewHolder.detailViewpager.setImages(imgs)
+                            .setImageLoader(new GlideImageLoader())
+                            .setBannerStyle(BannerConfig.NOT_INDICATOR)
+                            .setDelayTime(CategoryDetailHorizontalAdapter.NORMAL_BANNER_DELAY_TIME)
+                            .setOnBannerListener(new OnBannerListener() {
+                                @Override
+                                public void OnBannerClick(int i) {
+                                    onHeaderClick.onItemClick(headerViewHolder,i);
+                                }
+                            })
+                            .start();
+
                     headerViewHolder.detailViewpager.setTag("use");
                 }
             }
@@ -294,8 +309,8 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                 itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(onItemClickLitener!=null){
-                            onItemClickLitener.onItemClick(itemViewHolder,position);
+                        if(onVerticalItemClickLitener !=null){
+                            onVerticalItemClickLitener.onItemClick(itemViewHolder,position);
                         }
                     }
                 });
@@ -433,18 +448,20 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         }
     }
 
-    public interface OnItemClickLitener {
-        void onItemClick(ItemViewHolder itemViewHolder, int position);
+
+
+
+    private IHomeItemClickListener.IVerticalItemClickLitener onVerticalItemClickLitener;
+    private IHomeItemClickListener.IHeaderItemClickListener onHeaderClick;
+
+    public  void setOnVerticalItemClickLitener(IHomeItemClickListener.IVerticalItemClickLitener onVerticalItemClickLitener){
+        this.onVerticalItemClickLitener = onVerticalItemClickLitener;
     }
 
-
-    private OnItemClickLitener onItemClickLitener;
-
-
-    public  void  setOnItemClickLitener(OnItemClickLitener  onItemClickLitener){
-        this.onItemClickLitener=onItemClickLitener;
-
+    public void setOnHeaderClick(IHomeItemClickListener.IHeaderItemClickListener onHeaderClick) {
+        this.onHeaderClick = onHeaderClick;
     }
+
     @Override
     public int getItemCount() {
         return allItemLists.isEmpty()?1:allItemLists.size();
@@ -545,6 +562,16 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         }
         return imgs;
     }
+    private List<String> createImageUrlList(Context context, List<CategoryDetailNewModel.BannersBean> images,int  imageHeight) {
+        List<String> imgs = new ArrayList<>();
+        for (int i = 0; i < images.size(); i++) {
+            CategoryDetailNewModel.BannersBean bannersBeanResponse = images.get(i);
+            String norUrl=bannersBeanResponse.getImage();
+            String imageServerUrlByWidthHeight = JImageUtils.getImageServerUrlByWidthHeight(context, norUrl, (int) screenWidth, imageHeight);
+            imgs.add(imageServerUrlByWidthHeight);
+        }
+        return imgs;
+    }
     static class TitleViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.line)
         View line;
@@ -559,7 +586,8 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
 
     public static class HeaderViewHolder extends  RecyclerView.ViewHolder {
         @BindView(R.id.detail_viewpager)
-        ViewPager detailViewpager;
+//        ViewPager detailViewpager;
+        Banner detailViewpager;
         @BindView(R.id.ll_tips)
         LinearLayout llTips;
         @BindView(R.id.rl_switch_img)

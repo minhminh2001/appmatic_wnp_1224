@@ -190,7 +190,7 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
         tvContinueShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //checkoutPaymentStatusActivity.startNextActivity(null, HomeActivity.class, true);
+                //checkoutPaymentStatusActivity.startGuidePage(null, HomeActivity.class, true);
                 Intent intent = new Intent(checkoutPaymentStatusActivity, HomeActivity.class);
                 startActivity(intent);
                 checkoutPaymentStatusActivity.startActivityTransitionAnim();

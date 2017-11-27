@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.whitelabel.app.GlobalData;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.model.MyAccountOrderOuter;
 import com.whitelabel.app.widget.RefreshLoadMoreRecyclerView;
@@ -45,10 +45,10 @@ public class OrderListRecyclerViewTextAdapter extends RecyclerView.Adapter<Recyc
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType==GlobalData.ITEM){
+        if (viewType== Const.ITEM){
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_myorder_list_new_item_text, parent,false);
             return new OrderListholder(view);
-        }else if (viewType==GlobalData.FOOTER){
+        }else if (viewType==Const.FOOTER){
             RefreshLoadMoreRecyclerView.CustomDragRecyclerFooterView footerView = new RefreshLoadMoreRecyclerView.CustomDragRecyclerFooterView(parent.getContext());
             return new VHFooter(footerView);
         }
@@ -87,9 +87,9 @@ public class OrderListRecyclerViewTextAdapter extends RecyclerView.Adapter<Recyc
     @Override
     public int getItemViewType(int position) {
         if (isPositonFooter(position)){
-            return GlobalData.FOOTER;
+            return Const.FOOTER;
         }else {
-            return GlobalData.ITEM;
+            return Const.ITEM;
         }
     }
 

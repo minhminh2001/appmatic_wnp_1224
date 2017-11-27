@@ -208,6 +208,7 @@
         android:layout_marginTop="6dp"
         android:background="@drawable/bg_normal_circular"
         android:text="@string/product_detail_addtocart"
+        android:visibility="gone"
         android:textColor="@color/buttonTextColorPrimary"
         android:textSize="13sp" />
 

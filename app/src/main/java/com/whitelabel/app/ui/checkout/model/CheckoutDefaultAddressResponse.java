@@ -14,6 +14,7 @@ public class CheckoutDefaultAddressResponse implements Serializable {
     private AddressBook primaryBilling;
     private AddressBook  primaryShipping;
     private List<ShippingMethodBean> shippingMethod;
+    private PickUpAddress pickupAddress;
     public AddressBook getPrimaryBilling() {
         return primaryBilling;
     }
@@ -78,6 +79,26 @@ public class CheckoutDefaultAddressResponse implements Serializable {
 
         public void setChecked(int checked) {
             this.checked = checked;
+        }
+    }
+    private static class PickUpAddress{
+        private String title;
+        private String address;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
         }
     }
 }

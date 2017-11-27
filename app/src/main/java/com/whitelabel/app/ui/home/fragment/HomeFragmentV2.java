@@ -32,6 +32,7 @@ import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomDialog;
@@ -64,6 +65,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     private int  fragmentType;
     private final static String PARAM1="param1";
     private boolean isFirstLoading=true;
+    String categoryName = "";
     @Override
     public void inject() {
         DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
@@ -293,7 +295,6 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
         }
         @Override
         public CharSequence getPageTitle(int position) {
-            String categoryName = null;
             if (categoryArrayList != null && position >= 0 && categoryArrayList.size() > position) {
                 final int categoryArrayListSize = categoryArrayList.size();
                 position = position % categoryArrayListSize;
@@ -323,10 +324,19 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             mFragments.get(currentCategoryFragmentIndex).onPause();
             currentCategoryFragmentIndex = position;
             mFragments.get(position).onResume();
+            skipBrandPage(position);
         }
         @Override
         public void onPageScrollStateChanged(int state) {
         }
     };
+
+    private void skipBrandPage(int index){
+        if (categoryArrayList.size()>0 && index==categoryArrayList.size()-1){
+            vpCategoryViewPager.setCurrentItem(0);
+            String menuId = categoryArrayList.get(index).getMenuId();
+            PageIntentUtils.skipToBrandListPage(getActivity(),menuId,categoryName);
+        }
+    }
 
 }
