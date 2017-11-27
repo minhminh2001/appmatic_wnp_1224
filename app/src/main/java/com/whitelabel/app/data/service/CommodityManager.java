@@ -8,6 +8,7 @@ import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.ApiException;
+import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ProductDetailModel;
@@ -142,6 +143,31 @@ public class CommodityManager  implements ICommodityManager{
                  }
              }
          });
+    }
+
+
+    @Override
+    public Observable<BindProductResponseModel> getRelateProducts(String productId) {
+        return productApi.getRelateProducts(productId).flatMap(new Func1<ResponseModel<BindProductResponseModel>, Observable<BindProductResponseModel>>() {
+            @Override
+            public Observable<BindProductResponseModel> call(ResponseModel<BindProductResponseModel> bindProductResponseModelResponseModel) {
+                if (bindProductResponseModelResponseModel.getStatus()==-1){
+                    return  Observable.error(new ApiException(bindProductResponseModelResponseModel.getErrorMessage()));
+                }else {
+                    return Observable.just(bindProductResponseModelResponseModel.getData());
+                }
+            }
+        });
+    }
+
+    @Override
+    public Observable<ResponseModel> addBoughtTogether(String productId,String sessionKey){
+        return productApi.addBoughtTogether(productId,sessionKey).map(new Func1<ResponseModel, ResponseModel>() {
+            @Override
+            public ResponseModel call(ResponseModel responseModel) {
+              return responseModel;
+            }
+        });
     }
 
 

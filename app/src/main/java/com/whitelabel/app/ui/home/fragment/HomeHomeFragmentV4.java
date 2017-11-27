@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.CategoryDetailNewModel;
@@ -31,6 +32,9 @@ import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomTextView;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import injection.components.DaggerPresenterComponent1;
@@ -78,6 +82,8 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     private String mCategoryId;
     private int mIndex;
     private ImageLoader mImageLoader;
+    private CategoryDetailNewModel categoryDetailModel;
+    CategoryDetailHorizontalAdapter mAdapter;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -162,8 +168,10 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public void loadData(final CategoryDetailNewModel categoryDetailModel) {
          if(getActivity()!=null){
-             CategoryDetailHorizontalAdapter mAdapter=
-                     new CategoryDetailHorizontalAdapter(getActivity(),categoryDetailModel,mImageLoader);
+             this.categoryDetailModel =categoryDetailModel;
+//             this.categoryDetailModel=categoryDetailModel;
+             mAdapter=
+                     new CategoryDetailHorizontalAdapter(getActivity(),this.categoryDetailModel,mImageLoader);
              mAdapter.setOnProductItemClickListener(new IHomeItemClickListener.IHorizontalItemClickListener() {
                  @Override
                  public void onItemClick(RecyclerView.ViewHolder itemViewHolder, int parentPosition, int childPosition) {
@@ -188,6 +196,39 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
              });
          }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        notifyBackThisPageChangeWishIconStatus();
+    }
+
+    private void notifyBackThisPageChangeWishIconStatus() {
+        if (categoryDetailModel !=null && categoryDetailModel.getCarousels()!=null ){
+            List<CategoryDetailNewModel.CarouselsBean> carousels = categoryDetailModel.getCarousels();
+            for (CategoryDetailNewModel.CarouselsBean carouselsBean:carousels ) {
+                if (carouselsBean.getItems()!=null){
+                    List<SVRAppserviceProductSearchResultsItemReturnEntity> items = carouselsBean.getItems();
+                    for (SVRAppserviceProductSearchResultsItemReturnEntity entity:items){
+                        OperateProductIdPrecache productIdAndIsLike = WhiteLabelApplication.getAppConfiguration().getProductIdAndIsLike();
+                       if (productIdAndIsLike!=null){
+                           String productId = productIdAndIsLike.getProductId();
+                           int isLike = productIdAndIsLike.getIsLike();
+                           boolean unLogin = productIdAndIsLike.isUnLogin();
+                           if (productId!=null && productId.equals(entity.getProductId()) && !unLogin){
+                               entity.setIsLike(isLike);
+                               WhiteLabelApplication.getAppConfiguration().setProductIdAndIsLikeNull();
+                               if (mAdapter!=null){
+                                   mAdapter.notifyDataSetChanged();
+                               }
+                           }
+                       }
+                    }
+                }
+            }
+        }
+    }
+
     private ProductListItemToProductDetailsEntity getProductListItemToProductDetailsEntity(SVRAppserviceProductSearchResultsItemReturnEntity e) {
         ProductListItemToProductDetailsEntity entity = new ProductListItemToProductDetailsEntity();
         entity.setBrand(e.getBrand());

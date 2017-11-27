@@ -709,9 +709,9 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
         if (onblurAll(R.id.edit_addaddress_firstName) && onblurAll(R.id.edit_addaddress_lastName)  && onblurAll(R.id.edit_addaddresss_country)
                 && onblurAll(R.id.edit_addaddresss_address1)
                 && onblurAll(R.id.edit_addaddresss_city)
+                &&onblurAll(R.id.edit_addaddresss_state)
                 && onblurAll(R.id.edit_addaddresss_eg)
-                &&onblurAll(R.id.edit_day_phone_eg)
-                &&onblurAll(R.id.edit_addaddresss_state)) {
+                &&onblurAll(R.id.edit_day_phone_eg)) {
 
             mDialog=JViewUtils.showProgressDialog(AddAddressActivity.this);
             String region="";

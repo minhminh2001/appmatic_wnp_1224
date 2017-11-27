@@ -21,6 +21,7 @@ import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.FragmentOnAdapterCallBack;
 import com.whitelabel.app.callback.ProductListFilterHideCallBack;
 import com.whitelabel.app.dao.ProductDao;
@@ -518,6 +519,32 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
     public void onLoadMore() {
         searchType = SEARCH_TYPE_LOADMORE;
         search();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        notifyBackThisPageChangeWishIconStatus();
+    }
+
+    private void notifyBackThisPageChangeWishIconStatus() {
+        if (productItemEntityArrayList !=null ) {
+            for (SVRAppserviceProductSearchResultsItemReturnEntity entity : productItemEntityArrayList) {
+                OperateProductIdPrecache productIdAndIsLike = WhiteLabelApplication.getAppConfiguration().getProductIdAndIsLike();
+                if (productIdAndIsLike != null) {
+                    String productId = productIdAndIsLike.getProductId();
+                    int isLike = productIdAndIsLike.getIsLike();
+                    boolean unLogin = productIdAndIsLike.isUnLogin();
+                    if (productId != null && productId.equals(entity.getProductId()) && !unLogin) {
+                        entity.setIsLike(isLike);
+                        WhiteLabelApplication.getAppConfiguration().setProductIdAndIsLikeNull();
+                        if (productListAdapter!=null){
+                            productListAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public ArrayList<SVRAppserviceProductSearchResultsItemReturnEntity> getProductItemEntityArrayList() {

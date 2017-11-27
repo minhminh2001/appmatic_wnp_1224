@@ -11,4 +11,8 @@ public class Const {
     public final static int ITEM = 3;
     public final static int FOOTER = 4;
 
+    //banner 3:8
+    public static final double BANNER_PIC_HEIGHT_THAN_WIDTH = 180.0/480;
+    public static final int NORMAL_BANNER_DELAY_TIME=3000;
+
 }

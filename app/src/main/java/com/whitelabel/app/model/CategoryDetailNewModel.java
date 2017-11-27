@@ -18,6 +18,9 @@ public class CategoryDetailNewModel implements Serializable {
     private String category_img;
     private int image_width;
     private int image_height;
+    private int thumbnail_width;
+    private int thumbnail_height;
+
     private String category_name;
     private String category_id;
     private List<CarouselsBean> carousels;
@@ -45,6 +48,22 @@ public class CategoryDetailNewModel implements Serializable {
 
     public void setImage_height(int image_height) {
         this.image_height = image_height;
+    }
+
+    public int getThumbnail_width() {
+        return thumbnail_width;
+    }
+
+    public void setThumbnail_width(int thumbnail_width) {
+        this.thumbnail_width = thumbnail_width;
+    }
+
+    public int getThumbnail_height() {
+        return thumbnail_height;
+    }
+
+    public void setThumbnail_height(int thumbnail_height) {
+        this.thumbnail_height = thumbnail_height;
     }
 
     public List<CarouselsBean> getCarousels() {

@@ -57,6 +57,7 @@ import com.whitelabel.app.ui.checkout.CheckoutContract;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressFragment;
 import com.whitelabel.app.ui.checkout.CheckoutPresenterImpl;
 import com.whitelabel.app.ui.checkout.PayPalPaymentActivity;
+import com.whitelabel.app.ui.checkout.model.CheckoutDefaultAddressResponse;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -138,7 +139,11 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     private CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity;
     private ImageLoader mImageLoader;
     private PaypalHelper mPaypalHelper;
-
+    public AddressBook shippingAddress;
+    public AddressBook billingAddress;
+    public CheckoutDefaultAddressResponse.PickUpAddress pickUpAddress;
+    public boolean isBillAddressChecked;
+    public boolean isPickInStoreChecked;
 
     @Override
     protected void initInject() {
@@ -651,8 +656,11 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     private void sendRequestAndGoToNextPaymentModule() {
         mGATrackAddressToPaymentTimeEnable = true;
         mGATrackAddressToPaymentTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-        AddressBook shippingAddress= ((CheckoutDefaultAddressFragment)checkoutDefaultAddressFragment).getPrimaryShipping();
-        AddressBook   billingAddress=((CheckoutDefaultAddressFragment)checkoutDefaultAddressFragment).getPrimaryBilling();
+        shippingAddress = ((CheckoutDefaultAddressFragment)checkoutDefaultAddressFragment).getPrimaryShipping();
+        billingAddress = ((CheckoutDefaultAddressFragment)checkoutDefaultAddressFragment).getPrimaryBilling();
+        pickUpAddress = ((CheckoutDefaultAddressFragment) checkoutDefaultAddressFragment).getmPickUpAddress();
+        isBillAddressChecked = ((CheckoutDefaultAddressFragment) checkoutDefaultAddressFragment).isBillAddressChecked();
+        isPickInStoreChecked = ((CheckoutDefaultAddressFragment) checkoutDefaultAddressFragment).isPickUpInStoreChecked();
         int shippingCode=((CheckoutDefaultAddressFragment)checkoutDefaultAddressFragment).curentClickShipping;
         setButtonEnable(false);
         mDialog = JViewUtils.showProgressDialog(CheckoutActivity.this);

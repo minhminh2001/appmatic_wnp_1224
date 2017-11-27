@@ -35,12 +35,39 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_below="@id/ll_address_way"
+        android:id="@+id/ll_pick_address"
+        android:orientation="vertical"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_pick_address_title"
+            style="@style/font_family_roboto_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="titletitletitletitletitle"
+            android:textColor="@color/black000000"
+            android:textSize="15sp" />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_pick_address_msg"
+            style="@style/font_family_robot_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="addressaddressaddressaddressaddress"
+            android:textColor="@color/black000000"
+            android:textSize="14sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_shipping_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_address_way"
+        android:layout_below="@id/ll_pick_address"
         android:layout_marginRight="5dp"
         android:layout_marginTop="15dp"
         android:layout_toLeftOf="@+id/AddAddress_select_button"

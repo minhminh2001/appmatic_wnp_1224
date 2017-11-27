@@ -37,7 +37,7 @@ public class JShareUtils {
 		String description = entity.getDescription();
 		String name = entity.getName();
 		String caption = entity.getCaption();
-		String picture = JImageUtils.getImageServerUrlByWidthHeight(activity,entity.getPicture(),-1,-1);
+		String picture = JImageUtils.getImageServerUrlByWidthHeight(activity,entity.getPicture(),-1,-1,JImageUtils.DEFAULT_DOWNLAOD_IMAGE_API);
 		JLogUtils.i("share","webURL ="+link+"  描述="+description+"  title="+name+"  imgURL="+picture);
 
 		try {

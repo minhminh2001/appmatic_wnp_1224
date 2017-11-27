@@ -25,7 +25,7 @@ public  class WishlistObservable implements Observable.OnSubscribe<SVRAppservice
          private ImageView ivWishIcon;
          private ImageView  ivWishIcon2;
          private List<Subscriber<? super SVRAppserviceProductSearchResultsItemReturnEntity>> mSubscribers = new ArrayList<>();
-         public WishlistObservable(View view ,SVRAppserviceProductSearchResultsItemReturnEntity entity,ImageView ivWishIcon,ImageView ivWishIcon2){
+         public WishlistObservable(View view , SVRAppserviceProductSearchResultsItemReturnEntity entity, ImageView ivWishIcon, ImageView ivWishIcon2){
              this.view =view;
              this.entity=entity;
              this.ivWishIcon=ivWishIcon;
@@ -39,6 +39,7 @@ public  class WishlistObservable implements Observable.OnSubscribe<SVRAppservice
          @Override
          public void onClick(View view) {
              if(!WhiteLabelApplication.getAppConfiguration().isSignIn(view.getContext())){
+                 WhiteLabelApplication.getAppConfiguration().saveProductIdWhenCheckPage(entity.getProductId(),entity.getIsLike(),true);
                  Intent intent = new Intent();
                  intent.setClass(view.getContext(), LoginRegisterActivity.class);
                  ((Activity)view.getContext()).startActivityForResult(intent, LoginRegisterActivity.REQUESTCODE_LOGIN);

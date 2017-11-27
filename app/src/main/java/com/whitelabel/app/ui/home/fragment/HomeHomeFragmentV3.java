@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.CategoryDetailNewModel;
@@ -33,6 +34,8 @@ import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomTextView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,6 +84,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     public final static  String ARG_CATEGORY_INDEX="category_index";
     private int mIndex;
     private boolean isPrepared, isVisible, mHasLoadedOnce;
+    private CategoryDetailNewModel categoryDetailModel;
     /**
      * Use this factory method to creaøte a new instance of
      * this fragment using the provided parameters.
@@ -199,6 +203,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public void loadData(final CategoryDetailNewModel categoryDetailModel) {
         if(getActivity()!=null) {
+            this.categoryDetailModel =categoryDetailModel;
             mAdapter = new CategoryDetailVerticalAdapter(getActivity(), categoryDetailModel, mImageLoader);
             mAdapter.setOnVerticalItemClickLitener(new IHomeItemClickListener.IVerticalItemClickLitener() {
                 @Override
@@ -227,6 +232,39 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
             recyclerView1.setAdapter(mAdapter);
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        notifyBackThisPageChangeWishIconStatus();
+    }
+
+    private void notifyBackThisPageChangeWishIconStatus() {
+        if (categoryDetailModel !=null && categoryDetailModel.getCarousels()!=null ){
+            List<CategoryDetailNewModel.CarouselsBean> carousels = categoryDetailModel.getCarousels();
+            for (CategoryDetailNewModel.CarouselsBean carouselsBean:carousels ) {
+                if (carouselsBean.getItems()!=null){
+                    List<SVRAppserviceProductSearchResultsItemReturnEntity> items = carouselsBean.getItems();
+                    for (SVRAppserviceProductSearchResultsItemReturnEntity entity:items){
+                        OperateProductIdPrecache productIdAndIsLike = WhiteLabelApplication.getAppConfiguration().getProductIdAndIsLike();
+                        if (productIdAndIsLike!=null){
+                            String productId = productIdAndIsLike.getProductId();
+                            int isLike = productIdAndIsLike.getIsLike();
+                            boolean unLogin = productIdAndIsLike.isUnLogin();
+                            if (productId!=null && productId.equals(entity.getProductId()) && !unLogin){
+                                entity.setIsLike(isLike);
+                                WhiteLabelApplication.getAppConfiguration().setProductIdAndIsLikeNull();
+                                if (mAdapter!=null){
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private ProductListItemToProductDetailsEntity getProductListItemToProductDetailsEntity(SVRAppserviceProductSearchResultsItemReturnEntity e) {
         ProductListItemToProductDetailsEntity entity = new ProductListItemToProductDetailsEntity();
         entity.setBrand(e.getBrand());

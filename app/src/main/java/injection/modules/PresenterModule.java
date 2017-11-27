@@ -26,6 +26,8 @@ import com.whitelabel.app.ui.home.presenter.MainPresenterImpl;
 import com.whitelabel.app.ui.home.presenter.ShopBrandPresenterImpl;
 import com.whitelabel.app.ui.login.LoginFragmentContract;
 import com.whitelabel.app.ui.login.LoginFragmentPresenterImpl;
+import com.whitelabel.app.ui.productdetail.BindProductContract;
+import com.whitelabel.app.ui.productdetail.BindProductPresenterImpl;
 import com.whitelabel.app.ui.productdetail.ProductDetailContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailPresenter;
 import com.whitelabel.app.ui.start.StartContract;
@@ -109,4 +111,9 @@ public class PresenterModule {
         return new ShopBrandPresenterImpl(iCommodityManager,iBaseManager);
     }
 
+    @Provides
+    @ActivityScope
+    public BindProductContract.Presenter provideBindProductPresenter(ICommodityManager iCommodityManager){
+        return new BindProductPresenterImpl(iCommodityManager);
+    }
 }

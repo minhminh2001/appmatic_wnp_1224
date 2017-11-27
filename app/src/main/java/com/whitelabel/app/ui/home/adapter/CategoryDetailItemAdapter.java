@@ -35,6 +35,7 @@ import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JScreenUtils;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomTextView;
 
@@ -153,11 +154,11 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
         // load left image
         if (itemViewHolder.ivProductImage.getTag() != null) {
             if (!itemViewHolder.ivProductImage.getTag().toString().equals(leftProductImageUrl)) {
-                JImageUtils.downloadImageFromServerByUrl(itemViewHolder.itemView.getContext(), mImageLoader, itemViewHolder.ivProductImage, leftProductImageUrl, destWidth, destHeight);
+                JImageUtils.downloadImageFromServerByProductUrl(itemViewHolder.itemView.getContext(), mImageLoader, itemViewHolder.ivProductImage, leftProductImageUrl, destWidth, destHeight);
                 itemViewHolder.ivProductImage.setTag(leftProductImageUrl);
             }
         } else {
-            JImageUtils.downloadImageFromServerByUrl(itemViewHolder.itemView.getContext(), mImageLoader, itemViewHolder.ivProductImage, leftProductImageUrl, destWidth, destHeight);
+            JImageUtils.downloadImageFromServerByProductUrl(itemViewHolder.itemView.getContext(), mImageLoader, itemViewHolder.ivProductImage, leftProductImageUrl, destWidth, destHeight);
             itemViewHolder.ivProductImage.setTag(leftProductImageUrl);
         }
         itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -204,6 +205,7 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
         } else {
             setWishIconColorToBlankNoAnim(itemViewHolder.ivLeftProductlistWishIcon);
         }
+        setUnLoginClickWishBackThisPageToRefresh(itemViewHolder.itemView.getContext(),leftProductEntity,itemViewHolder.ivLeftProductlistWishIcon,position);
         final SVRAppserviceProductSearchResultsItemReturnEntity finalLeftProductEntity = leftProductEntity;
         finalLeftProductEntity.setPosition(position);
         Observable<SVRAppserviceProductSearchResultsItemReturnEntity> observable=Observable.
@@ -219,9 +221,9 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
                         if(bean.getIsLike()==1){
                             mProductDao.addProductListToWish(bean.getProductId(),WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
                                     bean.getPosition());
-                        }else if(!JDataUtils.isEmpty(bean.getItem_id())){
+                        }else if(!JDataUtils.isEmpty(bean.getItemId())){
                             myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
-                                    bean.getItem_id(),bean.getPosition());
+                                    bean.getItemId(),bean.getPosition());
                         }
                     }
                 });
@@ -282,6 +284,15 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
         });
         ivWishIcon.startAnimation(animation2);
     }
+
+    public void setUnLoginClickWishBackThisPageToRefresh(Context context, SVRAppserviceProductSearchResultsItemReturnEntity entity, ImageView ivWwishIcon,  int tempPosition){
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(context) && WhiteLabelApplication.getAppConfiguration().isUnLoginCanWishIconRefresh(entity.getProductId())){
+            entity.setIsLike(1);
+            mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), tempPosition);
+            setWishIconColorToPurpleNoAnim(ivWwishIcon);
+        }
+    }
+
 //    private void addtoWishlistsendRequest(Context context,SVRAppserviceProductSearchResultsItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
 //        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ivWwishIcon.getContext())) {
 //            entity.setIsLike(1);

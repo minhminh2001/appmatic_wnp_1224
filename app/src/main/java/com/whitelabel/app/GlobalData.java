@@ -22,6 +22,7 @@ public class GlobalData {
     public static String downloadImageUrl;
     public static String upLoadFileUrl;
     public static String downloadImagePath;
+    public static String downloadImageProductPath;
     public static String uploadFilePath;
     public static String mockUrl;
     public static  String  apiVersion;
@@ -64,6 +65,7 @@ public class GlobalData {
         imageBaseUrl=context.getString(R.string.image_base_url);
         creditCardPaymentUrl=serviceRequestUrl+context.getString(R.string.payment_creditcard_url);
         downloadImagePath = context.getString(R.string.download_image_path);
+        downloadImageProductPath = context.getString(R.string.download_image_product_path);
         uploadFilePath =context.getString(R.string.upload_file_path);
         downloadImageUrl = imageBaseUrl + pathSeparator + downloadImagePath;
         upLoadFileUrl = serviceRequestUrl + pathSeparator + uploadFilePath;

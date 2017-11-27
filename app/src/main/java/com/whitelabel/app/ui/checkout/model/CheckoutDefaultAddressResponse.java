@@ -36,6 +36,14 @@ public class CheckoutDefaultAddressResponse implements Serializable {
         this.shippingMethod = shippingMethod;
     }
 
+    public PickUpAddress getPickupAddress() {
+        return pickupAddress;
+    }
+
+    public void setPickupAddress(PickUpAddress pickupAddress) {
+        this.pickupAddress = pickupAddress;
+    }
+
     public static class ShippingMethodBean {
         /**
          * title : Pick up in store
@@ -81,7 +89,7 @@ public class CheckoutDefaultAddressResponse implements Serializable {
             this.checked = checked;
         }
     }
-    private static class PickUpAddress{
+    public static class PickUpAddress implements Serializable{
         private String title;
         private String address;
 

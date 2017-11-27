@@ -68,6 +68,7 @@ import com.whitelabel.app.utils.JTimeUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.ShareUtil;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.BindProductView;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
 import com.whitelabel.app.widget.CustomDialog;
@@ -138,6 +139,10 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     private final static  int BOTTONBAR_HEIGHT=80;
     private int destWidth;
     private RelativeLayout rlProductrecommendLine;
+    int trueImageWidth;
+    int trueImageHeight;
+    int netImageHeight;
+    int netImageWidth;
     @Override
     public void showNornalProgressDialog() {
         mDialog = JViewUtils.showProgressDialog(ProductDetailActivity.this);
@@ -287,6 +292,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         }
     }
     public  void setWishIconColorToBlank() {
+        Logger.e("productId:"+productId+"--isLike:"+mPresenter.getProductData().getIsLike());
+        WhiteLabelApplication.getAppConfiguration().saveProductIdWhenCheckPage(productId,mPresenter.getProductData().getIsLike(),false);
         ivHeaderBarWishlist2.setVisibility(View.VISIBLE);
         ivHeaderBarWishlist.setVisibility(View.VISIBLE);
         mIVHeaderBarWishlist2.setVisibility(View.VISIBLE);
@@ -315,6 +322,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     }
 
     public  void setWishIconColorToThemeColor() {
+        Logger.e("productId:"+productId+"--isLike:"+mPresenter.getProductData().getIsLike());
+        WhiteLabelApplication.getAppConfiguration().saveProductIdWhenCheckPage(productId,mPresenter.getProductData().getIsLike(),false);
         ivHeaderBarWishlist2.setVisibility(View.VISIBLE);
         mIVHeaderBarWishlist2.setVisibility(View.VISIBLE);
         ivHeaderBarWishlist.setVisibility(View.VISIBLE);
@@ -457,8 +466,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             int marginLeft = destWidth * 15 / 640;
             int dividerWidth = destWidth * 16 / 640;
             int destWidth = (this.destWidth - (2 * marginLeft) - dividerWidth) / 2;
-            JLogUtils.i("ProductDetailActivity","url:"+ivProductImage);
-             JImageUtils.downloadImageFromServerByUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, mProductFirstImageurl, destWidth, destWidth);
+            int destHeight = (int) (destWidth/1.332);
+            JImageUtils.downloadImageFromServerByProductUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, mProductFirstImageurl, destWidth,destHeight);
         } else {
             ivProductImage.setAlpha(0.0f);
         }
@@ -828,16 +837,23 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     }
     @Override
     public void loadStaticData(ProductDetailModel productDetailModel) {
-        if(!TextUtils.isEmpty(productDetailModel.getBrand())) {
-            ctvProductBrand.setText(productDetailModel.getBrand().toUpperCase());
-        }
-        ctvProductName.setText(productDetailModel.getName());//分享标题赋值
-        if (!TextUtils.isEmpty(productDetailModel.getUiDetailHtmlText())) {
-            JToolUtils.webViewFont(this, mWebView, productDetailModel.getUiDetailHtmlText(), 13.5f);
-        }
-        int webviewCount=llWebView.getChildCount();
-        if(webviewCount<1) {
-            llWebView.addView(mWebView);
+        if (productDetailModel!=null){
+            if(!TextUtils.isEmpty(productDetailModel.getBrand())) {
+                ctvProductBrand.setText(productDetailModel.getBrand().toUpperCase());
+            }
+            ctvProductName.setText(productDetailModel.getName());//分享标题赋值
+            if (!TextUtils.isEmpty(productDetailModel.getUiDetailHtmlText())) {
+                JToolUtils.webViewFont(this, mWebView, productDetailModel.getUiDetailHtmlText(), 13.5f);
+            }
+            int webviewCount=llWebView.getChildCount();
+            if(webviewCount<1) {
+                llWebView.addView(mWebView);
+            }
+            netImageHeight = productDetailModel.getImage_height();
+            netImageWidth = productDetailModel.getImage_width();
+            trueImageWidth=destWidth;
+            trueImageHeight=(destWidth*netImageHeight)/netImageWidth;
+            JImageUtils.downloadImageFromServerByProductUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, mProductFirstImageurl, trueImageWidth, trueImageHeight);
         }
     }
     private WebView getWebView() {
@@ -1038,7 +1054,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             mProductImagesArrayList.addAll(productImageUrlList);
             if (mProductFirstImageurl != null && productImageUrlList.size() > 0) {
                 if (!mProductFirstImageurl.equals(productImageUrlList.get(0))) {
-                    JImageUtils.downloadImageFromServerByUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, productImageUrlList.get(0), destWidth, destWidth);
+                    JImageUtils.downloadImageFromServerByProductUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, productImageUrlList.get(0), netImageWidth, netImageHeight);
                     mProductFirstImageurl = "";
                 }
             }
@@ -1061,15 +1077,15 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             viewPager.setCurrentItem(0);
         }
         if (viewPager != null && viewPager.getLayoutParams() != null) {
-            viewPager.getLayoutParams().height = destWidth;
-            viewPager.getLayoutParams().width = destWidth;
+            viewPager.getLayoutParams().height = trueImageHeight;
+            viewPager.getLayoutParams().width = trueImageWidth;
         }
     }
     @NonNull
     private ImageView getImageView(final ArrayList<String> productImageUrlList, int index) {
         final ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        JImageUtils.downloadImageFromServerByUrl(ProductDetailActivity.this, mImageLoader, imageView, productImageUrlList.get(index), destWidth, destWidth);
+        JImageUtils.downloadImageFromServerByProductUrl(ProductDetailActivity.this, mImageLoader, imageView, productImageUrlList.get(index), netImageWidth, netImageHeight);
         imageView.setTag(index);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
 public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private CategoryDetailNewModel mCategoryDetailModel;
     private final ImageLoader mImageLoader;
-    public static final int NORMAL_BANNER_DELAY_TIME=3000;
+
 
     private   double screenWidth;
     private IHomeItemClickListener.IHorizontalItemClickListener onProductClick;
@@ -124,7 +124,8 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         if(holder instanceof  HeaderViewHolder){
             final HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (mCategoryDetailModel == null) return;
-            int   imageHeight= (int) (screenWidth*(348.0/750));
+//            int   imageHeight= (int) (screenWidth*(348.0/750));
+            int   imageHeight= (int) (screenWidth*(Const.BANNER_PIC_HEIGHT_THAN_WIDTH));
             headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
             if (mCategoryDetailModel.getBanners().isEmpty()) {
                 headerViewHolder.detailViewpager.setVisibility(View.VISIBLE);
@@ -138,7 +139,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
                     headerViewHolder.detailViewpager.setImages(imgs)
                             .setImageLoader(new GlideImageLoader())
                             .setBannerStyle(BannerConfig.NOT_INDICATOR)
-                            .setDelayTime(NORMAL_BANNER_DELAY_TIME)
+                            .setDelayTime(Const.NORMAL_BANNER_DELAY_TIME)
                             .setOnBannerListener(new OnBannerListener() {
                                 @Override
                                 public void OnBannerClick(int i) {
@@ -188,7 +189,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         for (int i = 0; i < images.size(); i++) {
             ImageView imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            JImageUtils.downloadImageFromServerByUrl(context, imageLoader, imageView, images.get(i), (int) screenWidth,imageHeight);
+            JImageUtils.downloadImageFromServerByProductUrl(context, imageLoader, imageView, images.get(i), (int) screenWidth,imageHeight);
             imgs.add(imageView);
         }
         return imgs;
@@ -199,7 +200,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         for (int i = 0; i < images.size(); i++) {
             CategoryDetailNewModel.BannersBean bannersBeanResponse = images.get(i);
             String norUrl=bannersBeanResponse.getImage();
-            String imageServerUrlByWidthHeight = JImageUtils.getImageServerUrlByWidthHeight(context, norUrl, (int) screenWidth, imageHeight);
+            String imageServerUrlByWidthHeight = JImageUtils.getImageServerUrlByWidthHeight(context, norUrl, (int) screenWidth, imageHeight,-1);
             imgs.add(imageServerUrlByWidthHeight);
         }
         return imgs;

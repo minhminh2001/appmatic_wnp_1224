@@ -5,7 +5,8 @@
     android:background="@null"
     android:button="@null"
     android:drawablePadding="8dp"
-    android:padding="4dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
     android:textSize="14sp"
     android:layout_height="30dp"
     >

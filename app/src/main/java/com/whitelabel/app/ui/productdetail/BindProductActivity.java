@@ -25,6 +25,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
 public class BindProductActivity extends BaseActivity<BindProductContract.Presenter> implements BindProductContract.View {
     @BindView(R.id.rv_recycler)
     RecyclerView rvRecycler;
@@ -64,6 +67,13 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
         openProgressDialog();
         mPresenter.loadData(mProductId);
     }
+
+    @Override
+    protected void initInject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(this)).build().inject(this);
+    }
+
     private void initRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -97,10 +107,10 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
         closeProgressDialog();
         JViewUtils.showErrorToast(this, errorMsg);
     }
-    @Override
-    public BindProductContract.Presenter getPresenter() {
-        return new BindProductPresenterImpl();
-    }
+//    @Override
+//    public BindProductContract.Presenter getPresenter() {
+//        return new BindProductPresenterImpl();
+//    }
     public void setAddToCartButtonEnable(boolean  enable){
         if(enable){
             tvAddToCart.setEnabled(true);

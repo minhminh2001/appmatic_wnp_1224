@@ -409,6 +409,7 @@ public class ProductListAdapter extends BaseAdapter {
 //                }
 //            }
 //        });
+        setUnLoginClickWishBackThisPageToRefresh(leftProductEntity, viewHolder.ivLeftProductlistWishIcon, viewHolder.ivLeftProductlistWishIcon2, tempPosition);
         if (addProductToWishWhenLoginSuccess(leftProductEntity.getProductId())) {
             addtoWishlistsendRequest(leftProductEntity, viewHolder.rlLeftProductlistWish, viewHolder.ivLeftProductlistWishIcon, viewHolder.ivLeftProductlistWishIcon2, tempPosition);
         }
@@ -607,6 +608,14 @@ public class ProductListAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public void setUnLoginClickWishBackThisPageToRefresh(SVRAppserviceProductSearchResultsItemReturnEntity entity, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition){
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(productListActivity) && WhiteLabelApplication.getAppConfiguration().isUnLoginCanWishIconRefresh(entity.getProductId())){
+                entity.setIsLike(1);
+                mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), tempPosition);
+                setWishIconColorToPurple(ivWwishIcon, ivWwishIcon2);
+            }
+    }
+
     public boolean addProductToWishWhenLoginSuccess(String productId) {
         //点击wish icon 时跳到登陆页面前，需要保存
         if (productListActivity.operateProductIdPrecache != null && !TextUtils.isEmpty(productId)) {
@@ -710,7 +719,7 @@ public class ProductListAdapter extends BaseAdapter {
     private void sendRequestToDeteleteCell(ImageView ivWwishIcon, RelativeLayout rlCurationWish, String itemId, int tempPosition) {
         setWishIconColorToBlank(ivWwishIcon);
         productItemEntityArrayList.get(tempPosition).setIsLike(0);
-        if (!TextUtils.isEmpty(productItemEntityArrayList.get(tempPosition).getItem_id())) {
+        if (!TextUtils.isEmpty(productItemEntityArrayList.get(tempPosition).getItemId())) {
             myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), itemId, tempPosition);
         }
     }

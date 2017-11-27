@@ -53,6 +53,8 @@ public class ProductDetailModel implements Serializable {
     private String uiDetailHtmlText;
     private  String ingredients;
     private String features;
+    private int image_width;
+    private int image_height;
 
     public String getIngredients() {
         return ingredients;
@@ -302,5 +304,21 @@ public class ProductDetailModel implements Serializable {
 
     public void setProperty(ArrayList<ProductPropertyModel> property) {
         this.property = property;
+    }
+
+    public int getImage_width() {
+        return image_width;
+    }
+
+    public void setImage_width(int image_width) {
+        this.image_width = image_width;
+    }
+
+    public int getImage_height() {
+        return image_height;
+    }
+
+    public void setImage_height(int image_height) {
+        this.image_height = image_height;
     }
 }

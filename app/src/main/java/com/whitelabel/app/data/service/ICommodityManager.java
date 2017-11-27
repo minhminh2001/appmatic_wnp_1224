@@ -1,6 +1,7 @@
 package com.whitelabel.app.data.service;
 
 import com.whitelabel.app.model.AddressBook;
+import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ResponseModel;
@@ -26,5 +27,6 @@ public interface ICommodityManager {
     public Observable<ProductDetailModel> getProductDetail(String sessionKey,String productId);
     public Observable<SVRAppserviceCatalogSearchReturnEntity> getLocalCategoryManager();
     public  Observable<SVRAppserviceProductRecommendedReturnEntity> getProductRecommendList(String storeId,String limit,String productId,String sessionKey);
-
+    public  Observable<BindProductResponseModel> getRelateProducts(String productId);
+    public  Observable<ResponseModel> addBoughtTogether(String productId,String sessionKey);
 }
