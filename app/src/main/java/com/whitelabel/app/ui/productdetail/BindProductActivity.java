@@ -107,10 +107,7 @@ public class BindProductActivity extends BaseActivity<BindProductContract.Presen
         closeProgressDialog();
         JViewUtils.showErrorToast(this, errorMsg);
     }
-//    @Override
-//    public BindProductContract.Presenter getPresenter() {
-//        return new BindProductPresenterImpl();
-//    }
+
     public void setAddToCartButtonEnable(boolean  enable){
         if(enable){
             tvAddToCart.setEnabled(true);

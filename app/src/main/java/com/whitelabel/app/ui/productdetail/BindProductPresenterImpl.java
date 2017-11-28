@@ -49,21 +49,6 @@ public class BindProductPresenterImpl  extends RxPresenter<BindProductContract.V
                         mView.showData(bindProductResponseModel);
                     }
                 });
-//        Subscription  subscription=   DataManager.getInstance().getProductApi().
-//                getRelateProducts(productId).compose(RxUtil.<ResponseModel<BindProductResponseModel>>rxSchedulerHelper())
-//                .compose(RxUtil.<BindProductResponseModel>handleResult()).subscribe(new Action1<BindProductResponseModel>() {
-//            @Override
-//            public void call(BindProductResponseModel bindProductResponseModel) {
-//                mView.showData(bindProductResponseModel);
-//            }
-//        }, new ErrorHandlerAction() {
-//            @Override
-//            protected void requestError(ApiFaildException ex) {
-//                if(ex.getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
-//                    mView.showNetworkErrorView(ex.getErrorMsg());
-//                }
-//            }
-//        });
         addSubscrebe(subscribe);
     }
     public double  computeSumPrice(List<ProductPropertyModel> svrAppserviceProductDetailResultPropertyReturnEntities){
@@ -107,25 +92,6 @@ public class BindProductPresenterImpl  extends RxPresenter<BindProductContract.V
                         }
                     }
                 });
-//        Subscription  subscription= DataManager.getInstance().getProductApi().addBoughtTogether(relatedProductIds,sessionKey)
-//                .compose(RxUtil.<ResponseModel>rxSchedulerHelper())
-//                    .subscribe(new Action1<ResponseModel>() {
-//                        @Override
-//                        public void call(ResponseModel responseModel) {
-//                            if(responseModel.getStatus()==1){
-//                                mView.addCartSuccess();
-//                            }else{
-//                                mView.showFaildErrorMsg(responseModel.getErrorMessage());
-//                            }
-//                        }
-//                    }, new ErrorHandlerAction() {
-//                        @Override
-//                        protected void requestError(ApiFaildException ex) {
-//                            if(ex.getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
-//                                mView.showNetworkErrorView(ex.getErrorMsg());
-//                            }
-//                        }
-//                    });
         addSubscrebe(subscribe);
     }
 

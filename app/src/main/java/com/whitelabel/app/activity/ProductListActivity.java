@@ -123,15 +123,20 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         addFragment(FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, new ProductListCategoryLandingFragment());
         addFragment(FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, new ProductListKeywordsSearchFragment());
     }
-    public void saveProductIdWhenJumpLoginPage(String productId) {
-        //点击wish icon 时跳到登陆页面前，需要保存
-        operateProductIdPrecache = new OperateProductIdPrecache(productId);
+    public void saveProductIdWhenCheckPage(String productId, int isLike,boolean isUnLogin) {
+        operateProductIdPrecache = new OperateProductIdPrecache(productId,isLike,isUnLogin);
     }
-    public void changeOperateProductIdPrecacheStatus(boolean available) {
-        if (operateProductIdPrecache != null) {
-            operateProductIdPrecache.setAvailable(available);
+
+    public boolean isUnLoginCanWishIconRefresh(String productId){
+        if (operateProductIdPrecache!=null){
+            if (operateProductIdPrecache.getProductId().equals(productId) && operateProductIdPrecache.isUnLogin()){
+                operateProductIdPrecache=null;
+                return true;
+            }
         }
+        return false;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mCurrentFragment.onActivityResult(requestCode, resultCode, data);

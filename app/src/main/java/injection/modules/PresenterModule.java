@@ -2,6 +2,7 @@ package injection.modules;
 
 import android.app.Activity;
 
+import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICheckoutManager;
@@ -54,8 +55,8 @@ public class PresenterModule {
     }
     @Provides
     @ActivityScope
-    public StartContract.Presenter  provideStartPresenter(IBaseManager configService){
-        return new StartPresenterImpl(configService);
+    public StartContract.Presenter  provideStartPresenter(IBaseManager configService,IAccountManager accountManager){
+        return new StartPresenterImpl(configService,accountManager);
     }
     @Provides
     @ActivityScope

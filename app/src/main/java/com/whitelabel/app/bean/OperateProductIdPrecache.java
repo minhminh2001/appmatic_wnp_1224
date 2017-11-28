@@ -14,6 +14,7 @@ public class OperateProductIdPrecache {
         this.productId = productId;
     }
 
+
     public OperateProductIdPrecache(String productId,int isLike,boolean isUnLogin) {
         this.productId = productId;
         this.isLike=isLike;

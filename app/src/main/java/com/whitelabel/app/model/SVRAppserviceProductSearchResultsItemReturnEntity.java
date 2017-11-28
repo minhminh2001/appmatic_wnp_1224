@@ -61,7 +61,7 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
     }
 
     public String getItem_id() {
-        return item_id;
+        return itemId;
     }
     private String itemId;
 
@@ -74,7 +74,7 @@ public class SVRAppserviceProductSearchResultsItemReturnEntity implements Serial
     }
 
     public void setItem_id(String item_id) {
-        this.item_id = item_id;
+        this.itemId = item_id;
     }
     public boolean getSyncnServering() {
         return syncnServering;

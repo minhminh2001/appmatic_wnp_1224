@@ -159,7 +159,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     }
 
     @Override
-    public void hideBillToDefferentLayout() {
+    public void hideBillToDifferentLayout() {
         llCheckbox.setVisibility(View.INVISIBLE);
         llBillingAddress.setVisibility(View.VISIBLE);
     }

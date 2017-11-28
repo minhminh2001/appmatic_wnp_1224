@@ -30,7 +30,6 @@ public class ApplicationConfigurationEntity {
     private GOStoreViewEntity storeView;
     private GOCurrencyEntity currency;
     private LayoutStyleModel  mLayoutStyle;
-    private OperateProductIdPrecache operateProductIdPrecache;
     public LayoutStyleModel getLayoutStyle() {
         if(mLayoutStyle==null){
             mLayoutStyle=new LayoutStyleModel();
@@ -321,26 +320,5 @@ public class ApplicationConfigurationEntity {
     public void setCategoryArrayList(SVRAppserviceCatalogSearchReturnEntity categoryArrayList) {
         this.categoryArrayList = categoryArrayList;
     }
-
-    public void saveProductIdWhenCheckPage(String productId, int isLike,boolean isUnLogin) {
-        operateProductIdPrecache = new OperateProductIdPrecache(productId,isLike,isUnLogin);
-    }
-    public OperateProductIdPrecache getProductIdAndIsLike(){
-        return operateProductIdPrecache;
-    }
-    public void setProductIdAndIsLikeNull(){
-        operateProductIdPrecache=null;
-    }
-
-    public boolean isUnLoginCanWishIconRefresh(String productId){
-        if (operateProductIdPrecache!=null){
-            if (operateProductIdPrecache.getProductId().equals(productId) && operateProductIdPrecache.isUnLogin()){
-                operateProductIdPrecache=null;
-                return true;
-            }
-        }
-        return false;
-    }
-
 
 }

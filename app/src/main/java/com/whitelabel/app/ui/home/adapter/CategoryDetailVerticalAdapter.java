@@ -77,6 +77,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     Map<Integer,Integer> childCountMaps=new HashMap<>();
     List<SVRAppserviceProductSearchResultsItemReturnEntity> allItemLists=new ArrayList<>();
     List<Integer> titleLists=new ArrayList<>();
+    private HomeActivity homeActivity;
 
 
     public interface OnFilterSortBarListener {
@@ -141,14 +142,15 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
             }
         }
     }
-    public CategoryDetailVerticalAdapter(Context context, CategoryDetailNewModel categoryDetailModel, ImageLoader loader) {
+    public CategoryDetailVerticalAdapter(HomeActivity homeActivity, CategoryDetailNewModel categoryDetailModel, ImageLoader loader) {
         this.categoryDetailModel = categoryDetailModel;
         mImageLoader = loader;
-        DataHandler dataHandler = new DataHandler(context, this);
+        this.homeActivity=homeActivity;
+        DataHandler dataHandler = new DataHandler(homeActivity, this);
         String TAG = this.getClass().getSimpleName();
         myAccountDao = new MyAccountDao(TAG, dataHandler);
         mProductDao = new ProductDao(TAG, dataHandler);
-        screenWidth=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity) context);
+        screenWidth=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(homeActivity);
 //        getRcyListSize();
         createAllItemAndCreateTitleIndex();
     }
@@ -230,7 +232,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         if (holder instanceof HeaderViewHolder) {
             final HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (categoryDetailModel == null) return;
-//            int imageHeight = (int) (categoryDetailModel.getImage_height() * (screenWidth/categoryDetailModel.getImage_width()));
+//            int imageHeight = (int) (categoryDetailModel.getImageHeight() * (screenWidth/categoryDetailModel.getImageWidth()));
 //            if(imageHeight==0){
                 int  imageHeight= (int) (screenWidth*(Const.BANNER_PIC_HEIGHT_THAN_WIDTH));
 //            }
@@ -345,8 +347,13 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                 finalLeftProductEntity.setPosition(position);
                 setUnLoginClickWishBackThisPageToRefresh(itemViewHolder.itemView.getContext(),leftProductEntity,itemViewHolder.ivLeftProductlistWishIcon,position);
                 Observable<SVRAppserviceProductSearchResultsItemReturnEntity> observable=Observable.
-                        create(new WishlistObservable(itemViewHolder.rlLeftProductlistWish,finalLeftProductEntity,
-                                itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2));
+                        create(new WishlistObservable(itemViewHolder.rlLeftProductlistWish, finalLeftProductEntity,
+                                itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2, new WishlistObservable.IWishIconUnLogin() {
+                            @Override
+                            public void clickWishToLogin() {
+                                homeActivity.saveProductIdWhenCheckPage(finalLeftProductEntity.getProductId(),finalLeftProductEntity.getIsLike(),true);
+                            }
+                        }));
                 observable.buffer(observable.debounce(1000, TimeUnit.MILLISECONDS))
                         .subscribeOn(Schedulers.computation())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -399,7 +406,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     }
 
     public void setUnLoginClickWishBackThisPageToRefresh(Context context, SVRAppserviceProductSearchResultsItemReturnEntity entity, ImageView ivWwishIcon,  int tempPosition){
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(context) && WhiteLabelApplication.getAppConfiguration().isUnLoginCanWishIconRefresh(entity.getProductId())){
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(context) && homeActivity.isUnLoginCanWishIconRefresh(entity.getProductId())){
             entity.setIsLike(1);
             mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), tempPosition);
             setWishIconColorToPurpleNoAnim(ivWwishIcon);

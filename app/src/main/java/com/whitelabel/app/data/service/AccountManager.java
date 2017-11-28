@@ -66,6 +66,7 @@ public class AccountManager implements IAccountManager{
                     }
                 });
     }
+
     @Override
     public Observable<AddToWishlistEntity> addWishlist(String sessionKey, String productId) {
         return myAccoutApi.addWish(sessionKey,productId)
@@ -109,5 +110,15 @@ public class AccountManager implements IAccountManager{
                         }
                     }
          });
+    }
+
+    @Override
+    public void saveGuideFlag(Boolean isFirst) {
+        iCacheApi.saveGuideFlag(isFirst);
+    }
+
+    @Override
+    public boolean isGuide() {
+        return iCacheApi.isGuide();
     }
 }

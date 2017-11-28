@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
@@ -44,7 +45,9 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
     private IHomeItemClickListener.IHorizontalItemClickListener onProductClick;
     private IHomeItemClickListener.IHeaderItemClickListener onHeaderClick;
     List<CategoryDetailNewModel.CarouselsBean> carousels=new ArrayList<>();
-    public CategoryDetailHorizontalAdapter(Activity activity, CategoryDetailNewModel categoryDetailModel, ImageLoader imageLoader) {
+    private HomeActivity homeActivity;
+    public CategoryDetailHorizontalAdapter(HomeActivity activity, CategoryDetailNewModel categoryDetailModel, ImageLoader imageLoader) {
+        this.homeActivity=activity;
         this.mImageLoader = imageLoader;
         this.mCategoryDetailModel = categoryDetailModel;
         screenWidth=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(activity);
@@ -161,7 +164,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
                 CategoryDetailNewModel.CarouselsBean carouselsBean = this.carousels.get(position);
                 //let HomeFragmentV3's CategoryDetailNewModel know which position items
                 int CarouselsItemPosition=(position-1)/2;
-                CategoryDetailItemAdapter mCategoryDetailAdapater=new CategoryDetailItemAdapter(holder.itemView.getContext(),CarouselsItemPosition,carouselsBean.getItems(),mImageLoader);
+                CategoryDetailItemAdapter mCategoryDetailAdapater=new CategoryDetailItemAdapter(homeActivity,CarouselsItemPosition,carouselsBean.getItems(),mImageLoader);
                 mCategoryDetailAdapater.setOnItemClickLitener(onProductClick);
                 ItemViewHolder  itemViewHolder= (ItemViewHolder) holder;
                 itemViewHolder.rvCategory.setVisibility(View.VISIBLE);

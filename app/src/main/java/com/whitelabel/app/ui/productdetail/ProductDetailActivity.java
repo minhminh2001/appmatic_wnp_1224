@@ -37,19 +37,14 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HelpCenterDetialActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.activity.ProductDetailPictureActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.adapter.ProductListAdapter;
 import com.whitelabel.app.adapter.ProductRecommendedListAdapter;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.ProductDetailCallback;
 import com.whitelabel.app.callback.WheelPickerCallback;
-import com.whitelabel.app.data.DataManager;
-import com.whitelabel.app.data.service.AccountManager;
-import com.whitelabel.app.data.service.BaseManager;
-import com.whitelabel.app.data.service.CommodityManager;
-import com.whitelabel.app.data.service.ShoppingCartManager;
 import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.ProductPropertyModel;
@@ -59,6 +54,7 @@ import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
+import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV3;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -68,7 +64,6 @@ import com.whitelabel.app.utils.JTimeUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.ShareUtil;
-import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.BindProductView;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
 import com.whitelabel.app.widget.CustomDialog;
@@ -143,6 +138,9 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     int trueImageHeight;
     int netImageHeight;
     int netImageWidth;
+    private ProductListItemToProductDetailsEntity productEntity;
+    private int isLike;
+    private String  mFromProductList;
     @Override
     public void showNornalProgressDialog() {
         mDialog = JViewUtils.showProgressDialog(ProductDetailActivity.this);
@@ -292,8 +290,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         }
     }
     public  void setWishIconColorToBlank() {
-        Logger.e("productId:"+productId+"--isLike:"+mPresenter.getProductData().getIsLike());
-        WhiteLabelApplication.getAppConfiguration().saveProductIdWhenCheckPage(productId,mPresenter.getProductData().getIsLike(),false);
         ivHeaderBarWishlist2.setVisibility(View.VISIBLE);
         ivHeaderBarWishlist.setVisibility(View.VISIBLE);
         mIVHeaderBarWishlist2.setVisibility(View.VISIBLE);
@@ -322,8 +318,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     }
 
     public  void setWishIconColorToThemeColor() {
-        Logger.e("productId:"+productId+"--isLike:"+mPresenter.getProductData().getIsLike());
-        WhiteLabelApplication.getAppConfiguration().saveProductIdWhenCheckPage(productId,mPresenter.getProductData().getIsLike(),false);
         ivHeaderBarWishlist2.setVisibility(View.VISIBLE);
         mIVHeaderBarWishlist2.setVisibility(View.VISIBLE);
         ivHeaderBarWishlist.setVisibility(View.VISIBLE);
@@ -445,8 +439,9 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         setContentView(R.layout.activity_product);
         destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductDetailActivity.this);
         productId =  getIntent().getExtras().getString("productId");
-        String  mFromProductList = getIntent().getExtras().getString("from");
+        mFromProductList = getIntent().getExtras().getString("from");
         mProductFirstImageurl=getIntent().getExtras().getString("imageurl");
+        isLike=getIntent().getExtras().getInt("isLike");
         initView();
         initData();
         mPresenter.setDialogType(mFromProductList);
@@ -458,7 +453,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         mAttributeEntity = new WheelPickerConfigEntity();
         mAttributeEntity.setArrayList(new ArrayList<WheelPickerEntity>());
         mAttributeEntity.setOldValue(new WheelPickerEntity());
-        ProductListItemToProductDetailsEntity productEntity=
+        productEntity=
                 (ProductListItemToProductDetailsEntity) getIntent().getExtras().getSerializable("product_info");
         clearUserSelectedProduct();
         if (!TextUtils.isEmpty(mProductFirstImageurl)) {
@@ -849,8 +844,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             if(webviewCount<1) {
                 llWebView.addView(mWebView);
             }
-            netImageHeight = productDetailModel.getImage_height();
-            netImageWidth = productDetailModel.getImage_width();
+            netImageHeight = productDetailModel.getImageHeight();
+            netImageWidth = productDetailModel.getImageWidth();
             trueImageWidth=destWidth;
             trueImageHeight=(destWidth*netImageHeight)/netImageWidth;
             JImageUtils.downloadImageFromServerByProductUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, mProductFirstImageurl, trueImageWidth, trueImageHeight);
@@ -981,6 +976,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     }
     @Override
     public void setLikeView(boolean isLike) {
+        isLike = setDiffPageIsLike(isLike);
+
         if(isLike){
             ivHeaderBarWishlist.setImageDrawable
                     (JImageUtils.getThemeIcon
@@ -995,6 +992,28 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             mIVHeaderBarWishlist.setImageResource(R.mipmap.wishlist_white_normal);
         }
     }
+
+    private boolean setDiffPageIsLike(boolean isLike) {
+        if (mFromProductList.equals(ProductListAdapter.FROM_PRODUCT_LIST)){
+            if (productEntity != null){
+                mPresenter.getProductData().setIsLike(productEntity.getIsLike());
+                if (productEntity.getIsLike()==1){
+                    isLike=true;
+                }else {
+                    isLike=false;
+                }
+            }
+        }else if (mFromProductList.equals(HomeHomeFragmentV3.FROM_HOME_LIST)){
+            mPresenter.getProductData().setIsLike(this.isLike);
+            if (this.isLike==1){
+                isLike=true;
+            }else {
+                isLike=false;
+            }
+        }
+        return isLike;
+    }
+
     public  void showAvailabilityView() {
         rlProductQuantity.setVisibility(View.GONE);
         ivHeaderBarWishlist.setVisibility(View.GONE);

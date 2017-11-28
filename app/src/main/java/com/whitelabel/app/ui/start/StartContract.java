@@ -25,5 +25,7 @@ public class StartContract {
          void  getConfigInfo(String sessionKey,String deviceToken);
          void setStartTime();
          void timeOutJudgment();
+         void saveGuideFlag(Boolean isFirst);
+         boolean isGuide();
      }
 }

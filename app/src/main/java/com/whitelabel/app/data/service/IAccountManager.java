@@ -23,4 +23,6 @@ public interface IAccountManager {
     public Observable<SVRAppserviceCustomerFbLoginReturnEntity>
     threePartLogin(String gavinName,String displayName,String formatted,String familyName,String email,
                    String identityToken,String userToken,String provider, String boundEmail );
+    public void saveGuideFlag(Boolean isFirst);
+    public boolean isGuide();
 }

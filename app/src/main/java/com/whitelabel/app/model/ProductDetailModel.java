@@ -1,5 +1,7 @@
 package com.whitelabel.app.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +55,10 @@ public class ProductDetailModel implements Serializable {
     private String uiDetailHtmlText;
     private  String ingredients;
     private String features;
-    private int image_width;
-    private int image_height;
+    @SerializedName("image_width")
+    private int imageWidth;
+    @SerializedName("image_height")
+    private int imageHeight;
 
     public String getIngredients() {
         return ingredients;
@@ -306,19 +310,19 @@ public class ProductDetailModel implements Serializable {
         this.property = property;
     }
 
-    public int getImage_width() {
-        return image_width;
+    public int getImageWidth() {
+        return imageWidth;
     }
 
-    public void setImage_width(int image_width) {
-        this.image_width = image_width;
+    public void setImageWidth(int image_width) {
+        this.imageWidth = image_width;
     }
 
-    public int getImage_height() {
-        return image_height;
+    public int getImageHeight() {
+        return imageHeight;
     }
 
-    public void setImage_height(int image_height) {
-        this.image_height = image_height;
+    public void setImageHeight(int image_height) {
+        this.imageHeight = image_height;
     }
 }

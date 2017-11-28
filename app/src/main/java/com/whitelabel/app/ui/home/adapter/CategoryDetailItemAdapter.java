@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
@@ -63,14 +64,16 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
     private MyAccountDao myAccountDao;
     //click which CarouselsBean'list
     private int parentPosition;
+    private HomeActivity homeActivity;
 
-    public CategoryDetailItemAdapter(Context context,int position,List<SVRAppserviceProductSearchResultsItemReturnEntity> beans,ImageLoader imageLoader) {
+    public CategoryDetailItemAdapter(HomeActivity homeActivity, int position, List<SVRAppserviceProductSearchResultsItemReturnEntity> beans, ImageLoader imageLoader) {
         mBeans = beans;
+        this.homeActivity=homeActivity;
         mImageLoader=imageLoader;
         this.parentPosition=position;
         String TAG = "CategoryDetailItemAdapter";
-        mProductDao = new ProductDao(TAG, new DataHandler(context,this));
-        myAccountDao = new MyAccountDao(TAG, new DataHandler(context,this));
+        mProductDao = new ProductDao(TAG, new DataHandler(homeActivity,this));
+        myAccountDao = new MyAccountDao(TAG, new DataHandler(homeActivity,this));
     }
     private static final class DataHandler extends Handler {
         private final WeakReference<CategoryDetailItemAdapter> mAdapter;
@@ -209,8 +212,13 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
         final SVRAppserviceProductSearchResultsItemReturnEntity finalLeftProductEntity = leftProductEntity;
         finalLeftProductEntity.setPosition(position);
         Observable<SVRAppserviceProductSearchResultsItemReturnEntity> observable=Observable.
-                create(new WishlistObservable(itemViewHolder.rlLeftProductlistWish,finalLeftProductEntity,
-                        itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2));
+                create(new WishlistObservable(itemViewHolder.rlLeftProductlistWish, finalLeftProductEntity,
+                        itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2, new WishlistObservable.IWishIconUnLogin() {
+                    @Override
+                    public void clickWishToLogin() {
+                        homeActivity.saveProductIdWhenCheckPage(finalLeftProductEntity.getProductId(),finalLeftProductEntity.getIsLike(),true);
+                    }
+                }));
         observable.buffer(observable.debounce(1000, TimeUnit.MILLISECONDS))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -286,7 +294,7 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public void setUnLoginClickWishBackThisPageToRefresh(Context context, SVRAppserviceProductSearchResultsItemReturnEntity entity, ImageView ivWwishIcon,  int tempPosition){
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(context) && WhiteLabelApplication.getAppConfiguration().isUnLoginCanWishIconRefresh(entity.getProductId())){
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(context) && homeActivity.isUnLoginCanWishIconRefresh(entity.getProductId())){
             entity.setIsLike(1);
             mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), tempPosition);
             setWishIconColorToPurpleNoAnim(ivWwishIcon);

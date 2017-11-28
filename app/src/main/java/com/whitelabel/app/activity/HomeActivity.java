@@ -17,6 +17,7 @@ import android.view.WindowManager;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.fragment.HomeCategoryTreeFragment;
 import com.whitelabel.app.fragment.HomeHelpCenterDetailFragment;
@@ -81,6 +82,21 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
     //跳转到哪个Fragment上
     public static final String BUNDLE_START_FRAGMENT = "startFragment";
     public static final String BUNDLE_FRAGMENT_STORECREDIT = "storeCredit";
+
+    public OperateProductIdPrecache operateProductIdPrecache;
+    public void saveProductIdWhenCheckPage(String productId, int isLike,boolean isUnLogin) {
+        operateProductIdPrecache = new OperateProductIdPrecache(productId,isLike,isUnLogin);
+    }
+
+    public boolean isUnLoginCanWishIconRefresh(String productId){
+        if (operateProductIdPrecache!=null){
+            if (operateProductIdPrecache.getProductId().equals(productId) && operateProductIdPrecache.isUnLogin()){
+                operateProductIdPrecache=null;
+                return true;
+            }
+        }
+        return false;
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -570,4 +586,6 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
 }

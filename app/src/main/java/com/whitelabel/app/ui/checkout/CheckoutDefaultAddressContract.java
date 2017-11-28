@@ -22,7 +22,7 @@ public interface CheckoutDefaultAddressContract  {
 
          public void  dissmissProgressDialog();
 
-         public void hideBillToDefferentLayout();
+         public void hideBillToDifferentLayout();
          public void showErrorMsg(String errorMsg);
 
          public void showData(AddressBook shippingAddress,

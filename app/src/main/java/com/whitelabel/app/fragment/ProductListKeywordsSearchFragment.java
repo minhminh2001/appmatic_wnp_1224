@@ -50,12 +50,15 @@ import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomEditText;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.CustomXListView;
 import com.whitelabel.app.widget.FilterSortBottomView;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -701,40 +704,41 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                if (!data.getBooleanExtra("needRefreshWhenBackPressed", false)) {
+                    String productId = data.getStringExtra("productId");
+                    String itemId = data.getStringExtra("itemId");
+                    int isLike = data.getIntExtra("isLike", -1);
+                    Logger.e("peoductList productId :"+productId+" isLike:"+isLike);
+                    if (!TextUtils.isEmpty(productId) && isLike != -1) {
+                        refreWishIconByPDPResult(productId, isLike, itemId);
+                    }
+                } else {
+                    onRefresh();
+                }
+            }
+        }
         if (LoginRegisterActivity.REQUESTCODE_LOGIN == requestCode && resultCode == LoginRegisterEmailLoginFragment.RESULTCODE) {
             if (WhiteLabelApplication.getAppConfiguration().isSignIn(productListActivity)) {
-                productListActivity.changeOperateProductIdPrecacheStatus(true);
+//                productListActivity.changeOperateProductIdPrecacheStatus(true);
                 onRefresh();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getSearchType() == ProductListKeywordsSearchFragment.SEARCH_TYPE_KEYWORDS) {
-            showKeyboard();
-        }
-        notifyBackThisPageChangeWishIconStatus();
-    }
-
-    private void notifyBackThisPageChangeWishIconStatus() {
-        if (productItemEntityArrayList !=null ) {
-            for (SVRAppserviceProductSearchResultsItemReturnEntity entity : productItemEntityArrayList) {
-                OperateProductIdPrecache productIdAndIsLike = WhiteLabelApplication.getAppConfiguration().getProductIdAndIsLike();
-                if (productIdAndIsLike != null) {
-                    String productId = productIdAndIsLike.getProductId();
-                    int isLike = productIdAndIsLike.getIsLike();
-                    boolean unLogin = productIdAndIsLike.isUnLogin();
-                    if (productId != null && productId.equals(entity.getProductId()) && !unLogin) {
-                        entity.setIsLike(isLike);
-                        WhiteLabelApplication.getAppConfiguration().setProductIdAndIsLikeNull();
-                        if (productListAdapter!=null){
-                            productListAdapter.notifyDataSetChanged();
-                        }
-                    }
+    private void refreWishIconByPDPResult(String productId, int isLike, String itemId) {
+        Iterator<SVRAppserviceProductSearchResultsItemReturnEntity> itemReturnEntityIterator = productItemEntityArrayList.iterator();
+        while (itemReturnEntityIterator.hasNext()) {
+            SVRAppserviceProductSearchResultsItemReturnEntity entity = itemReturnEntityIterator.next();
+            if (entity.getProductId().equals(productId)) {
+                entity.setIsLike(isLike);
+                entity.setItemId(itemId);
+                if (productListAdapter!=null){
+                    productListAdapter.notifyDataSetChanged();
                 }
+                continue;
             }
         }
     }
