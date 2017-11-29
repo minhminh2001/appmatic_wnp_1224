@@ -53,7 +53,7 @@ import injection.modules.PresenterModule;
  * Use the {@link HomeHomeFragmentV4#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContract.Presenter> implements HomeActivity.HomeFragmentCallback,SwipeRefreshLayout.OnRefreshListener,HomeCategoryDetailContract.View {
+public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContract.Presenter> implements HomeActivity.HomeFragmentCallback,SwipeRefreshLayout.OnRefreshListener,HomeCategoryDetailContract.View,HomeActivity.ICommunHomeActivity {
     public final static String ARG_CATEGORY_ID = "category_id";
     public final static String ARG_CATEGORY_INDEX = "category_index";
     public final static String SHOP_BRAND_MENU_ID = "816";
@@ -91,6 +91,7 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     private CategoryDetailNewModel categoryDetailModel;
     CategoryDetailHorizontalAdapter mAdapter;
     private HomeActivity homeActivity;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -186,6 +187,7 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
 //             this.categoryDetailModel=categoryDetailModel;
              mAdapter=
                      new CategoryDetailHorizontalAdapter(homeActivity,this.categoryDetailModel,mImageLoader);
+             mAdapter.setiCommunHomeActivity(this);
              mAdapter.setOnProductItemClickListener(new IHomeItemClickListener.IHorizontalItemClickListener() {
                  @Override
                  public void onItemClick(RecyclerView.ViewHolder itemViewHolder, int parentPosition, int childPosition) {
@@ -286,4 +288,15 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     public void onDetach() {
         super.onDetach();
     }
+
+    @Override
+    public void saveProductIdWhenCheckPage(String productId, int isLike, boolean isUnLogin) {
+        homeActivity.saveProductIdWhenCheckPage(productId,isLike,isUnLogin);
+    }
+
+    @Override
+    public boolean isUnLoginCanWishIconRefresh(String productId) {
+        return homeActivity.isUnLoginCanWishIconRefresh(productId);
+    }
+
 }

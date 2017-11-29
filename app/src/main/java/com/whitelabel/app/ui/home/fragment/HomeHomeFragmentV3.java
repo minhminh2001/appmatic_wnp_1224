@@ -55,7 +55,7 @@ import injection.modules.PresenterModule;
  * Use the {@link HomeHomeFragmentV3#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContract.Presenter>implements HomeCategoryDetailContract.View,SwipeRefreshLayout.OnRefreshListener {
+public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContract.Presenter>implements HomeCategoryDetailContract.View,SwipeRefreshLayout.OnRefreshListener, HomeActivity.ICommunHomeActivity {
     @BindView(R.id.recyclerView1)
     RecyclerView recyclerView1;
     @BindView(R.id.v_view)
@@ -222,6 +222,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         if(getActivity()!=null) {
             this.categoryDetailModel =categoryDetailModel;
             mAdapter = new CategoryDetailVerticalAdapter(homeActivity, categoryDetailModel, mImageLoader);
+            mAdapter.setiCommunHomeActivity(this);
             mAdapter.setOnVerticalItemClickLitener(new IHomeItemClickListener.IVerticalItemClickLitener() {
                 @Override
                 public void onItemClick(RecyclerView.ViewHolder itemViewHolder, int position) {
@@ -305,4 +306,13 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         return entity;
     }
 
+    @Override
+    public void saveProductIdWhenCheckPage(String productId, int isLike, boolean isUnLogin) {
+        homeActivity.saveProductIdWhenCheckPage(productId,isLike,isUnLogin);
+    }
+
+    @Override
+    public boolean isUnLoginCanWishIconRefresh(String productId) {
+        return homeActivity.isUnLoginCanWishIconRefresh(productId);
+    }
 }

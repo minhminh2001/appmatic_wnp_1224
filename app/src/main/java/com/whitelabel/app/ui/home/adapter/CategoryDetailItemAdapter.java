@@ -64,17 +64,20 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
     private MyAccountDao myAccountDao;
     //click which CarouselsBean'list
     private int parentPosition;
-    private HomeActivity homeActivity;
+    private HomeActivity.ICommunHomeActivity  iCommunHomeActivity;
 
-    public CategoryDetailItemAdapter(HomeActivity homeActivity, int position, List<SVRAppserviceProductSearchResultsItemReturnEntity> beans, ImageLoader imageLoader) {
+    public CategoryDetailItemAdapter(Context context, int position, List<SVRAppserviceProductSearchResultsItemReturnEntity> beans, ImageLoader imageLoader) {
         mBeans = beans;
-        this.homeActivity=homeActivity;
         mImageLoader=imageLoader;
         this.parentPosition=position;
         String TAG = "CategoryDetailItemAdapter";
-        mProductDao = new ProductDao(TAG, new DataHandler(homeActivity,this));
-        myAccountDao = new MyAccountDao(TAG, new DataHandler(homeActivity,this));
+        mProductDao = new ProductDao(TAG, new DataHandler(context,this));
+        myAccountDao = new MyAccountDao(TAG, new DataHandler(context,this));
     }
+    public void setiCommunHomeActivity(HomeActivity.ICommunHomeActivity iCommunHomeActivity) {
+        this.iCommunHomeActivity = iCommunHomeActivity;
+    }
+
     private static final class DataHandler extends Handler {
         private final WeakReference<CategoryDetailItemAdapter> mAdapter;
         private final WeakReference<Context> mContext;
@@ -216,7 +219,9 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
                         itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2, new WishlistObservable.IWishIconUnLogin() {
                     @Override
                     public void clickWishToLogin() {
-                        homeActivity.saveProductIdWhenCheckPage(finalLeftProductEntity.getProductId(),finalLeftProductEntity.getIsLike(),true);
+//                        homeActivity.saveProductIdWhenCheckPage(finalLeftProductEntity.getProductId(),finalLeftProductEntity.getIsLike(),true);
+                        ///TODO
+                        iCommunHomeActivity.saveProductIdWhenCheckPage(finalLeftProductEntity.getProductId(),finalLeftProductEntity.getIsLike(),true);
                     }
                 }));
         observable.buffer(observable.debounce(1000, TimeUnit.MILLISECONDS))
@@ -294,7 +299,8 @@ public class CategoryDetailItemAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public void setUnLoginClickWishBackThisPageToRefresh(Context context, SVRAppserviceProductSearchResultsItemReturnEntity entity, ImageView ivWwishIcon,  int tempPosition){
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(context) && homeActivity.isUnLoginCanWishIconRefresh(entity.getProductId())){
+//        if (WhiteLabelApplication.getAppConfiguration().isSignIn(context) && homeActivity.isUnLoginCanWishIconRefresh(entity.getProductId())){
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(context) && iCommunHomeActivity.isUnLoginCanWishIconRefresh(entity.getProductId())){
             entity.setIsLike(1);
             mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), tempPosition);
             setWishIconColorToPurpleNoAnim(ivWwishIcon);

@@ -21,6 +21,7 @@ import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV3;
 import com.whitelabel.app.utils.GlideImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
 import com.youth.banner.Banner;
@@ -39,19 +40,21 @@ import butterknife.ButterKnife;
 public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private CategoryDetailNewModel mCategoryDetailModel;
     private final ImageLoader mImageLoader;
-
-
+    private Activity activity;
     private   double screenWidth;
     private IHomeItemClickListener.IHorizontalItemClickListener onProductClick;
     private IHomeItemClickListener.IHeaderItemClickListener onHeaderClick;
     List<CategoryDetailNewModel.CarouselsBean> carousels=new ArrayList<>();
-    private HomeActivity homeActivity;
-    public CategoryDetailHorizontalAdapter(HomeActivity activity, CategoryDetailNewModel categoryDetailModel, ImageLoader imageLoader) {
-        this.homeActivity=activity;
+    public CategoryDetailHorizontalAdapter(Activity activity, CategoryDetailNewModel categoryDetailModel, ImageLoader imageLoader) {
         this.mImageLoader = imageLoader;
+        this.activity=activity;
         this.mCategoryDetailModel = categoryDetailModel;
         screenWidth=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(activity);
         addTitleItemList();
+    }
+    private HomeActivity.ICommunHomeActivity iCommunHomeActivity;
+    public void setiCommunHomeActivity(HomeActivity.ICommunHomeActivity iCommunHomeActivity) {
+        this.iCommunHomeActivity = iCommunHomeActivity;
     }
 
     //add item type position and data
@@ -164,7 +167,18 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
                 CategoryDetailNewModel.CarouselsBean carouselsBean = this.carousels.get(position);
                 //let HomeFragmentV3's CategoryDetailNewModel know which position items
                 int CarouselsItemPosition=(position-1)/2;
-                CategoryDetailItemAdapter mCategoryDetailAdapater=new CategoryDetailItemAdapter(homeActivity,CarouselsItemPosition,carouselsBean.getItems(),mImageLoader);
+                CategoryDetailItemAdapter mCategoryDetailAdapater=new CategoryDetailItemAdapter(activity,CarouselsItemPosition,carouselsBean.getItems(),mImageLoader);
+                mCategoryDetailAdapater.setiCommunHomeActivity(new HomeActivity.ICommunHomeActivity() {
+                    @Override
+                    public void saveProductIdWhenCheckPage(String productId, int isLike, boolean isUnLogin) {
+                        iCommunHomeActivity.saveProductIdWhenCheckPage(productId,isLike,isUnLogin);
+                    }
+
+                    @Override
+                    public boolean isUnLoginCanWishIconRefresh(String productId) {
+                         return iCommunHomeActivity.isUnLoginCanWishIconRefresh(productId);
+                    }
+                });
                 mCategoryDetailAdapater.setOnItemClickLitener(onProductClick);
                 ItemViewHolder  itemViewHolder= (ItemViewHolder) holder;
                 itemViewHolder.rvCategory.setVisibility(View.VISIBLE);

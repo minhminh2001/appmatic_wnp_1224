@@ -209,6 +209,8 @@ public class MyAccountChangePasswordActivity extends com.whitelabel.app.BaseActi
                         oldText2.setText(getResources().getString(R.string.current_password));
                         oldText2.setTextColor(getResources().getColor(R.color.redC2060A));
                         return false;
+                    }else {
+                        onFocus(old, oldText, oldText2, "Old Password");
                     }
                 }
                 break;
@@ -230,6 +232,8 @@ public class MyAccountChangePasswordActivity extends com.whitelabel.app.BaseActi
                         newPasswordText2.setText(getResources().getString(R.string.enter_characters_ignored));
                         newPasswordText2.setTextColor(getResources().getColor(R.color.redC2060A));
                         return false;
+                    }else {
+                        onFocus(newPassword, newPasswordText, newPasswordText2, "New Password");
                     }
                 }
                 break;
@@ -244,20 +248,22 @@ public class MyAccountChangePasswordActivity extends com.whitelabel.app.BaseActi
                     if(newPassword.getText().toString().trim().equals("")) {
                         confirmText2.setText(getResources().getString(R.string.password_empty));
                     }else{
-                        confirmText2.setText(getResources().getString(R.string.confirmation_password));
+                        confirmText2.setText(getResources().getString(R.string.password_empty));
                     }
                     confirmText2.setTextColor(getResources().getColor(R.color.redC2060A));
                     return false;
                 }else{
                     confirmText.clearAnimation();
-                    if(!confirm.getText().toString().trim().equals(newPassword.getText().toString().trim())){
-                        confirmText2.setText(getResources().getString(R.string.confirmation_password));
-                        confirmText2.setTextColor(getResources().getColor(R.color.redC2060A));
-                        return false;
-                    }else if(!JDataUtils.isPassword(confirm)){
+                    if(!JDataUtils.isPassword(confirm)){
                         confirmText2.setText(getResources().getString(R.string.enter_characters_ignored));
                         confirmText2.setTextColor(getResources().getColor(R.color.redC2060A));
                         return false;
+                    }else if (!confirm.getText().toString().trim().equals(newPassword.getText().toString().trim())){
+                            confirmText2.setText(getResources().getString(R.string.confirmation_password));
+                            confirmText2.setTextColor(getResources().getColor(R.color.redC2060A));
+                            return false;
+                    }else {
+                        onFocus(confirm, confirmText, confirmText2, "Confirm New Password");
                     }
                 }
                 break;

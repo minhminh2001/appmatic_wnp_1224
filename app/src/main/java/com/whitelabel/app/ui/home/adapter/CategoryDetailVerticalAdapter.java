@@ -31,6 +31,7 @@ import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.dao.ShoppingCarDao;
+import com.whitelabel.app.fragment.HomeHomeFragment;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ErrorMsgBean;
@@ -77,13 +78,14 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     Map<Integer,Integer> childCountMaps=new HashMap<>();
     List<SVRAppserviceProductSearchResultsItemReturnEntity> allItemLists=new ArrayList<>();
     List<Integer> titleLists=new ArrayList<>();
-    private HomeActivity homeActivity;
-
-
     public interface OnFilterSortBarListener {
         void onSwitchViewClick(View view);
         void onFilterClick();
         void onSortClick();
+    }
+    private HomeActivity.ICommunHomeActivity iCommunHomeActivity;
+    public void setiCommunHomeActivity(HomeActivity.ICommunHomeActivity iCommunHomeActivity) {
+        this.iCommunHomeActivity = iCommunHomeActivity;
     }
     private static final class DataHandler extends Handler {
         private final WeakReference<CategoryDetailVerticalAdapter> mAdapter;
@@ -142,15 +144,14 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
             }
         }
     }
-    public CategoryDetailVerticalAdapter(HomeActivity homeActivity, CategoryDetailNewModel categoryDetailModel, ImageLoader loader) {
+    public CategoryDetailVerticalAdapter(Context context, CategoryDetailNewModel categoryDetailModel, ImageLoader loader) {
         this.categoryDetailModel = categoryDetailModel;
         mImageLoader = loader;
-        this.homeActivity=homeActivity;
-        DataHandler dataHandler = new DataHandler(homeActivity, this);
+        DataHandler dataHandler = new DataHandler(context, this);
         String TAG = this.getClass().getSimpleName();
         myAccountDao = new MyAccountDao(TAG, dataHandler);
         mProductDao = new ProductDao(TAG, dataHandler);
-        screenWidth=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(homeActivity);
+        screenWidth=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth((Activity) context);
 //        getRcyListSize();
         createAllItemAndCreateTitleIndex();
     }
@@ -351,7 +352,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                                 itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2, new WishlistObservable.IWishIconUnLogin() {
                             @Override
                             public void clickWishToLogin() {
-                                homeActivity.saveProductIdWhenCheckPage(finalLeftProductEntity.getProductId(),finalLeftProductEntity.getIsLike(),true);
+                                iCommunHomeActivity.saveProductIdWhenCheckPage(finalLeftProductEntity.getProductId(),finalLeftProductEntity.getIsLike(),true);
                             }
                         }));
                 observable.buffer(observable.debounce(1000, TimeUnit.MILLISECONDS))
@@ -406,7 +407,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
     }
 
     public void setUnLoginClickWishBackThisPageToRefresh(Context context, SVRAppserviceProductSearchResultsItemReturnEntity entity, ImageView ivWwishIcon,  int tempPosition){
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(context) && homeActivity.isUnLoginCanWishIconRefresh(entity.getProductId())){
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(context) && iCommunHomeActivity.isUnLoginCanWishIconRefresh(entity.getProductId())){
             entity.setIsLike(1);
             mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), tempPosition);
             setWishIconColorToPurpleNoAnim(ivWwishIcon);
