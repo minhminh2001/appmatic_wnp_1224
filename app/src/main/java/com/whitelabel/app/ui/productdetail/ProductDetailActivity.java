@@ -37,19 +37,14 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HelpCenterDetialActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.activity.ProductActivity;
 import com.whitelabel.app.activity.ProductDetailPictureActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.adapter.ProductListAdapter;
 import com.whitelabel.app.adapter.ProductRecommendedListAdapter;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.ProductDetailCallback;
 import com.whitelabel.app.callback.WheelPickerCallback;
-import com.whitelabel.app.data.DataManager;
-import com.whitelabel.app.data.service.AccountManager;
-import com.whitelabel.app.data.service.BaseManager;
-import com.whitelabel.app.data.service.CommodityManager;
-import com.whitelabel.app.data.service.ShoppingCartManager;
 import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.ProductPropertyModel;
@@ -59,6 +54,7 @@ import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
+import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV3;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -138,6 +134,13 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     private final static  int BOTTONBAR_HEIGHT=80;
     private int destWidth;
     private RelativeLayout rlProductrecommendLine;
+    int trueImageWidth;
+    int trueImageHeight;
+    int netImageHeight;
+    int netImageWidth;
+    private ProductListItemToProductDetailsEntity productEntity;
+    private int isLike;
+    private String  mFromProductList;
     @Override
     public void showNornalProgressDialog() {
         mDialog = JViewUtils.showProgressDialog(ProductDetailActivity.this);
@@ -436,8 +439,9 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         setContentView(R.layout.activity_product);
         destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductDetailActivity.this);
         productId =  getIntent().getExtras().getString("productId");
-        String  mFromProductList = getIntent().getExtras().getString("from");
+        mFromProductList = getIntent().getExtras().getString("from");
         mProductFirstImageurl=getIntent().getExtras().getString("imageurl");
+        isLike=getIntent().getExtras().getInt("isLike");
         initView();
         initData();
         mPresenter.setDialogType(mFromProductList);
@@ -449,7 +453,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         mAttributeEntity = new WheelPickerConfigEntity();
         mAttributeEntity.setArrayList(new ArrayList<WheelPickerEntity>());
         mAttributeEntity.setOldValue(new WheelPickerEntity());
-        ProductListItemToProductDetailsEntity productEntity=
+        productEntity=
                 (ProductListItemToProductDetailsEntity) getIntent().getExtras().getSerializable("product_info");
         clearUserSelectedProduct();
         if (!TextUtils.isEmpty(mProductFirstImageurl)) {
@@ -457,8 +461,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             int marginLeft = destWidth * 15 / 640;
             int dividerWidth = destWidth * 16 / 640;
             int destWidth = (this.destWidth - (2 * marginLeft) - dividerWidth) / 2;
-            JLogUtils.i("ProductDetailActivity","url:"+ivProductImage);
-             JImageUtils.downloadImageFromServerByUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, mProductFirstImageurl, destWidth, destWidth);
+            int destHeight = (int) (destWidth/1.332);
+            JImageUtils.downloadImageFromServerByProductUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, mProductFirstImageurl, destWidth,destHeight);
         } else {
             ivProductImage.setAlpha(0.0f);
         }
@@ -828,16 +832,23 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     }
     @Override
     public void loadStaticData(ProductDetailModel productDetailModel) {
-        if(!TextUtils.isEmpty(productDetailModel.getBrand())) {
-            ctvProductBrand.setText(productDetailModel.getBrand().toUpperCase());
-        }
-        ctvProductName.setText(productDetailModel.getName());//分享标题赋值
-        if (!TextUtils.isEmpty(productDetailModel.getUiDetailHtmlText())) {
-            JToolUtils.webViewFont(this, mWebView, productDetailModel.getUiDetailHtmlText(), 13.5f);
-        }
-        int webviewCount=llWebView.getChildCount();
-        if(webviewCount<1) {
-            llWebView.addView(mWebView);
+        if (productDetailModel!=null){
+            if(!TextUtils.isEmpty(productDetailModel.getBrand())) {
+                ctvProductBrand.setText(productDetailModel.getBrand().toUpperCase());
+            }
+            ctvProductName.setText(productDetailModel.getName());//分享标题赋值
+            if (!TextUtils.isEmpty(productDetailModel.getUiDetailHtmlText())) {
+                JToolUtils.webViewFont(this, mWebView, productDetailModel.getUiDetailHtmlText(), 13.5f);
+            }
+            int webviewCount=llWebView.getChildCount();
+            if(webviewCount<1) {
+                llWebView.addView(mWebView);
+            }
+            netImageHeight = productDetailModel.getImageHeight();
+            netImageWidth = productDetailModel.getImageWidth();
+            trueImageWidth=destWidth;
+            trueImageHeight=(destWidth*netImageHeight)/netImageWidth;
+            JImageUtils.downloadImageFromServerByProductUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, mProductFirstImageurl, trueImageWidth, trueImageHeight);
         }
     }
     private WebView getWebView() {
@@ -965,6 +976,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     }
     @Override
     public void setLikeView(boolean isLike) {
+        isLike = setDiffPageIsLike(isLike);
+
         if(isLike){
             ivHeaderBarWishlist.setImageDrawable
                     (JImageUtils.getThemeIcon
@@ -979,6 +992,28 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             mIVHeaderBarWishlist.setImageResource(R.mipmap.wishlist_white_normal);
         }
     }
+
+    private boolean setDiffPageIsLike(boolean isLike) {
+        if (mFromProductList.equals(ProductListAdapter.FROM_PRODUCT_LIST)){
+            if (productEntity != null){
+                mPresenter.getProductData().setIsLike(productEntity.getIsLike());
+                if (productEntity.getIsLike()==1){
+                    isLike=true;
+                }else {
+                    isLike=false;
+                }
+            }
+        }else if (mFromProductList.equals(HomeHomeFragmentV3.FROM_HOME_LIST)){
+            mPresenter.getProductData().setIsLike(this.isLike);
+            if (this.isLike==1){
+                isLike=true;
+            }else {
+                isLike=false;
+            }
+        }
+        return isLike;
+    }
+
     public  void showAvailabilityView() {
         rlProductQuantity.setVisibility(View.GONE);
         ivHeaderBarWishlist.setVisibility(View.GONE);
@@ -1038,7 +1073,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             mProductImagesArrayList.addAll(productImageUrlList);
             if (mProductFirstImageurl != null && productImageUrlList.size() > 0) {
                 if (!mProductFirstImageurl.equals(productImageUrlList.get(0))) {
-                    JImageUtils.downloadImageFromServerByUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, productImageUrlList.get(0), destWidth, destWidth);
+                    JImageUtils.downloadImageFromServerByProductUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, productImageUrlList.get(0), netImageWidth, netImageHeight);
                     mProductFirstImageurl = "";
                 }
             }
@@ -1061,15 +1096,15 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             viewPager.setCurrentItem(0);
         }
         if (viewPager != null && viewPager.getLayoutParams() != null) {
-            viewPager.getLayoutParams().height = destWidth;
-            viewPager.getLayoutParams().width = destWidth;
+            viewPager.getLayoutParams().height = trueImageHeight;
+            viewPager.getLayoutParams().width = trueImageWidth;
         }
     }
     @NonNull
     private ImageView getImageView(final ArrayList<String> productImageUrlList, int index) {
         final ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        JImageUtils.downloadImageFromServerByUrl(ProductDetailActivity.this, mImageLoader, imageView, productImageUrlList.get(index), destWidth, destWidth);
+        JImageUtils.downloadImageFromServerByProductUrl(ProductDetailActivity.this, mImageLoader, imageView, productImageUrlList.get(index), netImageWidth, netImageHeight);
         imageView.setTag(index);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

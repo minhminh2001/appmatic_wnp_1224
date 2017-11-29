@@ -1,6 +1,7 @@
 package com.whitelabel.app.ui.start;
 
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
@@ -21,6 +22,7 @@ import rx.Subscription;
 public class StartPresenterImpl extends RxPresenter<StartContract.View> implements StartContract.Presenter{
     private IBaseManager configService;
     private long mStartTimeLong;
+    private IAccountManager iAccountManager;
     public  void setStartTime(){
         mStartTimeLong=System.currentTimeMillis();
     }
@@ -33,9 +35,13 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                 mView.startGuidePage();
          }
     }
+
+
+
     @Inject
-    public StartPresenterImpl( IBaseManager configService){
+    public StartPresenterImpl( IBaseManager configService,IAccountManager iAccountManager){
         this.configService=configService;
+        this.iAccountManager=iAccountManager;
     }
 //    @Override
 //    public void openApp(String sessionKey, String deviceToken) {
@@ -164,5 +170,15 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                     }
                 });
         addSubscrebe(subscription);
+    }
+
+    @Override
+    public void saveGuideFlag(Boolean isFirst) {
+        iAccountManager.saveGuideFlag(isFirst);
+    }
+
+    @Override
+    public boolean isGuide() {
+        return iAccountManager.isGuide();
     }
 }

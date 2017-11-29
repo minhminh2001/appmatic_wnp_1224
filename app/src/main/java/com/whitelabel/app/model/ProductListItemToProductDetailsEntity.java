@@ -36,7 +36,7 @@ public class ProductListItemToProductDetailsEntity implements Serializable {
         this.vendor_id = vendor_id;
     }
 
-    public int getIs_like() {
+    public int getIsLike() {
         return is_like;
     }
 

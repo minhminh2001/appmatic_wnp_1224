@@ -1,5 +1,7 @@
 package com.whitelabel.app.ui.home.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,9 @@ import android.widget.RelativeLayout;
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.activity.ProductListActivity;
+import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.fragment.HomeBaseFragment;
 import com.whitelabel.app.model.CategoryDetailNewModel;
@@ -30,9 +36,13 @@ import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.PageIntentUtils;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomTextView;
+
+import java.util.Iterator;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +55,7 @@ import injection.modules.PresenterModule;
  * Use the {@link HomeHomeFragmentV3#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContract.Presenter>implements HomeCategoryDetailContract.View,SwipeRefreshLayout.OnRefreshListener {
+public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContract.Presenter>implements HomeCategoryDetailContract.View,SwipeRefreshLayout.OnRefreshListener, HomeActivity.ICommunHomeActivity {
     @BindView(R.id.recyclerView1)
     RecyclerView recyclerView1;
     @BindView(R.id.v_view)
@@ -79,8 +89,12 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     private String mCategoryId;
     public final static  String ARG_CATEGORY_ID="category_id";
     public final static  String ARG_CATEGORY_INDEX="category_index";
+    public final static String FROM_HOME_LIST= "from_home_list";
+    public final static  int REQUEST_PRODUCT_DETAIL_CODE=101;
     private int mIndex;
     private boolean isPrepared, isVisible, mHasLoadedOnce;
+    private CategoryDetailNewModel categoryDetailModel;
+    private HomeActivity homeActivity;
     /**
      * Use this factory method to creaøte a new instance of
      * this fragment using the provided parameters.
@@ -145,6 +159,13 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
             swipeContainer.setRefreshing(false);
         }
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        homeActivity=(HomeActivity)context;
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -199,7 +220,9 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public void loadData(final CategoryDetailNewModel categoryDetailModel) {
         if(getActivity()!=null) {
-            mAdapter = new CategoryDetailVerticalAdapter(getActivity(), categoryDetailModel, mImageLoader);
+            this.categoryDetailModel =categoryDetailModel;
+            mAdapter = new CategoryDetailVerticalAdapter(homeActivity, categoryDetailModel, mImageLoader);
+            mAdapter.setiCommunHomeActivity(this);
             mAdapter.setOnVerticalItemClickLitener(new IHomeItemClickListener.IVerticalItemClickLitener() {
                 @Override
                 public void onItemClick(RecyclerView.ViewHolder itemViewHolder, int position) {
@@ -210,12 +233,13 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
                     intent.setClass(getActivity(), ProductDetailActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("productId",productEntity.getProductId());
-                    bundle.putString("from", "from_product_list");
+                    bundle.putString("from", FROM_HOME_LIST);
+                    bundle.putInt("isLike", productEntity.getIsLike());
                     bundle.putSerializable("product_info", getProductListItemToProductDetailsEntity(productEntity));
                     bundle.putString("imageurl", productEntity.getSmallImage());
                     intent.putExtras(bundle);
-                    getContext().startActivity(intent);
-                    ((BaseActivity)getActivity()).startActivityTransitionAnim();
+                    startActivityForResult(intent,REQUEST_PRODUCT_DETAIL_CODE);
+                    homeActivity.startActivityTransitionAnim();
                 }
             });
             mAdapter.setOnHeaderClick(new IHomeItemClickListener.IHeaderItemClickListener() {
@@ -227,6 +251,47 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
             recyclerView1.setAdapter(mAdapter);
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==REQUEST_PRODUCT_DETAIL_CODE && resultCode== Activity.RESULT_OK){
+            if (data != null) {
+                if (!data.getBooleanExtra("needRefreshWhenBackPressed", false)) {
+                    String productId = data.getStringExtra("productId");
+                    String itemId = data.getStringExtra("itemId");
+                    int isLike = data.getIntExtra("isLike", -1);
+                    Logger.e("peoductList productId :"+productId+" isLike:"+isLike);
+                    if (!TextUtils.isEmpty(productId) && isLike != -1) {
+                        notifyBackThisPageChangeWishIconStatus(productId, isLike, itemId);
+                    }
+                } else {
+                    onRefresh();
+                }
+            }
+        }
+    }
+
+    private void notifyBackThisPageChangeWishIconStatus(String productId,int isLike,String itemId) {
+        if (categoryDetailModel !=null && categoryDetailModel.getCarousels()!=null ){
+            List<CategoryDetailNewModel.CarouselsBean> carousels = categoryDetailModel.getCarousels();
+            for (CategoryDetailNewModel.CarouselsBean carouselsBean:carousels ) {
+                if (carouselsBean.getItems()!=null){
+                    List<SVRAppserviceProductSearchResultsItemReturnEntity> items = carouselsBean.getItems();
+                    for (SVRAppserviceProductSearchResultsItemReturnEntity entity:items){
+                        if (productId!=null && productId.equals(entity.getProductId())){
+                            entity.setIsLike(isLike);
+                            entity.setItemId(itemId);
+                            if (mAdapter!=null){
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private ProductListItemToProductDetailsEntity getProductListItemToProductDetailsEntity(SVRAppserviceProductSearchResultsItemReturnEntity e) {
         ProductListItemToProductDetailsEntity entity = new ProductListItemToProductDetailsEntity();
         entity.setBrand(e.getBrand());
@@ -241,4 +306,13 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
         return entity;
     }
 
+    @Override
+    public void saveProductIdWhenCheckPage(String productId, int isLike, boolean isUnLogin) {
+        homeActivity.saveProductIdWhenCheckPage(productId,isLike,isUnLogin);
+    }
+
+    @Override
+    public boolean isUnLoginCanWishIconRefresh(String productId) {
+        return homeActivity.isUnLoginCanWishIconRefresh(productId);
+    }
 }

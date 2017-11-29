@@ -3,6 +3,7 @@ package com.whitelabel.app.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -203,12 +204,17 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             }
 
 
+            GradientDrawable myGrad = (GradientDrawable)subOrderHolder.btnOrderListItemAddtocart.getBackground();
             if(!TextUtils.isEmpty(orderBody.getAvailability())&&!"1".equals(orderBody.getAvailability())){
                 subOrderHolder.tvUnavailable.setVisibility(View.VISIBLE);
                 subOrderHolder.tvTrans.setVisibility(View.VISIBLE);
+                myGrad.setColor(ContextCompat.getColor(context,R.color.greyDCDCDC));
+                subOrderHolder.btnOrderListItemAddtocart.setEnabled(false);
             }else{
                 subOrderHolder.tvUnavailable.setVisibility(View.GONE);
                 subOrderHolder.tvTrans.setVisibility(View.GONE);
+                myGrad.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+                subOrderHolder.btnOrderListItemAddtocart.setEnabled(true);
             }
             subOrderHolder.orderPrice.setText(JDataUtils.formatDouble(orderBody.getOrderPrice()));
             subOrderHolder.orderNum.setText("Quantity: " + orderBody.getOrderQuantity());

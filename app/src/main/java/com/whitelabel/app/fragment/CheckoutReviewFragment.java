@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,16 +19,20 @@ import com.whitelabel.app.*;
 import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.adapter.CheckoutReviewShoppingCartAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CheckoutPaymentReturnShippingAddress;
 import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.model.ShoppingCarStoreCreditBean;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.checkout.model.CheckoutDefaultAddressResponse;
 import com.whitelabel.app.utils.FileUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.CustomWebView;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
@@ -46,6 +51,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
     private View rlStoreCredit;
     private TextView tvStoreCreditTitle;
     private TextView tvStoreCreditValue;
+    private TextView tvWord;
     private EditText etCheckoutReviewOrderComment;
     private String orderComment;
     /**
@@ -91,7 +97,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
 //        tvCardType = (TextView) view.findViewById(R.id.tv_checkout_review_pay_cardtype);
 //        tvCardNumber = (TextView) view.findViewById(R.id.tv_checkout_review_pay_cardnubmer);
 //        tvCardBank = (TextView) view.findViewById(R.id.tv_checkout_review_pay_cardBank);
-        TextView tvWord = (TextView) view.findViewById(R.id.tv_word);
+        tvWord = (TextView) view.findViewById(R.id.tv_word);
         View llRoot = view.findViewById(R.id.ll_root);
         tvSubtotal = (TextView) view.findViewById(R.id.tv_checkout_review_subtotal);
         tvShippingfee = (TextView) view.findViewById(R.id.tv_checkout_review_shippingfee);
@@ -201,12 +207,12 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
             }
             //Set Datas to ShippingAddress and inflate llShippingAddress with an address cell
               address = paymentSaveReturnEntity.getShippingAddress();
-             View view = getAddressView(address);
-            llShippingAddress.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-            View  billingView=getAddressView(paymentSaveReturnEntity.getBillingAddress());
-            llBillingAddress.addView(billingView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
+//             View view = getAddressView(address);
+//            llShippingAddress.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//
+//            View  billingView=getAddressView(paymentSaveReturnEntity.getBillingAddress());
+//            llBillingAddress.addView(billingView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            initTopAddressData();
             //Set Datas to Payment Method
             payment_type = getArguments().getString("payment[molpay_type]");
             String code = getArguments().getString("code");
@@ -421,8 +427,40 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
         });
     }
 
+    private void initTopAddressData(){
+
+        if (checkoutActivity.isPickInStoreChecked){
+            tvWord.setText(checkoutActivity.pickUpAddress.getTitle());
+            View pickUpView = getAddressView(checkoutActivity.pickUpAddress);
+            llShippingAddress.addView(pickUpView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            View  billingView=getAddressView(checkoutActivity.billingAddress);
+            llBillingAddress.addView(billingView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        }else {
+            //true billAddress show ,false show twice shippingAddress
+            if (checkoutActivity.isBillAddressChecked){
+                if (checkoutActivity.shippingAddress!=null){
+                    View shippingView = getAddressView(checkoutActivity.shippingAddress);
+                    llShippingAddress.addView(shippingView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                }
+                if (checkoutActivity.billingAddress!=null){
+                    View  billingView=getAddressView(checkoutActivity.billingAddress);
+                    llBillingAddress.addView(billingView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                }
+            }else {
+                if (checkoutActivity.shippingAddress!=null){
+                    View shippingView = getAddressView(checkoutActivity.shippingAddress);
+                    llShippingAddress.addView(shippingView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    View shippingView2 = getAddressView(checkoutActivity.shippingAddress);
+                    llBillingAddress.addView(shippingView2, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                }
+            }
+        }
+
+
+    }
+
     @NonNull
-    private View getAddressView(CheckoutPaymentReturnShippingAddress address) {
+    private View getAddressView(Serializable address) {
         View view = LayoutInflater.from(checkoutActivity).inflate(R.layout.fragment_checkout_shipping_selectaddress_cell_for_review, null);
         view.findViewById(R.id.image_address_select_top).setVisibility(View.GONE);
         view.findViewById(R.id.image_address_select_end).setVisibility(View.GONE);
@@ -435,32 +473,71 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
         TextView tvCityStatePostcode = (TextView) view.findViewById(R.id.tv_address_select_citystatepostcode);
         TextView tvCountry = (TextView) view.findViewById(R.id.tv_address_select_country);
         TextView tvTelephone = (TextView) view.findViewById(R.id.tv_address_select_telephone);
-        tvFirstname.setText(address.getFirstname() + " " + address.getLastname());
-        //tvLastname.setText(address.getLastname());
-        tvAddress1.setText(address.getStreet());
-        tvAddress2.setVisibility(View.GONE);
-        //initstoreCredit
-        initStoreCredit(paymentSaveReturnEntity.getStoreCredit());
-        /**
-         * Constructor city,state,postcode
-         */
-        if(!TextUtils.isEmpty(address.getFax())){
-            tvDayTimeTelephone.setText(getResources().getString(R.string.day_time_contact)+" : "+address.getFax());
-        }else{
+        if (address instanceof CheckoutPaymentReturnShippingAddress) {
+            tvFirstname.setText(((CheckoutPaymentReturnShippingAddress)address).getFirstname() + " " + ((CheckoutPaymentReturnShippingAddress)address).getLastname());
+            //tvLastname.setText(address.getLastname());
+            tvAddress1.setText(((CheckoutPaymentReturnShippingAddress)address).getStreet());
+            tvAddress2.setVisibility(View.GONE);
+            //initstoreCredit
+            initStoreCredit(paymentSaveReturnEntity.getStoreCredit());
+            /**
+             * Constructor city,state,postcode
+             */
+            if(!TextUtils.isEmpty(((CheckoutPaymentReturnShippingAddress)address).getFax())){
+                tvDayTimeTelephone.setText(getResources().getString(R.string.day_time_contact)+" : "+((CheckoutPaymentReturnShippingAddress)address).getFax());
+            }else{
+                tvDayTimeTelephone.setVisibility(View.GONE);
+            }
+            StringBuilder stringBuilder=new StringBuilder();
+            stringBuilder=stringBuilder.append(((CheckoutPaymentReturnShippingAddress)address).getCity()).append(",");
+            if(!JDataUtils.isEmpty(((CheckoutPaymentReturnShippingAddress)address).getRegion()) && !((CheckoutPaymentReturnShippingAddress)address).getRegion().equalsIgnoreCase("null")){
+                stringBuilder=stringBuilder.append(((CheckoutPaymentReturnShippingAddress)address).getRegion());
+            }
+            if(!TextUtils.isEmpty(((CheckoutPaymentReturnShippingAddress)address).getPostcode())){
+                stringBuilder=stringBuilder.append(",").append(((CheckoutPaymentReturnShippingAddress)address).getPostcode());
+            }
+            tvCityStatePostcode.setText(stringBuilder.toString());
+            tvCountry.setText(((CheckoutPaymentReturnShippingAddress)address).getCountry());
+            tvTelephone.setText(getResources().getString(R.string.address_mobile_number)+" : " + ((CheckoutPaymentReturnShippingAddress)address).getTelephone());
+            return view;
+        }else if (address instanceof AddressBook){
+            tvFirstname.setText(((AddressBook)address).getFirstName() + " " + ((AddressBook)address).getLastName());
+            //tvLastname.setText(address.getLastname());
+            tvAddress1.setText(((AddressBook)address).getStreet().get(0));
+            tvAddress2.setVisibility(View.GONE);
+            //initstoreCredit
+            initStoreCredit(paymentSaveReturnEntity.getStoreCredit());
+            /**
+             * Constructor city,state,postcode
+             */
+            if(!TextUtils.isEmpty(((AddressBook)address).getFax())){
+                tvDayTimeTelephone.setText(getResources().getString(R.string.day_time_contact)+" : "+((AddressBook)address).getFax());
+            }else{
+                tvDayTimeTelephone.setVisibility(View.GONE);
+            }
+            StringBuilder stringBuilder=new StringBuilder();
+            stringBuilder=stringBuilder.append(((AddressBook)address).getCity()).append(",");
+            if(!JDataUtils.isEmpty(((AddressBook)address).getRegion()) && !((AddressBook)address).getRegion().equalsIgnoreCase("null")){
+                stringBuilder=stringBuilder.append(((AddressBook)address).getRegion());
+            }
+            if(!TextUtils.isEmpty(((AddressBook)address).getPostcode())){
+                stringBuilder=stringBuilder.append(",").append(((AddressBook)address).getPostcode());
+            }
+            tvCityStatePostcode.setText(stringBuilder.toString());
+            tvCountry.setText(((AddressBook)address).getCountry());
+            tvTelephone.setText(getResources().getString(R.string.address_mobile_number)+" : " + ((AddressBook)address).getTelephone());
+            return view;
+        }else if (address instanceof CheckoutDefaultAddressResponse.PickUpAddress){
+            tvAddress1.setText(Html.fromHtml(((CheckoutDefaultAddressResponse.PickUpAddress) address).getAddress()));
+            tvFirstname.setVisibility(View.GONE);
+            tvAddress2.setVisibility(View.GONE);
             tvDayTimeTelephone.setVisibility(View.GONE);
-        }
-        StringBuilder stringBuilder=new StringBuilder();
-        stringBuilder=stringBuilder.append(address.getCity()).append(",");
-        if(!JDataUtils.isEmpty(address.getRegion()) && !address.getRegion().equalsIgnoreCase("null")){
-            stringBuilder=stringBuilder.append(address.getRegion());
-        }
-        if(!TextUtils.isEmpty(address.getPostcode())){
-            stringBuilder=stringBuilder.append(",").append(address.getPostcode());
-        }
-        tvCityStatePostcode.setText(stringBuilder.toString());
-        tvCountry.setText(address.getCountry());
-        tvTelephone.setText(getResources().getString(R.string.address_mobile_number)+" : " + address.getTelephone());
-        return view;
+            tvCityStatePostcode.setVisibility(View.GONE);
+            tvCountry.setVisibility(View.GONE);
+            tvTelephone.setVisibility(View.GONE);
+            return view;
+        }else {return view;}
+
     }
 
     /**

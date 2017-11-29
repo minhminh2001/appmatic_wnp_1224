@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.MerchantStoreFrontActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -35,6 +34,7 @@ import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.dao.ShoppingCarDao;
 import com.whitelabel.app.fragment.ProductListBaseFragment;
+import com.whitelabel.app.fragment.ProductListProductListFragment;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
@@ -74,6 +74,7 @@ public class ProductListAdapter extends BaseAdapter {
     private FragmentOnAdapterCallBack fragmentOnAdapterCallBack;
     private ProductListBaseFragment mProductListBaseFragment;
     private final ImageLoader mImageLoader;
+    public final static String FROM_PRODUCT_LIST= "from_product_list";
 
     public ProductListAdapter(ProductListActivity productListActivity, ArrayList<SVRAppserviceProductSearchResultsItemReturnEntity> productItemEntityArrayList, ImageLoader imageLoader, ProductListBaseFragment productListBaseFragment, FragmentOnAdapterCallBack fragmentOnAdapterCallBack) {
         this.productListActivity = productListActivity;
@@ -355,13 +356,13 @@ public class ProductListAdapter extends BaseAdapter {
                 if (finalViewHolder.ivLeftProductImage.getDrawable() == null) {
                     setBundleAndToPDP(intent, bundle);
                 } else {
-                    bundle.putString("from", "from_product_list");
+                    bundle.putString("from", FROM_PRODUCT_LIST);
                     bundle.putSerializable("product_info", getProductListItemToProductDetailsEntity(leftProductEntity));
                     bundle.putString("imageurl", leftProductImageUrl);
                     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
                         intent.putExtras(bundle);
                         ActivityOptionsCompat aop = ActivityOptionsCompat.makeSceneTransitionAnimation(productListActivity, finalViewHolder.ivLeftProductImage, productListActivity.getString(R.string.activity_image_trans));
-                        ActivityCompat.startActivity(productListActivity, intent, aop.toBundle());
+                        ActivityCompat.startActivityForResult(productListActivity, intent, ProductListProductListFragment.PRODUCT_LIST_FRAGMENT_REQUEST_CODE,aop.toBundle());
                     } else {
                         setBundleAndToPDP(intent, bundle);
                     }
@@ -380,8 +381,13 @@ public class ProductListAdapter extends BaseAdapter {
         final int tempPosition = position;
         leftProductEntity.setPosition(tempPosition);
         Observable<SVRAppserviceProductSearchResultsItemReturnEntity> observable=Observable.
-                create(new WishlistObservable(viewHolder.rlLeftProductlistWish,leftProductEntity,
-                        viewHolder.ivLeftProductlistWishIcon, viewHolder.ivLeftProductlistWishIcon2));
+                create(new WishlistObservable(viewHolder.rlLeftProductlistWish, leftProductEntity,
+                        viewHolder.ivLeftProductlistWishIcon, viewHolder.ivLeftProductlistWishIcon2, new WishlistObservable.IWishIconUnLogin() {
+                    @Override
+                    public void clickWishToLogin() {
+                        productListActivity.saveProductIdWhenCheckPage(leftProductEntity.getProductId(),leftProductEntity.getIsLike(),true);
+                    }
+                }));
         observable.buffer(observable.debounce(800, TimeUnit.MILLISECONDS))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -398,20 +404,8 @@ public class ProductListAdapter extends BaseAdapter {
                         }
                     }
                 });
+        setUnLoginClickWishBackThisPageToRefresh(leftProductEntity, viewHolder.ivLeftProductlistWishIcon, viewHolder.ivLeftProductlistWishIcon2, tempPosition);
 
-//        viewHolder.rlLeftProductlistWish.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (leftProductEntity.getIsLike() == 1) {
-//                    sendRequestToDeteleteCell(viewHolder.ivLeftProductlistWishIcon, viewHolder.rlLeftProductlistWish, leftProductEntity.getItem_id(), tempPosition);
-//                } else {
-//                    addtoWishlistsendRequest(leftProductEntity, viewHolder.rlLeftProductlistWish, viewHolder.ivLeftProductlistWishIcon, viewHolder.ivLeftProductlistWishIcon2, tempPosition);
-//                }
-//            }
-//        });
-        if (addProductToWishWhenLoginSuccess(leftProductEntity.getProductId())) {
-            addtoWishlistsendRequest(leftProductEntity, viewHolder.rlLeftProductlistWish, viewHolder.ivLeftProductlistWishIcon, viewHolder.ivLeftProductlistWishIcon2, tempPosition);
-        }
         ///// Right //////
         position = position + 1;
         if (position < 0 || productListArrayListSize <= position) {
@@ -570,8 +564,13 @@ public class ProductListAdapter extends BaseAdapter {
         final int rightTempPosition = position;
         rightProductEntity.setPosition(rightTempPosition);
         Observable<SVRAppserviceProductSearchResultsItemReturnEntity> rightObservable=Observable.
-                create(new WishlistObservable(viewHolder.rlRightProductlistWish,rightProductEntity,
-                        viewHolder.ivRightProductlistWishIcon, viewHolder.ivRightProductlistWishIcon2));
+                create(new WishlistObservable(viewHolder.rlRightProductlistWish, rightProductEntity,
+                        viewHolder.ivRightProductlistWishIcon, viewHolder.ivRightProductlistWishIcon2, new WishlistObservable.IWishIconUnLogin() {
+                    @Override
+                    public void clickWishToLogin() {
+                        productListActivity.saveProductIdWhenCheckPage(rightProductEntity.getProductId(),rightProductEntity.getIsLike(),true);
+                    }
+                }));
         rightObservable.buffer(rightObservable.debounce(800, TimeUnit.MILLISECONDS))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -588,38 +587,17 @@ public class ProductListAdapter extends BaseAdapter {
                         }
                     }
                 });
-//        viewHolder.rlRightProductlistWish.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //如果 islike，且有itemId，就执行删除 wish item
-//                if (rightProductEntity.getIsLike() == 1) {
-//                    sendRequestToDeteleteCell(viewHolder.ivRightProductlistWishIcon, viewHolder.rlRightProductlistWish, rightProductEntity.getItem_id(), rightTempPosition);
-//                } else {
-//                    addtoWishlistsendRequest(rightProductEntity, viewHolder.rlRightProductlistWish, viewHolder.ivRightProductlistWishIcon, viewHolder.ivRightProductlistWishIcon2, rightTempPosition);
-//                }
-//            }
-//        });
-        if (addProductToWishWhenLoginSuccess(rightProductEntity.getProductId())) {
-            if (!rightProductEntity.getSyncnServering()) {
-                addtoWishlistsendRequest(rightProductEntity, viewHolder.rlRightProductlistWish, viewHolder.ivRightProductlistWishIcon, viewHolder.ivRightProductlistWishIcon2, rightTempPosition);
-            }
-        }
+        setUnLoginClickWishBackThisPageToRefresh(rightProductEntity, viewHolder.ivRightProductlistWishIcon, viewHolder.ivRightProductlistWishIcon2, rightTempPosition);
+
         return convertView;
     }
 
-    public boolean addProductToWishWhenLoginSuccess(String productId) {
-        //点击wish icon 时跳到登陆页面前，需要保存
-        if (productListActivity.operateProductIdPrecache != null && !TextUtils.isEmpty(productId)) {
-            if (productId.equals(productListActivity.operateProductIdPrecache.getProductId())) {
-                if (productListActivity.operateProductIdPrecache.isAvailable()) {
-                    productListActivity.operateProductIdPrecache = null;
-                    return true;
-                } else {
-                    productListActivity.operateProductIdPrecache = null;
-                }
+    public void setUnLoginClickWishBackThisPageToRefresh(SVRAppserviceProductSearchResultsItemReturnEntity entity, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition){
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(productListActivity) && productListActivity.isUnLoginCanWishIconRefresh(entity.getProductId())){
+                entity.setIsLike(1);
+                mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), tempPosition);
+                setWishIconColorToPurple(ivWwishIcon, ivWwishIcon2);
             }
-        }
-        return false;
     }
 
     private void setBundleAndToPDP(Intent intent, Bundle bundle) {
@@ -707,13 +685,13 @@ public class ProductListAdapter extends BaseAdapter {
     }
 
     //调用删除接口
-    private void sendRequestToDeteleteCell(ImageView ivWwishIcon, RelativeLayout rlCurationWish, String itemId, int tempPosition) {
-        setWishIconColorToBlank(ivWwishIcon);
-        productItemEntityArrayList.get(tempPosition).setIsLike(0);
-        if (!TextUtils.isEmpty(productItemEntityArrayList.get(tempPosition).getItem_id())) {
-            myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), itemId, tempPosition);
-        }
-    }
+//    private void sendRequestToDeteleteCell(ImageView ivWwishIcon, RelativeLayout rlCurationWish, String itemId, int tempPosition) {
+//        setWishIconColorToBlank(ivWwishIcon);
+//        productItemEntityArrayList.get(tempPosition).setIsLike(0);
+//        if (!TextUtils.isEmpty(productItemEntityArrayList.get(tempPosition).getItemId())) {
+//            myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), itemId, tempPosition);
+//        }
+//    }
 
     private ProductListItemToProductDetailsEntity getProductListItemToProductDetailsEntity(SVRAppserviceProductSearchResultsItemReturnEntity e) {
         ProductListItemToProductDetailsEntity entity = new ProductListItemToProductDetailsEntity();
@@ -722,24 +700,26 @@ public class ProductListAdapter extends BaseAdapter {
         entity.setFinalPrice(e.getFinal_price());
         entity.setInStock(Integer.parseInt(e.getInStock()));
         entity.setName(e.getName());
+        entity.setIs_like(e.getIsLike());
         entity.setPrice(e.getPrice());
         entity.setVendorDisplayName(e.getVendorDisplayName());
         return entity;
     }
 
-    private void addtoWishlistsendRequest(SVRAppserviceProductSearchResultsItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(productListActivity)) {
-            entity.setIsLike(1);
-            mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), tempPosition);
-            setWishIconColorToPurple(ivWwishIcon, ivWwishIcon2);
-        } else {
-            productListActivity.saveProductIdWhenJumpLoginPage(entity.getProductId());
-            Intent intent = new Intent();
-            intent.setClass(productListActivity, LoginRegisterActivity.class);
-            fragmentOnAdapterCallBack.startActivityForResultCallBack(intent, LoginRegisterActivity.REQUESTCODE_LOGIN);
-            productListActivity.overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
-        }
-    }
+//    private void addtoWishlistsendRequest(SVRAppserviceProductSearchResultsItemReturnEntity entity, RelativeLayout rlCurationWish, ImageView ivWwishIcon, ImageView ivWwishIcon2, int tempPosition) {
+//        if (WhiteLabelApplication.getAppConfiguration().isSignIn(productListActivity)) {
+//            entity.setIsLike(1);
+//            mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(productListActivity).getSessionKey(), tempPosition);
+//            setWishIconColorToPurple(ivWwishIcon, ivWwishIcon2);
+//        } else {
+//            Intent intent = new Intent();
+//            intent.setClass(productListActivity, LoginRegisterActivity.class);
+//            productListActivity.startActivityForResult(intent,LoginRegisterActivity.REQUESTCODE_LOGIN);
+//            productListActivity.saveProductIdWhenJumpLoginPage(entity.getProductId());
+////            fragmentOnAdapterCallBack.startActivityForResultCallBack(intent, LoginRegisterActivity.REQUESTCODE_LOGIN);
+//            productListActivity.overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
+//        }
+//    }
 
     private static final class DataHandler extends Handler {
         private final WeakReference<ProductListAdapter> mAdapter;

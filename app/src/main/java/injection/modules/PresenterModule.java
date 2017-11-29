@@ -2,6 +2,7 @@ package injection.modules;
 
 import android.app.Activity;
 
+import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICheckoutManager;
@@ -26,6 +27,8 @@ import com.whitelabel.app.ui.home.presenter.MainPresenterImpl;
 import com.whitelabel.app.ui.home.presenter.ShopBrandPresenterImpl;
 import com.whitelabel.app.ui.login.LoginFragmentContract;
 import com.whitelabel.app.ui.login.LoginFragmentPresenterImpl;
+import com.whitelabel.app.ui.productdetail.BindProductContract;
+import com.whitelabel.app.ui.productdetail.BindProductPresenterImpl;
 import com.whitelabel.app.ui.productdetail.ProductDetailContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailPresenter;
 import com.whitelabel.app.ui.start.StartContract;
@@ -52,8 +55,8 @@ public class PresenterModule {
     }
     @Provides
     @ActivityScope
-    public StartContract.Presenter  provideStartPresenter(IBaseManager configService){
-        return new StartPresenterImpl(configService);
+    public StartContract.Presenter  provideStartPresenter(IBaseManager configService,IAccountManager accountManager){
+        return new StartPresenterImpl(configService,accountManager);
     }
     @Provides
     @ActivityScope
@@ -109,4 +112,9 @@ public class PresenterModule {
         return new ShopBrandPresenterImpl(iCommodityManager,iBaseManager);
     }
 
+    @Provides
+    @ActivityScope
+    public BindProductContract.Presenter provideBindProductPresenter(ICommodityManager iCommodityManager){
+        return new BindProductPresenterImpl(iCommodityManager);
+    }
 }

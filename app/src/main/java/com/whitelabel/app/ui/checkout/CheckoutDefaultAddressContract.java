@@ -22,10 +22,13 @@ public interface CheckoutDefaultAddressContract  {
 
          public void  dissmissProgressDialog();
 
-         public void hideBillToDefferentLayout();
+         public void hideBillToDifferentLayout();
          public void showErrorMsg(String errorMsg);
 
-         public void showData(AddressBook shippingAddress, AddressBook billingAddress,List<CheckoutDefaultAddressResponse.ShippingMethodBean> shippingMethod);
+         public void showData(AddressBook shippingAddress,
+                              AddressBook billingAddress,
+                              List<CheckoutDefaultAddressResponse.ShippingMethodBean> shippingMethod,
+                              CheckoutDefaultAddressResponse.PickUpAddress pickUpAddress);
      }
 
      public interface  Presenter extends BasePresenter<View>{

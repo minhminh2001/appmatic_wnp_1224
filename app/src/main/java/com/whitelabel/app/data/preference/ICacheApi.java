@@ -36,4 +36,6 @@ public interface ICacheApi {
     SkipToAppStoreMarket getFirstOrderAndMarkTime();
     rx.Observable<ShopBrandResponse> getShopBrandDetail();
     void saveShopBrandDetail(ShopBrandResponse shopBrandResponse);
+    void saveGuideFlag(Boolean isFirst);
+    boolean isGuide();
 }

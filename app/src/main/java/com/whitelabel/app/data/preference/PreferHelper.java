@@ -38,6 +38,7 @@ public class PreferHelper  implements ICacheApi{
     private static final String TABLE_CURRENCY="currency";
     public static final String IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG ="IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG";
     public static final String SHOP_BRAND_DETAIL ="SHOP_BRAND_DETAIL";
+    public static final String IS_GUIDE ="IS_GUIDE";
     public String  getVersionNumber(){
         RemoteConfigResonseModel.RetomeConfig config=getLocalConfigModel();
         String currentVersion="";
@@ -251,5 +252,15 @@ public class PreferHelper  implements ICacheApi{
         ShopBrandResponse response=new ShopBrandResponse();
         String marketString = gson.toJson(response);
         AppPrefs.putString(SHOP_BRAND_DETAIL,marketString);
+    }
+
+    @Override
+    public void saveGuideFlag(Boolean isFirst) {
+        AppPrefs.putBoolean(IS_GUIDE,isFirst);
+    }
+
+    @Override
+    public boolean isGuide() {
+        return AppPrefs.getBoolean(IS_GUIDE,false);
     }
 }

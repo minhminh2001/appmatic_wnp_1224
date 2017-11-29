@@ -13,13 +13,13 @@
         android:layout_width="match_parent"
         android:paddingLeft="10dp"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginBottom="@dimen/checkout_line_space"
         android:gravity="center_vertical"
         android:text="@string/checkout_shipping_address"
-        android:paddingTop="16sp"
-        android:paddingBottom="16sp"
-        android:textSize="16sp"
+        android:paddingTop="8sp"
+        android:paddingBottom="8sp"
+        android:textSize="14sp"
         android:textColor="@color/black000000" />
 
     <View
@@ -52,10 +52,10 @@
         android:layout_marginBottom="@dimen/checkout_line_space"
         android:gravity="center_vertical"
         android:text="@string/checkout_billing_address"
-        android:paddingTop="16sp"
-        android:visibility="gone"
-        android:paddingBottom="16sp"
-        android:textSize="16sp"
+        android:paddingTop="8sp"
+        android:visibility="visible"
+        android:paddingBottom="8sp"
+        android:textSize="14sp"
         android:textColor="@color/black000000" />
 
 
@@ -81,15 +81,15 @@
     <com.whitelabel.app.widget.CustomTextView
         style="@style/font_family_roboto_medium"
         android:paddingLeft="10dp"
-        android:paddingTop="16sp"
-        android:paddingBottom="16sp"
+        android:paddingTop="8sp"
+        android:paddingBottom="8sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/checkout_line_space"
         android:gravity="center_vertical"
         android:text="@string/Payment_Method"
-        android:visibility="gone"
-        android:textSize="16sp"
+        android:visibility="visible"
+        android:textSize="14sp"
         android:textColor="@color/black000000" />
     <View
         android:layout_width="fill_parent"

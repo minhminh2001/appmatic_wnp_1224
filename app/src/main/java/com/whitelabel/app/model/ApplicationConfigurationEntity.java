@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import com.google.gson.Gson;
 import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JJsonUtils;
@@ -319,4 +320,5 @@ public class ApplicationConfigurationEntity {
     public void setCategoryArrayList(SVRAppserviceCatalogSearchReturnEntity categoryArrayList) {
         this.categoryArrayList = categoryArrayList;
     }
+
 }

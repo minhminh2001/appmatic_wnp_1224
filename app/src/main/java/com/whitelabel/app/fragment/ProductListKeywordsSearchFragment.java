@@ -27,9 +27,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
+import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.FragmentOnAdapterCallBack;
 import com.whitelabel.app.callback.ProductListFilterHideCallBack;
 import com.whitelabel.app.dao.ProductDao;
@@ -48,12 +50,15 @@ import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomEditText;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.CustomXListView;
 import com.whitelabel.app.widget.FilterSortBottomView;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -699,14 +704,42 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                if (!data.getBooleanExtra("needRefreshWhenBackPressed", false)) {
+                    String productId = data.getStringExtra("productId");
+                    String itemId = data.getStringExtra("itemId");
+                    int isLike = data.getIntExtra("isLike", -1);
+                    Logger.e("peoductList productId :"+productId+" isLike:"+isLike);
+                    if (!TextUtils.isEmpty(productId) && isLike != -1) {
+                        refreWishIconByPDPResult(productId, isLike, itemId);
+                    }
+                } else {
+                    onRefresh();
+                }
+            }
+        }
+        if (LoginRegisterActivity.REQUESTCODE_LOGIN == requestCode && resultCode == LoginRegisterEmailLoginFragment.RESULTCODE) {
+            if (WhiteLabelApplication.getAppConfiguration().isSignIn(productListActivity)) {
+//                productListActivity.changeOperateProductIdPrecacheStatus(true);
+                onRefresh();
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getSearchType() == ProductListKeywordsSearchFragment.SEARCH_TYPE_KEYWORDS) {
-            showKeyboard();
+    private void refreWishIconByPDPResult(String productId, int isLike, String itemId) {
+        Iterator<SVRAppserviceProductSearchResultsItemReturnEntity> itemReturnEntityIterator = productItemEntityArrayList.iterator();
+        while (itemReturnEntityIterator.hasNext()) {
+            SVRAppserviceProductSearchResultsItemReturnEntity entity = itemReturnEntityIterator.next();
+            if (entity.getProductId().equals(productId)) {
+                entity.setIsLike(isLike);
+                entity.setItemId(itemId);
+                if (productListAdapter!=null){
+                    productListAdapter.notifyDataSetChanged();
+                }
+                continue;
+            }
         }
     }
 

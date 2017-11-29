@@ -31,6 +31,7 @@ import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.dao.ShoppingCarDao;
+import com.whitelabel.app.fragment.HomeHomeFragment;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ErrorMsgBean;
@@ -81,6 +82,10 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         void onSwitchViewClick(View view);
         void onFilterClick();
         void onSortClick();
+    }
+    private HomeActivity.ICommunHomeActivity iCommunHomeActivity;
+    public void setiCommunHomeActivity(HomeActivity.ICommunHomeActivity iCommunHomeActivity) {
+        this.iCommunHomeActivity = iCommunHomeActivity;
     }
     private static final class DataHandler extends Handler {
         private final WeakReference<CategoryDetailVerticalAdapter> mAdapter;
@@ -228,9 +233,9 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         if (holder instanceof HeaderViewHolder) {
             final HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (categoryDetailModel == null) return;
-//            int imageHeight = (int) (categoryDetailModel.getImage_height() * (screenWidth/categoryDetailModel.getImage_width()));
+//            int imageHeight = (int) (categoryDetailModel.getImageHeight() * (screenWidth/categoryDetailModel.getImageWidth()));
 //            if(imageHeight==0){
-                int  imageHeight= (int) (screenWidth*(348.0/750));
+                int  imageHeight= (int) (screenWidth*(Const.BANNER_PIC_HEIGHT_THAN_WIDTH));
 //            }
             headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
 
@@ -245,7 +250,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                     headerViewHolder.detailViewpager.setImages(imgs)
                             .setImageLoader(new GlideImageLoader())
                             .setBannerStyle(BannerConfig.NOT_INDICATOR)
-                            .setDelayTime(CategoryDetailHorizontalAdapter.NORMAL_BANNER_DELAY_TIME)
+                            .setDelayTime(Const.NORMAL_BANNER_DELAY_TIME)
                             .setOnBannerListener(new OnBannerListener() {
                                 @Override
                                 public void OnBannerClick(int i) {
@@ -290,11 +295,11 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                 // load left image
                 if (itemViewHolder.ivProductImage.getTag() != null) {
                     if (!itemViewHolder.ivProductImage.getTag().toString().equals(leftProductImageUrl)) {
-                        JImageUtils.downloadImageFromServerByUrl(itemViewHolder.itemView.getContext(), mImageLoader, itemViewHolder.ivProductImage, leftProductImageUrl, destWidth, destHeight);
+                        JImageUtils.downloadImageFromServerByProductUrl(itemViewHolder.itemView.getContext(), mImageLoader, itemViewHolder.ivProductImage, leftProductImageUrl, destWidth, destHeight);
                         itemViewHolder.ivProductImage.setTag(leftProductImageUrl);
                     }
                 } else {
-                    JImageUtils.downloadImageFromServerByUrl(itemViewHolder.itemView.getContext(), mImageLoader, itemViewHolder.ivProductImage, leftProductImageUrl, destWidth, destHeight);
+                    JImageUtils.downloadImageFromServerByProductUrl(itemViewHolder.itemView.getContext(), mImageLoader, itemViewHolder.ivProductImage, leftProductImageUrl, destWidth, destHeight);
                     itemViewHolder.ivProductImage.setTag(leftProductImageUrl);
                 }
                 if (!JDataUtils.isEmpty(leftProductBrand)) {
@@ -341,9 +346,15 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                 }
                 final SVRAppserviceProductSearchResultsItemReturnEntity finalLeftProductEntity = leftProductEntity;
                 finalLeftProductEntity.setPosition(position);
+                setUnLoginClickWishBackThisPageToRefresh(itemViewHolder.itemView.getContext(),leftProductEntity,itemViewHolder.ivLeftProductlistWishIcon,position);
                 Observable<SVRAppserviceProductSearchResultsItemReturnEntity> observable=Observable.
-                        create(new WishlistObservable(itemViewHolder.rlLeftProductlistWish,finalLeftProductEntity,
-                                itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2));
+                        create(new WishlistObservable(itemViewHolder.rlLeftProductlistWish, finalLeftProductEntity,
+                                itemViewHolder.ivLeftProductlistWishIcon, itemViewHolder.ivLeftProductlistWishIcon2, new WishlistObservable.IWishIconUnLogin() {
+                            @Override
+                            public void clickWishToLogin() {
+                                iCommunHomeActivity.saveProductIdWhenCheckPage(finalLeftProductEntity.getProductId(),finalLeftProductEntity.getIsLike(),true);
+                            }
+                        }));
                 observable.buffer(observable.debounce(1000, TimeUnit.MILLISECONDS))
                         .subscribeOn(Schedulers.computation())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -354,7 +365,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
                                 if(bean.getIsLike()==1){
                                     mProductDao.addProductListToWish(bean.getProductId(),WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
                                             bean.getPosition());
-                                }else if(bean.getItem_id()!=null){
+                                }else if(bean.getItemId()!=null){
                                     myAccountDao.deleteWishListById(WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey(),
                                             bean.getItem_id(),bean.getPosition());
                                 }
@@ -393,6 +404,14 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         ivWishIcon.setImageDrawable(JImageUtils.getThemeIcon(ivWishIcon.getContext(),R.mipmap.wishlist_purple_pressed_v2));
         boolean repeatAnim = false;
         ivWishIcon.setTag(repeatAnim);
+    }
+
+    public void setUnLoginClickWishBackThisPageToRefresh(Context context, SVRAppserviceProductSearchResultsItemReturnEntity entity, ImageView ivWwishIcon,  int tempPosition){
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(context) && iCommunHomeActivity.isUnLoginCanWishIconRefresh(entity.getProductId())){
+            entity.setIsLike(1);
+            mProductDao.addProductListToWish(entity.getProductId(), WhiteLabelApplication.getAppConfiguration().getUserInfo(context).getSessionKey(), tempPosition);
+            setWishIconColorToPurpleNoAnim(ivWwishIcon);
+        }
     }
 
     private void setWishIconColorToBlank(final ImageView ivWishIcon) {
@@ -557,7 +576,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         for (int i = 0; i < images.size(); i++) {
             ImageView imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            JImageUtils.downloadImageFromServerByUrl(context, imageLoader, imageView, images.get(i), (int) screenWidth,imageHeight);
+            JImageUtils.downloadImageFromServerByProductUrl(context, imageLoader, imageView, images.get(i), (int) screenWidth,imageHeight);
             imgs.add(imageView);
         }
         return imgs;
@@ -567,7 +586,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         for (int i = 0; i < images.size(); i++) {
             CategoryDetailNewModel.BannersBean bannersBeanResponse = images.get(i);
             String norUrl=bannersBeanResponse.getImage();
-            String imageServerUrlByWidthHeight = JImageUtils.getImageServerUrlByWidthHeight(context, norUrl, (int) screenWidth, imageHeight);
+            String imageServerUrlByWidthHeight = JImageUtils.getImageServerUrlByWidthHeight(context, norUrl, (int) screenWidth, imageHeight,-1);
             imgs.add(imageServerUrlByWidthHeight);
         }
         return imgs;

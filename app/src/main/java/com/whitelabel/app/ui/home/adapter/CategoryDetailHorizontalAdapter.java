@@ -16,10 +16,12 @@ import android.widget.TextView;
 import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV3;
 import com.whitelabel.app.utils.GlideImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
 import com.youth.banner.Banner;
@@ -38,17 +40,21 @@ import butterknife.ButterKnife;
 public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private CategoryDetailNewModel mCategoryDetailModel;
     private final ImageLoader mImageLoader;
-    public static final int NORMAL_BANNER_DELAY_TIME=3000;
-
+    private Activity activity;
     private   double screenWidth;
     private IHomeItemClickListener.IHorizontalItemClickListener onProductClick;
     private IHomeItemClickListener.IHeaderItemClickListener onHeaderClick;
     List<CategoryDetailNewModel.CarouselsBean> carousels=new ArrayList<>();
     public CategoryDetailHorizontalAdapter(Activity activity, CategoryDetailNewModel categoryDetailModel, ImageLoader imageLoader) {
         this.mImageLoader = imageLoader;
+        this.activity=activity;
         this.mCategoryDetailModel = categoryDetailModel;
         screenWidth=WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(activity);
         addTitleItemList();
+    }
+    private HomeActivity.ICommunHomeActivity iCommunHomeActivity;
+    public void setiCommunHomeActivity(HomeActivity.ICommunHomeActivity iCommunHomeActivity) {
+        this.iCommunHomeActivity = iCommunHomeActivity;
     }
 
     //add item type position and data
@@ -124,7 +130,8 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         if(holder instanceof  HeaderViewHolder){
             final HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             if (mCategoryDetailModel == null) return;
-            int   imageHeight= (int) (screenWidth*(348.0/750));
+//            int   imageHeight= (int) (screenWidth*(348.0/750));
+            int   imageHeight= (int) (screenWidth*(Const.BANNER_PIC_HEIGHT_THAN_WIDTH));
             headerViewHolder.detailViewpager.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight));
             if (mCategoryDetailModel.getBanners().isEmpty()) {
                 headerViewHolder.detailViewpager.setVisibility(View.VISIBLE);
@@ -138,7 +145,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
                     headerViewHolder.detailViewpager.setImages(imgs)
                             .setImageLoader(new GlideImageLoader())
                             .setBannerStyle(BannerConfig.NOT_INDICATOR)
-                            .setDelayTime(NORMAL_BANNER_DELAY_TIME)
+                            .setDelayTime(Const.NORMAL_BANNER_DELAY_TIME)
                             .setOnBannerListener(new OnBannerListener() {
                                 @Override
                                 public void OnBannerClick(int i) {
@@ -160,7 +167,18 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
                 CategoryDetailNewModel.CarouselsBean carouselsBean = this.carousels.get(position);
                 //let HomeFragmentV3's CategoryDetailNewModel know which position items
                 int CarouselsItemPosition=(position-1)/2;
-                CategoryDetailItemAdapter mCategoryDetailAdapater=new CategoryDetailItemAdapter(holder.itemView.getContext(),CarouselsItemPosition,carouselsBean.getItems(),mImageLoader);
+                CategoryDetailItemAdapter mCategoryDetailAdapater=new CategoryDetailItemAdapter(activity,CarouselsItemPosition,carouselsBean.getItems(),mImageLoader);
+                mCategoryDetailAdapater.setiCommunHomeActivity(new HomeActivity.ICommunHomeActivity() {
+                    @Override
+                    public void saveProductIdWhenCheckPage(String productId, int isLike, boolean isUnLogin) {
+                        iCommunHomeActivity.saveProductIdWhenCheckPage(productId,isLike,isUnLogin);
+                    }
+
+                    @Override
+                    public boolean isUnLoginCanWishIconRefresh(String productId) {
+                         return iCommunHomeActivity.isUnLoginCanWishIconRefresh(productId);
+                    }
+                });
                 mCategoryDetailAdapater.setOnItemClickLitener(onProductClick);
                 ItemViewHolder  itemViewHolder= (ItemViewHolder) holder;
                 itemViewHolder.rvCategory.setVisibility(View.VISIBLE);
@@ -188,7 +206,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         for (int i = 0; i < images.size(); i++) {
             ImageView imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            JImageUtils.downloadImageFromServerByUrl(context, imageLoader, imageView, images.get(i), (int) screenWidth,imageHeight);
+            JImageUtils.downloadImageFromServerByProductUrl(context, imageLoader, imageView, images.get(i), (int) screenWidth,imageHeight);
             imgs.add(imageView);
         }
         return imgs;
@@ -199,7 +217,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
         for (int i = 0; i < images.size(); i++) {
             CategoryDetailNewModel.BannersBean bannersBeanResponse = images.get(i);
             String norUrl=bannersBeanResponse.getImage();
-            String imageServerUrlByWidthHeight = JImageUtils.getImageServerUrlByWidthHeight(context, norUrl, (int) screenWidth, imageHeight);
+            String imageServerUrlByWidthHeight = JImageUtils.getImageServerUrlByWidthHeight(context, norUrl, (int) screenWidth, imageHeight,-1);
             imgs.add(imageServerUrlByWidthHeight);
         }
         return imgs;

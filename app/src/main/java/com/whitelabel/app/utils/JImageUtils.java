@@ -41,6 +41,8 @@ import okhttp3.HttpUrl;
  */
 public class JImageUtils {
     private final static String TAG = "JImageUtils";
+    public final static int DEFAULT_DOWNLAOD_IMAGE_API = -1;
+    public final static int PRODUCT_DOWNLAOD_IMAGE_API = 1;
 
     public  static  Drawable getThemeCircle(Context context){
         GradientDrawable drawable= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.bg_cart_number);
@@ -159,9 +161,9 @@ public class JImageUtils {
      * @param imageUrl
      * @param destWidth  -1=>original size
      * @param destHeight -1=>original size
-     * @return
+     * @return requestApi -1 default 1 product detail
      */
-    public static String getImageServerUrlByWidthHeight(Context context, String imageUrl, int destWidth, int destHeight) {
+    public static String getImageServerUrlByWidthHeight(Context context, String imageUrl, int destWidth, int destHeight,int requestApi) {
         if (context == null || TextUtils.isEmpty(imageUrl)) {
             return null;
         }
@@ -170,9 +172,17 @@ public class JImageUtils {
             if (imageUrl.contains("http") || imageUrl.contains("https")) {
                 url = HttpUrl.parse(imageUrl).newBuilder().build().toString();
             } else {
-                HttpUrl.Builder urlBuilder = HttpUrl.parse(GlobalData.imageBaseUrl).newBuilder()
-                        .addPathSegments(GlobalData.downloadImagePath)
-                        .addQueryParameter("name", imageUrl);
+                HttpUrl.Builder urlBuilder=null;
+                if (requestApi==DEFAULT_DOWNLAOD_IMAGE_API){
+                    urlBuilder = HttpUrl.parse(GlobalData.imageBaseUrl).newBuilder()
+                            .addPathSegments(GlobalData.downloadImagePath)
+                            .addQueryParameter("name", imageUrl);
+                }else if (requestApi==PRODUCT_DOWNLAOD_IMAGE_API){
+                    urlBuilder = HttpUrl.parse(GlobalData.imageBaseUrl).newBuilder()
+                            .addPathSegments(GlobalData.downloadImageProductPath)
+                            .addQueryParameter("name", imageUrl);
+                }
+
 
                 if (destWidth != -1) {
                     urlBuilder.addQueryParameter("width", Integer.toString(destWidth));
@@ -194,19 +204,19 @@ public class JImageUtils {
      * @param imageUrl http://bbs.lidroid.com/static/image/common/logo.png
      */
     public static void downloadImageFromServerByUrl(Context context, ImageLoader loader, ImageView imageView, String imageUrl) {
-        loader.loadImage(getImageServerUrlByWidthHeight(context, imageUrl, -1, -1), imageView);
+        loader.loadImage(getImageServerUrlByWidthHeight(context, imageUrl, -1, -1,DEFAULT_DOWNLAOD_IMAGE_API), imageView);
     }
 
     public static void downloadImageFromServerListener(Context context, ImageLoader loader, ImageView imageView, String imageUrl, final RequestListener<String, Bitmap> listener) {
-        loader.loadImage(getImageServerUrlByWidthHeight(context, imageUrl, -1, -1), imageView, listener);
+        loader.loadImage(getImageServerUrlByWidthHeight(context, imageUrl, -1, -1,DEFAULT_DOWNLAOD_IMAGE_API), imageView, listener);
     }
 
     public static void downloadImageFromServerListener(Context context, ImageLoader loader, ImageView imageView, String imageUrl, int width, int height, final RequestListener<String, Bitmap> listener) {
-        loader.loadImage(getImageServerUrlByWidthHeight(context, imageUrl, width, height), imageView, listener);
+        loader.loadImage(getImageServerUrlByWidthHeight(context, imageUrl, width, height,DEFAULT_DOWNLAOD_IMAGE_API), imageView, listener);
     }
 
     public static void downloadImageFromServerListener(final Context context, String imageUrl, int width, int height, final SimpleTarget<Bitmap> loadImageListener) {
-        final String url = getImageServerUrlByWidthHeight(context, imageUrl, width, height);
+        final String url = getImageServerUrlByWidthHeight(context, imageUrl, width, height,DEFAULT_DOWNLAOD_IMAGE_API);
         Handler mainHandler = new Handler(Looper.getMainLooper());
         Runnable myRunnable = new Runnable() {
             @Override
@@ -229,7 +239,11 @@ public class JImageUtils {
      * @param imageUrl http://bbs.lidroid.com/static/image/common/logo.png
      */
     public static void downloadImageFromServerByUrl(Context context, ImageLoader loader, ImageView imageView, String imageUrl, int destWidth, int destHeight) {
-        loader.loadImage(getImageServerUrlByWidthHeight(context, imageUrl, destWidth, destHeight), imageView);
+        loader.loadImage(getImageServerUrlByWidthHeight(context, imageUrl, destWidth, destHeight,DEFAULT_DOWNLAOD_IMAGE_API), imageView);
+    }
+
+    public static void downloadImageFromServerByProductUrl(Context context, ImageLoader loader, ImageView imageView, String imageUrl, int destWidth, int destHeight) {
+        loader.loadImage(getImageServerUrlByWidthHeight(context, imageUrl, destWidth, destHeight,PRODUCT_DOWNLAOD_IMAGE_API), imageView);
     }
 
     public static Bitmap scaleImage(String fileName, float width, float height) {

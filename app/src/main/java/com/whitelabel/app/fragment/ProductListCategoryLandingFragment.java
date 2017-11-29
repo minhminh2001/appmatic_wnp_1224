@@ -294,6 +294,13 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
 
         filterSortHelper = new FilterSortHelper(getActivity(), sortFragment, filterFragment, flFilterSortContainer, FRAGMENT_CONTAINER_ID);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        categoryProductListFragmentArrayList.get(productListActivity.getCurrentProductListFragmentPosition()).onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     public long getCartItemCount(){
         long cartItemCount = 0;
         try{

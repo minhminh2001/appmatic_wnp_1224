@@ -17,6 +17,7 @@ import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV1;
 import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV2;
 import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV3;
 import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV4;
+import com.whitelabel.app.ui.productdetail.BindProductActivity;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.ui.start.StartActivityV2;
 
@@ -38,6 +39,7 @@ public interface PresenterComponent1 {
     void inject(HomeHomeFragmentV4 homeHomeFragmentV4);
     void inject(ShopBrandActivity shopBrandActivity);
     void inject(ProductDetailActivity productDetailActivity);
+    void inject(BindProductActivity bindProductActivity);
     void inject(BaseAddressFragment baseAddressFragment);
     void inject(CheckoutDefaultAddressFragment checkoutDefaultAddressFragment);
     void inject(CheckoutActivity checkoutActivity);

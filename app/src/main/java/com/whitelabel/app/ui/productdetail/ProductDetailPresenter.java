@@ -189,14 +189,14 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     public void wishListBtnClick() {
          if(iBaseManager.isSign()){
             if (mProduct.getIsLike() == 1&&!JDataUtils.isEmpty(mProduct.getItemId())) {
+                mProduct.setIsLike(0);
                 mView.setWishIconColorToBlank();
                 delteFromWishlistRequest(mProduct.getItemId());
-                mProduct.setIsLike(0);
             } else if(mProduct.getIsLike()==0){
+                mProduct.setIsLike(1);
                 mView.setWishIconColorToThemeColor();
                 addToWishlistRequest(mProduct.getId());
                 iGoogleAnalyticsManager.googleAnalyticsEvent(IGoogleAnalyticsManager.CATEGORY_PROCDUCT,IGoogleAnalyticsManager.ACTION_ADDWISH,mProduct.getName(),mProduct.getId());
-                mProduct.setIsLike(1);
             }
          }else{
              mView.startLoginActivity(false);

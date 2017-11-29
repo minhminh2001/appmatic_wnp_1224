@@ -21,6 +21,7 @@ import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.FragmentOnAdapterCallBack;
 import com.whitelabel.app.callback.ProductListFilterHideCallBack;
 import com.whitelabel.app.dao.ProductDao;
@@ -34,6 +35,7 @@ import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomXListView;
 
 import java.lang.ref.WeakReference;
@@ -82,6 +84,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
     private TextView mTVProductTotalCount;
     private boolean mIsFirst=true;
     private String TAG = this.getClass().getSimpleName();
+    public static final int PRODUCT_LIST_FRAGMENT_REQUEST_CODE =100;
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -105,13 +108,14 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ProductListActivity.RESULT_WISH && resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 //如果 pdp页面登陆了，needRefreshWhenBackPressed=true,刷新当前页面所有product,否则只刷新指定product的isLike字段
                 if (!data.getBooleanExtra("needRefreshWhenBackPressed", false)) {
                     String productId = data.getStringExtra("productId");
                     String itemId = data.getStringExtra("itemId");
                     int isLike = data.getIntExtra("isLike", -1);
+                    Logger.e("peoductList productId :"+productId+" isLike:"+isLike);
                     if (!TextUtils.isEmpty(productId) && isLike != -1) {
                         refreWishIconByPDPResult(productId, isLike, itemId);
                     }
@@ -123,7 +127,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
         //登陆成功后要刷新所有product的信息  //在curationProductListAdapter  onClick wishIcon 里 startActivityForResult 到loginpage;，成功后调用以下方法
         if (LoginRegisterActivity.REQUESTCODE_LOGIN == requestCode && resultCode == LoginRegisterEmailLoginFragment.RESULTCODE) {
             if (WhiteLabelApplication.getAppConfiguration().isSignIn(productListActivity)) {
-                productListActivity.changeOperateProductIdPrecacheStatus(true);
+//                productListActivity.changeOperateProductIdPrecacheStatus(true);
                 onRefresh();
             }
         }
@@ -137,12 +141,13 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
             SVRAppserviceProductSearchResultsItemReturnEntity entity = itemReturnEntityIterator.next();
             if (entity.getProductId().equals(productId)) {
                 entity.setIsLike(isLike);
-                entity.setItem_id(itemId);
-                productListAdapter.notifyDataSetChanged();
+                entity.setItemId(itemId);
+                if (productListAdapter!=null){
+                    productListAdapter.notifyDataSetChanged();
+                }
                 continue;
             }
         }
-
     }
     public void showViewSwitch(boolean show) {
         if (mRlViewbar != null) {
