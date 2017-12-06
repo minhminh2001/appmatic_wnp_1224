@@ -4,14 +4,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.BaseActivity;
-import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
 import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.utils.JLogUtils;

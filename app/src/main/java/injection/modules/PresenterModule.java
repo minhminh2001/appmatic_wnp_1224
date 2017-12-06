@@ -9,6 +9,8 @@ import com.whitelabel.app.data.service.ICheckoutManager;
 import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.data.service.IGoogleAnalyticsManager;
 import com.whitelabel.app.data.service.IShoppingCartManager;
+import com.whitelabel.app.ui.checkout.CheckoutAddAddressContract;
+import com.whitelabel.app.ui.checkout.CheckoutAddAddressPresenter;
 import com.whitelabel.app.ui.checkout.CheckoutContract;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressContract;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressPresenter;
@@ -87,6 +89,12 @@ public class PresenterModule {
     @ActivityScope
     public  CheckoutDefaultAddressContract.Presenter provideCheckoutDefaultAddressPresenter(ICheckoutManager iCheckoutManager, IBaseManager iBaseManager){
         return new CheckoutDefaultAddressPresenter(iCheckoutManager,iBaseManager);
+    }
+
+    @Provides
+    @ActivityScope
+    public  CheckoutAddAddressContract.Presenter provideCheckoutAddAddressPresenter(ICheckoutManager iCheckoutManager, IBaseManager iBaseManager){
+        return new CheckoutAddAddressPresenter(iCheckoutManager,iBaseManager);
     }
     @Provides
     @ActivityScope

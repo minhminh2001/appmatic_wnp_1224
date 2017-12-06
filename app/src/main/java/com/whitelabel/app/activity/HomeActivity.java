@@ -101,7 +101,6 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
         void saveProductIdWhenCheckPage(String productId, int isLike,boolean isUnLogin);
         boolean isUnLoginCanWishIconRefresh(String productId);
     }
-    ICommunHomeActivity iCommunHomeActivity;
     @Override
     protected void onStart() {
         super.onStart();

@@ -27,6 +27,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.google.gson.Gson;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -40,6 +42,7 @@ import com.whitelabel.app.model.SVRGetCityANdStateByPostCodeEntity;
 import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.utils.AnimUtil;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -511,6 +514,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
             public void afterTextChanged(Editable s) {
             }
         });
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.ADD_ADDRESS_SCREEN,this);
     }
     private void initToolBar() {
         setTitle(getResources().getString(R.string.add_address));

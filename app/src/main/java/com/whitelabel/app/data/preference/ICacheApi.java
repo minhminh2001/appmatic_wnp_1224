@@ -5,6 +5,7 @@ import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
+import com.whitelabel.app.model.SVRAppServiceCustomerCountry;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.SkipToAppStoreMarket;
@@ -38,4 +39,6 @@ public interface ICacheApi {
     void saveShopBrandDetail(ShopBrandResponse shopBrandResponse);
     void saveGuideFlag(Boolean isFirst);
     boolean isGuide();
+    void saveCountryAndRegions(SVRAppServiceCustomerCountry countryEntityResult);
+    SVRAppServiceCustomerCountry getCountryAndRegions();
 }

@@ -97,7 +97,7 @@ public class CheckoutPaymentStatusWrongFragment extends com.whitelabel.app.BaseF
                         mFragment.get().isSend=true;
                         mFragment.get().isLoading=false;
                         mFragment.get().startShoppingCart();
-                        mFragment.get().gaTrackerProductToCart();
+//                        mFragment.get().gaTrackerProductToCart();
                     }else{
                         mFragment.get().isLoading=false;
                         mFragment.get().startShoppingCart();

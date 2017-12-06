@@ -1,5 +1,6 @@
 package com.whitelabel.app.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -14,13 +15,20 @@ public class MyAccountOrderDetailEntityResult extends SVRReturnEntity{
     private String subtotal;
     private String shippingFee;
     private String grandTotal;
+    private CheckoutPaymentReturnShippingAddress shippingAddress;
+    private CheckoutPaymentReturnShippingAddress billingAddress;
+    private PickUpAddress pickupAddress;
+    private String paymentMethod;
+    private String orderComment;
+    private int isBanktransfer;
+    private BanktransferBean banktransfer;
     private String storeCredit;
     private String gst;
-    private CheckoutPaymentReturnShippingAddress billingAddress;
-    private CheckoutPaymentReturnShippingAddress shippingAddress;
-    private String paymentMethod;
-    private String paymentCode;
+
     private int isRPayment;
+    private int isPickupInStore;
+    private String paymentCode;
+    private MyAccountOrderMiddle[] suborders;
     private HashMap<String,String> discount;
     public String getPaymentCode() {
         return paymentCode;
@@ -38,6 +46,14 @@ public class MyAccountOrderDetailEntityResult extends SVRReturnEntity{
         this.isRPayment = isRPayment;
     }
 
+    public int getIsPickupInStore() {
+        return isPickupInStore;
+    }
+
+    public void setIsPickupInStore(int isPickupInStore) {
+        this.isPickupInStore = isPickupInStore;
+    }
+
     public String getGst() {
         return gst;
     }
@@ -46,10 +62,7 @@ public class MyAccountOrderDetailEntityResult extends SVRReturnEntity{
         this.gst = gst;
     }
 
-    private MyAccountOrderMiddle[] suborders;
-    private BanktransferBean banktransfer;
 
-    private int isBanktransfer;
 
 
     public String getStoreCredit() {
@@ -154,12 +167,28 @@ public class MyAccountOrderDetailEntityResult extends SVRReturnEntity{
         this.shippingAddress = shippingAddress;
     }
 
+    public PickUpAddress getPickupAddress() {
+        return pickupAddress;
+    }
+
+    public void setPickupAddress(PickUpAddress pickupAddress) {
+        this.pickupAddress = pickupAddress;
+    }
+
     public String getPaymentMethod() {
         return paymentMethod;
     }
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public String getOrderComment() {
+        return orderComment;
+    }
+
+    public void setOrderComment(String orderComment) {
+        this.orderComment = orderComment;
     }
 
     public HashMap<String, String> getDiscount() {
@@ -176,5 +205,26 @@ public class MyAccountOrderDetailEntityResult extends SVRReturnEntity{
 
     public void setSuborders(MyAccountOrderMiddle[] suborders) {
         this.suborders = suborders;
+    }
+
+    public static class PickUpAddress implements Serializable {
+        private String title;
+        private String address;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
     }
 }

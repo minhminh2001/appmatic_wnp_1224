@@ -90,7 +90,7 @@ public class LoginRegisterRegisterSuccessFragment extends Fragment implements Vi
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        toolBarFragmentCallback.setToolBarTitle(getResources().getString(R.string.register));
+        toolBarFragmentCallback.setToolBarTitle(getResources().getString(R.string.Sign_Out));
         toolBarFragmentCallback.setToolBarLeftIconAndListenter(JViewUtils.getNavBarIconDrawable(getActivity(),R.drawable.ic_action_back), new View.OnClickListener() {
             @Override
             public void onClick(View v) {

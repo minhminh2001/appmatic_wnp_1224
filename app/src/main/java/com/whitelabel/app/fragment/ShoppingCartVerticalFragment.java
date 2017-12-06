@@ -34,7 +34,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.CheckoutActivity;
+import com.whitelabel.app.ui.checkout.CheckoutActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.adapter.ShoppingCartVerticalAdapter;
@@ -526,11 +526,11 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                             fragment.mCar.setGrandTotal(shoppingCartVoucherApplyEntity.getGrandTotal());
                             fragment.mCar.setShipping(shoppingCartVoucherApplyEntity.getShipping());
                             fragment.initShoppingCartData(fragment.mCar, false);
-                            if (shoppingCartVoucherApplyEntity.getDiscount() != null && !TextUtils.isEmpty(shoppingCartVoucherApplyEntity.getDiscount().getCaption())) {
-                                fragment.gaTrackerApplyCode(fragment.APPLIED);
-                            } else {
-                                fragment.gaTrackerApplyCode(fragment.UNAPPLIED);
-                            }
+//                            if (shoppingCartVoucherApplyEntity.getDiscount() != null && !TextUtils.isEmpty(shoppingCartVoucherApplyEntity.getDiscount().getCaption())) {
+//                                fragment.gaTrackerApplyCode(fragment.APPLIED);
+//                            } else {
+//                                fragment.gaTrackerApplyCode(fragment.UNAPPLIED);
+//                            }
                         } else {
                             ErrorMsgBean errorBean = (ErrorMsgBean) msg.obj;
                             if (!JToolUtils.expireHandler(activity, errorBean.getErrorMessage(), 2000)) {
@@ -749,6 +749,9 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                         JViewUtils.setSoildButtonGlobalStyle(getActivity(),tvCheckout);
                         tvCheckout.setEnabled(true);
                         showTopError(false);
+                        if (!TextUtils.isEmpty(backOrderErrorMessage)){
+                            showTopError(true);
+                        }
                     }
                 }
             }

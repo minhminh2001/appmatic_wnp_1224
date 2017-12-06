@@ -184,7 +184,7 @@
             android:theme="@style/BackgroundWhiteTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.CheckoutActivity"
+            android:name=".ui.checkout.CheckoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BackgroundWhiteTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />

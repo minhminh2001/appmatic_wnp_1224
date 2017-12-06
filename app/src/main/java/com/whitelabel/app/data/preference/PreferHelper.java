@@ -13,6 +13,7 @@ import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
+import com.whitelabel.app.model.SVRAppServiceCustomerCountry;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.SkipToAppStoreMarket;
@@ -39,6 +40,8 @@ public class PreferHelper  implements ICacheApi{
     public static final String IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG ="IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG";
     public static final String SHOP_BRAND_DETAIL ="SHOP_BRAND_DETAIL";
     public static final String IS_GUIDE ="IS_GUIDE";
+    public static final String IS_FIRST_CHECKOUT_ADDADDRESS ="IS_FIRST_CHECKOUT_ADDADDRESS";
+    public static final String GET_COUNTRY_AND_REGIONS ="countries";
     public String  getVersionNumber(){
         RemoteConfigResonseModel.RetomeConfig config=getLocalConfigModel();
         String currentVersion="";
@@ -263,4 +266,27 @@ public class PreferHelper  implements ICacheApi{
     public boolean isGuide() {
         return AppPrefs.getBoolean(IS_GUIDE,false);
     }
+
+    @Override
+    public void saveCountryAndRegions(SVRAppServiceCustomerCountry countryEntityResult){
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(GET_COUNTRY_AND_REGIONS, Activity.MODE_PRIVATE);
+        Gson gson=new Gson();
+        String countryStr=gson.toJson(countryEntityResult);
+        sharedPreferences.edit().putString(GET_COUNTRY_AND_REGIONS,countryStr).commit();
+    }
+
+    @Override
+    public SVRAppServiceCustomerCountry getCountryAndRegions(){
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(GET_COUNTRY_AND_REGIONS, Activity.MODE_PRIVATE);
+        String  countryStr=sharedPreferences.getString(GET_COUNTRY_AND_REGIONS,"");
+        Gson gson=new Gson();
+        SVRAppServiceCustomerCountry svrAppServiceCustomerCountry=null;
+        if(!TextUtils.isEmpty(countryStr)) {
+            svrAppServiceCustomerCountry = gson.fromJson(countryStr, SVRAppServiceCustomerCountry.class);
+        }
+        return svrAppServiceCustomerCountry;
+    }
+
+
+
 }

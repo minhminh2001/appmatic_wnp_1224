@@ -28,6 +28,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.google.gson.Gson;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -42,6 +43,7 @@ import com.whitelabel.app.model.SVRGetCityANdStateByPostCodeEntity;
 import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.utils.AnimUtil;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -534,6 +536,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         if(!TextUtils.isEmpty(mBean.getRegion())){
             state.setText(mBean.getRegion());
         }
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.EDIT_ADDRESS_SCREEN,this);
 
         initAllHint();
         initData();

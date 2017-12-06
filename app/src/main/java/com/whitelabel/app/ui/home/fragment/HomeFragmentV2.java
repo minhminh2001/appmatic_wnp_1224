@@ -18,6 +18,7 @@ import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
@@ -302,6 +303,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
                 if (category != null) {
                     categoryName = category.getMenuTitle();
                 }
+                GaTrackHelper.getInstance().googleAnalytics(categoryName,getActivity());
             }
             return categoryName;
         }
@@ -338,5 +340,6 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             PageIntentUtils.skipToBrandListPage(getActivity(),menuId,categoryName);
         }
     }
+
 
 }

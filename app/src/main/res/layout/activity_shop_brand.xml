@@ -41,8 +41,13 @@
             android:layout_alignParentBottom="true"
             android:background="@color/greyEEEEEE"/>
     </RelativeLayout>
+    <com.whitelabel.app.widget.CustomSwipefreshLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcv_brand_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    </com.whitelabel.app.widget.CustomSwipefreshLayout>
 </LinearLayout>

@@ -31,7 +31,7 @@ import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
-import com.whitelabel.app.utils.JViewUtils;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.TreeMap;

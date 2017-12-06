@@ -271,7 +271,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        toolBarFragmentCallback.setToolBarTitle(getResources().getString(R.string.register));
+        toolBarFragmentCallback.setToolBarTitle(getResources().getString(R.string.Sign_Out));
         toolBarFragmentCallback.setToolBarLeftIconAndListenter(JViewUtils.getNavBarIconDrawable(getActivity(),R.drawable.ic_action_back), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -909,8 +909,8 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
     public void trackerRegister(String id){
                 try {
-                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", "Register",
-                            "customerId",
+                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", "Sign Out",
+                            id,
                             Long.valueOf(id));
         }catch (Exception ex){
             ex.getStackTrace();

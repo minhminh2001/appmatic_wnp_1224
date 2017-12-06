@@ -3,6 +3,7 @@ package com.whitelabel.app.ui.home.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.PageIntentUtils;
+import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.GridSpacingItemDecoration;
 
@@ -40,13 +42,15 @@ import injection.modules.PresenterModule;
  * Created by img on 2017/11/20.
  */
 
-public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter> implements ShopBrandContract.View {
+public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter> implements ShopBrandContract.View, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.tv_start_with)
     CustomTextView tvStartWith;
     @BindView(R.id.rcv_brand_list)
     RecyclerView rcvBrandList;
     @BindView(R.id.iv_arrow_down_black)
     ImageView ivArrowDownBlack;
+    @BindView(R.id.swipe_container)
+    CustomSwipefreshLayout swipeContainer;
 
     private Context mContext;
     private String menuId;
@@ -59,6 +63,7 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
     private ShopBrandDetailAdapter recycViewAdapter;
     private List<ShopBrandResponse.BrandsBean.ItemsBean> titles=new ArrayList<>();
     private List<ShopBrandResponse.BrandsBean.ItemsBean> titlesAnditems=new ArrayList<>();
+    private boolean isFront;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,18 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
         initTitleBar();
         initRecyclerView();
         initTopBrandSelect();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isFront=true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isFront=false;
     }
 
     private void initGetIntent() {
@@ -89,6 +106,8 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
                 onBackPressed();
             }
         });
+        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        swipeContainer.setOnRefreshListener(this);
     }
 
     private void initRecyclerView() {
@@ -161,6 +180,20 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
         JViewUtils.showErrorToast(mContext, errorMsg);
     }
 
+    @Override
+    public void showSwipeLayout() {
+        if(swipeContainer!=null){
+            swipeContainer.setRefreshing(true);
+        }
+    }
+
+    @Override
+    public void closeSwipeLayout() {
+        if(swipeContainer!=null) {
+            swipeContainer.setRefreshing(false);
+        }
+    }
+
     @OnClick(R.id.tv_start_with)
     public void onViewClicked() {
         wheelPickerBrandTitle();
@@ -217,4 +250,11 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
             }
         });
         JViewUtils.showWheelPickerOneDialog(mContext, configEntity);    }
+
+    @Override
+    public void onRefresh() {
+        if (isFront){
+            mPresenter.getOnlineCategoryDetail(false,menuId);
+        }
+    }
 }

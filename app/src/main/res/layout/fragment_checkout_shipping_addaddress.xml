@@ -554,6 +554,95 @@
 
                 </LinearLayout>
 
+                <!--day time contact-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:layout_weight="2">
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:id="@+id/tv_checkout_shipping_address_dayphone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="@string/_phone"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:textColor="@color/label_saved" />
+
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/add6"
+                            android:layout_below="@+id/tv_checkout_shipping_address_dayphone"
+                            android:layout_alignParentBottom="true"
+                            android:paddingBottom="@dimen/checkout_common_padding"
+                            android:textSize="@dimen/editTextFontSize"
+                            android:textColor="@color/editColor" />
+                    </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+                    <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
+                        android:id="@+id/rl_checkadd_dayphone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <View
+                            android:layout_width="@dimen/line_height"
+                            android:visibility="gone"
+                            android:layout_height="match_parent"
+                            android:background="@color/edittext_line"/>
+                        <com.whitelabel.app.widget.CustomTextView
+                            style="@style/font_family_robot_regular"
+                            android:id="@+id/tv_checkout_shipping_dayphone_anim"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingLeft="@dimen/checkout_common_padding"
+                            android:paddingTop="@dimen/checkout_hint_anim_text_paddingtop"
+                            android:textSize="@dimen/labelTextFontSize"
+                            android:textColor="@color/label_saved"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_below="@+id/tv_checkout_shipping_dayphone_anim"
+                            android:layout_alignParentBottom="true"
+                            android:paddingLeft="@dimen/checkout_common_padding"
+                            android:paddingBottom="@dimen/checkout_common_padding"
+                            >
+                            <com.whitelabel.app.widget.CustomEditText
+                                style="@style/font_family_robot_regular"
+                                android:id="@+id/et_checkout_shipping_dayphone"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tv_checkout_shipping_phone_anim"
+                                android:layout_alignParentBottom="true"
+                                android:background="@null"
+                                android:singleLine="true"
+                                android:inputType="number"
+                                android:paddingRight="2dp"
+                                android:hint="@string/day_time_contact"
+                                android:maxLength="@integer/phone_number_length"
+                                android:layout_gravity="center_vertical"
+                                android:textColorHint="@color/hint"
+                                android:textSize="@dimen/editTextFontSize"
+                                android:textColor="@color/editColor" />
+                            <ImageView
+                                android:id="@+id/clear_checkout_dayphone"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:background="@mipmap/text_elimination"
+                                android:layout_gravity="center_vertical"
+                                android:visibility="invisible"
+                                />
+                        </LinearLayout>
+                    </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -580,15 +669,14 @@
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </RadioGroup>
-
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/whiteFFFFFF">
@@ -618,5 +706,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
+
 
 </ScrollView>

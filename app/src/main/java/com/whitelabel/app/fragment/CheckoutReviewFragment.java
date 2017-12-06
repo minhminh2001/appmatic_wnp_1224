@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.whitelabel.app.*;
-import com.whitelabel.app.activity.CheckoutActivity;
+import com.whitelabel.app.ui.checkout.CheckoutActivity;
 import com.whitelabel.app.adapter.CheckoutReviewShoppingCartAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;

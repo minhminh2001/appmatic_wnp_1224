@@ -58,18 +58,18 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
     }
 
     private void startNextActvity() {
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(StartActivityV2.this)) {
+//        if (WhiteLabelApplication.getAppConfiguration().isSignIn(StartActivityV2.this)) {
             Intent intent = new Intent(StartActivityV2.this, HomeActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            Intent intent = new Intent(StartActivityV2.this, LoginRegisterActivity.class);
-            Bundle mBundle = new Bundle();
-            mBundle.putString("Activity", "start");//压入数据
-            intent.putExtras(mBundle);
-            startActivity(intent);
-            finish();
-        }
+//        } else {
+//            Intent intent = new Intent(StartActivityV2.this, LoginRegisterActivity.class);
+//            Bundle mBundle = new Bundle();
+//            mBundle.putString("Activity", "start");//压入数据
+//            intent.putExtras(mBundle);
+//            startActivity(intent);
+//            finish();
+//        }
     }
 
     @Override

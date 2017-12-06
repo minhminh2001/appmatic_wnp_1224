@@ -112,6 +112,7 @@
                 <!--Shipping Address Title-->
                 <com.whitelabel.app.widget.CustomTextView
                     style="@style/font_family_roboto_medium"
+                    android:id="@+id/tv_order_detail_top_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"

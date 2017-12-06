@@ -11,6 +11,7 @@ public class TMPProductListListPageEntity implements Serializable {
     private int searchType;
     private String categoryId;
     private String keyWord;
+    private String brandId;
 
     public TMPProductListListPageEntity() {
         searchType = ProductListKeywordsSearchFragment.SEARCH_TYPE_KEYWORDS;
@@ -40,4 +41,11 @@ public class TMPProductListListPageEntity implements Serializable {
         this.keyWord = keyWord;
     }
 
+    public String getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(String brandId) {
+        this.brandId = brandId;
+    }
 }

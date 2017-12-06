@@ -490,7 +490,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
     private void gaTrackerIncresaseQuantity(String name, String productId) {
         try {
             GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
-                    "Remove Item From Cart",
+                    "Incresase Quantity From Cart",
                     name,
                     Long.valueOf(productId));
             GaTrackHelper.getInstance().googleAnalyticsAddCart( productId, name);

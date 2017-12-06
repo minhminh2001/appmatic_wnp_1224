@@ -26,6 +26,7 @@ import com.whitelabel.app.bean.OrderBody;
 import com.whitelabel.app.bean.OrderTip;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ShoppingCarDao;
+import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.MyAccountOrderListEntityResult;
 import com.whitelabel.app.model.MyAccountOrderOuter;
 import com.whitelabel.app.network.ImageLoader;
@@ -345,7 +346,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                     break;
                 case ShoppingCarDao.REQUEST_RECOVERORDER :
 //                    ErrorMsgBean msgBean = (ErrorMsgBean) ;
-//                    JToolUtils.printObject(msg.obj);
                     mFragment.get().startShoppingCart((String) msg.obj);
                     break;
             }

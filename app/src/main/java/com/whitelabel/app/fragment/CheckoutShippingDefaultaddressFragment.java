@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.google.gson.Gson;
-import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.model.CheckoutDefaultShippingAddress;
+import com.whitelabel.app.ui.checkout.CheckoutActivity;
 import com.whitelabel.app.utils.JDataUtils;
 
 public class CheckoutShippingDefaultaddressFragment extends Fragment {

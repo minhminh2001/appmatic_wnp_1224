@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.google.gson.Gson;
-import com.whitelabel.app.activity.CheckoutActivity;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.WheelPickerCallback;
 import com.whitelabel.app.dao.MyAccountDao;
@@ -39,6 +38,7 @@ import com.whitelabel.app.model.SVRAppServiceCustomerCountry;
 import com.whitelabel.app.model.SVRGetCityANdStateByPostCodeEntity;
 import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
+import com.whitelabel.app.ui.checkout.CheckoutActivity;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;

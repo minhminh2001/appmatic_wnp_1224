@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.whitelabel.app.BaseActivity;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.MyAccountWishlistAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -397,7 +398,7 @@ public class HomeMyAccountWishlistFragment extends HomeBaseFragment implements V
     public void onStart() {
         super.onStart();
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, true);
-        GaTrackHelper.getInstance().googleAnalytics("Sign In screen", homeActivity);
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.ACCOUNT_WISHLIST_SCREEN, homeActivity);
         JLogUtils.i("googleGA_screen", "My Wishlist Screen");
     }
 

@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -71,6 +72,8 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private TextView mTvGst;
     private TextView tvStoreCreditTitle;
     private TextView tvStoreCreditVlaue;
+    private TextView tvTopAddressTitle;
+
     private CustomWebView tvCreditCardTypeText;
     private ScrollView scrollView;
     private ListView listView;
@@ -231,6 +234,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         tvVoucher = (TextView) findViewById(R.id.tv_order_detail_voucher);
         tvVoucherTitle = (TextView) findViewById(R.id.tv_order_detail_voucher_title);
         tvGrandTotal = (TextView) findViewById(R.id.tv_order_detail_grandtotal);
+        tvTopAddressTitle= (TextView) findViewById(R.id.tv_order_detail_top_title);
 //        tvUsername = (TextView) findViewById(R.id.tv_order_detail_username);
 //        tvAddress1 = (TextView) findViewById(R.id.tv_order_detail_address1);
 //        TextView tvAddress2 = (TextView) findViewById(R.id.tv_order_detail_address2);
@@ -396,6 +400,9 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private ObjectAnimator mAnimator;
 
     private void initWithWebServiceDatas(MyAccountOrderDetailEntityResult orderDetail) {
+        if (orderDetail==null){
+            return;
+        }
         String method = orderDetail.getPaymentMethod();
         if (mDialog != null) {
             mDialog.cancel();
@@ -453,8 +460,15 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         }
         tvGrandTotal.setText(orderDetail.getGrandTotal());
         tvGrandTotal.setTextColor(getResources().getColor(R.color.black000000));
-         llShippingAddress.addView(getAddressView(orderDetail.getShippingAddress()));
-         llBillingAddress.addView(getAddressView(orderDetail.getBillingAddress()));
+        if (orderDetail.getIsPickupInStore()==1){
+            tvTopAddressTitle.setText(orderDetail.getPickupAddress().getTitle());
+            llShippingAddress.addView(getPickUpAddress(orderDetail.getPickupAddress()));
+            llBillingAddress.addView(getAddressView(orderDetail.getBillingAddress()));
+        }else {
+            llShippingAddress.addView(getAddressView(orderDetail.getShippingAddress()));
+            llBillingAddress.addView(getAddressView(orderDetail.getBillingAddress()));
+        }
+
 //        ShippingAddress shippingAddress = orderDetail.getShippingAddress();
 //        tvUsername.setText(shippingAddress.getFirstname() + " " + shippingAddress.getLastname());
 //        tvAddress1.setText(shippingAddress.getStreet());
@@ -519,6 +533,16 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         tvCityStatePostcode.setText(stringBuilder.toString());
         tvCountry.setText(address.getCountry());
         tvTelephone.setText(getResources().getString(R.string.address_mobile_number)+" : " + address.getTelephone());
+        view.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent00));
+        return view;
+    }
+
+    private View getPickUpAddress(MyAccountOrderDetailEntityResult.PickUpAddress pickUpAddress){
+        View view = LayoutInflater.from(this).inflate(R.layout.fragment_order_detail_pick_up_store_address, null);
+        TextView tvFirstname = (TextView) view.findViewById(R.id.tv_address_select_firstname);
+        //TextView tvLastname = (TextView) view.findViewById(R.id.tv_address_select_lastname);
+        tvFirstname.setText(Html.fromHtml(pickUpAddress.getAddress()));
+        //tvLastname.setText(address.getLastname());
         view.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent00));
         return view;
     }
