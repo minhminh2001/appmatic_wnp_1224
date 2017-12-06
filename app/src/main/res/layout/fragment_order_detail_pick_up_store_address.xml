@@ -33,15 +33,6 @@
                 android:textColor="@color/black000000"
                 android:textSize="15sp" />
 
-            <!--<com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_roboto_medium"
-                android:id="@+id/tv_address_select_lastname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="Green"
-                android:textColor="@color/black000000"
-                android:textSize="15sp" />-->
         </LinearLayout>
 
         <com.whitelabel.app.widget.CustomTextView

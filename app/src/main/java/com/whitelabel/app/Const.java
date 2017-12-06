@@ -21,6 +21,7 @@ public class Const {
         public final static String ADD_ADDRESS_SCREEN = "Add Address Screen";
         public final static String EDIT_ADDRESS_SCREEN = "Edit Address Screen";
         public final static String ACCOUNT_WISHLIST_SCREEN = "My Wishlist Screen";
+        public final static String ADDRESS_BOOK_SCREEN = "My Address Book Screen";
         public final static String HOME_BANNER_EVENT = "banner";
 
     }

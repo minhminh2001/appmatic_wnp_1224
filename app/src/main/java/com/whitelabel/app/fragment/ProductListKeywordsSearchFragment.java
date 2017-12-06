@@ -768,8 +768,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         try {
             if (!TextUtils.isEmpty(keyWord)) {
                 GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action", "Search", keyWord, null);
-                FirebaseEventUtils.getInstance().ecommerceSearchResult(getActivity(), keyWord);
-                FirebaseEventUtils.getInstance().allAppSearch(getActivity(), keyWord);
+//                FirebaseEventUtils.getInstance().ecommerceSearchResult(getActivity(), keyWord);
+//                FirebaseEventUtils.getInstance().allAppSearch(getActivity(), keyWord);
             }
 
         } catch (Exception e) {

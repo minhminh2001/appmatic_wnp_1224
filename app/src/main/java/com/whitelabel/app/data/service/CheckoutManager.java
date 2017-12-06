@@ -88,12 +88,7 @@ public class CheckoutManager implements ICheckoutManager {
 
     @Override
     public Observable<SVRAddAddress> createCustomerAddress(String sessionKey, String firstName, String lastName, String countryId, String telePhone, String street0, String street1, String fax, String postCode, String city, String region, String defaultBilling, String defaultShipping, String regionId) {
-        return checkoutApi.createCustomerAddress(sessionKey,firstName,lastName,countryId,telePhone,street0,street1,fax,postCode,city,region,defaultBilling,defaultShipping,regionId).map(new Func1<SVRAddAddress, SVRAddAddress>() {
-            @Override
-            public SVRAddAddress call(SVRAddAddress svrAddAddress) {
-                return svrAddAddress;
-            }
-        });
+        return checkoutApi.createCustomerAddress(sessionKey,firstName,lastName,countryId,telePhone,street0,street1,fax,postCode,city,region,defaultBilling,defaultShipping,regionId);
     }
 
 

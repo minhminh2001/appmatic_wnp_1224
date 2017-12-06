@@ -22,6 +22,7 @@ import com.whitelabel.app.adapter.ShareIntentListAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.OtherDao;
 import com.whitelabel.app.model.FacebookStoryEntity;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 
 import java.util.List;
 
@@ -105,7 +106,7 @@ public class ShareUtil {
                 ResolveInfo info = (ResolveInfo) activityList.get(item);
                 try {
                     //google追踪分享到某应用
-                    ProductActivity productActivity= (ProductActivity) mContext;
+                    ProductDetailActivity productActivity= (ProductDetailActivity) mContext;
                     if(productActivity.mProductDetailBean !=null){
                        productId=productActivity.mProductDetailBean.getId();
                     }

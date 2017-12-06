@@ -188,13 +188,13 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         super.onActivityCreated(savedInstanceState);
         initToolBar();
         int FRAGMENT_CONTAINER_ID = R.id.flFilterSortContainer;
-        try {
-            GaTrackHelper.getInstance().googleAnalytics("Sub Category Screen", getActivity());
-            JLogUtils.i("googleAnalytics", "Sub Category Screen");
-
-        }catch (Exception ex){
-            ex.getStackTrace();
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalytics("Sub Category Screen", getActivity());
+//            JLogUtils.i("googleAnalytics", "Sub Category Screen");
+//
+//        }catch (Exception ex){
+//            ex.getStackTrace();
+//        }
 
         mIVBottomSlideToTop = (ImageView) mContentView.findViewById(R.id.iv_bottom_slideto_top);
         mTopFilterAndSortBarRL = (RelativeLayout) mContentView.findViewById(R.id.top_switch_and_filter_bar);

@@ -35,6 +35,7 @@ import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomSpeedLayoutManager;
 import com.whitelabel.app.widget.ExpandableRecyclerAdapter;
 
@@ -63,7 +64,8 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
     private ImageLoader mImageLoader;
     DrawerLayoutActivity drawerLayoutActivity;
     private String leftMenuTitle;
-    private String rightMenuTitle;
+    private String rightSubTitle;
+    private String rightTopTitle;
     public HomeCategoryTreeFragment() {
 
     }
@@ -162,7 +164,8 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
         public void childOnClick(int position, Object ob, String parentId) {
             //   GO TO  ProductListActivity
             SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) ob;
-            rightMenuTitle=entity.getMenuTitle();
+            rightSubTitle=entity.getMenuTitle();
+
             Intent intent = new Intent(getContext(), ProductListActivity.class);
             intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_MAINCATEGOTY);
             intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY);
@@ -170,6 +173,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
             for (SVRAppserviceCatalogSearchCategoryItemReturnEntity en : categoryList) {
                 if (en.getId() != null && en.getId().equals(parentId)) {
                     intent.putExtra(ProductListActivity.INTENT_DATA_CATEGORYID, en);
+                    rightTopTitle =en.getMenuTitle();
                     continue;
                 }
             }
@@ -186,7 +190,9 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
         builder.append("Category_");
         builder.append(leftMenuTitle);
         builder.append("_");
-        builder.append(rightMenuTitle);
+        builder.append(rightTopTitle);
+        builder.append("_");
+        builder.append(rightSubTitle);
         GaTrackHelper.getInstance().googleAnalytics(builder.toString(),getActivity());
     }
 
@@ -208,6 +214,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvRootCategory.setLayoutManager(linearLayoutManager);
+        leftMenuTitle = allData.get(0).getMenuTitle();
         categoryTreeRootAdapter = new CategoryTreeRootAdapter(getContext(), allData,
                 new CategoryTreeRootAdapter.ItemClick() {
                     @Override

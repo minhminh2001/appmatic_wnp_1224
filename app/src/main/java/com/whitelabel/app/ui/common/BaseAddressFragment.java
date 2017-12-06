@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.whitelabel.app.BaseFragment;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.AddressBookAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -22,6 +23,7 @@ import com.whitelabel.app.data.service.CommodityManager;
 import com.whitelabel.app.fragment.BaseFragmentSearchCart;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.network.BaseHttp;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomButton;
@@ -131,6 +133,13 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
             mListView.setAdapter(mAddressBookAdapter);
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.ADDRESS_BOOK_SCREEN, getActivity());
+    }
+
     @Override
     public void onRefresh() {
         String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();

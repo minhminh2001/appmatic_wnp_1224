@@ -183,6 +183,7 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
                    paymentSaveReturnEntity.getReviewOrder(),
                    orderNumber, Double.parseDouble(paymentSaveReturnEntity.getGrandtotal()),
                    Double.parseDouble(paymentSaveReturnEntity.getShipping().get("value")));
+           GaTrackHelper.getInstance().googleAnalytics("Checkout Sucess Screen",getActivity());
        }catch (Exception ex){
            ex.getStackTrace();
        }

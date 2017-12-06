@@ -103,7 +103,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                 case MyAccountDao.REQUEST_SENDREQUEST:
                     if (msg.arg1 == MyAccountDao.RESPONSE_SUCCESS) {
                         mActivity.get().mBean = (MyAccountOrderDetailEntityResult) msg.obj;
-                        JToolUtils.printObject((MyAccountOrderDetailEntityResult) msg.obj);
                         mActivity.get().initWithWebServiceDatas(mActivity.get().mBean);
                     } else {
                         String errorMsg = msg.obj.toString();

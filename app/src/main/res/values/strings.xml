@@ -226,10 +226,11 @@
     <string name="order_status_text_Delivery_Failed">Delivery Failed</string>-->
 
     <!--login-->
-    <string name="RegisterNow"><u>Register now.</u></string>
+    <string name="RegisterNow"><u>Sign Out Now.</u></string>
     <string name="ClickEmail"><u>Click here</u></string>
     <!--register-->
-    <string name="SignInNow"> <u>Sign in now.</u></string>
+    <string name="SignInNow"> <u>Sign In Now.</u></string>
+    <string name="hey">Hey,&#160;</string>
 
     <!-- Size Picker -->
     <string name="global_picker_size_cancel">Cancel</string>
@@ -540,7 +541,7 @@
     <string name="add_address">Add Address</string>
     <string name="try_again">Try Again</string>
     <string name="try_again_lar">TRY AGAIN</string>
-    <string name="sign_register">Sign In / Register</string>
+    <string name="sign_register">Sign In / Sign Out</string>
 
     <string name="change">CHANGE</string>
     <string name="fashion">FASHION</string>
