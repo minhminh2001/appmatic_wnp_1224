@@ -47,6 +47,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     public final static String INTENT_DATA_CATEGORYID = "categoryEntity";
     public final static String INTENT_CATEGORY_ID = "categoryId";
     private final static String CURRENT_INDEX = "position";
+    public static final String SHOP_BRAND_ID = "SHOP_BRAND_ID";
     public final static int INTENT_DATA_PREVTYPE_VALUE_MAINCATEGOTY = 1;
     public final static int INTENT_DATA_PREVTYPE_VALUE_HOME = 2;
     public static final int FRAGMENT_TYPE_PRODUCTLIST_CATEGORY = 0;
@@ -181,9 +182,11 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
                 }
                 categoryId = intent.getStringExtra(INTENT_CATEGORY_ID);
                 keyWord = intent.getStringExtra(ProductListKeywordsSearchFragment.FROM_OTHER_PAGE_KEYWORD);
+                String brandId=intent.getStringExtra(ProductListActivity.SHOP_BRAND_ID);
                 tmpProductListListPageEntity=new TMPProductListListPageEntity();
                 tmpProductListListPageEntity.setCategoryId(categoryId);
                 tmpProductListListPageEntity.setKeyWord(keyWord);
+                tmpProductListListPageEntity.setBrandId(brandId);
             } catch (Exception ex) {
                 JLogUtils.e(TAG, "onCreate", ex);
             }

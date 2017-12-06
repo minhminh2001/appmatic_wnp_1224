@@ -122,6 +122,15 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
         // Required empty public constructor
     }
 
+   public interface IChangeAddAddressPage{
+        void selectAddressFragment();
+   }
+    IChangeAddAddressPage iChangeAddAddressPage;
+
+    public void setiChangeAddAddressPage(IChangeAddAddressPage iChangeAddAddressPage) {
+        this.iChangeAddAddressPage = iChangeAddAddressPage;
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -168,11 +177,14 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     public void showData(AddressBook shippingAddress, AddressBook billingAddress, List<CheckoutDefaultAddressResponse.ShippingMethodBean> shippingMethod, CheckoutDefaultAddressResponse.PickUpAddress pickUpAddress) {
         //first to this page skip to addAddress Page
         if (shippingAddress == null && billingAddress == null) {
-            Intent intent = new Intent(getActivity(), AddAddressActivity.class);
-            intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT, false);
-            startActivityForResult(intent, REQUEST_ADD_ADDRESS_CODE);
-            getActivity().overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
-                    R.anim.activity_transition_exit_righttoleft);
+//            Intent intent = new Intent(getActivity(), AddAddressActivity.class);
+//            intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT, false);
+//            startActivityForResult(intent, REQUEST_ADD_ADDRESS_CODE);
+//            getActivity().overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
+//                    R.anim.activity_transition_exit_righttoleft);
+            if (iChangeAddAddressPage!=null){
+                iChangeAddAddressPage.selectAddressFragment();
+            }
             return;
         }
         rlRoot.setVisibility(View.VISIBLE);
@@ -187,7 +199,6 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
                 if (rb.isChecked()) {
                     int code = (int) rb.getTag();
                     baseRadioCodeToCheckClick(code);
-//                curentClickShipping= (int) rb.getTag();
                     break;
                 }
             }
@@ -261,6 +272,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
         rbCheckAddress.setTag(shippingMethodBean.getCode());
         if (RADIO_BUTTON_CHECK_CODE == shippingMethodBean.getChecked()) {
             rbCheckAddress.setChecked(true);
+            curentClickShipping= (int) rbCheckAddress.getTag();
             Drawable pressIcon = JImageUtils.getThemeIcon(getActivity(), R.drawable.icon_cb_selected);
             rbCheckAddress.setCompoundDrawablesWithIntrinsicBounds(pressIcon, null, null, null);
         } else {
@@ -273,6 +285,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             public void onClick(View v) {
                 RadioButton radioButton = (RadioButton) v;
                 int currentCode = (int) radioButton.getTag();
+                curentClickShipping= currentCode;
                 //Pick up in store just show bill address
                 baseRadioCodeToCheckClick(currentCode);
                 for (int i = 0; i < radioGroup.getChildCount(); i++) {
@@ -297,6 +310,10 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
                 llCheckbox.setVisibility(View.VISIBLE);
                 llBillingAddress.setVisibility(View.GONE);
                 llPickAddress.setVisibility(View.GONE);
+                if(cbBillAddress.isChecked()){
+                    llBillingAddress.setVisibility(View.VISIBLE);
+                }
+
                 break;
             //Pick up in store (just show llBilling)
             case PICK_UP_IN_STORE_CODE:
@@ -306,6 +323,18 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
                 llPickAddress.setVisibility(View.VISIBLE);
                 llBillingAddress.setVisibility(View.VISIBLE);
                 break;
+        }
+    }
+
+    public AddressBook getTopAddress(){
+        return mPrimaryShipping;
+    }
+
+    public AddressBook getBootomAddress(){
+        if (isBillAddressChecked){
+            return mPrimaryBilling;
+        }else {
+            return mPrimaryShipping;
         }
     }
 

@@ -37,7 +37,7 @@ import android.widget.Toast;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.whitelabel.app.*;
-import com.whitelabel.app.activity.CheckoutActivity;
+import com.whitelabel.app.ui.checkout.CheckoutActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.adapter.WheelPickerAdapter;
 import com.whitelabel.app.WhiteLabelApplication;

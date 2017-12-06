@@ -34,7 +34,8 @@ public class ShopBrandPresenterImpl extends RxPresenter<ShopBrandContract.View> 
 
     @Override
     public void getOnlineCategoryDetail(boolean isCache,final String categoryId) {
-        mView.showProgressDialog();
+//        mView.showProgressDialog();
+        mView.showSwipeLayout();
         final String sessionKey=iBaseManager.isSign()?iBaseManager.getUser().getSessionKey():"";
         Subscription subscription=iCommodityManager.getShopBrandDetail(isCache,categoryId,sessionKey)
                 .compose(RxUtil.<ShopBrandResponse>rxSchedulerHelper())
@@ -46,13 +47,15 @@ public class ShopBrandPresenterImpl extends RxPresenter<ShopBrandContract.View> 
 
                     @Override
                     public void onError(Throwable throwable) {
-                        mView.closeProgressDialog();
+//                        mView.closeProgressDialog();
+                        mView.closeSwipeLayout();
                         mView.showErrorMsg(ExceptionParse.parseException(throwable).getErrorMsg());
                     }
 
                     @Override
                     public void onNext(ShopBrandResponse shopBrandResponse) {
-                        mView.closeProgressDialog();
+//                        mView.closeProgressDialog();
+                        mView.closeSwipeLayout();
                         ArrayList<ShopBrandResponse.BrandsBean.ItemsBean> titleAndItemList = createTitleAndItemList(shopBrandResponse.getBrands());
                         mView.loadData(titleAndItemList);
                         mView.loadTitleData(getTitleList(titleAndItemList));
@@ -88,6 +91,7 @@ public class ShopBrandPresenterImpl extends RxPresenter<ShopBrandContract.View> 
                         itemsChildBean.setTitle(itemsBeanChild.getTitle());
                         itemsChildBean.setIcon(itemsBeanChild.getIcon());
                         itemsChildBean.setLink(itemsBeanChild.getLink());
+                        itemsChildBean.setId(itemsBeanChild.getId());
                         itemsChildBean.setIdentifier(itemsBeanChild.getIdentifier());
                         currentItemPosition=currentTitlePosition+j+1;
                         itemsChildBean.setPosition(currentItemPosition);

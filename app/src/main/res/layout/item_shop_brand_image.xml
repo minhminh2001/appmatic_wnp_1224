@@ -7,16 +7,18 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/iv_shop_brand_border"
-            android:layout_width="110dp"
-            android:src="@drawable/shape_boreder_grey"
-            android:layout_height="100dp" />
+
         <ImageView
             android:id="@+id/iv_brand_icon"
-            android:layout_width="90dp"
+            android:layout_width="match_parent"
             android:layout_centerInParent="true"
-            android:layout_height="83dp" />
+            android:layout_margin="5dp"
+            android:layout_height="90dp" />
+        <ImageView
+            android:id="@+id/iv_shop_brand_border"
+            android:layout_width="match_parent"
+            android:src="@drawable/shape_boreder_grey"
+            android:layout_height="110dp" />
     </RelativeLayout>
 
     <TextView

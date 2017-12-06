@@ -45,6 +45,7 @@ import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.model.TMPProductListListPageEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.FilterSortHelper;
+import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -58,6 +59,8 @@ import com.whitelabel.app.widget.FilterSortBottomView;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import javax.inject.Inject;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -80,6 +83,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     public static final String SUGGESTION_ROW_TYPE_MODEL_TYPE = "model_type";
     public static final int SUGGESTION_KEYWORD_TIMEOUT = 500;
     public static final String FROM_OTHER_PAGE_KEYWORD = "FROM_OTHER_PAGE_KEYWORD";
+
     private final String TAG = "ProductListKeywordsSearchFragment";
     protected ProductListActivity productListActivity;
     private RequestErrorHelper requestErrorHelper;
@@ -118,6 +122,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 //    private boolean mIsShowSuggestion;
 //    private long mTime_start;
     private boolean mIsSuggestionSearch;
+    long resultSumPageNum=1;
 
     private RelativeLayout mRlSwitchViewbar;
     private ImageView mHeaderIvViewToggle;
@@ -127,6 +132,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     private boolean mIsShowSwitchFilterBar;
     private String fromOtherPageKeyWord ="";
     private String fromOtherPageCategoryId ="";
+    String brandId;
 
     @Override
     public void onAttach(Context context) {
@@ -195,6 +201,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
                             ArrayList<SVRAppserviceProductSearchResultsItemReturnEntity> productListResult = null;
                             try {
                                 SVRAppserviceProductSearchReturnEntity svrAppserviceProductSearchReturnEntity = (SVRAppserviceProductSearchReturnEntity) msg.obj;
+                                fragment.resultSumPageNum = svrAppserviceProductSearchReturnEntity.getPageNum();
                                 SVRAppserviceProductSearchParameter param = activity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1);
                                 if (param.getP() == 1 && svrAppserviceProductSearchReturnEntity.getTotal() == 0) {
                                     Message notDataMsg = new Message();
@@ -323,6 +330,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             productListListPageEntity = (TMPProductListListPageEntity) bundle.getSerializable("data");
             fromOtherPageKeyWord = productListListPageEntity.getKeyWord();
             fromOtherPageCategoryId =productListListPageEntity.getCategoryId();
+            brandId =productListListPageEntity.getBrandId();
         }
         RelativeLayout rlContainer = (RelativeLayout) mContentView.findViewById(R.id.rlContainer);
         RelativeLayout mBackRL = (RelativeLayout) mContentView.findViewById(R.id.rl_back);
@@ -751,25 +759,24 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 
     private void search() {
         getProductListFromServer();
-//        searchTrack();
+        searchTrack();
     }
 
 
-//    public void searchTrack() {
-//        String keyWord = mKeyWord;
-//        try {
-//            //追踪用户搜索过得数据
-//            if (!TextUtils.isEmpty(mKeyWord)) {
-//                GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action", "Search", keyWord, null);
-//                FirebaseEventUtils.getInstance().ecommerceSearchResult(getActivity(), keyWord);
-//                FirebaseEventUtils.getInstance().allAppSearch(getActivity(), keyWord);
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
+    public void searchTrack() {
+        String keyWord = cetKeywords.getText().toString().trim();
+        try {
+            if (!TextUtils.isEmpty(keyWord)) {
+                GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action", "Search", keyWord, null);
+                FirebaseEventUtils.getInstance().ecommerceSearchResult(getActivity(), keyWord);
+                FirebaseEventUtils.getInstance().allAppSearch(getActivity(), keyWord);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
     private Dialog mDialog;
@@ -902,14 +909,22 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         if (!TextUtils.isEmpty(param.getCategory_id())) {
             categoryId = param.getCategory_id();
         }
-        //传入session是为判断产品是否被wish
+        String sessionKey="";
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q,q ,price,
-                    WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),"","search"
-                   );
-        } else {
-            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q,q, price, "", "","search");
+            sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
         }
+        if (!TextUtils.isEmpty(brandId)){
+            if (resultSumPageNum>=Integer.valueOf(p)){
+                mProductDao.brandSearch(storeId,p,brandId,limit,order,dir,q, sessionKey);
+            }else {
+                cxlvProductList.stopLoadMore();
+            }
+        }else {
+            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q,q ,price,
+                    sessionKey,"","search"
+            );
+        }
+
 
     }
 

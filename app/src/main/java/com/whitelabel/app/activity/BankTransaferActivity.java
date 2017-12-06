@@ -131,11 +131,11 @@ public class BankTransaferActivity extends com.whitelabel.app.BaseActivity imple
 
     private void initData() {
         DataHandler mHandler = new DataHandler(this);
-        try {
-            GaTrackHelper.getInstance().googleAnalytics("Submit Bank Transfer Screen", BankTransaferActivity.this);
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
+//        try {
+//            GaTrackHelper.getInstance().googleAnalytics("Submit Bank Transfer Screen", BankTransaferActivity.this);
+//        } catch (Exception ex) {
+//            ex.getStackTrace();
+//        }
         emailErrorString = getResources().getString(R.string.email_error);
         imageSelectError = getResources().getString(R.string.select_img);
         intentnetErrorString = getResources().getString(R.string.Global_Error_Internet);

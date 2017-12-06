@@ -303,7 +303,7 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
         super.onStart();
         try {
             GaTrackHelper.getInstance().googleAnalyticsReportActivity(getActivity(), true);
-            GaTrackHelper.getInstance().googleAnalytics("My Store Credit Screen", getContext());
+//            GaTrackHelper.getInstance().googleAnalytics("My Store Credit Screen", getContext());
         } catch (Exception ex) {
             ex.getStackTrace();
         }

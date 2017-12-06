@@ -1,7 +1,8 @@
 package com.whitelabel.app.data.service;
 
 
-import com.whitelabel.app.model.ResponseModel;
+import com.whitelabel.app.model.SVRAddAddress;
+import com.whitelabel.app.model.SVRAppServiceCustomerCountry;
 import com.whitelabel.app.model.SkipToAppStoreMarket;
 import com.whitelabel.app.ui.checkout.model.CheckoutDefaultAddressResponse;
 import com.whitelabel.app.ui.checkout.model.PaypalPlaceOrderReponse;
@@ -20,6 +21,26 @@ public interface ICheckoutManager {
 
     public void saveFinishOrderAndMarkTime(long currentTime);
 
+    public Observable<SVRAppServiceCustomerCountry> getCountryAndRegions(String sessionKey);
+
     public SkipToAppStoreMarket getFirstOrderAndMarkTime();
+
+    public SVRAppServiceCustomerCountry getCountryAndRegions();
+
+    public Observable<SVRAddAddress>  createCustomerAddress(
+            String sessionKey,
+            String firstName,
+            String lastName,
+            String countryId,
+            String telePhone,
+            String street0,
+            String street1,
+            String fax,
+            String postCode,
+            String city,
+            String region,
+            String defaultBilling,
+            String defaultShipping,
+            String regionId);
 
 }

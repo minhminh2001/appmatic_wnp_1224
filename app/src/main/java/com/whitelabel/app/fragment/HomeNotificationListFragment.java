@@ -304,7 +304,7 @@ public class HomeNotificationListFragment extends HomeBaseFragment implements Cu
     @Override
     public void onStart() {
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(homeActivity, true);
-        GaTrackHelper.getInstance().googleAnalytics("Notification list screen", homeActivity);
+//        GaTrackHelper.getInstance().googleAnalytics("Notification list screen", homeActivity);
         super.onStart();
     }
     @Override

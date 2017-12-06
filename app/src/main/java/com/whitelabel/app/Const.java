@@ -15,4 +15,14 @@ public class Const {
     public static final double BANNER_PIC_HEIGHT_THAN_WIDTH = 180.0/480;
     public static final int NORMAL_BANNER_DELAY_TIME=3000;
 
+    public interface GA{
+        public final static String HOME_SCREEN = " Category Landing Screen";
+        public final static String CATEGORY_ALL_LIST_SCREEN = "Category list";
+        public final static String ADD_ADDRESS_SCREEN = "Add Address Screen";
+        public final static String EDIT_ADDRESS_SCREEN = "Edit Address Screen";
+        public final static String ACCOUNT_WISHLIST_SCREEN = "My Wishlist Screen";
+        public final static String HOME_BANNER_EVENT = "banner";
+
+    }
+
 }

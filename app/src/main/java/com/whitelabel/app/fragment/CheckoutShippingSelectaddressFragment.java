@@ -19,7 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.activity.CheckoutActivity;
+import com.whitelabel.app.ui.checkout.CheckoutActivity;
 import com.whitelabel.app.adapter.CheckoutShippingAddressAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.MyAccountDao;
@@ -213,7 +213,7 @@ public class CheckoutShippingSelectaddressFragment extends Fragment implements V
 //            checkoutActivity.list_fragment_shipping.clear();//Add New Address Fragment is the first one
 //            checkoutActivity.list_fragment.add(checkoutShippingAddaddressFragment);
 //            checkoutActivity.list_fragment_shipping.add(checkoutShippingAddaddressFragment);
-            fragmentTransaction.add(R.id.ll_checkout_body, checkoutShippingAddaddressFragment, "addNewAddressFragment").commitAllowingStateLoss();
+//            fragmentTransaction.add(R.id.ll_checkout_body, checkoutShippingAddaddressFragment, "addNewAddressFragment").commitAllowingStateLoss();
             btnAddNewAddress.setVisibility(View.GONE);
 //            checkoutActivity.addressConditionInShipping = "0";
         }

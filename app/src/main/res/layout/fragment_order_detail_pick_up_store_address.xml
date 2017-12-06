@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteFFFFFF"
+    xmlns:imaginato="http://schemas.android.com/apk/res-auto">
+
+<RelativeLayout
+    android:id="@+id/mparent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
+>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/address_select_text_space"
+            android:orientation="horizontal">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_address_select_firstname"
+                style="@style/font_family_robot_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black000000"
+                android:textSize="15sp" />
+
+            <!--<com.whitelabel.app.widget.CustomTextView
+                style="@style/font_family_roboto_medium"
+                android:id="@+id/tv_address_select_lastname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Green"
+                android:textColor="@color/black000000"
+                android:textSize="15sp" />-->
+        </LinearLayout>
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_address_select_address1"
+            style="@style/font_family_robot_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/address_select_text_space"
+            android:text="@string/address"
+            android:textColor="@color/black000000"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+
+</LinearLayout>

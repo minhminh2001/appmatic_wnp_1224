@@ -73,7 +73,7 @@ public class CreditInstructionActivity extends com.whitelabel.app.BaseActivity i
         super.onStart();
         try {
             GaTrackHelper.getInstance().googleAnalyticsReportActivity(this,true);
-            GaTrackHelper.getInstance().googleAnalytics("Store Credit Instruction Screen", this);
+//            GaTrackHelper.getInstance().googleAnalytics("Store Credit Instruction Screen", this);
         } catch (Exception ex) {
             ex.getStackTrace();
         }

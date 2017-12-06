@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class SVRAppserviceProductSearchReturnEntity extends SVRReturnEntity {
     private long status;
     private long total;
+    private long page_num;
     private ArrayList<SVRAppserviceProductSearchResultsItemReturnEntity> results;
     private SVRAppserviceProductSearchFacetsReturnEntity facets;
 
@@ -41,5 +42,13 @@ public class SVRAppserviceProductSearchReturnEntity extends SVRReturnEntity {
 
     public void setFacets(SVRAppserviceProductSearchFacetsReturnEntity facets) {
         this.facets = facets;
+    }
+
+    public long getPageNum() {
+        return page_num;
+    }
+
+    public void setPageNum(long page_num) {
+        this.page_num = page_num;
     }
 }

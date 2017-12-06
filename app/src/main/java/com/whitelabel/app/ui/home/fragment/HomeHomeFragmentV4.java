@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -32,6 +34,7 @@ import com.whitelabel.app.ui.checkout.CheckoutPresenterImpl;
 import com.whitelabel.app.ui.home.adapter.CategoryDetailHorizontalAdapter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.utils.logger.Logger;
@@ -198,6 +201,10 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
                 @Override
                 public void onItemClick(RecyclerView.ViewHolder headerViewHolder, int position) {
                     CategoryDetailNewModel.BannersBean bannersBean = categoryDetailModel.getBanners().get(position);
+                    GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
+                            Const.GA.HOME_BANNER_EVENT,
+                            bannersBean.getName(),
+                            Long.valueOf(bannersBean.getId()));
                     PageIntentUtils.skipToSerachPage(getActivity(),bannersBean);
                 }
             });

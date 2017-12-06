@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.whitelabel.app.BaseActivity;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.activity.HomeActivity;
@@ -34,6 +35,7 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.home.adapter.CategoryDetailVerticalAdapter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.utils.logger.Logger;
@@ -245,7 +247,12 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
             mAdapter.setOnHeaderClick(new IHomeItemClickListener.IHeaderItemClickListener() {
                 @Override
                 public void onItemClick(RecyclerView.ViewHolder headerViewHolder, int position) {
-                    PageIntentUtils.skipToSerachPage(getActivity(),categoryDetailModel.getBanners().get(position));
+                    CategoryDetailNewModel.BannersBean bannersBean = categoryDetailModel.getBanners().get(position);
+                    GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
+                            Const.GA.HOME_BANNER_EVENT,
+                            bannersBean.getName(),
+                            Long.valueOf(bannersBean.getId()));
+                    PageIntentUtils.skipToSerachPage(getActivity(),bannersBean);
                 }
             });
             recyclerView1.setAdapter(mAdapter);

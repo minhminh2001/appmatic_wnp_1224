@@ -230,7 +230,7 @@ public class ProductDao extends BaseHttp {
     }
 
     public void productSearch(String storeId, String p, String limit, String order, String dir,
-                              String brand, String categoryId, String modelType, String q,String keywords, String price, String sessionKey,String key,String fromPage) {
+                                String brand, String categoryId, String modelType, String q,String keywords, String price, String sessionKey,String key,String fromPage) {
         params = new TreeMap<>();
         params.put("store_id", storeId);
         params.put("p", p);
@@ -270,7 +270,28 @@ public class ProductDao extends BaseHttp {
         requestHttp(HTTP_METHOD.POST, "appservice/product/search", params, REQUEST_PRODUCTSEARCH);
     }
 
-
+    public void brandSearch(String storeId, String p,String brandId, String limit, String order, String dir,
+                              String keywords, String sessionKey) {
+        params = new TreeMap<>();
+        params.put("store_id", storeId);
+        params.put("p", p);
+        params.put("limit", limit);
+        params.put("brand_id", brandId);
+        if (!TextUtils.isEmpty(order)) {
+            params.put("order", order);
+        }
+        if (!TextUtils.isEmpty(dir)) {
+            params.put("dir", dir);
+        }
+        if (!TextUtils.isEmpty(keywords)) {
+            params.put("keywords", keywords);
+        }
+        if (!TextUtils.isEmpty(sessionKey)) {
+            params.put("session_key", sessionKey);
+        }
+        JLogUtils.d("response","params="+params.toString());
+        requestHttp(HTTP_METHOD.POST, "appservice/category/brandDetail", params, REQUEST_PRODUCTSEARCH);
+    }
 
 
     public void getProductRecommendList(String storeId, String limit, String productId, String sessionKey) {

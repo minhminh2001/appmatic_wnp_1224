@@ -18,6 +18,7 @@ import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
@@ -302,6 +303,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
                 if (category != null) {
                     categoryName = category.getMenuTitle();
                 }
+                gaScreen(position,categoryName);
             }
             return categoryName;
         }
@@ -337,6 +339,21 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             String menuId = categoryArrayList.get(index).getMenuId();
             PageIntentUtils.skipToBrandListPage(getActivity(),menuId,categoryName);
         }
+    }
+
+    private void gaScreen(int position,String titleName) {
+        String tempScreenName="";
+        if (categoryArrayList!=null && position==categoryArrayList.size()){
+                tempScreenName=titleName;
+        }else {
+            StringBuilder builder=new StringBuilder();
+            builder.append("[");
+            builder.append(titleName);
+            builder.append("]");
+            builder.append(Const.GA.HOME_SCREEN);
+            tempScreenName=builder.toString();
+        }
+        GaTrackHelper.getInstance().googleAnalytics(tempScreenName,getActivity());
     }
 
 }

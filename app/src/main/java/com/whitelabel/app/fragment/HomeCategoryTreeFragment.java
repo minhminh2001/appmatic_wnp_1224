@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.whitelabel.app.BaseActivity;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.DrawerLayoutActivity;
 import com.whitelabel.app.activity.ProductListActivity;
@@ -28,6 +29,7 @@ import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
@@ -60,6 +62,8 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
     private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> allData = new ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity>();
     private ImageLoader mImageLoader;
     DrawerLayoutActivity drawerLayoutActivity;
+    private String leftMenuTitle;
+    private String rightMenuTitle;
     public HomeCategoryTreeFragment() {
 
     }
@@ -158,6 +162,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
         public void childOnClick(int position, Object ob, String parentId) {
             //   GO TO  ProductListActivity
             SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) ob;
+            rightMenuTitle=entity.getMenuTitle();
             Intent intent = new Intent(getContext(), ProductListActivity.class);
             intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_MAINCATEGOTY);
             intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY);
@@ -172,8 +177,18 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
             intent.putExtra("categoryId", entity.getId());
             getContext().startActivity(intent);
             ((BaseActivity) getContext()).startActivityTransitionAnim();
+            gaScreenName();
         }
     };
+
+    private void gaScreenName(){
+        StringBuilder builder=new StringBuilder();
+        builder.append("Category_");
+        builder.append(leftMenuTitle);
+        builder.append("_");
+        builder.append(rightMenuTitle);
+        GaTrackHelper.getInstance().googleAnalytics(builder.toString(),getActivity());
+    }
 
     private void switchCategoryList(int posotion) {
         //关闭所有的组
@@ -200,8 +215,10 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
                         categoryTreeRootAdapter.currentRootPosition = position;
                         categoryTreeRootAdapter.notifyDataSetChanged();
                         SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = allData.get(position);
+                        leftMenuTitle = entity.getMenuTitle();
                         if (position==allData.size()-1){//last one
                             SVRAppserviceCatalogSearchCategoryItemReturnEntity returnEntity = allData.get(position);
+                            GaTrackHelper.getInstance().googleAnalytics(returnEntity.getMenuTitle(),getActivity());
                             PageIntentUtils.skipToBrandListPage(getActivity(),returnEntity.getMenuId(),returnEntity.getMenuTitle());
                         }else {
                             if (!HomeHomeFragment.isCategory(entity)) {
@@ -251,6 +268,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
     @Override
     public void onStart() {
         super.onStart();
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.CATEGORY_ALL_LIST_SCREEN,getActivity());
     }
 
     @Override

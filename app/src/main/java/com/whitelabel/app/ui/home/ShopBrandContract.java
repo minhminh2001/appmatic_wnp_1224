@@ -16,6 +16,9 @@ public class ShopBrandContract {
         public void loadData(List<ShopBrandResponse.BrandsBean.ItemsBean> itemsBean);
         public void loadTitleData(List<ShopBrandResponse.BrandsBean.ItemsBean> itemsBean);
         public void showErrorMsg(String errorMsg);
+        public void showSwipeLayout();
+        public void closeSwipeLayout();
+
     }
 
     public  static interface Presenter extends BasePresenter<View> {

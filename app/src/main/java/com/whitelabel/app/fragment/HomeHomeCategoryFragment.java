@@ -96,9 +96,9 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
                         }
                     }
                     if (mFragment.get().mGATrackTimeEnable) {
-                        GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-                                GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, mFragment.get().mGATrackTimeStart, "Main Category Loading"
-                        );
+//                        GaTrackHelper.getInstance().googleAnalyticsTimeStop(
+//                                GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, mFragment.get().mGATrackTimeStart, "Main Category Loading"
+//                        );
                         mFragment.get().mGATrackTimeEnable = false;
                     }
                     break;
@@ -494,7 +494,7 @@ public class HomeHomeCategoryFragment extends HomeBaseFragment implements View.O
                         ex.getStackTrace();
                     }
                 }
-                GaTrackHelper.getInstance().googleAnalytics("Curation Landing Screen", homeActivity);
+//                GaTrackHelper.getInstance().googleAnalytics("Curation Landing Screen", homeActivity);
 //                JLogUtils.i("googleGA_screen", "Curation Landing Screen");
             }
         });

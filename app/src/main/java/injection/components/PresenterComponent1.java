@@ -1,14 +1,14 @@
 package injection.components;
 
 import android.app.Activity;
-import android.app.Fragment;
 
 
-import com.whitelabel.app.activity.CheckoutActivity;
+import com.whitelabel.app.ui.checkout.CheckoutActivity;
 import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.fragment.LoginRegisterEmailBoundFragment;
 import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
+import com.whitelabel.app.ui.checkout.CheckoutAddaddressFragment;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressFragment;
 import com.whitelabel.app.ui.common.BaseAddressFragment;
 import com.whitelabel.app.ui.home.activity.ShopBrandActivity;
@@ -42,6 +42,7 @@ public interface PresenterComponent1 {
     void inject(BindProductActivity bindProductActivity);
     void inject(BaseAddressFragment baseAddressFragment);
     void inject(CheckoutDefaultAddressFragment checkoutDefaultAddressFragment);
+    void inject(CheckoutAddaddressFragment checkoutAddaddressFragment);
     void inject(CheckoutActivity checkoutActivity);
     void inject(HomeActivity homeActivity);
     void inject(LoginRegisterEmailLoginFragment fragment);

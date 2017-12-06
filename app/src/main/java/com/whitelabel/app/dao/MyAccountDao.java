@@ -31,7 +31,7 @@ import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
-import com.whitelabel.app.utils.JViewUtils;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.TreeMap;
@@ -460,7 +460,9 @@ public class MyAccountDao extends BaseHttp {
                 break;
             case REQUEST_SENDREQUEST:
                 if (isOk(response)) {
-                    MyAccountOrderDetailEntityResult bean = JJsonUtils.parseJsonObj(response, MyAccountOrderDetailEntityResult.class);
+                    //TODO temp scheme
+                    String newResponse= tempReplacePickupAddress(response);
+                    MyAccountOrderDetailEntityResult bean = JJsonUtils.parseJsonObj(newResponse, MyAccountOrderDetailEntityResult.class);
                     postHandler(requestCode, bean, RESPONSE_SUCCESS);
                 } else {
                     ErrorMsgBean errorBean = getErrorMsgBean(response);
@@ -650,6 +652,17 @@ public class MyAccountDao extends BaseHttp {
         params.put("session_key", sessionKey);
         params.put("item_id", itemId);
         requestHttp(HTTP_METHOD.POST, "appservice/wishlist/remove", params, REQUEST_DELETEWISH);
+    }
+
+    //TODO temp if pickupAddress return "" transform to {}
+    private String tempReplacePickupAddress(String temp){
+        String targetString="\"pickupAddress\":\"\"";
+        String replaceString="\"pickupAddress\":{}";
+        if (temp.contains(targetString)) {
+            return temp.replace(targetString, replaceString);
+        }else {
+            return temp;
+        }
     }
 
 }
