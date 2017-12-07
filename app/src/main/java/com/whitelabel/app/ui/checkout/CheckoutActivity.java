@@ -831,7 +831,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                             String CustomerId = WhiteLabelApplication.getAppConfiguration().getUser().getId();
                             GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
                                     "Save Address",
-                                    "Shipping State",
+                                    ((CheckoutDefaultAddressFragment)mActivity.get().checkoutDefaultAddressFragment).getPrimaryShipping().getRegion(),
                                     Long.valueOf(CustomerId));
 //                            JLogUtils.i("googleGA", "checkout shipping  点击 continue");
                         } catch (NumberFormatException e) {

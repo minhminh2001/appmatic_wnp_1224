@@ -240,7 +240,7 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
     }
 
     public final ArrayList<CountryRegions> getState(ArrayList<CountrySubclass> countrys) {
-        ArrayList<CountryRegions> regions = null;
+        ArrayList<CountryRegions> regions = new ArrayList<>();
         if (countrys != null && countrys.size() > 1) {
             CountrySubclass country = countrys.get(1);
             if (country!=null){
@@ -1143,6 +1143,9 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
 
     @Override
     public void showData(SVRAppServiceCustomerCountry countryEntityResult) {
+        if (countryEntityResult==null){
+            return;
+        }
         list_countries = countryEntityResult.getCountry();
         list_countries.add(0, new CountrySubclass("", getResources().getString(R.string.pleaseselect)));
         mRegions.clear();

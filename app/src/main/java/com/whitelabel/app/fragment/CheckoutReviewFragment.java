@@ -395,7 +395,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
             String shippingState = address.getRegion();
             GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
                     "Place Order",
-                    shippingState,
+                    null,
                     null);
             JLogUtils.i("googleGA", "checkout shipping  点击 continue" + "shippingState=" + shippingState);
         } catch (Exception e) {

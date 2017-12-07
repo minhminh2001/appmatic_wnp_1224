@@ -549,7 +549,7 @@
                     android:layout_below="@+id/relative6"
                     android:layout_marginTop="42dp"
                     android:background="@drawable/big_button_style_config"
-                    android:text="@string/sign_out"
+                    android:text="@string/sign_up"
                     android:textColor="@color/buttonTextColorPrimary"
                     android:textSize="16sp"
                     />

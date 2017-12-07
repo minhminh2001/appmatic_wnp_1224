@@ -226,7 +226,7 @@
     <string name="order_status_text_Delivery_Failed">Delivery Failed</string>-->
 
     <!--login-->
-    <string name="RegisterNow"><u>Sign Out Now.</u></string>
+    <string name="RegisterNow"><u>Sign Up Now.</u></string>
     <string name="ClickEmail"><u>Click here</u></string>
     <!--register-->
     <string name="SignInNow"> <u>Sign In Now.</u></string>
@@ -416,8 +416,9 @@
     <string name="receive_newsletter">Receive newsletters from Wnp</string>
     <string name="setting_rate">Rate us in Google Play store</string>
     <string name="setting_version">Version</string>
+    <string name="sign_up">SIGN Up</string>
+    <string name="Sign_Up">Sign Up</string>
     <string name="sign_out">SIGN OUT</string>
-    <string name="Sign_Out">Sign Out</string>
     <string name="setting_sound">Sound</string>
     <!-- Product detail -->
 
@@ -541,7 +542,7 @@
     <string name="add_address">Add Address</string>
     <string name="try_again">Try Again</string>
     <string name="try_again_lar">TRY AGAIN</string>
-    <string name="sign_register">Sign In / Sign Out</string>
+    <string name="sign_register">Sign In / Sign Up</string>
 
     <string name="change">CHANGE</string>
     <string name="fashion">FASHION</string>
@@ -722,6 +723,7 @@
     <string name="api_version">v1</string>
     <string name="api_key">eyKOW06BPBqbe3qe</string>
     <string name="app_key">APP-53910061550170911</string>
+    <string name="build_id">20171204021754</string>
     <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bb5de7d8</string>
     <string name="app_name">WNP</string>
     <!--https://dev2.wnp.com.hk/ 103.210.236.156:8088  /  https://imaginato.wnp.com.hk/-->

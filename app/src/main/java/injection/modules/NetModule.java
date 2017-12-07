@@ -61,15 +61,17 @@ public class NetModule {
     private String apiVersion;
     private String apiKey;
     private String appKey;
+    private String buildId;
     private String versionNumber;
     private String serviceVersion;
     private String oneAllUrl;
-    public NetModule(String requestUrl, String mockUrl,String apiVersion,String apiKey,String appKey,String versionNumber,String serviceVersion,String subdoMain){
+    public NetModule(String requestUrl, String mockUrl,String apiVersion,String apiKey,String appKey,String buildId,String versionNumber,String serviceVersion,String subdoMain){
         this.mRequestUri=requestUrl;
         this.mMockUrl=mockUrl;
         this.apiVersion=apiVersion;
         this.apiKey=apiKey;
         this.appKey=appKey;
+        this.buildId=buildId;
         this.versionNumber=versionNumber;
         this.serviceVersion=serviceVersion;
         oneAllUrl= String.format("https://%s.api.oneall.com", subdoMain);;
@@ -107,7 +109,7 @@ public class NetModule {
 //        builder.writeTimeout(60, TimeUnit.SECONDS);
 //        builder.retryOnConnectionFailure(true);
 //        OkHttpClient mOkHttpClient=builder.build();
-        return OkHttpClientManager.getInstance().client().newBuilder().addInterceptor(new CommonInterceptor(apiKey,appKey,apiVersion,versionNumber,serviceVersion)).build();
+        return OkHttpClientManager.getInstance().client().newBuilder().addInterceptor(new CommonInterceptor(apiKey,appKey,apiVersion,buildId,versionNumber,serviceVersion)).build();
     }
     @Provides
     @Singleton

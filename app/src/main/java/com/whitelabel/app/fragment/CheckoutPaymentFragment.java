@@ -1904,7 +1904,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
         try {
             GaTrackHelper.getInstance().googleAnalyticsEvent("Checkout Action",
                     "Save Payment",
-                    paymentStr,
+                    getString(R.string.paypal_payment),
                     Long.valueOf(WhiteLabelApplication.getAppConfiguration().getUser().getId()));
         } catch (Exception ex) {
             ex.getStackTrace();
