@@ -120,6 +120,7 @@ public abstract class BaseHttp {
                 params.put("API-VERSION",GlobalData.apiVersion);
                 params.put("API-KEY",GlobalData.apiKey);
                 params.put("APP-KEY",GlobalData.appKey);
+                params.put("BUILD-ID",GlobalData.buildId);
                 return params;
             }
         };
@@ -236,6 +237,7 @@ public abstract class BaseHttp {
                 params.put("API-VERSION",GlobalData.apiVersion);
                 params.put("API-KEY",GlobalData.apiKey);
                 params.put("APP-KEY",GlobalData.appKey);
+                params.put("BUILD-ID",GlobalData.buildId);
                 return params;
             }
         };

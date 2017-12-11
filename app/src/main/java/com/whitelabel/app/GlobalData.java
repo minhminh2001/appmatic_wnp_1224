@@ -27,6 +27,7 @@ public class GlobalData {
     public static String mockUrl;
     public static  String  apiVersion;
     public static  String apiKey="";
+    public static  String buildId="";
     public static String appKey="";
     public static String  creditCardPaymentUrl="";
     public static  String  imageBaseUrl;
@@ -47,6 +48,7 @@ public class GlobalData {
         gaTrackId=context.getResources().getString(R.string.ga_track_id);
         apiVersion=context.getResources().getString(R.string.api_version);
         apiKey=context.getResources().getString(R.string.api_key);
+        buildId=context.getResources().getString(R.string.build_id);
         facebookId=context.getResources().getString(R.string.facebook_id);
         mockUrl=context.getResources().getString(R.string.mock_url);
         serviceRequestUrl=context.getResources().getString(R.string.request_url);

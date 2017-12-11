@@ -190,7 +190,7 @@
     <string name="Payment_channel_is_incorrect">Payment channel is incorrect</string>
     <string name="Malaysia">Malaysia</string>
     <string name="payment_mark_title">Love using \"%1$s\" app?</string>
-    <string name="payment_mark_message">Please rate us in the App Store</string>
+    <string name="payment_mark_message">Please rate us in the Play Store</string>
     <string name="payment_rate_us_now">Rate Us Now</string>
     <string name="payment_rate_cancel">Cancel</string>
 
@@ -226,7 +226,7 @@
     <string name="order_status_text_Delivery_Failed">Delivery Failed</string>-->
 
     <!--login-->
-    <string name="RegisterNow"><u>Sign Out Now.</u></string>
+    <string name="RegisterNow"><u>Sign Up Now.</u></string>
     <string name="ClickEmail"><u>Click here</u></string>
     <!--register-->
     <string name="SignInNow"> <u>Sign In Now.</u></string>
@@ -252,7 +252,7 @@
 
     <string name="checkBox1"> I agree to receiving direct marketing&#160;materials from </string>
     <string name="checkBox3"><u>More.</u></string>
-    <string name="rigisterSuccess2">REGISTERED SUCCESSFULLY</string>
+    <string name="rigisterSuccess2">SIGN UP SUCCESSFULLY</string>
 
     <!-- Product List -->
     <string name="productlist_filter">FILTER</string>
@@ -416,8 +416,9 @@
     <string name="receive_newsletter">Receive newsletters from Wnp</string>
     <string name="setting_rate">Rate us in Google Play store</string>
     <string name="setting_version">Version</string>
+    <string name="sign_up">SIGN Up</string>
+    <string name="Sign_Up">Sign Up</string>
     <string name="sign_out">SIGN OUT</string>
-    <string name="Sign_Out">Sign Out</string>
     <string name="setting_sound">Sound</string>
     <!-- Product detail -->
 
@@ -541,7 +542,7 @@
     <string name="add_address">Add Address</string>
     <string name="try_again">Try Again</string>
     <string name="try_again_lar">TRY AGAIN</string>
-    <string name="sign_register">Sign In / Sign Out</string>
+    <string name="sign_register">Sign In / Sign Up</string>
 
     <string name="change">CHANGE</string>
     <string name="fashion">FASHION</string>
@@ -577,9 +578,9 @@
     <string name="password_match">Please make sure your passwords match.</string>
     <string name="account_associated">If there is an account associated with&#160;</string>
     <string name="reset_password">, you will receive an email with a link to reset your password.</string>
-    <string name="process_email">Thank you for registering on WNP APP. To complete your registration process, please check your email&#160;</string>
+    <string name="process_email">Thank you for Sign Up on WNP APP. To complete your registration process, please check your email&#160;</string>
     <string name="to_confirm">to confirm.</string>
-    <string name="register_whitelabel">Thank you for registering on Wnp</string>
+    <string name="register_whitelabel">Thank you for Sign Up on</string>
     <string name="current_password">Invalid current password.</string>
     <string name="password_empty">New password field cannot be empty.</string>
     <string name="confirmation_password">The confirmation is not the new password.</string>
@@ -722,10 +723,11 @@
     <string name="api_version">v1</string>
     <string name="api_key">eyKOW06BPBqbe3qe</string>
     <string name="app_key">APP-53910061550170911</string>
+    <string name="build_id">20171204021754</string>
     <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bb5de7d8</string>
     <string name="app_name">WNP</string>
     <!--https://dev2.wnp.com.hk/ 103.210.236.156:8088  /  https://imaginato.wnp.com.hk/-->
-    <string name="request_url">https://dev2.wnp.com.hk/</string>
+    <string name="request_url">https://imaginato.wnp.com.hk/</string>
     <string name="image_base_url">https://dev2.wnp.com.hk/</string>
     <string name="mock_url">http://mis.appmatic.io/</string>
 

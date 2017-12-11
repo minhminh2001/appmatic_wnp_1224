@@ -16,13 +16,15 @@ private String serviceVersion;
 private String apiKey;
 private String appKey;
 private String apiVersion;
+private String buildId;
 
-public CommonInterceptor(String apiKey,String appKey,String apiVersion,String versionNumber,String serviceVersion) {
+public CommonInterceptor(String apiKey,String appKey,String apiVersion,String buildId,String versionNumber,String serviceVersion) {
     this.versionNumber=versionNumber;
     this.serviceVersion=serviceVersion;
     this.apiKey=apiKey;
     this.appKey=appKey;
     this.apiVersion=apiVersion;
+    this.buildId=buildId;
 }
 
 @Override public Response intercept(Interceptor.Chain chain) throws IOException {
@@ -36,7 +38,8 @@ public CommonInterceptor(String apiKey,String appKey,String apiVersion,String ve
             .addQueryParameter("serviceVersion",serviceVersion );
     Request.Builder builder= oldRequest.newBuilder().header("API-VERSION",apiVersion)
             .header("API-KEY",apiKey)
-            .header("APP-KEY",appKey);
+            .header("APP-KEY",appKey)
+            .header("BUILD-ID",buildId);
     Request newRequest = builder
             .method(oldRequest.method(), oldRequest.body())
             .url(authorizedUrlBuilder.build())

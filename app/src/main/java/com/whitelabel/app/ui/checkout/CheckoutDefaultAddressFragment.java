@@ -98,7 +98,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     private static final int SHIP_TO_ME_CODE = 1;
     private static final int PICK_UP_IN_STORE_CODE = 2;
     //0 checked 1 no checked
-    private static final int RADIO_BUTTON_CHECK_CODE = 0;
+    private static final int RADIO_BUTTON_CHECK_CODE = 1;
 
     // TODO: Rename parameter arguments, choose names that match
     private Dialog mProgressDialog;
