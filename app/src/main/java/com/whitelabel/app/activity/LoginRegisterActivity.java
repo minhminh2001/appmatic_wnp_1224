@@ -320,7 +320,9 @@ public class LoginRegisterActivity extends com.whitelabel.app.BaseActivity imple
                 backToFragment = EMAILLOGIN_FLAG;
                 break;
             case REGISTERSUCCESS_FLAG:
-                backToFragment = EMAILLOGIN_FLAG;
+                //view register success finish this activity
+//                backToFragment = EMAILLOGIN_FLAG;
+                backToFragment = BACKAPP;
                 break;
         }
         return backToFragment;

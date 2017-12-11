@@ -291,13 +291,18 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
                         JToolUtils.openPlayStore();
 //                        JStorageUtils.saveFinishOrderAndMarkTime(0);
                         mPresenter.saveFinishOrderAndMarkTime(0);
-                        mMaterialDialog.dismiss();
+                        if (mMaterialDialog!=null){
+                            mMaterialDialog.dismiss();
+                        }
                     }
                 });
                 tvRateCancel.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v) {
-                        mMaterialDialog.dismiss();
+                        if (mMaterialDialog!=null){
+                            mMaterialDialog.dismiss();
+                        }
                         if (!mPresenter.getFirstOrderAndMarkTime().isAfterFirstOrder()){
                             mPresenter.saveFinishOrderAndMarkTime(System.currentTimeMillis());
                         }

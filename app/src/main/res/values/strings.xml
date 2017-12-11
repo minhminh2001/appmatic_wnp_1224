@@ -190,7 +190,7 @@
     <string name="Payment_channel_is_incorrect">Payment channel is incorrect</string>
     <string name="Malaysia">Malaysia</string>
     <string name="payment_mark_title">Love using \"%1$s\" app?</string>
-    <string name="payment_mark_message">Please rate us in the App Store</string>
+    <string name="payment_mark_message">Please rate us in the Play Store</string>
     <string name="payment_rate_us_now">Rate Us Now</string>
     <string name="payment_rate_cancel">Cancel</string>
 
@@ -252,7 +252,7 @@
 
     <string name="checkBox1"> I agree to receiving direct marketing&#160;materials from </string>
     <string name="checkBox3"><u>More.</u></string>
-    <string name="rigisterSuccess2">REGISTERED SUCCESSFULLY</string>
+    <string name="rigisterSuccess2">SIGN UP SUCCESSFULLY</string>
 
     <!-- Product List -->
     <string name="productlist_filter">FILTER</string>
@@ -578,9 +578,9 @@
     <string name="password_match">Please make sure your passwords match.</string>
     <string name="account_associated">If there is an account associated with&#160;</string>
     <string name="reset_password">, you will receive an email with a link to reset your password.</string>
-    <string name="process_email">Thank you for registering on WNP APP. To complete your registration process, please check your email&#160;</string>
+    <string name="process_email">Thank you for Sign Up on WNP APP. To complete your registration process, please check your email&#160;</string>
     <string name="to_confirm">to confirm.</string>
-    <string name="register_whitelabel">Thank you for registering on Wnp</string>
+    <string name="register_whitelabel">Thank you for Sign Up on</string>
     <string name="current_password">Invalid current password.</string>
     <string name="password_empty">New password field cannot be empty.</string>
     <string name="confirmation_password">The confirmation is not the new password.</string>
@@ -727,7 +727,7 @@
     <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bb5de7d8</string>
     <string name="app_name">WNP</string>
     <!--https://dev2.wnp.com.hk/ 103.210.236.156:8088  /  https://imaginato.wnp.com.hk/-->
-    <string name="request_url">https://dev2.wnp.com.hk/</string>
+    <string name="request_url">https://imaginato.wnp.com.hk/</string>
     <string name="image_base_url">https://dev2.wnp.com.hk/</string>
     <string name="mock_url">http://mis.appmatic.io/</string>
 

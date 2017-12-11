@@ -42,7 +42,9 @@ public class LoginRegisterEmailSendSuccessFragment extends Fragment implements V
     }
 
     public void onClickRightMenu(View v) {
-        loginRegisterActivity.redirectToAttachedFragment(LoginRegisterActivity.EMAILLOGIN_FLAG, -2);
+//        loginRegisterActivity.redirectToAttachedFragment(LoginRegisterActivity.EMAILLOGIN_FLAG, -2);
+        loginRegisterActivity.onBackPressed();
+        loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
