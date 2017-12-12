@@ -94,7 +94,7 @@ public class ShareUtil {
         init();
     }
 
-    private String productId;
+    private String productId="0";
     public void show() {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");

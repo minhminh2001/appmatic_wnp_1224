@@ -39,42 +39,38 @@ public class SwipeMenuAdapter implements WrapperListAdapter,
 
 	@Override
 	public long getItemId(int position) {
+		return mAdapter.getItemId(position);
+	}
 
-	return mAdapter.getItemId(position);
-}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View layout = convertView;
-		if (layout == null) {
+		SwipeMenuLayout layout = null;
+		if (convertView == null) {
 			View contentView = mAdapter.getView(position, convertView, parent);
-			layout=createSwipeMenuLayout(position,parent,contentView);
+			SwipeMenu menu = new SwipeMenu(mContext);
+			menu.setViewType(getItemViewType(position));
+			createMenu(menu,position);
+			SwipeMenuView menuView = new SwipeMenuView(menu,
+					(SwipeMenuListView) parent);
+			menuView.setOnSwipeItemClickListener(this);
+			SwipeMenuListView listView = (SwipeMenuListView) parent;
+			layout = new SwipeMenuLayout(contentView, menuView,
+					listView.getCloseInterpolator(),
+					listView.getOpenInterpolator());
+			layout.setPosition(position);
 		} else {
-				SwipeMenuLayout swipeLayout= (SwipeMenuLayout) layout;
-				SwipeMenu menu = new SwipeMenu(mContext);
-				createMenu(menu,position);
-				swipeLayout.getMenuView().setMenu(menu);
-				View contentView = mAdapter.getView(position, swipeLayout.getContentView(), parent);
-				swipeLayout.closeMenu();
-				swipeLayout.setPosition(position);
+			layout = (SwipeMenuLayout) convertView;
+			layout.closeMenu();
+			layout.setPosition(position);
+			View view = mAdapter.getView(position, layout.getContentView(),
+					parent);
+		}
+		if (mAdapter instanceof BaseSwipListAdapter) {
+			boolean swipEnable = (((BaseSwipListAdapter) mAdapter).getSwipEnableByPosition(position));
+			layout.setSwipEnable(swipEnable);
 		}
 		return layout;
 	}
-
-	public  SwipeMenuLayout  createSwipeMenuLayout(int position,ViewGroup parent,View contentView){
-		SwipeMenu menu = new SwipeMenu(mContext);
-		menu.setViewType(mAdapter.getItemViewType(position));
-		createMenu(menu,position);
-		SwipeMenuView menuView = new SwipeMenuView(menu,
-				(SwipeMenuListView) parent);
-		menuView.setOnSwipeItemClickListener(this);
-		SwipeMenuListView listView = (SwipeMenuListView) parent;
-		SwipeMenuLayout layout = new SwipeMenuLayout(contentView, menuView,
-				listView.getCloseInterpolator(),
-				listView.getOpenInterpolator());
-		layout.setPosition(position);
-		return  layout;
-	}
-
 
 	public void createMenu(SwipeMenu menu,int position) {
 		// Test Code
@@ -99,13 +95,7 @@ public class SwipeMenuAdapter implements WrapperListAdapter,
 		}
 	}
 
-
-
-	public int getSelect(){
-		return -1;
-	}
-
-	public void setOnMenuItemClickListener(
+	public void setOnSwipeItemClickListener(
 			SwipeMenuListView.OnMenuItemClickListener onMenuItemClickListener) {
 		this.onMenuItemClickListener = onMenuItemClickListener;
 	}

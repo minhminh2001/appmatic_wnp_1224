@@ -410,14 +410,14 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         }
         productListActivity.setCurrentProductListFragmentPosition(position);
 
-        try {
-            String categoryA=  productListActivity.searchCategoryEntity.getName();
-            String categoryA_B=  categoryArrayList.get(position).getName();
-            GaTrackHelper.getInstance().googleAnalytics(categoryA + "->" + categoryA_B, productListActivity);
-            JLogUtils.i("googleGA_screen",categoryA+"->"+categoryA_B);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            String categoryA=  productListActivity.searchCategoryEntity.getName();
+//            String categoryA_B=  categoryArrayList.get(position).getName();
+//            GaTrackHelper.getInstance().googleAnalytics(categoryA + "->" + categoryA_B, productListActivity);
+//            JLogUtils.i("googleGA_screen",categoryA+"->"+categoryA_B);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override

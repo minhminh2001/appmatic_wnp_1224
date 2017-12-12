@@ -12,7 +12,6 @@ import java.util.List;
  * 
  */
 public class SwipeMenu {
-
 	private Context mContext;
 	private List<SwipeMenuItem> mItems;
 	private int mViewType;
@@ -32,11 +31,6 @@ public class SwipeMenu {
 
 	public void removeMenuItem(SwipeMenuItem item) {
 		mItems.remove(item);
-	}
-
-
-	public void removeMenuItem(int index){
-		mItems.remove(index);
 	}
 
 	public List<SwipeMenuItem> getMenuItems() {

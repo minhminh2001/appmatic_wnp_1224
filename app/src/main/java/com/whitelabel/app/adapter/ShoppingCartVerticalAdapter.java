@@ -131,12 +131,6 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
 
         final ViewHolder viewHolder = (ViewHolder) holder;
 
-        if (position == getItemCount() - 2) {
-            viewHolder.tvShoppingcartSplit.setVisibility(View.GONE);
-        } else {
-            viewHolder.tvShoppingcartSplit.setVisibility(View.VISIBLE);
-        }
-
         //if ("1".equals(sc.getInStock())&&!"0".equals(sc.getAvailability())) {
         if ("1".equals(sc.getInStock())) {
             viewHolder.tvOutOfStock.setVisibility(View.INVISIBLE);
@@ -351,12 +345,13 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             }
         });
 
-        if (list.size() == 2) {
+        if (list.size() == 2 ||list.size() == 3) {
             if(getInitBlankView()) {
                 //预计算布局高度//  android api <=17无效  view.measure(...)有源码级bug.
                 int itemHeight = getViewHeight(viewHolder.itemView);
                 int infoHeight = getViewHeight(callback.getInfoView());
-                callback.setItemHeightByView(itemHeight + infoHeight);
+                //how much item
+                callback.setItemHeightByView(itemHeight*(list.size()-1) + infoHeight);
                 setInitBlankView(false);
             }
             //底部是否需要贴底

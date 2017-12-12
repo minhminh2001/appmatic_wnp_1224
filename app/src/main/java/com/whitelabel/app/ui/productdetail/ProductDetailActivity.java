@@ -834,6 +834,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     }
     @Override
     public void loadStaticData(ProductDetailModel productDetailModel) {
+        mProductDetailBean=productDetailModel;
         if (productDetailModel!=null){
             if(!TextUtils.isEmpty(productDetailModel.getBrand())) {
                 ctvProductBrand.setText(productDetailModel.getBrand().toUpperCase());

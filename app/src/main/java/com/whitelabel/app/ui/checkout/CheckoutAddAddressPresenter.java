@@ -26,7 +26,7 @@ public class CheckoutAddAddressPresenter extends RxPresenter<CheckoutAddAddressC
 
     @Override
     public void getCountryAndRegions(){
-        if (iCheckoutManager.getCountryAndRegions()==null){
+//        if (iCheckoutManager.getCountryAndRegions()==null){
             String session=iBaseManager.isSign()?iBaseManager.getUser().getSessionKey():"";
             Subscription subscription= iCheckoutManager.getCountryAndRegions(session)
                     .compose(RxUtil.<SVRAppServiceCustomerCountry>rxSchedulerHelper())
@@ -49,9 +49,9 @@ public class CheckoutAddAddressPresenter extends RxPresenter<CheckoutAddAddressC
                         }
                     });
             addSubscrebe(subscription);
-        }else {
-            mView.showData(iCheckoutManager.getCountryAndRegions());
-        }
+//        }else {
+//            mView.showData(iCheckoutManager.getCountryAndRegions());
+//        }
 
     }
 

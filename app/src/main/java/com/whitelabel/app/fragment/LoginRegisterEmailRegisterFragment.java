@@ -909,7 +909,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
     public void trackerRegister(String id){
                 try {
-                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", "Sign Out",
+                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", "Sign Up",
                             id,
                             Long.valueOf(id));
         }catch (Exception ex){
@@ -946,8 +946,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     public void onStart() {
         super.onStart();
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, true);
-        GaTrackHelper.getInstance().googleAnalytics("Register screen", loginRegisterActivity);
-        JLogUtils.i("googleGA_screen", "Register screen");
+        GaTrackHelper.getInstance().googleAnalytics("Sign Up screen", loginRegisterActivity);
 //        if(isstop){
 //            firstName.setText(mFirstName);
 //            lastName.setText(mLastName);
