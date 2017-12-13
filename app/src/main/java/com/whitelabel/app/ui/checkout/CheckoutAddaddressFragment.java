@@ -1143,10 +1143,10 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
 
     @Override
     public void showData(SVRAppServiceCustomerCountry countryEntityResult) {
-        try {
-            if (countryEntityResult==null){
-                return;
-            }
+        if (countryEntityResult==null){
+            return;
+        }
+        if (countryEntityResult.getCountry()!=null){
             list_countries = countryEntityResult.getCountry();
             list_countries.add(0, new CountrySubclass("", getResources().getString(R.string.pleaseselect)));
             ArrayList<CountryRegions> state = getState(list_countries);
@@ -1163,8 +1163,6 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
             if ("".equals(etShippingState.getText().toString().trim())) {
                 tvStateAnim.setVisibility(View.INVISIBLE);
             }
-        }catch (Exception e){
-            e.printStackTrace();
         }
     }
 }

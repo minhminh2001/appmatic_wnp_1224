@@ -41,7 +41,6 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
         super(context,0,list);
         this.mAddressBook =list;
         this.context = context;
-        AddressBookAdapter adapter = this;
     }
 
     public  List<AddressBook> getData(){
@@ -130,12 +129,6 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
         holder.llAddressbookCellPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //default
-//                if (holder.llAddressbookCellPoint.getTag().equals("0")){
-//                    setDotDefault(holder);
-//                }else {//selected
-//                    setDotSelected(holder);
-//                }
                 if (iChangeMenuDot!=null){
                     iChangeMenuDot.updateDot(position);
                 }

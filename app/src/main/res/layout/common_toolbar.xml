@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/statusbar_height"
     android:orientation="vertical"
     android:theme="@style/MyToolBarTheme"
-    app:layout_scrollFlags="scroll|enterAlways|snap"
+    app:layout_scrollFlags="enterAlways|snap"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
     <!--主页搜索框-->
     <RelativeLayout

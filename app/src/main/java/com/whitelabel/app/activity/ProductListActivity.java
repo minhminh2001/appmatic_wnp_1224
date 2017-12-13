@@ -45,6 +45,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     public final static String INTENT_DATA_PREVTYPE = "prevType";
     public final static String INTENT_DATA_FRAGMENTTYPE = "fragmentType";
     public final static String INTENT_DATA_CATEGORYID = "categoryEntity";
+    public final static String INTENT_DATA_LEFT_TOP_TITLE = "leftMenuTitle";
     public final static String INTENT_CATEGORY_ID = "categoryId";
     private final static String CURRENT_INDEX = "position";
     public static final String SHOP_BRAND_ID = "SHOP_BRAND_ID";
@@ -69,6 +70,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     private SVRAppserviceProductSearchParameter svrAppserviceProductSearchParameter;
     public SVRAppserviceCatalogSearchCategoryItemReturnEntity searchCategoryEntity;
     private ArrayList<SVRAppserviceProductSearchParameter> searchCategoryParameterArrayList;
+    public String leftMenuTitle;
     private int prevType;
     private int fragmentType;
     public String categoryId;
@@ -173,6 +175,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
             currentProductListFragmentPosition = intent.getIntExtra(CURRENT_INDEX, 0);
             try {
                 searchCategoryEntity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) intent.getSerializableExtra(INTENT_DATA_CATEGORYID);
+                leftMenuTitle= (String) intent.getSerializableExtra(INTENT_DATA_LEFT_TOP_TITLE);
                 if (searchCategoryEntity != null && !JDataUtils.isEmpty(searchCategoryEntity.getId())) {
                     svrAppserviceProductSearchParameter.setCategory_id(searchCategoryEntity.getId());
                     svrAppserviceProductSearchParameter.setName(searchCategoryEntity.getName());

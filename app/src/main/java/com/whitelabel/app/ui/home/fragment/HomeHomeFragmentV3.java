@@ -147,7 +147,7 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setScrollToolBarEnable(true);
+        setScrollToolBarEnable(false);
         View view = inflater.inflate(R.layout.fragment_home_category, container, false);
         ButterKnife.bind(this, view);
         setRetryTheme(view);

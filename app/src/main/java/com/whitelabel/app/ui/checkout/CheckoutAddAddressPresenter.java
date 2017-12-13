@@ -26,6 +26,7 @@ public class CheckoutAddAddressPresenter extends RxPresenter<CheckoutAddAddressC
 
     @Override
     public void getCountryAndRegions(){
+//TODO joyson whether use cache data
 //        if (iCheckoutManager.getCountryAndRegions()==null){
             String session=iBaseManager.isSign()?iBaseManager.getUser().getSessionKey():"";
             Subscription subscription= iCheckoutManager.getCountryAndRegions(session)
@@ -44,7 +45,6 @@ public class CheckoutAddAddressPresenter extends RxPresenter<CheckoutAddAddressC
 
                         @Override
                         public void onNext(SVRAppServiceCustomerCountry svrAppServiceCustomerCountry) {
-//                            mView.dissmissProgressDialog();
                             mView.showData(svrAppServiceCustomerCountry);
                         }
                     });

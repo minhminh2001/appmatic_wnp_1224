@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
@@ -909,7 +910,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
     public void trackerRegister(String id){
                 try {
-                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", "Sign Up",
+                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", Const.GA.SIGN_UP_SCREEN,
                             id,
                             Long.valueOf(id));
         }catch (Exception ex){
