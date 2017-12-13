@@ -63,6 +63,7 @@ import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.SoftInputShownUtil;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 
 import java.lang.ref.WeakReference;
@@ -118,6 +119,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private RequestErrorHelper requestErrorHelper;
 //    private View vCampaign; vProgress
     private View  connectionBreak;
+    private View  viewShoppingCartBottom;
     public int fromType;
     private Dialog mDialog;
     private LinearLayout btnTry;
@@ -336,6 +338,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         tvShippingFree = (TextView) view.findViewById(R.id.tv_shoppingcart_shippingFree);
         tvVoucherWorld = (TextView) view.findViewById(R.id.tv_voucher_world);
         clearVoucher = (ImageView) view.findViewById(R.id.clear_voucher);
+        viewShoppingCartBottom=view.findViewById(R.id.view_shopping_cart_bottom);
         etVoucherApply.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -803,7 +806,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     //from shoppingCartVerticalAdapter callback--delete item
     public void deleteShoppingData(ShoppingCartDeleteCellEntity bean,int position){
         //delete position item
-        JToolUtils.printObject(mCar);
         mCar.setItems(deleteCellItem(mCar.getItems(),position));
         JToolUtils.printObject(mCar);
         mCar.setDiscount(bean.getDiscount());
@@ -979,7 +981,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     private void addHeightListenerOnInfoView() {
         //底部是否需要贴底
         recyclerViewHeight = JScreenUtils.getScreenHeight(getActivity()) - JViewUtils.getToolBarHeight(getContext());
-        ViewTreeObserver vto = infoView.getViewTreeObserver();
+        final ViewTreeObserver vto = infoView.getViewTreeObserver();
         onPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
             public boolean onPreDraw() {
                 if (mProducts != null && mProducts.size() <= 2 && itemHieght != 0) {
@@ -1019,7 +1021,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                         tv_shoppingbottominfo_blank.setVisibility(View.VISIBLE);
                     }
                     oldAllItemHeight = allItemHeight;
-                } else {
+                }else {
                     if (tv_shoppingbottominfo_blank.getVisibility() != View.GONE) {
                         gapHeight = 0;
                         tv_shoppingbottominfo_blank.setVisibility(View.GONE);
@@ -1027,6 +1029,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 }
                 return true;
             }
+
         };
         vto.addOnPreDrawListener(onPreDrawListener);
     }

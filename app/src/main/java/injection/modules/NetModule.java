@@ -1,7 +1,5 @@
 package injection.modules;
 
-import android.util.Log;
-
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
@@ -30,22 +28,12 @@ import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.data.service.ShoppingCartManager;
 import com.whitelabel.app.network.CommonInterceptor;
 import com.whitelabel.app.network.OkHttpClientManager;
-import com.whitelabel.app.utils.JLogUtils;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.Authenticator;
-import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.Route;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;

@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
@@ -909,7 +910,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
     public void trackerRegister(String id){
                 try {
-                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", "Sign Out",
+                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", Const.GA.SIGN_UP_SCREEN,
                             id,
                             Long.valueOf(id));
         }catch (Exception ex){
@@ -946,8 +947,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     public void onStart() {
         super.onStart();
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, true);
-        GaTrackHelper.getInstance().googleAnalytics("Register screen", loginRegisterActivity);
-        JLogUtils.i("googleGA_screen", "Register screen");
+        GaTrackHelper.getInstance().googleAnalytics("Sign Up screen", loginRegisterActivity);
 //        if(isstop){
 //            firstName.setText(mFirstName);
 //            lastName.setText(mLastName);

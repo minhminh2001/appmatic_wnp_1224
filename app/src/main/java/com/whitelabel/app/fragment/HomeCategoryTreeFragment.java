@@ -173,6 +173,7 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
             for (SVRAppserviceCatalogSearchCategoryItemReturnEntity en : categoryList) {
                 if (en.getId() != null && en.getId().equals(parentId)) {
                     intent.putExtra(ProductListActivity.INTENT_DATA_CATEGORYID, en);
+                    intent.putExtra(ProductListActivity.INTENT_DATA_LEFT_TOP_TITLE, leftMenuTitle);
                     rightTopTitle =en.getMenuTitle();
                     continue;
                 }
@@ -181,20 +182,8 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
             intent.putExtra("categoryId", entity.getId());
             getContext().startActivity(intent);
             ((BaseActivity) getContext()).startActivityTransitionAnim();
-            gaScreenName();
         }
     };
-
-    private void gaScreenName(){
-        StringBuilder builder=new StringBuilder();
-        builder.append("Category_");
-        builder.append(leftMenuTitle);
-        builder.append("_");
-        builder.append(rightTopTitle);
-        builder.append("_");
-        builder.append(rightSubTitle);
-        GaTrackHelper.getInstance().googleAnalytics(builder.toString(),getActivity());
-    }
 
     private void switchCategoryList(int posotion) {
         //关闭所有的组

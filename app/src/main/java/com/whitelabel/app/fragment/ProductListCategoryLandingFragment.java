@@ -409,15 +409,27 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             filterSortBottomView.hideSwitchAndFilterBar(true);
         }
         productListActivity.setCurrentProductListFragmentPosition(position);
+        gaScreenName(position);
+    }
 
+    private void gaScreenName(int position){
         try {
-            String categoryA=  productListActivity.searchCategoryEntity.getName();
-            String categoryA_B=  categoryArrayList.get(position).getName();
-            GaTrackHelper.getInstance().googleAnalytics(categoryA + "->" + categoryA_B, productListActivity);
-            JLogUtils.i("googleGA_screen",categoryA+"->"+categoryA_B);
-        } catch (Exception e) {
+            String rightTopTitle=productListActivity.searchCategoryEntity.getMenuTitle();
+            ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> parent = productListActivity.searchCategoryEntity.getChildren();
+            SVRAppserviceCatalogSearchCategoryItemReturnEntity returnEntity = parent.get(position);
+            String rightSubTitle=returnEntity.getMenuTitle();
+            StringBuilder builder=new StringBuilder();
+            builder.append("Category_");
+            builder.append(productListActivity.leftMenuTitle);
+            builder.append("_");
+            builder.append(rightTopTitle);
+            builder.append("_");
+            builder.append(rightSubTitle);
+            GaTrackHelper.getInstance().googleAnalytics(builder.toString(),getActivity());
+        }catch (Exception e){
             e.printStackTrace();
         }
+
     }
 
     @Override

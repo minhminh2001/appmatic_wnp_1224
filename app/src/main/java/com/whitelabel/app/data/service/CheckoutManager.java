@@ -61,7 +61,7 @@ public class CheckoutManager implements ICheckoutManager {
         return checkoutApi.getCountryAndRegions(sessionKey).map(new Func1<SVRAppServiceCustomerCountry, SVRAppServiceCustomerCountry>() {
             @Override
             public SVRAppServiceCustomerCountry call(SVRAppServiceCustomerCountry svrAppServiceCustomerCountry) {
-                if(svrAppServiceCustomerCountry.getStatus()==1){
+                if(svrAppServiceCustomerCountry!=null && svrAppServiceCustomerCountry.getStatus()==1){
                     cacheHelper.saveCountryAndRegions(svrAppServiceCustomerCountry);
                 }
                 return svrAppServiceCustomerCountry;

@@ -223,15 +223,12 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Logger.e("onActivityResult");
         if (requestCode==HomeHomeFragmentV3.REQUEST_PRODUCT_DETAIL_CODE && resultCode== Activity.RESULT_OK){
-            Logger.e("onActivityResult 2");
             if (data != null) {
                 if (!data.getBooleanExtra("needRefreshWhenBackPressed", false)) {
                     String productId = data.getStringExtra("productId");
                     String itemId = data.getStringExtra("itemId");
                     int isLike = data.getIntExtra("isLike", -1);
-                    Logger.e("peoductList productId :"+productId+" isLike:"+isLike);
                     if (!TextUtils.isEmpty(productId) && isLike != -1) {
                         notifyBackThisPageChangeWishIconStatus(productId, isLike, itemId);
                     }

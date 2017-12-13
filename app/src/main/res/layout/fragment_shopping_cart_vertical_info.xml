@@ -2,7 +2,7 @@
     xmlns:imaginato="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/grayf0f0f0"
+    android:background="@color/whiteFFFFFF"
     >
     <TextView
         android:layout_width="match_parent"
@@ -314,6 +314,7 @@
         android:visibility="gone"
         style="@style/font_family_robot_regular" />
     <View
+        android:id="@+id/view_shopping_cart_bottom"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_below="@+id/tv_shoppingcart_errormsg"

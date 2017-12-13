@@ -1146,18 +1146,23 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
         if (countryEntityResult==null){
             return;
         }
-        list_countries = countryEntityResult.getCountry();
-        list_countries.add(0, new CountrySubclass("", getResources().getString(R.string.pleaseselect)));
-        mRegions.clear();
-        mRegions.addAll(getState(list_countries));
-        mRegions.add(0, new CountryRegions("", getResources().getString(R.string.pleaseselect)));
-        if (list_countries.size() > 1) {
-            etShippingCountry.setText(list_countries.get(1).getName());
-            etShippingCountry.setTag(list_countries.get(1).getCountry_id());
-        }
-        checkoutActivity.scrollViewBody.scrollTo(0, (int) (getResources().getDimension(R.dimen.scroll_height) * 100));
-        if ("".equals(etShippingState.getText().toString().trim())) {
-            tvStateAnim.setVisibility(View.INVISIBLE);
+        if (countryEntityResult.getCountry()!=null){
+            list_countries = countryEntityResult.getCountry();
+            list_countries.add(0, new CountrySubclass("", getResources().getString(R.string.pleaseselect)));
+            ArrayList<CountryRegions> state = getState(list_countries);
+            if (state!=null){
+                mRegions.clear();
+                mRegions.addAll(state);
+                mRegions.add(0, new CountryRegions("", getResources().getString(R.string.pleaseselect)));
+            }
+            if (list_countries.size() > 1) {
+                etShippingCountry.setText(list_countries.get(1).getName());
+                etShippingCountry.setTag(list_countries.get(1).getCountry_id());
+            }
+            checkoutActivity.scrollViewBody.scrollTo(0, (int) (getResources().getDimension(R.dimen.scroll_height) * 100));
+            if ("".equals(etShippingState.getText().toString().trim())) {
+                tvStateAnim.setVisibility(View.INVISIBLE);
+            }
         }
     }
 }

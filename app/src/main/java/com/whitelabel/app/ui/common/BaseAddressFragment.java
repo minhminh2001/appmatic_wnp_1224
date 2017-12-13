@@ -26,6 +26,7 @@ import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomTextView;
@@ -94,6 +95,9 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
     public BaseAddressFragment() {
         // Required empty public constructor
     }
+
+
+
     @Override
     public void openSwipeLayout() {
          swipeContainer.setRefreshing(true);
@@ -130,6 +134,12 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
             addressbookAddTextview.setVisibility(View.VISIBLE);
             addressBooks = handlerAddressData(addressBooks);
             mAddressBookAdapter = new AddressBookAdapter(getContext(), addressBooks);
+            mAddressBookAdapter.setiChangeMenuDot(new AddressBookAdapter.IChangeMenuDot() {
+                @Override
+                public void updateDot(int position) {
+                    mListView.smoothOpenMenu(position);
+                }
+            });
             mListView.setAdapter(mAddressBookAdapter);
         }
     }
@@ -216,7 +226,7 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
     public void setSwipeListView() {
         SwipeMenuCreator creator = new SwipeMenuCreator() {
             @Override
-            public void create(SwipeMenu menu, int position) {
+            public void create(SwipeMenu menu,int position) {
                 // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem(
                         getActivity());
@@ -239,6 +249,17 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
         mListView.setOnItemClickListener(this);
         mListView.setOnMenuItemClickListener(this);
         mListView.setOnSwipeListener(this);
+        mListView.setOnMenuStateChangeListener(new SwipeMenuListView.OnMenuStateChangeListener() {
+            @Override
+            public void onMenuOpen(int position) {
+                mAddressBookAdapter.updataView(position,mListView,true);
+            }
+
+            @Override
+            public void onMenuClose(int position) {
+                mAddressBookAdapter.updateAllViewToDef(mListView);
+            }
+        });
     }
     public final SwipeMenuItem createDeleteSwipeItem() {
         SwipeMenuItem deleteItem = new SwipeMenuItem(

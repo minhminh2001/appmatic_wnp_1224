@@ -303,7 +303,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
                 if (category != null) {
                     categoryName = category.getMenuTitle();
                 }
-                GaTrackHelper.getInstance().googleAnalytics(categoryName,getActivity());
+                GaTrackHelper.getInstance().googleAnalytics(categoryName.toUpperCase(),getActivity());
             }
             return categoryName;
         }
