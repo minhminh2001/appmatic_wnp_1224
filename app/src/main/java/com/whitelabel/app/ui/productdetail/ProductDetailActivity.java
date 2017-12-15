@@ -55,8 +55,6 @@ import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
 import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV3;
-import com.whitelabel.app.utils.FacebookEventUtils;
-import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -143,6 +141,11 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     private ProductListItemToProductDetailsEntity productEntity;
     private int isLike;
     private String  mFromProductList;
+    private ImageView ivProductThumbnail;
+    private final static int IV_PRODUCTTHUMBNAIL_WANDH=44;
+    private ImageView ivShopping;
+    private RelativeLayout rlRoot;
+    private int currentShoppingCount;
     @Override
     public void showNornalProgressDialog() {
         mDialog = JViewUtils.showProgressDialog(ProductDetailActivity.this);
@@ -166,6 +169,9 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         JLogUtils.i("ray","results:"+results.size());
         recommendedListAdapter.updateData(results);
     }
+
+
+
     @Override
     public void showErrorMessage(String errorMsg) {
         JViewUtils.showErrorToast(this,errorMsg+"");
@@ -208,14 +214,18 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             ex.getStackTrace();
         }
     }
-    public void startShoppingCartActivity(){
-        Intent intent = new Intent();
-        intent.setClass(this, ShoppingCartActivity1.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        Bundle bundle = new Bundle();
-        bundle.putLong("mGATrackTimeStart",mGATrackAddCartTimeStart);
-        intent.putExtras(bundle);
-        startActivityForResult(intent, REQUEST_SHOPPINGCART);
+    public void startAddToCart(){
+//TODO joyson  requirement change ,temp not skip ShoppingCart
+//        Intent intent = new Intent();
+//        intent.setClass(this, ShoppingCartActivity1.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//        Bundle bundle = new Bundle();
+//        bundle.putLong("mGATrackTimeStart",mGATrackAddCartTimeStart);
+//        intent.putExtras(bundle);
+//        startActivityForResult(intent, REQUEST_SHOPPINGCART);
+        mPresenter.addCartToTopAnim(rlRoot,ivProductThumbnail,ivShopping);
+        currentShoppingCount+=pcGroupConfigView.getProductSelectQty();
+        mPresenter.saveShoppingCartCount(currentShoppingCount);
     }
 //    private void facebookWishTrack(){
 //        try {
@@ -465,6 +475,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             int destWidth = (this.destWidth - (2 * marginLeft) - dividerWidth) / 2;
             int destHeight = (int) (destWidth/1.332);
             JImageUtils.downloadImageFromServerByProductUrl(ProductDetailActivity.this, mImageLoader, ivProductImage, mProductFirstImageurl, destWidth,destHeight);
+            JImageUtils.downloadImageFromServerByProductUrl(ProductDetailActivity.this, mImageLoader, ivProductThumbnail, mProductFirstImageurl, IV_PRODUCTTHUMBNAIL_WANDH,IV_PRODUCTTHUMBNAIL_WANDH);
         } else {
             ivProductImage.setAlpha(0.0f);
         }
@@ -571,6 +582,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         textView_num = (TextView) findViewById(R.id.detail_quantity_textview2);
         rlProductQuantity = (RelativeLayout) findViewById(R.id.rlProductQuantity);
         lvProductRecommendList= (RecyclerView) findViewById(R.id.lvProductRecommendList);
+        ivProductThumbnail= (ImageView) findViewById(R.id.iv_add_to_cart_thumbnail);
+        rlRoot=(RelativeLayout) findViewById(R.id.rl_product_detail_root);
         int destWidthColorSize = (WhiteLabelApplication.getPhoneConfiguration().getScreenWidth() - (JDataUtils.dp2Px(27))) / 2;
         int destHeightColorSize = JDataUtils.dp2Px(37);
         if (rlProductQuantity.getLayoutParams() != null) {
@@ -641,7 +654,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
                 });
         TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
         textView.setBackground(JImageUtils.getThemeCircle(this));
-        ImageView ivShopping= (ImageView) view.findViewById(R.id.iv_img);
+        ivShopping= (ImageView) view.findViewById(R.id.iv_img);
         JViewUtils.setNavBarIconColor(this,ivShopping,R.drawable.ic_action_cart);
         mPresenter.getShoppingCount();
         return super.onCreateOptionsMenu(menu);
@@ -662,6 +675,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     }
     @Override
     public void setShoppingCartCount(int count) {
+        currentShoppingCount =count;
         updateRightIconNum(R.id.action_shopping_cart, count);
     }
     @Override

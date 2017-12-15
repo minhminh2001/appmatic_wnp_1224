@@ -159,6 +159,7 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
     public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
         switch (index) {
             case 0:
+                mAddressBookAdapter.updateAllViewToDef(mListView);
                 onEditButtonClick(position);
                 break;
             case 1:
@@ -256,7 +257,7 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
             }
 
             @Override
-            public void onMenuClose(int position) {
+            public void onMenuClose(final int position) {
                 mAddressBookAdapter.updateAllViewToDef(mListView);
             }
         });

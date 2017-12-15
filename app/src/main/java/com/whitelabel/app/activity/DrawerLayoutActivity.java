@@ -557,7 +557,9 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     public void setFragmentPaddingBottom(boolean hasPaddingBottom) {
         if (isFinishing()) return;
         if (hasPaddingBottom) {
-            flContainer.setPadding(flContainer.getPaddingLeft(), flContainer.getPaddingTop(), flContainer.getPaddingRight(), getToolbar().getHeight());
+            //TODO joyson  shield sroll bottom padding
+//            flContainer.setPadding(flContainer.getPaddingLeft(), flContainer.getPaddingTop(), flContainer.getPaddingRight(), getToolbar().getHeight());
+            flContainer.setPadding(flContainer.getPaddingLeft(), flContainer.getPaddingTop(), flContainer.getPaddingRight(), 0);
         } else {
             flContainer.setPadding(flContainer.getPaddingLeft(), flContainer.getPaddingTop(), flContainer.getPaddingRight(), 0);
         }

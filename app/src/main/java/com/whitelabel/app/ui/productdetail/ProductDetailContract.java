@@ -1,5 +1,8 @@
 package com.whitelabel.app.ui.productdetail;
 
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedResultsItemReturnEntity;
@@ -36,7 +39,7 @@ public interface ProductDetailContract {
         public void setWishIconColorToBlank();
         public void setWishIconColorToThemeColor();
         public void startLoginActivity(boolean expire);
-        public void startShoppingCartActivity();
+        public void startAddToCart();
         public void showNoInventoryToast();
         public void setProductCountView(long count);
         public Map<String,String> getGroupProductParams();
@@ -49,6 +52,7 @@ public interface ProductDetailContract {
         void setDialogType(String type);
         ProductDetailModel getProductData();
         void getShoppingCount();
+        void saveShoppingCartCount(int num);
         void wishListBtnClick();
         void setOutOfStock(boolean isOutOfStock);
         long getUserSelectedProductQty();
@@ -59,6 +63,7 @@ public interface ProductDetailContract {
         void productCountPlusClick();
         void addToCartClick();
         void delayAddToCart();
+        void addCartToTopAnim(final RelativeLayout parentView, final ImageView sourceIv, ImageView targetIv);
     }
 
 }

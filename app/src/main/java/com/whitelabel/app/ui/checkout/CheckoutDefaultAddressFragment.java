@@ -331,11 +331,17 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     }
 
     public AddressBook getBootomAddress(){
-        if (isBillAddressChecked){
+        if (isPickUpInStoreChecked){
             return mPrimaryBilling;
         }else {
-            return mPrimaryShipping;
+            //shipToMe
+            if (isBillAddressChecked){
+                return mPrimaryBilling;
+            }else {
+                return mPrimaryShipping;
+            }
         }
+
     }
 
     @Override

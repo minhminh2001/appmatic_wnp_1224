@@ -67,9 +67,11 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
         int visibleLastPosi = listView.getLastVisiblePosition();
         for (int i=visibleFirstPosi;i<=visibleLastPosi;i++){
             SwipeMenuLayout layout = (SwipeMenuLayout) listView.getChildAt(i);
-            View view= layout.getChildAt(0);
-            AddressViewHolder holder = (AddressViewHolder) view.getTag();
-            setDotDefault(holder);
+            if (layout!=null){
+                View view= layout.getChildAt(0);
+                AddressViewHolder holder = (AddressViewHolder) view.getTag();
+                setDotDefault(holder);
+            }
         }
     }
 

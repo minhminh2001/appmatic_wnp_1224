@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:imaginato="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/rl_product_detail_root"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/whiteFFFFFF">
@@ -337,22 +338,34 @@
                     android:src="@mipmap/wishlist_white_normal"
                     android:visibility="visible"/>
             </RelativeLayout>
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-                <com.whitelabel.app.widget.CustomTextView
-                    android:id="@+id/ctvAddToCart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:text="@string/product_detail_addtocart"
-                    android:textColor="@color/whiteffffff"
-                    android:textSize="@dimen/button_font_size"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/iv_add_to_cart_thumbnail"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_centerVertical="true"
+                    android:visibility="invisible"
                     />
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/ctvAddToCart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:text="@string/product_detail_addtocart"
+                        android:textColor="@color/whiteffffff"
+                        android:textSize="@dimen/button_font_size"
+                        />
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
