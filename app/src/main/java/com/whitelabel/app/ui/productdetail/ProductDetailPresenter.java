@@ -417,6 +417,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
         path.cubicTo(startX/2, startY/4, WhiteLabelApplication.getPhoneConfiguration().getScreenWidth()/2, -400,toX,toY);
         final PathMeasure mPathMeasure = new PathMeasure(path, false);
 
+//TODO  joyson  may add scale anim
 //        PropertyValuesHolder mPropertyValuesHolderScale = PropertyValuesHolder.ofFloat("scale", 1.0f,0.3f);
         PropertyValuesHolder mRotation = PropertyValuesHolder.ofFloat("rotation", 0.0f,1080.0f);
         ValueAnimator styleAnimator = ValueAnimator.ofPropertyValuesHolder(mRotation);
