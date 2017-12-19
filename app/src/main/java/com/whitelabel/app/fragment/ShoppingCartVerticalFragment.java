@@ -807,7 +807,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
     public void deleteShoppingData(ShoppingCartDeleteCellEntity bean,int position){
         //delete position item
         mCar.setItems(deleteCellItem(mCar.getItems(),position));
-        JToolUtils.printObject(mCar);
         mCar.setDiscount(bean.getDiscount());
         mCar.setSubTotal(bean.getSubTotal());
         mCar.setGrandTotal(bean.getGrandTotal());

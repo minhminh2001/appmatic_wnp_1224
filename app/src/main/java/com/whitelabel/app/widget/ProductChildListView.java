@@ -150,7 +150,7 @@ public class ProductChildListView extends LinearLayout{
         });
         return view;
     }
-    private  int getProductSelectQty(){
+    public  int getProductSelectQty(){
         int qty=0;
         for(int i=0;i<tvNumbers.size();i++){
             qty+=Integer.parseInt(tvNumbers.get(i).getText().toString());

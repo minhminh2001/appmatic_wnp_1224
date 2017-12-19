@@ -288,12 +288,12 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
                 tvRateUsNow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        JToolUtils.openPlayStore();
-//                        JStorageUtils.saveFinishOrderAndMarkTime(0);
-                        mPresenter.saveFinishOrderAndMarkTime(0);
                         if (mMaterialDialog!=null){
                             mMaterialDialog.dismiss();
                         }
+                        JToolUtils.openPlayStore();
+                        mPresenter.saveFinishOrderAndMarkTime(0);
+
                     }
                 });
                 tvRateCancel.setOnClickListener(new View.OnClickListener() {
@@ -306,9 +306,6 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
                         if (!mPresenter.getFirstOrderAndMarkTime().isAfterFirstOrder()){
                             mPresenter.saveFinishOrderAndMarkTime(System.currentTimeMillis());
                         }
-//                        if (!JStorageUtils.getFirstOrderAndMarkTime().isAfterFirstOrder()){
-//                            JStorageUtils.saveFinishOrderAndMarkTime(System.currentTimeMillis());
-//                        }
                     }
                 });
                 mMaterialDialog.setContentView(view);

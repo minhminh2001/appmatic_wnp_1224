@@ -1,8 +1,18 @@
 package com.whitelabel.app.ui.productdetail;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
+import android.graphics.Path;
+import android.graphics.PathMeasure;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
+import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
@@ -11,13 +21,11 @@ import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.ProductDetailModel;
-import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ExceptionParse;
-import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -174,16 +182,25 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                     }
                     @Override
                     public void onNext(Integer integer) {
-                        setShoppingCartCount(integer);
+                        getShoppingCartCount(integer);
                     }
                 });
         addSubscrebe(subscription);
     }
-    public void setShoppingCartCount(int count){
+    private void getShoppingCartCount(int count){
         if(iBaseManager.isSign()) {
             count= (int) (iBaseManager.getUser().getCartItemCount()+count);
         }
         mView.setShoppingCartCount(count);
+    }
+
+    @Override
+    public void saveShoppingCartCount(int num){
+        if (iBaseManager.isSign()) {
+            GOUserEntity userEntity = iBaseManager.getUser();
+            userEntity.setCartItemCount(num);
+            iBaseManager.saveUser(userEntity);
+        }
     }
     @Override
     public void wishListBtnClick() {
@@ -320,6 +337,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
         }
         return params;
     }
+
     public void addToShoppingCart(Map<String,String> params){
         mView.showNornalProgressDialog();
         iGoogleAnalyticsManager.googleAnalyticsEvent(IGoogleAnalyticsManager.CATEGORY_PROCDUCT,IGoogleAnalyticsManager.ACTION_ADDTOCART,mProduct.getName(),mProduct.getId());
@@ -343,7 +361,7 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                     @Override
                     public void onNext(ResponseModel responseModel) {
                         mView.dissmissProgressDialog();
-                        mView.startShoppingCartActivity();
+                        mView.startAddToCart();
                     }
                 });
     }
@@ -368,5 +386,93 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
                       }
                   });
             addSubscrebe(subscription);
+    }
+
+    public void addCartToTopAnim(final RelativeLayout parentView, final ImageView sourceIv, ImageView targetIv) {
+        final ImageView goods = new ImageView(parentView.getContext());
+        goods.setImageDrawable(sourceIv.getDrawable());
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(sourceIv.getWidth(), sourceIv.getHeight());
+        parentView.addView(goods, params);
+
+        int[] parentLocation = new int[2];
+        parentView.getLocationInWindow(parentLocation);
+
+        int startLoc[] = new int[2];
+        sourceIv.getLocationInWindow(startLoc);
+
+        int endLoc[] = new int[2];
+        targetIv.getLocationInWindow(endLoc);
+
+
+        float startX = startLoc[0] - parentLocation[0] + sourceIv.getWidth() / 2;
+        float startY = startLoc[1] - parentLocation[1] + sourceIv.getHeight() / 2;
+
+        float toX = endLoc[0] - parentLocation[0] - targetIv.getWidth() ;
+        float toY = endLoc[1] - parentLocation[1];
+
+        Path path = new Path();
+        path.moveTo(startX, startY);
+        //quadTo twice bessel  cubicTo thrice  bessel
+//        path.quadTo((startX + toX) / 2, startY, toX, toY);
+        path.cubicTo(startX/2, startY/4, WhiteLabelApplication.getPhoneConfiguration().getScreenWidth()/2, -400,toX,toY);
+        final PathMeasure mPathMeasure = new PathMeasure(path, false);
+
+//TODO  joyson  may add scale anim
+//        PropertyValuesHolder mPropertyValuesHolderScale = PropertyValuesHolder.ofFloat("scale", 1.0f,0.3f);
+        PropertyValuesHolder mRotation = PropertyValuesHolder.ofFloat("rotation", 0.0f,1080.0f);
+        ValueAnimator styleAnimator = ValueAnimator.ofPropertyValuesHolder(mRotation);
+        styleAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+//                float animatorValueScale =  (float) animation.getAnimatedValue("scale");
+                float animatorRotation = (float) animation.getAnimatedValue("rotation");
+//                goods.setScaleX(animatorValueScale);
+//                goods.setScaleY(animatorValueScale);
+                goods.setRotation(animatorRotation);
+            }
+        });
+        styleAnimator.setInterpolator(new LinearInterpolator());
+        ValueAnimator transAnimator = ValueAnimator.ofFloat(0, mPathMeasure.getLength());
+
+        transAnimator.setInterpolator(new LinearInterpolator());
+        final float[] mCurrentPosition = new float[2];
+        transAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (Float) animation.getAnimatedValue();
+                mPathMeasure.getPosTan(value, mCurrentPosition, null);
+                goods.setTranslationX(mCurrentPosition[0]);
+                goods.setTranslationY(mCurrentPosition[1]);
+            }
+        });
+
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.play(transAnimator).with(styleAnimator);
+        animSet.setDuration(500);
+        animSet.start();
+        transAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                parentView.removeView(goods);
+                sourceIv.setVisibility(View.INVISIBLE);
+                getShoppingCount();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 }
