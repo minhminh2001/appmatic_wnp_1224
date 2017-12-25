@@ -11,21 +11,22 @@
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="0.8dp"
+        android:layout_height="@dimen/line_height"
         android:layout_centerInParent="true"
-        android:background="@color/greyB8B8B8"
+        android:background="@color/greye1e1e1"
          />
 
     <TextView
         android:id="@+id/tv_txt"
-         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="@string/home_new_arrivals"
+        android:textAllCaps="true"
         android:background="@color/white"
-        android:textColor="@color/gray999999"
-         android:layout_centerInParent="true"
+        android:textColor="@color/black000000"
+        android:textSize="16sp"
+        android:layout_centerInParent="true"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>

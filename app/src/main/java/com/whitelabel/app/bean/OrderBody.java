@@ -19,6 +19,10 @@ public class OrderBody {
     private boolean isLast;
     private String availability;
     private String orderId;
+    private boolean isChecked;
+    private String itemId;
+    private String stockQty;
+    private boolean isBtnAddCartEnable;
 
     public String getAvailability() {
         return availability;
@@ -156,5 +160,37 @@ public class OrderBody {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getStockQty() {
+        return stockQty;
+    }
+
+    public void setStockQty(String stockQty) {
+        this.stockQty = stockQty;
+    }
+
+    public boolean isBtnAddCartEnable() {
+        return isBtnAddCartEnable;
+    }
+
+    public void setBtnAddCartEnable(boolean btnAddCartEnable) {
+        isBtnAddCartEnable = btnAddCartEnable;
     }
 }

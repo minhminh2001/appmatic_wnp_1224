@@ -94,6 +94,19 @@ public class JImageUtils {
 //        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
         return drawable;
     }
+
+    public static  Drawable  getbuttonUnusableBakcgroundStrokeDrawable(Context context){
+        StateListDrawable drawable=new StateListDrawable();
+        GradientDrawable  normal= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
+        normal.setColor(ContextCompat.getColor(context,R.color.transparent00));
+        normal.setStroke(JScreenUtils.dip2px(context,1.5f), ContextCompat.getColor(context,R.color.greyDCDCDC));
+//        GradientDrawable  pressed= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);
+//        pressed.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getButtonClickColor());
+        drawable.addState(new int[]{},normal);
+//        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
+        return drawable;
+    }
+
     public static ColorStateList getThemeTextColorDrawable(int defaultColor){
         int[] colors = new int[] { WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color(), defaultColor,defaultColor};
         int[][] states = new int[3][];

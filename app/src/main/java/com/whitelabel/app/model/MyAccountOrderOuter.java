@@ -1,6 +1,7 @@
 package com.whitelabel.app.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * MyAccountOrder:outer datas
@@ -15,7 +16,7 @@ public class MyAccountOrderOuter extends SVRReturnEntity implements Serializable
     private int isRPayment;
     private String availability;
     private String statusCode;
-    private MyAccountOrderMiddle[] suborders;//MyAccountOrderMiddle
+    private List<MyAccountOrderMiddle> suborders;//MyAccountOrderMiddle
 
     public String getAvailability() {
         return availability;
@@ -89,11 +90,11 @@ public class MyAccountOrderOuter extends SVRReturnEntity implements Serializable
         this.status = status;
     }
 
-    public MyAccountOrderMiddle[] getSuborders() {
+    public List<MyAccountOrderMiddle> getSuborders() {
         return suborders;
     }
 
-    public void setSuborders(MyAccountOrderMiddle[] suborders) {
+    public void setSuborders(List<MyAccountOrderMiddle> suborders) {
         this.suborders = suborders;
     }
 }

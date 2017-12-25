@@ -9,14 +9,15 @@
     android:background="@color/whiteFFFFFF">
 <ImageView
     android:id="@+id/img"
-    android:layout_width="45dp"
-    android:layout_height="45dp" />
+    android:layout_width="50dp"
+    android:layout_height="50dp" />
     <com.whitelabel.app.widget.CustomTextView
         android:id="@+id/tv_name"
         style="@style/font_family_robot_regular"
         android:layout_marginLeft="15dp"
         android:layout_width="wrap_content"
         android:textColor="@color/black999999"
+        android:textSize="13sp"
         android:text="@string/product"
         android:layout_height="wrap_content">
     </com.whitelabel.app.widget.CustomTextView>

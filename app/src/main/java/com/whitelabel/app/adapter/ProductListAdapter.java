@@ -290,7 +290,7 @@ public class ProductListAdapter extends BaseAdapter {
 
         final String leftProductImageUrl = leftProductEntity.getSmallImage();
         if (!leftProductImageUrl.equals(String.valueOf(viewHolder.ivLeftProductImage.getTag()))) {
-            JImageUtils.downloadImageFromServerByUrl(productListActivity, mImageLoader, viewHolder.ivLeftProductImage, leftProductImageUrl, destWidth, destHeight);
+            JImageUtils.downloadImageFromServerByProductUrl(productListActivity, mImageLoader, viewHolder.ivLeftProductImage, leftProductImageUrl, destWidth, destHeight);
             viewHolder.ivLeftProductImage.setTag(leftProductImageUrl);
         }
 
@@ -472,7 +472,7 @@ public class ProductListAdapter extends BaseAdapter {
         }
         final String rightProductImageUrl = rightProductEntity.getSmallImage();
         if (!rightProductImageUrl.equals(String.valueOf(viewHolder.ivRightProductImage.getTag()))) {
-            JImageUtils.downloadImageFromServerByUrl(productListActivity, mImageLoader, viewHolder.ivRightProductImage, rightProductImageUrl, destWidth, destHeight);
+            JImageUtils.downloadImageFromServerByProductUrl(productListActivity, mImageLoader, viewHolder.ivRightProductImage, rightProductImageUrl, destWidth, destHeight);
             viewHolder.ivRightProductImage.setTag(rightProductImageUrl);
         }
         String rightProductName = rightProductEntity.getName();

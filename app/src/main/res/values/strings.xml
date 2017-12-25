@@ -297,7 +297,8 @@
     <!-- Product Detail -->
     <string name="product_detail_instock">IN STOCK</string>
     <string name="product_detail_outofstock">SOLD OUT</string>
-    <string name="product_detail_addtocart">ADD TO CART</string>
+    <string name="product_detail_addtocart">Add to Cart</string>
+    <string name="product_detail_addorder_tocart">Add Order to Cart</string>
     <string name="product_detail_addtowishlist">ADD TO WISHLIST</string>
     <string name="product_detail_addedtowishlist">ADDED TO WISHLIST</string>
     <string name="product_detail_prompy_addtocart_success">Added in cart.</string>
@@ -332,7 +333,7 @@
     <string name="home_helpcenter_list_ordertracking2">Order Tracking</string>
     <string name="home_helpcenter_list_cancellationsreturns2">Cancellations &amp; Returns</string>
     <string name="home_helpcenter_list_gemcashvoucher2">Promotion Terms</string>
-    <string name="home_helpcenter_list_customerservice2">Customer Service</string>
+    <string name="home_helpcenter_list_customerservice2">Customer Care</string>
     <string name="statement_of_ipr2">Statement Of IPR</string>
     <!--notification-->
     <string name="home_notification_title">Notification</string>
@@ -351,6 +352,7 @@
     <string name="insufficient_stock">Insufficient stock. You reached the maximum available quantity for this product.</string>
     <string name="over_maxSale_stock">Cannot add the item to shopping cart. The maximum quantity allowed for purchase is </string>
     <string name="over_maxSale">Only x allowed per checkout.</string>
+    <string name="add_order_to_cart_error_title">The following item(s) in your order can\'t be added to cart</string>
 
     <string name="Discount">Discount</string>
     <string name="check_out_num_product"> CHECKOUT {num} ITEM</string>
@@ -416,7 +418,6 @@
     <string name="receive_newsletter">Receive newsletters from Wnp</string>
     <string name="setting_rate">Rate us in Google Play store</string>
     <string name="setting_version">Version</string>
-    <string name="sign_up">SIGN Up</string>
     <string name="Sign_Up">Sign Up</string>
     <string name="sign_out">SIGN OUT</string>
     <string name="setting_sound">Sound</string>
@@ -623,7 +624,7 @@
     <string name="my_orders">My Orders</string>
     <string name="my_address_book">My Address Book</string>
     <string name="_settings">Settings</string>
-    <string name="customer_service">Customer Service</string>
+    <string name="customer_service">Customer Care</string>
     <string name="help_centre">Help Centre</string>
     <string name="my_upp">MY</string>
     <string name="address">Address</string>
@@ -697,7 +698,7 @@
     <string name="banktransfer_permission_album_rationale">Wnp needs to access your device\'s storage</string>
     <string name="switch_view_bar_results">&#160;results</string>
 
-    <string name="product_detail_total">Total:</string>
+    <string name="product_detail_total">Total:&#160;</string>
     <string name="home_new_arrivals">NEW ARRIVALS</string>
     <string name="home_best_sellers">BEST SELLERS</string>
     <string name="order_re_payment">RePayment</string>
@@ -727,7 +728,7 @@
     <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bb5de7d8</string>
     <string name="app_name">WNP</string>
     <!--https://dev2.wnp.com.hk/ 103.210.236.156:8088  /  https://imaginato.wnp.com.hk/-->
-    <string name="request_url">https://imaginato.wnp.com.hk//</string>
+    <string name="request_url">https://imaginato.wnp.com.hk/</string>
     <string name="image_base_url">https://imaginato.wnp.com.hk/</string>
     <string name="mock_url">http://mis.appmatic.io/</string>
 

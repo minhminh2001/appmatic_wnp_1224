@@ -1,9 +1,13 @@
 package com.whitelabel.app.ui.common;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +16,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import com.whitelabel.app.BaseFragment;
+
+import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
-import com.whitelabel.app.adapter.AddressBookAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.data.DataManager;
-import com.whitelabel.app.data.service.AccountManager;
-import com.whitelabel.app.data.service.CommodityManager;
+import com.whitelabel.app.adapter.AddressBookAdapterV2;
 import com.whitelabel.app.fragment.BaseFragmentSearchCart;
 import com.whitelabel.app.model.AddressBook;
+import com.whitelabel.app.model.ShoppingCartListEntityBody;
+import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.network.BaseHttp;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
@@ -48,9 +53,9 @@ import injection.modules.PresenterModule;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAddressContract.Presenter> implements BaseAddressContract.View, SwipeMenuListView.OnMenuItemClickListener, SwipeMenuListView.OnSwipeListener, AdapterView.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener {
-    @BindView(R.id.mListView)
-    SwipeMenuListView mListView;
+public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAddressContract.Presenter> implements BaseAddressContract.View, AdapterView.OnItemClickListener,SwipeRefreshLayout.OnRefreshListener {
+    @BindView(R.id.mRecycView)
+    RecyclerView mRecycView;
     @BindView(R.id.swipe_container)
     CustomSwipefreshLayout swipeContainer;
     @BindView(R.id.addressbook_add_textview)
@@ -88,32 +93,22 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
     public abstract  void  addAddressBtnOnClick();
     public abstract List<AddressBook> handlerAddressData(List<AddressBook> addressBooks);
     public abstract   void onEditButtonClick(int postion);
-    private AddressBookAdapter mAddressBookAdapter;
+    private AddressBookAdapterV2 mAddressBookAdapter;
     protected final static String EXTRA_USE_CACHE = "use_cache";
     private RequestErrorHelper requestErrorHelper;
     // TODO: Rename parameter arguments, choose names that match
     public BaseAddressFragment() {
-        // Required empty public constructor
     }
-
-
 
     @Override
     public void openSwipeLayout() {
          swipeContainer.setRefreshing(true);
     }
 
-    public AddressBookAdapter getAdapter() {
+    public AddressBookAdapterV2 getAdapter() {
         return mAddressBookAdapter;
     }
-    @Override
-    public void onSwipeStart(int position) {
-        swipeContainer.setEnabled(false);
-    }
-    @Override
-    public void onSwipeEnd(int position) {
-        swipeContainer.setEnabled(true);
-    }
+
     @Override
     public void showNetworkErrorView(String errorMsg) {
         if(mAddressBookAdapter==null||mAddressBookAdapter.getData().size()==0){
@@ -133,14 +128,25 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
         if(addressBooks!=null) {
             addressbookAddTextview.setVisibility(View.VISIBLE);
             addressBooks = handlerAddressData(addressBooks);
-            mAddressBookAdapter = new AddressBookAdapter(getContext(), addressBooks);
-            mAddressBookAdapter.setiChangeMenuDot(new AddressBookAdapter.IChangeMenuDot() {
+            mAddressBookAdapter = new AddressBookAdapterV2(getContext(), addressBooks);
+            mRecycView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            mRecycView.setHasFixedSize(true);
+            mRecycView.setAdapter(mAddressBookAdapter);
+            mAddressBookAdapter.setiSwipeClick(new AddressBookAdapterV2.ISwipeClick() {
                 @Override
-                public void updateDot(int position) {
-                    mListView.smoothOpenMenu(position);
+                public void onEditClick(int position) {
+                    onEditButtonClick(position);
+                }
+
+                @Override
+                public void onDelClick(int position) {
+                    showProgressDialog();
+                    String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+                    mPresenter.deleteAddressById(sessionKey,
+                            mAddressBookAdapter.getData().get(position).getAddressId(),
+                            WhiteLabelApplication.getAppConfiguration().getUser().getId());
                 }
             });
-            mListView.setAdapter(mAddressBookAdapter);
         }
     }
 
@@ -155,23 +161,7 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
         String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
         mPresenter.getAddressListOnLine(sessionKey,WhiteLabelApplication.getAppConfiguration().getUser().getId());
     }
-    @Override
-    public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-        switch (index) {
-            case 0:
-                mAddressBookAdapter.updateAllViewToDef(mListView);
-                onEditButtonClick(position);
-                break;
-            case 1:
-                showProgressDialog();
-                String sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
-                mPresenter.deleteAddressById(sessionKey,
-                        mAddressBookAdapter.getData().get(position).getAddressId(),
-                WhiteLabelApplication.getAppConfiguration().getUser().getId());
-                break;
-        }
-        return false;
-    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -198,7 +188,6 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
         swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         swipeContainer.setOnRefreshListener(this);
         requestErrorHelper=new RequestErrorHelper(getActivity(),connectionBreaks);
-        setSwipeListView();
         if(useCache){
             requestCacheData();
         }else {
@@ -224,56 +213,7 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
         }
         mPresenter.getAddressListOnLine(sessionKey,WhiteLabelApplication.getAppConfiguration().getUser().getId());
     }
-    public void setSwipeListView() {
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
-            @Override
-            public void create(SwipeMenu menu,int position) {
-                // create "open" item
-                SwipeMenuItem openItem = new SwipeMenuItem(
-                        getActivity());
-                // set item background
-                openItem.setBackground(getResources().getDrawable(R.color.white));
-                // set item width
-                openItem.setWidth(JToolUtils.dip2px(getActivity(), mMenuWidth));
-                openItem.setIcon(getResources().getDrawable(R.drawable.draw_edit));
-                // add to menu
-                menu.addMenuItem(openItem);
-              if (getDeleteFuntionPostions() != null) {
-                    for(int  index: getDeleteFuntionPostions()){
-                         if(index==position)menu.addMenuItem(createDeleteSwipeItem());
-                    }
-                }
-            }
-        };
-        // set creator
-        mListView.setMenuCreator(creator);
-        mListView.setOnItemClickListener(this);
-        mListView.setOnMenuItemClickListener(this);
-        mListView.setOnSwipeListener(this);
-        mListView.setOnMenuStateChangeListener(new SwipeMenuListView.OnMenuStateChangeListener() {
-            @Override
-            public void onMenuOpen(int position) {
-                mAddressBookAdapter.updataView(position,mListView,true);
-            }
 
-            @Override
-            public void onMenuClose(final int position) {
-                mAddressBookAdapter.updateAllViewToDef(mListView);
-            }
-        });
-    }
-    public final SwipeMenuItem createDeleteSwipeItem() {
-        SwipeMenuItem deleteItem = new SwipeMenuItem(
-                getActivity());
-        // set item background
-        deleteItem.setBackground(getResources().getDrawable(R.color.white));
-        // set item width
-        deleteItem.setWidth(JToolUtils.dip2px(getActivity(), mMenuWidth));
-        // set a icon
-        deleteItem.setIcon(getResources().getDrawable(R.drawable.draw_dele));
-        // add to menu
-        return deleteItem;
-    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

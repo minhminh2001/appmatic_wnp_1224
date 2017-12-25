@@ -30,13 +30,14 @@
             android:orientation="vertical">
             <RelativeLayout
                 android:id="@+id/rl_recyclerview_change_layout_toggle"
-                android:layout_width="wrap_content"
-                android:layout_gravity="right"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:background="@color/greyEEEEEE"
+                android:layout_height="@dimen/switch_view_and_filter_bar_height">
                 <ImageView
+                    android:layout_alignParentRight="true"
                     android:id="@+id/iv_change_rcy_list_toogle"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="25dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
                     android:layout_marginLeft="6dp"

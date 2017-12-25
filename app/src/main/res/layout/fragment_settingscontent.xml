@@ -190,12 +190,12 @@
             android:textSize="@dimen/setting_item_text_size"
             style="@style/font_family_robot_regular"/>
 
-        <!--<View-->
-            <!--android:id="@+id/view_version_line"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:background="@color/greyE1E1E1"/>-->
+        <View
+            android:id="@+id/view_version_line"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/greyE1E1E1"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -207,15 +207,17 @@
 
         <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/sign_out"
+            style="@style/font_family_robot_regular"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/button_touch_height"
-            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:background="@drawable/btn_purple_border"
             android:gravity="center"
             android:text="@string/sign_out"
             android:textColor="@drawable/btn_text_purple"
-            android:textSize="16sp"
-            style="@style/font_family_robot_regular"/>
+            android:textSize="16sp" />
 
     </RelativeLayout>
 

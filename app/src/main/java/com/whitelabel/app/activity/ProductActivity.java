@@ -158,6 +158,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     private ToolBarAlphaBehavior toolBarAlphaBehavior;
     private ImageLoader mImageLoader;
     private boolean isLoad = false;
+    private View rootView;
     @Override
     protected void onDestroy() {
         JLogUtils.d(TAG, "onDestroy() ");
@@ -528,6 +529,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         mGATrackTimeEnable = true;
         setContentView(R.layout.activity_product);
+        rootView=LayoutInflater.from(this).inflate(R.layout.activity_product,null);
         initView();
         initToolBar();
         initData();
@@ -1326,7 +1328,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             if( mProductDetailBean.getProperty().size()>0&&mProductDetailBean.getImages().size()>0){
                 mProductDetailBean.getProperty().get(0).setImage(mProductDetailBean.getImages().get(0));
             }
-            pcGroupConfig.initProductChildListView(mProductDetailBean.getProperty());
+            pcGroupConfig.initProductChildListView(mProductDetailBean.getProperty(),rootView);
             boolean instock=false;
             if(mProductDetailBean.getImages()!=null) {
                 productImagesArrayList.addAll(mProductDetailBean.getImages());

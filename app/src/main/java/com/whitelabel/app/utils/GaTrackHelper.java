@@ -74,6 +74,26 @@ public class GaTrackHelper {
         }
         mTracker.send(eventBuilder.build());
     }
+
+    public  void googleAnalyticsReorderEvent(String category,String action,String productNameLable,String addOrSubLable,String quantityLable,Long value){
+        Tracker mTracker= WhiteLabelApplication.getInstance().getAnalyticTracherInstance();
+        HitBuilders.EventBuilder eventBuilder=new HitBuilders.EventBuilder();
+        eventBuilder.setCategory(category);
+        eventBuilder.setAction(action);
+        if(!TextUtils.isEmpty(productNameLable)){
+            eventBuilder.setLabel(productNameLable);
+        }
+        if(!TextUtils.isEmpty(addOrSubLable)){
+            eventBuilder.setLabel(addOrSubLable);
+        }
+        if(!TextUtils.isEmpty(quantityLable)){
+            eventBuilder.setLabel(quantityLable);
+        }
+        if(value!=null){
+            eventBuilder.setValue(value);
+        }
+        mTracker.send(eventBuilder.build());
+    }
     public  void googleAnalytics(String screenName,Context context){
         Tracker mTracker= WhiteLabelApplication.getInstance().getAnalyticTracherInstance();
         mTracker.setScreenName(screenName);

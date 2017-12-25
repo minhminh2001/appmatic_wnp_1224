@@ -21,6 +21,7 @@ import com.whitelabel.app.utils.JToolUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Datas in order list are divided in three part,and this Adapter is the outer one.
@@ -74,15 +75,14 @@ public class MyAccountOrderAdapter extends BaseAdapter {
         tvTotalMoney.setText(orderOuter.getTotalFormatted());
 
         //GET middle order datas
-        MyAccountOrderMiddle[] orderMiddleFromOuter = orderOuter.getSuborders();
-        MyAccountOrderMiddle[] orderMiddles = orderMiddleFromOuter;
+        List<MyAccountOrderMiddle> orderMiddleFromOuter = orderOuter.getSuborders() ;
 
         //TO PUT middle datas into outer body
         LinearLayout llOuterBody = (LinearLayout) convertView.findViewById(R.id.ll_myaccount_order_cellouter_body);
 
         llOuterBody.removeAllViews();
 
-        for (MyAccountOrderMiddle orderMiddle : orderMiddles) {
+        for (MyAccountOrderMiddle orderMiddle : orderMiddleFromOuter) {
             //Constructor middle view
             View view_middle = inflater.inflate(R.layout.fragment_myaccount_orders_cell_middle, null);
 
@@ -96,7 +96,7 @@ public class MyAccountOrderAdapter extends BaseAdapter {
             LinearLayout llMiddleBody = (LinearLayout) view_middle.findViewById(R.id.ll_myaccount_order_cellmiddle_body);
 
             //GET Inner order datas
-            MyAccountOrderInner[] orderInners = orderMiddle.getItems();
+            List<MyAccountOrderInner> orderInners = orderMiddle.getItems();
 
             for (MyAccountOrderInner orderInner : orderInners) {
                 //Constructor inner view

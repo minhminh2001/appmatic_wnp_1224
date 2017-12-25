@@ -51,6 +51,7 @@ import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
 import com.whitelabel.app.widget.CustomCheckBox;
+import com.whitelabel.app.widget.CustomTextView;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -337,9 +338,8 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
          stringBuilder=stringBuilder.append(GlobalData.appName);
          tvRegisterHint.setText(stringBuilder.toString());
         sign_in.setOnClickListener(this);
-        Button signUp = (Button) contentView.findViewById(R.id.sign_up);
-        signUp.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-
+        CustomTextView signUp = (CustomTextView) contentView.findViewById(R.id.sign_up);
+        JViewUtils.setSoildButtonGlobalStyle(getActivity(),signUp);
         signUp.setOnClickListener(this);
         checkBox= (CustomCheckBox) contentView.findViewById(R.id.checkbox2);
         checkBox.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());

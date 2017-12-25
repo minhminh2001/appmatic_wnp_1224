@@ -12,111 +12,205 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
             <ImageView
-                android:layout_width="50dp"
-                android:layout_centerVertical="true"
-                android:layout_height="wrap_content"
                 android:id="@+id/iv_address_edit"
-                android:src="@drawable/action_edit"/>
-            <ImageView
-                android:layout_toRightOf="@+id/iv_address_edit"
                 android:layout_width="50dp"
-                android:layout_centerVertical="true"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/draw_edit" />
+
+            <ImageView
                 android:id="@+id/iv_address_delete"
-                android:src="@mipmap/icon_delete"/>
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/iv_address_edit"
+                android:src="@mipmap/icon_delete" />
         </RelativeLayout>
+
+
         <RelativeLayout
+            android:id="@+id/rl_address_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rl_address_item">
+            android:layout_height="wrap_content">
+
             <LinearLayout
-                android:orientation="vertical"
-                android:gravity="left"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/iv_address_default"
-                android:paddingTop="5dp"
+                android:gravity="left"
+                android:orientation="vertical"
                 android:paddingBottom="5dp"
                 android:paddingLeft="15dp"
-                android:paddingRight="20dp">
+                android:paddingRight="20dp"
+                android:paddingTop="5dp">
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_default_address"
+                    style="@style/font_family_roboto_medium"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black111111"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/AddAddress_name_textview"
+                    style="@style/font_family_roboto_medium"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:text="@string/Smith"
                     android:textColor="@color/black111111"
-                    android:textSize="15sp"
-                    style="@style/font_family_roboto_medium" />
+                    android:textSize="15sp" />
 
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/AddAddress_lastname_textview"
+                    style="@style/font_family_roboto_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/AddAddress_name_textview"
                     android:textColor="@color/black111111"
-                    android:textSize="15sp"
 
-                    android:visibility="gone"
-                    style="@style/font_family_roboto_medium" />
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/AddAddress_second_textview"
+                    style="@style/font_family_robot_regular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/AddAddress_name_textview"
                     android:layout_marginTop="2dp"
                     android:gravity="center_vertical"
                     android:textColor="@color/black111111"
-                    android:textSize="14sp"
-                    style="@style/font_family_robot_regular" />
+                    android:textSize="14sp" />
 
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/AddAddress_third_textview"
+                    style="@style/font_family_robot_regular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black111111"
-                    android:textSize="14sp"
-                    style="@style/font_family_robot_regular" />
+                    android:textSize="14sp" />
 
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/AddAddress_address_textview"
+                    style="@style/font_family_robot_regular"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_below="@+id/AddAddress_third_textview"
+                    android:gravity="center_vertical"
                     android:text="@string/address1"
                     android:textColor="@color/black111111"
-                    android:textSize="14sp"
-                    style="@style/font_family_robot_regular"
-                    />
+                    android:textSize="14sp" />
+
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/AddAddress_malaysia_textview"
+                    style="@style/font_family_robot_regular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/AddAddress_address_textview"
                     android:gravity="center_vertical"
                     android:text="@string/malaysia"
                     android:textColor="@color/black111111"
-                    android:textSize="14sp"
-                    style="@style/font_family_robot_regular" />
+                    android:textSize="14sp" />
 
-                <com.whitelabel.app.widget.CustomTextView
-                    android:id="@+id/AddAddress_tel_textview"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:id="@+id/ll_mobile_number"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/AddAddress_malaysia_textview"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/black111111"
-                    android:textSize="14sp"
-                    style="@style/font_family_robot_regular" />
+                    android:orientation="horizontal">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/tv_mobile_title"
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/address_mobile_number"
+                        android:textColor="@color/black111111"
+                        android:textSize="14sp" />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/AddAddress_tel_textview"
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black111111"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_day_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_mobile_number"
+                    android:orientation="horizontal">
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/tv_day_phone_title"
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/day_time_contact"
+                        android:textColor="@color/black111111"
+                        android:textSize="14sp" />
+
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/tv_day_phone_value"
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black111111"
+                        android:textSize="14sp" />
+                </LinearLayout>
             </LinearLayout>
 
-            <ImageView
+            <LinearLayout
+                android:id="@+id/ll_addressbook_cell_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_addressbook_cell_point1"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginRight="3dp"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/tv_addressbook_cell_point2"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginRight="3dp"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/tv_addressbook_cell_point3"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:text="" />
+            </LinearLayout>
+            <com.whitelabel.app.widget.CustomRadioButton
+
                 android:id="@+id/iv_address_default"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
@@ -124,14 +218,18 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
                 android:src="@mipmap/right"
-               />
+                android:visibility="gone" />
         </RelativeLayout>
+
     </com.whitelabel.app.widget.swipe.SwipeLayout>
+
     <TextView
         android:id="@+id/tv_address_line"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:visibility="gone"
         android:layout_alignParentBottom="true"
-        android:background="@color/v2_line"/>
+        android:background="@color/v2_line"
+        android:visibility="gone" />
+
+
 </RelativeLayout>

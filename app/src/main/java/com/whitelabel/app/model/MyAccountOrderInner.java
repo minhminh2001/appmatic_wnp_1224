@@ -24,6 +24,8 @@ public class MyAccountOrderInner  implements Serializable {
     private String vendor_id;
     private String brandId;
     private boolean  isLast;
+    private boolean isChecked;
+    private String stockQty;
     public boolean isLast() {
         return isLast;
     }
@@ -154,5 +156,21 @@ public class MyAccountOrderInner  implements Serializable {
 
     public void setOptions(ArrayList<HashMap<String, String>> options) {
         this.options = options;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public String getStockQty() {
+        return stockQty;
+    }
+
+    public void setStockQty(String stockQty) {
+        this.stockQty = stockQty;
     }
 }

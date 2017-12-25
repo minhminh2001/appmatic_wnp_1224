@@ -22,8 +22,20 @@ public class Const {
         public final static String EDIT_ADDRESS_SCREEN = "Edit Address Screen";
         public final static String ACCOUNT_WISHLIST_SCREEN = "My Wishlist Screen";
         public final static String ADDRESS_BOOK_SCREEN = "My Address Book Screen";
-        public final static String SIGN_UP_SCREEN = "Sign Up Screen";
+        public final static String SIGN_UP_SCREEN = "Sign Up Succeed Screen";
+        public final static String SLIDE_MENU_SCREEN = "Side Menu";
+        public final static String FORGOT_PASSWORD_SCREEN = "Forgot Password Screen";
+
         public final static String HOME_BANNER_EVENT = "Banner";
+        public final static String ORDER_ADD_TO_CART_EVENT = "Add to Cart";
+        public final static String ORDER_CHOOSE_PRODUCT_EVENT = "Choose Product";
+        public final static String ORDER_MODIFY_QTY_EVENT = "Modify qty";
+        public final static String ORDER_ADD_EVENT = "Add";
+        public final static String ORDER_SUBTRACT_EVENT = "Subtract";
+
+        public final static String ORDER_REORDER_CATEGORY = "Reorder";
+
+
     }
 
 }

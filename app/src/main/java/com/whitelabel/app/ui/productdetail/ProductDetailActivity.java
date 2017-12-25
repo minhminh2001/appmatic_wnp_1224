@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ViewUtils;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.common.utils.JViewUtil;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HelpCenterDetialActivity;
 import com.whitelabel.app.activity.HomeActivity;
@@ -146,6 +148,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     private ImageView ivShopping;
     private RelativeLayout rlRoot;
     private int currentShoppingCount;
+    private View rootView;
     @Override
     public void showNornalProgressDialog() {
         mDialog = JViewUtils.showProgressDialog(ProductDetailActivity.this);
@@ -174,7 +177,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
 
     @Override
     public void showErrorMessage(String errorMsg) {
-        JViewUtils.showErrorToast(this,errorMsg+"");
+//        JViewUtils.showErrorToast(this,errorMsg+"");
+        JViewUtils.showPopUpWindw(this,rootView,errorMsg);
     }
     @Override
     public void showContentLayout() {
@@ -449,6 +453,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         mGATrackTimeEnable = true;
         setContentView(R.layout.activity_product);
+        rootView=LayoutInflater.from(this).inflate(R.layout.activity_product,null);
         destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductDetailActivity.this);
         productId =  getIntent().getExtras().getString("productId");
         mFromProductList = getIntent().getExtras().getString("from");
@@ -895,7 +900,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         if( mProductDetailBean.getProperty().size()>0&&mProductDetailBean.getImages().size()>0){
             mProductDetailBean.getProperty().get(0).setImage(mProductDetailBean.getImages().get(0));
         }
-        pcGroupConfigView.initProductChildListView(mProductDetailBean.getProperty());
+        pcGroupConfigView.initProductChildListView(mProductDetailBean.getProperty(),rootView);
         boolean instock=false;
         for(ProductPropertyModel bean:mProductDetailBean.getProperty() ){
             if(bean.getInStock()==1){
@@ -1386,30 +1391,32 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
     }
     public  void showNoInventoryToast() {
-        LinearLayout toastView = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.layout_prompt_productdetail_notenoughinventory, null);
-        TextView message = (TextView) toastView.findViewById(R.id.tv_text);
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductDetailActivity.this)) {
-            message.setText(getResources().getString(R.string.insufficient_stock));
-        } else {
-            if (mStockQty > 0 && mMaxSaleQty > 0) {
-                message.setText(getResources().getString(R.string.insufficient_stock));
-            } else {
-                message.setText(getResources().getString(R.string.insufficient_stock));
-            }
-        }
-        if (mToast == null) {
-            mToast = Toast.makeText(this.getApplicationContext(), "", Toast.LENGTH_SHORT);
-            if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
-                mToast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
-            }
-            mToast.setView(toastView);
-        } else {
-            if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
-                mToast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
-            }
-            mToast.setView(toastView);
-        }
-        mToast.show();
+//        LinearLayout toastView = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.layout_prompt_productdetail_notenoughinventory, null);
+//        TextView message = (TextView) toastView.findViewById(R.id.tv_text);
+//        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductDetailActivity.this)) {
+//            message.setText(getResources().getString(R.string.insufficient_stock));
+//        } else {
+//            if (mStockQty > 0 && mMaxSaleQty > 0) {
+//                message.setText(getResources().getString(R.string.insufficient_stock));
+//            } else {
+//                message.setText(getResources().getString(R.string.insufficient_stock));
+//            }
+//        }
+//        if (mToast == null) {
+//            mToast = Toast.makeText(this.getApplicationContext(), "", Toast.LENGTH_SHORT);
+//            if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
+//                mToast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
+//            }
+//            mToast.setView(toastView);
+//        } else {
+//            if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
+//                mToast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
+//            }
+//            mToast.setView(toastView);
+//        }
+//        mToast.show();
+
+        JViewUtils.showPopUpWindw(this,rootView,getResources().getString(R.string.insufficient_stock));
     }
     @Override
     protected void onStart() {

@@ -6,24 +6,38 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.adapter.CustomerCareAdapter;
 import com.whitelabel.app.dao.HelpCenterDao;
 import com.whitelabel.app.model.SVRAppserviceCmsCmsPageReturnEntity;
 import com.whitelabel.app.model.TMPHelpCenterListToDetailEntity;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.logger.Logger;
+import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.CustomWebView;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by imaginato on 2015/7/27.
@@ -39,7 +53,14 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
     private DataHandler mHandler;
     private TMPHelpCenterListToDetailEntity listToDetailEntity;
     private HelpCenterDao dao;
+    private RecyclerView rcyCustumers;
+    private String titleKeyWord;
+    private CustomTextView tvHtmlMsg;
+    private Dialog mDialog;
+    String mTitles = "";
 
+    private List<String> customerCares= Arrays.asList("Privacy Policy","Terms & Condition","Returns & Exchange","Delivery","Payment Option","Customer Service");
+    private List<String> customerParams= Arrays.asList("privacy_policy","terms","return_exchange","delivery","payment","contact_us");
 
     private static final class DataHandler extends Handler {
         private final WeakReference<Activity> mActivity;
@@ -79,6 +100,27 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
                     }
                     mFragment.get().requestErrorHelper.showConnectionBreaks(msg);
                     break;
+                case HelpCenterDao.REQUEST_GET_CUSTOMER_CARE:
+                    if (msg.arg1 == HelpCenterDao.RESPONSE_SUCCESS) {
+                        SVRAppserviceCmsCmsPageReturnEntity returnEntity = (SVRAppserviceCmsCmsPageReturnEntity) msg.obj;
+                        String content=JToolUtils.replaceFont(returnEntity.getContent());
+                        Logger.e("content:"+content);
+                        mFragment.get().tvHtmlMsg.setVisibility(View.VISIBLE);
+                        mFragment.get().rcyCustumers.setVisibility(View.GONE);
+                        mFragment.get().connectionLayout.setVisibility(View.GONE);
+                        mFragment.get().tvHtmlMsg.setText(Html.fromHtml(content));
+                        if (mFragment.get().mDialog != null && mFragment.get().mDialog.isShowing()) {
+                            mFragment.get().mDialog.dismiss();
+                        }
+                        mFragment.get().mCommonCallback.setTitle(mFragment.get().titleKeyWord);
+                        mFragment.get().listToDetailEntity.setType(SECOND_MENU);
+                        mFragment.get().initToolBar();
+
+                    } else {
+                        String msgs = String.valueOf(msg.obj);
+                        Toast.makeText(mActivity.get(), msgs, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
             }
             super.handleMessage(msg);
         }
@@ -116,15 +158,17 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
         super.onActivityCreated(savedInstanceState);
         mHandler = new DataHandler(getActivity(), this);
         connectionLayout=contentView.findViewById(R.id.connectionBreaks);
+        rcyCustumers= (RecyclerView) contentView.findViewById(R.id.rcy_customer_care);
         requestErrorHelper=new RequestErrorHelper(getContext(),connectionLayout);
         LinearLayout tryAgain = (LinearLayout) contentView.findViewById(R.id.try_again);
-
+        tvHtmlMsg= (CustomTextView) contentView.findViewById(R.id.tv_html_msg);
+        mDialog = JViewUtils.showProgressDialog(homeActivity);
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 connectionLayout.setVisibility(View.GONE);
                 initViewTitle();
-                initViewContent();
+                initCustomerCare();
             }
         });
         Bundle bundle = getArguments();
@@ -140,12 +184,10 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
         }
 
         cwvDetail = (CustomWebView) contentView.findViewById(R.id.cwvDetail);
-        //     TAG =homeActivity.getClass().getSimpleName();
         dao = new HelpCenterDao(TAG, mHandler);
         initToolBar();
         initViewTitle();
-        initViewContent();
-
+        initCustomerCare();
 
     }
 
@@ -157,7 +199,7 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
             cwvDetail.setText("");
             initToolBar();
             initViewTitle();
-            initViewContent();
+            initCustomerCare();
         }
     }
 
@@ -167,64 +209,87 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
         } else {
             mCommonCallback.setLeftMenuIcon(JToolUtils.getDrawable(R.drawable.action_back));
         }
-
-        if (homeActivity instanceof HomeActivity) {
-            //来自HomeActivity
-            if (listToDetailEntity.getType() != FIREST_MENU) {
-                //后退
-                mCommonCallback.setLeftMenuClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((HomeActivity) homeActivity).switchFragment(HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERDETAIL, HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERLIST, null);
+        mCommonCallback.setLeftMenuClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listToDetailEntity.getType() == SECOND_MENU){
+                    mCommonCallback.resetMenuAndListenter();
+                    listToDetailEntity.setType(FIREST_MENU);
+                    refresh(listToDetailEntity);
+                }else {
+                    if (homeActivity instanceof HomeActivity){
+                        ((HomeActivity)homeActivity).getDrawerLayout().openDrawer(Gravity.LEFT);
+                        GaTrackHelper.getInstance().googleAnalytics(Const.GA.SLIDE_MENU_SCREEN,getActivity());
                     }
-                });
+                }
             }
-        } else {
+        });
+        if (!(homeActivity instanceof HomeActivity)) {
             homeActivity.finish();
         }
     }
 
     private void initViewTitle() {
-        String titlestring = null;
         int switchMenu = -1;
         if (0 == contentType) {
-            titlestring = getString(R.string.home_helpcenter_list_aboutus2);
+            mTitles = getString(R.string.home_helpcenter_list_aboutus2);
         } else if (1 == contentType) {
-            titlestring = getString(R.string.home_helpcenter_list_privacypolicy2);
+            mTitles = getString(R.string.home_helpcenter_list_privacypolicy2);
         } else if (2 == contentType) {
-            titlestring = getString(R.string.home_helpcenter_list_termsofus2);
+            mTitles = getString(R.string.home_helpcenter_list_termsofus2);
         } else if (3 == contentType) {
-            titlestring = getString(R.string.home_helpcenter_list_howtobuy2);
+            mTitles = getString(R.string.home_helpcenter_list_howtobuy2);
         } else if (4 == contentType) {
-            titlestring = getString(R.string.home_helpcenter_list_payments2);
+            mTitles = getString(R.string.home_helpcenter_list_payments2);
         } else if (5 == contentType) {
-            titlestring = getString(R.string.home_helpcenter_list_shippingdelivery2);
+            mTitles = getString(R.string.home_helpcenter_list_shippingdelivery2);
             switchMenu = HomeCommonCallback.MENU_SHIPPING;
         } else if (6 == contentType) {
-            titlestring = getString(R.string.home_helpcenter_list_ordertracking2);
+            mTitles = getString(R.string.home_helpcenter_list_ordertracking2);
         } else if (7 == contentType) {
-            titlestring = getString(R.string.home_helpcenter_list_cancellationsreturns2);
+            mTitles = getString(R.string.home_helpcenter_list_cancellationsreturns2);
         } else if (8 == contentType) {
-            titlestring = getString(R.string.home_helpcenter_list_gemcashvoucher2);
+            mTitles = getString(R.string.home_helpcenter_list_gemcashvoucher2);
         } else if (9 == contentType) {
             switchMenu = HomeCommonCallback.MENU_COSTOMSERVICE;
-            titlestring = getString(R.string.home_helpcenter_list_customerservice2);
+            mTitles = getString(R.string.home_helpcenter_list_customerservice2);
         } else if (10 == contentType) {
-            titlestring = getString(R.string.statement_of_ipr2);
+            mTitles = getString(R.string.statement_of_ipr2);
         }
         if (mCommonCallback != null) {
-            mCommonCallback.setTitle(titlestring);
+            mCommonCallback.setTitle(mTitles);
             mCommonCallback.switchMenu(switchMenu);
             mCommonCallback.getToolBar().getMenu().clear();
         }
     }
 
-    public boolean onBackPressed() {
-        return listToDetailEntity.getType() == SECOND_MENU;
-
+    private void initCustomerCare(){
+        if (mDialog!=null){
+            mDialog.dismiss();
+        }
+        tvHtmlMsg.setVisibility(View.GONE);
+        CustomerCareAdapter adapter=new CustomerCareAdapter(customerCares);
+        rcyCustumers.setAdapter(adapter);
+        rcyCustumers.setVisibility(View.VISIBLE);
+        rcyCustumers.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (mDialog!=null){
+                    mDialog.show();
+                }
+                dao.loadCustomerCare(customerParams.get(position));
+                titleKeyWord=customerCares.get(position);
+            }
+        });
     }
 
-    private Dialog mDialog;
+    public boolean onBackPressed() {
+        return listToDetailEntity.getType() == SECOND_MENU;
+    }
+
+
+
 
     @Override
     public void onDetach() {

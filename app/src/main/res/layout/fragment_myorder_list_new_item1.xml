@@ -147,6 +147,65 @@
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
+                <LinearLayout
+                    android:id="@+id/ll_add_count_subs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="1dp"
+                    android:layout_alignBottom="@id/rl_shopping_cart_cell"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/linearlayout_gray_border"
+                    android:orientation="horizontal">
+                    <RelativeLayout
+                        android:id="@+id/rl_shoppingcart_count_sub"
+                        android:layout_width="30dp"
+                        android:background="@drawable/qty_button"
+                        android:layout_height="fill_parent">
+
+                        <RelativeLayout
+                            android:layout_centerInParent="true"
+                            android:layout_width="10dp"
+                            android:layout_height="2dp"
+                            android:background="@color/greyC888888" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="fill_parent"
+                        android:background="@color/greyE1E1E1"/>
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_robot_regular"
+                        android:id="@+id/tv_shoppingcart_cell_count"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="35dp"
+                        android:layout_height="30dp"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:text="1" />
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="fill_parent"
+                        android:background="@color/greyE1E1E1"/>
+                    <RelativeLayout
+                        android:id="@+id/rl_shoppingcart_count_plus"
+                        android:layout_width="30dp"
+                        android:background="@drawable/qty_button"
+                        android:layout_height="fill_parent">
+                        <RelativeLayout
+                            android:layout_centerInParent="true"
+                            android:layout_width="10dp"
+                            android:layout_height="2dp"
+                            android:background="@color/greyC888888"/>
+                        <RelativeLayout
+                            android:layout_centerInParent="true"
+                            android:layout_width="2dp"
+                            android:layout_height="10dp"
+                            android:background="@color/greyC888888"/>
+                    </RelativeLayout>
+                </LinearLayout>
+
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_orderlist_new_mername"
                     style="@style/font_family_robot_regular"
@@ -188,6 +247,16 @@
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
+            <CheckBox
+                android:id="@+id/cb_reorder_check"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/bg_order_cb"
+                android:button="@null"
+                />
         </RelativeLayout>
 
         <View
@@ -200,21 +269,7 @@
             android:layout_marginTop="5dp"
             android:background="@color/greyF3F3F3" />
 
-        <Button
-            android:id="@+id/btn_order_list_item_addtocart"
-            style="@style/font_family_roboto_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="26dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/v_device_line"
-            android:layout_marginBottom="6dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/bg_normal_circular"
-            android:text="@string/product_detail_addtocart"
-            android:textColor="@color/buttonTextColorPrimary"
-            android:textSize="13sp"
-            android:visibility="gone" />
+
 
         <LinearLayout
             android:id="@+id/ll_order_repayment"
@@ -240,6 +295,7 @@
                 android:textColor="@color/whiteFFFFFF"
                 android:textSize="14sp" />
         </LinearLayout>
+
     </RelativeLayout>
 
     <TextView
@@ -251,4 +307,23 @@
         android:background="@color/tranwhite"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:visibility="gone" />
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/btn_order_list_item_addtocart"
+        style="@style/font_family_roboto_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:padding="6dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/order_parent"
+        android:layout_marginBottom="6dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/big_button_style_config"
+        android:text="@string/product_detail_addorder_tocart"
+        android:textColor="@color/buttonTextColorPrimary"
+        android:textSize="13sp"
+        android:textAllCaps="true"
+        android:visibility="gone" />
+
+
 </RelativeLayout>

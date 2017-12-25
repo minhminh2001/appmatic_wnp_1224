@@ -15,8 +15,9 @@
 
     </LinearLayout>
     <RelativeLayout
+        android:background="@color/greyEEEEEE"
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:layout_height="@dimen/switch_view_and_filter_bar_height">
         <ImageView
             android:id="@+id/iv_arrow_down_black"
             android:layout_alignParentRight="true"

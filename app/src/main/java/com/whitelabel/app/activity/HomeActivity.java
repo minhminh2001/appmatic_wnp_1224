@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
@@ -35,9 +36,12 @@ import com.whitelabel.app.ui.home.MainContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.BadgeUtils;
 import com.whitelabel.app.utils.FragmentFactory;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.logger.Logger;
+
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -286,6 +290,7 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
             public void onClick(View v) {
                 if (getDrawerLayout().getDrawerLockMode(Gravity.LEFT) != DrawerLayout.LOCK_MODE_LOCKED_CLOSED) {
                     getDrawerLayout().openDrawer(Gravity.LEFT);
+                    GaTrackHelper.getInstance().googleAnalytics(Const.GA.SLIDE_MENU_SCREEN,HomeActivity.this);
                 }
             }
         });
@@ -455,6 +460,8 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
             redirectToAttachedFragment(to, TYPE_FRAGMENT_SWITCH_RIGHT2LEFT, serializable);
         } else if (HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERDETAIL == from && HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERLIST == to) {
             redirectToAttachedFragment(to, TYPE_FRAGMENT_SWITCH, serializable);
+        } else if (HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERDETAIL == from && HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERDETAIL == to) {
+            redirectToAttachedFragment(to, TYPE_FRAGMENT_SWITCH, serializable);
         } else if (HomeActivity.FRAGMENT_TYPE_HOME_NOTIFICATIONLIST == from && HomeActivity.FRAGMENT_TYPE_HOME_NOTIFICATIONDETAIL == to) {//from notification list fragment to notification detail fragment
             redirectToAttachedFragment(to, TYPE_FRAGMENT_SWITCH_RIGHT2LEFT, serializable);
         } else if (HomeActivity.FRAGMENT_TYPE_HOME_NOTIFICATIONDETAIL == from && HomeActivity.FRAGMENT_TYPE_HOME_NOTIFICATIONLIST == to) {//from notification detail fragment back to notification list fragment
@@ -576,7 +583,10 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             if (mCurrentFragment instanceof HomeHelpCenterDetailFragment && ((HomeHelpCenterDetailFragment) mCurrentFragment).onBackPressed()) {
                 if (mCanback) {
-                    switchFragment(HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERDETAIL, HomeActivity.FRAGMENT_TYPE_HOME_HELPCENTERLIST, null);
+                    TMPHelpCenterListToDetailEntity dataentity = new TMPHelpCenterListToDetailEntity();
+                    dataentity.setHelpCenterType(9);
+                    dataentity.setType(HomeHelpCenterDetailFragment.FIREST_MENU);
+                    ((HomeHelpCenterDetailFragment) mCurrentFragment).refresh(dataentity);
                 }
                 return true;
             } else if (!(mCurrentFragment instanceof HomeFragmentCallback)) {

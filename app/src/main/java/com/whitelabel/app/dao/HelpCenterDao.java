@@ -16,6 +16,7 @@ import java.util.TreeMap;
  */
 public class HelpCenterDao extends BaseHttp {
     public static final int REQUEST_GETDATA = 1;
+    public static final int REQUEST_GET_CUSTOMER_CARE = 2;
     public static final int REQUEST_ERROR = 10;
 
     public HelpCenterDao(String TAG, Handler handler) {
@@ -28,6 +29,13 @@ public class HelpCenterDao extends BaseHttp {
         requestHttp(HTTP_METHOD.GET, "appservice/cms/cmsPage?", params, REQUEST_GETDATA);
     }
 
+    public void loadCustomerCare(String key){
+        params = new TreeMap<>();
+        params.put("url_key", key);
+        params.put("store_id","1");
+        requestHttp(HTTP_METHOD.GET, "appservice/cms/customerCare", params, REQUEST_GET_CUSTOMER_CARE);
+    }
+
     @Override
     public void requestHttp(BaseHttp.HTTP_METHOD method, String url, TreeMap map, int requestCode) {
         super.requestHttp(method, url, map, requestCode);
@@ -38,6 +46,19 @@ public class HelpCenterDao extends BaseHttp {
         JLogUtils.json("response", response);
         switch (requestCode) {
             case REQUEST_GETDATA:
+                if (isOk(response)) {
+                    SVRAppserviceCmsCmsPageReturnEntity entity = JJsonUtils.parseJsonObj(response, SVRAppserviceCmsCmsPageReturnEntity.class);
+                    postHandler(requestCode, entity, RESPONSE_SUCCESS);
+                } else {
+                    ErrorMsgBean bean = JJsonUtils.parseJsonObj(response, ErrorMsgBean.class);
+                    String errorMsg="";
+                    if(bean!=null){
+                        errorMsg=bean.getErrorMessage();
+                    }
+                    postHandler(requestCode,errorMsg, RESPONSE_FAILED);
+                }
+                break;
+            case REQUEST_GET_CUSTOMER_CARE:
                 if (isOk(response)) {
                     SVRAppserviceCmsCmsPageReturnEntity entity = JJsonUtils.parseJsonObj(response, SVRAppserviceCmsCmsPageReturnEntity.class);
                     postHandler(requestCode, entity, RESPONSE_SUCCESS);

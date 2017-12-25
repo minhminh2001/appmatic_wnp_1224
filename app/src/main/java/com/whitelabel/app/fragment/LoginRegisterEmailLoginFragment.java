@@ -75,6 +75,7 @@ import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.SendBoardUtil;
 import com.whitelabel.app.utils.TwitterWrapper;
 import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
+import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.NoUnderLineClickSpan;
 
 import org.json.JSONObject;
@@ -473,8 +474,8 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
         LinearLayout llGoogleLogin = (LinearLayout) contentView.findViewById(R.id.ll_googleLogin);
         email = (EditText) contentView.findViewById(R.id.email);
         password = (EditText) contentView.findViewById(R.id.password);
-        Button sign_in = (Button) contentView.findViewById(R.id.sign_in);
-        sign_in.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        CustomTextView sign_in = (CustomTextView) contentView.findViewById(R.id.sign_in);
+        JViewUtils.setSoildButtonGlobalStyle(getActivity(),sign_in);
         View ivFacebookLogin = contentView.findViewById(R.id.ivFacebookLogin);
         TextView register = (TextView) contentView.findViewById(R.id.register);
         register.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());

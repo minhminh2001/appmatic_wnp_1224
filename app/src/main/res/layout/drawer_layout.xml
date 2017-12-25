@@ -17,8 +17,8 @@
             android:paddingTop="@dimen/statusbar_height"
             android:layout_width="match_parent"
             android:gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingRight="16dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
             android:orientation="horizontal"
             android:layout_height="130dp">
             <ImageView
@@ -57,8 +57,8 @@
             android:layout_height="match_parent">
             <RelativeLayout
                 android:id="@+id/rl_drawer_home"
-                android:paddingLeft="16sp"
-                android:paddingRight="16sp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
                 android:layout_height="44dp">
                 <ImageView
@@ -72,7 +72,6 @@
                     android:id="@+id/tv_home"
                     android:layout_toRightOf="@+id/iv_home"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="16dp"
                     android:layout_centerVertical="true"
                     style="@style/font_family_roboto_medium"
                     android:textColor="@drawable/text_color_selected"
@@ -81,10 +80,9 @@
                     android:layout_height="wrap_content" />
             </RelativeLayout>
             <RelativeLayout
-
                 android:id="@+id/rl_drawer_categorytree"
-                android:paddingLeft="16sp"
-                android:paddingRight="16sp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
                 android:layout_height="44dp">
                 <ImageView
@@ -97,7 +95,6 @@
                     android:id="@+id/tv_category_tree"
                     android:layout_toRightOf="@+id/iv_category_tree"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="16dp"
                     android:layout_centerVertical="true"
                     style="@style/font_family_roboto_medium"
                     android:textSize="14sp"
@@ -109,8 +106,8 @@
 
             <RelativeLayout
                 android:id="@+id/rl_drawer_shoppingcart"
-                android:paddingLeft="16sp"
-                android:paddingRight="16sp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
                 android:layout_height="44dp">
                 <ImageView
@@ -124,7 +121,6 @@
                     android:id="@+id/tv_shopping_cart"
                     android:layout_toRightOf="@+id/iv_shopping_cart"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="16dp"
                     android:layout_centerVertical="true"
                     style="@style/font_family_roboto_medium"
                     android:textSize="14sp"
@@ -151,8 +147,8 @@
             <RelativeLayout
                 android:id="@+id/rl_drawer_notification"
                 android:visibility="gone"
-                android:paddingLeft="16sp"
-                android:paddingRight="16sp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
                 android:layout_height="44dp">
                 <ImageView
@@ -165,7 +161,6 @@
                     android:id="@+id/tv_notification"
                     android:layout_toRightOf="@+id/iv_notification"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="16dp"
                     android:layout_centerVertical="true"
                     style="@style/font_family_roboto_medium"
                     android:textSize="14sp"
@@ -193,8 +188,8 @@
 
             <RelativeLayout
                 android:id="@+id/rl_drawer_wishlist"
-                android:paddingLeft="16sp"
-                android:paddingRight="16sp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
                 android:layout_height="44dp">
                 <ImageView
@@ -207,7 +202,6 @@
                     android:id="@+id/tv_wishlist"
                     android:layout_toRightOf="@+id/iv_wishlist"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="16dp"
                     android:layout_centerVertical="true"
                     style="@style/font_family_roboto_medium"
                     android:textSize="14sp"
@@ -232,8 +226,8 @@
 
             <RelativeLayout
                 android:id="@+id/rl_drawer_order"
-                android:paddingLeft="16sp"
-                android:paddingRight="16sp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
                 android:layout_height="44dp">
                 <ImageView
@@ -246,7 +240,6 @@
                     android:id="@+id/tv_order"
                     android:layout_toRightOf="@+id/iv_orderlist"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="16dp"
                     android:layout_centerVertical="true"
                     style="@style/font_family_roboto_medium"
                     android:textSize="14sp"
@@ -273,8 +266,8 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rl_drawer_address"
-                android:paddingLeft="16sp"
-                android:paddingRight="16sp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
                 android:layout_height="44dp">
                 <ImageView
@@ -287,7 +280,6 @@
                     android:id="@+id/tv_address"
                     android:layout_toRightOf="@+id/iv_address"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="16dp"
                     android:layout_centerVertical="true"
                     style="@style/font_family_roboto_medium"
                     android:textSize="14sp"
@@ -297,9 +289,34 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_drawer_customer_care"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+                <ImageView
+                    android:id="@+id/iv_customer_care"
+                    android:layout_width="24dp"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:layout_height="24dp" />
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_customer_care"
+                    android:layout_toRightOf="@+id/iv_customer_care"
+                    android:layout_width="match_parent"
+                    android:layout_centerVertical="true"
+                    style="@style/font_family_roboto_medium"
+                    android:textSize="14sp"
+                    android:textColor="@drawable/text_color_selected"
+                    android:text="@string/customer_service"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
                 android:id="@+id/rl_drawer_store_credit"
-                android:paddingLeft="16sp"
-                android:paddingRight="16sp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="44dp">
@@ -315,7 +332,6 @@
                     android:id="@+id/tv_store_credit"
                     android:layout_toRightOf="@+id/iv_store_credit"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="16dp"
                     android:layout_centerVertical="true"
                     style="@style/font_family_roboto_medium"
                     android:textSize="14sp"
@@ -332,8 +348,8 @@
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_setting"
                     android:layout_width="match_parent"
-                    android:paddingLeft="16sp"
-                    android:paddingRight="16sp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
                     android:layout_height="40dp"
                     style="@style/font_family_robot_regular"
@@ -344,8 +360,8 @@
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_customer_service"
                     android:layout_width="match_parent"
-                    android:paddingLeft="16sp"
-                    android:paddingRight="16sp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
                     android:layout_height="40dp"
                     style="@style/font_family_robot_regular"
@@ -364,8 +380,8 @@
                     android:textSize="12sp"
                     android:textColor="@drawable/text_grey_color_selected"
                     android:text="@string/help_centre"
-                    android:paddingLeft="16sp"
-                    android:paddingRight="16sp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
                     android:layout_height="40dp"/>
                 <com.whitelabel.app.widget.CustomTextView
@@ -377,8 +393,8 @@
                     android:textSize="12sp"
                     android:textColor="@drawable/text_grey_color_selected"
                     android:text="@string/home_helpcenter_list_shippingdelivery"
-                    android:paddingLeft="16sp"
-                    android:paddingRight="16sp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
                     android:layout_height="40dp" />
         </LinearLayout>

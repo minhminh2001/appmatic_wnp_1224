@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
@@ -34,10 +35,12 @@ import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.LoginRegisterDao;
 import com.whitelabel.app.model.SVRAppServiceCustomerResetpass;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
+import com.whitelabel.app.widget.CustomTextView;
 
 import java.lang.ref.WeakReference;
 
@@ -112,6 +115,7 @@ public class LoginRegisterResetPassFragment extends Fragment implements View.OnC
     @Override
     public void onStart() {
         super.onStart();
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.FORGOT_PASSWORD_SCREEN,getActivity());
     }
     public void onClickLeftMenu(View v) {
         InputMethodManager inputMethodManager = (InputMethodManager)loginRegisterActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -209,8 +213,9 @@ public class LoginRegisterResetPassFragment extends Fragment implements View.OnC
 
             }
         });
-        Button reset_password = (Button) contentView.findViewById(R.id.reset_password);
-        reset_password.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        CustomTextView reset_password = (CustomTextView) contentView.findViewById(R.id.reset_password);
+//        reset_password.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        JViewUtils.setSoildButtonGlobalStyle(getActivity(),reset_password);
         reset_password.setOnClickListener(this);
         email.setInputType(EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         clear=(ImageView)contentView.findViewById(R.id.clear);

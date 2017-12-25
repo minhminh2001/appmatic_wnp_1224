@@ -363,6 +363,7 @@
                         android:text="@string/product_detail_addtocart"
                         android:textColor="@color/whiteffffff"
                         android:textSize="@dimen/button_font_size"
+                        android:textAllCaps="true"
                         />
                 </LinearLayout>
             </RelativeLayout>
