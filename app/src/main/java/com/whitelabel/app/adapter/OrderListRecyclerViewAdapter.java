@@ -265,9 +265,6 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             });
             setDiffBtnShow(subOrderHolder.btnOrderListItemAddtocart);
             //checkBox
-//            subOrderHolder.cbReorderCheck.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-//            GradientDrawable myGrad = (GradientDrawable)subOrderHolder.cbReorderCheck.getBackground();
-//            myGrad.setColor(ContextCompat.getColor(context,R.color.red));
             subOrderHolder.cbReorderCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton checkBox, boolean isChecked) {
