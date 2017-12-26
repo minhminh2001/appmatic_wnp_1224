@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/setting_item_height"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    >
+    <com.whitelabel.app.widget.CustomTextView
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:paddingTop="@dimen/checkout_hint_anim_text_paddingtop"
+        android:paddingBottom="@dimen/checkout_hint_anim_text_paddingtop"
+        android:id="@+id/tv_customer_care_item"
+        android:textColor="@color/black"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_width="9dp"
+        android:layout_height="14dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/icon_right"
+         />
+</RelativeLayout>

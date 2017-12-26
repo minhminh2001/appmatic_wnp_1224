@@ -52,6 +52,7 @@ import org.json.JSONObject;
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
     private String mOrderNumber;
@@ -128,7 +129,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                         RepaymentInfoModel  repaymentInfoModel= (RepaymentInfoModel) msg.obj;
                         String productName="";
                         try {
-                            productName = mActivity.get().mBean.getSuborders()[0].getItems()[0].getName();
+                            productName = mActivity.get().mBean.getSuborders().get(0).getItems().get(0).getName();
                         }catch (Exception ex){
                             ex.getMessage();
                         }
@@ -304,9 +305,9 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         JLogUtils.d("orderId1", orderOuter.getOrderSn());
         sendRequest(orderId);
         //Set value to detail page column
-        MyAccountOrderMiddle[] orderMiddle = orderOuter.getSuborders();
+        List<MyAccountOrderMiddle> orderMiddle = orderOuter.getSuborders();
         LinkedList<MyAccountOrderMiddle> list_orderMiddles = new LinkedList<MyAccountOrderMiddle>();
-        list_orderMiddles.addAll(Arrays.asList(orderMiddle));
+        list_orderMiddles.addAll(orderMiddle);
         adapter = new MyAccountOrderDetailAdapter(this, mImageLoader,orderOuter.getStatusCode(),orderOuter.getStatus());
         adapter.list = list_orderMiddles;
         adapter.notifyDataSetChanged();
@@ -477,9 +478,10 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
 //        tvCityStatePostCode.setText(shippingAddress.getCity() + ", " + state + shippingAddress.getPostcode());
 //        tvCountry.setText(shippingAddress.getCountry());
 //        tvPhone.setText(getResources().getString(R.string.t) + shippingAddress.getTelephone());
-        MyAccountOrderMiddle[] orderMiddle = orderDetail.getSuborders();
+        List<MyAccountOrderMiddle> orderMiddle = orderDetail.getSuborders();
+        orderDetail.getSuborders();
         LinkedList<MyAccountOrderMiddle> list_orderMiddles = new LinkedList<MyAccountOrderMiddle>();
-        list_orderMiddles.addAll(Arrays.asList(orderMiddle));
+        list_orderMiddles.addAll(orderMiddle);
         adapter.list = list_orderMiddles;
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);

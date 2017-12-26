@@ -29,6 +29,7 @@ import java.util.Map;
 
 public class ProductChildListView extends LinearLayout{
     private List<TextView>  tvNumbers;
+    private View rootView;
      public ProductChildListView(Context context){
         super(context);
      }
@@ -37,8 +38,9 @@ public class ProductChildListView extends LinearLayout{
      }
     private  ArrayList<ProductPropertyModel>  mBeans;
     private TextView tvTotal;
-    public void initProductChildListView(ArrayList<ProductPropertyModel>  beans){
+    public void initProductChildListView(ArrayList<ProductPropertyModel>  beans,View rootView){
         tvNumbers=new ArrayList<>();
+        this.rootView=rootView;
         setPadding(JScreenUtils.dip2px(getContext(),10),0,JScreenUtils.dip2px(getContext(),10),0);
         mBeans=beans;
         if(mBeans==null||mBeans.size()==0){
@@ -138,7 +140,7 @@ public class ProductChildListView extends LinearLayout{
                     int count=Integer.parseInt(tvChildNumber.getText().toString());
                      count++;
                     if(count>bean.getStockQty()){
-                        JViewUtils.showNoInventoryToast(getContext(),getContext().getResources().getString(R.string.insufficient_stock));
+                        JViewUtils.showPopUpWindw(getContext(),rootView,getContext().getResources().getString(R.string.insufficient_stock));
                     }else{
                         tvChildNumber.setText(count+"");
                         setTotalPrice();

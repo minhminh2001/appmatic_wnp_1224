@@ -2,6 +2,7 @@ package com.whitelabel.app.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -10,9 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.bean.OrderBody;
@@ -22,14 +29,21 @@ import com.whitelabel.app.model.MyAccountOrderMiddle;
 import com.whitelabel.app.model.MyAccountOrderOuter;
 import com.whitelabel.app.model.MyAccountOrderTrackingInfo;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.logger.Logger;
+import com.whitelabel.app.widget.CustomCheckBox;
+import com.whitelabel.app.widget.CustomTextView;
+import com.whitelabel.app.widget.MaterialDialog;
 import com.whitelabel.app.widget.RefreshLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/4/11.
@@ -42,11 +56,26 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     private final Context context;
     private boolean loadMore;
     private final ArrayList dataList;
+    private ArrayList transformDataList=new ArrayList();
     private final ImageLoader mImageLoader;
+    //every item's position count
+    private Map<Integer,OrderBody> itemCheckedMaps =new HashMap<>();
+    //title opposite subItem position
+    Map<Integer,ArrayList<Integer>> titleAndSubBody=new HashMap<>();
+    //all title item positon
+    ArrayList<Integer> titlePoss=new ArrayList<>();
+    //if click btn no item checked ,then mark all items to this arraylist
+    ArrayList<OrderBody> markAllCheckedItems=new ArrayList<>();
+    private RecyclerView recyclerView;
+    //add btn to this array
+    private Map<Integer,CustomTextView> btnAddOrders=new HashMap<>();
+
+    private View rootView;
 
     @SuppressWarnings("unchecked")
     public ArrayList getDataList(ArrayList dataList) {
         ArrayList arrayList = new ArrayList();
+        ArrayList<String> availabilityLists=new ArrayList<>();
         for (int i = 0; i < dataList.size(); i++) {
             MyAccountOrderOuter myAccountOrderOuter = (MyAccountOrderOuter) dataList.get(i);
             OrderTip orderTip = new OrderTip();
@@ -55,34 +84,46 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             orderTip.setOrderSttus(myAccountOrderOuter.getStatus());
             orderTip.setOrderId(myAccountOrderOuter.getOrderId());
             arrayList.add(orderTip);
-            MyAccountOrderMiddle[] orderlist = myAccountOrderOuter.getSuborders();
-            for (int j = 0; j < orderlist.length; j++) {
+            List<MyAccountOrderMiddle> orderlist = myAccountOrderOuter.getSuborders();
+            availabilityLists.clear();
+            for (int j = 0; j < orderlist.size(); j++) {
                 MyAccountOrderTrackingInfo trackingInfo = null;
-                if (orderlist[j].getTrackingInfo() != null) {
-                  trackingInfo = orderlist[j].getTrackingInfo();
+                if (orderlist.get(j).getTrackingInfo() != null) {
+                  trackingInfo = orderlist.get(j).getTrackingInfo();
                 }
-                for (int k = 0; k < orderlist[j].getItems().length; k++) {
-                    MyAccountOrderInner orderInners = orderlist[j].getItems()[k];
+                for (int k = 0; k < orderlist.get(j).getItems().size(); k++) {
+                    MyAccountOrderInner orderInners = orderlist.get(j).getItems().get(k);
                     OrderBody orderBody = new OrderBody();
                     orderBody.setOrderNumber(myAccountOrderOuter.getOrderSn());
                     orderBody.setAvailability(orderInners.getAvailability());
+                    if (orderInners.getAvailability().equals("0")){
+                        availabilityLists.add("0");
+                    }
                     orderBody.setOrderCs(setCS(orderInners));
                     orderBody.setOrderImage(orderInners.getImage());
                     orderBody.setIsRPayment(myAccountOrderOuter.getIsRPayment());
                     orderBody.setOrderName(orderInners.getName());
                     orderBody.setOrderPrice(orderInners.getPrice());
                     orderBody.setOrderQuantity(orderInners.getQty());
+                    orderBody.setItemId(orderInners.getItemId());
                     orderBody.setOrderTextStatus(myAccountOrderOuter.getStatus());
                     orderBody.setOrderStatusCode(myAccountOrderOuter.getStatusCode());
                     orderBody.setMerchantName(orderInners.getVendorDisplayName());
                     orderBody.setVendor_id(orderInners.getVendor_id());
                     orderBody.setOrderId(myAccountOrderOuter.getOrderId());
+                    orderBody.setStockQty(orderInners.getStockQty());
                     if(trackingInfo!=null){
                         orderBody.setTrickingTitle(trackingInfo.getTitle());
                         orderBody.setTrickingUrl(trackingInfo.getUrl());
                     }
-                    if(j==orderlist.length-1){
+                    if(j==orderlist.size()-1){
                         orderBody.setLast(true);
+                    }
+                    //if subOrders all inAvailability then btn no used
+                    if (availabilityLists.size()==orderlist.size()){
+                        orderBody.setBtnAddCartEnable(false);
+                    }else {
+                        orderBody.setBtnAddCartEnable(true);
                     }
                     arrayList.add(orderBody);
                 }
@@ -90,19 +131,32 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         }
         return arrayList;
     }
-    public OrderListRecyclerViewAdapter(Context context, ArrayList dataList, boolean pullEnable, ImageLoader imageLoader) {
+
+
+    public OrderListRecyclerViewAdapter(Context context, RecyclerView recyclerView,ArrayList dataList, boolean pullEnable, ImageLoader imageLoader,View rootView) {
         this.context = context;
         this.dataList = dataList;
         this.loadMore = pullEnable;
         mImageLoader = imageLoader;
+        this.rootView=rootView;
+        this.recyclerView=recyclerView;
+    }
+
+    public void updateDataChange(){
+        transformDataList=getDataList(dataList);
+        itemCheckedMaps.clear();
+        initTitleAndSubItemPosition();
     }
 
     private OnOrderViewItemClickListener onOrderViewItemClickListener;
 
     public interface OnOrderViewItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view, int position,ArrayList<OrderBody> orders);
     }
 
+    public interface IOnErrorDialogConfirm{
+        void onComfirm();
+    }
     public void setOnOrderViewItemClickListener(OnOrderViewItemClickListener onOrderViewItemClickListener) {
         this.onOrderViewItemClickListener = onOrderViewItemClickListener;
     }
@@ -140,10 +194,12 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
     @SuppressLint("RecyclerView")
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {//相当于getView
-        ArrayList arrayList = getDataList(dataList);
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {//相当于getView
+        if (transformDataList==null && transformDataList.isEmpty()){
+            return;
+        }
         if (holder instanceof OrderListholder) {
-            OrderTip orderTip = (OrderTip) arrayList.get(position);
+            OrderTip orderTip = (OrderTip) transformDataList.get(position);
             final OrderListholder orderListholder = (OrderListholder) holder;
             orderListholder.orderNumber.setText("Order No. " + orderTip.getOrderNumber());
             orderListholder.orderDate.setText(orderTip.getOrderDate());
@@ -151,7 +207,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             orderListholder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onOrderViewItemClickListener.onItemClick(orderListholder.itemView, position);
+                    onOrderViewItemClickListener.onItemClick(orderListholder.itemView, position,null);
                 }
             });
         }  else if (holder instanceof VHFooter) {
@@ -159,27 +215,149 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             ((VHFooter) holder).footerView.setState(RefreshLoadMoreRecyclerView.CustomDragRecyclerFooterView.STATE_READY);
 //            }
         } else if (holder instanceof SubOrderHolder) {
-            final OrderBody orderBody = (OrderBody) arrayList.get(position);
+            final OrderBody orderBody = (OrderBody) transformDataList.get(position);
+
             final SubOrderHolder subOrderHolder = (SubOrderHolder) holder;
-//            JLogUtils.i("OrderListRecyclerViewAdapter", "=============" + String.valueOf(subOrderHolder.orderImage.getTag()));
             if (orderBody.getOrderImage() == null || !orderBody.getOrderImage().equals(String.valueOf(subOrderHolder.orderImage.getTag()))) {
                 JImageUtils.downloadImageFromServerByUrl(context, mImageLoader, subOrderHolder.orderImage, orderBody.getOrderImage(), JToolUtils.dip2px(context, 85), JToolUtils.dip2px(context, 85));
             }
             subOrderHolder.orderImage.setTag(orderBody.getOrderImage());
             subOrderHolder.rmTop.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+"");
             subOrderHolder.orderName.setText(orderBody.getOrderName());
+            subOrderHolder.orderNum.setVisibility(View.GONE);
+
             //add to cart button
             if (orderBody.isLast()){
                 subOrderHolder.btnOrderListItemAddtocart.setVisibility(View.VISIBLE);
-                GradientDrawable myGrad = (GradientDrawable)subOrderHolder.btnOrderListItemAddtocart.getBackground();
-                myGrad.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+                btnAddOrders.put(position,subOrderHolder.btnOrderListItemAddtocart);
+//                GradientDrawable myGrad = (GradientDrawable)subOrderHolder.btnOrderListItemAddtocart.getBackground();
+                //base current group product contain item all show : no Sell product-> to set btn enable
+                if (orderBody.isBtnAddCartEnable()){
+//                    myGrad.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+                    JViewUtils.setStrokeButtonGlobalStyle(context, subOrderHolder.btnOrderListItemAddtocart);
+                    subOrderHolder.btnOrderListItemAddtocart.setEnabled(true);
+                }else {
+//                    myGrad.setColor(ContextCompat.getColor(context,R.color.greyDCDCDC));
+                    JViewUtils.setStrokeButtonUnusableStyle(context,subOrderHolder.btnOrderListItemAddtocart);
+                    subOrderHolder.btnOrderListItemAddtocart.setEnabled(false);
+                }
             }else {
                 subOrderHolder.btnOrderListItemAddtocart.setVisibility(View.GONE);
             }
             subOrderHolder.btnOrderListItemAddtocart.setOnClickListener(new View.OnClickListener() {
                 @Override
+                public void onClick(final View v) {
+
+                    ArrayList<OrderBody> allAddOrderToCart = getAllAddOrderToCart(position);
+                    final ArrayList<OrderBody>[] noSellAndSellProductItem = getNoSellAndSellProductItem(allAddOrderToCart);
+                    if (noSellAndSellProductItem[0].isEmpty()){
+                        onOrderViewItemClickListener.onItemClick(v, position,noSellAndSellProductItem[1]);
+                    }else {
+                        showErrorProductDialog(noSellAndSellProductItem[0], new IOnErrorDialogConfirm() {
+                            @Override
+                            public void onComfirm() {
+                                onOrderViewItemClickListener.onItemClick(v, position,noSellAndSellProductItem[1]);
+                            }
+                        });
+                    }
+                    gaBtnKind(((CustomTextView)v).getText().toString().trim(),orderBody.getOrderId());
+                }
+            });
+            setDiffBtnShow(subOrderHolder.btnOrderListItemAddtocart);
+            //checkBox
+            subOrderHolder.cbReorderCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton checkBox, boolean isChecked) {
+                    if(isChecked){
+                        if (checkBox.getTag()!=null){
+                            if (!itemCheckedMaps.containsKey((int) checkBox.getTag())){
+                                Drawable pressIcon = JImageUtils.getThemeIcon(context, R.drawable.icon_order_checked);
+                                checkBox.setBackground(pressIcon);
+                                orderBody.setChecked(true);
+                                itemCheckedMaps.put(position,orderBody);
+                                transformDataList.set(position,orderBody);
+                                //click item to let group btn 'add to cart ' set Tag
+                                int[] preAndNextTitleIndex = getPreAndNextTitleIndex(position);
+                                if (recyclerView.getScrollState()==RecyclerView.SCROLL_STATE_IDLE&&!recyclerView.isComputingLayout()){
+                                    int currentBtnPos=preAndNextTitleIndex[1]-1;
+                                    CustomTextView btnAddOrder = btnAddOrders.get(currentBtnPos);
+                                    if (btnAddOrder!=null){
+                                        btnAddOrder.setTag(currentBtnPos);
+                                        setDiffBtnShow(btnAddOrder);
+                                    }
+                                }
+                                gaChooseProduct(orderBody.getOrderName(),orderBody.getOrderId());
+                            }
+                        }
+                    }else {
+                        if (checkBox.getTag()!=null){
+                            if (itemCheckedMaps.containsKey((int) checkBox.getTag())){
+                                Drawable pressIcon = JImageUtils.getThemeIcon(context, R.drawable.icon_order_nocheck);
+                                checkBox.setBackground(pressIcon);
+                                orderBody.setChecked(false);
+                                itemCheckedMaps.remove(position);
+                                transformDataList.set(position,orderBody);
+                                int[] preAndNextTitleIndex = getPreAndNextTitleIndex(position);
+                                boolean isContainThisGroupCheckItem=false;
+                                for (int startItemPos=preAndNextTitleIndex[0]+1;startItemPos<preAndNextTitleIndex[1];startItemPos++){
+                                    if (itemCheckedMaps.containsKey(startItemPos)){
+                                        isContainThisGroupCheckItem=true;
+                                    }
+                                }
+                                int currentBtnPos=preAndNextTitleIndex[1]-1;
+                                CustomTextView btnAddOrder = btnAddOrders.get(currentBtnPos);
+                                //isContainThisGroupCheckItem=true means this group contain checkedItem
+                                if (isContainThisGroupCheckItem && btnAddOrder!=null){
+                                    btnAddOrder.setTag(currentBtnPos);
+                                    setDiffBtnShow(btnAddOrder);
+                                }else {
+                                    btnAddOrder.setTag(null);
+                                    setDiffBtnShow(btnAddOrder);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            if (!itemCheckedMaps.isEmpty()){
+                subOrderHolder.cbReorderCheck.setChecked(itemCheckedMaps.containsKey(position)?true:false);
+            }else {
+                subOrderHolder.cbReorderCheck.setChecked(false);
+            }
+            subOrderHolder.cbReorderCheck.setTag(position);
+
+            //sub quantity and plus
+            subOrderHolder.tvShoppingcartCellCount.setText(orderBody.getOrderQuantity());
+            subOrderHolder.rlShoppingcartCountSub.setOnClickListener(new View.OnClickListener() {
+                @Override
                 public void onClick(View v) {
-                    onOrderViewItemClickListener.onItemClick(v, position);
+                    int visibleOrderCount;
+                    visibleOrderCount = Integer.valueOf(orderBody.getOrderQuantity());
+                    if (visibleOrderCount>1){
+                        visibleOrderCount--;
+                    }
+                    String itemQuantity=String.valueOf(visibleOrderCount);
+                    orderBody.setOrderQuantity(itemQuantity);
+                    transformDataList.set(position,orderBody);
+                    subOrderHolder.tvShoppingcartCellCount.setText(itemQuantity);
+                    gaModifyQty(orderBody.getOrderName(),false,itemQuantity,orderBody.getOrderId());
+                }
+            });
+            subOrderHolder.rlShoppingcartCountPlus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int visibleOrderCount;
+                    visibleOrderCount = Integer.valueOf(orderBody.getOrderQuantity());
+                    if (Integer.valueOf(orderBody.getStockQty())>visibleOrderCount){
+                        visibleOrderCount++;
+                    }else {
+                        JViewUtils.showPopUpWindw(context,rootView,context.getResources().getString(R.string.insufficient_stock));
+                    }
+                    String itemQuantity=String.valueOf(visibleOrderCount);
+                    orderBody.setOrderQuantity(itemQuantity);
+                    transformDataList.set(position,orderBody);
+                    subOrderHolder.tvShoppingcartCellCount.setText(itemQuantity);
+                    gaModifyQty(orderBody.getOrderName(),false,itemQuantity,orderBody.getOrderId());
                 }
             });
             if (orderBody.getIsRPayment()==0||!orderBody.isLast()) {
@@ -191,7 +369,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onClick(View v) {
                         if(onOrderViewItemClickListener!=null) {
-                            onOrderViewItemClickListener.onItemClick(v, position);
+                            onOrderViewItemClickListener.onItemClick(v, position,null);
                         }
                     }
                 });
@@ -204,20 +382,17 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             }
 
 
-            GradientDrawable myGrad = (GradientDrawable)subOrderHolder.btnOrderListItemAddtocart.getBackground();
             if(!TextUtils.isEmpty(orderBody.getAvailability())&&!"1".equals(orderBody.getAvailability())){
                 subOrderHolder.tvUnavailable.setVisibility(View.VISIBLE);
                 subOrderHolder.tvTrans.setVisibility(View.VISIBLE);
-                myGrad.setColor(ContextCompat.getColor(context,R.color.greyDCDCDC));
-                subOrderHolder.btnOrderListItemAddtocart.setEnabled(false);
+                subOrderHolder.cbReorderCheck.setEnabled(false);
             }else{
                 subOrderHolder.tvUnavailable.setVisibility(View.GONE);
                 subOrderHolder.tvTrans.setVisibility(View.GONE);
-                myGrad.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-                subOrderHolder.btnOrderListItemAddtocart.setEnabled(true);
+                subOrderHolder.cbReorderCheck.setEnabled(true);
             }
+
             subOrderHolder.orderPrice.setText(JDataUtils.formatDouble(orderBody.getOrderPrice()));
-            subOrderHolder.orderNum.setText("Quantity: " + orderBody.getOrderQuantity());
             subOrderHolder.orderNewStatus.setText(orderBody.getOrderTextStatus());
 
             JViewUtils.setStatus(subOrderHolder.orderStatus, orderBody.getOrderStatusCode());
@@ -231,11 +406,213 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             subOrderHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onOrderViewItemClickListener.onItemClick(view, position);
+                    onOrderViewItemClickListener.onItemClick(view, position,null);
                 }
             });
         }
     }
+
+    private void notifyBtnStatus(int position) {
+        RecyclerView.ViewHolder viewHolder=recyclerView.findViewHolderForAdapterPosition(position);
+        if (viewHolder != null && viewHolder instanceof SubOrderHolder) {
+            SubOrderHolder itemHolder = (SubOrderHolder) viewHolder;
+            if (itemHolder.btnOrderListItemAddtocart.getTag()!=null){
+                itemHolder.btnOrderListItemAddtocart.setText(context.getResources().getText(R.string.product_detail_addtocart));
+            }else {
+                itemHolder.btnOrderListItemAddtocart.setText(context.getResources().getText(R.string.product_detail_addorder_tocart));
+            }
+        }
+    }
+
+    private void setDiffBtnShow(CustomTextView btn){
+        if (btn.getTag()!=null){
+            btn.setText(context.getResources().getText(R.string.product_detail_addtocart));
+        }else {
+            btn.setText(context.getResources().getText(R.string.product_detail_addorder_tocart));
+        }
+    }
+
+    /**
+     *  base btn click position ,if no item checked ,then add all currency group's item ,else get all checked item
+     * @param position btn click postion
+     * @return
+     */
+    private ArrayList<OrderBody> getAllAddOrderToCart(int position) {
+        ArrayList<OrderBody> checkedList = getCheckedList(position);
+        markAllCheckedItems.clear();
+        //current group order no check any item,then
+        if (checkedList!=null && checkedList.isEmpty()){
+            int[] preAndNextTitleIndex = getPreAndNextTitleIndex(position);
+            //all item count
+//            int totalItem=preAndNextTitleIndex[1]-preAndNextTitleIndex[0];
+
+            //startItemPos = preTitlePos +1,
+            for (int i= preAndNextTitleIndex[0]+1;i<preAndNextTitleIndex[1];i++){
+                if (transformDataList.get(i) instanceof OrderBody){
+                    OrderBody orderBody = (OrderBody) transformDataList.get(i);
+                    markAllCheckedItems.add(orderBody);
+                }
+            }
+        }else {
+            markAllCheckedItems.addAll(checkedList);
+        }
+        return markAllCheckedItems;
+    }
+
+    /**
+     * base (all checked lists) to get no sell prducts
+     * @param checkedLists all checked lists
+     */
+    private ArrayList<OrderBody>[] getNoSellAndSellProductItem(ArrayList<OrderBody> checkedLists){
+        ArrayList<OrderBody> noSellProducts=new ArrayList<>();
+        ArrayList<OrderBody> sellProducts=new ArrayList<>();
+        ArrayList<OrderBody>[] noSellAndSellItems =new ArrayList[2];
+        if (checkedLists!=null &&  !checkedLists.isEmpty()){
+            for (OrderBody orderBody:checkedLists){
+                if (orderBody.getAvailability().equals("0")){
+                    noSellProducts.add(orderBody);
+                }else {
+                    sellProducts.add(orderBody);
+                }
+            }
+        }
+        noSellAndSellItems[0]=noSellProducts;
+        noSellAndSellItems[1]=sellProducts;
+        return noSellAndSellItems;
+    }
+
+    /**
+     * base click position btn ,get current grounp order -all child checked item
+     * @param position click btn anchor
+     * @return
+     */
+    private ArrayList<OrderBody> getCheckedList(int position){
+        ArrayList<OrderBody> orderBodies=new ArrayList<>();
+        if (itemCheckedMaps!=null && !itemCheckedMaps.isEmpty()){
+            int[] preAndNextTitleIndex = getPreAndNextTitleIndex(position);
+            for (Map.Entry<Integer,OrderBody> entry:itemCheckedMaps.entrySet()){
+                //gather than last title and less-than next title :all item
+                if (entry.getKey()>preAndNextTitleIndex[0] && entry.getKey()<preAndNextTitleIndex[1]){
+                    orderBodies.add(entry.getValue());
+                }
+            }
+        }
+        return orderBodies;
+    }
+
+    //click 'add to cart' button if order's item show unavailable ,show this dialog
+    public void showErrorProductDialog(ArrayList<OrderBody> beans, final IOnErrorDialogConfirm iOnErrorDialogConfirm) {
+        final MaterialDialog mMaterialDialog = new MaterialDialog(context);
+        mMaterialDialog.setTitle(context.getResources().getString(R.string.add_order_to_cart_error_title));
+        mMaterialDialog.setTitleSize(16);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_list, null);
+        ListView listView = (ListView) view.findViewById(R.id.listview);
+        ReRorderToCartAdapter adapter = new ReRorderToCartAdapter(context, beans, mImageLoader);
+        listView.setAdapter(adapter);
+        mMaterialDialog.setContentView(view);
+        mMaterialDialog.setPositiveButton("OK", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mMaterialDialog!=null) {
+                    mMaterialDialog.dismiss();
+                }
+                if (iOnErrorDialogConfirm!=null){
+                    iOnErrorDialogConfirm.onComfirm();
+                }
+            }
+        });
+        mMaterialDialog.show();
+    }
+
+    private void initTitleAndSubItemPosition(){
+        ArrayList<Integer> subBody=new ArrayList<>();
+        //create titlePos targe subItem's Pos
+        int titlePos=0;
+        int SubBodyPos=0;
+        if (transformDataList!=null && !transformDataList.isEmpty()) {
+            titleAndSubBody.clear();
+            for (int i = 0; i < transformDataList.size(); i++) {
+                if (transformDataList.get(i) instanceof OrderTip) {
+                    titlePoss.add(i);
+                    titlePos = i;
+                } else if (transformDataList.get(i) instanceof OrderBody) {
+                    subBody.add(i);
+                    SubBodyPos = i;
+                }
+                if (titlePos > SubBodyPos && SubBodyPos != 0) {
+                    titleAndSubBody.put(titlePos - subBody.size() - 1, new ArrayList<Integer>(subBody));
+                    subBody.clear();
+                    //last one
+                } else if (SubBodyPos == transformDataList.size() - 1) {
+                    titleAndSubBody.put(titlePos, new ArrayList<Integer>(subBody));
+                    subBody.clear();
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     * @param position add to cart position ,never equal title Position
+     * @return
+     */
+    private int [] getPreAndNextTitleIndex(int position){
+        int [] arr=new int[2];
+        int markPos = 0;
+        int markGTPos = 0;
+        if (!titlePoss.isEmpty()) {
+            for (int i=0;i<titlePoss.size();i++){
+                if (position<titlePoss.get(i)){
+                    if (i>0){
+                        markPos=titlePoss.get(i-1);
+                    }
+                    markGTPos=titlePoss.get(i);
+                    break;
+                }
+            }
+        }
+        arr[0]=markPos;
+        arr[1]=markGTPos;
+        return arr;
+    }
+
+    /**
+     * get btn text to ga
+     * @param btnText
+     * @param orderId
+     */
+    private void gaBtnKind(String btnText,String orderId){
+        if (!TextUtils.isEmpty(btnText)){
+            GaTrackHelper.getInstance().googleAnalyticsEvent(Const.GA.ORDER_REORDER_CATEGORY,
+                    Const.GA.ORDER_ADD_TO_CART_EVENT,
+                    btnText,
+                    Long.valueOf(orderId));
+        }
+    }
+
+
+    private void gaChooseProduct(String productName,String orderId){
+        GaTrackHelper.getInstance().googleAnalyticsEvent(Const.GA.ORDER_REORDER_CATEGORY,
+                Const.GA.ORDER_CHOOSE_PRODUCT_EVENT,
+                productName,
+                Long.valueOf(orderId));
+    }
+
+    private void gaModifyQty(String productName,boolean isAddOrSub,String quantity,String orderId){
+        String text="";
+        if (isAddOrSub){
+            text= Const.GA.ORDER_ADD_EVENT;
+        }else {
+            text= Const.GA.ORDER_SUBTRACT_EVENT;
+        }
+        GaTrackHelper.getInstance().googleAnalyticsReorderEvent(Const.GA.ORDER_REORDER_CATEGORY,
+                Const.GA.ORDER_MODIFY_QTY_EVENT,
+                productName,
+                text,
+                quantity,
+                Long.valueOf(orderId));
+    }
+
 
     @Override
     public int getItemCount() {
@@ -276,6 +653,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         }
     }
 
+
     public static class OrderListholder extends RecyclerView.ViewHolder {
         private final TextView orderNumber;
         private final TextView orderDate;
@@ -303,7 +681,11 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         final TextView rmTop;
         final TextView tvUnavailable;
         final TextView tvTrans;
-        final Button btnOrderListItemAddtocart;
+        final CustomTextView btnOrderListItemAddtocart;
+        final CheckBox cbReorderCheck;
+        final RelativeLayout rlShoppingcartCountSub;
+        final CustomTextView tvShoppingcartCellCount;
+        final RelativeLayout rlShoppingcartCountPlus;
 
         public SubOrderHolder(View view) {
             super(view);
@@ -320,8 +702,11 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             llOrderRePayment= (LinearLayout) view.findViewById(R.id.ll_order_repayment);
             rmTop= (TextView) view.findViewById(R.id.rm_top);
             tvTrans= (TextView) view.findViewById(R.id.order_detail_trans);
-            btnOrderListItemAddtocart= (Button) view.findViewById(R.id.btn_order_list_item_addtocart);
-
+            btnOrderListItemAddtocart= (CustomTextView) view.findViewById(R.id.btn_order_list_item_addtocart);
+            cbReorderCheck= (CheckBox) view.findViewById(R.id.cb_reorder_check);
+            rlShoppingcartCountSub= (RelativeLayout) view.findViewById(R.id.rl_shoppingcart_count_sub);
+            tvShoppingcartCellCount = (CustomTextView) view.findViewById(R.id.tv_shoppingcart_cell_count);
+            rlShoppingcartCountPlus = (RelativeLayout) view.findViewById(R.id.rl_shoppingcart_count_plus);
         }
     }
 

@@ -2,6 +2,7 @@ package com.whitelabel.app.model;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/7/7.
@@ -28,7 +29,7 @@ public class MyAccountOrderDetailEntityResult extends SVRReturnEntity{
     private int isRPayment;
     private int isPickupInStore;
     private String paymentCode;
-    private MyAccountOrderMiddle[] suborders;
+    private List<MyAccountOrderMiddle> suborders;
     private HashMap<String,String> discount;
     public String getPaymentCode() {
         return paymentCode;
@@ -199,11 +200,11 @@ public class MyAccountOrderDetailEntityResult extends SVRReturnEntity{
         this.discount = discount;
     }
 
-    public MyAccountOrderMiddle[] getSuborders() {
+    public List<MyAccountOrderMiddle> getSuborders() {
         return suborders;
     }
 
-    public void setSuborders(MyAccountOrderMiddle[] suborders) {
+    public void setSuborders(List<MyAccountOrderMiddle> suborders) {
         this.suborders = suborders;
     }
 

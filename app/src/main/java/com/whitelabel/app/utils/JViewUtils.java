@@ -9,12 +9,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -22,6 +24,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +51,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Handler;
 
 
 /**
@@ -104,8 +108,8 @@ public class JViewUtils {
     public static  void setSlideMenuTextStyle(TextView tvText,boolean defaultIsGray){
         int defaultColor=defaultIsGray? ContextCompat.getColor(tvText.getContext(),R.color.blackD0):
                 ContextCompat.getColor(tvText.getContext(),R.color.black);
-        int[] colors = new int[] {WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSide_menu_background_default_color()
-                , WhiteLabelApplication.getAppConfiguration().getThemeConfig().getSide_menu_text_icon_tapping_color(),
+        int[] colors = new int[] {WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color()
+                , WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color(),
                 defaultColor};
         int[][] states = new int[3][];
         states[0] = new int[] { android.R.attr.state_enabled, android.R.attr.state_selected };
@@ -126,6 +130,11 @@ public class JViewUtils {
     public static void setStrokeButtonGlobalStyle(Context context,TextView textView){
         textView.setBackground(JImageUtils.getbuttonBakcgroundStrokeDrawable(context));
         textView.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+    }
+
+    public static void setStrokeButtonUnusableStyle(Context context,TextView textView){
+        textView.setBackground(JImageUtils.getbuttonUnusableBakcgroundStrokeDrawable(context));
+        textView.setTextColor(ContextCompat.getColor(context,R.color.greyDCDCDC));
     }
 
 
@@ -1409,5 +1418,30 @@ public class JViewUtils {
         } else {
             textView.setVisibility(View.GONE);
         }
+    }
+
+
+    public static void showPopUpWindw(Context context,View rootView,String errorMsg){
+        final PopupWindow popupWindow=new PopupWindow(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_product_detail_prompt_msg, null);
+        ((TextView) view.findViewById(R.id.tv_product_detial_error_msg)).setText(errorMsg);
+        popupWindow.setContentView(view);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        //transparent
+        ColorDrawable dw = new ColorDrawable(-00000);
+        popupWindow.setBackgroundDrawable(dw);
+        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (popupWindow!=null){
+                    popupWindow.dismiss();
+                }
+            }
+        },3000);
     }
 }

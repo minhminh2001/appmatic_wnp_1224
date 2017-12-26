@@ -49,4 +49,5 @@ public class OrderTip {
     public void setOrderId(String orderId) {
         OrderId = orderId;
     }
+
 }

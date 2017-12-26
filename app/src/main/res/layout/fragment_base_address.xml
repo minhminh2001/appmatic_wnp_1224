@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/addressbook_add_RelativeLayout">
-        <com.whitelabel.app.widget.swipemenulistview.SwipeMenuListView
-            android:id="@+id/mListView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRecycView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/v2_line"

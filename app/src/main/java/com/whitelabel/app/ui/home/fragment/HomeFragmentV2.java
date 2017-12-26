@@ -67,6 +67,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     private final static String PARAM1="param1";
     private boolean isFirstLoading=true;
     String categoryName = "";
+    private int lastPagePositon;
     @Override
     public void inject() {
         DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
@@ -303,10 +304,14 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
                 if (category != null) {
                     categoryName = category.getMenuTitle();
                 }
-                GaTrackHelper.getInstance().googleAnalytics(categoryName.toUpperCase(),getActivity());
+                //exclude 'shop by brand'
+                if (position<categoryArrayList.size()-1){
+                    GaTrackHelper.getInstance().googleAnalytics(categoryName.toUpperCase()+Const.GA.HOME_SCREEN,getActivity());
+                }
             }
             return categoryName;
         }
+
         @Override
         public int getCount() {
             int count = 0;
@@ -326,6 +331,9 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             mFragments.get(currentCategoryFragmentIndex).onPause();
             currentCategoryFragmentIndex = position;
             mFragments.get(position).onResume();
+            if (isCatOrDogPosition(position)){
+                lastPagePositon=position;
+            }
             skipBrandPage(position);
         }
         @Override
@@ -333,9 +341,17 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
         }
     };
 
+    private boolean isCatOrDogPosition(int position){
+        if (position!=categoryArrayList.size()-1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     private void skipBrandPage(int index){
         if (categoryArrayList.size()>0 && index==categoryArrayList.size()-1){
-            vpCategoryViewPager.setCurrentItem(0);
+            vpCategoryViewPager.setCurrentItem(lastPagePositon);
             String menuId = categoryArrayList.get(index).getMenuId();
             PageIntentUtils.skipToBrandListPage(getActivity(),menuId,categoryName);
         }

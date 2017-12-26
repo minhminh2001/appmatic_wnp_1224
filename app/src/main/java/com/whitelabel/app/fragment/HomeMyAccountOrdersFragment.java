@@ -34,6 +34,7 @@ import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.RefreshLoadMoreRecyclerView;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
     private boolean isImageRcyList=true;
     private ImageView ivChangeRcyListToogle;
     public static final String ORDER_ERROR_MESSAGE="orderErrorMessage";
-
+    private View rootView;
 
     @Override
     public void onRefresh() {
@@ -97,6 +98,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                     ivChangeRcyListToogle.setImageResource(R.mipmap.ic_view_single);
                     recyclerView.setAdapter(mOrderListRecyclerViewAdapter);
                     mOrderListRecyclerViewAdapter.notifyDataSetChanged();
+                    mOrderListRecyclerViewAdapter.updateDataChange();
                     isImageRcyList=!isImageRcyList;
                 }
                 break;
@@ -115,6 +117,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         @SuppressLint("InflateParams")
         View view = inflater.inflate(R.layout.fragment_myaccount_order_list_new, null);
+        rootView=LayoutInflater.from(getActivity()).inflate(R.layout.fragment_myaccount_order_list_new,null);
         setRetryTheme(view);
         mImageLoader = new ImageLoader(homeActivity);
         recyclerView = (RefreshLoadMoreRecyclerView) view.findViewById(R.id.rcy_order_list);
@@ -154,10 +157,11 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
     }
     private void initRecyclerView() {
         recyclerView.setPullLoadEnable(false);
-        mOrderListRecyclerViewAdapter = new OrderListRecyclerViewAdapter(homeActivity, listOuterRecord, true, mImageLoader);
+        mOrderListRecyclerViewAdapter = new OrderListRecyclerViewAdapter(homeActivity,recyclerView, listOuterRecord, true, mImageLoader,rootView);
         JLogUtils.d("list_size", listOuterRecord.size() + "");
         recyclerView.setAdapter(mOrderListRecyclerViewAdapter);
         mOrderListRecyclerViewAdapter.notifyItemInserted(listOuterRecord.size() - 1);
+        mOrderListRecyclerViewAdapter.updateDataChange();
         recyclerView.setOnRefreshListener(new RefreshLoadMoreRecyclerView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -176,18 +180,11 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         });
         mOrderListRecyclerViewAdapter.setOnOrderViewItemClickListener(new OrderListRecyclerViewAdapter.OnOrderViewItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(View view, int position,ArrayList<OrderBody> orders) {
                 //add to cart
                 if (view.getId()==R.id.btn_order_list_item_addtocart){
-                    if (!listOuterRecord.isEmpty()){
-                        final ArrayList arrayList = mOrderListRecyclerViewAdapter.getDataList(listOuterRecord);
-                        if(arrayList.get(position) instanceof OrderBody){
-                            OrderBody orderTip = (OrderBody) arrayList.get(position);
-                            showSwipeRefreshDialog();
-                            mShoppingCarDao.sendRecoverOrder( WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),orderTip.getOrderId(),"");
-                        }
-
-                    }
+                    showSwipeRefreshDialog();
+                    mShoppingCarDao.sendReOrderProduct(WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),orders);
 
                 }else {
                     MyAccountOrderOuter orderOuterParam = null;
@@ -212,6 +209,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         });
         mOrderListRecyclerViewTextAdapter=new OrderListRecyclerViewTextAdapter(homeActivity, listOuterRecord);
         mOrderListRecyclerViewTextAdapter.notifyItemInserted(listOuterRecord.size() - 1);
+        mOrderListRecyclerViewAdapter.updateDataChange();
         mOrderListRecyclerViewTextAdapter.setOnOrderTextViewItemClickListener(new OrderListRecyclerViewTextAdapter.OnOrderTextViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -273,6 +271,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                     if (results != null && results.size() > 0) {
                         mFragment.get().listOuterRecord.addAll(mFragment.get().initArray(results));
                         mFragment.get().mOrderListRecyclerViewAdapter.notifyDataSetChanged();
+                        mFragment.get().mOrderListRecyclerViewAdapter.updateDataChange();
                         mFragment.get().recyclerView.setVisibility(View.VISIBLE);
                     }
                     mFragment.get().pageIndex = 1;
@@ -316,6 +315,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                                 mFragment.get().recyclerView.setPullLoadEnable(true);
                             }
                             mFragment.get().mOrderListRecyclerViewAdapter.notifyDataSetChanged();
+                            mFragment.get().mOrderListRecyclerViewAdapter.updateDataChange();
                         } else {
                             if (mFragment.get().pageIndex == 1) {
                                 mFragment.get().vsEmpty.setVisibility(View.VISIBLE);
@@ -347,6 +347,13 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                 case ShoppingCarDao.REQUEST_RECOVERORDER :
 //                    ErrorMsgBean msgBean = (ErrorMsgBean) ;
                     mFragment.get().startShoppingCart((String) msg.obj);
+                    break;
+                case ShoppingCarDao.REQUEST_REORDER_PRODUCT:
+                    if (msg.arg1==ShoppingCarDao.RESPONSE_SUCCESS){
+                        mFragment.get().startShoppingCart("");
+                    }else {
+                        mFragment.get().startShoppingCart((String) msg.obj);
+                    }
                     break;
             }
             super.handleMessage(msg);

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.bean.OrderBody;
 import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.KeyValueBean;
@@ -45,6 +46,7 @@ public class ShoppingCarDao extends BaseHttp {
     public static final int REQUEST_ADDPRODUCT = 9;
     public static final int REQUEST_ADDCAMPAGINTOCART = 11;
     public static final int REQUEST_RECOVERORDER = 222;
+    public static final int REQUEST_REORDER_PRODUCT = 223;
     public static final int REQUEST_CHANGESHOPPINGCARCOUNT = 14;
     public static final int REQUEST_DELETEFROMSHOPPINGCART = 23;
     public static final int REQUEST_STORECREDIT = 24;
@@ -143,12 +145,28 @@ public class ShoppingCarDao extends BaseHttp {
 //        }
 //        requestHttp(HTTP_METHOD.POST, "/appservice/cart/add", params, REQUEST_ADDPRODUCT);
 //    }
+    //TODO joyson may use
     public void sendRecoverOrder(String sessionKey, String orderId, String storeId) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         params.put("order_id", orderId);
         params.put("store_id", storeId);
         requestHttp(HTTP_METHOD.POST, "appservice/order/reorder", params, REQUEST_RECOVERORDER);
+    }
+
+    public void sendReOrderProduct(String sessionKey, ArrayList<OrderBody> orderBodies) {
+        String orderId="";
+        params = new TreeMap<>();
+        params.put("session_key", sessionKey);
+        if(orderBodies!=null&&!orderBodies.isEmpty()){
+            for (int i=0;i<orderBodies.size();i++){
+                orderId=orderBodies.get(i).getOrderId();
+                params.put("products["+i+"][item_id]", orderBodies.get(i).getItemId());
+                params.put("products["+i+"][qty]", orderBodies.get(i).getOrderQuantity());
+            }
+        }
+        params.put("order_id", orderId);
+        requestHttp(HTTP_METHOD.POST, "appservice/order/reOrderProduct", params, REQUEST_REORDER_PRODUCT);
     }
     public void addCampaignProductToCart(String sessionKey, String productId) {
         params = new TreeMap<>();
@@ -313,6 +331,14 @@ public class ShoppingCarDao extends BaseHttp {
                 }
                 break;
             case REQUEST_RECOVERORDER:
+                if (isOk(response)) {
+                    postHandler(requestCode, "", RESPONSE_SUCCESS);
+                } else {
+                    ErrorMsgBean errorMsgBean = getErrorMsgBean(response);
+                    postHandler(requestCode, errorMsgBean.getErrorMessage(), RESPONSE_FAILED);
+                }
+                break;
+            case REQUEST_REORDER_PRODUCT:
                 if (isOk(response)) {
                     postHandler(requestCode, "", RESPONSE_SUCCESS);
                 } else {

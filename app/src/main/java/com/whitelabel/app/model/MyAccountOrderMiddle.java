@@ -1,6 +1,7 @@
 package com.whitelabel.app.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * MyAccountOrder:middle datas
@@ -9,7 +10,7 @@ public class MyAccountOrderMiddle  implements Serializable {
     private String status;
     private String statusCode;
     private String id;
-    private MyAccountOrderInner [] items;//MyAccountOrderInner;
+    private List<MyAccountOrderInner> items;//MyAccountOrderInner;
     private MyAccountOrderTrackingInfo trackingInfo;
 
     public MyAccountOrderTrackingInfo getTrackingInfo() {
@@ -44,11 +45,11 @@ public class MyAccountOrderMiddle  implements Serializable {
         this.id = id;
     }
 
-    public MyAccountOrderInner[] getItems() {
+    public List<MyAccountOrderInner> getItems() {
         return items;
     }
 
-    public void setItems(MyAccountOrderInner[] items) {
+    public void setItems(List<MyAccountOrderInner> items) {
         this.items = items;
     }
 }

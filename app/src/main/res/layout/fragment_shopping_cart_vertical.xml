@@ -48,6 +48,7 @@
                 android:gravity="center"
                 android:text="@string/CHECKOUT"
                 android:textColor="@color/buttonTextColorPrimary"
+                android:textAllCaps="true"
                 android:textSize="@dimen/button_font_size" />
         </LinearLayout>
     </RelativeLayout>

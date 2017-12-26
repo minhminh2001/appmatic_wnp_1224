@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.ui.checkout.CheckoutPaymentStatusRightFragment;
@@ -38,6 +40,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity<MainCont
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GaTrackHelper.getInstance().googleAnalytics(Const.GA.SLIDE_MENU_SCREEN,CheckoutPaymentStatusActivity.this);
                 getDrawerLayout().openDrawer(Gravity.LEFT);
             }
         });

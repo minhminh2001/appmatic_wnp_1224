@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,10 +23,13 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.common.utils.JViewUtil;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.JViewUtils;
 
 /**
  * Created by drakeet on 9/28/14.
@@ -58,6 +62,7 @@ public class MaterialDialog {
     View.OnClickListener pListener, nListener;
     private int mHeight;
     private int mWidth;
+    private int textSize;
 
 
     public MaterialDialog(Context context) {
@@ -165,12 +170,18 @@ public class MaterialDialog {
 
 
     public MaterialDialog setTitle(CharSequence title) {
-
         mTitle = title;
         if (mBuilder != null) {
             mBuilder.setTitle(title);
         }
         return this;
+    }
+
+    public void setTitleSize(int size){
+        textSize=size;
+        if (mBuilder!=null){
+            mBuilder.setTitleSize(size);
+        }
     }
 
 
@@ -273,6 +284,7 @@ public class MaterialDialog {
             }else {
                 p.width= JDataUtils.dp2Px(getmWidth());
             }
+            p.gravity=Gravity.CENTER;
             mAlertDialogWindow.setAttributes(p);
             View contentView = LayoutInflater.from(mContext)
                     .inflate(
@@ -309,6 +321,9 @@ public class MaterialDialog {
             }
             if (mTitle == null && mTitleResId == 0) {
                 mTitleView.setVisibility(View.GONE);
+            }
+            if (textSize!=0){
+                mTitleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
             }
             if (mMessageResId != 0) {
                 setMessage(mMessageResId);
@@ -396,6 +411,10 @@ public class MaterialDialog {
             }else {
                 mTitleView.setText(title);
             }
+        }
+
+        public void setTitleSize(int size){
+            mTitleView.setTextSize(dip2px(size));
         }
 
 

@@ -298,14 +298,15 @@
                     </RelativeLayout>
                 </RelativeLayout>
 
-                <com.whitelabel.app.widget.CustomButton
+                <com.whitelabel.app.widget.CustomTextView
                     style="@style/font_family_roboto_medium"
                     android:id="@+id/sign_in"
                     android:layout_width="fill_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="@dimen/button_touch_height"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/big_button_style_config"
                     android:text="@string/sign_in"
+                    android:gravity="center"
                     android:textColor="@color/buttonTextColorPrimary"
                     android:textSize="16sp"/>
 

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,10 +26,12 @@ import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.widget.CustomCheckBox;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class MyAccountOrderDetailAdapter extends BaseAdapter {
 
@@ -77,9 +80,9 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
         LinearLayout llMiddleBody = (LinearLayout) convertView.findViewById(R.id.ll_myaccount_order_cellmiddle_body);
         convertView.findViewById(R.id.order_line).setVisibility(View.GONE);
         convertView.findViewById(R.id.order_relative).setVisibility(View.GONE);
-        MyAccountOrderInner[] orderInners = orderMiddle.getItems();
-        for (int i = 0; i < orderInners.length; i++) {
-            final MyAccountOrderInner orderInner = orderInners[i];
+        List<MyAccountOrderInner> orderInners = orderMiddle.getItems();
+        for (int i = 0; i < orderInners.size(); i++) {
+            final MyAccountOrderInner orderInner = orderInners.get(i);
             View view_inner = LayoutInflater.from(context).inflate(R.layout.fragment_myorder_list_new_item1, null);
             view_inner.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,6 +123,10 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
             TextView unavailable=(TextView)view_inner.findViewById(R.id.order_detail_unavailable);
             TextView orderDetailTrans=(TextView)view_inner.findViewById(R.id.order_detail_trans);
             TextView orderMerchantName=(TextView)view_inner.findViewById(R.id.tv_orderlist_new_mername);
+            LinearLayout llAddCountSubs=(LinearLayout)view_inner.findViewById(R.id.ll_add_count_subs);
+            llAddCountSubs.setVisibility(View.GONE);
+            CheckBox chRecorderCheck=(CheckBox)view_inner.findViewById(R.id.cb_reorder_check);
+            chRecorderCheck.setVisibility(View.GONE);
             final MyAccountOrderTrackingInfo  trackingInfo = orderMiddle.getTrackingInfo();
             tvCurreny.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+"");
 //            if (trackingInfo!=null) {

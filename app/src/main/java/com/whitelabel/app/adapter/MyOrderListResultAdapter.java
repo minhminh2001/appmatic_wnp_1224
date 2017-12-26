@@ -21,6 +21,7 @@ import com.whitelabel.app.utils.JViewUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/4/7.
@@ -75,15 +76,15 @@ public class MyOrderListResultAdapter extends BaseAdapter {
             }
             orderHolder.orderDate.setText(entityResult.get(i - 1).getDate());
             orderHolder.orderStatus.setText(entityResult.get(i - 1).getStatus());
-            MyAccountOrderMiddle[] orderlist = entityResult.get(i - 1).getSuborders();
+            List<MyAccountOrderMiddle> orderlist = entityResult.get(i - 1).getSuborders();
 
             orderHolder.orderEvery.removeAllViews();
             SubOrderHolder subOrderHolder = new SubOrderHolder();
 
-            for (int j = 0; j < orderlist.length; j++) {
-                for (int k = 0; k < orderlist[j].getItems().length; k++) {
+            for (int j = 0; j < orderlist.size(); j++) {
+                for (int k = 0; k < orderlist.get(j).getItems().size(); k++) {
                     View itemView = LayoutInflater.from(context).inflate(R.layout.fragment_myorder_list_new_item1, null);
-                    MyAccountOrderInner orderInners = orderlist[j].getItems()[k];
+                    MyAccountOrderInner orderInners = orderlist.get(j).getItems().get(k);
                     subOrderHolder.orderImage = (ImageView) itemView.findViewById(R.id.iv_orderlist_new);
                     subOrderHolder.orderName = (TextView) itemView.findViewById(R.id.tv_orderlist_new_name);
                     subOrderHolder.orderCS = (TextView) itemView.findViewById(R.id.tv_orderlist_new_det);
@@ -97,8 +98,8 @@ public class MyOrderListResultAdapter extends BaseAdapter {
                     setCS(subOrderHolder.orderCS, orderInners);
                     subOrderHolder.orderPrice.setText(orderInners.getPrice());
                     subOrderHolder.orderNum.setText("Quantity: " + orderInners.getQty());
-                    subOrderHolder.orderNewStatus.setText(orderlist[j].getStatus());
-                    JViewUtils.setStatus(subOrderHolder.orderStatus, orderlist[j].getStatusCode());
+                    subOrderHolder.orderNewStatus.setText(orderlist.get(j).getStatus());
+                    JViewUtils.setStatus(subOrderHolder.orderStatus, orderlist.get(j).getStatusCode());
                     orderHolder.orderEvery.addView(itemView);
                 }
             }

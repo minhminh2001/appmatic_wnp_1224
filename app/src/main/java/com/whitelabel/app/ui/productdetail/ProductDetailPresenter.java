@@ -341,7 +341,8 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
     public void addToShoppingCart(Map<String,String> params){
         mView.showNornalProgressDialog();
         iGoogleAnalyticsManager.googleAnalyticsEvent(IGoogleAnalyticsManager.CATEGORY_PROCDUCT,IGoogleAnalyticsManager.ACTION_ADDTOCART,mProduct.getName(),mProduct.getId());
-        iGoogleAnalyticsManager.googleAnalyticsAddCart(mProduct.getId(),mProduct.getName());
+        //TODO joyson may be use
+//        iGoogleAnalyticsManager.googleAnalyticsAddCart(mProduct.getId(),mProduct.getName());
         String sessionKey=iBaseManager.getUser().getSessionKey();
         iShoppingCartManager.addProductToShoppingCart(sessionKey,mProduct.getId(),params)
                 .compose(RxUtil.<ResponseModel>rxSchedulerHelper())

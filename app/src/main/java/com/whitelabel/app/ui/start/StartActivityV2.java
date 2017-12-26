@@ -1,10 +1,12 @@
 package com.whitelabel.app.ui.start;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,15 +18,13 @@ import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.activity.StartActivity;
 import com.whitelabel.app.adapter.GuidePagerAdapter;
 import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.handler.INITApp;
 import com.whitelabel.app.notification.RegistrationIntentService;
 import com.whitelabel.app.task.INITExecutor;
 import com.whitelabel.app.utils.JViewUtils;
-import com.whitelabel.app.utils.logger.Logger;
+import com.whitelabel.app.widget.MaterialDialog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
