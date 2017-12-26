@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/text_border_normal"
+            android:text="@string/navigation_dogs"
+            android:gravity="center"
+            android:layout_height="45dp" />
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="-1dp"
+            android:background="@drawable/text_border_normal"
+            android:text="@string/navigation_cats"
+            android:gravity="center"
+            android:layout_height="45dp" />
+    </LinearLayout>
+</RelativeLayout>

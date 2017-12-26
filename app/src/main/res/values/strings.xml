@@ -648,7 +648,8 @@
     <string name="apple_watch">Apple Watch</string>
     <string name="message">message</string>
     <string name="address_default_shipping">Default Shipping Address</string>
-    <string name="address_default_billing">Default Billing Address</string>
+    <string name="navigation_dogs">Dogs</string>
+    <string name="navigation_cats">Cats</string>
 
     <!--category-->
     <string name="accessories_upp">ACCESSORIES</string>
