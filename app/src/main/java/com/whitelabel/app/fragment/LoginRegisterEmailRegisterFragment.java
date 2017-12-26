@@ -910,9 +910,11 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
     public void trackerRegister(String id){
                 try {
-                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", Const.GA.SIGN_UP_SCREEN,
-                            id,
-                            Long.valueOf(id));
+                    //TODO joyson may be use
+//                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", Const.GA.SIGN_UP_SCREEN,
+//                            id,
+//                            Long.valueOf(id));
+                    GaTrackHelper.getInstance().googleAnalytics(Const.GA.SIGN_UP_SCREEN,getActivity());
         }catch (Exception ex){
             ex.getStackTrace();
         }
