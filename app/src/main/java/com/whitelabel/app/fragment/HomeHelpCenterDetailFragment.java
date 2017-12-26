@@ -55,11 +55,10 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
     private HelpCenterDao dao;
     private RecyclerView rcyCustumers;
     private String titleKeyWord;
-    private CustomTextView tvHtmlMsg;
     private Dialog mDialog;
     String mTitles = "";
 
-    private List<String> customerCares= Arrays.asList("Privacy Policy","Terms & Condition","Returns & Exchange","Delivery","Payment Option","Customer Service");
+    private List<String> customerCares= Arrays.asList("Privacy Policy","Terms & Conditions","Returns & Exchanges","Delivery","Payment Option","Customer Service");
     private List<String> customerParams= Arrays.asList("privacy_policy","terms","return_exchange","delivery","payment","contact_us");
 
     private static final class DataHandler extends Handler {
@@ -104,11 +103,11 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
                     if (msg.arg1 == HelpCenterDao.RESPONSE_SUCCESS) {
                         SVRAppserviceCmsCmsPageReturnEntity returnEntity = (SVRAppserviceCmsCmsPageReturnEntity) msg.obj;
                         String content=JToolUtils.replaceFont(returnEntity.getContent());
-                        Logger.e("content:"+content);
-                        mFragment.get().tvHtmlMsg.setVisibility(View.VISIBLE);
                         mFragment.get().rcyCustumers.setVisibility(View.GONE);
                         mFragment.get().connectionLayout.setVisibility(View.GONE);
-                        mFragment.get().tvHtmlMsg.setText(Html.fromHtml(content));
+//                        mFragment.get().tvHtmlMsg.setText(Html.fromHtml(content));
+                        mFragment.get().cwvDetail.setVisibility(View.VISIBLE);
+                        mFragment.get().cwvDetail.setText(content);
                         if (mFragment.get().mDialog != null && mFragment.get().mDialog.isShowing()) {
                             mFragment.get().mDialog.dismiss();
                         }
@@ -161,7 +160,6 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
         rcyCustumers= (RecyclerView) contentView.findViewById(R.id.rcy_customer_care);
         requestErrorHelper=new RequestErrorHelper(getContext(),connectionLayout);
         LinearLayout tryAgain = (LinearLayout) contentView.findViewById(R.id.try_again);
-        tvHtmlMsg= (CustomTextView) contentView.findViewById(R.id.tv_html_msg);
         mDialog = JViewUtils.showProgressDialog(homeActivity);
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,7 +265,7 @@ public class HomeHelpCenterDetailFragment extends HomeBaseFragment implements Vi
         if (mDialog!=null){
             mDialog.dismiss();
         }
-        tvHtmlMsg.setVisibility(View.GONE);
+        cwvDetail.setVisibility(View.GONE);
         CustomerCareAdapter adapter=new CustomerCareAdapter(customerCares);
         rcyCustumers.setAdapter(adapter);
         rcyCustumers.setVisibility(View.VISIBLE);
