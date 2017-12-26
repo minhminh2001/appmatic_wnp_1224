@@ -324,8 +324,10 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
                     "Remove Item From Cart",
                     name,
                     Long.valueOf(productId));
-            GaTrackHelper.getInstance().googleAnalyticsAddCart( productId, name);
-            GaTrackHelper.getInstance().googleAnalyticsDeleteCart(context, productId, name);
+            //TODO joyson may be use
+//            GaTrackHelper.getInstance().googleAnalyticsAddCart( productId, name);
+            //TODO joyson may be use
+//            GaTrackHelper.getInstance().googleAnalyticsDeleteCart(context, productId, name);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -538,7 +540,8 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
                             ShoppingCartListEntityCell cell = null;
                             try {
                                 cell = mAdapter.get().list.get(position);
-                                GaTrackHelper.getInstance().googleAnalyticsDeleteCart(mContext.get(), cell.getProductId(), cell.getName());
+                                //TODO joyson may be use
+//                                GaTrackHelper.getInstance().googleAnalyticsDeleteCart(mContext.get(), cell.getProductId(), cell.getName());
                             } catch (Exception ex) {
                                 ex.getStackTrace();
                             }
