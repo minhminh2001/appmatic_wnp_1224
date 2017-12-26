@@ -214,7 +214,6 @@ public class LoginRegisterResetPassFragment extends Fragment implements View.OnC
             }
         });
         CustomTextView reset_password = (CustomTextView) contentView.findViewById(R.id.reset_password);
-//        reset_password.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         JViewUtils.setSoildButtonGlobalStyle(getActivity(),reset_password);
         reset_password.setOnClickListener(this);
         email.setInputType(EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);

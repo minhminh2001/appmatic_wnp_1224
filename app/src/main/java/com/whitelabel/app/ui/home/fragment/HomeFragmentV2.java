@@ -304,7 +304,10 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
                 if (category != null) {
                     categoryName = category.getMenuTitle();
                 }
-                GaTrackHelper.getInstance().googleAnalytics(categoryName.toUpperCase()+Const.GA.HOME_SCREEN,getActivity());
+                //exclude 'shop by brand'
+                if (position<categoryArrayList.size()-1){
+                    GaTrackHelper.getInstance().googleAnalytics(categoryName.toUpperCase()+Const.GA.HOME_SCREEN,getActivity());
+                }
             }
             return categoryName;
         }

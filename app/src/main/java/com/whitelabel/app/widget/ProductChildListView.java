@@ -140,7 +140,6 @@ public class ProductChildListView extends LinearLayout{
                     int count=Integer.parseInt(tvChildNumber.getText().toString());
                      count++;
                     if(count>bean.getStockQty()){
-//                        JViewUtils.showNoInventoryToast(getContext(),getContext().getResources().getString(R.string.insufficient_stock));
                         JViewUtils.showPopUpWindw(getContext(),rootView,getContext().getResources().getString(R.string.insufficient_stock));
                     }else{
                         tvChildNumber.setText(count+"");

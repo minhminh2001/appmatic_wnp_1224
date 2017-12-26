@@ -1391,31 +1391,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
     }
     public  void showNoInventoryToast() {
-//        LinearLayout toastView = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.layout_prompt_productdetail_notenoughinventory, null);
-//        TextView message = (TextView) toastView.findViewById(R.id.tv_text);
-//        if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductDetailActivity.this)) {
-//            message.setText(getResources().getString(R.string.insufficient_stock));
-//        } else {
-//            if (mStockQty > 0 && mMaxSaleQty > 0) {
-//                message.setText(getResources().getString(R.string.insufficient_stock));
-//            } else {
-//                message.setText(getResources().getString(R.string.insufficient_stock));
-//            }
-//        }
-//        if (mToast == null) {
-//            mToast = Toast.makeText(this.getApplicationContext(), "", Toast.LENGTH_SHORT);
-//            if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
-//                mToast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
-//            }
-//            mToast.setView(toastView);
-//        } else {
-//            if (WhiteLabelApplication.getPhoneConfiguration() != null && WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() != 0) {
-//                mToast.setGravity(Gravity.BOTTOM, 0, (int) (WhiteLabelApplication.getPhoneConfiguration().getScreenHeigth() * 0.25));
-//            }
-//            mToast.setView(toastView);
-//        }
-//        mToast.show();
-
         JViewUtils.showPopUpWindw(this,rootView,getResources().getString(R.string.insufficient_stock));
     }
     @Override
