@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/ll_dogs_and_cats_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_dogs"
+            style="@style/font_family_roboto_medium"
             android:layout_width="0dp"
+            android:layout_height="45dp"
             android:layout_weight="1"
-            android:background="@drawable/text_border_normal"
+            android:background="@drawable/text_border_left_dogs"
+            android:gravity="center"
             android:text="@string/navigation_dogs"
-            android:gravity="center"
-            android:layout_height="45dp" />
+            android:textColor="@drawable/text_color_selected"
+            android:textSize="14sp" />
+
         <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_cats"
+            style="@style/font_family_roboto_medium"
             android:layout_width="0dp"
+            android:layout_height="45dp"
             android:layout_weight="1"
-            android:layout_marginLeft="-1dp"
-            android:background="@drawable/text_border_normal"
-            android:text="@string/navigation_cats"
+            android:background="@drawable/text_border_right_cats"
             android:gravity="center"
-            android:layout_height="45dp" />
+            android:text="@string/navigation_cats"
+            android:textColor="@drawable/text_color_selected"
+            android:textSize="14sp" />
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_dogs_and_cats_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_dogs_and_cats_group">
+
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

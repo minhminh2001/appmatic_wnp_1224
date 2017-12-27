@@ -339,6 +339,7 @@
                     android:text="@string/store_credit"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
+            <include layout="@layout/draw_layout_dogs_and_cat"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_marginTop="8dp"
