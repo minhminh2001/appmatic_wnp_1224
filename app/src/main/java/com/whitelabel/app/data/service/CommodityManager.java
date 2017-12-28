@@ -9,6 +9,7 @@ import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.ApiException;
 import com.whitelabel.app.model.BindProductResponseModel;
+import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ProductDetailModel;
@@ -55,6 +56,17 @@ public class CommodityManager  implements ICommodityManager{
                       cacheHelper.saveBaseCategory(svrAppserviceCatalogSearchReturnEntity);
                 }
             });
+    }
+
+    @Override
+    public Observable<CategoryBaseBean> getAllCategoryManagerV2() {
+        return productApi.getBaseCategoryV2()
+                .doOnNext(new Action1<CategoryBaseBean>() {
+                    @Override
+                    public void call(CategoryBaseBean categoryBaseBean) {
+                        cacheHelper.saveBaseCategoryV2(categoryBaseBean);
+                    }
+                });
     }
 
     @Override

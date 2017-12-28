@@ -1,6 +1,7 @@
 package com.whitelabel.app.data.preference;
 
 import com.whitelabel.app.model.AddressBook;
+import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
@@ -32,7 +33,9 @@ public interface ICacheApi {
     GOUserEntity getUser();
     void saveUser(GOUserEntity goUserEntity);
     void saveBaseCategory(SVRAppserviceCatalogSearchReturnEntity allCategorys);
+    void saveBaseCategoryV2(CategoryBaseBean categoryBaseBean);
     rx.Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory();
+    rx.Observable<CategoryBaseBean> getBaseCategoryV2();
     void saveFinishOrderAndMarkTime(long currentTime);
     SkipToAppStoreMarket getFirstOrderAndMarkTime();
     rx.Observable<ShopBrandResponse> getShopBrandDetail();

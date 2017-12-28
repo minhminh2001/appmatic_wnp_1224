@@ -1,5 +1,6 @@
 package com.whitelabel.app.activity;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
@@ -19,18 +21,23 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.whitelabel.app.R;
-import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.*;
+import com.whitelabel.app.adapter.LeftMenuDogsAndCatsAdapter;
 import com.whitelabel.app.callback.NotificationCallback;
 import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.fragment.HomeBaseFragment;
+import com.whitelabel.app.model.CategoryBaseBean;
+import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.utils.BadgeUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JStorageUtils;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
+import com.whitelabel.app.widget.CustomTextView;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
@@ -53,13 +60,15 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     private ImageView ivStoreCredit;
     private TextView tvUserName, tvHome, tvCategoryTree, tvShoppingCart, tvNotification, tvWistlist,
             tvMyOrder, tvSetting, tvCustomerService, tvHelpCenter, tvOrderNum, tvMyOrderNum,
-            tvShipping, tvShoppingNum, tvNotificationNum, tvWistNum,tvCustomerCare,
-            tvAddress, tvStoreCredit;
+            tvShipping, tvShoppingNum, tvNotificationNum, tvWistNum,
+            tvAddress, tvStoreCredit,tvDogs,tvCats;
     private Handler baseHandler = new Handler();
     private RelativeLayout rlDrawerOrder;
     private RelativeLayout rlDrawerAddress;
     private RelativeLayout rlDrawerSotreCredit;
     private NotificationReceiver receiver;
+    private RecyclerView rvDogsAndCatsList;
+    LeftMenuDogsAndCatsAdapter leftMenuDogsAndCatsAdapter;
     protected abstract boolean refreshNotification(int type, String id);
     protected abstract void jumpHomePage();
     public abstract void jumpHomePage(Serializable serializable);
@@ -186,7 +195,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
                     }
                 }, DELAY);
                 break;
-            case R.id.rl_drawer_customer_care:
             case R.id.tv_customer_service:
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_COSTOMSERVICE);
                 drawerLayout.closeDrawer(Gravity.LEFT);
@@ -241,6 +249,14 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
                     }
                 }, DELAY);
                 break;
+            case R.id.tv_dogs:
+                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_DOGS);
+                leftMenuDogsAndCatsAdapter.setNewData(JStorageUtils.getLeftTreeData(0));
+                break;
+            case R.id.tv_cats:
+                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_CATS);
+                leftMenuDogsAndCatsAdapter.setNewData(JStorageUtils.getLeftTreeData(1));
+                break;
         }
     }
     private void initLayout() {
@@ -261,7 +277,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         tvNotification = (TextView) findViewById(R.id.tv_notification);
         tvWistlist = (TextView) findViewById(R.id.tv_wishlist);
         tvMyOrder = (TextView) findViewById(R.id.tv_order);
-        tvCustomerCare = (TextView) findViewById(R.id.tv_customer_care);
         tvSetting = (TextView) findViewById(R.id.tv_setting);
         tvCustomerService = (TextView) findViewById(R.id.tv_customer_service);
         tvHelpCenter = (TextView) findViewById(R.id.tv_help_center);
@@ -278,7 +293,12 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         RelativeLayout rlDrawerCategoryTree = (RelativeLayout) findViewById(R.id.rl_drawer_categorytree);
         RelativeLayout rlDrawerShoppingCart = (RelativeLayout) findViewById(R.id.rl_drawer_shoppingcart);
         RelativeLayout rlDrawerNotification = (RelativeLayout) findViewById(R.id.rl_drawer_notification);
-        RelativeLayout rlCustomerCare = (RelativeLayout) findViewById(R.id.rl_drawer_customer_care);
+
+        tvDogs = (CustomTextView) findViewById(R.id.tv_dogs);
+        tvCats = (CustomTextView) findViewById(R.id.tv_cats);
+        rvDogsAndCatsList = (RecyclerView) findViewById(R.id.rv_dogs_and_cats_list);
+
+
 
 //        int black=ContextCompat.getColor(this,R.color.black000000);
         JViewUtils.setSlideMenuTextStyle(tvHome,false);
@@ -287,12 +307,13 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         JViewUtils.setSlideMenuTextStyle(tvWistlist,false);
         JViewUtils.setSlideMenuTextStyle(tvMyOrder,false);
         JViewUtils.setSlideMenuTextStyle(tvAddress,false);
-        JViewUtils.setSlideMenuTextStyle(tvCustomerCare,false);
         JViewUtils.setSlideMenuTextStyle(tvCategoryTree,false);
-        JViewUtils.setSlideMenuTextStyle(tvSetting,true);
-        JViewUtils.setSlideMenuTextStyle(tvCustomerService,true);
-        JViewUtils.setSlideMenuTextStyle(tvHelpCenter,true);
-        JViewUtils.setSlideMenuTextStyle(tvShipping,true);
+        JViewUtils.setSlideMenuTextStyle(tvDogs,false);
+        JViewUtils.setSlideMenuTextStyle(tvCats,false);
+        JViewUtils.setSlideMenuTextStyle(tvSetting,false);
+        JViewUtils.setSlideMenuTextStyle(tvCustomerService,false);
+        JViewUtils.setSlideMenuTextStyle(tvHelpCenter,false);
+        JViewUtils.setSlideMenuTextStyle(tvShipping,false);
 //        tvHome.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
 //        tvShoppingCart.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
 //        tvNotification.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
@@ -325,7 +346,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         rlDrawerShoppingCart.setOnClickListener(this);
         rlDrawerNotification.setOnClickListener(this);
         rlDrawerWish.setOnClickListener(this);
-        rlCustomerCare.setOnClickListener(this);
         rlDrawerOrder.setOnClickListener(this);
         rlDrawerAddress.setOnClickListener(this);
         rlDrawerSotreCredit.setOnClickListener(this);
@@ -333,9 +353,12 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         tvCustomerService.setOnClickListener(this);
         tvHelpCenter.setOnClickListener(this);
         tvShipping.setOnClickListener(this);
+        tvDogs.setOnClickListener(this);
+        tvCats.setOnClickListener(this);
         tvShoppingNum.setBackground(JImageUtils.getThemeCircle(this));
         tvNotificationNum.setBackground(JImageUtils.getThemeCircle(this));
         tvWistNum.setBackground(JImageUtils.getThemeCircle(this));
+
     }
 //    private static final class DataHandler extends Handler {
 //        private WeakReference<DrawerLayoutActivity> mActivity;
@@ -392,6 +415,7 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         IntentFilter intentFilter = new IntentFilter(NotificationReceiver.ACTION);
         registerReceiver(receiver, intentFilter);
         initLayout();
+        initLeftAdapter();
 //        setAppBarLayoutBehaviour();
         mActionDrawableToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.openDrawer, R.string.closeDrawer) {
             @Override
@@ -404,6 +428,35 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         mActionDrawableToggle.syncState();
     }
 
+
+    private void initLeftAdapter() {
+        switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_DOGS);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(DrawerLayoutActivity.this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvDogsAndCatsList.setLayoutManager(mLayoutManager);
+
+        // Disabled nested scrolling since Parent scrollview will scroll the content.
+        rvDogsAndCatsList.setNestedScrollingEnabled(false);
+
+        leftMenuDogsAndCatsAdapter = new LeftMenuDogsAndCatsAdapter(JStorageUtils.getLeftTreeData(0), new LeftMenuDogsAndCatsAdapter.ITreeClick() {
+            @Override
+            public void onChildClick(CategoryBaseBean.CategoryBean.ChildrenBeanX parentBean,CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean childrenBean,String lv0Title) {
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                Intent intent = new Intent(DrawerLayoutActivity.this, ProductListActivity.class);
+                intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_MAINCATEGOTY);
+                intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY);
+                // Get Parent data
+                if (parentBean.getId() != null ) {
+                    intent.putExtra(ProductListActivity.INTENT_DATA_CATEGORYID, parentBean);
+                    intent.putExtra(ProductListActivity.INTENT_DATA_LEFT_TOP_TITLE, lv0Title);
+                }
+                intent.putExtra(ProductListActivity.INTENT_CATEGORY_ID, childrenBean.getId());
+                startActivity(intent);
+                startActivityTransitionAnim();
+            }
+        });
+        rvDogsAndCatsList.setAdapter(leftMenuDogsAndCatsAdapter);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -429,7 +482,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         tvMyOrder.setSelected(false);
         tvAddress.setSelected(false);
         tvStoreCredit.setSelected(false);
-        tvCustomerCare.setSelected(false);
 
         ivHome.setSelected(false);
         ivCategoryTree.setSelected(false);
@@ -446,7 +498,12 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     }
 
     public void switchMenu(int type) {
-        resetSate();
+        if (type == HomeBaseFragment.HomeCommonCallback.MENU_DOGS || type == HomeBaseFragment.HomeCommonCallback.MENU_CATS){
+            tvCats.setSelected(false);
+            tvDogs.setSelected(false);
+        }else {
+            resetSate();
+        }
         if (type == HomeBaseFragment.HomeCommonCallback.MENU_HOME) {
             ivHome.setSelected(true);
             tvHome.setSelected(true);
@@ -475,11 +532,14 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
             tvSetting.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_COSTOMSERVICE) {
             tvCustomerService.setSelected(true);
-            tvCustomerCare.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_HELPCENTER) {
             tvHelpCenter.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_SHIPPING) {
             tvShipping.setSelected(true);
+        }else if (type == HomeBaseFragment.HomeCommonCallback.MENU_DOGS){
+            tvDogs.setSelected(true);
+        }else if (type == HomeBaseFragment.HomeCommonCallback.MENU_CATS){
+            tvCats.setSelected(true);
         }
     }
     public void updateLeftMenuNumber() {

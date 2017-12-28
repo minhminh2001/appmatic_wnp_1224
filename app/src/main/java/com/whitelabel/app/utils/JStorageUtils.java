@@ -6,17 +6,20 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.bean.Wishlist;
 import com.whitelabel.app.model.AddressBook;
+import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.MyAccountOrderOuter;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceLandingPagesListLandingPageItemReturnEntity;
 import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.model.SkipToAppStoreMarket;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
+import com.whitelabel.app.utils.logger.Logger;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -660,6 +663,51 @@ public class JStorageUtils {
             click[i]=preference.getBoolean("myOtherRightClick"+i, false);
         }
         return click;
+    }
+
+    public static ArrayList<MultiItemEntity> getLeftTreeData(int position){
+        ArrayList<MultiItemEntity> res = new ArrayList<>();
+        if (WhiteLabelApplication.getAppConfiguration().getCategoryBaseBean()==null){
+            CategoryBaseBean bean=new Gson().fromJson(JJsonUtils.getJson(WhiteLabelApplication.getInstance(),"catalogSearch.json"),CategoryBaseBean.class);
+            res = addLeftTreeData(bean,position);
+        }else {
+            res = addLeftTreeData(WhiteLabelApplication.getAppConfiguration().getCategoryBaseBean(),position);
+        }
+        return res;
+    }
+
+    private static ArrayList<MultiItemEntity> addLeftTreeData(CategoryBaseBean bean, int position){
+        ArrayList<MultiItemEntity> res = new ArrayList<>();
+        if (bean!=null){
+            List<CategoryBaseBean.CategoryBean> category = bean.getCategory();
+            if (category!=null && !category.isEmpty()){
+                CategoryBaseBean.CategoryBean categoryBean = category.get(position);
+                if (categoryBean!=null){
+                    List<CategoryBaseBean.CategoryBean.ChildrenBeanX> children = categoryBean.getChildren();
+                    if (children!=null&&!children.isEmpty()){
+                        //parent tree
+                        for (int j=0;j<children.size();j++){
+                            CategoryBaseBean.CategoryBean.ChildrenBeanX childrenBeanX = children.get(j);
+                            childrenBeanX.setExpanded(false);
+                            if (childrenBeanX!=null){
+                                List<CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean> children1 = childrenBeanX.getChildren();
+                                if (children1!=null && !children1.isEmpty()){
+                                    //child Tree
+                                   if (childrenBeanX.getSubItems()==null){
+                                        for (int k=0;k<children1.size();k++){
+                                            CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean childrenBean = children1.get(k);
+                                            childrenBeanX.addSubItem(childrenBean);
+                                        }
+                                    }
+                                }
+                            }
+                            res.add(childrenBeanX);
+                        }
+                    }
+                }
+            }
+        }
+        return res;
     }
 
 }

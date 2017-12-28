@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="44dp">
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/tv_expand_lv1"
+        style="@style/font_family_roboto_medium"
+        android:textSize="14sp"
+        android:textColor="@drawable/text_item_color_selected"
+        android:text="asdasdasd"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_marginLeft="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+
+</RelativeLayout>

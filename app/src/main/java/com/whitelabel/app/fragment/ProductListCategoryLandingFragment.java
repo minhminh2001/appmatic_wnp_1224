@@ -29,6 +29,7 @@ import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.listener.OnFilterSortFragmentListener;
+import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
@@ -40,12 +41,14 @@ import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomTabCustomPageIndicator;
 import com.whitelabel.app.widget.FilterSortBottomView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by imaginato on 2015/7/14.
@@ -57,7 +60,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     protected View mContentView;
     private String categoryId;
     private CustomTabCustomPageIndicator ctpiCategoryList;
-    private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> categoryArrayList;
+    private ArrayList<CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean> categoryArrayList;
     private ProductListFilterFragment filterFragment;
     private ProductListSortFragment sortFragment;
     private FilterSortHelper filterSortHelper;
@@ -220,7 +223,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         int parentCategoryIndex = 0;
         int categoryViewCount = 0;
         categoryArrayList = new ArrayList<>();
-        SVRAppserviceCatalogSearchCategoryItemReturnEntity entity = productListActivity.getSearchCategoryEntity();
+        CategoryBaseBean.CategoryBean.ChildrenBeanX entity = productListActivity.getSearchCategoryEntity();
 
         //all暂时取消掉  ray
          SVRAppserviceProductSearchParameter  parameter= productListActivity.getSVRAppserviceProductSearchParameterById(productListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS,-1);
@@ -231,11 +234,11 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
                 isGemBrands=true;
             }
         if ((entity != null) && (!JDataUtils.isEmpty(entity.getId()))) {
-            SVRAppserviceCatalogSearchCategoryItemReturnEntity allCategory = new SVRAppserviceCatalogSearchCategoryItemReturnEntity();
+            CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean allCategory = new CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean();
             allCategory.setId(entity.getId());
             allCategory.setName(getString(R.string.productlist_categorylanding_allcategory));
             allCategory.setLevel(entity.getLevel());
-            allCategory.setChildren(null);
+//            allCategory.setChildren(null);
             allCategoryName = entity.getMenuTitle();
             if (!JDataUtils.isEmpty(allCategoryName)) {
                 allCategoryName = allCategoryName.toUpperCase();
@@ -249,7 +252,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
                     if(!isGemBrands) {//当为GEM Brands  隐藏ALL
                         //是第0个并且entity的第0个不是all,防止重复添加
                         if (index == parentCategoryIndex&&entity.getId()!=entity.getChildren().get(parentCategoryIndex).getId()) {
-                            categoryArrayList.add(allCategory);
+                            //TODO temp not add all
+//                            categoryArrayList.add(allCategory);
                         }
                     }
                     categoryArrayList.add(entity.getChildren().get(index));
@@ -261,6 +265,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             }
         }
         setTitle(allCategoryName);
+        JToolUtils.printObject(categoryArrayList);
         if(categoryArrayList!=null&& categoryId !=null&&!"0".equals(categoryId)) {
             for (int i = 0; i < categoryArrayList.size(); i++) {
                    if(categoryArrayList.get(i).getId().equals(categoryId)){
@@ -415,8 +420,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     private void gaScreenName(int position){
         try {
             String rightTopTitle=productListActivity.searchCategoryEntity.getMenuTitle();
-            ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> parent = productListActivity.searchCategoryEntity.getChildren();
-            SVRAppserviceCatalogSearchCategoryItemReturnEntity returnEntity = parent.get(position);
+            List<CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean> parent = productListActivity.searchCategoryEntity.getChildren();
+            CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean returnEntity = parent.get(position);
             String rightSubTitle=returnEntity.getMenuTitle();
             StringBuilder builder=new StringBuilder();
             builder.append("Category_");
@@ -537,7 +542,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             String brandId = null;
             String brandName=null;
             if (categoryArrayList != null && position >= 0 && categoryArrayList.size() > position) {
-                SVRAppserviceCatalogSearchCategoryItemReturnEntity category = categoryArrayList.get(position);
+                CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean category = categoryArrayList.get(position);
                 if (category != null) {
                     categoryId = category.getId();
                     brandId = category.getBrandId();
@@ -556,7 +561,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             String categoryName = null;
             if (categoryArrayList != null && position >= 0 && categoryArrayList.size() > position) {
                 final int categoryArrayListSize = categoryArrayList.size();
-                SVRAppserviceCatalogSearchCategoryItemReturnEntity category = categoryArrayList.get(position % categoryArrayListSize);
+                CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean category = categoryArrayList.get(position % categoryArrayListSize);
                 if (category != null) {
                     categoryName = category.getName();
                 }

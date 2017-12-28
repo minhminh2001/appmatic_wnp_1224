@@ -35,11 +35,15 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_dogs_and_cats_list"
+    <RelativeLayout
+        android:layout_below="@id/ll_dogs_and_cats_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll_dogs_and_cats_group">
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_dogs_and_cats_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </RelativeLayout>
 
-    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

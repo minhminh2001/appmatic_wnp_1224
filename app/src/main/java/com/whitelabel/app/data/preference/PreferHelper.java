@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
+import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
@@ -194,6 +195,16 @@ public class PreferHelper  implements ICacheApi{
         sharedPreferences.edit().
                 putString("allCategorys",allCategoryStr).commit();
     }
+
+    @Override
+    public void saveBaseCategoryV2(CategoryBaseBean categoryBaseBean) {
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
+        Gson gson=new Gson();
+        String allCategoryStr=gson.toJson(categoryBaseBean);
+        sharedPreferences.edit().
+                putString("allCategorysv2",allCategoryStr).commit();
+    }
+
     @Override
     public Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory() {
        return  Observable.fromCallable(new Callable<SVRAppserviceCatalogSearchReturnEntity>() {
@@ -209,6 +220,23 @@ public class PreferHelper  implements ICacheApi{
            }
        });
     }
+
+    @Override
+    public Observable<CategoryBaseBean> getBaseCategoryV2() {
+        return  Observable.fromCallable(new Callable<CategoryBaseBean>() {
+            @Override
+            public CategoryBaseBean call() throws Exception {
+                SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
+                String allCategoryStr=sharedPreferences.getString("allCategorysv2","");
+                CategoryBaseBean entity=null;
+                if(!JDataUtils.isEmpty(allCategoryStr)){
+                    entity=new Gson().fromJson(allCategoryStr,CategoryBaseBean.class );
+                }
+                return entity;
+            }
+        });
+    }
+
 
     @Override
     public void saveFinishOrderAndMarkTime(long currentTime) {

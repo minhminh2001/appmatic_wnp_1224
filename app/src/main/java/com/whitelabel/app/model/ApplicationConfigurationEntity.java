@@ -37,6 +37,7 @@ public class ApplicationConfigurationEntity {
         return mLayoutStyle;
     }
     private SVRAppserviceCatalogSearchReturnEntity categoryArrayList;
+    private CategoryBaseBean categoryBaseBean;
     private ApplicationConfigurationEntity() {
         user = null;
         ArrayList<GOThirdPartyUserEntity> thirdPartyUsers = new ArrayList<GOThirdPartyUserEntity>();
@@ -320,5 +321,14 @@ public class ApplicationConfigurationEntity {
     public void setCategoryArrayList(SVRAppserviceCatalogSearchReturnEntity categoryArrayList) {
         this.categoryArrayList = categoryArrayList;
     }
+
+    public CategoryBaseBean getCategoryBaseBean() {
+        return categoryBaseBean;
+    }
+
+    public void setCategoryBaseBean(CategoryBaseBean categoryBaseBean) {
+        this.categoryBaseBean = categoryBaseBean;
+    }
+
 
 }
