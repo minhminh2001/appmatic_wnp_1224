@@ -53,7 +53,7 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     private ImageView ivStoreCredit;
     private TextView tvUserName, tvHome, tvCategoryTree, tvShoppingCart, tvNotification, tvWistlist,
             tvMyOrder, tvSetting, tvCustomerService, tvHelpCenter, tvOrderNum, tvMyOrderNum,
-            tvShipping, tvShoppingNum, tvNotificationNum, tvWistNum,tvCustomerCare,
+            tvShipping, tvShoppingNum, tvNotificationNum, tvWistNum,
             tvAddress, tvStoreCredit;
     private Handler baseHandler = new Handler();
     private RelativeLayout rlDrawerOrder;
@@ -186,7 +186,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
                     }
                 }, DELAY);
                 break;
-            case R.id.rl_drawer_customer_care:
             case R.id.tv_customer_service:
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_COSTOMSERVICE);
                 drawerLayout.closeDrawer(Gravity.LEFT);
@@ -261,7 +260,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         tvNotification = (TextView) findViewById(R.id.tv_notification);
         tvWistlist = (TextView) findViewById(R.id.tv_wishlist);
         tvMyOrder = (TextView) findViewById(R.id.tv_order);
-        tvCustomerCare = (TextView) findViewById(R.id.tv_customer_care);
         tvSetting = (TextView) findViewById(R.id.tv_setting);
         tvCustomerService = (TextView) findViewById(R.id.tv_customer_service);
         tvHelpCenter = (TextView) findViewById(R.id.tv_help_center);
@@ -278,7 +276,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         RelativeLayout rlDrawerCategoryTree = (RelativeLayout) findViewById(R.id.rl_drawer_categorytree);
         RelativeLayout rlDrawerShoppingCart = (RelativeLayout) findViewById(R.id.rl_drawer_shoppingcart);
         RelativeLayout rlDrawerNotification = (RelativeLayout) findViewById(R.id.rl_drawer_notification);
-        RelativeLayout rlCustomerCare = (RelativeLayout) findViewById(R.id.rl_drawer_customer_care);
 
 //        int black=ContextCompat.getColor(this,R.color.black000000);
         JViewUtils.setSlideMenuTextStyle(tvHome,false);
@@ -287,12 +284,11 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         JViewUtils.setSlideMenuTextStyle(tvWistlist,false);
         JViewUtils.setSlideMenuTextStyle(tvMyOrder,false);
         JViewUtils.setSlideMenuTextStyle(tvAddress,false);
-        JViewUtils.setSlideMenuTextStyle(tvCustomerCare,false);
         JViewUtils.setSlideMenuTextStyle(tvCategoryTree,false);
-        JViewUtils.setSlideMenuTextStyle(tvSetting,true);
-        JViewUtils.setSlideMenuTextStyle(tvCustomerService,true);
-        JViewUtils.setSlideMenuTextStyle(tvHelpCenter,true);
-        JViewUtils.setSlideMenuTextStyle(tvShipping,true);
+        JViewUtils.setSlideMenuTextStyle(tvSetting,false);
+        JViewUtils.setSlideMenuTextStyle(tvCustomerService,false);
+        JViewUtils.setSlideMenuTextStyle(tvHelpCenter,false);
+        JViewUtils.setSlideMenuTextStyle(tvShipping,false);
 //        tvHome.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
 //        tvShoppingCart.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
 //        tvNotification.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
@@ -325,7 +321,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         rlDrawerShoppingCart.setOnClickListener(this);
         rlDrawerNotification.setOnClickListener(this);
         rlDrawerWish.setOnClickListener(this);
-        rlCustomerCare.setOnClickListener(this);
         rlDrawerOrder.setOnClickListener(this);
         rlDrawerAddress.setOnClickListener(this);
         rlDrawerSotreCredit.setOnClickListener(this);
@@ -429,7 +424,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         tvMyOrder.setSelected(false);
         tvAddress.setSelected(false);
         tvStoreCredit.setSelected(false);
-        tvCustomerCare.setSelected(false);
 
         ivHome.setSelected(false);
         ivCategoryTree.setSelected(false);
@@ -475,7 +469,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
             tvSetting.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_COSTOMSERVICE) {
             tvCustomerService.setSelected(true);
-            tvCustomerCare.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_HELPCENTER) {
             tvHelpCenter.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_SHIPPING) {

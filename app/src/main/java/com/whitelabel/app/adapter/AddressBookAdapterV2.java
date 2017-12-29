@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.swipe.SwipeLayout;
 import com.whitelabel.app.widget.swipe.SwipeLayoutCallBack;
 import com.whitelabel.app.widget.swipe.SwipeableAdapter;
@@ -28,15 +30,25 @@ public class AddressBookAdapterV2 extends SwipeableAdapter {
         void onEditClick(int position);
         void onDelClick(int position);
     }
+    public interface IOnItemClick{
+        void onItemClick(AdapterView<?> parent, View view, int position, long id);
+    }
+    IOnItemClick iOnItemClick;
     private ISwipeClick iSwipeClick;
+    private boolean isSwipeDelVisible;
 
     public void setiSwipeClick(ISwipeClick iSwipeClick) {
         this.iSwipeClick = iSwipeClick;
     }
 
-    public AddressBookAdapterV2(Context context, List<AddressBook> list) {
+    public void setiOnItemClick(IOnItemClick iOnItemClick) {
+        this.iOnItemClick = iOnItemClick;
+    }
+
+    public AddressBookAdapterV2(Context context, List<AddressBook> list, boolean isSwipeDelVisible) {
         this.mAddressBook =list;
         this.context = context;
+        this.isSwipeDelVisible=isSwipeDelVisible;
     }
 
     public  List<AddressBook> getData(){
@@ -78,9 +90,13 @@ public class AddressBookAdapterV2 extends SwipeableAdapter {
             holder.tvDefault.setText(context.getResources().getString(R.string.address_default_shipping));
             holder.ivAddressDelete.setVisibility(View.GONE);
             holder.ivAddressEdit.setVisibility(View.VISIBLE);
-        }else{
+        }else if (isSwipeDelVisible){
             holder.tvDefault.setVisibility(View.GONE);
             holder.ivAddressDelete.setVisibility(View.VISIBLE);
+            holder.ivAddressEdit.setVisibility(View.VISIBLE);
+        }else {
+            holder.tvDefault.setVisibility(View.GONE);
+            holder.ivAddressDelete.setVisibility(View.GONE);
             holder.ivAddressEdit.setVisibility(View.VISIBLE);
         }
         holder.recyclerviewSwipe.setDragEdge(SwipeLayout.DragEdge.Right);
@@ -107,6 +123,9 @@ public class AddressBookAdapterV2 extends SwipeableAdapter {
         holder.rlAddressItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (iOnItemClick!=null){
+                    iOnItemClick.onItemClick(null,holder.itemView,position,v.getId());
+                }
                 String swipeOpenStatus = "1";
                 if (swipeOpenStatus.equals(holder.recyclerviewSwipe.getTag())) {
                     holder.recyclerviewSwipe.toggle();

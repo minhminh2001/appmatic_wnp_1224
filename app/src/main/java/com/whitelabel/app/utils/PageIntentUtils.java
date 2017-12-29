@@ -63,6 +63,7 @@ public class PageIntentUtils {
             intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS);
             intent.putExtra(ProductListActivity.SHOP_BRAND_ID, ((ShopBrandResponse.BrandsBean.ItemsBean)serializable).getId());
             intent.putExtra(ProductListKeywordsSearchFragment.FROM_OTHER_PAGE_KEYWORD,((ShopBrandResponse.BrandsBean.ItemsBean)serializable).getIdentifier());
+            intent.putExtra(ProductListKeywordsSearchFragment.IS_FROM_SHOP_BRAND, true);
             context.startActivity(intent);
         }
    }

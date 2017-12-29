@@ -288,30 +288,6 @@
                     android:layout_height="wrap_content" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_drawer_customer_care"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-                <ImageView
-                    android:id="@+id/iv_customer_care"
-                    android:layout_width="24dp"
-                    android:visibility="gone"
-                    android:layout_centerVertical="true"
-                    android:layout_height="24dp" />
-                <com.whitelabel.app.widget.CustomTextView
-                    android:id="@+id/tv_customer_care"
-                    android:layout_toRightOf="@+id/iv_customer_care"
-                    android:layout_width="match_parent"
-                    android:layout_centerVertical="true"
-                    style="@style/font_family_roboto_medium"
-                    android:textSize="14sp"
-                    android:textColor="@drawable/text_color_selected"
-                    android:text="@string/customer_service"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-
 
             <RelativeLayout
                 android:id="@+id/rl_drawer_store_credit"
@@ -345,6 +321,19 @@
                 android:layout_marginBottom="8dp"
                 android:background="@color/black2c"
                 android:layout_height="0.8dp"></View>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_customer_service"
+                android:layout_width="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:gravity="center_vertical"
+                android:layout_height="40dp"
+                style="@style/font_family_robot_regular"
+                android:textSize="12sp"
+                android:textColor="@drawable/text_grey_color_selected"
+                android:text="@string/customer_service"
+                />
                 <com.whitelabel.app.widget.CustomTextView
                     android:id="@+id/tv_setting"
                     android:layout_width="match_parent"
@@ -357,19 +346,7 @@
                     android:textColor="@drawable/text_grey_color_selected"
                     android:text="@string/_settings"
             />
-                <com.whitelabel.app.widget.CustomTextView
-                    android:id="@+id/tv_customer_service"
-                    android:layout_width="match_parent"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:gravity="center_vertical"
-                    android:layout_height="40dp"
-                    style="@style/font_family_robot_regular"
-                    android:textSize="12sp"
-                    android:textColor="@drawable/text_grey_color_selected"
-                    android:text="@string/customer_service"
-                    android:visibility="gone"
-                    />
+
 
 
                 <com.whitelabel.app.widget.CustomTextView

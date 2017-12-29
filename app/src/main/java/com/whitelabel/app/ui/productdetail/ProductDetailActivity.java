@@ -165,12 +165,13 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     }
     @Override
     public void showProductRecommendLine() {
-        rlProductrecommendLine.setVisibility(View.VISIBLE);
+        //TODO joyson temp annotation ,V2 already add
+//        rlProductrecommendLine.setVisibility(View.VISIBLE);
     }
     @Override
     public void updateRecommendData(ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity> results) {
-        JLogUtils.i("ray","results:"+results.size());
-        recommendedListAdapter.updateData(results);
+        //TODO joyson temp annotation ,V2 already add
+        //        recommendedListAdapter.updateData(results);
     }
 
 
@@ -456,7 +457,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         rootView=LayoutInflater.from(this).inflate(R.layout.activity_product,null);
         destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductDetailActivity.this);
         productId =  getIntent().getExtras().getString("productId");
-        mFromProductList = getIntent().getExtras().getString("from");
+        mFromProductList = getIntent().getExtras().getString("from",ProductListAdapter.FROM_PRODUCT_LIST);
         mProductFirstImageurl=getIntent().getExtras().getString("imageurl");
         isLike=getIntent().getExtras().getInt("isLike");
         initView();
