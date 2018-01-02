@@ -83,6 +83,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     public static final String SUGGESTION_ROW_TYPE_MODEL_TYPE = "model_type";
     public static final int SUGGESTION_KEYWORD_TIMEOUT = 500;
     public static final String FROM_OTHER_PAGE_KEYWORD = "FROM_OTHER_PAGE_KEYWORD";
+    public static final String IS_FROM_SHOP_BRAND = "IS_FROM_SHOP_BRAND";
 
     private final String TAG = "ProductListKeywordsSearchFragment";
     protected ProductListActivity productListActivity;
@@ -132,7 +133,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     private boolean mIsShowSwitchFilterBar;
     private String fromOtherPageKeyWord ="";
     private String fromOtherPageCategoryId ="";
-    String brandId;
+    private String brandId;
+    private boolean isFromShopBrand;
 
     @Override
     public void onAttach(Context context) {
@@ -331,8 +333,13 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             fromOtherPageKeyWord = productListListPageEntity.getKeyWord();
             fromOtherPageCategoryId =productListListPageEntity.getCategoryId();
             brandId =productListListPageEntity.getBrandId();
+            //default false show serach bar,if true show title bar
+            isFromShopBrand = productListListPageEntity.isFromShopBrand();
         }
+
         RelativeLayout rlContainer = (RelativeLayout) mContentView.findViewById(R.id.rlContainer);
+        RelativeLayout llHeaderBar = (RelativeLayout) mContentView.findViewById(R.id.llHeaderBar);
+        LinearLayout llToolBar = (LinearLayout) mContentView.findViewById(R.id.ll_toolbar);
         RelativeLayout mBackRL = (RelativeLayout) mContentView.findViewById(R.id.rl_back);
         cetKeywords = (CustomEditText) mContentView.findViewById(R.id.cetKeywords);
         cxlvProductList = (CustomXListView) mContentView.findViewById(R.id.cxlvProductList);
@@ -362,6 +369,15 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         cxlvProductList.setFooterDividersEnabled(false);
         cxlvProductList.setPullRefreshEnable(false);
         cxlvProductList.setPullLoadEnable(false);
+        if (isFromShopBrand){
+            setContentView(mContentView);
+            llHeaderBar.setVisibility(GONE);
+            llToolBar.setVisibility(VISIBLE);
+            initTitleBar();
+        }else {
+            llHeaderBar.setVisibility(VISIBLE);
+            llToolBar.setVisibility(GONE);
+        }
         cxlvProductList.setOnScrollListener(new CustomXListView.OnXScrollListener() {
             @Override
             public void onXScrolling(View view) {
@@ -370,14 +386,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
 
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-//                if (cxlvProductList.mPullLoading) {
-//                    if (isSlideToBottom(cxlvProductList)) {
-//                        return;
-//                    }
-//                }
-                if(!mIsShowSwitchFilterBar){
-                    return;
-                }
                 filterSortBottomView.setFilterShow(scrollState, new ProductListFilterHideCallBack() {
                     @Override
                     public void callBack() {
@@ -403,15 +411,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
                 } else {
                     filterSortBottomView.hideBottomSlideToTop(false);
                 }
-                if(firstVisibleItem>=1){
-                    mIsShowSwitchFilterBar=true;
-//                    filterSortBottomView.hideSwitchAndFilterBar(false);
-                    mTopFilterAndSortBarRL.setVisibility(View.VISIBLE);
-                }else{
-                    mIsShowSwitchFilterBar = false;
-//                    filterSortBottomView.hideSwitchAndFilterBar(true);
-                    mTopFilterAndSortBarRL.setVisibility(View.GONE);
-                }
+                mTopFilterAndSortBarRL.setVisibility(View.VISIBLE);
             }
         });
 
@@ -521,12 +521,17 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         });
        }
 
-//    private void clearSuggestionList() {
-//        if (mSuggestionsArrayList != null) {
-//            mSuggestionsArrayList.clear();
-//            mSearchSuggestionAdapter.notifyDataSetChanged();
-//        }
-//    }
+    private void initTitleBar() {
+        setTitle(fromOtherPageKeyWord);
+        setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(getActivity(), R.drawable.ic_action_back));
+        setLeftMenuClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
+
 
     private void initListViewHeader(){
         View view = LayoutInflater.from(productListActivity).inflate(R.layout.header_product_list_switch_and_filter_bar, null);

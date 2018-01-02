@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
 /**
  * Created by imaginato on 2015/11/24.
  */
-public class RegisterToHelpCenter extends com.whitelabel.app.BaseActivity  implements View.OnClickListener {
+public class RegisterToHelpCenter extends com.whitelabel.app.BaseActivity {
     private Dialog mDialog;
     private final String TAG = "RegisterToHelpCenter";
     private CustomWebView cwvDetail;
@@ -42,7 +42,7 @@ public class RegisterToHelpCenter extends com.whitelabel.app.BaseActivity  imple
                 mActivity.get().mDialog.dismiss();
             }
             switch (msg.what){
-                case HelpCenterDao.REQUEST_GETDATA:
+                case HelpCenterDao.REQUEST_GET_CUSTOMER_CARE:
                     if(msg.arg1==HelpCenterDao.RESPONSE_SUCCESS){
                             SVRAppserviceCmsCmsPageReturnEntity returnEntity = (SVRAppserviceCmsCmsPageReturnEntity) msg.obj;
                             String content= JToolUtils.replaceFont(returnEntity.getContent());
@@ -80,7 +80,7 @@ public class RegisterToHelpCenter extends com.whitelabel.app.BaseActivity  imple
     }
     private void initToolBar(String title){
         setTitle(title);
-        setLeftMenuIcon(R.drawable.action_back);
+        setLeftMenuIcon(JToolUtils.getDrawable(R.drawable.action_back));
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +124,7 @@ public class RegisterToHelpCenter extends com.whitelabel.app.BaseActivity  imple
             titlestring = getString(R.string.home_helpcenter_list_customerservice2);
         }
         initToolBar(titlestring);
+
     }
 
     private void initViewContent() {
@@ -132,9 +133,9 @@ public class RegisterToHelpCenter extends com.whitelabel.app.BaseActivity  imple
         if (0 == contentType) {
             content = "about-us-mobile";
         } else if (1 == contentType) {
-            content = "privacy-policy-mobile";
+            content = "privacy_policy";
         } else if (2 == contentType) {
-            content = "terms-of-use-mobile";
+            content = "terms";
         } else if (3 == contentType) {
             content = "how-to-buy-mobile";
         } else if (4 == contentType) {
@@ -151,15 +152,8 @@ public class RegisterToHelpCenter extends com.whitelabel.app.BaseActivity  imple
             content = "customer-service-mobile";
         }
 
-        mDao.loadDataFromServer(content);
+        mDao.loadCustomerCare(content);
 
     }
 
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-        }
-    }
 }

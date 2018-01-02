@@ -6,11 +6,11 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.whitelabel.app.BaseActivity;
-import com.whitelabel.app.R;
 import com.whitelabel.app.activity.AddAddressActivity;
 import com.whitelabel.app.activity.EditAddressActivity;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.ui.common.BaseAddressFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -58,6 +58,12 @@ public class CheckoutSelectAddressFragment extends BaseAddressFragment {
 //        getActivity().overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
 //                R.anim.activity_transition_exit_righttoleft);
     }
+
+    @Override
+    public boolean isSwipeDelVisible() {
+        return false;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

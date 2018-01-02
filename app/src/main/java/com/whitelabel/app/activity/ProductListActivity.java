@@ -186,10 +186,12 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
                 categoryId = intent.getStringExtra(INTENT_CATEGORY_ID);
                 keyWord = intent.getStringExtra(ProductListKeywordsSearchFragment.FROM_OTHER_PAGE_KEYWORD);
                 String brandId=intent.getStringExtra(ProductListActivity.SHOP_BRAND_ID);
+                boolean isFromShopBrand=intent.getBooleanExtra(ProductListKeywordsSearchFragment.IS_FROM_SHOP_BRAND,false);
                 tmpProductListListPageEntity=new TMPProductListListPageEntity();
                 tmpProductListListPageEntity.setCategoryId(categoryId);
                 tmpProductListListPageEntity.setKeyWord(keyWord);
                 tmpProductListListPageEntity.setBrandId(brandId);
+                tmpProductListListPageEntity.setFromShopBrand(isFromShopBrand);
             } catch (Exception ex) {
                 JLogUtils.e(TAG, "onCreate", ex);
             }

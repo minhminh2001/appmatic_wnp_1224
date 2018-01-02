@@ -213,6 +213,7 @@
     <string name="Order_Status">Order Status:</string>
     <string name="Products">Products</string>
     <string name="Shipping_Address">Shipping Address: </string>
+    <string name="billing_Address">Billing Address: </string>
     <string name="Quantity__">Quantity:&#160;</string>
     <string name="RM">RM&#160;</string>
 

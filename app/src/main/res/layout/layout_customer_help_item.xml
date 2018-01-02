@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/setting_item_height"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_height="wrap_content"
     >
+    <RelativeLayout
+        android:id="@+id/rl_help_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
     <com.whitelabel.app.widget.CustomTextView
         android:singleLine="true"
         android:ellipsize="end"
@@ -22,4 +26,10 @@
         android:layout_centerVertical="true"
         android:src="@mipmap/icon_right"
          />
+    </RelativeLayout>
+    <View
+        android:layout_below="@id/rl_help_item"
+        android:layout_width="match_parent"
+        android:background="@color/edittext_line"
+        android:layout_height="@dimen/line_height"/>
 </RelativeLayout>

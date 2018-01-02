@@ -93,6 +93,7 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
     public abstract  void  addAddressBtnOnClick();
     public abstract List<AddressBook> handlerAddressData(List<AddressBook> addressBooks);
     public abstract   void onEditButtonClick(int postion);
+    public abstract boolean isSwipeDelVisible();
     private AddressBookAdapterV2 mAddressBookAdapter;
     protected final static String EXTRA_USE_CACHE = "use_cache";
     private RequestErrorHelper requestErrorHelper;
@@ -118,6 +119,7 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Logger.e("点击onItemClick2");
     }
     @Override
     public void closeSwipeLayout() {
@@ -128,10 +130,16 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
         if(addressBooks!=null) {
             addressbookAddTextview.setVisibility(View.VISIBLE);
             addressBooks = handlerAddressData(addressBooks);
-            mAddressBookAdapter = new AddressBookAdapterV2(getContext(), addressBooks);
+            mAddressBookAdapter = new AddressBookAdapterV2(getContext(), addressBooks,isSwipeDelVisible());
             mRecycView.setLayoutManager(new LinearLayoutManager(getActivity()));
             mRecycView.setHasFixedSize(true);
             mRecycView.setAdapter(mAddressBookAdapter);
+            mAddressBookAdapter.setiOnItemClick(new AddressBookAdapterV2.IOnItemClick() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    BaseAddressFragment.this.onItemClick(parent,view,position,id);
+                }
+            });
             mAddressBookAdapter.setiSwipeClick(new AddressBookAdapterV2.ISwipeClick() {
                 @Override
                 public void onEditClick(int position) {

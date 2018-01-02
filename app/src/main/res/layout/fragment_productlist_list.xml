@@ -8,6 +8,11 @@
                 android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_bar_height">
+
+    <RelativeLayout
         android:id="@+id/llHeaderBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/header_bar_height"
@@ -59,20 +64,33 @@
 
         </RelativeLayout>
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_toolbar"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/common_toolbar"/>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyEEEEEE"/>
 
+    </LinearLayout>
+    </RelativeLayout>
     <com.whitelabel.app.widget.CustomXListView
         android:id="@+id/cxlvProductList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_below="@id/llHeaderBar"
+        android:layout_below="@id/rl_top_bar"
         android:divider="@null"
         android:dividerHeight="0dp"
         android:scrollbars="none"/>
 
     <RelativeLayout
         android:id="@+id/top_switch_and_filter_bar"
-        android:layout_below="@id/llHeaderBar"
+        android:layout_below="@id/rl_top_bar"
         android:visibility="gone"
         android:background="@color/greyEEEEEE"
         android:layout_width="match_parent"
@@ -101,7 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_below="@id/llHeaderBar"
+        android:layout_below="@id/rl_top_bar"
         android:visibility="gone">
 
         <View
@@ -144,7 +162,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_below="@id/llHeaderBar"
+        android:layout_below="@id/rl_top_bar"
         android:background="@color/whiteFFFFFF"
         android:divider="@null"
         android:dividerHeight="0dp"
@@ -154,5 +172,5 @@
         layout="@layout/connection_breaks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/llHeaderBar"/>
+        android:layout_below="@id/rl_top_bar"/>
 </RelativeLayout>

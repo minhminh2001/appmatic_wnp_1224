@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -350,12 +351,13 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         TextView t1 = (TextView) contentView.findViewById(R.id.t1);
         TextView t3 = (TextView) contentView.findViewById(R.id.t3);
         t1.setText(getResources().getString(R.string.TermsOfUserPrivacyPolicy1));
+        t1.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         t3.setText(getResources().getString(R.string.TermsOfUserPrivacyPolicy2));
-
-//        t1.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-//        t3.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-//        t1.setOnClickListener(this);
-//        t3.setOnClickListener(this);
+        t3.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        t1.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        t3.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        t1.setOnClickListener(this);
+        t3.setOnClickListener(this);
         TAG=this.getClass().getSimpleName();
         email.setInputType(EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         et_phone_number.setInputType( InputType.TYPE_CLASS_NUMBER);
@@ -910,9 +912,11 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
 
     public void trackerRegister(String id){
                 try {
-                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", Const.GA.SIGN_UP_SCREEN,
-                            id,
-                            Long.valueOf(id));
+                    //TODO joyson may be use
+//                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", Const.GA.SIGN_UP_SCREEN,
+//                            id,
+//                            Long.valueOf(id));
+                    GaTrackHelper.getInstance().googleAnalytics(Const.GA.SIGN_UP_SCREEN,getActivity());
         }catch (Exception ex){
             ex.getStackTrace();
         }
