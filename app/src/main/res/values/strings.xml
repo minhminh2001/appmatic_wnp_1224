@@ -227,10 +227,10 @@
     <string name="order_status_text_Delivery_Failed">Delivery Failed</string>-->
 
     <!--login-->
-    <string name="RegisterNow"><u>Sign Up Now.</u></string>
+    <string name="RegisterNow"><u>Sign up now.</u></string>
     <string name="ClickEmail"><u>Click here</u></string>
     <!--register-->
-    <string name="SignInNow"> <u>Sign In Now.</u></string>
+    <string name="SignInNow"> <u>Sign in now.</u></string>
     <string name="hey">Hey,&#160;</string>
 
     <!-- Size Picker -->
