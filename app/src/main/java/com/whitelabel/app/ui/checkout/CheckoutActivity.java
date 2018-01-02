@@ -1368,7 +1368,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     protected void onStart() {
         super.onStart();
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
-        GaTrackHelper.getInstance().googleAnalyticsStartCheckout(CheckoutActivity.this, productIds, "checkout", 1);
+        //TODO joyson may be use
+//        GaTrackHelper.getInstance().googleAnalyticsStartCheckout(CheckoutActivity.this, productIds, "checkout", 1);
     }
 
     @Override

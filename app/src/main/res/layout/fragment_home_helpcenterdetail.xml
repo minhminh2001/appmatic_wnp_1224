@@ -20,40 +20,23 @@
 
     </LinearLayout>
 
-    <ScrollView
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcy_customer_care"
+        android:visibility="gone"
+        android:layout_below="@id/ll_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rcy_customer_care"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <com.whitelabel.app.widget.CustomTextView
-            android:id="@+id/tv_html_msg"
-            android:padding="@dimen/activity_horizontal_margin"
-            android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/ll_toolbar"
-            />
-        </LinearLayout>
-    </ScrollView>
     <com.whitelabel.app.widget.CustomWebView
         android:id="@+id/cwvDetail"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ll_toolbar" />
+        android:layout_below="@id/ll_toolbar" />
     <include
         layout="@layout/connection_breaks"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/rlHeaderBar"
+        android:layout_below="@id/ll_toolbar"
         />
 </RelativeLayout>

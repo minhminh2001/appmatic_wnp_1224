@@ -341,8 +341,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     "Add To Cart",
                     mProductDetailBean.getName(),
                     Long.valueOf(mProductDetailBean.getId()));
-            GaTrackHelper.getInstance().googleAnalyticsAddCart(
-                    productId, mProductDetailBean.getName());
+            //TODO joyson may be use
+//            GaTrackHelper.getInstance().googleAnalyticsAddCart(
+//                    productId, mProductDetailBean.getName());
             FacebookEventUtils.getInstance().facebookEventAddedToCart(this, productId, userSelectedProductFinalPriceFloat * userSelectedProductQty);
             FirebaseEventUtils.getInstance().ecommerceAddToCart(this, userSelectedProductQty + "", mProductDetailBean.getCategory(),
                     mProductDetailBean.getName(), mProductDetailBean.getId(),

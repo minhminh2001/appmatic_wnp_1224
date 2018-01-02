@@ -39,28 +39,30 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
     @Override
     public List<AddressBook> handlerAddressData(List<AddressBook> addressBooks) {
         this.addressBooks=addressBooks;
-         ArrayList<AddressBook> mBeans = new ArrayList<AddressBook>();
+         ArrayList<AddressBook> billAndShips = new ArrayList<AddressBook>();
+         ArrayList<AddressBook> otherLists = new ArrayList<AddressBook>();
         for (int i = 0; i < addressBooks.size(); i++) {
             AddressBook addressBook = addressBooks.get(i);
             if("1".equals(addressBook.getPrimaryShipping())&&"1".equals(addressBook.getPrimaryBilling())) {
                 AddressBook cloneObject= (AddressBook) addressBook.clone();
                 addressBook.setPrimaryShipping("0");
-                mBeans.add(0,addressBook);
+                billAndShips.add(0,addressBook);
                 cloneObject.setPrimaryBilling("0");
-                mBeans.add(0,cloneObject);
+                billAndShips.add(0,cloneObject);
             }else if("1".equals(addressBook.getPrimaryBilling())){
-                if(mBeans.size()>0){
-                    mBeans.add(1, addressBook);
-                }else {
-                    mBeans.add(0, addressBook);
-                }
+                billAndShips.add(0,addressBook);
             }else if("1".equals(addressBook.getPrimaryShipping())){
-                mBeans.add(0,addressBook);
-            } else{
-                mBeans.add(addressBook);
+                if(billAndShips.size()>0){
+                    billAndShips.add(1, addressBook);
+                }else {
+                    billAndShips.add(0, addressBook);
+                }
+            }else {
+                otherLists.add(addressBook);
             }
         }
-        return mBeans;
+        billAndShips.addAll(otherLists);
+        return billAndShips;
     }
     @Override
     public void onEditButtonClick(int postion) {
@@ -75,6 +77,12 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
         }
         ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
+
+    @Override
+    public boolean isSwipeDelVisible() {
+        return true;
+    }
+
     @Override
     public List<Integer> getDeleteFuntionPostions() {
         List<Integer>  deleteFuntionPostions=new ArrayList<>();
