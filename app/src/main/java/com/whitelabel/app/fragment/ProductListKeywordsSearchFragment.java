@@ -132,6 +132,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     private RelativeLayout mTopFilterAndSortBarRL;
     private boolean mIsShowSwitchFilterBar;
     private String fromOtherPageKeyWord ="";
+    private String fromOtherPageTitle ="";
     private String fromOtherPageCategoryId ="";
     private String brandId;
     private boolean isFromShopBrand;
@@ -331,6 +332,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         if (bundle != null) {
             productListListPageEntity = (TMPProductListListPageEntity) bundle.getSerializable("data");
             fromOtherPageKeyWord = productListListPageEntity.getKeyWord();
+            fromOtherPageTitle=productListListPageEntity.getShopBrandTitle();
             fromOtherPageCategoryId =productListListPageEntity.getCategoryId();
             brandId =productListListPageEntity.getBrandId();
             //default false show serach bar,if true show title bar
@@ -522,7 +524,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
        }
 
     private void initTitleBar() {
-        setTitle(fromOtherPageKeyWord);
+        setTitle(fromOtherPageTitle);
         setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(getActivity(), R.drawable.ic_action_back));
         setLeftMenuClickListener(new View.OnClickListener() {
             @Override
