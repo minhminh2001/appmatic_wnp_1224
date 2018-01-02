@@ -13,6 +13,7 @@ public class TMPProductListListPageEntity implements Serializable {
     private String keyWord;
     private String brandId;
     private boolean isFromShopBrand;
+    private String shopBrandTitle;
 
     public TMPProductListListPageEntity() {
         searchType = ProductListKeywordsSearchFragment.SEARCH_TYPE_KEYWORDS;
@@ -56,5 +57,13 @@ public class TMPProductListListPageEntity implements Serializable {
 
     public void setFromShopBrand(boolean fromShopBrand) {
         isFromShopBrand = fromShopBrand;
+    }
+
+    public String getShopBrandTitle() {
+        return shopBrandTitle;
+    }
+
+    public void setShopBrandTitle(String shopBrandTitle) {
+        this.shopBrandTitle = shopBrandTitle;
     }
 }
