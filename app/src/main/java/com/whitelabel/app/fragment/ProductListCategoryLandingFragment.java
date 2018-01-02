@@ -253,7 +253,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
                         //是第0个并且entity的第0个不是all,防止重复添加
                         if (index == parentCategoryIndex&&entity.getId()!=entity.getChildren().get(parentCategoryIndex).getId()) {
                             //TODO temp not add all
-//                            categoryArrayList.add(allCategory);
+                            categoryArrayList.add(allCategory);
                         }
                     }
                     categoryArrayList.add(entity.getChildren().get(index));
@@ -265,7 +265,6 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             }
         }
         setTitle(allCategoryName);
-        JToolUtils.printObject(categoryArrayList);
         if(categoryArrayList!=null&& categoryId !=null&&!"0".equals(categoryId)) {
             for (int i = 0; i < categoryArrayList.size(); i++) {
                    if(categoryArrayList.get(i).getId().equals(categoryId)){
