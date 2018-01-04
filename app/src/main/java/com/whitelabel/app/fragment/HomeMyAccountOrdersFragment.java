@@ -97,8 +97,8 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                 }else {
                     ivChangeRcyListToogle.setImageResource(R.mipmap.ic_view_single);
                     recyclerView.setAdapter(mOrderListRecyclerViewAdapter);
-                    mOrderListRecyclerViewAdapter.notifyDataSetChanged();
                     mOrderListRecyclerViewAdapter.updateDataChange();
+                    mOrderListRecyclerViewAdapter.notifyDataSetChanged();
                     isImageRcyList=!isImageRcyList;
                 }
                 break;
@@ -270,8 +270,8 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                     }
                     if (results != null && results.size() > 0) {
                         mFragment.get().listOuterRecord.addAll(mFragment.get().initArray(results));
-                        mFragment.get().mOrderListRecyclerViewAdapter.notifyDataSetChanged();
                         mFragment.get().mOrderListRecyclerViewAdapter.updateDataChange();
+                        mFragment.get().mOrderListRecyclerViewAdapter.notifyDataSetChanged();
                         mFragment.get().recyclerView.setVisibility(View.VISIBLE);
                     }
                     mFragment.get().pageIndex = 1;
@@ -314,8 +314,8 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                             } else {
                                 mFragment.get().recyclerView.setPullLoadEnable(true);
                             }
-                            mFragment.get().mOrderListRecyclerViewAdapter.notifyDataSetChanged();
                             mFragment.get().mOrderListRecyclerViewAdapter.updateDataChange();
+                            mFragment.get().mOrderListRecyclerViewAdapter.notifyDataSetChanged();
                         } else {
                             if (mFragment.get().pageIndex == 1) {
                                 mFragment.get().vsEmpty.setVisibility(View.VISIBLE);
