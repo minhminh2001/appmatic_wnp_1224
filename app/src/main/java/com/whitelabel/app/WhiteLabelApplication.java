@@ -10,7 +10,6 @@ import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
-import com.newrelic.agent.android.NewRelic;
 import com.whitelabel.app.exception.CrashHandler;
 import com.whitelabel.app.model.ApplicationConfigurationEntity;
 import com.whitelabel.app.model.PhoneConfigurationEntity;
@@ -73,9 +72,9 @@ public class WhiteLabelApplication extends MultiDexApplication {
         MultiDex.install(this);
         super.onCreate();
         Fabric.with(this, new Crashlytics());
-        NewRelic.withApplicationToken(
-                "AAd06a20384063c34e4b1ab1ade0f956323ffa6de4"
-        ).start(this);
+//        NewRelic.withApplicationToken(
+//                "AAd06a20384063c34e4b1ab1ade0f956323ffa6de4"
+//        ).start(this);
         LeakCanaryForTest.install(this);
         try {
             mInstance = this;
