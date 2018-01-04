@@ -17,6 +17,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ import java.util.ArrayList;
 public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.whitelabel.app.BaseActivity<T> implements View.OnClickListener {
     private CustomCoordinatorLayout rootLayout;
     private AppBarLayout appbar_layout;
-    private View flContainer;
+    private FrameLayout flContainer;
     private DrawerLayout drawerLayout;
     private ImageView ivHome;
     private ImageView ivCategoryTree;
@@ -61,7 +62,8 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     private TextView tvUserName, tvHome, tvCategoryTree, tvShoppingCart, tvNotification, tvWistlist,
             tvMyOrder, tvSetting, tvCustomerService, tvHelpCenter, tvOrderNum, tvMyOrderNum,
             tvShipping, tvShoppingNum, tvNotificationNum, tvWistNum,
-            tvAddress, tvStoreCredit,tvDogs,tvCats;
+            tvAddress, tvStoreCredit;
+    protected TextView tvDogs,tvCats;
     private Handler baseHandler = new Handler();
     private RelativeLayout rlDrawerOrder;
     private RelativeLayout rlDrawerAddress;
@@ -69,6 +71,8 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     private NotificationReceiver receiver;
     private RecyclerView rvDogsAndCatsList;
     LeftMenuDogsAndCatsAdapter leftMenuDogsAndCatsAdapter;
+    private String lv0Title="Dogs";
+    protected static boolean isHomePage=true;
     protected abstract boolean refreshNotification(int type, String id);
     protected abstract void jumpHomePage();
     public abstract void jumpHomePage(Serializable serializable);
@@ -192,6 +196,7 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
                     @Override
                     public void run() {
                         jumpSettingPage();
+                        startActivity(new Intent(DrawerLayoutActivity.this,CheckoutPaymentStatusActivity.class));
                     }
                 }, DELAY);
                 break;
@@ -440,8 +445,8 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
 
         leftMenuDogsAndCatsAdapter = new LeftMenuDogsAndCatsAdapter(JStorageUtils.getLeftTreeData(0), new LeftMenuDogsAndCatsAdapter.ITreeClick() {
             @Override
-            public void onChildClick(CategoryBaseBean.CategoryBean.ChildrenBeanX parentBean,CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean childrenBean,String lv0Title) {
-                drawerLayout.closeDrawer(Gravity.LEFT);
+            public void onChildClick(CategoryBaseBean.CategoryBean.ChildrenBeanX parentBean,CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean childrenBean,String lv1Title) {
+//                drawerLayout.closeDrawer(Gravity.LEFT);
                 Intent intent = new Intent(DrawerLayoutActivity.this, ProductListActivity.class);
                 intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_MAINCATEGOTY);
                 intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY);
@@ -538,7 +543,9 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
             tvShipping.setSelected(true);
         }else if (type == HomeBaseFragment.HomeCommonCallback.MENU_DOGS){
             tvDogs.setSelected(true);
+            lv0Title=getResources().getString(R.string.navigation_dogs);
         }else if (type == HomeBaseFragment.HomeCommonCallback.MENU_CATS){
+            lv0Title=getResources().getString(R.string.navigation_cats);
             tvCats.setSelected(true);
         }
     }
@@ -618,7 +625,8 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     public void setContentView(View view) {
         rootLayout = (CustomCoordinatorLayout) findViewById(R.id.root_layout);
         appbar_layout = (AppBarLayout) findViewById(R.id.appbar_layout);
-        flContainer = findViewById(R.id.flContainer);
+        flContainer = (FrameLayout) findViewById(R.id.flContainer);
+        flContainer.addView(view);
     }
 
     //因toolBar滑动原因,需要添加paddingBottom,主页除外

@@ -292,6 +292,10 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
                 if (getDrawerLayout().getDrawerLockMode(Gravity.LEFT) != DrawerLayout.LOCK_MODE_LOCKED_CLOSED) {
                     getDrawerLayout().openDrawer(Gravity.LEFT);
                     GaTrackHelper.getInstance().googleAnalytics(Const.GA.SLIDE_MENU_SCREEN,HomeActivity.this);
+                    if (!isHomePage){
+                        tvDogs.performClick();
+                    }
+                    isHomePage=true;
                 }
             }
         });
@@ -424,6 +428,7 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
             long cartItemcount = getCartItemCount();
              updateRightIconNum(R.id.action_shopping_cart, cartItemcount);
         }
+
     }
     public long getCartItemCount() {
         long cartItemCount = 0;

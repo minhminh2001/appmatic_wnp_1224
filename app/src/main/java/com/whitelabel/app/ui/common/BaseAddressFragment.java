@@ -119,7 +119,6 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Logger.e("点击onItemClick2");
     }
     @Override
     public void closeSwipeLayout() {
