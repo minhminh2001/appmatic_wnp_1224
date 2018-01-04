@@ -1052,36 +1052,6 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                     postalcodeText.clearAnimation();
                 }
 
-//                rl_addadd_postcode.setBottomLineActive(false);
-//                postalcodeText2.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
-//                postalcodeText2.setVisibility(View.VISIBLE);
-//                if(postalcode!=null&&postalcode.getText().toString().trim().equals("")){
-//                    postalcode.setHint("Postal Code");
-//
-//                    postalcodeText2.getLocationOnScreen(location);
-//                    srollto();
-//
-//                    postalcodeText.clearAnimation();
-//                    //验证字段
-//                    postalcodeText2.setText(getResources().getString(R.string.This_is_a_required_field));
-//                    postalcodeText2.setTextColor(getResources().getColor(R.color.redC2060A));
-//                    return false;
-//                }else if(postalcode!=null&&postalcode.getText().toString().trim().length()<4){
-//                    postalcodeText2.getLocationOnScreen(location);
-//                    srollto();
-//                    postalcodeText.clearAnimation();
-//                    //验证字段
-//                    postalcodeText2.setText(getResources().getString(R.string.blur_postalcode));
-//                    postalcodeText2.setTextColor(getResources().getColor(R.color.redC2060A));
-//                    return false;
-//                }else{
-//                    postalcodeText.clearAnimation();
-//                    /**
-//                     * send request to get city and state by postcode.
-//                     * russell
-//                     */
-////                    sendRequestToGetCityAndStateByPostCode(postalcode.getText().toString().trim());
-//                }
                 break;
             case R.id.edit_addaddresss_city:
                 rl_addadd_city.setBottomLineActive(false);
