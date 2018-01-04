@@ -1051,6 +1051,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
                 }else{
                     postalcodeText.clearAnimation();
                 }
+
                 break;
             case R.id.edit_addaddresss_city:
                 rl_addadd_city.setBottomLineActive(false);
