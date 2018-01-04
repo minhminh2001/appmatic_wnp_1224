@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.ui.checkout.CheckoutPaymentStatusRightFragment;
 import com.whitelabel.app.fragment.CheckoutPaymentStatusWrongFragment;
 import com.whitelabel.app.ui.home.MainContract;
@@ -34,8 +33,8 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity<MainCont
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_payment_status);
-//        WhiteLabelApplication.getAppConfiguration().getUser().setCartItemCount(0);
-//        WhiteLabelApplication.getAppConfiguration().updateUserData(this,WhiteLabelApplication.getAppConfiguration().getUser());
+        WhiteLabelApplication.getAppConfiguration().getUser().setCartItemCount(0);
+        WhiteLabelApplication.getAppConfiguration().updateUserData(this,WhiteLabelApplication.getAppConfiguration().getUser());
         setTitle(getResources().getString(R.string.PAYMENT_STATUS));
         setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this,R.drawable.ic_action_menu));
         setLeftMenuClickListener(new View.OnClickListener() {

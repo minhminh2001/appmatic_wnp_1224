@@ -428,7 +428,6 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
             long cartItemcount = getCartItemCount();
              updateRightIconNum(R.id.action_shopping_cart, cartItemcount);
         }
-
     }
     public long getCartItemCount() {
         long cartItemCount = 0;

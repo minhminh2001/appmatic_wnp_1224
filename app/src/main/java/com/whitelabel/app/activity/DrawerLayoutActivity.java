@@ -196,7 +196,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
                     @Override
                     public void run() {
                         jumpSettingPage();
-                        startActivity(new Intent(DrawerLayoutActivity.this,CheckoutPaymentStatusActivity.class));
                     }
                 }, DELAY);
                 break;
