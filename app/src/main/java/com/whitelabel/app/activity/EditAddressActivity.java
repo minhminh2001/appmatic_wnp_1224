@@ -330,7 +330,7 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
         address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         address1Text2= (TextView) findViewById(R.id.edit_address1_text2);
         address2Text= (TextView) findViewById(R.id.edit_address2_text1);
-        address1Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        address2Text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         address2Text2= (TextView) findViewById(R.id.edit_address2_text2);
         postalcodeText= (TextView) findViewById(R.id.edit_postalcode_text);
         postalcodeText.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
@@ -871,13 +871,13 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                     else
                         ivClearEditAddress2.setVisibility(View.GONE);
                     break;
-//                case R.id.edit_postalcode_EditText:
-//                    onFocus(postalcode, postalcodeText, postalcodeText2, "Postal Code",rl_edit_postcode);
-//                    if (postalcode.getText().length()!=0)
-//                        ivClearEditCode.setVisibility(View.VISIBLE);
-//                    else
-//                        ivClearEditCode.setVisibility(View.GONE);
-//                    break;
+                case R.id.edit_postalcode_EditText:
+                    onFocus(postalcode, postalcodeText, postalcodeText2, "Postal Code",rl_edit_postcode);
+                    if (postalcode.getText().length()!=0)
+                        ivClearEditCode.setVisibility(View.VISIBLE);
+                    else
+                        ivClearEditCode.setVisibility(View.GONE);
+                    break;
                 case R.id.edit_city_EditText:
                     onFocus(city, cityText, cityText2, "City",rl_edit_city);
                     if (city.getText().length()!=0)
@@ -1022,28 +1022,24 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                 postalcodeText2.setVisibility(View.VISIBLE);
                 rl_edit_postcode.setBottomLineActive(false);
                 if(postalcode!=null&&postalcode.getText().toString().trim().equals("")){
-                    postalcode.setHint("Postal Code");
+                    postalcode.setHint(getResources().getString(R.string.postal_code));
                     postalcodeText.clearAnimation();
+                    postalcodeText2.setVisibility(View.INVISIBLE);
                     //验证字段
-                    postalcodeText2.setText(getResources().getString(R.string.This_is_a_required_field));
-                    postalcodeText2.setTextColor(getResources().getColor(R.color.redC2060A));
-                    myScrollView.scrollTo(0, 0);
+//                    postalcodeText2.setText(getResources().getString(R.string.This_is_a_required_field));
+//                    postalcodeText2.setTextColor(getResources().getColor(R.color.redC2060A));
+//                    myScrollView.scrollTo(0, 0);
                     return false;
-                }else if(postalcode!=null&&postalcode.getText().toString().trim().length()<4){
+                }else {
                     postalcodeText.clearAnimation();
-                    //验证字段
-                    postalcodeText2.setText(getResources().getString(R.string.blur_postalcode));
-                    postalcodeText2.setTextColor(getResources().getColor(R.color.redC2060A));
-                    myScrollView.scrollTo(0, 0);
-                    return false;
-                }else{
-                    postalcodeText.clearAnimation();
+                }
+
                     /**
                      * send request to get city and state by postcode.
                      * russell
                      */
 //                    sendRequestToGetCityAndStateByPostCode(postalcode.getText().toString().trim());
-                }
+
                 break;
             case R.id.edit_city_EditText:
                 cityText2.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
