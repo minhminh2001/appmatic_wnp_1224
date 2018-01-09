@@ -54,7 +54,7 @@ import java.util.List;
  * Created by imaginato on 2015/7/14.
  */
 public class ProductListCategoryLandingFragment extends ProductListBaseFragment implements View.OnClickListener,
-        ViewPager.OnPageChangeListener, OnFilterSortFragmentListener,FilterSortBottomView.FilterSortBottomViewCallBack {
+    ViewPager.OnPageChangeListener, OnFilterSortFragmentListener,FilterSortBottomView.FilterSortBottomViewCallBack {
     private final String TAG = "ProductListCategoryLandingFragment";
     protected ProductListActivity productListActivity;
     protected View mContentView;
@@ -226,13 +226,13 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         CategoryBaseBean.CategoryBean.ChildrenBeanX entity = productListActivity.getSearchCategoryEntity();
 
         //all暂时取消掉  ray
-         SVRAppserviceProductSearchParameter  parameter= productListActivity.getSVRAppserviceProductSearchParameterById(productListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS,-1);
+        SVRAppserviceProductSearchParameter  parameter= productListActivity.getSVRAppserviceProductSearchParameterById(productListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS,-1);
         //需求隐藏 Gem Brands 的ALL  GEM Brands 的
         String gemBradns=productListActivity.getResources().getString(R.string.gembrand);
         boolean   isGemBrands=false;
-            if(!TextUtils.isEmpty(parameter.getName())&&gemBradns.equals(parameter.getName().replace(" ","").toUpperCase())){
-                isGemBrands=true;
-            }
+        if(!TextUtils.isEmpty(parameter.getName())&&gemBradns.equals(parameter.getName().replace(" ","").toUpperCase())){
+            isGemBrands=true;
+        }
         if ((entity != null) && (!JDataUtils.isEmpty(entity.getId()))) {
             CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean allCategory = new CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean();
             allCategory.setId(entity.getId());
@@ -267,7 +267,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         setTitle(allCategoryName);
         if(categoryArrayList!=null&& categoryId !=null&&!"0".equals(categoryId)) {
             for (int i = 0; i < categoryArrayList.size(); i++) {
-                   if(categoryArrayList.get(i).getId().equals(categoryId)){
+                if(categoryArrayList.get(i).getId().equals(categoryId)){
                     parentCategoryIndex=i;
                 }
             }
@@ -420,8 +420,15 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         try {
             String rightTopTitle=productListActivity.searchCategoryEntity.getMenuTitle();
             List<CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean> parent = productListActivity.searchCategoryEntity.getChildren();
-            CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean returnEntity = parent.get(position);
-            String rightSubTitle=returnEntity.getMenuTitle();
+            String rightSubTitle;
+            //temp add pos 0 item all
+            if (position==0){
+                rightSubTitle="All";
+            }else {
+                position=position-1;
+                CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean returnEntity = parent.get(position);
+                rightSubTitle=returnEntity.getMenuTitle();
+            }
             StringBuilder builder=new StringBuilder();
             builder.append("Category_");
             builder.append(productListActivity.leftMenuTitle);
