@@ -71,7 +71,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     @Override
     public void inject() {
         DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
-                presenterModule(new PresenterModule(getActivity())).build().inject(this);
+            presenterModule(new PresenterModule(getActivity())).build().inject(this);
     }
 
     @Override
@@ -136,21 +136,21 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     }
     @Override
     public void loadData(SVRAppserviceCatalogSearchReturnEntity data) {
-             isFirstLoading=false;
-            if(mFragments !=null&& mFragments.size()>0){
-                for(int i = 0; i< mFragments.size(); i++){
-                    if(mFragments.get(i) instanceof HomeHomeFragmentV3){
-                        ((HomeHomeFragmentV3) mFragments.get(i)).onRefresh();
-                    }else if(mFragments.get(i) instanceof HomeHomeFragmentV4){
-                        ((HomeHomeFragmentV4) mFragments.get(i)).onRefresh();
-                    }
+        isFirstLoading=false;
+        if(mFragments !=null&& mFragments.size()>0){
+            for(int i = 0; i< mFragments.size(); i++){
+                if(mFragments.get(i) instanceof HomeHomeFragmentV3){
+                    ((HomeHomeFragmentV3) mFragments.get(i)).onRefresh();
+                }else if(mFragments.get(i) instanceof HomeHomeFragmentV4){
+                    ((HomeHomeFragmentV4) mFragments.get(i)).onRefresh();
                 }
-            }else {
-              categoryArrayList = data.getCategory();
-              mFragments = new ArrayList<>();
-               for (int i = 0; i < categoryArrayList.size(); i++) {
-                    mFragments.add(createFragmentByIndex(i));
-               }
+            }
+        }else {
+            categoryArrayList = data.getCategory();
+            mFragments = new ArrayList<>();
+            for (int i = 0; i < categoryArrayList.size(); i++) {
+                mFragments.add(createFragmentByIndex(i));
+            }
             categoryViewCount = data.getCategory().size() - 1;
             fragmentPagerAdapter = new CustomTabPageIndicatorAdapter(getChildFragmentManager());
             vpCategoryViewPager.setAdapter(fragmentPagerAdapter);
@@ -183,7 +183,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             requestErrorHelper.setResponseListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                       requestData();
+                    requestData();
                 }
             });
         }
@@ -307,6 +307,9 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
                 //exclude 'shop by brand'
                 if (position<categoryArrayList.size()-1){
                     GaTrackHelper.getInstance().googleAnalytics(categoryName.toUpperCase()+Const.GA.HOME_SCREEN,getActivity());
+                }else if (position==categoryArrayList.size()-1){
+                    // SHOP BY BRAND
+                    GaTrackHelper.getInstance().googleAnalytics(categoryName.toUpperCase(),getActivity());
                 }
             }
             return categoryName;
