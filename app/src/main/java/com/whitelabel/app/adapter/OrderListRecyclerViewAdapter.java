@@ -443,10 +443,6 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         //current group order no check any item,then
         if (checkedList!=null && checkedList.isEmpty()){
             int[] preAndNextTitleIndex = getPreAndNextTitleIndex(position);
-            //all item count
-//            int totalItem=preAndNextTitleIndex[1]-preAndNextTitleIndex[0];
-
-            //startItemPos = preTitlePos +1,
             for (int i= preAndNextTitleIndex[0]+1;i<preAndNextTitleIndex[1];i++){
                 if (transformDataList.get(i) instanceof OrderBody){
                     OrderBody orderBody = (OrderBody) transformDataList.get(i);
@@ -531,6 +527,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         int SubBodyPos=0;
         if (transformDataList!=null && !transformDataList.isEmpty()) {
             titleAndSubBody.clear();
+            titlePoss.clear();
             for (int i = 0; i < transformDataList.size(); i++) {
                 if (transformDataList.get(i) instanceof OrderTip) {
                     titlePoss.add(i);
@@ -545,6 +542,8 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     //last one
                 } else if (SubBodyPos == transformDataList.size() - 1) {
                     titleAndSubBody.put(titlePos, new ArrayList<Integer>(subBody));
+                    //mark "add to cart" btn next title index
+                    titlePoss.add(i+1);
                     subBody.clear();
                 }
             }
