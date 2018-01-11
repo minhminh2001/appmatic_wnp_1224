@@ -32,7 +32,7 @@ public interface ShoppingCartApi {
     @POST("appservice/cart/delete")
     public  Observable<ShoppingCartDeleteCellEntity>  deleteProductFromShoppingCart(@Field("session_key")String sessionKey,@Field("id") String id);
     @FormUrlEncoded
-    @POST("appservice/cart/updateShoppingCart")
+    @POST("appservice/cart/updateItemAmountCart")
     public Observable<ShoppingCartDeleteCellEntity> setProductCountFromShoppingCart(@Field("session_key")String sessionKey, @FieldMap Map<String,String> params);
 
 
