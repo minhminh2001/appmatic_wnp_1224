@@ -357,7 +357,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     orderBody.setOrderQuantity(itemQuantity);
                     transformDataList.set(position,orderBody);
                     subOrderHolder.tvShoppingcartCellCount.setText(itemQuantity);
-                    gaModifyQty(orderBody.getOrderName(),false,itemQuantity,orderBody.getOrderId());
+                    gaModifyQty(orderBody.getOrderName(),true,itemQuantity,orderBody.getOrderId());
                 }
             });
             if (orderBody.getIsRPayment()==0||!orderBody.isLast()) {
@@ -606,9 +606,9 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         }
         StringBuilder builder=new StringBuilder();
         builder.append(productName);
-        builder.append(",");
+        builder.append(", ");
         builder.append(addOrSub);
-        builder.append(",");
+        builder.append(", ");
         builder.append(quantity);
         GaTrackHelper.getInstance().googleAnalyticsEvent(Const.GA.ORDER_REORDER_CATEGORY,
             Const.GA.ORDER_MODIFY_QTY_EVENT,
