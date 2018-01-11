@@ -727,16 +727,16 @@
     <string name="api_version">v1</string>
     <string name="api_key">eyKOW06BPBqbe3qe</string>
     <!--dev stage-->
-    <string name="app_key">APP-53910061550170911</string>
+    <!--<string name="app_key">APP-53910061550170911</string>-->
     <!--live-->
-    <!--<string name="app_key">APP-13110015850171019</string>-->
+    <string name="app_key">APP-13110015850171019</string>
 
     <string name="build_id">20171204021754</string>
     <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bb5de7d8</string>
     <string name="app_name">Whiskers N Paws</string>
     <!--https://dev2.wnp.com.hk/ 103.210.236.156:8088  /  https://imaginato.wnp.com.hk/  https://www.wnp.com.hk  -->
-    <string name="request_url">https://imaginato.wnp.com.hk/</string>
-    <string name="image_base_url">https://imaginato.wnp.com.hk/</string>
+    <string name="request_url">https://www.wnp.com.hk/</string>
+    <string name="image_base_url">https://www.wnp.com.hk/</string>
     <string name="mock_url">http://mis.appmatic.io/</string>
 
     <string name="address_phone_error_hint">More than 6 digits please.</string>
