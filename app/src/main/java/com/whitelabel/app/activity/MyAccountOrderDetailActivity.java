@@ -74,6 +74,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private TextView tvStoreCreditTitle;
     private TextView tvStoreCreditVlaue;
     private TextView tvTopAddressTitle;
+    private TextView tvOrderComment;
 
     private CustomWebView tvCreditCardTypeText;
     private ScrollView scrollView;
@@ -190,7 +191,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private CheckoutDao mCheckoutDao;
     private LinearLayout llShippingAddress;
     private LinearLayout llBillingAddress;
-
+    private RelativeLayout rlComment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -236,6 +237,8 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         tvVoucherTitle = (TextView) findViewById(R.id.tv_order_detail_voucher_title);
         tvGrandTotal = (TextView) findViewById(R.id.tv_order_detail_grandtotal);
         tvTopAddressTitle= (TextView) findViewById(R.id.tv_order_detail_top_title);
+        tvOrderComment= (TextView) findViewById(R.id.tv_order_comment);
+
 //        tvUsername = (TextView) findViewById(R.id.tv_order_detail_username);
 //        tvAddress1 = (TextView) findViewById(R.id.tv_order_detail_address1);
 //        TextView tvAddress2 = (TextView) findViewById(R.id.tv_order_detail_address2);
@@ -244,6 +247,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
 //        tvPhone = (TextView) findViewById(R.id.tv_order_detail_telephone);
         tvCreditCardTypeText = (CustomWebView) findViewById(R.id.tv_order_detail_paymentmethod_text);
         RelativeLayout rlBody = (RelativeLayout) findViewById(R.id.rl_orderdetail_body);
+        rlComment=(RelativeLayout) findViewById(R.id.rl_comment);
         scrollView = (ScrollView) findViewById(R.id.scollview_myorder_detail);
         listView = (ListView) findViewById(R.id.lv_myaccount_orderdetail);
         LinearLayout llWebView = (LinearLayout) findViewById(R.id.ll_myaccount_orderdetail_paymentmethod_creditcard);
@@ -424,6 +428,13 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         if (!TextUtils.isEmpty(method)) {
             // tvCreditCardTypeText.setText(method);
             webViewFont(method);
+        }
+        //comment
+        if (TextUtils.isEmpty(orderDetail.getOrderComment())){
+            rlComment.setVisibility(View.GONE);
+        }else {
+            rlComment.setVisibility(View.VISIBLE);
+            tvOrderComment.setText(orderDetail.getOrderComment());
         }
 
         if (orderDetail.getIsBanktransfer() == 1) {
