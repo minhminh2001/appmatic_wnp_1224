@@ -214,6 +214,7 @@
     <string name="Products">Products</string>
     <string name="Shipping_Address">Shipping Address: </string>
     <string name="billing_Address">Billing Address: </string>
+    <string name="reorder_comment_title">Comment: </string>
     <string name="Quantity__">Quantity:&#160;</string>
     <string name="RM">RM&#160;</string>
 
@@ -650,6 +651,8 @@
     <string name="message">message</string>
     <string name="address_default_shipping">Default Shipping Address</string>
     <string name="address_default_billing">Default Billing Address</string>
+    <string name="navigation_dogs">Dogs</string>
+    <string name="navigation_cats">Cats</string>
 
     <!--category-->
     <string name="accessories_upp">ACCESSORIES</string>
@@ -715,7 +718,7 @@
     <string name="checkout_address_change">Change</string>
 
     <string name="checkout_bill_diffent">Bill to different address</string>
-  <!--config-->
+    <!--config-->
     <string name="gcm_sender_id">399952816616</string>
     <string name="facebook_app_id_test">1586589871584877</string>
     <string name="facebook_app_id_live">1287318627981888</string>

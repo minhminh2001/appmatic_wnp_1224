@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    >
+>
     <LinearLayout
         android:id="@+id/ll_toolbar"
         android:orientation="vertical"
@@ -103,40 +103,40 @@
                 </RelativeLayout>
 
                 <!--Shipping Address Title-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/greyEEEEEE"
-                android:paddingLeft="10dp">
-                <!--Shipping Address Title-->
-                <com.whitelabel.app.widget.CustomTextView
-                    style="@style/font_family_roboto_medium"
-                    android:id="@+id/tv_order_detail_top_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="@string/Shipping_Address"
-                    android:layout_marginTop="6dp"
-                    android:textColor="@color/black000000"
-                    android:textSize="14sp" />
                 <LinearLayout
-                    android:id="@+id/ll_shipping_address"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:background="@color/greyEEEEEE"
+                    android:paddingLeft="10dp">
+                    <!--Shipping Address Title-->
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_roboto_medium"
+                        android:id="@+id/tv_order_detail_top_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/Shipping_Address"
+                        android:layout_marginTop="6dp"
+                        android:textColor="@color/black000000"
+                        android:textSize="14sp" />
+                    <LinearLayout
+                        android:id="@+id/ll_shipping_address"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
 
-                </LinearLayout>
-                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    </LinearLayout>
+                    <!--<com.whitelabel.app.widget.CustomTextView-->
                     <!--style="@style/font_family_robot_regular"-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="@dimen/orderdetail_line_space"-->
                     <!--android:background="@color/gray_light"-->
                     <!--android:visibility="gone"/>-->
 
-                <!--&lt;!&ndash;Shipping Address Data&ndash;&gt;-->
+                    <!--&lt;!&ndash;Shipping Address Data&ndash;&gt;-->
 
-                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--<com.whitelabel.app.widget.CustomTextView-->
                     <!--android:id="@+id/tv_order_detail_username"-->
                     <!--style="@style/font_family_roboto_medium"-->
                     <!--android:layout_width="wrap_content"-->
@@ -146,7 +146,7 @@
                     <!--android:textColor="@color/black000000"-->
                     <!--android:textSize="@dimen/checkout_and_order_common_textsize" />-->
 
-                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--<com.whitelabel.app.widget.CustomTextView-->
                     <!--style="@style/font_family_robot_regular"-->
                     <!--android:id="@+id/tv_order_detail_address1"-->
                     <!--android:layout_width="wrap_content"-->
@@ -155,7 +155,7 @@
                     <!--android:textSize="@dimen/checkout_and_order_common_textsize"-->
                     <!--android:textColor="@color/black000000" />-->
 
-                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--<com.whitelabel.app.widget.CustomTextView-->
                     <!--style="@style/font_family_robot_regular"-->
                     <!--android:id="@+id/tv_order_detail_address2"-->
                     <!--android:layout_width="wrap_content"-->
@@ -165,7 +165,7 @@
                     <!--android:textColor="@color/black000000"-->
                     <!--android:visibility="gone" />-->
 
-                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--<com.whitelabel.app.widget.CustomTextView-->
                     <!--style="@style/font_family_robot_regular"-->
                     <!--android:id="@+id/tv_order_detail_citystatepostcode"-->
                     <!--android:layout_width="wrap_content"-->
@@ -174,7 +174,7 @@
                     <!--android:textSize="@dimen/checkout_and_order_common_textsize"-->
                     <!--android:textColor="@color/black000000" />-->
 
-                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--<com.whitelabel.app.widget.CustomTextView-->
                     <!--style="@style/font_family_robot_regular"-->
                     <!--android:id="@+id/tv_order_detail_country"-->
                     <!--android:layout_width="wrap_content"-->
@@ -184,7 +184,7 @@
                     <!--android:textColor="@color/black000000"-->
                     <!--android:gravity="center_vertical" />-->
 
-                <!--<com.whitelabel.app.widget.CustomTextView-->
+                    <!--<com.whitelabel.app.widget.CustomTextView-->
                     <!--style="@style/font_family_robot_regular"-->
                     <!--android:id="@+id/tv_order_detail_telephone"-->
                     <!--android:layout_width="wrap_content"-->
@@ -194,115 +194,115 @@
                     <!--android:gravity="center_vertical"-->
                     <!--android:textSize="@dimen/checkout_and_order_common_textsize"-->
                     <!--android:textColor="@color/black000000" />-->
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="3dp"
-                android:background="@color/greyEEEEEE"
-                android:paddingLeft="10dp">
-                <!--Shipping Address Title-->
-                <com.whitelabel.app.widget.CustomTextView
-                    style="@style/font_family_roboto_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="@string/billing_Address"
-
-                    android:layout_marginTop="6dp"
-                    android:textColor="@color/black000000"
-                    android:textSize="14sp" />
-                <LinearLayout
-                    android:id="@+id/ll_billing_address"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
                 </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="3dp"
-                android:background="@color/greyEEEEEE"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:minHeight="40dp">
-                <!--Payment Method Title-->
-                <com.whitelabel.app.widget.CustomTextView
-                    style="@style/font_family_roboto_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="@string/Payment_Method"
-                    android:layout_marginTop="6dp"
-                    android:textColor="@color/black000000"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="-8dp" />
 
-
-                <!--Payment Method Data-->
                 <LinearLayout
-                    android:id="@+id/ll_myaccount_orderdetail_paymentmethod_creditcard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="visible"
-                    android:minHeight="40dp">
-
-                    <com.whitelabel.app.widget.CustomWebView
-                        style="@style/font_family_robot_regular"
-                        android:layerType="software"
-                        android:scrollbars="none"
-                        android:id="@+id/tv_order_detail_paymentmethod_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_x="7dp"
-                        android:layout_y="5dp"
-                        android:gravity="center_vertical"
-                        android:textSize="@dimen/checkout_and_order_common_textsize"
-                        android:textColor="@color/black000000"
-                        android:background="#00000000"
-                        android:layout_marginBottom="-4dp"
-                        android:layout_marginTop="-2dp"
-                        android:visibility="visible"
-                        android:minHeight="40dp" />
-<!--CustomTextView
-                    <com.whitelabel.app.widget.
-                        style="@style/font_family_roboto_regular"
-                        android:id="@+id/tv_order_detail_creditcardtype"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/orderdetail_line_height"
-                        android:gravity="center_vertical"
-                        android:text="Credit Card Type visa"
-                        android:textSize="@dimen/checkout_and_order_common_textsize"
-                        android:textColor="@color/black000000" />
-
+                    android:layout_marginTop="3dp"
+                    android:background="@color/greyEEEEEE"
+                    android:paddingLeft="10dp">
+                    <!--Shipping Address Title-->
                     <com.whitelabel.app.widget.CustomTextView
-                        style="@style/font_family_roboto_regular"
-                        android:id="@+id/tv_order_detail_creditcardnumber"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/orderdetail_line_height"
-                        android:gravity="center_vertical"
-                        android:text="Credit Card Number 4111111 xxxxxx 1111111"
-                        android:textSize="@dimen/checkout_and_order_common_textsize"
-                        android:textColor="@color/black000000" />
-
-                    <com.whitelabel.app.widget.CustomTextView
-                        style="@style/font_family_roboto_regular"
-                        android:id="@+id/tv_order_detail_issuerbank"
+                        style="@style/font_family_roboto_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_gravity="center_vertical"
                         android:gravity="center_vertical"
-                        android:text="Issuer Bank Hong Leony Bank Berhand"
-                        android:textSize="@dimen/checkout_and_order_common_textsize"
-                        android:textColor="@color/black000000" />
-                        -->
+                        android:text="@string/billing_Address"
+
+                        android:layout_marginTop="6dp"
+                        android:textColor="@color/black000000"
+                        android:textSize="14sp" />
+                    <LinearLayout
+                        android:id="@+id/ll_billing_address"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                    </LinearLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/greyEEEEEE"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:minHeight="40dp">
+                    <!--Payment Method Title-->
+                    <com.whitelabel.app.widget.CustomTextView
+                        style="@style/font_family_roboto_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/Payment_Method"
+                        android:layout_marginTop="6dp"
+                        android:textColor="@color/black000000"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="-8dp" />
+
+
+                    <!--Payment Method Data-->
+                    <LinearLayout
+                        android:id="@+id/ll_myaccount_orderdetail_paymentmethod_creditcard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        android:minHeight="40dp">
+
+                        <com.whitelabel.app.widget.CustomWebView
+                            style="@style/font_family_robot_regular"
+                            android:layerType="software"
+                            android:scrollbars="none"
+                            android:id="@+id/tv_order_detail_paymentmethod_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_x="7dp"
+                            android:layout_y="5dp"
+                            android:gravity="center_vertical"
+                            android:textSize="@dimen/checkout_and_order_common_textsize"
+                            android:textColor="@color/black000000"
+                            android:background="#00000000"
+                            android:layout_marginBottom="-4dp"
+                            android:layout_marginTop="-2dp"
+                            android:visibility="visible"
+                            android:minHeight="40dp" />
+                        <!--CustomTextView
+                                            <com.whitelabel.app.widget.
+                                                style="@style/font_family_roboto_regular"
+                                                android:id="@+id/tv_order_detail_creditcardtype"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="@dimen/orderdetail_line_height"
+                                                android:gravity="center_vertical"
+                                                android:text="Credit Card Type visa"
+                                                android:textSize="@dimen/checkout_and_order_common_textsize"
+                                                android:textColor="@color/black000000" />
+
+                                            <com.whitelabel.app.widget.CustomTextView
+                                                style="@style/font_family_roboto_regular"
+                                                android:id="@+id/tv_order_detail_creditcardnumber"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="@dimen/orderdetail_line_height"
+                                                android:gravity="center_vertical"
+                                                android:text="Credit Card Number 4111111 xxxxxx 1111111"
+                                                android:textSize="@dimen/checkout_and_order_common_textsize"
+                                                android:textColor="@color/black000000" />
+
+                                            <com.whitelabel.app.widget.CustomTextView
+                                                style="@style/font_family_roboto_regular"
+                                                android:id="@+id/tv_order_detail_issuerbank"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginBottom="10dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:gravity="center_vertical"
+                                                android:text="Issuer Bank Hong Leony Bank Berhand"
+                                                android:textSize="@dimen/checkout_and_order_common_textsize"
+                                                android:textColor="@color/black000000" />
+                                                -->
+                    </LinearLayout>
                 </LinearLayout>
                 <com.whitelabel.app.widget.CustomTextView
                     style="@style/font_family_robot_regular"
@@ -334,21 +334,29 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
                     android:divider="@null"
-                    />
+                />
                 <RelativeLayout
                     android:id="@+id/rl_comment"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
+                    android:padding="10dp"
+                    android:background="@color/greyEEEEEE"
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/tv_order_comment_title"
-                        android:text="@string/checkout_review_common_et_hint"
+                        style="@style/font_family_robot_regular"
+                        android:text="@string/reorder_comment_title"
                         android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:textColor="@color/black000000"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <TextView
+                        android:layout_marginTop="10dp"
                         android:id="@+id/tv_order_comment"
+                        style="@style/font_family_robot_regular"
                         android:layout_below="@id/tv_order_comment_title"
+                        android:textSize="14sp"
+                        android:textColor="@color/black000000"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </RelativeLayout>
@@ -396,7 +404,7 @@
                         android:text="@string/Discount"
                         android:textSize="16sp"
                         android:textColor="@color/black000000"
-                        />
+                    />
 
                     <com.whitelabel.app.widget.CustomTextView
                         style="@style/font_family_robot_regular"
@@ -407,7 +415,7 @@
                         android:gravity="center_vertical"
                         android:textSize="16sp"
                         android:textColor="@color/black000000"
-                           />
+                    />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -435,7 +443,7 @@
                         android:text="@string/rm0"
                         android:textSize="16sp"
                         android:textColor="@color/black000000"
-                         />
+                    />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -469,7 +477,7 @@
                         android:text="@string/rm0"
                         android:textSize="16sp"
                         android:textColor="@color/black000000"
-                          />
+                    />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -500,7 +508,7 @@
                         android:text="- RM 0.00"
                         android:textSize="16sp"
                         android:textColor="@color/black000000"
-                          />
+                    />
                 </RelativeLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
