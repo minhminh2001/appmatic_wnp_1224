@@ -65,7 +65,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private TextView tvVoucher;
     private TextView tvVoucherTitle;
     private TextView tvGrandTotal;
-//    private TextView tvUsername;
+    //    private TextView tvUsername;
 //    private TextView tvAddress1;
 //    private TextView tvCityStatePostCode;
 //    private TextView tvCountry;
@@ -136,11 +136,11 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                         }
                         mActivity.get().mOrderNumber=repaymentInfoModel.getOrderSn();
                         mActivity.get().mPaypalHelper.startPaypalPayment(mActivity.get(),
-                                repaymentInfoModel.
+                            repaymentInfoModel.
                                 getGrandTotal(),
-                                repaymentInfoModel.getUnit(),
-                                productName,
-                                repaymentInfoModel.getOrderSn());
+                            repaymentInfoModel.getUnit(),
+                            productName,
+                            repaymentInfoModel.getOrderSn());
                     }else{
                         String errorMsg = msg.obj.toString();
                         JDataUtils.errorMsgHandler(mActivity.get(), errorMsg);
