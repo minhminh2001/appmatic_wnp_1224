@@ -434,7 +434,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
             rlComment.setVisibility(View.GONE);
         }else {
             rlComment.setVisibility(View.VISIBLE);
-            tvOrderComment.setText(orderDetail.getOrderComment());
+            tvOrderComment.setText(Html.fromHtml(orderDetail.getOrderComment()));
         }
 
         if (orderDetail.getIsBanktransfer() == 1) {
