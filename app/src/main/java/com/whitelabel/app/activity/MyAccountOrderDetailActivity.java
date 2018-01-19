@@ -65,11 +65,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private TextView tvVoucher;
     private TextView tvVoucherTitle;
     private TextView tvGrandTotal;
-    //    private TextView tvUsername;
-//    private TextView tvAddress1;
-//    private TextView tvCityStatePostCode;
-//    private TextView tvCountry;
-//    private TextView tvPhone;
     private TextView mTvGst;
     private TextView tvStoreCreditTitle;
     private TextView tvStoreCreditVlaue;
@@ -239,12 +234,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         tvTopAddressTitle= (TextView) findViewById(R.id.tv_order_detail_top_title);
         tvOrderComment= (TextView) findViewById(R.id.tv_order_comment);
 
-//        tvUsername = (TextView) findViewById(R.id.tv_order_detail_username);
-//        tvAddress1 = (TextView) findViewById(R.id.tv_order_detail_address1);
-//        TextView tvAddress2 = (TextView) findViewById(R.id.tv_order_detail_address2);
-//        tvCityStatePostCode = (TextView) findViewById(R.id.tv_order_detail_citystatepostcode);
-//        tvCountry = (TextView) findViewById(R.id.tv_order_detail_country);
-//        tvPhone = (TextView) findViewById(R.id.tv_order_detail_telephone);
         tvCreditCardTypeText = (CustomWebView) findViewById(R.id.tv_order_detail_paymentmethod_text);
         RelativeLayout rlBody = (RelativeLayout) findViewById(R.id.rl_orderdetail_body);
         rlComment=(RelativeLayout) findViewById(R.id.rl_comment);

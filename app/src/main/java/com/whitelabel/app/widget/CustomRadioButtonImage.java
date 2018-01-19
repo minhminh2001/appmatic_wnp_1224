@@ -16,10 +16,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-/**
- * Created by ray on 2017/3/27.
- */
-
 public class CustomRadioButtonImage extends RelativeLayout{
     private ImageView ivBigImage;
     private Context context;

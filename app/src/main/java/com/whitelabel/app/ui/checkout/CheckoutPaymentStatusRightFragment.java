@@ -220,7 +220,7 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
             JViewUtils.setStrokeButtonGlobalStyle(getActivity(), tvCheckOrder);
             JViewUtils.setSoildButtonGlobalStyle(getActivity(), tvContinueShopping);
 
-//TODO temp annotation release add this
+//TODO joyson temp annotation release add this
 //           showMarkToAppStoreDialog(getActivity());
         return view;
     }

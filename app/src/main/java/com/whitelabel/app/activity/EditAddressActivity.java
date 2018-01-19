@@ -1025,20 +1025,11 @@ public class EditAddressActivity extends com.whitelabel.app.BaseActivity impleme
                     postalcode.setHint(getResources().getString(R.string.postal_code));
                     postalcodeText.clearAnimation();
                     postalcodeText2.setVisibility(View.INVISIBLE);
-                    //验证字段
-//                    postalcodeText2.setText(getResources().getString(R.string.This_is_a_required_field));
-//                    postalcodeText2.setTextColor(getResources().getColor(R.color.redC2060A));
-//                    myScrollView.scrollTo(0, 0);
                     return false;
                 }else {
                     postalcodeText.clearAnimation();
                 }
 
-                    /**
-                     * send request to get city and state by postcode.
-                     * russell
-                     */
-//                    sendRequestToGetCityAndStateByPostCode(postalcode.getText().toString().trim());
 
                 break;
             case R.id.edit_city_EditText:
