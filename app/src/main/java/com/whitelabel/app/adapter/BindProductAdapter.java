@@ -14,7 +14,7 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
-import com.whitelabel.app.widget.CustomRadioButton;
+import com.whitelabel.app.widget.CustomRadioButtonImage;
 import com.whitelabel.app.widget.CustomTextView;
 import java.util.List;
 import butterknife.BindView;
@@ -88,7 +88,7 @@ public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         @BindView(R.id.tv_final_price)
         CustomTextView tvFinalPrice;
         @BindView(R.id.ivSortTitle)
-        CustomRadioButton rbCheck;
+        CustomRadioButtonImage rbCheck;
         ItemViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

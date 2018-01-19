@@ -89,7 +89,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             for (int j = 0; j < orderlist.size(); j++) {
                 MyAccountOrderTrackingInfo trackingInfo = null;
                 if (orderlist.get(j).getTrackingInfo() != null) {
-                  trackingInfo = orderlist.get(j).getTrackingInfo();
+                    trackingInfo = orderlist.get(j).getTrackingInfo();
                 }
                 for (int k = 0; k < orderlist.get(j).getItems().size(); k++) {
                     MyAccountOrderInner orderInners = orderlist.get(j).getItems().get(k);
@@ -357,7 +357,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     orderBody.setOrderQuantity(itemQuantity);
                     transformDataList.set(position,orderBody);
                     subOrderHolder.tvShoppingcartCellCount.setText(itemQuantity);
-                    gaModifyQty(orderBody.getOrderName(),false,itemQuantity,orderBody.getOrderId());
+                    gaModifyQty(orderBody.getOrderName(),true,itemQuantity,orderBody.getOrderId());
                 }
             });
             if (orderBody.getIsRPayment()==0||!orderBody.isLast()) {
@@ -398,8 +398,8 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             JViewUtils.setStatus(subOrderHolder.orderStatus, orderBody.getOrderStatusCode());
             if (!TextUtils.isEmpty(orderBody.getMerchantName())) {
                 String soldBy = subOrderHolder.orderMerName.getContext().getResources().getString(R.string.soldby);
-                    subOrderHolder.orderMerName.setText(soldBy + " " + orderBody.getMerchantName());
-                    subOrderHolder.orderMerName.setTextColor(context.getResources().getColor(R.color.black));
+                subOrderHolder.orderMerName.setText(soldBy + " " + orderBody.getMerchantName());
+                subOrderHolder.orderMerName.setTextColor(context.getResources().getColor(R.color.black));
             } else {
                 subOrderHolder.orderMerName.setText("");
             }
@@ -443,10 +443,6 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         //current group order no check any item,then
         if (checkedList!=null && checkedList.isEmpty()){
             int[] preAndNextTitleIndex = getPreAndNextTitleIndex(position);
-            //all item count
-//            int totalItem=preAndNextTitleIndex[1]-preAndNextTitleIndex[0];
-
-            //startItemPos = preTitlePos +1,
             for (int i= preAndNextTitleIndex[0]+1;i<preAndNextTitleIndex[1];i++){
                 if (transformDataList.get(i) instanceof OrderBody){
                     OrderBody orderBody = (OrderBody) transformDataList.get(i);
@@ -531,6 +527,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         int SubBodyPos=0;
         if (transformDataList!=null && !transformDataList.isEmpty()) {
             titleAndSubBody.clear();
+            titlePoss.clear();
             for (int i = 0; i < transformDataList.size(); i++) {
                 if (transformDataList.get(i) instanceof OrderTip) {
                     titlePoss.add(i);
@@ -545,6 +542,8 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     //last one
                 } else if (SubBodyPos == transformDataList.size() - 1) {
                     titleAndSubBody.put(titlePos, new ArrayList<Integer>(subBody));
+                    //mark "add to cart" btn next title index
+                    titlePoss.add(i+1);
                     subBody.clear();
                 }
             }
@@ -584,33 +583,38 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     private void gaBtnKind(String btnText,String orderId){
         if (!TextUtils.isEmpty(btnText)){
             GaTrackHelper.getInstance().googleAnalyticsEvent(Const.GA.ORDER_REORDER_CATEGORY,
-                    Const.GA.ORDER_ADD_TO_CART_EVENT,
-                    btnText,
-                    Long.valueOf(orderId));
+                Const.GA.ORDER_ADD_TO_CART_EVENT,
+                btnText,
+                Long.valueOf(orderId));
         }
     }
 
 
     private void gaChooseProduct(String productName,String orderId){
         GaTrackHelper.getInstance().googleAnalyticsEvent(Const.GA.ORDER_REORDER_CATEGORY,
-                Const.GA.ORDER_CHOOSE_PRODUCT_EVENT,
-                productName,
-                Long.valueOf(orderId));
+            Const.GA.ORDER_CHOOSE_PRODUCT_EVENT,
+            productName,
+            Long.valueOf(orderId));
     }
 
     private void gaModifyQty(String productName,boolean isAddOrSub,String quantity,String orderId){
-        String text="";
+        String addOrSub="";
         if (isAddOrSub){
-            text= Const.GA.ORDER_ADD_EVENT;
+            addOrSub= Const.GA.ORDER_ADD_EVENT;
         }else {
-            text= Const.GA.ORDER_SUBTRACT_EVENT;
+            addOrSub= Const.GA.ORDER_SUBTRACT_EVENT;
         }
-        GaTrackHelper.getInstance().googleAnalyticsReorderEvent(Const.GA.ORDER_REORDER_CATEGORY,
-                Const.GA.ORDER_MODIFY_QTY_EVENT,
-                productName,
-                text,
-                quantity,
-                Long.valueOf(orderId));
+        StringBuilder builder=new StringBuilder();
+        builder.append(productName);
+        builder.append(", ");
+        builder.append(addOrSub);
+        builder.append(", ");
+        builder.append(quantity);
+        GaTrackHelper.getInstance().googleAnalyticsEvent(Const.GA.ORDER_REORDER_CATEGORY,
+            Const.GA.ORDER_MODIFY_QTY_EVENT,
+            builder.toString(),
+            Long.valueOf(orderId));
+
     }
 
 
@@ -645,7 +649,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
     class VHFooter extends RecyclerView.ViewHolder {
         public final RefreshLoadMoreRecyclerView.CustomDragRecyclerFooterView
-                footerView;
+            footerView;
 
         public VHFooter(View itemView) {
             super(itemView);

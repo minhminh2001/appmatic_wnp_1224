@@ -1,7 +1,7 @@
 ext {
     android = [
                applicationId    : "com.wnp.app",
-               versionCode      : 6,
+               versionCode      : 11,
                versionName      : "1.0.0"
     ]
 }

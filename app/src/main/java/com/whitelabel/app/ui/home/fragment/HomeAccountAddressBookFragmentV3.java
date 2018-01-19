@@ -48,7 +48,7 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
                 addressBook.setPrimaryShipping("0");
                 billAndShips.add(0,addressBook);
                 cloneObject.setPrimaryBilling("0");
-                billAndShips.add(0,cloneObject);
+                billAndShips.add(1,cloneObject);
             }else if("1".equals(addressBook.getPrimaryBilling())){
                 billAndShips.add(0,addressBook);
             }else if("1".equals(addressBook.getPrimaryShipping())){

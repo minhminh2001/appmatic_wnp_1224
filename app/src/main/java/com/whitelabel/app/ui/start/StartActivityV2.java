@@ -54,7 +54,12 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
     private Dialog mProgressDialog;
 
     public void startGuidePage() {
-        startLogoImageview.setVisibility(View.GONE);
+        if (mPresenter.isGuide()){
+            startNextActvity();
+        }else {
+            startLogoImageview.setVisibility(View.GONE);
+        }
+
     }
 
     private void startNextActvity() {
@@ -90,6 +95,7 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
             case R.id.btn_guide_one_skip_to_next_page:
             case R.id.btn_guide_two_skip_to_next_page:
                 startNextActvity();
+                mPresenter.saveGuideFlag(true);
                 break;
         }
     }

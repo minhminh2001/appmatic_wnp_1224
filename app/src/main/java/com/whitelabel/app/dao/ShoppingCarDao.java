@@ -178,7 +178,7 @@ public class ShoppingCarDao extends BaseHttp {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         params.put("cart[" + cellId + "][qty]", qty);
-        requestHttp(HTTP_METHOD.POST, "appservice/cart/updateShoppingCart", params, REQUEST_CHANGESHOPPINGCARCOUNT, keyValueBean);
+        requestHttp(HTTP_METHOD.POST, "appservice/cart/updateItemAmount", params, REQUEST_CHANGESHOPPINGCARCOUNT, keyValueBean);
     }
     public void applyOrCancelVoucherCode(String sessionKey, String voucherCode, String flag) {
         params = new TreeMap<>();

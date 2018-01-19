@@ -334,10 +334,10 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         TextView sign_in = (TextView) contentView.findViewById(R.id.sign_in);
         sign_in.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         StringBuilder stringBuilder=new StringBuilder();
-         stringBuilder=stringBuilder.append(getActivity().getResources().getString(R.string.by_creating));
-         stringBuilder=stringBuilder.append(" ");
-         stringBuilder=stringBuilder.append(GlobalData.appName);
-         tvRegisterHint.setText(stringBuilder.toString());
+        stringBuilder=stringBuilder.append(getActivity().getResources().getString(R.string.by_creating));
+        stringBuilder=stringBuilder.append(" ");
+        stringBuilder=stringBuilder.append(GlobalData.appName);
+        tvRegisterHint.setText(stringBuilder.toString());
         sign_in.setOnClickListener(this);
         CustomTextView signUp = (CustomTextView) contentView.findViewById(R.id.sign_up);
         JViewUtils.setSoildButtonGlobalStyle(getActivity(),signUp);
@@ -380,9 +380,9 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     private void setMoreClickSpan(){
 //        try {
 
-            StringBuilder stringBuilder=new StringBuilder();
-              stringBuilder=stringBuilder.append(getResources().getString(R.string.checkBox1)).append(" "+GlobalData.appName);
-             checkBoxText1.setText(stringBuilder.toString());
+        StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder=stringBuilder.append(getResources().getString(R.string.checkBox1)).append(" "+GlobalData.appName);
+        checkBoxText1.setText(stringBuilder.toString());
 //            String  sendStr=getResources().getString(R.string.checkBox3);
 //            int firstTextLength=firstStr.length();
 //            int sendTextLength=sendStr.length();
@@ -834,7 +834,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         switch (v.getId()){
             case R.id.sign_in:
                 loginRegisterActivity.redirectToAttachedFragment(
-                        LoginRegisterActivity.EMAILLOGIN_FLAG, 1);
+                    LoginRegisterActivity.EMAILLOGIN_FLAG, 1);
                 cleanEditText();
                 break;
             case R.id.sign_up:
@@ -847,7 +847,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                     inputMethodManager.hideSoftInputFromWindow(email.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     String checkBox_numbel=checkBox.isChecked()?"1":"0";
                     mAccountDao.registerUser(firstName.getText().toString().trim(),lastName.getText().toString().trim(),
-                            email.getText().toString().trim(),et_phone_number.getText().toString().trim(),password.getText().toString().trim(),checkBox_numbel, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
+                        email.getText().toString().trim(),et_phone_number.getText().toString().trim(),password.getText().toString().trim(),checkBox_numbel, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
 
                 }
                 break;
@@ -911,12 +911,10 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     }
 
     public void trackerRegister(String id){
-                try {
-                    //TODO joyson may be use
-//                    GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", Const.GA.SIGN_UP_SCREEN,
-//                            id,
-//                            Long.valueOf(id));
-                    GaTrackHelper.getInstance().googleAnalytics(Const.GA.SIGN_UP_SCREEN,getActivity());
+        try {
+            GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action", Const.GA.SIGN_UP_EVENT,
+                id,
+                Long.valueOf(id));
         }catch (Exception ex){
             ex.getStackTrace();
         }
@@ -951,7 +949,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     public void onStart() {
         super.onStart();
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, true);
-        GaTrackHelper.getInstance().googleAnalytics("Sign Up screen", loginRegisterActivity);
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.SIGN_UP_SCREEN, loginRegisterActivity);
 //        if(isstop){
 //            firstName.setText(mFirstName);
 //            lastName.setText(mLastName);
