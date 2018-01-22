@@ -42,7 +42,14 @@ public class LoginRegisterEmailSendSuccessFragment extends Fragment implements V
     @Override
     public void onStart() {
         super.onStart();
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, true);
         GaTrackHelper.getInstance().googleAnalytics(Const.GA.SIGN_UP_SUCCEED_SCREEN, loginRegisterActivity);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, false);
     }
 
     public void onClickLeftMenu(View v) {
