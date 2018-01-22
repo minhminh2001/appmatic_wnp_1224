@@ -723,7 +723,8 @@
     <string name="facebook_app_id_test">1586589871584877</string>
     <string name="facebook_app_id_live">1287318627981888</string>
     <string name="service_url">http://192.168.1.233/</string>
-    <string name="ga_track_id">UA-105181188-1</string>
+    <!--this is old gaid <string name="ga_track_id">UA-105181188-1</string>-->
+    <string name="ga_track_id">UA-66493898-4</string>
     <string name="facebook_id">1287318627981888</string>
     <string name="api_version">v1</string>
     <string name="api_key">eyKOW06BPBqbe3qe</string>
