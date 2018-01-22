@@ -1,39 +1,27 @@
 {
   "project_info": {
-    "project_number": "364318508430",
-    "firebase_url": "https://whitelabel-app.firebaseio.com",
-    "project_id": "Appmatic-app",
-    "storage_bucket": "gemfwhitelabelive-app.appspot.com"
+    "project_number": "175143002634",
+    "firebase_url": "https://wnpapp.firebaseio.com",
+    "project_id": "wnpapp",
+    "storage_bucket": "wnpapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:364318508430:android:bccf0e43b77ec6f3",
+        "mobilesdk_app_id": "1:175143002634:android:eaaabb7a5af483dc",
         "android_client_info": {
-          "package_name": "com.whitelabel.app"
+          "package_name": "com.wnp.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "364318508430-82cdu2h7knoto2o2uutnh9o6gonedrub.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.whitelabel.app",
-            "certificate_hash": "5017F7CA29CD3326F9D59E45E215F00362167AD8"
-          }
-        },
-        {
-          "client_id": "364318508430-letasur0u9o694vnscjei7lbvi85utlg.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "364318508430-qtvaig6h1inbh42icjqnu4s0h13kabqd.apps.googleusercontent.com",
+          "client_id": "175143002634-kha25sulkqcouarbcegsncsoivn6aaen.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBJs1xrTeqmJqa2_w926sDAPu1IHPB8YkM"
+          "current_key": "AIzaSyCZOp-tGZ__gOt9ehXXpCH7GEo2wq-L8Lk"
         }
       ],
       "services": {
@@ -41,20 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "364318508430-fiogd01i0cpfkhcl7b36d3d9na41d0hu.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.whitelabel.app"
-              }
-            },
-            {
-              "client_id": "364318508430-letasur0u9o694vnscjei7lbvi85utlg.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
