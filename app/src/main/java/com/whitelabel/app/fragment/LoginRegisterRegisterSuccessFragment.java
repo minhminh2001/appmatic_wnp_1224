@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JViewUtils;
 
 /**
@@ -43,6 +45,19 @@ public class LoginRegisterRegisterSuccessFragment extends Fragment implements Vi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, true);
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.SIGN_UP_SUCCEED_SCREEN, loginRegisterActivity);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, false);
     }
 
     @Override
