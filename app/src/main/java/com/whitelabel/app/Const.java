@@ -23,6 +23,7 @@ public class Const {
         public final static String ACCOUNT_WISHLIST_SCREEN = "My Wishlist Screen";
         public final static String ADDRESS_BOOK_SCREEN = "My Address Book Screen";
         public final static String SIGN_UP_SCREEN = "Sign Up Screen";
+        public final static String SIGN_UP_SUCCEED_SCREEN = "Sign Up Succeed Screen";
         public final static String SLIDE_MENU_SCREEN = "Side Menu";
         public final static String FORGOT_PASSWORD_SCREEN = "Forgot Password Screen";
 
