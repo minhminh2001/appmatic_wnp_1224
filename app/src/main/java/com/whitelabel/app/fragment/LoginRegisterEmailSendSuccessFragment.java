@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 
@@ -36,6 +38,13 @@ public class LoginRegisterEmailSendSuccessFragment extends Fragment implements V
             ex.printStackTrace();
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.SIGN_UP_SUCCEED_SCREEN, loginRegisterActivity);
+    }
+
     public void onClickLeftMenu(View v) {
         loginRegisterActivity.onBackPressed();
         loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
