@@ -19,7 +19,7 @@
 
 
     <string name="ga_logLevel">verbose</string>
-    <integer name="ga_dispatchPeriod">1</integer>
+    <integer name="ga_dispatchPeriod">30</integer>
     <bool  name="ga_dryRun">false</bool >
 
     <!--Enable automatic activity tracking-->
