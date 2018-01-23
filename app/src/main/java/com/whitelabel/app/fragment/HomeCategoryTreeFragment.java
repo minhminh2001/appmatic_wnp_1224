@@ -174,15 +174,12 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
                 if (en.getId() != null && en.getId().equals(parentId)) {
                     intent.putExtra(ProductListActivity.INTENT_DATA_CATEGORYID, en);
                     intent.putExtra(ProductListActivity.INTENT_DATA_LEFT_TOP_TITLE, leftMenuTitle);
-                    JToolUtils.printObject(en);
-                    Logger.e("home tree leftMenuTitle1:"+leftMenuTitle);
                     rightTopTitle =en.getMenuTitle();
                     continue;
                 }
             }
             //第三级bran选择的位置
             intent.putExtra("categoryId", entity.getId());
-            Logger.e("categoryId1:"+entity.getId());
             getContext().startActivity(intent);
             ((BaseActivity) getContext()).startActivityTransitionAnim();
         }
