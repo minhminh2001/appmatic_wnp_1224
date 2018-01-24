@@ -31,6 +31,8 @@ import java.util.List;
 public class JStorageUtils {
     private static final String TAG = "JStorageUtils";
 
+    private static final String LOCAL_CATEGORY_TREE_JSON = "catalogSearch.json";
+
     public static final String IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG ="IS_FINISH_ORDER_TO_SHOW_APPSTORE_DIALOG";
     public static void saveNotificaitionState(Context context,String str){
 
@@ -668,7 +670,7 @@ public class JStorageUtils {
     public static ArrayList<MultiItemEntity> getLeftTreeData(int position){
         ArrayList<MultiItemEntity> res = new ArrayList<>();
         if (WhiteLabelApplication.getAppConfiguration().getCategoryBaseBean()==null){
-            CategoryBaseBean bean=new Gson().fromJson(JJsonUtils.getJson(WhiteLabelApplication.getInstance(),"catalogSearch.json"),CategoryBaseBean.class);
+            CategoryBaseBean bean=new Gson().fromJson(JJsonUtils.getJson(WhiteLabelApplication.getInstance(),LOCAL_CATEGORY_TREE_JSON),CategoryBaseBean.class);
             res = addLeftTreeData(bean,position);
         }else {
             res = addLeftTreeData(WhiteLabelApplication.getAppConfiguration().getCategoryBaseBean(),position);

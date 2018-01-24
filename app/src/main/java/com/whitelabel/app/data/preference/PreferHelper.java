@@ -43,6 +43,7 @@ public class PreferHelper  implements ICacheApi{
     public static final String IS_GUIDE ="IS_GUIDE";
     public static final String IS_FIRST_CHECKOUT_ADDADDRESS ="IS_FIRST_CHECKOUT_ADDADDRESS";
     public static final String GET_COUNTRY_AND_REGIONS ="countries";
+    public static final String ALL_CATEGORYS_V2 ="allCategorysv2";
     public String  getVersionNumber(){
         RemoteConfigResonseModel.RetomeConfig config=getLocalConfigModel();
         String currentVersion="";
@@ -202,7 +203,7 @@ public class PreferHelper  implements ICacheApi{
         Gson gson=new Gson();
         String allCategoryStr=gson.toJson(categoryBaseBean);
         sharedPreferences.edit().
-                putString("allCategorysv2",allCategoryStr).commit();
+                putString(ALL_CATEGORYS_V2,allCategoryStr).commit();
     }
 
     @Override
@@ -227,7 +228,7 @@ public class PreferHelper  implements ICacheApi{
             @Override
             public CategoryBaseBean call() throws Exception {
                 SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
-                String allCategoryStr=sharedPreferences.getString("allCategorysv2","");
+                String allCategoryStr=sharedPreferences.getString(ALL_CATEGORYS_V2,"");
                 CategoryBaseBean entity=null;
                 if(!JDataUtils.isEmpty(allCategoryStr)){
                     entity=new Gson().fromJson(allCategoryStr,CategoryBaseBean.class );
