@@ -16,6 +16,7 @@ import com.whitelabel.app.fragment.ProductListBaseFragment;
 import com.whitelabel.app.fragment.ProductListCategoryLandingFragment;
 import com.whitelabel.app.fragment.ProductListKeywordsSearchFragment;
 import com.whitelabel.app.listener.OnSingleClickListener;
+import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.TMPProductListListPageEntity;
@@ -69,7 +70,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     protected boolean isActivityPaused = true;
     private int FRAGMENT_CONTAINER_ID;
     private SVRAppserviceProductSearchParameter svrAppserviceProductSearchParameter;
-    public SVRAppserviceCatalogSearchCategoryItemReturnEntity searchCategoryEntity;
+    public CategoryBaseBean.CategoryBean.ChildrenBeanX searchCategoryEntity;
     private ArrayList<SVRAppserviceProductSearchParameter> searchCategoryParameterArrayList;
     public String leftMenuTitle;
     private int prevType;
@@ -175,7 +176,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
             fragmentType = intent.getIntExtra(INTENT_DATA_FRAGMENTTYPE, FRAGMENT_TYPE_PRODUCTLIST_CATEGORY);
             currentProductListFragmentPosition = intent.getIntExtra(CURRENT_INDEX, 0);
             try {
-                searchCategoryEntity = (SVRAppserviceCatalogSearchCategoryItemReturnEntity) intent.getSerializableExtra(INTENT_DATA_CATEGORYID);
+                searchCategoryEntity = (CategoryBaseBean.CategoryBean.ChildrenBeanX) intent.getSerializableExtra(INTENT_DATA_CATEGORYID);
                 leftMenuTitle= (String) intent.getSerializableExtra(INTENT_DATA_LEFT_TOP_TITLE);
                 if (searchCategoryEntity != null && !JDataUtils.isEmpty(searchCategoryEntity.getId())) {
                     svrAppserviceProductSearchParameter.setCategory_id(searchCategoryEntity.getId());
@@ -344,7 +345,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         }
     }
 
-    public SVRAppserviceCatalogSearchCategoryItemReturnEntity getSearchCategoryEntity() {
+    public CategoryBaseBean.CategoryBean.ChildrenBeanX getSearchCategoryEntity() {
         return searchCategoryEntity;
     }
 

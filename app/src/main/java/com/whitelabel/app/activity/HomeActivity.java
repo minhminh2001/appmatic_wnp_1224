@@ -39,6 +39,7 @@ import com.whitelabel.app.utils.FragmentFactory;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.logger.Logger;
 
@@ -291,6 +292,10 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
                 if (getDrawerLayout().getDrawerLockMode(Gravity.LEFT) != DrawerLayout.LOCK_MODE_LOCKED_CLOSED) {
                     getDrawerLayout().openDrawer(Gravity.LEFT);
                     GaTrackHelper.getInstance().googleAnalytics(Const.GA.SLIDE_MENU_SCREEN,HomeActivity.this);
+                    if (!isHomePage){
+                        tvDogs.performClick();
+                    }
+                    isHomePage=true;
                 }
             }
         });

@@ -1,5 +1,6 @@
 package com.whitelabel.app.activity;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,27 +11,34 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.whitelabel.app.R;
-import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.*;
+import com.whitelabel.app.adapter.LeftMenuDogsAndCatsAdapter;
 import com.whitelabel.app.callback.NotificationCallback;
 import com.whitelabel.app.dao.NotificationDao;
 import com.whitelabel.app.fragment.HomeBaseFragment;
+import com.whitelabel.app.model.CategoryBaseBean;
+import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.utils.BadgeUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JStorageUtils;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
+import com.whitelabel.app.widget.CustomTextView;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
@@ -41,7 +49,7 @@ import java.util.ArrayList;
 public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.whitelabel.app.BaseActivity<T> implements View.OnClickListener {
     private CustomCoordinatorLayout rootLayout;
     private AppBarLayout appbar_layout;
-    private View flContainer;
+    private FrameLayout flContainer;
     private DrawerLayout drawerLayout;
     private ImageView ivHome;
     private ImageView ivCategoryTree;
@@ -55,11 +63,16 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
             tvMyOrder, tvSetting, tvCustomerService, tvHelpCenter, tvOrderNum, tvMyOrderNum,
             tvShipping, tvShoppingNum, tvNotificationNum, tvWistNum,
             tvAddress, tvStoreCredit;
+    protected TextView tvDogs,tvCats;
     private Handler baseHandler = new Handler();
     private RelativeLayout rlDrawerOrder;
     private RelativeLayout rlDrawerAddress;
     private RelativeLayout rlDrawerSotreCredit;
     private NotificationReceiver receiver;
+    private RecyclerView rvDogsAndCatsList;
+    LeftMenuDogsAndCatsAdapter leftMenuDogsAndCatsAdapter;
+    private String lv0Title="Dogs";
+    protected static boolean isHomePage=true;
     protected abstract boolean refreshNotification(int type, String id);
     protected abstract void jumpHomePage();
     public abstract void jumpHomePage(Serializable serializable);
@@ -240,6 +253,14 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
                     }
                 }, DELAY);
                 break;
+            case R.id.tv_dogs:
+                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_DOGS);
+                leftMenuDogsAndCatsAdapter.setNewData(JStorageUtils.getLeftTreeData(0));
+                break;
+            case R.id.tv_cats:
+                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_CATS);
+                leftMenuDogsAndCatsAdapter.setNewData(JStorageUtils.getLeftTreeData(1));
+                break;
         }
     }
     private void initLayout() {
@@ -277,6 +298,12 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         RelativeLayout rlDrawerShoppingCart = (RelativeLayout) findViewById(R.id.rl_drawer_shoppingcart);
         RelativeLayout rlDrawerNotification = (RelativeLayout) findViewById(R.id.rl_drawer_notification);
 
+        tvDogs = (CustomTextView) findViewById(R.id.tv_dogs);
+        tvCats = (CustomTextView) findViewById(R.id.tv_cats);
+        rvDogsAndCatsList = (RecyclerView) findViewById(R.id.rv_dogs_and_cats_list);
+
+
+
 //        int black=ContextCompat.getColor(this,R.color.black000000);
         JViewUtils.setSlideMenuTextStyle(tvHome,false);
         JViewUtils.setSlideMenuTextStyle(tvShoppingCart,false);
@@ -285,6 +312,8 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         JViewUtils.setSlideMenuTextStyle(tvMyOrder,false);
         JViewUtils.setSlideMenuTextStyle(tvAddress,false);
         JViewUtils.setSlideMenuTextStyle(tvCategoryTree,false);
+        JViewUtils.setSlideMenuTextStyle(tvDogs,false);
+        JViewUtils.setSlideMenuTextStyle(tvCats,false);
         JViewUtils.setSlideMenuTextStyle(tvSetting,false);
         JViewUtils.setSlideMenuTextStyle(tvCustomerService,false);
         JViewUtils.setSlideMenuTextStyle(tvHelpCenter,false);
@@ -328,9 +357,12 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         tvCustomerService.setOnClickListener(this);
         tvHelpCenter.setOnClickListener(this);
         tvShipping.setOnClickListener(this);
+        tvDogs.setOnClickListener(this);
+        tvCats.setOnClickListener(this);
         tvShoppingNum.setBackground(JImageUtils.getThemeCircle(this));
         tvNotificationNum.setBackground(JImageUtils.getThemeCircle(this));
         tvWistNum.setBackground(JImageUtils.getThemeCircle(this));
+
     }
 //    private static final class DataHandler extends Handler {
 //        private WeakReference<DrawerLayoutActivity> mActivity;
@@ -387,6 +419,7 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         IntentFilter intentFilter = new IntentFilter(NotificationReceiver.ACTION);
         registerReceiver(receiver, intentFilter);
         initLayout();
+        initLeftAdapter();
 //        setAppBarLayoutBehaviour();
         mActionDrawableToggle = new ActionBarDrawerToggle(this, getDrawerLayout(), getToolbar(), R.string.openDrawer, R.string.closeDrawer) {
             @Override
@@ -399,6 +432,35 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         mActionDrawableToggle.syncState();
     }
 
+
+    private void initLeftAdapter() {
+        switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_DOGS);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(DrawerLayoutActivity.this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvDogsAndCatsList.setLayoutManager(mLayoutManager);
+
+        // Disabled nested scrolling since Parent scrollview will scroll the content.
+        rvDogsAndCatsList.setNestedScrollingEnabled(false);
+
+        leftMenuDogsAndCatsAdapter = new LeftMenuDogsAndCatsAdapter(JStorageUtils.getLeftTreeData(0), new LeftMenuDogsAndCatsAdapter.ITreeClick() {
+            @Override
+            public void onChildClick(CategoryBaseBean.CategoryBean.ChildrenBeanX parentBean,CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean childrenBean,String lv1Title) {
+//                drawerLayout.closeDrawer(Gravity.LEFT);
+                Intent intent = new Intent(DrawerLayoutActivity.this, ProductListActivity.class);
+                intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_MAINCATEGOTY);
+                intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY);
+                // Get Parent data
+                if (parentBean.getId() != null ) {
+                    intent.putExtra(ProductListActivity.INTENT_DATA_CATEGORYID, parentBean);
+                    intent.putExtra(ProductListActivity.INTENT_DATA_LEFT_TOP_TITLE, lv0Title);
+                }
+                intent.putExtra(ProductListActivity.INTENT_CATEGORY_ID, childrenBean.getId());
+                startActivity(intent);
+                startActivityTransitionAnim();
+            }
+        });
+        rvDogsAndCatsList.setAdapter(leftMenuDogsAndCatsAdapter);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -440,7 +502,12 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     }
 
     public void switchMenu(int type) {
-        resetSate();
+        if (type == HomeBaseFragment.HomeCommonCallback.MENU_DOGS || type == HomeBaseFragment.HomeCommonCallback.MENU_CATS){
+            tvCats.setSelected(false);
+            tvDogs.setSelected(false);
+        }else {
+            resetSate();
+        }
         if (type == HomeBaseFragment.HomeCommonCallback.MENU_HOME) {
             ivHome.setSelected(true);
             tvHome.setSelected(true);
@@ -473,6 +540,12 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
             tvHelpCenter.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_SHIPPING) {
             tvShipping.setSelected(true);
+        }else if (type == HomeBaseFragment.HomeCommonCallback.MENU_DOGS){
+            tvDogs.setSelected(true);
+            lv0Title=getResources().getString(R.string.navigation_dogs);
+        }else if (type == HomeBaseFragment.HomeCommonCallback.MENU_CATS){
+            lv0Title=getResources().getString(R.string.navigation_cats);
+            tvCats.setSelected(true);
         }
     }
     public void updateLeftMenuNumber() {
@@ -551,7 +624,8 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     public void setContentView(View view) {
         rootLayout = (CustomCoordinatorLayout) findViewById(R.id.root_layout);
         appbar_layout = (AppBarLayout) findViewById(R.id.appbar_layout);
-        flContainer = findViewById(R.id.flContainer);
+        flContainer = (FrameLayout) findViewById(R.id.flContainer);
+        flContainer.addView(view);
     }
 
     //因toolBar滑动原因,需要添加paddingBottom,主页除外

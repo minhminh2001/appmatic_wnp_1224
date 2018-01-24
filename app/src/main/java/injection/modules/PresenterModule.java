@@ -57,8 +57,8 @@ public class PresenterModule {
     }
     @Provides
     @ActivityScope
-    public StartContract.Presenter  provideStartPresenter(IBaseManager configService,IAccountManager accountManager){
-        return new StartPresenterImpl(configService,accountManager);
+    public StartContract.Presenter  provideStartPresenter(IBaseManager configService,IAccountManager accountManager,ICommodityManager iCommodityManager){
+        return new StartPresenterImpl(configService,accountManager,iCommodityManager);
     }
     @Provides
     @ActivityScope

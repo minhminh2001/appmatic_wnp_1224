@@ -3,17 +3,24 @@ package com.whitelabel.app.ui.start;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
+import com.whitelabel.app.data.service.ICommodityManager;
+import com.whitelabel.app.model.ApiFaildException;
+import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
+import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.ui.RxPresenter;
+import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RxUtil;
 
 import javax.inject.Inject;
 
 import rx.Subscriber;
 import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * Created by ray on 2017/4/5.
@@ -23,6 +30,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
     private IBaseManager configService;
     private long mStartTimeLong;
     private IAccountManager iAccountManager;
+    private ICommodityManager iCommodityManager;
     public  void setStartTime(){
         mStartTimeLong=System.currentTimeMillis();
     }
@@ -39,9 +47,10 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
 
 
     @Inject
-    public StartPresenterImpl( IBaseManager configService,IAccountManager iAccountManager){
+    public StartPresenterImpl( IBaseManager configService,IAccountManager iAccountManager,ICommodityManager commodityManager){
         this.configService=configService;
         this.iAccountManager=iAccountManager;
+        this.iCommodityManager=commodityManager;
     }
 //    @Override
 //    public void openApp(String sessionKey, String deviceToken) {
@@ -172,6 +181,8 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
         addSubscrebe(subscription);
     }
 
+
+
     @Override
     public void saveGuideFlag(Boolean isFirst) {
         iAccountManager.saveGuideFlag(isFirst);
@@ -180,5 +191,24 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
     @Override
     public boolean isGuide() {
         return iAccountManager.isGuide();
+    }
+
+    @Override
+    public void getSearchCategory() {
+        Subscription  subscription= iCommodityManager.getAllCategoryManagerV2().
+                compose(RxUtil.<CategoryBaseBean>rxSchedulerHelper())
+                .subscribe(new Action1<CategoryBaseBean>() {
+                    @Override
+                    public void call(CategoryBaseBean categoryBaseBean) {
+                        if(categoryBaseBean.getStatus()==1){
+                            WhiteLabelApplication.getAppConfiguration().setCategoryBaseBean(categoryBaseBean);
+                        }
+                    }
+                }, new ErrorHandlerAction() {
+                    @Override
+                    protected void requestError(ApiFaildException ex) {
+                    }
+                });
+        addSubscrebe(subscription);
     }
 }

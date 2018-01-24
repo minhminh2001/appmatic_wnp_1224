@@ -2,6 +2,7 @@ package com.whitelabel.app.data.service;
 
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.BindProductResponseModel;
+import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ResponseModel;
@@ -20,6 +21,7 @@ import rx.Observable;
  */
 public interface ICommodityManager {
     public Observable<SVRAppserviceCatalogSearchReturnEntity> getAllCategoryManager();
+    public Observable<CategoryBaseBean> getAllCategoryManagerV2();
     public Observable<Integer> getLocalShoppingProductCount();
     public Observable<List<AddressBook>> getAddressListCache(String userId);
     public Observable<CategoryDetailNewModel> getCategoryDetail(boolean isCache, String category, String sessionKey);

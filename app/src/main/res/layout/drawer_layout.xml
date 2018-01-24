@@ -1,4 +1,4 @@
-<ScrollView
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:imaginato="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -13,6 +13,8 @@
         android:layout_gravity="start"
         android:layout_height="match_parent">
         <LinearLayout
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:id="@+id/ll_profile"
             android:paddingTop="@dimen/statusbar_height"
             android:layout_width="match_parent"
@@ -81,6 +83,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rl_drawer_categorytree"
+                android:visibility="gone"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
@@ -288,6 +291,13 @@
                     android:layout_height="wrap_content" />
             </RelativeLayout>
 
+            <include layout="@layout/draw_layout_dogs_and_cat"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/black2c"
+                android:layout_height="0.8dp"></View>
 
             <RelativeLayout
                 android:id="@+id/rl_drawer_store_credit"
@@ -315,12 +325,6 @@
                     android:text="@string/store_credit"
                     android:layout_height="wrap_content" />
             </RelativeLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/black2c"
-                android:layout_height="0.8dp"></View>
 
             <com.whitelabel.app.widget.CustomTextView
                 android:id="@+id/tv_customer_service"
@@ -334,17 +338,18 @@
                 android:textColor="@drawable/text_grey_color_selected"
                 android:text="@string/customer_service"
                 />
-                <com.whitelabel.app.widget.CustomTextView
-                    android:id="@+id/tv_setting"
-                    android:layout_width="match_parent"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:gravity="center_vertical"
-                    android:layout_height="40dp"
-                    style="@style/font_family_robot_regular"
-                    android:textSize="12sp"
-                    android:textColor="@drawable/text_grey_color_selected"
-                    android:text="@string/_settings"
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_setting"
+                android:layout_width="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:gravity="center_vertical"
+                android:layout_height="40dp"
+                style="@style/font_family_robot_regular"
+                android:textSize="12sp"
+                android:textColor="@drawable/text_grey_color_selected"
+                android:text="@string/_settings"
             />
 
 
@@ -376,4 +381,4 @@
                     android:layout_height="40dp" />
         </LinearLayout>
     </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>

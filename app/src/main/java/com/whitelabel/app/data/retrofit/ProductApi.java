@@ -3,6 +3,7 @@ package com.whitelabel.app.data.retrofit;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.BrandStoreModel;
+import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ResponseModel;
@@ -51,8 +52,10 @@ public interface ProductApi {
     @FormUrlEncoded
     @POST("appservice/cart/addBoughtTogether")
     public Observable<ResponseModel> addBoughtTogether(@Field("relatedProductIds") String productIds,@Field("session_key") String sessionKey);
-   @POST("appservice/catalogSearch")
+    @POST("appservice/catalogSearch")
     public Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory();
+    @POST("appservice/catalogSearch")
+    public Observable<CategoryBaseBean> getBaseCategoryV2();
     @GET("appservice/product/detail")
     public Observable<SVRAppserviceProductDetailReturnEntity> getProductDetail(@Query("session_key") String sessionKey,@Query("product_id") String productId);
     @GET("appservice/product/recommendedlist")

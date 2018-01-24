@@ -11,6 +11,9 @@ public class Const {
     public final static int ITEM = 3;
     public final static int FOOTER = 4;
 
+    public static final int TYPE_TREE_LEVEL_0 = 0;
+    public static final int TYPE_TREE_LEVEL_1 = 1;
+
     //banner 3:8
     public static final double BANNER_PIC_HEIGHT_THAN_WIDTH = 180.0/480;
     public static final int NORMAL_BANNER_DELAY_TIME=3000;
@@ -23,6 +26,7 @@ public class Const {
         public final static String ACCOUNT_WISHLIST_SCREEN = "My Wishlist Screen";
         public final static String ADDRESS_BOOK_SCREEN = "My Address Book Screen";
         public final static String SIGN_UP_SCREEN = "Sign Up Screen";
+        public final static String SIGN_UP_SUCCEED_SCREEN = "Sign Up Succeed Screen";
         public final static String SLIDE_MENU_SCREEN = "Side Menu";
         public final static String FORGOT_PASSWORD_SCREEN = "Forgot Password Screen";
 

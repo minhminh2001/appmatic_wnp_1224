@@ -1,5 +1,8 @@
 package com.whitelabel.app.utils;
 
+import android.content.Context;
+import android.content.res.AssetManager;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.whitelabel.app.model.AddToCartEntity;
@@ -72,6 +75,9 @@ import com.whitelabel.app.model.WishlistEntityResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -1275,5 +1281,27 @@ public class JJsonUtils {
             JLogUtils.e(TAG, "getSVRAPPSvrAppServiceCustomerLoginFromJson", ex);
         }
         return entity;
+    }
+
+    /**
+     *  from asset to read json file
+     * @param mContext
+     * @return
+     */
+    public static String getJson(Context mContext, String fileName) {
+        StringBuilder sb = new StringBuilder();
+        AssetManager am = mContext.getAssets();
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    am.open(fileName)));
+            String next = "";
+            while (null != (next = br.readLine())) {
+                sb.append(next);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            sb.delete(0, sb.length());
+        }
+        return sb.toString().trim();
     }
 }

@@ -53,6 +53,12 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity<MainCont
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        isHomePage=false;
+    }
+
+    @Override
     public void setNotificationUnReadCount(int unReadCount) {
         setNotificationCount(unReadCount);
     }
@@ -215,31 +221,35 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity<MainCont
         startActivity(storeCreditIntent);
         finish();
     }
+
+
     private void initData() {
         Bundle bundle = getIntent().getExtras();
-        mGATrackTimeStart = bundle.getLong("mGATrackTimeStart", 0);
-        int fromType = bundle.getInt("fromType");
-        String paymentStatus = bundle.getString("payment_status");
-        String errorMsg = bundle.getString("errorMsg");
-        String orderNumber = bundle.getString("orderNumber");
-        isLuckDraw = bundle.getBoolean("isLuckDraw", false);
-        html = bundle.getString("html");
-        android.support.v4.app.Fragment checkoutPaymentStatusFragment;
-        if ("1".equalsIgnoreCase(paymentStatus)) {
-            checkoutPaymentStatusFragment = new CheckoutPaymentStatusRightFragment();
-            checkoutPaymentStatusFragment.setArguments(bundle);
-            gaTrackerPayment(PAYMENTSUCESS);
-        } else {
-            Bundle bundle1 = new Bundle();
-            bundle1.putString("errorMsg", errorMsg);
-            bundle1.putString("orderNumber", orderNumber);
-            bundle1.putInt("fromType", fromType);
-            checkoutPaymentStatusFragment = new CheckoutPaymentStatusWrongFragment();
-            checkoutPaymentStatusFragment.setArguments(bundle1);
-            gaTrackerPayment(PAYMENTFAILURE);
+        if (bundle!=null){
+            mGATrackTimeStart = bundle.getLong("mGATrackTimeStart", 0);
+            int fromType = bundle.getInt("fromType");
+            String paymentStatus = bundle.getString("payment_status");
+            String errorMsg = bundle.getString("errorMsg");
+            String orderNumber = bundle.getString("orderNumber");
+            isLuckDraw = bundle.getBoolean("isLuckDraw", false);
+            html = bundle.getString("html");
+            android.support.v4.app.Fragment checkoutPaymentStatusFragment;
+            if ("1".equalsIgnoreCase(paymentStatus)) {
+                checkoutPaymentStatusFragment = new CheckoutPaymentStatusRightFragment();
+                checkoutPaymentStatusFragment.setArguments(bundle);
+                gaTrackerPayment(PAYMENTSUCESS);
+            } else {
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("errorMsg", errorMsg);
+                bundle1.putString("orderNumber", orderNumber);
+                bundle1.putInt("fromType", fromType);
+                checkoutPaymentStatusFragment = new CheckoutPaymentStatusWrongFragment();
+                checkoutPaymentStatusFragment.setArguments(bundle1);
+                gaTrackerPayment(PAYMENTFAILURE);
+            }
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.flContainer, checkoutPaymentStatusFragment).commit();
         }
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.flContainer, checkoutPaymentStatusFragment).commit();
     }
     public void gaTrackerPayment(int type) {
         String payment = "";

@@ -31,6 +31,8 @@ public class HomeBaseFragment<T extends BasePresenter> extends BaseFragmentSearc
         int MENU_HELPCENTER = 9;
         int MENU_SETTING = 10;
         int MENU_SHIPPING = 11;
+        int MENU_DOGS = 13;
+        int MENU_CATS = 14;
         void setTitle(String titleText);
         void setTitleNum(int num);
         void switchMenu(int type);

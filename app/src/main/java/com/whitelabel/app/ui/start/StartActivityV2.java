@@ -130,6 +130,7 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
         mPresenter.setStartTime();
         mPresenter.getConfigInfo("", "");
         initGuide();
+        mPresenter.getSearchCategory();
     }
 
     private void initGuide(){

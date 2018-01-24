@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.AddressBook;
+import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
@@ -42,6 +43,7 @@ public class PreferHelper  implements ICacheApi{
     public static final String IS_GUIDE ="IS_GUIDE";
     public static final String IS_FIRST_CHECKOUT_ADDADDRESS ="IS_FIRST_CHECKOUT_ADDADDRESS";
     public static final String GET_COUNTRY_AND_REGIONS ="countries";
+    public static final String ALL_CATEGORYS_V2 ="allCategorysv2";
     public String  getVersionNumber(){
         RemoteConfigResonseModel.RetomeConfig config=getLocalConfigModel();
         String currentVersion="";
@@ -194,6 +196,16 @@ public class PreferHelper  implements ICacheApi{
         sharedPreferences.edit().
                 putString("allCategorys",allCategoryStr).commit();
     }
+
+    @Override
+    public void saveBaseCategoryV2(CategoryBaseBean categoryBaseBean) {
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
+        Gson gson=new Gson();
+        String allCategoryStr=gson.toJson(categoryBaseBean);
+        sharedPreferences.edit().
+                putString(ALL_CATEGORYS_V2,allCategoryStr).commit();
+    }
+
     @Override
     public Observable<SVRAppserviceCatalogSearchReturnEntity> getBaseCategory() {
        return  Observable.fromCallable(new Callable<SVRAppserviceCatalogSearchReturnEntity>() {
@@ -209,6 +221,23 @@ public class PreferHelper  implements ICacheApi{
            }
        });
     }
+
+    @Override
+    public Observable<CategoryBaseBean> getBaseCategoryV2() {
+        return  Observable.fromCallable(new Callable<CategoryBaseBean>() {
+            @Override
+            public CategoryBaseBean call() throws Exception {
+                SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance().getSharedPreferences(FILE_NAME, Activity.MODE_PRIVATE);
+                String allCategoryStr=sharedPreferences.getString(ALL_CATEGORYS_V2,"");
+                CategoryBaseBean entity=null;
+                if(!JDataUtils.isEmpty(allCategoryStr)){
+                    entity=new Gson().fromJson(allCategoryStr,CategoryBaseBean.class );
+                }
+                return entity;
+            }
+        });
+    }
+
 
     @Override
     public void saveFinishOrderAndMarkTime(long currentTime) {

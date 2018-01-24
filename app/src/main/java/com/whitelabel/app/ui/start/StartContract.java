@@ -27,5 +27,6 @@ public class StartContract {
          void timeOutJudgment();
          void saveGuideFlag(Boolean isFirst);
          boolean isGuide();
+         void getSearchCategory();
      }
 }

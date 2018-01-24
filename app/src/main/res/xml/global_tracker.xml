@@ -15,11 +15,11 @@
     <string name="ga_appName">wnp</string>
 
     <!--The version of your application, used in the app version dimension within your reports.-->
-    <string name="ga_appVersion">1.0.1</string>
+    <string name="ga_appVersion">1.0.0</string>
 
 
     <string name="ga_logLevel">verbose</string>
-    <integer name="ga_dispatchPeriod">1</integer>
+    <integer name="ga_dispatchPeriod">30</integer>
     <bool  name="ga_dryRun">false</bool >
 
     <!--Enable automatic activity tracking-->
