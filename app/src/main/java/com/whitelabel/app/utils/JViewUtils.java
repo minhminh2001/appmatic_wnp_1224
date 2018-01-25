@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -105,12 +106,17 @@ public class JViewUtils {
                         WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavigation_bar_text_icon_tapping_color()));
     }
 
-    public static  void setSlideMenuTextStyle(TextView tvText,boolean defaultIsGray){
+    /**
+     *
+     * @param tvText
+     * @param defaultIsGray isShow Grey
+     * @param isPressedWhiteOrThemeColor  normal show color show white or theme color
+     */
+    public static  void setSlideMenuTextStyle(TextView tvText,boolean defaultIsGray,boolean isPressedWhiteOrThemeColor){
         int defaultColor=defaultIsGray? ContextCompat.getColor(tvText.getContext(),R.color.blackD0):
                 ContextCompat.getColor(tvText.getContext(),R.color.black);
-        int[] colors = new int[] {WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color()
-                , WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color(),
-                defaultColor};
+        int pressedColor = isPressedWhiteOrThemeColor ? WhiteLabelApplication.getAppConfiguration().getThemeConfig().getButton_text_color():WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color();
+        int[] colors = new int[] {pressedColor, pressedColor, defaultColor};
         int[][] states = new int[3][];
         states[0] = new int[] { android.R.attr.state_enabled, android.R.attr.state_selected };
         states[1] = new int[] { android.R.attr.state_enabled,android.R.attr.state_pressed};
@@ -119,6 +125,9 @@ public class JViewUtils {
         tvText.setTextColor(colorList);
     }
 
+    public static   void setSlideMenuBgStyle(View view){
+        view.setBackground(JImageUtils.getViewBgSoildDrawable());
+    }
 
     public static Drawable getNavBarIconDrawable(Context context, int icon){
      return   JImageUtils.
@@ -142,6 +151,8 @@ public class JViewUtils {
         textView.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(context));
         textView.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getButton_text_color());
     }
+
+
     public static void showErrorToast(Context context, String error) {
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
     }
