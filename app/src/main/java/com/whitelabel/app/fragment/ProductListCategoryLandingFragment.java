@@ -35,6 +35,7 @@ import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.model.TMPProductListListPageEntity;
+import com.whitelabel.app.model.TempCategoryBean;
 import com.whitelabel.app.utils.FilterSortHelper;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
@@ -70,7 +71,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     public RelativeLayout mTopFilterAndSortBarRL;
     public boolean mIsShowSwitchFilterBar;
     public ImageView mIVBottomSlideToTop;
-
+    private TempCategoryBean tempCategoryBean;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -86,8 +87,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContentView = inflater.inflate(R.layout.fragment_productlist_categorylanding, null);
-        productListActivity.mGATrackTimeStart= GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-//        productListActivity.mGATrackTimeEnable=true;
+        tempCategoryBean=TempCategoryBean.getInstance();
+        tempCategoryBean.mGATrackTimeStart= GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         setContentView(mContentView);
         return mContentView;
     }
@@ -105,7 +106,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             public void onClick(View v) {
                 if (productListActivity != null) {
                     filterSortBottomView.hideSwitchAndFilterBar(true);
-                    productListActivity.switchFragment(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, null);
+                    skipSearchPage();
                 }
             }
         });
@@ -138,6 +139,10 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    private void skipSearchPage(){
+        productListActivity.switchFragment(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, null);
+    }
+
     private void gotoShoppingCartActivity(){
         if (productListActivity != null) {
             Intent intent = new Intent(productListActivity, ShoppingCartActivity1.class);
@@ -165,7 +170,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
 
                 if (productListActivity != null) {
                     filterSortBottomView.hideSwitchAndFilterBar(true);
-                    productListActivity.switchFragment(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, null);
+                    skipSearchPage();
                 }
                 break;
         }
@@ -223,10 +228,10 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         int parentCategoryIndex = 0;
         int categoryViewCount = 0;
         categoryArrayList = new ArrayList<>();
-        CategoryBaseBean.CategoryBean.ChildrenBeanX entity = productListActivity.getSearchCategoryEntity();
+        CategoryBaseBean.CategoryBean.ChildrenBeanX entity = tempCategoryBean.getSearchCategoryEntity();
 
         //all暂时取消掉  ray
-        SVRAppserviceProductSearchParameter  parameter= productListActivity.getSVRAppserviceProductSearchParameterById(productListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS,-1);
+        SVRAppserviceProductSearchParameter  parameter= tempCategoryBean.getSVRAppserviceProductSearchParameterById(productListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS,-1);
         //需求隐藏 Gem Brands 的ALL  GEM Brands 的
         String gemBradns=productListActivity.getResources().getString(R.string.gembrand);
         boolean   isGemBrands=false;
@@ -274,8 +279,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         }
         if(getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
             //默认选择的 page由 currentProductListFragmentPosition优先控制
-            if(productListActivity.getCurrentProductListFragmentPosition()==0) {
-                productListActivity.setCurrentProductListFragmentPosition(parentCategoryIndex);
+            if(tempCategoryBean.getCurrentProductListFragmentPosition()==0) {
+                tempCategoryBean.setCurrentProductListFragmentPosition(parentCategoryIndex);
             }
             JLogUtils.i("Martin", "currentProductListFragmentPosition=>" + parentCategoryIndex);
             CustomTabPageIndicatorAdapter fragmentPagerAdapter = new CustomTabPageIndicatorAdapter(getChildFragmentManager());
@@ -285,12 +290,12 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
 
             vpProductList.setOffscreenPageLimit(categoryViewCount);
             vpProductList.addOnPageChangeListener(this);
-            vpProductList.setCurrentItem(productListActivity.getCurrentProductListFragmentPosition());
-            JLogUtils.i("ray","currlog:"+productListActivity.getCurrentProductListFragmentPosition());
+            vpProductList.setCurrentItem(tempCategoryBean.getCurrentProductListFragmentPosition());
+            JLogUtils.i("ray","currlog:"+tempCategoryBean.getCurrentProductListFragmentPosition());
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
-                    ctpiCategoryList.setSelectColor(productListActivity.getCurrentProductListFragmentPosition());
+                    ctpiCategoryList.setSelectColor(tempCategoryBean.getCurrentProductListFragmentPosition());
 
                 }
             });
@@ -301,7 +306,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        categoryProductListFragmentArrayList.get(productListActivity.getCurrentProductListFragmentPosition()).onActivityResult(requestCode, resultCode, data);
+        categoryProductListFragmentArrayList.get(tempCategoryBean.getCurrentProductListFragmentPosition()).onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -350,7 +355,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
                 productListActivity.filterSortOption(productListActivity.TYPE_FILTER);
                 break;
             case R.id.iv_view_toggle_top:
-                int position=productListActivity.getCurrentProductListFragmentPosition();
+                int position=tempCategoryBean.getCurrentProductListFragmentPosition();
                 if(position<categoryProductListFragmentArrayList.size()) {
                     categoryProductListFragmentArrayList.get(position).toggleViewOption();
                 }
@@ -412,14 +417,14 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         } else {
             filterSortBottomView.hideSwitchAndFilterBar(true);
         }
-        productListActivity.setCurrentProductListFragmentPosition(position);
+        tempCategoryBean.setCurrentProductListFragmentPosition(position);
         gaScreenName(position);
     }
 
     private void gaScreenName(int position){
         try {
-            String rightTopTitle=productListActivity.searchCategoryEntity.getMenuTitle();
-            List<CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean> parent = productListActivity.searchCategoryEntity.getChildren();
+            String rightTopTitle=tempCategoryBean.searchCategoryEntity.getMenuTitle();
+            List<CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean> parent = tempCategoryBean.searchCategoryEntity.getChildren();
             String rightSubTitle;
             //temp add pos 0 item all
             if (position==0){
@@ -431,7 +436,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             }
             StringBuilder builder=new StringBuilder();
             builder.append("Category_");
-            builder.append(productListActivity.leftMenuTitle);
+            builder.append(tempCategoryBean.leftMenuTitle);
             builder.append("_");
             builder.append(rightTopTitle);
             builder.append("_");
@@ -449,7 +454,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
 
     @Override
     public void onSlideToTop() {
-        int position=productListActivity.getCurrentProductListFragmentPosition();
+        int position=tempCategoryBean.getCurrentProductListFragmentPosition();
         if(position<categoryProductListFragmentArrayList.size()) {
             categoryProductListFragmentArrayList.get(position).onSlideToTop();
         }
@@ -484,9 +489,9 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     private Bundle createBundle() {
         TMPProductListFilterSortPageEntity filterSortPageEntity = new TMPProductListFilterSortPageEntity();
         filterSortPageEntity.setPreviousFragmentType(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY);
-        filterSortPageEntity.setCategoryFragmentPosition(productListActivity.getCurrentProductListFragmentPosition());
+        filterSortPageEntity.setCategoryFragmentPosition(tempCategoryBean.getCurrentProductListFragmentPosition());
 
-        ProductListProductListFragment productListFragment = getCategoryProductListFragmentById(productListActivity.getCurrentProductListFragmentPosition());
+        ProductListProductListFragment productListFragment = getCategoryProductListFragmentById(tempCategoryBean.getCurrentProductListFragmentPosition());
 
         if (productListFragment != null) {
             filterSortPageEntity.setFacets(productListFragment.getSearchReturnEntityFacets());
@@ -513,7 +518,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     }
 
     private void filterSortDefault() {
-        ProductListProductListFragment currentProductListFragment = getCategoryProductListFragmentById(productListActivity.getCurrentProductListFragmentPosition());
+        ProductListProductListFragment currentProductListFragment = getCategoryProductListFragmentById(tempCategoryBean.getCurrentProductListFragmentPosition());
         resetSelection();
         if (currentProductListFragment != null) {
             currentProductListFragment.searchByType(ProductListProductListFragment.SEARCH_TYPE_INIT);
@@ -521,13 +526,13 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     }
 
     private void resetSelection() {
-        productListActivity.resetCurrentFilterSortTabIndex();
+        tempCategoryBean.resetCurrentFilterSortTabIndex();
         filterSortHelper.hideVisibleFragments();
     }
 
     @Override
     public int getCurrentFilterSortTabIndex() {
-        return productListActivity.getCurrentFilterSortTabIndex();
+        return tempCategoryBean.getCurrentFilterSortTabIndex();
     }
 
     class CustomTabPageIndicatorAdapter extends FragmentPagerAdapter {
@@ -556,9 +561,9 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
 
                 }
             }
-            productListActivity.setSVRAppserviceProductSearchParameterCategoryId(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, position, categoryId);
-            productListActivity.setSVRAppserviceProductSearchParameterBrandId(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, position, brandId);
-            productListActivity.setSVRAppserviceProductSearchParameterBrandName(position, brandName);
+            tempCategoryBean.setSVRAppserviceProductSearchParameterCategoryId(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, position, categoryId);
+            tempCategoryBean.setSVRAppserviceProductSearchParameterBrandId(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, position, brandId);
+            tempCategoryBean.setSVRAppserviceProductSearchParameterBrandName(position, brandName);
             return productListProductListFragment;
         }
 

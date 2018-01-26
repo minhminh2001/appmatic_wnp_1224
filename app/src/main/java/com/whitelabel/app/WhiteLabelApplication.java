@@ -10,6 +10,8 @@ import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
+
+import com.orhanobut.logger.AndroidLogAdapter;
 import com.whitelabel.app.exception.CrashHandler;
 import com.whitelabel.app.model.ApplicationConfigurationEntity;
 import com.whitelabel.app.model.PhoneConfigurationEntity;
@@ -81,6 +83,7 @@ public class WhiteLabelApplication extends MultiDexApplication {
             GlobalData.init(this);
             FacebookSdk.sdkInitialize(getApplicationContext());
             FacebookSdk.setApplicationId(GlobalData.facebookId);
+            com.orhanobut.logger.Logger.addLogAdapter(new AndroidLogAdapter());
             WhiteLabelApplication.getAppConfiguration().isSignIn(getApplicationContext());
             WhiteLabelApplication.getAppConfiguration().init(getApplicationContext());
             ViewTarget.setTagId(R.id.glide_tag);

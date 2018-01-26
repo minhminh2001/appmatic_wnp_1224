@@ -15,6 +15,7 @@ import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.listener.OnFilterSortFragmentListener;
 import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsModelReturnEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
+import com.whitelabel.app.model.TempCategoryBean;
 import com.whitelabel.app.ui.brandstore.BrandStoreFontActivity;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -30,13 +31,14 @@ public class ProductListFilterSortFilterTypeAdapter extends ArrayAdapter<SVRApps
     private OnFilterSortFragmentListener filterSortFragmentListener;
     private ArrayList<SVRAppserviceProductSearchFacetsModelReturnEntity> modelTypeReturnEntityArrayList;
     private TMPProductListFilterSortPageEntity productListFilterSortPageEntity;
-
+    private TempCategoryBean tempCategoryBean;
     public ProductListFilterSortFilterTypeAdapter(Activity activity, OnFilterSortFragmentListener listener, ArrayList<SVRAppserviceProductSearchFacetsModelReturnEntity> array, TMPProductListFilterSortPageEntity filterSortPageEntity) {
         super(activity, R.layout.adapter_productlist_filter_typelist_item, array);
         this.activity = activity;
         this.filterSortFragmentListener = listener;
         this.modelTypeReturnEntityArrayList = array;
         this.productListFilterSortPageEntity = filterSortPageEntity;
+        tempCategoryBean=TempCategoryBean.getInstance();
     }
     private int mCurrindex;
     @Override
@@ -122,12 +124,12 @@ public class ProductListFilterSortFilterTypeAdapter extends ArrayAdapter<SVRApps
                     @Override
                     public void run() {
                         if (productListFilterSortPageEntity.getPreviousFragmentType() == ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY) {
-                            ((ProductListActivity)activity).setSVRAppserviceProductSearchParameterType(productListFilterSortPageEntity.getPreviousFragmentType(), productListFilterSortPageEntity.getCategoryFragmentPosition(), modelTypeReturnEntity.getValue());
+                            tempCategoryBean.setSVRAppserviceProductSearchParameterType(productListFilterSortPageEntity.getPreviousFragmentType(), productListFilterSortPageEntity.getCategoryFragmentPosition(), modelTypeReturnEntity.getValue());
                             if (filterSortFragmentListener != null) {
                                 filterSortFragmentListener.onFilterSortListItemClick(ProductListActivity.TABBAR_INDEX_FILTER, null);
                             }
                         } else if (productListFilterSortPageEntity.getPreviousFragmentType() == ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS) {
-                            ((ProductListActivity)activity).setSVRAppserviceProductSearchParameterType(productListFilterSortPageEntity.getPreviousFragmentType(), -1, modelTypeReturnEntity.getValue());
+                            tempCategoryBean.setSVRAppserviceProductSearchParameterType(productListFilterSortPageEntity.getPreviousFragmentType(), -1, modelTypeReturnEntity.getValue());
                             if (filterSortFragmentListener != null) {
                                 filterSortFragmentListener.onFilterSortListItemClick(ProductListActivity.TABBAR_INDEX_FILTER, null);
                             }

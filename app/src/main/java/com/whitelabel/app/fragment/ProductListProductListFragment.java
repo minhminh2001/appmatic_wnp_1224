@@ -29,6 +29,7 @@ import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
+import com.whitelabel.app.model.TempCategoryBean;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
@@ -53,6 +54,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
     public static final int SEARCH_TYPE_SORT = 4;
     public static final int SEARCH_TYPE_REFRESH = 5;
     public static final int SEARCH_TYPE_LOADMORE = 6;
+    public static final int PRODUCT_LIST_FRAGMENT_REQUEST_CODE =100;
     private View contentView;
     private ProductListActivity productListActivity;
     private ProductListCategoryLandingFragment mLandingFragment;
@@ -84,7 +86,8 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
     private TextView mTVProductTotalCount;
     private boolean mIsFirst=true;
     private String TAG = this.getClass().getSimpleName();
-    public static final int PRODUCT_LIST_FRAGMENT_REQUEST_CODE =100;
+    public TempCategoryBean tempCategoryBean;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -95,9 +98,11 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView = inflater.inflate(R.layout.fragment_productlist_productlist, null);
+        tempCategoryBean=TempCategoryBean.getInstance();
         mImageLoader = new ImageLoader(productListActivity);
         isPrepared = true;
         init();
+        TempCategoryBean tempCategoryBean=TempCategoryBean.getInstance();
         return contentView;
     }
 
@@ -245,7 +250,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
                             mFragment.get().connectionLayout.setVisibility(View.GONE);
                             mFragment.get().TYPE = mFragment.get().NONE;
                             if ((mActivity.get() != null && !mActivity.get().checkIsFinished()) && (mFragment.get().isAdded())
-                                    && (mActivity.get().getSVRAppserviceProductSearchParameterById(mFragment.get().parentFragmentType, mFragment.get().categoryFragmentPosition) != null)
+                                    && (mFragment.get().tempCategoryBean.getSVRAppserviceProductSearchParameterById(mFragment.get().parentFragmentType, mFragment.get().categoryFragmentPosition) != null)
                                     && (mFragment.get().productItemEntityArrayList != null && mFragment.get().productListAdapter != null)) {
 
                                 ArrayList<SVRAppserviceProductSearchResultsItemReturnEntity> productListResult = null;
@@ -389,7 +394,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                final SVRAppserviceProductSearchParameter param = productListActivity.getSVRAppserviceProductSearchParameterById(parentFragmentType, categoryFragmentPosition);
+                final SVRAppserviceProductSearchParameter param = tempCategoryBean.getSVRAppserviceProductSearchParameterById(parentFragmentType, categoryFragmentPosition);
                 if ((currentP * (param.getLimit() / 2) - firstVisibleItem) <= (param.getLimit() / 2 - 1) && TYPE == NONE) {
                     searchType = SEARCH_TYPE_LOADMORE;
                     cxlvProductList.setLoadMoreProgress();
@@ -442,7 +447,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
         if (productListActivity == null || productListActivity.checkIsFinished() || !isAdded()) {
             return;
         }
-        final SVRAppserviceProductSearchParameter param = productListActivity.getSVRAppserviceProductSearchParameterById(parentFragmentType, categoryFragmentPosition);
+        final SVRAppserviceProductSearchParameter param = tempCategoryBean.getSVRAppserviceProductSearchParameterById(parentFragmentType, categoryFragmentPosition);
         if (param == null) {
             return;
         }
@@ -814,13 +819,13 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
                         }
                     });
 
-                    if (fragment.productListActivity.getCurrentProductListFragmentPosition() == fragment.categoryFragmentPosition) {
+                    if (fragment.tempCategoryBean.getCurrentProductListFragmentPosition() == fragment.categoryFragmentPosition) {
                         activity.filterSortBottomView.hideSwitchAndFilterBar(false);
                     }
                 }
                 if (fragment.productListActivity.mGATrackTimeEnable) {
                     GaTrackHelper.getInstance().googleAnalyticsTimeStop(
-                            GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, fragment.productListActivity.mGATrackTimeStart, "2/3 Tier Category Loading"
+                            GaTrackHelper.GA_TIME_CATEGORY_IMPRESSION, fragment.tempCategoryBean.mGATrackTimeStart, "2/3 Tier Category Loading"
                     );
                     fragment.productListActivity.mGATrackTimeEnable = false;
                 }
