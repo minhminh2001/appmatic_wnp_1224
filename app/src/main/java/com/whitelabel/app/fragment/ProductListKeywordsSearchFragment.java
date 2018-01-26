@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
@@ -45,11 +46,13 @@ import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.model.TMPProductListListPageEntity;
 import com.whitelabel.app.model.TempCategoryBean;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.search.SearchContract;
 import com.whitelabel.app.utils.FilterSortHelper;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.logger.Logger;
@@ -63,14 +66,17 @@ import java.util.Iterator;
 
 import javax.inject.Inject;
 
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 /**
  * Created by imaginato on 2015/7/13.
  */
-public class ProductListKeywordsSearchFragment extends ProductListBaseFragment implements FragmentOnAdapterCallBack, View.OnClickListener,
-        CustomXListView.IXListViewListener, OnFilterSortFragmentListener, Filter.FilterListener,FilterSortBottomView.FilterSortBottomViewCallBack {
+public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<SearchContract.Presenter> implements FragmentOnAdapterCallBack, View.OnClickListener,
+        CustomXListView.IXListViewListener, OnFilterSortFragmentListener, Filter.FilterListener,FilterSortBottomView.FilterSortBottomViewCallBack ,SearchContract.View{
     public static final int SEARCH_TYPE_INIT = 1;
     public static final int SEARCH_TYPE_KEYWORDS = 2;
     public static final int SEARCH_TYPE_FILTER = 3;
@@ -150,6 +156,14 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             sortFragment.setFragmentListener(this);
         }
     }
+
+    @Override
+    public void inject() {
+        super.inject();
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+            presenterModule(new PresenterModule(getActivity())).build().inject(this);
+    }
+
     public void showViewSwitch(boolean show) {
         if (mRlSwitchViewbar != null) {
             if(show){
@@ -177,6 +191,20 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
     public int getCurrentFilterSortTabIndex() {
         return productListActivity.getCurrentFilterSortTabIndex();
     }
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+        if(getActivity()!=null) {
+            JViewUtils.showErrorToast(getActivity(), errorMsg);
+        }
+    }
+
+    @Override
+    public void loadAutoHintSearchData(
+        SVRAppserviceProductSearchReturnEntity svrAppserviceProductSearchReturnEntity) {
+        JToolUtils.printObject(svrAppserviceProductSearchReturnEntity);
+    }
+
     private static class DataHandler extends Handler {
         private final WeakReference<ProductListActivity> mActivity;
         private final WeakReference<ProductListKeywordsSearchFragment> mFragment;
@@ -325,8 +353,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         PROMPT_ERROR_NOINTERNET = getString(R.string.productlist_list_prompt_error_nointernet);
 
         try {
-            GaTrackHelper.getInstance().googleAnalytics("Search List Screen", getActivity());
-            JLogUtils.i("googleAnalytics", "Search List Screen");
+            GaTrackHelper.getInstance().googleAnalytics(Const.GA.SEARCH_LIST_SCREEN, getActivity());
 
         } catch (Exception ex) {
             ex.getStackTrace();
@@ -351,15 +378,15 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
         rlNodata = (RelativeLayout) mContentView.findViewById(R.id.rlNodata);
         noDataBlank = (CustomTextView) mContentView.findViewById(R.id.nodate_blank);
         mClearRL = (RelativeLayout) mContentView.findViewById(R.id.rl_clear);
-        mClearRL.setVisibility(GONE);
         //filter&sort
         flFilterSortContainer = (FrameLayout) mContentView.findViewById(R.id.flFilterSortContainer);
-        flFilterSortContainer.setOnClickListener(this);
         ImageView mIVBottomSlideToTop = (ImageView) mContentView.findViewById(R.id.iv_bottom_slideto_top);
         mTopFilterAndSortBarRL = (RelativeLayout) mContentView.findViewById(R.id.top_switch_and_filter_bar);
         mTopViewToggleIV = (ImageView) mContentView.findViewById(R.id.iv_view_toggle_top);
         LinearLayout mTopFilterLL = (LinearLayout) mContentView.findViewById(R.id.ll_filter_top);
         LinearLayout mTopSortLL = (LinearLayout) mContentView.findViewById(R.id.ll_sort_top);
+        mClearRL.setVisibility(GONE);
+        flFilterSortContainer.setOnClickListener(this);
         mTopFilterLL.setOnClickListener(this);
         mTopSortLL.setOnClickListener(this);
         mTopViewToggleIV.setOnClickListener(this);
@@ -933,6 +960,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment i
             mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q,q ,price,
                     sessionKey,"","search"
             );
+            mPresenter.autoSearch(mPresenter.transformSearchMap(storeId, p, limit, order, dir, brand, categoryId, modelType, q,q ,price,
+                "","search"));
         }
 
 

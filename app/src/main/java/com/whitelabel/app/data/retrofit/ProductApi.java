@@ -1,6 +1,7 @@
 package com.whitelabel.app.data.retrofit;
 
 import com.whitelabel.app.model.AddToWishlistEntity;
+import com.whitelabel.app.model.AutoHintSearchRequest;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.CategoryBaseBean;
@@ -10,17 +11,20 @@ import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
 import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.WishDelEntityResult;
 
 import java.util.Map;
 
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 /**
  * Created by Administrator on 2017/2/28.
@@ -63,4 +67,10 @@ public interface ProductApi {
                                                                                        @Query("limit") String limit,
                                                                                        @Query("product_id") String productId,
                                                                                        @Query("session_key") String sessionKey);
+    //TODO auto hint search api
+    @FormUrlEncoded
+    @POST("appservice/product/search")
+    public Observable<SVRAppserviceProductSearchReturnEntity> autoHintSearch(@FieldMap Map<String,String> params);
+
+
 }

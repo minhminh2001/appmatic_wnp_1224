@@ -8,6 +8,7 @@ import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.ApiException;
+import com.whitelabel.app.model.AutoHintSearchRequest;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailModel;
@@ -18,6 +19,7 @@ import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailResultDetailReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
 import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.JDataUtils;
@@ -182,7 +184,18 @@ public class CommodityManager  implements ICommodityManager{
         });
     }
 
-
+    @Override
+    public Observable<SVRAppserviceProductSearchReturnEntity> autoHintSearch(
+        Map<String,String> params) {
+        return productApi.autoHintSearch(params).map(
+            new Func1<SVRAppserviceProductSearchReturnEntity, SVRAppserviceProductSearchReturnEntity>() {
+                @Override
+                public SVRAppserviceProductSearchReturnEntity call(
+                    SVRAppserviceProductSearchReturnEntity svrAppserviceProductSearchReturnEntity) {
+                    return svrAppserviceProductSearchReturnEntity;
+                }
+            });
+    }
 
     public String  getProductDetailHtml(ProductDetailModel productDetailModel) {
         StringBuilder stringBuilder1 = new StringBuilder("");

@@ -78,6 +78,7 @@
 
     </LinearLayout>
     </RelativeLayout>
+    <!--list -->
     <com.whitelabel.app.widget.CustomXListView
         android:id="@+id/cxlvProductList"
         android:layout_width="match_parent"
@@ -87,6 +88,13 @@
         android:divider="@null"
         android:dividerHeight="0dp"
         android:scrollbars="none"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_hint_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/rl_top_bar"
+    />
 
     <RelativeLayout
         android:id="@+id/top_switch_and_filter_bar"

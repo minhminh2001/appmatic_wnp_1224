@@ -1,6 +1,8 @@
 package com.whitelabel.app.data.service;
 
+import com.twitter.sdk.android.core.models.Search;
 import com.whitelabel.app.model.AddressBook;
+import com.whitelabel.app.model.AutoHintSearchRequest;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailNewModel;
@@ -8,12 +10,15 @@ import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
 import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 
 import java.util.List;
 import java.util.Map;
 
+import retrofit2.http.Body;
+import retrofit2.http.FieldMap;
 import rx.Observable;
 
 /**
@@ -31,4 +36,6 @@ public interface ICommodityManager {
     public  Observable<SVRAppserviceProductRecommendedReturnEntity> getProductRecommendList(String storeId,String limit,String productId,String sessionKey);
     public  Observable<BindProductResponseModel> getRelateProducts(String productId);
     public  Observable<ResponseModel> addBoughtTogether(String productId,String sessionKey);
+    public  Observable<SVRAppserviceProductSearchReturnEntity> autoHintSearch(Map<String,String> params);
+
 }

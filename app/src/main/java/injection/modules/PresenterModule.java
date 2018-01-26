@@ -33,6 +33,8 @@ import com.whitelabel.app.ui.productdetail.BindProductContract;
 import com.whitelabel.app.ui.productdetail.BindProductPresenterImpl;
 import com.whitelabel.app.ui.productdetail.ProductDetailContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailPresenter;
+import com.whitelabel.app.ui.search.SearchContract;
+import com.whitelabel.app.ui.search.SearchPresenterImpl;
 import com.whitelabel.app.ui.start.StartContract;
 import com.whitelabel.app.ui.start.StartPresenterImpl;
 
@@ -118,6 +120,12 @@ public class PresenterModule {
     @ActivityScope
     public ShopBrandContract.Presenter provideShopBrandPresenter(ICommodityManager iCommodityManager,IBaseManager iBaseManager){
         return new ShopBrandPresenterImpl(iCommodityManager,iBaseManager);
+    }
+
+    @Provides
+    @ActivityScope
+    public SearchContract.Presenter provideSearchPresenter(ICommodityManager iCommodityManager){
+        return new SearchPresenterImpl(iCommodityManager) ;
     }
 
     @Provides
