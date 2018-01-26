@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.whitelabel.app.BuildConfig;
+import com.whitelabel.app.GlobalData;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -31,6 +33,7 @@ import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.widget.CustomCheckBox;
 import com.whitelabel.app.widget.CustomMyDialog;
 import com.whitelabel.app.widget.MultiSwitchButton;
 import java.lang.ref.WeakReference;
@@ -74,6 +77,11 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         RelativeLayout rlSettingRate = (RelativeLayout) view.findViewById(R.id.rl_setting_rate);
         rlSettingRate.setOnClickListener(this);
         TextView mVersion = (TextView) view.findViewById(R.id.tv_setting_version_name);
+        TextView tvAgree = (TextView) view.findViewById(R.id.tv_setting_notify);
+        StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder=stringBuilder.append(getResources().getString(R.string.checkBox1)).append(" "+ GlobalData.appName);
+        tvAgree.setText(stringBuilder.toString());
+
         setAppVersionName(mVersion);
         view.findViewById(R.id.rl_sound).setVisibility(View.GONE);
         textView_cancle.setOnClickListener(this);
@@ -81,17 +89,21 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         JViewUtils.setStrokeButtonGlobalStyle(getActivity(), sign_out);
         sign_out.setOnClickListener(this);
         RelativeLayout rlBack = (RelativeLayout) view.findViewById(R.id.rl_back);
+        CustomCheckBox cbUserCheck = (CustomCheckBox) view.findViewById(R.id.cb_user_check);
         rlBack.setOnClickListener(this);
-        MultiSwitchButton switchButton = (MultiSwitchButton) view.findViewById(R.id.swithch_button1);
-        int kai=0;
+        int isOpen=0;
         if(WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)){
-            kai= WhiteLabelApplication.getAppConfiguration().getUser().getNewsletterSubscribed();
+            isOpen= WhiteLabelApplication.getAppConfiguration().getUser().getNewsletterSubscribed();
         }
-        if(kai==1){
-            switchButton.setCheckedImmediately(true);
-        }else{
-            switchButton.setCheckedImmediately(false);
-        }
+        cbUserCheck.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        cbUserCheck.setChecked(isOpen==1?true:false);
+        //TODO joyson requirement diff style
+//        MultiSwitchButton switchButton = (MultiSwitchButton) view.findViewById(R.id.swithch_button1);
+//        if(isOpen==1){
+//            switchButton.setCheckedImmediately(true);
+//        }else{
+//            switchButton.setCheckedImmediately(false);
+//        }
         DataHandler dataHandler = new DataHandler(homeActivity, this);
         mOtherDao=new OtherDao(TAG, dataHandler);
         MultiSwitchButton sbClosedSound = (MultiSwitchButton) view.findViewById(R.id.sb_close_sound);
@@ -208,9 +220,7 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.rl_setting_rate:
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(String.format(getString(R.string.play_store_url), BuildConfig.APPLICATION_ID)));
-                startActivity(i);
+                JToolUtils.openPlayStore();
                 break;
             case R.id.sign_out:
                 if(!signing&& WhiteLabelApplication.getAppConfiguration().getUser()!=null) {

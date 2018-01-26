@@ -40,12 +40,12 @@
 
     </RelativeLayout>
 
-
+    <!-- notification -->
     <RelativeLayout
         android:id="@+id/rl_setting_notify"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_below="@id/home_title">
 
         <View
@@ -63,12 +63,22 @@
             android:layout_marginLeft="@dimen/setting_item_margin_left"
             android:alpha="0.87"
             android:paddingRight="80dp"
-            android:text="@string/receive_newsletter"
+            android:text="@string/checkBox1"
             android:textColor="@color/black000000"
             android:textSize="@dimen/setting_item_text_size"
             style="@style/font_family_robot_regular"/>
 
+        <com.whitelabel.app.widget.CustomCheckBox
+            android:id="@+id/cb_user_check"
+            imaginato:color_checked="@color/colorAccent"
+            imaginato:color_unchecked_stroke="@color/color_checkbox_unchecked"
+            android:layout_width="24dp"
+            android:layout_height="24dp" android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_alignParentEnd="true"/>
 
+        <!--TODO check style not sample-->
         <!--<com.whitelabel.app.widget.SwitchButton-->
         <!--android:id="@+id/swithch_button1"-->
         <!--android:layout_width="wrap_content"-->
@@ -76,22 +86,17 @@
         <!--android:layout_alignParentRight="true"-->
         <!--android:layout_centerVertical="true"-->
         <!--android:layout_marginRight="@dimen/setting_item_margin_left" />-->
-        <com.whitelabel.app.widget.MultiSwitchButton
-            android:id="@+id/swithch_button1"
-            style="@style/MultiSwitchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+        <!--<com.whitelabel.app.widget.MultiSwitchButton-->
+            <!--android:id="@+id/swithch_button1"-->
+            <!--style="@style/MultiSwitchButton"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"/>-->
 
-        <!--<View-->
-            <!--android:id="@+id/view_notifyline_2"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:background="@color/greyE1E1E1"/>-->
     </RelativeLayout>
 
+    <!-- sound-->
     <RelativeLayout
         android:id="@+id/rl_sound"
         android:layout_width="match_parent"
@@ -134,11 +139,12 @@
             <!--android:background="@color/greyE1E1E1"/>-->
 </RelativeLayout>
 
+    <!--rateus in google play store-->
     <RelativeLayout
         android:id="@+id/rl_setting_rate"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_below="@+id/rl_sound">
 
         <com.whitelabel.app.widget.CustomTextView
