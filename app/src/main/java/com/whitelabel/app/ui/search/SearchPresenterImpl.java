@@ -12,6 +12,8 @@ import android.text.TextUtils;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import rx.Subscriber;
 import rx.Subscription;
 
@@ -22,12 +24,14 @@ import rx.Subscription;
 public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implements SearchContract.Presenter {
     private ICommodityManager iCommodityManager;
 
+    @Inject
     public SearchPresenterImpl(ICommodityManager iCommodityManager) {
         this.iCommodityManager = iCommodityManager;
     }
 
     @Override
     public void autoSearch(Map<String,String> params) {
+        mView.showProgressDialog();
         Subscription subscribe = iCommodityManager.autoHintSearch(params)
             .compose(RxUtil.<SVRAppserviceProductSearchReturnEntity>rxSchedulerHelper()).subscribe(
 
@@ -39,6 +43,7 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
 
                     @Override
                     public void onError(Throwable e) {
+                        mView.closeProgressDialog();
                         if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
                             mView.showErrorMsg(ExceptionParse.parseException(e).getErrorMsg());
                         };
@@ -48,6 +53,7 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
                     public void onNext(
                         SVRAppserviceProductSearchReturnEntity
                             svrAppserviceProductSearchReturnEntity) {
+                        mView.closeProgressDialog();
                         mView.loadAutoHintSearchData(svrAppserviceProductSearchReturnEntity);
                     }
                 });

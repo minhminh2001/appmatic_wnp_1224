@@ -50,6 +50,7 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
     TextView tvOrderNumber;
     //just show one rate flag
     boolean isFirstShowPage=false;
+    private final static int DIALOG_HEIGHT=320;
     @Override
     public CheckoutStatusRightContract.Presenter getPresenter() {
         return new CheckoutStatusRightPresenter(new BaseManager(DataManager.getInstance().getMockApi(),
@@ -263,19 +264,22 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
         if (!isFirstShowPage){
             isFirstShowPage=true;
 
-            boolean isDifferSevenDays=false;
+            //TODO joyson temp close 7days open dialog
+//            boolean isDifferSevenDays=false;
             //first
 //            SkipToAppStoreMarket market = JStorageUtils.getFirstOrderAndMarkTime();
             SkipToAppStoreMarket market=mPresenter.getFirstOrderAndMarkTime();
             if (market.isAfterFirstOrder()&&market.getTime()!=0){
                 long result = System.currentTimeMillis() - market.getTime();
 
-                if (isThan7Days(result)){
-                    isDifferSevenDays=true;
-                }
+//                if (isThan7Days(result)){
+//                    isDifferSevenDays=true;
+//                }
             }
-            if (!market.isAfterFirstOrder()||isDifferSevenDays){
-                final MaterialDialog mMaterialDialog = new MaterialDialog(context,280);
+            if (!market.isAfterFirstOrder()
+//                ||isDifferSevenDays
+                ){
+                final MaterialDialog mMaterialDialog = new MaterialDialog(context,DIALOG_HEIGHT);
                 View view = LayoutInflater.from(context).inflate(R.layout.dialog_mark_app_store, null);
                 TextView tvMarkTitle= (TextView) view.findViewById(R.id.tv_mark_title);
                 String title = context.getResources().getString(R.string.payment_mark_title);

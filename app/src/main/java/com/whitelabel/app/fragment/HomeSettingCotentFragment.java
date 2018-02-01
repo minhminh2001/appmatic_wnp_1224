@@ -3,14 +3,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -19,12 +19,12 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.whitelabel.app.BuildConfig;
-import com.whitelabel.app.GlobalData;
+
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.dao.OtherDao;
+import com.whitelabel.app.ui.login.SettingContract;
 import com.whitelabel.app.utils.AppUtils;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
@@ -33,26 +33,42 @@ import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
-import com.whitelabel.app.widget.CustomCheckBox;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomMyDialog;
+import com.whitelabel.app.widget.CustomSwitch;
 import com.whitelabel.app.widget.MultiSwitchButton;
 import java.lang.ref.WeakReference;
+
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
 
 /**
  * Created by imaginato on 2015/8/21.
  */
-public class HomeSettingCotentFragment extends HomeBaseFragment implements View.OnClickListener{
+public class HomeSettingCotentFragment extends HomeBaseFragment<SettingContract.Presenter> implements View.OnClickListener,SettingContract.View{
     private Activity homeActivity;
     private View view;
     private Dialog mDialog;
     private  boolean signing=false;
     private OtherDao mOtherDao;
     public static  final  int CODE=8000;
+    public static  final  String NEWSLETTER_SUBSCRIBED_OPEN = "1";
+    public static  final  String NEWSLETTER_SUBSCRIBED_CLOSE = "0";
+
+    private CustomSwitch switchUserCheck;
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         homeActivity= (Activity) activity;
     }
+
+    @Override
+    public void inject() {
+        super.inject();
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+            presenterModule(new PresenterModule(getActivity())).build().inject(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,10 +93,6 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         RelativeLayout rlSettingRate = (RelativeLayout) view.findViewById(R.id.rl_setting_rate);
         rlSettingRate.setOnClickListener(this);
         TextView mVersion = (TextView) view.findViewById(R.id.tv_setting_version_name);
-        TextView tvAgree = (TextView) view.findViewById(R.id.tv_setting_notify);
-        StringBuilder stringBuilder=new StringBuilder();
-        stringBuilder=stringBuilder.append(getResources().getString(R.string.checkBox1)).append(" "+ GlobalData.appName);
-        tvAgree.setText(stringBuilder.toString());
 
         setAppVersionName(mVersion);
         view.findViewById(R.id.rl_sound).setVisibility(View.GONE);
@@ -89,14 +101,20 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
         JViewUtils.setStrokeButtonGlobalStyle(getActivity(), sign_out);
         sign_out.setOnClickListener(this);
         RelativeLayout rlBack = (RelativeLayout) view.findViewById(R.id.rl_back);
-        CustomCheckBox cbUserCheck = (CustomCheckBox) view.findViewById(R.id.cb_user_check);
+        mPresenter.getUserAgreement();
+        switchUserCheck = (CustomSwitch) view.findViewById(R.id.switch_user_check);
+        switchUserCheck.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              if (switchUserCheck.isChecked()){
+                  mPresenter.setUserAgreement(NEWSLETTER_SUBSCRIBED_OPEN);
+              }else {
+                  mPresenter.setUserAgreement(NEWSLETTER_SUBSCRIBED_CLOSE);
+              }
+          }
+      });
         rlBack.setOnClickListener(this);
-        int isOpen=0;
-        if(WhiteLabelApplication.getAppConfiguration().isSignIn(homeActivity)){
-            isOpen= WhiteLabelApplication.getAppConfiguration().getUser().getNewsletterSubscribed();
-        }
-        cbUserCheck.setColorChecked(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-        cbUserCheck.setChecked(isOpen==1?true:false);
+
         //TODO joyson requirement diff style
 //        MultiSwitchButton switchButton = (MultiSwitchButton) view.findViewById(R.id.swithch_button1);
 //        if(isOpen==1){
@@ -120,6 +138,28 @@ public class HomeSettingCotentFragment extends HomeBaseFragment implements View.
             }
         });
     }
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+
+    }
+
+    @Override
+    public void setSubscriberSuccess(boolean isSuccess) {
+        if (!isSuccess){
+            if (switchUserCheck.isChecked()) {
+                switchUserCheck.setChecked(false);
+            }else {
+                switchUserCheck.setChecked(true);
+            }
+        }
+    }
+
+    @Override
+    public void getIsSubscriber(boolean isSuccess) {
+        switchUserCheck.setChecked(isSuccess);
+    }
+
     public  static final class DataHandler extends Handler{
         private final WeakReference<Activity> mActivity;
         private final WeakReference<HomeSettingCotentFragment> mFragment;

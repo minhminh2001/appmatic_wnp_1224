@@ -252,6 +252,7 @@
     <string name="TermsOfUserPrivacyPolicy1"><u>Terms of Use</u> </string>
     <string name="TermsOfUserPrivacyPolicy2"> <u>Privacy Policy.</u></string>
 
+    <string name="setting_receiver_newsletters"> Receive Newsletters </string>
     <string name="checkBox1"> I agree to receiving direct marketing&#160;materials from </string>
     <string name="checkBox3"><u>More.</u></string>
     <string name="rigisterSuccess2">SIGN UP SUCCESSFULLY</string>
@@ -418,8 +419,8 @@
     <string name="settings">Settings</string>
     <string name="menu">MENU</string>
     <string name="receive_newsletter">Receive newsletters from Wnp</string>
-    <string name="setting_rate">Rate us in Google Play store</string>
-    <string name="setting_version">Version</string>
+    <string name="setting_rate">Rate Us in the Google Play Store</string>
+    <string name="setting_version">Version Number:&#160;</string>
     <string name="Sign_Up">Sign Up</string>
     <string name="sign_out">SIGN OUT</string>
     <string name="setting_sound">Sound</string>
@@ -513,7 +514,6 @@
     <string name="shipping_returns">Shipping &amp; Delivery</string>
 
     <string name="app_rate_text1">Love using Wnp?</string>
-    <string name="app_rate_text2">Please rate us in the Google Play.</string>
     <string name="play_store_url">http://play.google.com/store/apps/details?id=%1$s</string>
 
 
@@ -737,8 +737,8 @@
     <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bb5de7d8</string>
     <string name="app_name">Whiskers N Paws</string>
     <!--https://dev2.wnp.com.hk/ 103.210.236.156:8088  /  https://imaginato.wnp.com.hk/  https://www.wnp.com.hk  -->
-    <string name="request_url">https://imaginato.wnp.com.hk/</string>
-    <string name="image_base_url">https://imaginato.wnp.com.hk/</string>
+    <string name="request_url">https://www.wnp.com.hk/</string>
+    <string name="image_base_url">https://www.wnp.com.hk/</string>
     <string name="mock_url">http://mis.appmatic.io/</string>
 
     <string name="address_phone_error_hint">More than 6 digits please.</string>

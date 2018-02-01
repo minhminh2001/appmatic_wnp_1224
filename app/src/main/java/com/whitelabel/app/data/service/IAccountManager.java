@@ -6,6 +6,7 @@ package com.whitelabel.app.data.service;
         import com.whitelabel.app.model.ResponseConnection;
         import com.whitelabel.app.model.ResponseModel;
         import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
+        import com.whitelabel.app.model.SubscriberResponse;
         import com.whitelabel.app.model.WishDelEntityResult;
 
         import rx.Observable;
@@ -25,4 +26,6 @@ public interface IAccountManager {
                    String identityToken,String userToken,String provider, String boundEmail );
     public void saveGuideFlag(Boolean isFirst);
     public boolean isGuide();
+    public Observable<ResponseModel> setUserAgreement(String sessionKey, String isAgree);
+    public Observable<SubscriberResponse> getUserAgreement(String sessionKey);
 }
