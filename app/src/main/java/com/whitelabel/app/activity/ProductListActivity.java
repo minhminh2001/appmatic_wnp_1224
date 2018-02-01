@@ -184,8 +184,6 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
                 if (tempCategoryBean.searchCategoryEntity != null && !JDataUtils.isEmpty(tempCategoryBean.searchCategoryEntity.getId())) {
                     tempCategoryBean.svrAppserviceProductSearchParameter.setCategory_id(tempCategoryBean.searchCategoryEntity.getId());
                     tempCategoryBean.svrAppserviceProductSearchParameter.setName(tempCategoryBean.searchCategoryEntity.getName());
-                    //svrAppserviceProductSearchParameter.setBrandId(searchCategoryEntity.getBrandId());
-                    //firebaseTrack
                     viewListTrack(tempCategoryBean.searchCategoryEntity.getName());
                 }
                 categoryId = intent.getStringExtra(INTENT_CATEGORY_ID);
@@ -216,10 +214,11 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
 
 
     public void viewListTrack(String name) {
+        //TODO joyson old business code
 //        FirebaseEventUtils.getInstance().ecommerceViewItemList(ProductListActivity.this, name);
     }
 
-    //TODO joyson business code
+    //TODO joyson old business code
 //    private void switchBottomBar() {
 //        if (TABBAR_INDEX_FILTER == currentFilterSortTabIndex) {
 //            ctvBottomBarFilter.setTextColor(getResources().getColor(R.color.purple66006E));

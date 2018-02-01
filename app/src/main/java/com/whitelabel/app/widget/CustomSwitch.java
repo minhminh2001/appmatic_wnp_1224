@@ -35,7 +35,6 @@ public class CustomSwitch extends SwitchCompat {
 
     public void initialize(Context context) {
         // Setting up my colors
-//        int mediumGreen = ContextCompat.getColor(context, WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         int mediumGreen = WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color();
         int mediumGrey = ContextCompat.getColor(context, R.color.gray999999);
         int alphaMediumGreen = Color

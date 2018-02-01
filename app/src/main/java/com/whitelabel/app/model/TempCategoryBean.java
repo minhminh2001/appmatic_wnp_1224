@@ -185,7 +185,6 @@ public class TempCategoryBean {
         }
     }
 
-    ///////////////////////////////////////////////set brandId begin/////////////////////////////////////////////////////
 
     public void setSVRAppserviceProductSearchParameterBrandId(int type, int index, String brandId) {
         if (ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
@@ -196,7 +195,6 @@ public class TempCategoryBean {
     }
 
 
-    //////////////////////////////////////////set brandId end/////////////////////////////////////////////////////////
 
     public void setSVRAppserviceProductSearchParameterMinPriceMaxPrice(int index, long minPrice, long maxPrice) {
         if (index < 0) {

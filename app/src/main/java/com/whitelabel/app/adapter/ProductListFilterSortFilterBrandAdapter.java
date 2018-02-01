@@ -124,6 +124,7 @@ public class ProductListFilterSortFilterBrandAdapter extends ArrayAdapter<SVRApp
                     public void run() {
                         if (productListFilterSortPageEntity.getPreviousFragmentType() == ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY) {
                             tempCategoryBean.setSVRAppserviceProductSearchParameterBrand(productListFilterSortPageEntity.getPreviousFragmentType(), productListFilterSortPageEntity.getCategoryFragmentPosition(), brandItemReturnEntity.getValue());
+                            //TODO joyson old business code
 //                        mActivity.setSVRAppserviceProductSearchParameterBrandName(productListFilterSortPageEntity.getCategoryFragmentPosition(), brandItemReturnEntity.getLabel());
                             if (filterSortFragmentListener != null) {
                                 filterSortFragmentListener.onFilterSortListItemClick(ProductListActivity.TABBAR_INDEX_FILTER, null);
