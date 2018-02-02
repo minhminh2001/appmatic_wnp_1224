@@ -106,11 +106,8 @@ public class HomeSettingCotentFragment extends HomeBaseFragment<SettingContract.
         switchUserCheck.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              if (switchUserCheck.isChecked()){
-                  mPresenter.setUserAgreement(NEWSLETTER_SUBSCRIBED_OPEN);
-              }else {
-                  mPresenter.setUserAgreement(NEWSLETTER_SUBSCRIBED_CLOSE);
-              }
+              String userAgreement = switchUserCheck.isChecked()?NEWSLETTER_SUBSCRIBED_OPEN:NEWSLETTER_SUBSCRIBED_CLOSE;
+              mPresenter.setUserAgreement(userAgreement);
           }
       });
         rlBack.setOnClickListener(this);
@@ -147,11 +144,7 @@ public class HomeSettingCotentFragment extends HomeBaseFragment<SettingContract.
     @Override
     public void setSubscriberSuccess(boolean isSuccess) {
         if (!isSuccess){
-            if (switchUserCheck.isChecked()) {
-                switchUserCheck.setChecked(false);
-            }else {
-                switchUserCheck.setChecked(true);
-            }
+            switchUserCheck.setChecked(!switchUserCheck.isChecked());
         }
     }
 

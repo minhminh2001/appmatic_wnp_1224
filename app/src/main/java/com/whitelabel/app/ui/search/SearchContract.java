@@ -1,6 +1,5 @@
 package com.whitelabel.app.ui.search;
 
-import com.whitelabel.app.model.AutoHintSearchRequest;
 import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.BaseView;

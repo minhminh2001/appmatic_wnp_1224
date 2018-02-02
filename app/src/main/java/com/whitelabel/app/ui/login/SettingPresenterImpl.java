@@ -70,13 +70,7 @@ public class SettingPresenterImpl extends RxPresenter<SettingContract.View> impl
                 @Override
                 public void onNext(SubscriberResponse subscriberResponse) {
                     mView.closeProgressDialog();
-                    JToolUtils.printObject(subscriberResponse);
-
-                    if (subscriberResponse.getSubscribed().equals("1")){
-                        mView.getIsSubscriber(true);
-                    }else {
-                        mView.getIsSubscriber(false);
-                    }
+                    mView.getIsSubscriber(subscriberResponse.getSubscribed().equals("1"));
                 }
             });
     }

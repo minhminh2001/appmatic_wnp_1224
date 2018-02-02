@@ -8,7 +8,6 @@ import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.data.retrofit.ProductApi;
 import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.ApiException;
-import com.whitelabel.app.model.AutoHintSearchRequest;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailModel;

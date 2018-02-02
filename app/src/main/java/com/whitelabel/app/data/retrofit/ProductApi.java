@@ -1,7 +1,6 @@
 package com.whitelabel.app.data.retrofit;
 
 import com.whitelabel.app.model.AddToWishlistEntity;
-import com.whitelabel.app.model.AutoHintSearchRequest;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.CategoryBaseBean;

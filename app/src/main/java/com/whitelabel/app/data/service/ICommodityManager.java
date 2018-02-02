@@ -2,7 +2,6 @@ package com.whitelabel.app.data.service;
 
 import com.twitter.sdk.android.core.models.Search;
 import com.whitelabel.app.model.AddressBook;
-import com.whitelabel.app.model.AutoHintSearchRequest;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailNewModel;
