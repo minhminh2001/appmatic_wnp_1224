@@ -30,7 +30,7 @@
         <com.whitelabel.app.widget.CustomTextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_rate_text2"
+            android:text="@string/payment_mark_message"
             android:textColor="@color/black999999"
             android:layout_below="@+id/app_rate1"
             android:gravity="left"

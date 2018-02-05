@@ -1,6 +1,4 @@
 package com.whitelabel.app.data.service;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.data.retrofit.MyAccoutApi;
 import com.whitelabel.app.data.retrofit.OneAllApi;
@@ -11,6 +9,7 @@ import com.whitelabel.app.model.NotificationUnReadResponse;
 import com.whitelabel.app.model.ResponseConnection;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
+import com.whitelabel.app.model.SubscriberResponse;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
@@ -121,4 +120,36 @@ public class AccountManager implements IAccountManager{
     public boolean isGuide() {
         return iCacheApi.isGuide();
     }
+
+    @Override
+    public Observable<ResponseModel> setUserAgreement(String sessionKey, String isAgree) {
+        return myAccoutApi.setUserAgreement(sessionKey,isAgree).flatMap(
+            new Func1<ResponseModel, Observable<ResponseModel>>() {
+                @Override
+                public Observable<ResponseModel> call(ResponseModel responseModel) {
+                    if(responseModel.getStatus()==1){
+                        return Observable.just(responseModel);
+                    }else{
+                        return Observable.error(new ApiException(responseModel.getErrorMessage()));
+                    }
+                }
+            });
+    }
+
+    @Override
+    public Observable<SubscriberResponse> getUserAgreement(String sessionKey) {
+        return myAccoutApi.getUserAgreement(sessionKey).flatMap(
+            new Func1<SubscriberResponse, Observable<SubscriberResponse>>() {
+                @Override
+                public Observable<SubscriberResponse> call(SubscriberResponse subscriberResponse) {
+                    if(subscriberResponse.getStatus()==1){
+                        return Observable.just(subscriberResponse);
+                    }else{
+                        return Observable.error(new ApiException(subscriberResponse.getErrorMessage()));
+                    }
+                }
+            });
+    }
+
+
 }

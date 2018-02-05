@@ -40,12 +40,12 @@
 
     </RelativeLayout>
 
-
+    <!-- notification -->
     <RelativeLayout
         android:id="@+id/rl_setting_notify"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_below="@id/home_title">
 
         <View
@@ -63,12 +63,19 @@
             android:layout_marginLeft="@dimen/setting_item_margin_left"
             android:alpha="0.87"
             android:paddingRight="80dp"
-            android:text="@string/receive_newsletter"
+            android:text="@string/setting_receiver_newsletters"
             android:textColor="@color/black000000"
             android:textSize="@dimen/setting_item_text_size"
             style="@style/font_family_robot_regular"/>
 
-
+        <com.whitelabel.app.widget.CustomSwitch
+            android:id="@+id/switch_user_check"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+        />
+        <!--TODO joyson switchButton style not sample-->
         <!--<com.whitelabel.app.widget.SwitchButton-->
         <!--android:id="@+id/swithch_button1"-->
         <!--android:layout_width="wrap_content"-->
@@ -76,22 +83,21 @@
         <!--android:layout_alignParentRight="true"-->
         <!--android:layout_centerVertical="true"-->
         <!--android:layout_marginRight="@dimen/setting_item_margin_left" />-->
-        <com.whitelabel.app.widget.MultiSwitchButton
-            android:id="@+id/swithch_button1"
-            style="@style/MultiSwitchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
-
-        <!--<View-->
-            <!--android:id="@+id/view_notifyline_2"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:background="@color/greyE1E1E1"/>-->
+        <!--<com.whitelabel.app.widget.MultiSwitchButton-->
+            <!--android:id="@+id/swithch_button1"-->
+            <!--style="@style/MultiSwitchButton"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"/>-->
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/greyE1E1E1"/>
     </RelativeLayout>
 
+    <!-- sound-->
     <RelativeLayout
         android:id="@+id/rl_sound"
         android:layout_width="match_parent"
@@ -125,20 +131,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
-
-        <!--<View-->
-            <!--android:id="@+id/v_line1"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_marginTop="48dp"-->
-            <!--android:background="@color/greyE1E1E1"/>-->
 </RelativeLayout>
 
+    <!--rateus in google play store-->
     <RelativeLayout
         android:id="@+id/rl_setting_rate"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_below="@+id/rl_sound">
 
         <com.whitelabel.app.widget.CustomTextView
@@ -152,13 +152,19 @@
             android:textColor="@color/black000000"
             android:textSize="@dimen/setting_item_text_size"
             style="@style/font_family_robot_regular"/>
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/setting_item_margin_left"
+            android:background="@mipmap/icon_right"/>
 
-        <!--<View-->
-            <!--android:id="@+id/view_rate_line"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:background="@color/greyE1E1E1"/>-->
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_alignParentBottom="true"
+            android:background="@color/greyE1E1E1"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -198,28 +204,21 @@
             android:background="@color/greyE1E1E1"/>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/rl_setting_version"
-        android:paddingLeft="@dimen/setting_item_margin_left"
-        android:paddingRight="@dimen/setting_item_margin_left">
 
-        <com.whitelabel.app.widget.CustomTextView
-            android:id="@+id/sign_out"
-            style="@style/font_family_robot_regular"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/button_touch_height"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/btn_purple_border"
-            android:gravity="center"
-            android:text="@string/sign_out"
-            android:textColor="@drawable/btn_text_purple"
-            android:textSize="16sp" />
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/sign_out"
+        style="@style/font_family_robot_regular"
+        android:layout_marginLeft="@dimen/setting_item_margin_left"
+        android:layout_marginRight="@dimen/setting_item_margin_left"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/button_touch_height"
+        android:layout_centerInParent="true"
+        android:background="@drawable/btn_purple_border"
+        android:gravity="center"
+        android:text="@string/sign_out"
+        android:textColor="@drawable/btn_text_purple"
+        android:textSize="16sp" />
 
-    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/home_search"

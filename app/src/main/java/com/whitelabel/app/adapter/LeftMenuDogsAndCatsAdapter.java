@@ -70,7 +70,8 @@ public class LeftMenuDogsAndCatsAdapter  extends BaseMultiItemQuickAdapter<Multi
                 break;
             case Const.TYPE_TREE_LEVEL_1:
                 final TextView tvExpandLv1 = helper.getView(R.id.tv_expand_title);
-                JViewUtils.setSlideMenuTextStyle(tvExpandLv1,false);
+                JViewUtils.setSlideMenuTextStyle(tvExpandLv1,false,true);
+                JViewUtils.setSlideMenuBgStyle(tvExpandLv1);
                 tvExpandLv1.setSelected(false);
                 tvMaps.put(helper.getAdapterPosition(),tvExpandLv1);
                 final CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean lv1 = (CategoryBaseBean.CategoryBean.ChildrenBeanX.ChildrenBean) item;

@@ -68,6 +68,11 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     private RelativeLayout rlDrawerOrder;
     private RelativeLayout rlDrawerAddress;
     private RelativeLayout rlDrawerSotreCredit;
+    private RelativeLayout rlDrawerHome ;
+    private RelativeLayout rlDrawerCategoryTree;
+    private RelativeLayout rlDrawerShoppingCart;
+    private RelativeLayout rlDrawerNotification;
+    private RelativeLayout rlDrawerWish ;
     private NotificationReceiver receiver;
     private RecyclerView rvDogsAndCatsList;
     LeftMenuDogsAndCatsAdapter leftMenuDogsAndCatsAdapter;
@@ -293,44 +298,33 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         tvStoreCredit = (TextView) findViewById(R.id.tv_store_credit);
         ivAddress = (ImageView) findViewById(R.id.iv_address);
         ivStoreCredit = (ImageView) findViewById(R.id.iv_store_credit);
-        RelativeLayout rlDrawerHome = (RelativeLayout) findViewById(R.id.rl_drawer_home);
-        RelativeLayout rlDrawerCategoryTree = (RelativeLayout) findViewById(R.id.rl_drawer_categorytree);
-        RelativeLayout rlDrawerShoppingCart = (RelativeLayout) findViewById(R.id.rl_drawer_shoppingcart);
-        RelativeLayout rlDrawerNotification = (RelativeLayout) findViewById(R.id.rl_drawer_notification);
+        rlDrawerHome = (RelativeLayout) findViewById(R.id.rl_drawer_home);
+        rlDrawerCategoryTree = (RelativeLayout) findViewById(R.id.rl_drawer_categorytree);
+        rlDrawerShoppingCart = (RelativeLayout) findViewById(R.id.rl_drawer_shoppingcart);
+        rlDrawerNotification = (RelativeLayout) findViewById(R.id.rl_drawer_notification);
+        rlDrawerWish = (RelativeLayout) findViewById(R.id.rl_drawer_wishlist);
+        rlDrawerOrder = (RelativeLayout) findViewById(R.id.rl_drawer_order);
+        rlDrawerAddress = (RelativeLayout) findViewById(R.id.rl_drawer_address);
+        rlDrawerSotreCredit = (RelativeLayout) findViewById(R.id.rl_drawer_store_credit);
 
         tvDogs = (CustomTextView) findViewById(R.id.tv_dogs);
         tvCats = (CustomTextView) findViewById(R.id.tv_cats);
         rvDogsAndCatsList = (RecyclerView) findViewById(R.id.rv_dogs_and_cats_list);
 
+        JViewUtils.setSlideMenuTextStyle(tvHome,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvShoppingCart,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvNotification,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvWistlist,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvMyOrder,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvAddress,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvCategoryTree,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvDogs,false,false);
+        JViewUtils.setSlideMenuTextStyle(tvCats,false,false);
+        JViewUtils.setSlideMenuTextStyle(tvSetting,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvCustomerService,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvHelpCenter,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvShipping,false,true);
 
-
-//        int black=ContextCompat.getColor(this,R.color.black000000);
-        JViewUtils.setSlideMenuTextStyle(tvHome,false);
-        JViewUtils.setSlideMenuTextStyle(tvShoppingCart,false);
-        JViewUtils.setSlideMenuTextStyle(tvNotification,false);
-        JViewUtils.setSlideMenuTextStyle(tvWistlist,false);
-        JViewUtils.setSlideMenuTextStyle(tvMyOrder,false);
-        JViewUtils.setSlideMenuTextStyle(tvAddress,false);
-        JViewUtils.setSlideMenuTextStyle(tvCategoryTree,false);
-        JViewUtils.setSlideMenuTextStyle(tvDogs,false);
-        JViewUtils.setSlideMenuTextStyle(tvCats,false);
-        JViewUtils.setSlideMenuTextStyle(tvSetting,false);
-        JViewUtils.setSlideMenuTextStyle(tvCustomerService,false);
-        JViewUtils.setSlideMenuTextStyle(tvHelpCenter,false);
-        JViewUtils.setSlideMenuTextStyle(tvShipping,false);
-//        tvHome.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-//        tvShoppingCart.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-//        tvNotification.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-//        tvWistlist.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-//        tvMyOrder.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-//        tvAddress.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-//        int gray=ContextCompat.getColor(this,R.color.blackD0);
-//        tvSetting.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
-//        tvCustomerService.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
-//        tvHelpCenter.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
-//        tvShipping.setTextColor(JImageUtils.getThemeTextColorDrawable(gray));
-//        tvCategoryTree.setTextColor(JImageUtils.getThemeTextColorDrawable(black));
-//        tvOrderNum= (TextView) findViewById(R.id.tv_order_num);
         int iconDefaultColor=ContextCompat.getColor(this,R.color.blackD0);
         ivHome.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_default),iconDefaultColor));
         ivShoppingCart.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_shoppingcart_default),iconDefaultColor));
@@ -340,10 +334,19 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         ivAddress.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_address_default),iconDefaultColor));
         ivCategoryTree.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_categorytree_default),iconDefaultColor));
 
-        RelativeLayout rlDrawerWish = (RelativeLayout) findViewById(R.id.rl_drawer_wishlist);
-        rlDrawerOrder = (RelativeLayout) findViewById(R.id.rl_drawer_order);
-        rlDrawerAddress = (RelativeLayout) findViewById(R.id.rl_drawer_address);
-        rlDrawerSotreCredit = (RelativeLayout) findViewById(R.id.rl_drawer_store_credit);
+        JViewUtils.setSlideMenuBgStyle(rlDrawerHome);
+        JViewUtils.setSlideMenuBgStyle(rlDrawerCategoryTree);
+        JViewUtils.setSlideMenuBgStyle(rlDrawerShoppingCart);
+        JViewUtils.setSlideMenuBgStyle(rlDrawerNotification);
+        JViewUtils.setSlideMenuBgStyle(rlDrawerWish);
+        JViewUtils.setSlideMenuBgStyle(rlDrawerOrder);
+        JViewUtils.setSlideMenuBgStyle(rlDrawerAddress);
+        JViewUtils.setSlideMenuBgStyle(rlDrawerSotreCredit);
+        JViewUtils.setSlideMenuBgStyle(tvCustomerService);
+        JViewUtils.setSlideMenuBgStyle(tvSetting);
+        JViewUtils.setSlideMenuBgStyle(tvHelpCenter);
+        JViewUtils.setSlideMenuBgStyle(tvShipping);
+
         llProfile.setOnClickListener(this);
         rlDrawerCategoryTree.setOnClickListener(this);
         rlDrawerHome.setOnClickListener(this);
@@ -362,6 +365,8 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         tvShoppingNum.setBackground(JImageUtils.getThemeCircle(this));
         tvNotificationNum.setBackground(JImageUtils.getThemeCircle(this));
         tvWistNum.setBackground(JImageUtils.getThemeCircle(this));
+
+
 
     }
 //    private static final class DataHandler extends Handler {
@@ -499,6 +504,15 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         tvShipping.setSelected(false);
         tvSetting.setSelected(false);
         tvCustomerService.setSelected(false);
+
+        rlDrawerHome.setSelected(false);
+        rlDrawerCategoryTree.setSelected(false);
+        rlDrawerShoppingCart.setSelected(false);
+        rlDrawerNotification.setSelected(false);
+        rlDrawerWish.setSelected(false);
+        rlDrawerOrder.setSelected(false);
+        rlDrawerAddress.setSelected(false);
+        rlDrawerSotreCredit.setSelected(false);
     }
 
     public void switchMenu(int type) {
@@ -508,30 +522,39 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         }else {
             resetSate();
         }
+
         if (type == HomeBaseFragment.HomeCommonCallback.MENU_HOME) {
             ivHome.setSelected(true);
             tvHome.setSelected(true);
+            rlDrawerHome.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_CATEGORYTREE) {
             ivCategoryTree.setSelected(true);
             tvCategoryTree.setSelected(true);
+            rlDrawerCategoryTree.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_SHOPPINGCART) {
             ivShoppingCart.setSelected(true);
             tvShoppingCart.setSelected(true);
+            rlDrawerShoppingCart.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_NOTIFICATION) {
             ivNotification.setSelected(true);
             tvNotification.setSelected(true);
+            rlDrawerNotification.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_WISHLIST) {
             ivMyWishList.setSelected(true);
             tvWistlist.setSelected(true);
+            rlDrawerWish.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_ORDER) {
             ivMyOrder.setSelected(true);
             tvMyOrder.setSelected(true);
+            rlDrawerOrder.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_ADDRESS) {
             ivAddress.setSelected(true);
             tvAddress.setSelected(true);
+            rlDrawerAddress.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_STORECREDITS) {
             ivStoreCredit.setSelected(true);
             tvStoreCredit.setSelected(true);
+            rlDrawerSotreCredit.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_SETTING) {
             tvSetting.setSelected(true);
         } else if (type == HomeBaseFragment.HomeCommonCallback.MENU_COSTOMSERVICE) {

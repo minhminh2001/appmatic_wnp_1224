@@ -29,6 +29,7 @@ public class Const {
         public final static String SIGN_UP_SUCCEED_SCREEN = "Sign Up Succeed Screen";
         public final static String SLIDE_MENU_SCREEN = "Side Menu";
         public final static String FORGOT_PASSWORD_SCREEN = "Forgot Password Screen";
+        public final static String SEARCH_LIST_SCREEN = "Search List Screen";
 
         public final static String HOME_BANNER_EVENT = "Banner";
         public final static String ORDER_ADD_TO_CART_EVENT = "Add to Cart";

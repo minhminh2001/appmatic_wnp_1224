@@ -72,7 +72,7 @@ public class ShoppingCartVerticalFragmentV2 {
 //    @Override
 //    public void onRefresh() {
 //        //暂时没有用到
-//        mPresenter.loadData(false);
+//        mPresenter.loadAutoHintSearchData(false);
 //    }
 //
 //    @Override
@@ -381,7 +381,7 @@ public class ShoppingCartVerticalFragmentV2 {
 //        mCancelStr = getResources().getString(R.string.shoppingcart_btn_cancel);
 //        mApplyStr = getResources().getString(R.string.shoppingcart_btn_apply);
 //        initAdapter();
-//        mPresenter.loadData(true);
+//        mPresenter.loadAutoHintSearchData(true);
 //    }
 //    private AdapterView.OnItemClickListener mItemListener = new AdapterView.OnItemClickListener() {
 //        @Override

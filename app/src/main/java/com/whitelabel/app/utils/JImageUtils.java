@@ -83,6 +83,20 @@ public class JImageUtils {
         drawable.addState(new int[]{},normal);
         return drawable;
     }
+
+    public static Drawable getViewBgSoildDrawable(){
+        StateListDrawable drawable=new StateListDrawable();
+        GradientDrawable  normal= new GradientDrawable();
+        normal.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getButton_text_color());
+        GradientDrawable  pressed= new GradientDrawable();
+        pressed.setColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        drawable.addState(new int[]{android.R.attr.state_selected,android.R.attr.state_enabled},pressed);
+        drawable.addState(new int[]{android.R.attr.state_pressed,android.R.attr.state_enabled},pressed);
+        drawable.addState(new int[]{android.R.attr.state_enabled},normal);
+        drawable.addState(new int[]{},normal);
+        return drawable;
+    }
+
     public static  Drawable  getbuttonBakcgroundStrokeDrawable(Context context){
         StateListDrawable drawable=new StateListDrawable();
         GradientDrawable  normal= (GradientDrawable) ContextCompat.getDrawable(context, R.drawable.button_default_shape);

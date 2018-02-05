@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
 import com.whitelabel.app.R;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.fragment.ProductListBaseFragment;
@@ -20,6 +21,7 @@ import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.TMPProductListListPageEntity;
+import com.whitelabel.app.model.TempCategoryBean;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.CustomTextView;
@@ -35,12 +37,12 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         FilterSortBottomView.FilterSortBottomViewCallBack, IFilterSortActivity {
     public  final int TYPE_SORT = 0;
     public  final int TYPE_FILTER = 1;
-    public Long mGATrackTimeStart = 0L;
+
     public boolean mGATrackTimeEnable = false;
     public Long GATrackSearchTimeStart = 0L;
     public boolean GATrackSearchTimeEnable = false;
     public static final int RESULT_WISH = 101;
-    public final static int TABBAR_INDEX_NONE = -1;
+
     public final static int TABBAR_INDEX_FILTER = 1;
     public final static int TABBAR_INDEX_SORT = 2;
     public final static String INTENT_DATA_PREVTYPE = "prevType";
@@ -69,10 +71,10 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     protected boolean isActivityInvisible = true;
     protected boolean isActivityPaused = true;
     private int FRAGMENT_CONTAINER_ID;
-    private SVRAppserviceProductSearchParameter svrAppserviceProductSearchParameter;
-    public CategoryBaseBean.CategoryBean.ChildrenBeanX searchCategoryEntity;
-    private ArrayList<SVRAppserviceProductSearchParameter> searchCategoryParameterArrayList;
-    public String leftMenuTitle;
+
+
+
+
     private int prevType;
     private int fragmentType;
     public String categoryId;
@@ -89,7 +91,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     private SingleClickListener singleClickListener;
 
     private int currentFilterSortTabIndex;
-    private int currentProductListFragmentPosition = 0;
+    private TempCategoryBean tempCategoryBean;
 
     public boolean checkIsFinished() {
         return isActivityFinished;
@@ -107,7 +109,6 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         if (index < 0) {
             return;
         }
-
         if (mAttachedFragmentList == null) {
             mAttachedFragmentList = new ArrayList<ProductListBaseFragment>();
         }
@@ -151,8 +152,9 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_productlist);
+        tempCategoryBean=TempCategoryBean.getInstance();
         isActivityFinished = false;
-        currentFilterSortTabIndex = TABBAR_INDEX_NONE;
+        currentFilterSortTabIndex = tempCategoryBean.TABBAR_INDEX_NONE;
         FRAGMENT_CONTAINER_ID = R.id.flFilterSortContainer;
         llToolBar = (LinearLayout) findViewById(R.id.ll_toolbar);
         rlBottomBar = (RelativeLayout) findViewById(R.id.rlBottomBar);
@@ -167,23 +169,22 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         singleClickListener = new SingleClickListener();
         rlBottomBarFilter.setOnClickListener(singleClickListener);
         rlBottomBarSort.setOnClickListener(singleClickListener);
-        svrAppserviceProductSearchParameter = new SVRAppserviceProductSearchParameter();
+        tempCategoryBean.svrAppserviceProductSearchParameter = new SVRAppserviceProductSearchParameter();
         prevType = 0;
         fragmentType = FRAGMENT_TYPE_PRODUCTLIST_CATEGORY;
         Intent intent = getIntent();
         if (intent != null) {
             prevType = intent.getIntExtra(INTENT_DATA_PREVTYPE, 0);
             fragmentType = intent.getIntExtra(INTENT_DATA_FRAGMENTTYPE, FRAGMENT_TYPE_PRODUCTLIST_CATEGORY);
-            currentProductListFragmentPosition = intent.getIntExtra(CURRENT_INDEX, 0);
+            tempCategoryBean.currentProductListFragmentPosition = intent.getIntExtra(CURRENT_INDEX, 0);
             try {
-                searchCategoryEntity = (CategoryBaseBean.CategoryBean.ChildrenBeanX) intent.getSerializableExtra(INTENT_DATA_CATEGORYID);
-                leftMenuTitle= (String) intent.getSerializableExtra(INTENT_DATA_LEFT_TOP_TITLE);
-                if (searchCategoryEntity != null && !JDataUtils.isEmpty(searchCategoryEntity.getId())) {
-                    svrAppserviceProductSearchParameter.setCategory_id(searchCategoryEntity.getId());
-                    svrAppserviceProductSearchParameter.setName(searchCategoryEntity.getName());
-                    //svrAppserviceProductSearchParameter.setBrandId(searchCategoryEntity.getBrandId());
-                    //firebaseTrack
-                    viewListTrack(searchCategoryEntity.getName());
+                CategoryBaseBean.CategoryBean.ChildrenBeanX searchCategoryEntity = (CategoryBaseBean.CategoryBean.ChildrenBeanX) intent.getSerializableExtra(INTENT_DATA_CATEGORYID);
+                tempCategoryBean.searchCategoryEntity=searchCategoryEntity;
+                tempCategoryBean.leftMenuTitle= (String) intent.getSerializableExtra(INTENT_DATA_LEFT_TOP_TITLE);
+                if (tempCategoryBean.searchCategoryEntity != null && !JDataUtils.isEmpty(tempCategoryBean.searchCategoryEntity.getId())) {
+                    tempCategoryBean.svrAppserviceProductSearchParameter.setCategory_id(tempCategoryBean.searchCategoryEntity.getId());
+                    tempCategoryBean.svrAppserviceProductSearchParameter.setName(tempCategoryBean.searchCategoryEntity.getName());
+                    viewListTrack(tempCategoryBean.searchCategoryEntity.getName());
                 }
                 categoryId = intent.getStringExtra(INTENT_CATEGORY_ID);
                 keyWord = intent.getStringExtra(ProductListKeywordsSearchFragment.FROM_OTHER_PAGE_KEYWORD);
@@ -207,14 +208,18 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         fragmentSequenceArray = new ArrayList<>();
         initFragment();
         switchFragment(-1, fragmentType, tmpProductListListPageEntity);
+
+        ;
     }
 
 
     public void viewListTrack(String name) {
+        //TODO joyson old business code
 //        FirebaseEventUtils.getInstance().ecommerceViewItemList(ProductListActivity.this, name);
     }
 
-    private void switchBottomBar() {
+    //TODO joyson old business code
+//    private void switchBottomBar() {
 //        if (TABBAR_INDEX_FILTER == currentFilterSortTabIndex) {
 //            ctvBottomBarFilter.setTextColor(getResources().getColor(R.color.purple66006E));
 //            AnimUtil.animatePlusSign(tvFilterAnimate, true, this);
@@ -235,7 +240,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
 //            ctvBottomBarSort.setTextColor(getResources().getColor(R.color.black000000));
 //            AnimUtil.animatePlusSign(tvSortAnimate, false, this);
 //        }
-    }
+//    }
 
     @Override
     protected void onStart() {
@@ -275,13 +280,13 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         if (-1 == from) {
             redirectToAttachedFragment(to, TYPE_FRAGMENT_SWITCH_NONE, serializable);
         } else if (FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == from && FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == to) {
-            resetCurrentFilterSortTabIndex();
+            tempCategoryBean.resetCurrentFilterSortTabIndex();
             if (fragmentSequenceArray != null) {
                 redirectToAttachedFragment(to, TYPE_FRAGMENT_SWITCH_RIGHT2LEFT, serializable);
                 fragmentSequenceArray.add(C_L_LINK);
             }
         } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == from && FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == to) {
-            resetCurrentFilterSortTabIndex();
+            tempCategoryBean.resetCurrentFilterSortTabIndex();
             if (fragmentSequenceArray != null) {
                 if (fragmentSequenceArray.contains(C_L_LINK)) {
                     redirectToAttachedFragment(to, TYPE_FRAGMENT_SWITCH_LEFT2RIGHT, serializable);
@@ -345,383 +350,17 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         }
     }
 
-    public CategoryBaseBean.CategoryBean.ChildrenBeanX getSearchCategoryEntity() {
-        return searchCategoryEntity;
-    }
-
-    /**
-     * @param type FragmentType
-     */
-    public SVRAppserviceProductSearchParameter getSVRAppserviceProductSearchParameterById(int type, int index) {
-        if (FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
-            return getSVRAppserviceProductSearchParameterById(index);
-        } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
-            return getSvrAppserviceProductSearchParameter();
-        } else {
-            return null;
-        }
-    }
-
-    private SVRAppserviceProductSearchParameter getSVRAppserviceProductSearchParameterById(int index) {
-        if (index < 0 || searchCategoryParameterArrayList == null || searchCategoryParameterArrayList.size() <= index) {
-            return null;
-        } else {
-            return searchCategoryParameterArrayList.get(index);
-        }
-    }
-
-    private SVRAppserviceProductSearchParameter getSvrAppserviceProductSearchParameter() {
-        if (svrAppserviceProductSearchParameter == null) {
-            svrAppserviceProductSearchParameter = new SVRAppserviceProductSearchParameter();
-        }
-        return svrAppserviceProductSearchParameter;
-    }
-
-    public void setSVRAppserviceProductSearchParameterCategoryId(int type, int index, String categoryId) {
-        if (FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
-            setSVRAppserviceProductSearchParameterCategoryId(index, categoryId);
-        } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
-            setSVRAppserviceProductSearchParameterCategoryId(categoryId);
-        }
-    }
-
-    private void setSVRAppserviceProductSearchParameterCategoryId(int index, String categoryId) {
-        if (index < 0) {
-            return;
-        }
-        if (searchCategoryParameterArrayList == null) {
-            searchCategoryParameterArrayList = new ArrayList<>();
-        }
-        int arraySize = searchCategoryParameterArrayList.size();
-        if (index >= arraySize) {
-            for (int newInstallIndex = arraySize; newInstallIndex <= index; ++newInstallIndex) {
-                SVRAppserviceProductSearchParameter parameter = new SVRAppserviceProductSearchParameter();
-                if (newInstallIndex == index) {
-                    parameter.setCategory_id(categoryId);
-                    searchCategoryParameterArrayList.add(parameter);
-                    break;
-                } else {
-                    searchCategoryParameterArrayList.add(parameter);
-                    continue;
-                }
-            }
-        } else {
-            searchCategoryParameterArrayList.get(index).setCategory_id(categoryId);
-        }
-    }
-
-    private void setSVRAppserviceProductSearchParameterCategoryId(String categoryId) {
-        if (svrAppserviceProductSearchParameter == null) {
-            svrAppserviceProductSearchParameter = new SVRAppserviceProductSearchParameter();
-        }
-
-        svrAppserviceProductSearchParameter.setCategory_id(categoryId);
-    }
-
-    ///////////////////////////////////////////////set brandId begin/////////////////////////////////////////////////////
-
-    public void setSVRAppserviceProductSearchParameterBrandId(int type, int index, String brandId) {
-        if (FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
-            setSVRAppserviceProductSearchParameterBrandId(index, brandId);
-        } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
-            setSVRAppserviceProductSearchParameterBrandId(brandId);
-        }
-    }
-
-    private void setSVRAppserviceProductSearchParameterBrandId(int index, String brandId) {
-        if (index < 0) {
-            return;
-        }
-        if (searchCategoryParameterArrayList == null) {
-            searchCategoryParameterArrayList = new ArrayList<>();
-        }
-
-        int arraySize = searchCategoryParameterArrayList.size();
-        if (index >= arraySize) {
-            for (int newInstallIndex = arraySize; newInstallIndex <= index; ++newInstallIndex) {
-                SVRAppserviceProductSearchParameter parameter = new SVRAppserviceProductSearchParameter();
-                if (newInstallIndex == index) {
-                    parameter.setBrandId(brandId);
-                    searchCategoryParameterArrayList.add(parameter);
-                    break;
-                } else {
-                    searchCategoryParameterArrayList.add(parameter);
-                    continue;
-                }
-            }
-        } else {
-            searchCategoryParameterArrayList.get(index).setBrandId(brandId);
-        }
-    }
-
-    private void setSVRAppserviceProductSearchParameterBrandId(String brandId) {
-        if (svrAppserviceProductSearchParameter == null) {
-            svrAppserviceProductSearchParameter = new SVRAppserviceProductSearchParameter();
-        }
-
-        svrAppserviceProductSearchParameter.setBrandId(brandId);
-    }
-
-    //////////////////////////////////////////set brandId end/////////////////////////////////////////////////////////
-
     @Override
     public void setSVRAppserviceProductSearchParameterMinPriceMaxPrice(int type, int index, long minPrice, long maxPrice) {
         if (FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
-            setSVRAppserviceProductSearchParameterMinPriceMaxPrice(index, minPrice, maxPrice);
+            tempCategoryBean.setSVRAppserviceProductSearchParameterMinPriceMaxPrice(index, minPrice, maxPrice);
         } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
-            setSVRAppserviceProductSearchParameterMinPriceMaxPrice(minPrice, maxPrice);
+            tempCategoryBean.setSVRAppserviceProductSearchParameterMinPriceMaxPrice(minPrice, maxPrice);
         }
-    }
-
-    private void setSVRAppserviceProductSearchParameterMinPriceMaxPrice(int index, long minPrice, long maxPrice) {
-        if (index < 0) {
-            return;
-        }
-
-        if (searchCategoryParameterArrayList == null) {
-            searchCategoryParameterArrayList = new ArrayList<>();
-        }
-
-        int arraySize = searchCategoryParameterArrayList.size();
-        if (index >= arraySize) {
-            for (int newInstallIndex = arraySize; newInstallIndex <= index; ++newInstallIndex) {
-                SVRAppserviceProductSearchParameter parameter = new SVRAppserviceProductSearchParameter();
-                if (newInstallIndex == index) {
-                    parameter.setPrice(minPrice + "-" + maxPrice);
-                    searchCategoryParameterArrayList.add(parameter);
-                    break;
-                } else {
-                    searchCategoryParameterArrayList.add(parameter);
-                    continue;
-                }
-            }
-        } else {
-            searchCategoryParameterArrayList.get(index).setPrice(minPrice + "-" + maxPrice);
-        }
-    }
-
-    private void setSVRAppserviceProductSearchParameterMinPriceMaxPrice(long minPrice, long maxPrice) {
-        if (svrAppserviceProductSearchParameter == null) {
-            svrAppserviceProductSearchParameter = new SVRAppserviceProductSearchParameter();
-        }
-
-        svrAppserviceProductSearchParameter.setPrice(minPrice + "-" + maxPrice);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    public void setSVRAppserviceProductSearchParameterBrand(int type, int index, String brandValue) {
-        if (FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
-            setSVRAppserviceProductSearchParameterBrand(index, brandValue);
-        } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
-            setSVRAppserviceProductSearchParameterBrand(brandValue);
-        }
-    }
-
-    public void setSVRAppserviceProductSearchParameterBrandName(int index, String brandValue) {
-        if (index < 0) {
-            return;
-        }
-        if (searchCategoryParameterArrayList == null) {
-            searchCategoryParameterArrayList = new ArrayList<>();
-        }
-
-        int arraySize = searchCategoryParameterArrayList.size();
-
-        if (index >= arraySize) {
-            for (int newInstallIndex = arraySize; newInstallIndex <= index; ++newInstallIndex) {
-                SVRAppserviceProductSearchParameter parameter = new SVRAppserviceProductSearchParameter();
-                if (newInstallIndex == index) {
-                    parameter.setBrandName(brandValue);
-                    searchCategoryParameterArrayList.add(parameter);
-                    break;
-                } else {
-                    searchCategoryParameterArrayList.add(parameter);
-                    continue;
-                }
-            }
-        } else {
-            searchCategoryParameterArrayList.get(index).setBrandName(brandValue);
-        }
-    }
-
-    private void setSVRAppserviceProductSearchParameterBrand(int index, String brandValue) {
-        if (index < 0) {
-            return;
-        }
-        if (searchCategoryParameterArrayList == null) {
-            searchCategoryParameterArrayList = new ArrayList<>();
-        }
-
-        int arraySize = searchCategoryParameterArrayList.size();
-
-        if (index >= arraySize) {
-            for (int newInstallIndex = arraySize; newInstallIndex <= index; ++newInstallIndex) {
-                SVRAppserviceProductSearchParameter parameter = new SVRAppserviceProductSearchParameter();
-                if (newInstallIndex == index) {
-                    parameter.setBrand(brandValue);
-                    searchCategoryParameterArrayList.add(parameter);
-                    break;
-                } else {
-                    searchCategoryParameterArrayList.add(parameter);
-                    continue;
-                }
-            }
-        } else {
-            searchCategoryParameterArrayList.get(index).setBrand(brandValue);
-        }
-    }
-
-    private void setSVRAppserviceProductSearchParameterBrand(String brandValue) {
-        if (svrAppserviceProductSearchParameter == null) {
-            svrAppserviceProductSearchParameter = new SVRAppserviceProductSearchParameter();
-        }
-
-        svrAppserviceProductSearchParameter.setBrand(brandValue);
-    }
-
-    public void setSVRAppserviceProductSearchParameterType(int type, int index, String typeValue) {
-        if (FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
-            setSVRAppserviceProductSearchParameterType(index, typeValue);
-        } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
-            setSVRAppserviceProductSearchParameterType(typeValue);
-        }
-    }
-
-    private void setSVRAppserviceProductSearchParameterType(int index, String typeValue) {
-        if (index < 0) {
-            return;
-        }
-
-        if (searchCategoryParameterArrayList == null) {
-            searchCategoryParameterArrayList = new ArrayList<>();
-        }
-
-        int arraySize = searchCategoryParameterArrayList.size();
-        if (index >= arraySize) {
-            for (int newInstallIndex = arraySize; newInstallIndex <= index; ++newInstallIndex) {
-                SVRAppserviceProductSearchParameter parameter = new SVRAppserviceProductSearchParameter();
-                if (newInstallIndex == index) {
-                    parameter.setModel_type(typeValue);
-                    searchCategoryParameterArrayList.add(parameter);
-                    break;
-                } else {
-                    searchCategoryParameterArrayList.add(parameter);
-                    continue;
-                }
-            }
-        } else {
-            searchCategoryParameterArrayList.get(index).setModel_type(typeValue);
-        }
-    }
-
-    private void setSVRAppserviceProductSearchParameterType(String typeValue) {
-        if (svrAppserviceProductSearchParameter == null) {
-            svrAppserviceProductSearchParameter = new SVRAppserviceProductSearchParameter();
-        }
-
-        svrAppserviceProductSearchParameter.setModel_type(typeValue);
-    }
-
-    public void setSVRAppserviceProductSearchParameterSort(int type, int index, String sortValue) {
-        JLogUtils.i("ray","type:"+type+"  index:"+index+"  sortvalue:"+sortValue);
-        if (FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
-            setSVRAppserviceProductSearchParameterSort(index, sortValue);
-        } else if (FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
-            setSVRAppserviceProductSearchParameterSort(sortValue);
-        }
-    }
-
-    private void setSVRAppserviceProductSearchParameterSort(int index, String sortValue) {
-        if (index < 0) {
-            return;
-        }
-
-        if (searchCategoryParameterArrayList == null) {
-            searchCategoryParameterArrayList = new ArrayList<>();
-        }
-
-        int arraySize = searchCategoryParameterArrayList.size();
-        if (index >= arraySize) {
-            for (int newInstallIndex = arraySize; newInstallIndex <= index; ++newInstallIndex) {
-                SVRAppserviceProductSearchParameter parameter = new SVRAppserviceProductSearchParameter();
-                if (newInstallIndex == index) {
-                    String orderValue = null;
-                    String dirValue = null;
-
-                    if (!JDataUtils.isEmpty(sortValue)) {
-                        String[] sortValueArray = sortValue.split("__");
-                        if (sortValueArray != null && sortValueArray.length >= 2) {
-                            orderValue = sortValueArray[0];
-                            dirValue = sortValueArray[1];
-                        }
-                    }
-
-                    parameter.setOrder(orderValue);
-                    parameter.setDir(dirValue);
-
-                    searchCategoryParameterArrayList.add(parameter);
-                    break;
-                } else {
-                    searchCategoryParameterArrayList.add(parameter);
-                    continue;
-                }
-            }
-        } else {
-            String orderValue = null;
-            String dirValue = null;
-
-            if (!JDataUtils.isEmpty(sortValue)) {
-                String[] sortValueArray = sortValue.split("__");
-                if (sortValueArray != null && sortValueArray.length >= 2) {
-                    orderValue = sortValueArray[0];
-                    dirValue = sortValueArray[1];
-                }
-            }
-            JLogUtils.i("Martin", "sortValue=>" + sortValue + "  orderValue=>" + orderValue + "  dirValue=>" + dirValue);
-            searchCategoryParameterArrayList.get(index).setOrder(orderValue);
-            searchCategoryParameterArrayList.get(index).setDir(dirValue);
-        }
-    }
-
-    private void setSVRAppserviceProductSearchParameterSort(String sortValue) {
-        if (svrAppserviceProductSearchParameter == null) {
-            svrAppserviceProductSearchParameter = new SVRAppserviceProductSearchParameter();
-        }
-
-        String orderValue = null;
-        String dirValue = null;
-
-        if (!JDataUtils.isEmpty(sortValue)) {
-            String[] sortValueArray = sortValue.split("__");
-            if (sortValueArray != null && sortValueArray.length >= 2) {
-                orderValue = sortValueArray[0];
-                dirValue = sortValueArray[1];
-            }
-        }
-        JLogUtils.i("Martin", "sortValue=>" + sortValue + "  orderValue=>" + orderValue + "  dirValue=>" + dirValue);
-        svrAppserviceProductSearchParameter.setOrder(orderValue);
-        svrAppserviceProductSearchParameter.setDir(dirValue);
     }
 
     public int getPrevType() {
         return prevType;
-    }
-
-    public int getCurrentFilterSortTabIndex() {
-        return currentFilterSortTabIndex;
-    }
-
-    public void resetCurrentFilterSortTabIndex() {
-        currentFilterSortTabIndex = TABBAR_INDEX_NONE;
-        switchBottomBar();
-    }
-
-    public int getCurrentProductListFragmentPosition() {
-        return currentProductListFragmentPosition;
-    }
-
-    public void setCurrentProductListFragmentPosition(int currentProductListFragmentPosition) {
-        this.currentProductListFragmentPosition = currentProductListFragmentPosition;
     }
 
     @Override
@@ -735,18 +374,23 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         }
     }
     public void filterSortOption(int type) {
-        if(type==0){
+        if(type == TYPE_SORT){
             if (mCurrentFragment != null) {
                 mCurrentFragment.onSortWidgetClick(currentFilterSortTabIndex != TABBAR_INDEX_SORT);
-                currentFilterSortTabIndex = currentFilterSortTabIndex == TABBAR_INDEX_SORT ? TABBAR_INDEX_NONE : TABBAR_INDEX_SORT;
+                currentFilterSortTabIndex = currentFilterSortTabIndex == TABBAR_INDEX_SORT ? tempCategoryBean.TABBAR_INDEX_NONE : TABBAR_INDEX_SORT;
             }
-        }else{
+        }else if (type == TYPE_FILTER){
             filterSortBottomView.setFilterStatus(0, null);
             if (mCurrentFragment != null) {
                 mCurrentFragment.onFilterWidgetClick(currentFilterSortTabIndex != TABBAR_INDEX_FILTER);
-                currentFilterSortTabIndex = currentFilterSortTabIndex == TABBAR_INDEX_FILTER ? TABBAR_INDEX_NONE : TABBAR_INDEX_FILTER;
+                currentFilterSortTabIndex = currentFilterSortTabIndex == TABBAR_INDEX_FILTER ? tempCategoryBean.TABBAR_INDEX_NONE : TABBAR_INDEX_FILTER;
             }
         }
+    }
+
+    @Override
+    public int getCurrentFilterSortTabIndex() {
+        return tempCategoryBean.getCurrentFilterSortTabIndex();
     }
 
     private class SingleClickListener extends OnSingleClickListener {

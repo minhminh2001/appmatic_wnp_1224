@@ -6,6 +6,7 @@ import com.whitelabel.app.model.NotificationUnReadResponse;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
+import com.whitelabel.app.model.SubscriberResponse;
 import com.whitelabel.app.model.WishDelEntityResult;
 
 import java.util.Observable;
@@ -45,4 +46,14 @@ public interface MyAccoutApi {
             ,@Field("user_token") String userToken
             ,@Field("provider") String provider
             ,@Field("boundEmail") String boundEmail );
+
+
+
+    @FormUrlEncoded
+    @POST("appservice/customer/setsubscriberstatus")
+    public rx.Observable<ResponseModel> setUserAgreement(@Field("session_key")String sessionKey, @Field("newsletterSubscribed") String isSubscried);
+
+    @FormUrlEncoded
+    @POST("appservice/customer/getsubscriberstatus")
+    public rx.Observable<SubscriberResponse> getUserAgreement(@Field("session_key")String sessionKey);
 }

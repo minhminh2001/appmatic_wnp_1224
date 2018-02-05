@@ -2,7 +2,8 @@ package injection.components;
 
 import android.app.Activity;
 
-
+import com.whitelabel.app.fragment.HomeSettingCotentFragment;
+import com.whitelabel.app.fragment.ProductListKeywordsSearchFragment;
 import com.whitelabel.app.ui.checkout.CheckoutActivity;
 import com.whitelabel.app.activity.CheckoutPaymentStatusActivity;
 import com.whitelabel.app.activity.HomeActivity;
@@ -48,5 +49,7 @@ public interface PresenterComponent1 {
     void inject(LoginRegisterEmailLoginFragment fragment);
     void inject(CheckoutPaymentStatusActivity activity);
     void inject(LoginRegisterEmailBoundFragment fragment);
+    void inject(ProductListKeywordsSearchFragment fragment);
+    void inject(HomeSettingCotentFragment fragment);
     Activity getActivity();
 }
