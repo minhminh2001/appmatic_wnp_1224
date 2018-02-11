@@ -7,12 +7,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.ViewUtils;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.whitelabel.app.BaseActivity;
@@ -30,9 +34,12 @@ import com.whitelabel.app.model.ErrorMsgBean;
 import com.whitelabel.app.model.MyAccountOrderListEntityResult;
 import com.whitelabel.app.model.MyAccountOrderOuter;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.menuMyOrder.MyOrderContract;
 import com.whitelabel.app.utils.GaTrackHelper;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.RefreshLoadMoreRecyclerView;
@@ -40,10 +47,13 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
 /**
  * Created by imaginato on 2015/7/28.
  */
-public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements View.OnClickListener, MyAccountFragmentRefresh, SwipeRefreshLayout.OnRefreshListener {
+public class HomeMyAccountOrdersFragment extends HomeBaseFragment<MyOrderContract.Presenter> implements View.OnClickListener, MyAccountFragmentRefresh, SwipeRefreshLayout.OnRefreshListener ,MyOrderContract.View{
     private BaseActivity homeActivity;
     private final Handler mHandler = new Handler();
     private static final int pageSize = 10;
@@ -65,7 +75,8 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
     private ImageView ivChangeRcyListToogle;
     public static final String ORDER_ERROR_MESSAGE="orderErrorMessage";
     private View rootView;
-
+    private int orderClickItemsCount=0;
+    private int currentShoppingCount=0;
     @Override
     public void onRefresh() {
         pageIndex = 1;
@@ -80,6 +91,14 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void inject() {
+        super.inject();
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+            presenterModule(new PresenterModule(getActivity())).build().inject(this);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -155,9 +174,10 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         showSwipeRefreshDialog();
         setHasOptionsMenu(true);
     }
+
     private void initRecyclerView() {
         recyclerView.setPullLoadEnable(false);
-        mOrderListRecyclerViewAdapter = new OrderListRecyclerViewAdapter(homeActivity,recyclerView, listOuterRecord, true, mImageLoader,rootView);
+        mOrderListRecyclerViewAdapter = new OrderListRecyclerViewAdapter(homeActivity,recyclerView, listOuterRecord, true, mImageLoader);
         JLogUtils.d("list_size", listOuterRecord.size() + "");
         recyclerView.setAdapter(mOrderListRecyclerViewAdapter);
         mOrderListRecyclerViewAdapter.notifyItemInserted(listOuterRecord.size() - 1);
@@ -181,30 +201,35 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         mOrderListRecyclerViewAdapter.setOnOrderViewItemClickListener(new OrderListRecyclerViewAdapter.OnOrderViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position,ArrayList<OrderBody> orders) {
-                //add to cart
-                if (view.getId()==R.id.btn_order_list_item_addtocart){
-                    showSwipeRefreshDialog();
-                    mShoppingCarDao.sendReOrderProduct(WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),orders);
 
-                }else {
-                    MyAccountOrderOuter orderOuterParam = null;
-                    final ArrayList arrayList = mOrderListRecyclerViewAdapter.getDataList(listOuterRecord);
-                    for (MyAccountOrderOuter orderOuter : listOuterRecord) {
-                        if (arrayList.get(position) instanceof OrderTip) {
-                            if (((OrderTip) arrayList.get(position)).getOrderNumber().equals(orderOuter.getOrderSn())) {
-                                orderOuterParam = orderOuter;
-                                break;
-                            }
-                        } else {
-                            if (((OrderBody) arrayList.get(position)).getOrderNumber().equals(orderOuter.getOrderSn())) {
-                                orderOuterParam = orderOuter;
-                                break;
-                            }
-                        }
-                    }
-                    skipToOrderDetailPage(orderOuterParam);
+                switch(view.getId()){
+                    //reorder
+                    case R.id.btn_order_list_item_addtocart:
+                    case R.id.iv_add_to_cart:
+                    case R.id.rl_add_to_cart:
+                        mPresenter.setToCheckout(orders);
+                        orderClickItemsCount = getOrderItemsCount(orders);
+                        break;
+                        //skip to order Detail page
+                     default:
+                         MyAccountOrderOuter orderOuterParam = null;
+                         final ArrayList arrayList = mOrderListRecyclerViewAdapter.getDataList(listOuterRecord);
+                         for (MyAccountOrderOuter orderOuter : listOuterRecord) {
+                             if (arrayList.get(position) instanceof OrderTip) {
+                                 if (((OrderTip) arrayList.get(position)).getOrderNumber().equals(orderOuter.getOrderSn())) {
+                                     orderOuterParam = orderOuter;
+                                     break;
+                                 }
+                             } else {
+                                 if (((OrderBody) arrayList.get(position)).getOrderNumber().equals(orderOuter.getOrderSn())) {
+                                     orderOuterParam = orderOuter;
+                                     break;
+                                 }
+                             }
+                         }
+                         skipToOrderDetailPage(orderOuterParam);
+                         break;
                 }
-
             }
         });
         mOrderListRecyclerViewTextAdapter=new OrderListRecyclerViewTextAdapter(homeActivity, listOuterRecord);
@@ -216,6 +241,16 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                 skipToOrderDetailPage(listOuterRecord.get(position));
             }
         });
+    }
+
+    private Integer getOrderItemsCount(ArrayList<OrderBody> orderBodies){
+        int itemCounts = 0;
+        if (orderBodies!=null && !orderBodies.isEmpty()){
+            for (OrderBody orderBody:orderBodies){
+                itemCounts += Integer.valueOf(orderBody.getOrderQuantity());
+            }
+        }
+        return itemCounts;
     }
 
     private void skipToOrderDetailPage(MyAccountOrderOuter orderOuter_param) {
@@ -247,6 +282,30 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
         }
     }
 
+    @Override
+    public void loadShoppingCount(int count) {
+        currentShoppingCount=count;
+    }
+
+    @Override
+    public void showNetErrorMessage() {
+        RequestErrorHelper requestErrorHelper=new RequestErrorHelper(homeActivity);
+        requestErrorHelper.showNetWorkErrorToast();
+    }
+    @Override
+    public void showFaildMessage(String faildMessage) {
+        JViewUtils.showMaterialDialog(homeActivity, "", faildMessage,null);
+    }
+
+    @Override
+    public void showReorderErrorMessage(String errorMsg) {
+        JViewUtils.showPopUpWindw(homeActivity,rootView,errorMsg);
+    }
+
+    @Override
+    public void showReorderSuccessMessage() {
+        JViewUtils.showHintToast(homeActivity.getResources().getString(R.string.add_order_to_checkout));
+    }
 
     private static final class DataHandler extends Handler {
         private final WeakReference<Activity> mActivity;
@@ -349,11 +408,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment implements Vie
                     mFragment.get().startShoppingCart((String) msg.obj);
                     break;
                 case ShoppingCarDao.REQUEST_REORDER_PRODUCT:
-                    if (msg.arg1==ShoppingCarDao.RESPONSE_SUCCESS){
-                        mFragment.get().startShoppingCart("");
-                    }else {
-                        mFragment.get().startShoppingCart((String) msg.obj);
-                    }
+                    mFragment.get().swipeRefrshLayout.setRefreshing(false);
                     break;
             }
             super.handleMessage(msg);

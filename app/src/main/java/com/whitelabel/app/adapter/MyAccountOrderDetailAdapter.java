@@ -2,6 +2,7 @@ package com.whitelabel.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,17 +12,20 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.MyAccountOrderDetailActivity;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.bean.OrderBody;
 import com.whitelabel.app.model.MyAccountOrderInner;
 import com.whitelabel.app.model.MyAccountOrderMiddle;
 import com.whitelabel.app.model.MyAccountOrderTrackingInfo;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -41,13 +45,24 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
     private String mStatus;
     private static final String TAG = "MyAccountOrderDetailAda";
     private final ImageLoader mImageLoader;
-    public MyAccountOrderDetailAdapter(Context context, ImageLoader imageLoader,String statusCode,String status) {
+    private String orderId;
+    public MyAccountOrderDetailAdapter(Context context, ImageLoader imageLoader,String statusCode,String status,String orderId) {
         this.context = context;
         this.list = new LinkedList<MyAccountOrderMiddle>();
         MyAccountOrderDetailActivity activity = (MyAccountOrderDetailActivity) context;
         mImageLoader = imageLoader;
         mStatusCode=statusCode;
         mStatus=status;
+        this.orderId=orderId;
+    }
+
+    private OnOrderViewItemClickListener onOrderViewItemClickListener;
+
+    public interface OnOrderViewItemClickListener {
+        void onItemClick(View view, int position,List<MyAccountOrderInner> orderInners);
+    }
+    public void setOnOrderViewItemClickListener(OnOrderViewItemClickListener onOrderViewItemClickListener) {
+        this.onOrderViewItemClickListener = onOrderViewItemClickListener;
     }
 
     @Override
@@ -80,7 +95,7 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
         LinearLayout llMiddleBody = (LinearLayout) convertView.findViewById(R.id.ll_myaccount_order_cellmiddle_body);
         convertView.findViewById(R.id.order_line).setVisibility(View.GONE);
         convertView.findViewById(R.id.order_relative).setVisibility(View.GONE);
-        List<MyAccountOrderInner> orderInners = orderMiddle.getItems();
+        final List<MyAccountOrderInner> orderInners = orderMiddle.getItems();
         for (int i = 0; i < orderInners.size(); i++) {
             final MyAccountOrderInner orderInner = orderInners.get(i);
             View view_inner = LayoutInflater.from(context).inflate(R.layout.fragment_myorder_list_new_item1, null);
@@ -121,12 +136,10 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
             TextView orderStatus=(TextView)view_inner.findViewById(R.id.order_status);
 //            TextView tvTrickingInfo=(TextView)view_inner.findViewById(R.id.tv_orderlist_tracking);
             TextView unavailable=(TextView)view_inner.findViewById(R.id.order_detail_unavailable);
-            TextView orderDetailTrans=(TextView)view_inner.findViewById(R.id.order_detail_trans);
+            final TextView orderDetailTrans=(TextView)view_inner.findViewById(R.id.order_detail_trans);
             TextView orderMerchantName=(TextView)view_inner.findViewById(R.id.tv_orderlist_new_mername);
-            LinearLayout llAddCountSubs=(LinearLayout)view_inner.findViewById(R.id.ll_add_count_subs);
-            llAddCountSubs.setVisibility(View.GONE);
-            CheckBox chRecorderCheck=(CheckBox)view_inner.findViewById(R.id.cb_reorder_check);
-            chRecorderCheck.setVisibility(View.GONE);
+            ImageView ivAddToCart=(ImageView) view_inner.findViewById(R.id.iv_add_to_cart);
+            RelativeLayout rlAddToCart= (RelativeLayout) view_inner.findViewById(R.id.rl_add_to_cart);
             final MyAccountOrderTrackingInfo  trackingInfo = orderMiddle.getTrackingInfo();
             tvCurreny.setText(WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+"");
 //            if (trackingInfo!=null) {
@@ -204,18 +217,38 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
 //            TextView tvColorsAndSize = (TextView) view_inner.findViewById(R.id.tv_checkout_review_shoppingcart_cell_colorandsize);
 //            tvBrand.setText(orderInner.getBrand() == null?"BRAND":orderInner.getBrand().toUpperCase());
 
+
+
+            rlAddToCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onOrderViewItemClickListener!=null){
+                        List<MyAccountOrderInner> orderInners=new ArrayList<>();
+                        orderInners.add(orderInner);
+                        onOrderViewItemClickListener.onItemClick(v,position,orderInners);
+                        GaTrackHelper.getInstance().gaOrderListOrDetail(false,orderId);
+                    }
+                }
+            });
             if (!TextUtils.isEmpty(orderInner.getAvailability())) {
                 if ("1".equals(orderInner.getAvailability())) {
                     unavailable.setVisibility(View.GONE);
                     orderDetailTrans.setVisibility(View.GONE);
+                    rlAddToCart.setClickable(true);
+                    Drawable pressIcon = JImageUtils.getThemeIcon(context, R.drawable.ic_order_shopping_disabled);
+                    ivAddToCart.setBackground(pressIcon);
                 } else {
                     unavailable.setVisibility(View.VISIBLE);
                     orderDetailTrans.setVisibility(View.VISIBLE);
+                    rlAddToCart.setClickable(false);
+                    Drawable normal = JImageUtils.getDarkThemeIcon(context, R.drawable.ic_order_shopping_disabled);
+                    ivAddToCart.setBackground(normal);
                 }
             } else {
                 unavailable.setVisibility(View.GONE);
                 orderDetailTrans.setVisibility(View.GONE);
             }
+
             productId.setVisibility(View.VISIBLE);
             productBrand.setVisibility(View.VISIBLE);
             productId.setText(orderMiddle.getId());

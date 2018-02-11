@@ -300,12 +300,14 @@
     <!-- Product Detail -->
     <string name="product_detail_instock">IN STOCK</string>
     <string name="product_detail_outofstock">SOLD OUT</string>
+    <string name="unavailable">UNAVAILABLE</string>
     <string name="product_detail_addtocart">Add to Cart</string>
-    <string name="product_detail_addorder_tocart">Add Order to Cart</string>
+    <string name="product_detail_addorder_tocart">Add All Items to Cart</string>
     <string name="product_detail_addtowishlist">ADD TO WISHLIST</string>
     <string name="product_detail_addedtowishlist">ADDED TO WISHLIST</string>
     <string name="product_detail_prompy_addtocart_success">Added in cart.</string>
     <string name="product_detail_recommended_title">RECOMMENDED PRODUCTS</string>
+    <string name="add_order_to_checkout">Added to cart.</string>
 
 
     <string name="startText">Discover new brands and the latest shopping trends from fashion and beauty to living and wellness.</string>
@@ -724,7 +726,8 @@
     <string name="facebook_app_id_live">1287318627981888</string>
     <string name="service_url">http://192.168.1.233/</string>
     <!--this is old gaid <string name="ga_track_id">UA-105181188-1</string>-->
-    <string name="ga_track_id">UA-66493898-4</string>
+    <!--dev gid :UA-113868370-5   release gid:UA-66493898-4 -->
+    <string name="ga_track_id">UA-113868370-5</string>
     <string name="facebook_id">1287318627981888</string>
     <string name="api_version">v1</string>
     <string name="api_key">eyKOW06BPBqbe3qe</string>
@@ -737,8 +740,8 @@
     <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bb5de7d8</string>
     <string name="app_name">Whiskers N Paws</string>
     <!--https://dev2.wnp.com.hk/ 103.210.236.156:8088  /  https://imaginato.wnp.com.hk/  https://www.wnp.com.hk  -->
-    <string name="request_url">https://www.wnp.com.hk/</string>
-    <string name="image_base_url">https://www.wnp.com.hk/</string>
+    <string name="request_url">https://imaginato.wnp.com.hk/</string>
+    <string name="image_base_url">https://imaginato.wnp.com.hk/</string>
     <string name="mock_url">http://mis.appmatic.io/</string>
 
     <string name="address_phone_error_hint">More than 6 digits please.</string>

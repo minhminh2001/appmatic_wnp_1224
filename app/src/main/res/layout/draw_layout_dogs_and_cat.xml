@@ -10,29 +10,46 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.whitelabel.app.widget.CustomTextView
-            android:id="@+id/tv_dogs"
-            style="@style/font_family_roboto_medium"
+        <RelativeLayout
+            android:id="@+id/rl_dogs"
             android:layout_width="0dp"
             android:layout_height="45dp"
-            android:layout_weight="1"
             android:background="@drawable/text_border_left_dogs"
-            android:gravity="center"
-            android:text="@string/navigation_dogs"
-            android:textColor="@drawable/text_color_selected"
-            android:textSize="14sp" />
+            android:layout_weight="1">
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_dogs"
+                style="@style/font_family_roboto_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/ic_slide_dog"
+                android:layout_centerInParent="true"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="@string/navigation_dogs"
+                android:textColor="@drawable/text_color_selected"
+                android:textSize="14sp" />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/rl_cats"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:background="@drawable/text_border_left_dogs"
+            android:layout_weight="1">
         <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/tv_cats"
             style="@style/font_family_roboto_medium"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_slide_cat"
             android:background="@drawable/text_border_right_cats"
+            android:layout_centerInParent="true"
+            android:drawablePadding="10dp"
             android:gravity="center"
             android:text="@string/navigation_cats"
             android:textColor="@drawable/text_color_selected"
             android:textSize="14sp" />
+        </RelativeLayout>
     </LinearLayout>
 
     <RelativeLayout

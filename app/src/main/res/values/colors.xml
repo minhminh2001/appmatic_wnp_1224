@@ -144,6 +144,7 @@
     <color name="white">#ffffff</color>
     <color name="big_botton_white">#E3ffffff</color>
     <color name="tranwhite">#86FFFFFF</color>
+    <color name="tranwhite95">#F2FFFFFF</color>
     <!-- divider line color #000 12%-->
     <color name="v2_line">#21000000</color>
 

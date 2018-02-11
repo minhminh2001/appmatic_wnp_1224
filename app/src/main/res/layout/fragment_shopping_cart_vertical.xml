@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/big_botton_white"
+            android:background="@color/tranwhite95"
             android:orientation="horizontal"
             android:padding="@dimen/button_padding_value"
             android:visibility="gone">

@@ -1,9 +1,11 @@
 package com.whitelabel.app.ui.search;
 
 import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
+import com.whitelabel.app.model.SearchFilterResponse;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.BaseView;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,12 +15,10 @@ import java.util.Map;
 public class SearchContract {
     public interface View extends BaseView{
         public void showErrorMsg(String errorMsg);
-        public void loadAutoHintSearchData(SVRAppserviceProductSearchReturnEntity svrAppserviceProductSearchReturnEntity);
+        public void loadAutoHintSearchData(List<SearchFilterResponse.SuggestsBean.ItemsBean> itemsBeans);
     }
 
     public interface Presenter extends BasePresenter<View>{
-        public void  autoSearch(Map<String,String> params);
-        public Map<String,String> transformSearchMap(String storeId, String p, String limit, String order, String dir,
-            String brand, String categoryId, String modelType, String q,String keywords, String price, String key,String fromPage);
+        public void  autoSearch(String keyword);
     }
 }

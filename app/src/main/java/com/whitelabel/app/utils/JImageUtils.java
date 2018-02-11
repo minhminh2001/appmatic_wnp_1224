@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -127,7 +128,7 @@ public class JImageUtils {
 
 
     public static Drawable getThemeIconSelector(Drawable drawable,int defaultColor){
-        int[] colors = new int[] { WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color(), defaultColor,defaultColor};
+        int[] colors = new int[] {Color.WHITE, defaultColor,defaultColor};
         int[][] states = new int[3][];
         states[0] = new int[] { android.R.attr.state_enabled, android.R.attr.state_selected };
         states[1] = new int[] { android.R.attr.state_enabled };
@@ -135,6 +136,20 @@ public class JImageUtils {
         ColorStateList colorList = new ColorStateList(states, colors);
         final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
          DrawableCompat.setTintList(wrappedDrawable, colorList);
+        return wrappedDrawable;
+    }
+
+    //home banner circle
+    public static Drawable getCircleSelector(Drawable drawable){
+        int[] colors = new int[] {WhiteLabelApplication.getAppConfiguration().getThemeConfig()
+            .getTheme_color(), Color.WHITE,Color.WHITE};
+        int[][] states = new int[3][];
+        states[0] = new int[] { android.R.attr.state_enabled, android.R.attr.state_selected };
+        states[1] = new int[] { android.R.attr.state_enabled };
+        states[2] = new int[] {};
+        ColorStateList colorList = new ColorStateList(states, colors);
+        final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTintList(wrappedDrawable, colorList);
         return wrappedDrawable;
     }
 

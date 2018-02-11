@@ -2,6 +2,7 @@ package com.whitelabel.app.ui.home.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
@@ -24,9 +26,12 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV3;
 import com.whitelabel.app.utils.GlideImageLoader;
 import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.logger.Logger;
+import com.whitelabel.app.widget.CustomPagerCircleIndicator;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
+import com.youth.banner.view.BannerViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,6 +159,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
                             })
                             .start();
                     headerViewHolder.detailViewpager.setTag("use");
+                    headerViewHolder.circleIndicator.setIndictor(headerViewHolder.detailViewpager,imgs);
                 }
             }
         }else if(holder instanceof TitleViewHolder){
@@ -226,6 +232,8 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.detail_viewpager)
         Banner detailViewpager;
+        @BindView(R.id.cpci_indicator)
+        CustomPagerCircleIndicator  circleIndicator;
         @BindView(R.id.ll_tips)
         LinearLayout llTips;
         @BindView(R.id.rl_switch_img)

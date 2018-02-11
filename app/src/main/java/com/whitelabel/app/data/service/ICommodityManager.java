@@ -10,9 +10,11 @@ import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
+import com.whitelabel.app.model.SearchFilterResponse;
 import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +37,7 @@ public interface ICommodityManager {
     public  Observable<SVRAppserviceProductRecommendedReturnEntity> getProductRecommendList(String storeId,String limit,String productId,String sessionKey);
     public  Observable<BindProductResponseModel> getRelateProducts(String productId);
     public  Observable<ResponseModel> addBoughtTogether(String productId,String sessionKey);
-    public  Observable<SVRAppserviceProductSearchReturnEntity> autoHintSearch(Map<String,String> params);
+    public  Observable<SearchFilterResponse> autoHintSearch(String sessionKey,String keyword);
+    public  Observable<ResponseModel> setToCheckout(HashMap<String,String> maps);
 
 }

@@ -335,31 +335,7 @@
                     android:layout_marginTop="1dp"
                     android:divider="@null"
                 />
-                <RelativeLayout
-                    android:id="@+id/rl_comment"
-                    android:layout_width="match_parent"
-                    android:padding="10dp"
-                    android:background="@color/greyEEEEEE"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/tv_order_comment_title"
-                        style="@style/font_family_robot_regular"
-                        android:text="@string/reorder_comment_title"
-                        android:textStyle="bold"
-                        android:textSize="15sp"
-                        android:textColor="@color/black000000"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_marginTop="10dp"
-                        android:id="@+id/tv_order_comment"
-                        style="@style/font_family_robot_regular"
-                        android:layout_below="@id/tv_order_comment_title"
-                        android:textSize="14sp"
-                        android:textColor="@color/black000000"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </RelativeLayout>
+
 
                 <!--Bottom four lines-->
                 <RelativeLayout
@@ -563,6 +539,45 @@
                     android:id="@+id/bottom_black"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"/>
+                <!--Comment-->
+                <RelativeLayout
+                    android:id="@+id/rl_comment"
+                    android:layout_width="match_parent"
+                    android:padding="10dp"
+                    android:background="@color/greyEEEEEE"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_order_comment_title"
+                        style="@style/font_family_robot_regular"
+                        android:text="@string/reorder_comment_title"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:textColor="@color/black000000"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/tv_order_comment"
+                        style="@style/font_family_robot_regular"
+                        android:layout_below="@id/tv_order_comment_title"
+                        android:textSize="14sp"
+                        android:textColor="@color/black000000"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:layout_height="wrap_content">
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/tv_order_detail_add_to_cart"
+                        android:gravity="center"
+                        android:textSize="@dimen/button_font_size"
+                        android:text="@string/product_detail_addorder_tocart"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_touch_height"/>
+                </RelativeLayout>
             </LinearLayout>
         </ScrollView>
         <LinearLayout

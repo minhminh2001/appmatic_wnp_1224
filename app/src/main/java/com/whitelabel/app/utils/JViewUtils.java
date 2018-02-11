@@ -183,6 +183,22 @@ public class JViewUtils {
             mToast.setView(toastView);
         mToast.show();
     }
+
+    public static void showHintToast(String msg){
+        Context context=WhiteLabelApplication.getInstance().getApplicationContext();
+        LinearLayout toastView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.layout_prompt_hint, null);
+        TextView message = (TextView) toastView.findViewById(R.id.tv_text);
+        message.setText(msg);
+        if (mSingleToast == null) {
+            mSingleToast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
+            mSingleToast.setGravity(Gravity.CENTER,0,0);
+            mSingleToast.setView(toastView);
+        } else {
+            mSingleToast.setGravity(Gravity.CENTER,0,0);
+            mSingleToast.setView(toastView);
+        }
+        mSingleToast.show();
+    }
     public static Dialog showExitDialog(Context context, String message, String btnLeft, String btnRight, DialogInterface.OnClickListener btnLeftListener, DialogInterface.OnClickListener btnRightListener) {
         Dialog dialog = null;
         CustomMyDialog.Builder builder = new CustomMyDialog.Builder(context);

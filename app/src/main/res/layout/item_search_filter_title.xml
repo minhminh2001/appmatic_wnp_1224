@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.whitelabel.app.widget.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_search_filter_title"
+    android:layout_width="match_parent"
+    android:text="sdasdadsasdasd"
+    android:gravity="center_vertical"
+    android:textSize="13sp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_height="50dp">
+
+</com.whitelabel.app.widget.CustomTextView>
