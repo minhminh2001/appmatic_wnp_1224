@@ -505,25 +505,25 @@ public class JToolUtils {
     }
 
     //open app google market to mark
-    public static void openPlayStore() {
+    public static void openPlayStore(Context context) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(
                     new StringBuilder(
-                            WhiteLabelApplication.getInstance().getResources().getString(R.string.market_url)).append(WhiteLabelApplication.getInstance().getPackageName())
+                            WhiteLabelApplication.getInstance().getResources().getString(R.string.market_url)).append(context.getPackageName())
                             .toString()
             )); //跳转到应用市场，非Google Play市场一般情况也实现了这个接口
             //检查安装应用市场
-            if (intent.resolveActivity(WhiteLabelApplication.getInstance().getPackageManager()) != null) { //可以接收
-                WhiteLabelApplication.getInstance().startActivity(intent);
+            if (intent.resolveActivity(context.getPackageManager()) != null) { //可以接收
+                context.startActivity(intent);
             } else { //浏览器
                 intent.setData(Uri.parse(
                         new StringBuilder(
-                                WhiteLabelApplication.getInstance().getResources().getString(R.string.playstore_url)).append(WhiteLabelApplication.getInstance().getPackageName())
+                                WhiteLabelApplication.getInstance().getResources().getString(R.string.playstore_url)).append(context.getPackageName())
                                 .toString()
                 ));
-                if (intent.resolveActivity(WhiteLabelApplication.getInstance().getPackageManager()) != null) { //有浏览器
-                    WhiteLabelApplication.getInstance().startActivity(intent);
+                if (intent.resolveActivity(context.getPackageManager()) != null) { //有浏览器
+                    context.startActivity(intent);
                 }
             }
         }catch (Exception e){

@@ -9,6 +9,8 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.analytics.ecommerce.Product;
 import com.google.android.gms.analytics.ecommerce.ProductAction;
+
+import com.whitelabel.app.Const;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 
@@ -226,5 +228,21 @@ public class GaTrackHelper {
                 .setVariable(name)
                 .build());
         JLogUtils.d("GaTrack",name+">>load time:"+(endTime-startTime)+">>endTime:"+endTime+">>startTime"+startTime);
+    }
+
+    /**
+     * orderList or orderDetail event
+     * @param isOrderListDetail true orderList ,false orderDetail
+     * @param isIconOrBtn true icon,false btn
+     * @param productId
+     */
+    public void gaOrderListOrDetail(boolean isOrderListDetail,boolean isIconOrBtn,String productId){
+        String eventAction = isIconOrBtn? Const.GA.ORDER_ICON_ADD_TO_CART_EVENT:Const.GA.ORDER_BUTTON_ADD_TO_CART_EVENT;
+        String eventLabel = isOrderListDetail? Const.GA.EVENT_REORDER_ORDERLIST:Const.GA.EVENT_REORDER_ORDERDETAIL;
+
+        GaTrackHelper.getInstance().googleAnalyticsEvent(Const.GA.ORDER_REORDER_CATEGORY,
+            eventAction,
+            eventLabel,
+            Long.valueOf(productId));
     }
 }

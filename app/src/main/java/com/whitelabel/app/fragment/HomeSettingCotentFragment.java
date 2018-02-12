@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -106,7 +107,14 @@ public class HomeSettingCotentFragment extends HomeBaseFragment<SettingContract.
         switchUserCheck.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              String userAgreement = switchUserCheck.isChecked()?NEWSLETTER_SUBSCRIBED_OPEN:NEWSLETTER_SUBSCRIBED_CLOSE;
+              String userAgreement;
+              if (switchUserCheck.isChecked()){
+                  userAgreement=NEWSLETTER_SUBSCRIBED_OPEN;
+                  gaEvent(Const.GA.EVENT_SETTINGS,getString(R.string.setting_receiver_newsletters),Const.GA.EVENT_SETTINGS_NEWSLETTERS_SELECT);
+              }else {
+                  userAgreement=NEWSLETTER_SUBSCRIBED_CLOSE;
+                  gaEvent(Const.GA.EVENT_SETTINGS,getString(R.string.setting_receiver_newsletters),Const.GA.EVENT_SETTINGS_NEWSLETTERS_UNSELECT);
+              }
               mPresenter.setUserAgreement(userAgreement);
           }
       });
@@ -253,7 +261,8 @@ public class HomeSettingCotentFragment extends HomeBaseFragment<SettingContract.
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.rl_setting_rate:
-                JToolUtils.openPlayStore();
+                gaEvent(Const.GA.EVENT_SETTINGS,Const.GA.EVENT_SETTINGS_RATE_APP,"");
+                JToolUtils.openPlayStore(homeActivity);
                 break;
             case R.id.sign_out:
                 if(!signing&& WhiteLabelApplication.getAppConfiguration().getUser()!=null) {
@@ -270,5 +279,12 @@ public class HomeSettingCotentFragment extends HomeBaseFragment<SettingContract.
     public void onStart() {
         super.onStart();
         GaTrackHelper.getInstance().googleAnalytics("Settings Screen", homeActivity);
+    }
+
+    private void gaEvent(String categoryName,String actionName,String eventLabel){
+        GaTrackHelper.getInstance().googleAnalyticsEvent(categoryName,
+            actionName,
+            eventLabel,
+            Long.valueOf(WhiteLabelApplication.getAppConfiguration().getUser().getId()));
     }
 }

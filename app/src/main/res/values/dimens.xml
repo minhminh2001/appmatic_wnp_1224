@@ -29,6 +29,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="layout_top_bar_height">48dp</dimen>
+    <dimen name="activity_horizontal_margin_half">8dp</dimen>
     <!--big button -->
     <dimen name="button_touch_height">48dp</dimen>
     <dimen name="button_font_size">16sp</dimen>

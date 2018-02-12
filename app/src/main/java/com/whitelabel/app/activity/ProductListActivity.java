@@ -278,6 +278,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
 
     public void switchFragment(int from, int to, Serializable serializable) {
         if (-1 == from) {
+            tempCategoryBean.resetCurrentFilterSortTabIndex();
             redirectToAttachedFragment(to, TYPE_FRAGMENT_SWITCH_NONE, serializable);
         } else if (FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == from && FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == to) {
             tempCategoryBean.resetCurrentFilterSortTabIndex();

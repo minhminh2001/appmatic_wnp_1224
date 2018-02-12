@@ -293,7 +293,7 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
                     getDrawerLayout().openDrawer(Gravity.LEFT);
                     GaTrackHelper.getInstance().googleAnalytics(Const.GA.SLIDE_MENU_SCREEN,HomeActivity.this);
                     if (!isHomePage){
-                        tvDogs.performClick();
+                        rlDogs.performClick();
                     }
                     isHomePage=true;
                 }

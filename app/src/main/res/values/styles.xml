@@ -408,4 +408,10 @@
         <item name="android:button">@null</item>
         <item name="android:background">@drawable/cb_address_checkout</item>
     </style>
+    <style name="view_horzontial_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/line_height</item>
+        <item name="android:background">@color/edittext_line</item>
+    </style>
+
 </resources>

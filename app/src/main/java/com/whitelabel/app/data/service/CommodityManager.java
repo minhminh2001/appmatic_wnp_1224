@@ -19,6 +19,7 @@ import com.whitelabel.app.model.SVRAppserviceProductDetailResultDetailReturnEnti
 import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
+import com.whitelabel.app.model.SearchFilterResponse;
 import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.utils.JDataUtils;
@@ -184,14 +185,25 @@ public class CommodityManager  implements ICommodityManager{
     }
 
     @Override
-    public Observable<SVRAppserviceProductSearchReturnEntity> autoHintSearch(
-        Map<String,String> params) {
-        return productApi.autoHintSearch(params).map(
-            new Func1<SVRAppserviceProductSearchReturnEntity, SVRAppserviceProductSearchReturnEntity>() {
+    public Observable<SearchFilterResponse> autoHintSearch(String sessionKey,
+        String keyword) {
+        return productApi.autoHintSearch(sessionKey,keyword).map(
+            new Func1<SearchFilterResponse, SearchFilterResponse>() {
                 @Override
-                public SVRAppserviceProductSearchReturnEntity call(
-                    SVRAppserviceProductSearchReturnEntity svrAppserviceProductSearchReturnEntity) {
-                    return svrAppserviceProductSearchReturnEntity;
+                public SearchFilterResponse call(
+                    SearchFilterResponse searchFilterResponse) {
+                    return searchFilterResponse;
+                }
+            });
+    }
+
+    @Override
+    public Observable<ResponseModel> setToCheckout(HashMap<String, String> maps) {
+        return productApi.setToCheckout(maps).map(
+            new Func1<ResponseModel, ResponseModel>() {
+                @Override
+                public ResponseModel call(ResponseModel ResponseModel) {
+                    return ResponseModel;
                 }
             });
     }

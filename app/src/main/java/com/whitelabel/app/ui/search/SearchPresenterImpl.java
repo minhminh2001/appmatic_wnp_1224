@@ -1,15 +1,20 @@
 package com.whitelabel.app.ui.search;
 
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.adapter.SearchFilterAdapter;
+import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
+import com.whitelabel.app.model.SearchFilterResponse;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.RxUtil;
 
 import android.text.TextUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -23,19 +28,22 @@ import rx.Subscription;
 
 public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implements SearchContract.Presenter {
     private ICommodityManager iCommodityManager;
+    private IBaseManager iBaseManager;
 
     @Inject
-    public SearchPresenterImpl(ICommodityManager iCommodityManager) {
+    public SearchPresenterImpl(ICommodityManager iCommodityManager,IBaseManager iBaseManager) {
         this.iCommodityManager = iCommodityManager;
+        this.iBaseManager=iBaseManager;
     }
 
     @Override
-    public void autoSearch(Map<String,String> params) {
-        mView.showProgressDialog();
-        Subscription subscribe = iCommodityManager.autoHintSearch(params)
-            .compose(RxUtil.<SVRAppserviceProductSearchReturnEntity>rxSchedulerHelper()).subscribe(
+    public void autoSearch(String keyword) {
+//        mView.showProgressDialog();
+        final String sessionKey=iBaseManager.isSign()?iBaseManager.getUser().getSessionKey():"";
+        Subscription subscribe = iCommodityManager.autoHintSearch(sessionKey,keyword)
+            .compose(RxUtil.<SearchFilterResponse>rxSchedulerHelper()).subscribe(
 
-                new Subscriber<SVRAppserviceProductSearchReturnEntity>() {
+                new Subscriber<SearchFilterResponse>() {
                     @Override
                     public void onCompleted() {
 
@@ -43,7 +51,7 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.closeProgressDialog();
+//                        mView.closeProgressDialog();
                         if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
                             mView.showErrorMsg(ExceptionParse.parseException(e).getErrorMsg());
                         };
@@ -51,54 +59,62 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
 
                     @Override
                     public void onNext(
-                        SVRAppserviceProductSearchReturnEntity
-                            svrAppserviceProductSearchReturnEntity) {
-                        mView.closeProgressDialog();
-                        mView.loadAutoHintSearchData(svrAppserviceProductSearchReturnEntity);
+                        SearchFilterResponse
+                            searchFilterResponse) {
+//                        mView.closeProgressDialog();
+                        List<SearchFilterResponse.SuggestsBean.ItemsBean> itemsBeans =
+                            parseRecyclerDatas(
+                            searchFilterResponse);
+                        mView.loadAutoHintSearchData(itemsBeans);
                     }
                 });
         addSubscrebe(subscribe);
     }
 
-    @Override
-    public Map<String,String> transformSearchMap(String storeId, String p, String limit, String order, String dir,
-        String brand, String categoryId, String modelType, String q,String keywords, String price, String key,String fromPage) {
-        Map<String,String> params=new HashMap<>();
-        params.put("store_id", storeId);
-        params.put("p", p);
-        params.put("limit", limit);
-        if (!TextUtils.isEmpty(order)) {
-            params.put("order", order);
+    private List<SearchFilterResponse.SuggestsBean.ItemsBean> parseRecyclerDatas(SearchFilterResponse searchFilterResponse){
+        List<SearchFilterResponse.SuggestsBean.ItemsBean> itemsBeans=new ArrayList<>();
+        if (searchFilterResponse!=null){
+            List<SearchFilterResponse.SuggestsBean> suggests = searchFilterResponse.getSuggests();
+            if (suggests!=null && !suggests.isEmpty()){
+                for (int i=0;i<suggests.size();i++){
+                    SearchFilterResponse.SuggestsBean suggestsBean = suggests.get(i);
+                    SearchFilterResponse.SuggestsBean.ItemsBean itemsBeanParent=new SearchFilterResponse.SuggestsBean.ItemsBean();
+                    itemsBeanParent.setRecyclerType(SearchFilterAdapter.HEADER_TITLE);
+                    itemsBeanParent.setType(suggestsBean.getType());
+                    itemsBeanParent.setTitle(suggestsBean.getTitle());
+                    List<SearchFilterResponse.SuggestsBean.ItemsBean> items = suggestsBean
+                        .getItems();
+                    itemsBeans.add(itemsBeanParent);
+                    if (items!=null && !items.isEmpty()){
+                        for (int j=0;j<items.size();j++){
+                            SearchFilterResponse.SuggestsBean.ItemsBean itemsBean = items.get(j);
+                            SearchFilterResponse.SuggestsBean.ItemsBean itemsBeanChild=new SearchFilterResponse.SuggestsBean.ItemsBean();
+                            itemsBeanChild.setImage(itemsBean.getImage());
+                            itemsBeanChild.setName(itemsBean.getName());
+                            //img and text
+                            if (suggestsBean.getType()==1){
+                                itemsBeanChild.setRecyclerType(SearchFilterAdapter.IMG_AND_TEXT);
+                            }else {
+                                itemsBeanChild.setRecyclerType(SearchFilterAdapter.TEXT);
+                            }
+                            itemsBeanChild.setType(suggestsBean.getType());
+                            itemsBeanChild.setProductId(itemsBean.getProductId());
+                            itemsBeanChild.setBrandId(itemsBean.getBrandId());
+                            itemsBeanChild.setCategoryId(itemsBean.getCategoryId());
+                            itemsBeanChild.setKey(itemsBean.getKey());
+
+                            itemsBeanChild.setSort(suggestsBean.getSort());
+                            itemsBeanChild.setIsLast(j==items.size()-1);
+                            itemsBeans.add(itemsBeanChild);
+                        }
+                    }else {
+                        //if child not data, remove last one(parent)
+                        itemsBeans.remove(itemsBeans.size()-1);
+                    }
+                }
+            }
         }
-        if (!TextUtils.isEmpty(dir)) {
-            params.put("dir", dir);
-        }
-        if (!TextUtils.isEmpty(brand)) {
-            params.put("brand", brand);
-        }
-        if (!TextUtils.isEmpty(categoryId)) {
-            params.put("category_id", categoryId);
-        }
-        if (!TextUtils.isEmpty(modelType)) {
-            params.put("model_type", modelType);
-        }
-        if (!TextUtils.isEmpty(q)) {
-            params.put("q", q);
-        }
-        if (!TextUtils.isEmpty(keywords)) {
-            params.put("keywords", keywords);
-        }
-        if (!TextUtils.isEmpty(price)) {
-            params.put("price", price);
-        }
-        String sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(WhiteLabelApplication.getInstance()).getSessionKey();
-        if (!TextUtils.isEmpty(sessionKey)) {
-            params.put("session_key", sessionKey);
-        }
-        if(!TextUtils.isEmpty(fromPage)){
-            params.put("pageType",fromPage);
-        }
-        return params;
+        return itemsBeans;
     }
 
 

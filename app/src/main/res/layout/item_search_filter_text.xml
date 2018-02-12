@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/ripple_with_no_mash"
+    android:layout_height="wrap_content">
+    <com.whitelabel.app.widget.CustomTextView
+        android:id="@+id/tv_search_filter_text"
+        android:gravity="center_vertical"
+        android:textSize="16sp"
+        android:textColor="@color/black75"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+    </com.whitelabel.app.widget.CustomTextView>
+    <RelativeLayout
+        android:id="@+id/rl_bottom_line"
+        android:layout_below="@id/tv_search_filter_text"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_horizontal_margin">
+        <View
+            android:id="@+id/view_search_filter_text_line"
+            android:layout_alignParentBottom="true"
+            style="@style/view_horzontial_line"/>
+    </RelativeLayout>
+
+</RelativeLayout>

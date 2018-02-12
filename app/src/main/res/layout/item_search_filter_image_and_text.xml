@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ripple_with_no_mash"
+>
+
+
+    <LinearLayout
+        android:id="@+id/ll_img_and_txt"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+    >
+        <ImageView
+            android:id="@+id/iv_search_filter_product_icon"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+        />
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_search_filter_product_name"
+            android:layout_marginLeft="8dp"
+            android:textSize="16sp"
+            android:textColor="@color/black75"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:maxLines="2"
+            android:ellipsize="end"
+        />
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_bottom_line"
+        android:layout_below="@id/ll_img_and_txt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_horizontal_margin">
+        <View
+            android:id="@+id/view_search_filter_img_text_interval"
+            style="@style/view_horzontial_line"
+            android:layout_alignParentBottom="true"
+        />
+    </RelativeLayout>
+
+</RelativeLayout>

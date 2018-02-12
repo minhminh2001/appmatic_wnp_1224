@@ -23,6 +23,7 @@ public class OrderBody {
     private String itemId;
     private String stockQty;
     private boolean isBtnAddCartEnable;
+    private String productId;
 
     public String getAvailability() {
         return availability;
@@ -192,5 +193,13 @@ public class OrderBody {
 
     public void setBtnAddCartEnable(boolean btnAddCartEnable) {
         isBtnAddCartEnable = btnAddCartEnable;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 }

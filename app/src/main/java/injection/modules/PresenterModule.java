@@ -31,6 +31,8 @@ import com.whitelabel.app.ui.login.LoginFragmentContract;
 import com.whitelabel.app.ui.login.LoginFragmentPresenterImpl;
 import com.whitelabel.app.ui.login.SettingContract;
 import com.whitelabel.app.ui.login.SettingPresenterImpl;
+import com.whitelabel.app.ui.menuMyOrder.MyOrderContract;
+import com.whitelabel.app.ui.menuMyOrder.MyOrderPresenter;
 import com.whitelabel.app.ui.productdetail.BindProductContract;
 import com.whitelabel.app.ui.productdetail.BindProductPresenterImpl;
 import com.whitelabel.app.ui.productdetail.ProductDetailContract;
@@ -126,8 +128,8 @@ public class PresenterModule {
 
     @Provides
     @ActivityScope
-    public SearchContract.Presenter provideSearchPresenter(ICommodityManager iCommodityManager){
-        return new SearchPresenterImpl(iCommodityManager) ;
+    public SearchContract.Presenter provideSearchPresenter(ICommodityManager iCommodityManager,IBaseManager iBaseManager){
+        return new SearchPresenterImpl(iCommodityManager,iBaseManager) ;
     }
 
     @Provides
@@ -141,4 +143,11 @@ public class PresenterModule {
     public SettingContract.Presenter provideSettingPresenter(IBaseManager iBaseManager,IAccountManager iAccountManager){
         return new SettingPresenterImpl(iBaseManager,iAccountManager);
     }
+
+    @Provides
+    @ActivityScope
+    public  MyOrderContract.Presenter provideMyOrderPresenter(ICommodityManager iCommodityManager, IBaseManager iBaseManager){
+        return new MyOrderPresenter(iCommodityManager,iBaseManager);
+    }
+
 }

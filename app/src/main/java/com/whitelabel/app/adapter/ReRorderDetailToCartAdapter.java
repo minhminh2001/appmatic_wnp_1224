@@ -1,5 +1,12 @@
 package com.whitelabel.app.adapter;
 
+import com.whitelabel.app.R;
+import com.whitelabel.app.bean.OrderBody;
+import com.whitelabel.app.model.MyAccountOrderInner;
+import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JToolUtils;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,20 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.whitelabel.app.R;
-import com.whitelabel.app.bean.OrderBody;
-import com.whitelabel.app.model.DialogProductBean;
-import com.whitelabel.app.network.ImageLoader;
-import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JToolUtils;
-
 import java.util.ArrayList;
+import java.util.List;
 
-public class ReRorderToCartAdapter extends ArrayAdapter<OrderBody> {
-    private ArrayList<OrderBody> mBeans;
+public class ReRorderDetailToCartAdapter extends ArrayAdapter<MyAccountOrderInner> {
+    private List<MyAccountOrderInner> mBeans;
     private final ImageLoader mImageLoader;
 
-    public ReRorderToCartAdapter(Context context, ArrayList<OrderBody> beans, ImageLoader imageLoader) {
+    public ReRorderDetailToCartAdapter(Context context, List<MyAccountOrderInner> beans, ImageLoader imageLoader) {
         super(context, R.layout.dialog_product, beans);
         mBeans = beans;
         mImageLoader = imageLoader;
@@ -45,9 +46,9 @@ public class ReRorderToCartAdapter extends ArrayAdapter<OrderBody> {
         } else {
             holder = (Holder) view.getTag();
         }
-        OrderBody orderBody = mBeans.get(position);
-        JImageUtils.downloadImageFromServerByUrl(getContext(), mImageLoader, holder.img, orderBody.getOrderImage(), JToolUtils.dip2px(getContext(), 45), JToolUtils.dip2px(getContext(), 45));
-        holder.tvName.setText(orderBody.getOrderName());
+        MyAccountOrderInner myAccountOrderInner = mBeans.get(position);
+        JImageUtils.downloadImageFromServerByUrl(getContext(), mImageLoader, holder.img, myAccountOrderInner.getImage(), JToolUtils.dip2px(getContext(), 45), JToolUtils.dip2px(getContext(), 45));
+        holder.tvName.setText(myAccountOrderInner.getName());
         return view;
     }
 }

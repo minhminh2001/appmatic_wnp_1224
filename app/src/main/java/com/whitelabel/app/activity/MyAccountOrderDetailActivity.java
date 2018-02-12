@@ -1,7 +1,6 @@
 package com.whitelabel.app.activity;
 
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,14 +25,19 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.MyAccountOrderDetailAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.adapter.ReRorderDetailToCartAdapter;
+import com.whitelabel.app.adapter.ReRorderListToCartAdapter;
+import com.whitelabel.app.callback.IOnErrorDialogConfirm;
 import com.whitelabel.app.dao.CheckoutDao;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.CheckoutPaymentReturnShippingAddress;
 import com.whitelabel.app.model.MyAccountOrderDetailEntityResult;
+import com.whitelabel.app.model.MyAccountOrderInner;
 import com.whitelabel.app.model.MyAccountOrderMiddle;
 import com.whitelabel.app.model.MyAccountOrderOuter;
 import com.whitelabel.app.model.RepaymentInfoModel;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.menuMyOrder.MyOrderContract;
 import com.whitelabel.app.utils.AnimUtil;
 import com.whitelabel.app.utils.FileUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
@@ -44,17 +47,19 @@ import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.PaypalHelper;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.CustomWebView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.whitelabel.app.widget.MaterialDialog;
 
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener {
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
+public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivity<MyOrderContract.Presenter> implements View.OnClickListener ,MyOrderContract.View, MyAccountOrderDetailAdapter.OnOrderViewItemClickListener {
     private String mOrderNumber;
     private MyAccountOrderDetailAdapter adapter;
     private TextView tvOrderNumber;
@@ -70,6 +75,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private TextView tvStoreCreditVlaue;
     private TextView tvTopAddressTitle;
     private TextView tvOrderComment;
+    private CustomTextView tvOrderDetailAddToCart;
 
     private CustomWebView tvCreditCardTypeText;
     private ScrollView scrollView;
@@ -83,6 +89,46 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private MyAccountDao mDao;
     private String TAG;
     private ImageLoader mImageLoader;
+    private View rootView;
+    LinkedList<MyAccountOrderMiddle> listOrderMiddles=new LinkedList<>();
+    private int currentShoppingCount=0;
+
+    @Override
+    public void loadShoppingCount(int count) {
+        currentShoppingCount = count;
+    }
+
+    @Override
+    public void showNetErrorMessage() {
+        RequestErrorHelper requestErrorHelper=new RequestErrorHelper(this);
+        requestErrorHelper.showNetWorkErrorToast();
+    }
+
+    @Override
+    public void showFaildMessage(String faildMessage) {
+        JViewUtils.showMaterialDialog(this, "", faildMessage,null);
+    }
+
+    @Override
+    public void showReorderErrorMessage(String errorMsg) {
+        JViewUtils.showPopUpWindw(this,rootView,errorMsg);
+    }
+
+    @Override
+    public void showReorderSuccessMessage(int count) {
+        JViewUtils.showHintToast(getResources().getString(R.string.add_order_to_checkout));
+        mPresenter.saveShoppingCartCount(currentShoppingCount+count);
+    }
+
+    private void setOrderToCheckout(List<MyAccountOrderInner> orderInners){
+        mPresenter.setToCheckoutDetail(orderId,orderInners);
+    }
+
+    @Override
+    public void onItemClick(View view, int position, List<MyAccountOrderInner> orderInners) {
+        setOrderToCheckout(orderInners);
+    }
+
     private static final class DataHandler extends Handler {
         private final WeakReference<MyAccountOrderDetailActivity> mActivity;
         public DataHandler(MyAccountOrderDetailActivity activity) {
@@ -172,7 +218,12 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         }
     }
 
-
+    @Override
+    protected void initInject() {
+        super.initInject();
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+            presenterModule(new PresenterModule(this)).build().inject(this);
+    }
 
     @Override
     protected void onDestroy() {
@@ -191,6 +242,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account_order_detail1);
+        rootView=LayoutInflater.from(this).inflate(R.layout.activity_my_account_order_detail1,null);
         initToolBar();
         initView();
         // ViewUtils.inject(this);
@@ -233,7 +285,8 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         tvGrandTotal = (TextView) findViewById(R.id.tv_order_detail_grandtotal);
         tvTopAddressTitle= (TextView) findViewById(R.id.tv_order_detail_top_title);
         tvOrderComment= (TextView) findViewById(R.id.tv_order_comment);
-
+        tvOrderDetailAddToCart= (CustomTextView) findViewById(R.id.tv_order_detail_add_to_cart);
+        tvOrderDetailAddToCart.setOnClickListener(this);
         tvCreditCardTypeText = (CustomWebView) findViewById(R.id.tv_order_detail_paymentmethod_text);
         RelativeLayout rlBody = (RelativeLayout) findViewById(R.id.rl_orderdetail_body);
         rlComment=(RelativeLayout) findViewById(R.id.rl_comment);
@@ -250,7 +303,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private void initSessionKey() {
         //init session_key
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
-
             initData();
         } else {
             Bundle bundle = new Bundle();
@@ -281,10 +333,44 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                     startActivityForResult(intent, REQUESTCODE_TRANSAFER);
                 }
                 break;
-
+            case R.id.tv_order_detail_add_to_cart:
+                addOrdersToShoppingCart();
+                break;
             default:
                 break;
         }
+    }
+
+    private void addOrdersToShoppingCart() {
+        List<MyAccountOrderInner> canUseOrders=new ArrayList<>();
+        List<MyAccountOrderInner> notUseOrders=new ArrayList<>();
+        for (MyAccountOrderMiddle myAccountOrderMiddle: listOrderMiddles){
+            if (myAccountOrderMiddle.getItems()!=null && !myAccountOrderMiddle.getItems().isEmpty()){
+                List<MyAccountOrderInner> items = myAccountOrderMiddle.getItems();
+                if (items!=null && !items.isEmpty()){
+                    for (MyAccountOrderInner myAccountOrderInner:items){
+                        //Availability
+                        if ( "1".equals( myAccountOrderInner.getAvailability())){
+                            canUseOrders.addAll(items);
+                        }else {
+                            notUseOrders.addAll(items);
+                        }
+                    }
+                }
+            }
+        }
+        final List<MyAccountOrderInner> cloneCanUseOrders=canUseOrders;
+        if (notUseOrders.size()>0){
+            showErrorProductDialog(notUseOrders, new IOnErrorDialogConfirm() {
+                @Override
+                public void onComfirm() {
+                    setOrderToCheckout(cloneCanUseOrders);
+                }
+            });
+        }else {
+            setOrderToCheckout(cloneCanUseOrders);
+        }
+        GaTrackHelper.getInstance().gaOrderListOrDetail(false,false,orderId);
     }
 
     private String creditStr = "";
@@ -299,12 +385,13 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         sendRequest(orderId);
         //Set value to detail page column
         List<MyAccountOrderMiddle> orderMiddle = orderOuter.getSuborders();
-        LinkedList<MyAccountOrderMiddle> list_orderMiddles = new LinkedList<MyAccountOrderMiddle>();
-        list_orderMiddles.addAll(orderMiddle);
-        adapter = new MyAccountOrderDetailAdapter(this, mImageLoader,orderOuter.getStatusCode(),orderOuter.getStatus());
-        adapter.list = list_orderMiddles;
+        listOrderMiddles.addAll(orderMiddle);
+        adapter = new MyAccountOrderDetailAdapter(this, mImageLoader,orderOuter.getStatusCode(),orderOuter.getStatus(),orderId);
+        adapter.setOnOrderViewItemClickListener(this);
+        adapter.list = listOrderMiddles;
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
+        initAllItemBtnStyle();
         int totalHeight = 0;//To fix measurement on page
         for (int i = 0; i < adapter.getCount(); i++) {
             View listItem = adapter.getView(i, null, listView);
@@ -316,6 +403,29 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         params.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
         //((ViewGroup.MarginLayoutParams) params).setMargins(10, 10, 10, 10);
         listView.setLayoutParams(params);
+    }
+
+    private void initAllItemBtnStyle(){
+        boolean isAvail=true;
+        if (listOrderMiddles!=null && !listOrderMiddles.isEmpty()){
+            for (MyAccountOrderMiddle myAccountOrderMiddle:listOrderMiddles){
+                List<MyAccountOrderInner> items = myAccountOrderMiddle.getItems();
+                if (items!=null && !items.isEmpty()){
+                    for (MyAccountOrderInner myAccountOrderInner:items){
+                        isAvail=!myAccountOrderInner.getAvailability().equals("0");
+                    }
+                }
+            }
+        }
+        if (isAvail){
+            tvOrderDetailAddToCart.setClickable(true);
+            JViewUtils.setStrokeButtonGlobalStyle(this, tvOrderDetailAddToCart);
+        }else{
+            tvOrderDetailAddToCart.setClickable(false);
+            JViewUtils.setStrokeButtonUnusableStyle(this, tvOrderDetailAddToCart);
+        }
+
+
     }
 
     private MyAccountOrderDetailEntityResult mBean;
@@ -638,5 +748,33 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.getShoppingCount();
+    }
 
+    //click 'add to cart' button if order's item show unavailable ,show this dialog
+    public void showErrorProductDialog(List<MyAccountOrderInner> beans, final IOnErrorDialogConfirm iOnErrorDialogConfirm) {
+        final MaterialDialog mMaterialDialog = new MaterialDialog(this);
+        mMaterialDialog.setTitle(getResources().getString(R.string.add_order_to_cart_error_title));
+        mMaterialDialog.setTitleSize(16);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_list, null);
+        ListView listView = (ListView) view.findViewById(R.id.listview);
+        ReRorderDetailToCartAdapter adapter = new ReRorderDetailToCartAdapter(this, beans, mImageLoader);
+        listView.setAdapter(adapter);
+        mMaterialDialog.setContentView(view);
+        mMaterialDialog.setPositiveButton("OK", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mMaterialDialog!=null) {
+                    mMaterialDialog.dismiss();
+                }
+                if (iOnErrorDialogConfirm!=null){
+                    iOnErrorDialogConfirm.onComfirm();
+                }
+            }
+        });
+        mMaterialDialog.show();
+    }
 }

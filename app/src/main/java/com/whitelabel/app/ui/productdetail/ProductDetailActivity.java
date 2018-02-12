@@ -89,6 +89,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     public static final int RESULT_WISH = 101;
     public static final int PRODUCT_PICTURE_REQUEST_CODE = 0x200;
     private String TAG = "ProductDetailActivity";
+    public static final String PRODUCT_ID="productId";
     private final int REQUESTCODE_LOGIN = 1000;
     private ViewGroup llDots;
     private BindProductView  bpvBindProduct;
@@ -456,7 +457,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         setContentView(R.layout.activity_product);
         rootView=LayoutInflater.from(this).inflate(R.layout.activity_product,null);
         destWidth = WhiteLabelApplication.getPhoneConfiguration().getScreenWidth(ProductDetailActivity.this);
-        productId =  getIntent().getExtras().getString("productId");
+        productId =  getIntent().getExtras().getString(PRODUCT_ID);
         mFromProductList = getIntent().getExtras().getString("from",ProductListAdapter.FROM_PRODUCT_LIST);
         mProductFirstImageurl=getIntent().getExtras().getString("imageurl");
         isLike=getIntent().getExtras().getInt("isLike");

@@ -295,7 +295,7 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
                         if (mMaterialDialog!=null){
                             mMaterialDialog.dismiss();
                         }
-                        JToolUtils.openPlayStore();
+                        JToolUtils.openPlayStore(checkoutPaymentStatusActivity);
                         mPresenter.saveFinishOrderAndMarkTime(0);
 
                     }
