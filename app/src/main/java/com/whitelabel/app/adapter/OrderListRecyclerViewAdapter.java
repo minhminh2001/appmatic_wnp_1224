@@ -19,6 +19,7 @@ import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.bean.OrderBody;
 import com.whitelabel.app.bean.OrderTip;
+import com.whitelabel.app.callback.IOnErrorDialogConfirm;
 import com.whitelabel.app.model.MyAccountOrderInner;
 import com.whitelabel.app.model.MyAccountOrderMiddle;
 import com.whitelabel.app.model.MyAccountOrderOuter;
@@ -29,7 +30,6 @@ import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
-import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.MaterialDialog;
 import com.whitelabel.app.widget.RefreshLoadMoreRecyclerView;
@@ -146,10 +146,6 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         this.onOrderViewItemClickListener = onOrderViewItemClickListener;
     }
 
-    public interface IOnErrorDialogConfirm{
-        void onComfirm();
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
@@ -238,7 +234,6 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
                     ArrayList<OrderBody> groupList = getCurrentGroupList(position);
                     final ArrayList<OrderBody>[] noSellAndSellProductItem = getNoSellAndSellProductItem(groupList);
-                    JToolUtils.printObject(noSellAndSellProductItem[0]);
                     if (noSellAndSellProductItem[0].isEmpty()){
                         onOrderViewItemClickListener.onItemClick(v, position,noSellAndSellProductItem[1]);
                     }else {
@@ -412,7 +407,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         mMaterialDialog.setTitleSize(16);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_list, null);
         ListView listView = (ListView) view.findViewById(R.id.listview);
-        ReRorderToCartAdapter adapter = new ReRorderToCartAdapter(context, beans, mImageLoader);
+        ReRorderListToCartAdapter adapter = new ReRorderListToCartAdapter(context, beans, mImageLoader);
         listView.setAdapter(adapter);
         mMaterialDialog.setContentView(view);
         mMaterialDialog.setPositiveButton("OK", new View.OnClickListener() {

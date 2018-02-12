@@ -15,6 +15,7 @@ import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.ui.search.SearchContract;
 import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.ExceptionParse;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RxUtil;
 import com.whitelabel.app.utils.logger.Logger;
 
@@ -81,20 +82,24 @@ public class MyOrderPresenter extends RxPresenter<MyOrderContract.View> implemen
     @Override
     public void setToCheckout(ArrayList<OrderBody> orderBodies) {
         HashMap<String, String> params=new HashMap<>();
+        int count = 0;
         String sessionKey=iBaseManager.getUser().getSessionKey();
         String orderId="";
         params.put("session_key",sessionKey);
 
         if(orderBodies!=null&&!orderBodies.isEmpty()){
             for (int i=0;i<orderBodies.size();i++){
-                orderId=orderBodies.get(i).getOrderId();
-                params.put("products["+i+"][item_id]", orderBodies.get(i).getItemId());
-                params.put("products["+i+"][qty]", orderBodies.get(i).getOrderQuantity());
+                OrderBody orderBody = orderBodies.get(i);
+                orderId=orderBody.getOrderId();
+                params.put("products["+i+"][item_id]", orderBody.getItemId());
+                params.put("products["+i+"][qty]", orderBody.getOrderQuantity());
+                count += Integer.valueOf(orderBody.getOrderQuantity());
             }
         }
         params.put("order_id",orderId);
 
         mView.showProgressDialog();
+        final int finalCount = count;
         Subscription  subscription = iCommodityManager.setToCheckout(params).compose(RxUtil.<ResponseModel>rxSchedulerHelper()).subscribe(
 
             new Subscriber<ResponseModel>() {
@@ -118,7 +123,7 @@ public class MyOrderPresenter extends RxPresenter<MyOrderContract.View> implemen
                 public void onNext(ResponseModel responseModel) {
                     mView.closeProgressDialog();
                     if (responseModel.getStatus()==1){
-                        mView.showReorderSuccessMessage();
+                        mView.showReorderSuccessMessage(finalCount);
                     }else {
                         mView.showReorderErrorMessage(responseModel.getErrorMessage());
                     }
@@ -131,18 +136,22 @@ public class MyOrderPresenter extends RxPresenter<MyOrderContract.View> implemen
     @Override
     public void setToCheckoutDetail(String orderId,List<MyAccountOrderInner> orderBodies) {
         HashMap<String, String> params=new HashMap<>();
+        int count = 0;
         String sessionKey=iBaseManager.getUser().getSessionKey();
         params.put("session_key",sessionKey);
 
         if(orderBodies!=null&&!orderBodies.isEmpty()){
             for (int i=0;i<orderBodies.size();i++){
-                params.put("products["+i+"][item_id]", orderBodies.get(i).getItemId());
-                params.put("products["+i+"][qty]", orderBodies.get(i).getQty());
+                MyAccountOrderInner myAccountOrderInner = orderBodies.get(i);
+                params.put("products["+i+"][item_id]",myAccountOrderInner.getItemId());
+                params.put("products["+i+"][qty]", myAccountOrderInner.getQty());
+                count += Integer.valueOf(myAccountOrderInner.getQty());
             }
         }
         params.put("order_id",orderId);
 
         mView.showProgressDialog();
+        final int finalCount = count;
         Subscription  subscription = iCommodityManager.setToCheckout(params).compose(RxUtil.<ResponseModel>rxSchedulerHelper()).subscribe(
 
             new Subscriber<ResponseModel>() {
@@ -166,7 +175,7 @@ public class MyOrderPresenter extends RxPresenter<MyOrderContract.View> implemen
                 public void onNext(ResponseModel responseModel) {
                     mView.closeProgressDialog();
                     if (responseModel.getStatus()==1){
-                        mView.showReorderSuccessMessage();
+                        mView.showReorderSuccessMessage(finalCount);
                     }else {
                         mView.showReorderErrorMessage(responseModel.getErrorMessage());
                     }

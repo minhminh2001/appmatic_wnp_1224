@@ -1,7 +1,6 @@
 package com.whitelabel.app.activity;
 
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +25,9 @@ import android.widget.TextView;
 import com.whitelabel.app.R;
 import com.whitelabel.app.adapter.MyAccountOrderDetailAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.adapter.ReRorderDetailToCartAdapter;
+import com.whitelabel.app.adapter.ReRorderListToCartAdapter;
+import com.whitelabel.app.callback.IOnErrorDialogConfirm;
 import com.whitelabel.app.dao.CheckoutDao;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.model.CheckoutPaymentReturnShippingAddress;
@@ -48,13 +49,10 @@ import com.whitelabel.app.utils.PaypalHelper;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.CustomWebView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.whitelabel.app.widget.MaterialDialog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -93,10 +91,11 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private ImageLoader mImageLoader;
     private View rootView;
     LinkedList<MyAccountOrderMiddle> listOrderMiddles=new LinkedList<>();
+    private int currentShoppingCount=0;
 
     @Override
     public void loadShoppingCount(int count) {
-
+        currentShoppingCount = count;
     }
 
     @Override
@@ -116,8 +115,9 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     }
 
     @Override
-    public void showReorderSuccessMessage() {
+    public void showReorderSuccessMessage(int count) {
         JViewUtils.showHintToast(getResources().getString(R.string.add_order_to_checkout));
+        mPresenter.saveShoppingCartCount(currentShoppingCount+count);
     }
 
     private void setOrderToCheckout(List<MyAccountOrderInner> orderInners){
@@ -303,7 +303,6 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private void initSessionKey() {
         //init session_key
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
-
             initData();
         } else {
             Bundle bundle = new Bundle();
@@ -335,16 +334,41 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
                 }
                 break;
             case R.id.tv_order_detail_add_to_cart:
-                List<MyAccountOrderInner> canUseOrders=new ArrayList<>();
-                for (MyAccountOrderMiddle myAccountOrderMiddle: listOrderMiddles){
-                    if (myAccountOrderMiddle.getItems()!=null && !myAccountOrderMiddle.getItems().isEmpty()){
-                        canUseOrders.addAll(myAccountOrderMiddle.getItems());
-                    }
-                }
-                setOrderToCheckout(canUseOrders);
+                addOrdersToShoppingCart();
                 break;
             default:
                 break;
+        }
+    }
+
+    private void addOrdersToShoppingCart() {
+        List<MyAccountOrderInner> canUseOrders=new ArrayList<>();
+        List<MyAccountOrderInner> notUseOrders=new ArrayList<>();
+        for (MyAccountOrderMiddle myAccountOrderMiddle: listOrderMiddles){
+            if (myAccountOrderMiddle.getItems()!=null && !myAccountOrderMiddle.getItems().isEmpty()){
+                List<MyAccountOrderInner> items = myAccountOrderMiddle.getItems();
+                if (items!=null && !items.isEmpty()){
+                    for (MyAccountOrderInner myAccountOrderInner:items){
+                        //Availability
+                        if ( "1".equals( myAccountOrderInner.getAvailability())){
+                            canUseOrders.addAll(items);
+                        }else {
+                            notUseOrders.addAll(items);
+                        }
+                    }
+                }
+            }
+        }
+        final List<MyAccountOrderInner> cloneCanUseOrders=canUseOrders;
+        if (notUseOrders.size()>0){
+            showErrorProductDialog(notUseOrders, new IOnErrorDialogConfirm() {
+                @Override
+                public void onComfirm() {
+                    setOrderToCheckout(cloneCanUseOrders);
+                }
+            });
+        }else {
+            setOrderToCheckout(cloneCanUseOrders);
         }
     }
 
@@ -723,5 +747,33 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.getShoppingCount();
+    }
 
+    //click 'add to cart' button if order's item show unavailable ,show this dialog
+    public void showErrorProductDialog(List<MyAccountOrderInner> beans, final IOnErrorDialogConfirm iOnErrorDialogConfirm) {
+        final MaterialDialog mMaterialDialog = new MaterialDialog(this);
+        mMaterialDialog.setTitle(getResources().getString(R.string.add_order_to_cart_error_title));
+        mMaterialDialog.setTitleSize(16);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_list, null);
+        ListView listView = (ListView) view.findViewById(R.id.listview);
+        ReRorderDetailToCartAdapter adapter = new ReRorderDetailToCartAdapter(this, beans, mImageLoader);
+        listView.setAdapter(adapter);
+        mMaterialDialog.setContentView(view);
+        mMaterialDialog.setPositiveButton("OK", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mMaterialDialog!=null) {
+                    mMaterialDialog.dismiss();
+                }
+                if (iOnErrorDialogConfirm!=null){
+                    iOnErrorDialogConfirm.onComfirm();
+                }
+            }
+        });
+        mMaterialDialog.show();
+    }
 }

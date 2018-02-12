@@ -21,7 +21,7 @@ public interface MyOrderContract {
         public void showNetErrorMessage();
         public void showFaildMessage(String faildMessage);
         public void showReorderErrorMessage(String errorMsg);
-        public void showReorderSuccessMessage();
+        public void showReorderSuccessMessage(int count);
 
     }
     public interface  Presenter extends BasePresenter<View>{

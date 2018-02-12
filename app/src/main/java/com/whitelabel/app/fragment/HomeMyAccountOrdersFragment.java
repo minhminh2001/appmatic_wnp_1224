@@ -75,7 +75,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment<MyOrderContrac
     private ImageView ivChangeRcyListToogle;
     public static final String ORDER_ERROR_MESSAGE="orderErrorMessage";
     private View rootView;
-    private int orderClickItemsCount=0;
     private int currentShoppingCount=0;
     @Override
     public void onRefresh() {
@@ -208,7 +207,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment<MyOrderContrac
                     case R.id.iv_add_to_cart:
                     case R.id.rl_add_to_cart:
                         mPresenter.setToCheckout(orders);
-                        orderClickItemsCount = getOrderItemsCount(orders);
                         break;
                         //skip to order Detail page
                      default:
@@ -282,9 +280,11 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment<MyOrderContrac
         }
     }
 
+    //2.return shoping count
     @Override
     public void loadShoppingCount(int count) {
-        currentShoppingCount=count;
+        currentShoppingCount = count;
+        mCommonCallback.updateRightIconNum(R.id.action_shopping_cart, count);
     }
 
     @Override
@@ -303,8 +303,24 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment<MyOrderContrac
     }
 
     @Override
-    public void showReorderSuccessMessage() {
+    public void showReorderSuccessMessage(int count) {
         JViewUtils.showHintToast(homeActivity.getResources().getString(R.string.add_order_to_checkout));
+        //3.save cache checkout size,count is order sum
+        mPresenter.saveShoppingCartCount(currentShoppingCount+count);
+        //deloy operator
+        dataHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPresenter.getShoppingCount();
+            }
+        },200);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //1.get current shopping counts
+        mPresenter.getShoppingCount();
     }
 
     private static final class DataHandler extends Handler {
