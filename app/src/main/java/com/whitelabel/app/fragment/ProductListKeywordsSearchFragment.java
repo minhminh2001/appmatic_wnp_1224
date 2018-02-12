@@ -224,6 +224,10 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     public void onRecyclerItemClick(SearchFilterResponse.SuggestsBean.ItemsBean itemsBean) {
         int type = itemsBean.getType();
         setSearchType(SEARCH_TYPE_INIT);
+        //reset search data
+        tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setBrandId("");
+        tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setCategory_id("");
+        tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ("");
         switch (type){
             case SEARCH_GETSUGGEST_PRODUCT_DETAIL:
                 Intent it = new Intent(productListActivity, ProductDetailActivity.class);
@@ -238,7 +242,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 showSuggestOrResultPage(false);
                 tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setBrandId(itemsBean.getBrandId());
                 search();
-                tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setBrandId("");
                 break;
             case SEARCH_GETSUGGEST_CATEGORY_SEARCH:
                 showSuggestOrResultPage(false);
@@ -246,7 +249,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setCategory_id(itemsBean.getCategoryId());
                 tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ("");
                 search();
-                tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setCategory_id("");
                 break;
             case SEARCH_GETSUGGEST_KEYWORD_SEARCH:
                 String suggestKeyword=itemsBean.getKey();
@@ -254,7 +256,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 showSuggestOrResultPage(false);
                 tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ(suggestKeyword);
                 search();
-                tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ("");
                 break;
         }
     }
