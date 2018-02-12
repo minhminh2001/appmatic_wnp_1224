@@ -370,6 +370,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         }else {
             setOrderToCheckout(cloneCanUseOrders);
         }
+        GaTrackHelper.getInstance().gaOrderListOrDetail(false,false,orderId);
     }
 
     private String creditStr = "";

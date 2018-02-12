@@ -244,7 +244,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                             }
                         });
                     }
-                    GaTrackHelper.getInstance().gaOrderListOrDetail(true,orderBody.getProductId());
+                    GaTrackHelper.getInstance().gaOrderListOrDetail(true,false,orderBody.getProductId());
                 }
             });
 
@@ -277,7 +277,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                         ArrayList<OrderBody> orderBodies=new ArrayList<>();
                         orderBodies.add(orderBody);
                         onOrderViewItemClickListener.onItemClick(v, position,orderBodies);
-                        GaTrackHelper.getInstance().gaOrderListOrDetail(true,orderBody.getProductId());
+                        GaTrackHelper.getInstance().gaOrderListOrDetail(true,true,orderBody.getProductId());
                     }
                 }
             });

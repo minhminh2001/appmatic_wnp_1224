@@ -32,7 +32,8 @@ public class Const {
         public final static String SEARCH_LIST_SCREEN = "Search List Screen";
 
         public final static String HOME_BANNER_EVENT = "Banner";
-        public final static String ORDER_ADD_TO_CART_EVENT = "Add to Cart by icon";
+        public final static String ORDER_ICON_ADD_TO_CART_EVENT = "Add to Cart by icon";
+        public final static String ORDER_BUTTON_ADD_TO_CART_EVENT = "Add to Cart by button";
         public final static String ORDER_CHOOSE_PRODUCT_EVENT = "Choose Product";
         public final static String ORDER_MODIFY_QTY_EVENT = "Modify qty";
         public final static String ORDER_ADD_EVENT = "Add";

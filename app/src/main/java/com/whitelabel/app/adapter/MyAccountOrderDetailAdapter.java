@@ -226,7 +226,7 @@ public class MyAccountOrderDetailAdapter extends BaseAdapter {
                         List<MyAccountOrderInner> orderInners=new ArrayList<>();
                         orderInners.add(orderInner);
                         onOrderViewItemClickListener.onItemClick(v,position,orderInners);
-                        GaTrackHelper.getInstance().gaOrderListOrDetail(false,orderId);
+                        GaTrackHelper.getInstance().gaOrderListOrDetail(false,true,orderId);
                     }
                 }
             });
