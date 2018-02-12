@@ -177,7 +177,6 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment<MyOrderContrac
     private void initRecyclerView() {
         recyclerView.setPullLoadEnable(false);
         mOrderListRecyclerViewAdapter = new OrderListRecyclerViewAdapter(homeActivity,recyclerView, listOuterRecord, true, mImageLoader);
-        JLogUtils.d("list_size", listOuterRecord.size() + "");
         recyclerView.setAdapter(mOrderListRecyclerViewAdapter);
         mOrderListRecyclerViewAdapter.notifyItemInserted(listOuterRecord.size() - 1);
         mOrderListRecyclerViewAdapter.updateDataChange();

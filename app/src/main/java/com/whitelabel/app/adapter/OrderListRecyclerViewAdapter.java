@@ -390,9 +390,7 @@ public class OrderListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                     OrderBody orderBody = (OrderBody) transformDataList.get(index);
                     if (index>preAndNextTitleIndex[0] && index<preAndNextTitleIndex[1]){
                         //0 not avail ,1  avail
-//                        if ("1".equals(orderBody.getAvailability())){
-                            orderBodies.add(orderBody);
-//                        }
+                        orderBodies.add(orderBody);
                     }
                 }
             }
