@@ -298,7 +298,7 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment<MyOrderContrac
 
     @Override
     public void showReorderErrorMessage(String errorMsg) {
-        JViewUtils.showPopUpWindw(homeActivity,rootView,errorMsg);
+        JViewUtils.showPopUpWindw(homeActivity,rootView,getString(R.string.insufficient_stock));
     }
 
     @Override

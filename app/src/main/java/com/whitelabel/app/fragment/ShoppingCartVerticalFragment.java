@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
+import com.whitelabel.app.callback.IShoppingCartAddOrSubtractCallback;
 import com.whitelabel.app.ui.checkout.CheckoutActivity;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
@@ -710,6 +711,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 }
                 tv_shoppingbottominfo_blank.setVisibility(View.GONE);
                 adapter.setInitBlankView(true);//预计算布局高度,初始化空白布局的大小
+                adapter.setData(mProducts);
                 adapter.notifyDataSetChanged();
             }
             if (mProducts != null && mProducts.size() > 1) {
@@ -926,6 +928,12 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
         mProducts = new ArrayList<>();
         adapter = new ShoppingCartVerticalAdapter(getActivity(), mProducts, mImageLoader, this);
         adapter.setItemOnClickListener(mItemListener);
+        adapter.setiShoppingCartAddOrSubtractCallback(new IShoppingCartAddOrSubtractCallback() {
+            @Override
+            public void callRefreshData() {
+                sendRequest();
+            }
+        });
         shoppingCartRecyclerView.setAdapter(adapter);
     }
 

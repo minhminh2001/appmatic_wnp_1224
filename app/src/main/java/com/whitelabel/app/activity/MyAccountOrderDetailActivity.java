@@ -111,7 +111,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
 
     @Override
     public void showReorderErrorMessage(String errorMsg) {
-        JViewUtils.showPopUpWindw(this,rootView,errorMsg);
+        JViewUtils.showPopUpWindw(this,rootView,getString(R.string.insufficient_stock));
     }
 
     @Override
@@ -407,25 +407,28 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
 
     private void initAllItemBtnStyle(){
         boolean isAvail=true;
+        List<MyAccountOrderInner> unUseLists=new ArrayList<>();
         if (listOrderMiddles!=null && !listOrderMiddles.isEmpty()){
             for (MyAccountOrderMiddle myAccountOrderMiddle:listOrderMiddles){
                 List<MyAccountOrderInner> items = myAccountOrderMiddle.getItems();
                 if (items!=null && !items.isEmpty()){
                     for (MyAccountOrderInner myAccountOrderInner:items){
                         isAvail=!myAccountOrderInner.getAvailability().equals("0");
+                        if (!isAvail){
+                            unUseLists.add(myAccountOrderInner);
+                        }
                     }
                 }
             }
         }
-        if (isAvail){
-            tvOrderDetailAddToCart.setClickable(true);
-            JViewUtils.setStrokeButtonGlobalStyle(this, tvOrderDetailAddToCart);
-        }else{
+        //all unuse
+        if (unUseLists.size()==listOrderMiddles.size()){
             tvOrderDetailAddToCart.setClickable(false);
             JViewUtils.setStrokeButtonUnusableStyle(this, tvOrderDetailAddToCart);
+        }else{
+            tvOrderDetailAddToCart.setClickable(true);
+            JViewUtils.setStrokeButtonGlobalStyle(this, tvOrderDetailAddToCart);
         }
-
-
     }
 
     private MyAccountOrderDetailEntityResult mBean;
