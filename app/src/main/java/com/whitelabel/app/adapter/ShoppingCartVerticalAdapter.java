@@ -655,11 +655,6 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             } else {
                 shoppingCart.setQty(newCount + "");
                 if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
-//                    if (newCount > Integer.parseInt(shoppingCart.getMaxQty())) {
-//                        shoppingCart.setInStock("0");
-//                    } else {
-//                        shoppingCart.setInStock("1");
-//                    }
                     JStorageUtils.savaProductListToLocalCartRepository(context, shoppingCarToTMPLocal(list));
                     calculationToatalPriceAndNum(list);
 //                    if(list.size()==0){
