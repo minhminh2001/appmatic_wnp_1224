@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.callback.IShoppingCartAddOrSubtractCallback;
 import com.whitelabel.app.callback.ShoppingCartAdapterCallback;
 import com.whitelabel.app.dao.ShoppingCarDao;
 import com.whitelabel.app.model.ErrorMsgBean;
@@ -43,6 +44,7 @@ import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.swipe.SwipeLayout;
 import com.whitelabel.app.widget.swipe.SwipeLayoutCallBack;
 import com.whitelabel.app.widget.swipe.SwipeableAdapter;
@@ -67,10 +69,17 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
     private final ImageLoader mImageLoader;
 
     private AdapterView.OnItemClickListener itemOnClickListener;
+    private IShoppingCartAddOrSubtractCallback iShoppingCartAddOrSubtractCallback;
 
     public void setItemOnClickListener(AdapterView.OnItemClickListener itemOnClickListener) {
         this.itemOnClickListener = itemOnClickListener;
     }
+
+    public void setiShoppingCartAddOrSubtractCallback(
+        IShoppingCartAddOrSubtractCallback iShoppingCartAddOrSubtractCallback) {
+        this.iShoppingCartAddOrSubtractCallback = iShoppingCartAddOrSubtractCallback;
+    }
+
     public ShoppingCartVerticalAdapter(Context context, ArrayList<ShoppingCartListBase> products, ImageLoader imageLoader, ShoppingCartAdapterCallback callback) {
         super();
         JLogUtils.d(TAG, "init");
@@ -108,6 +117,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
 
     public void setData(ArrayList<ShoppingCartListBase> list) {
         this.list = list;
+        JToolUtils.printObject(list);
     }
 
     private ShoppingCartListEntityCell getItem(int position) {
@@ -142,6 +152,8 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                 viewHolder.ivShoppingCartIcon.setBackgroundResource(R.mipmap.ic_checkout_error_mark_item);
                 ((ViewHolder) holder).tvShoppingCartErrorMsg.setTextColor(ContextCompat.getColor(context,R.color.red_cart_shopping_error));
                 ((ViewHolder) holder).tvShoppingCartErrorMsg.setText(sc.getErrorMessage());
+            }else {
+                viewHolder.llShoppingCartError.setVisibility(View.GONE);
             }
         } else {
             viewHolder.tvOutOfStock.setVisibility(View.VISIBLE);
@@ -178,6 +190,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                 assert imm != null;
                 imm.hideSoftInputFromWindow(viewHolder.itemView.getWindowToken(), 0);
+                //TODO
                 ShoppingCartListEntityCell bean = (ShoppingCartListEntityCell) list.get(position);
                 if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
                     list.remove(position);
@@ -642,11 +655,6 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             } else {
                 shoppingCart.setQty(newCount + "");
                 if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
-                    if (newCount > Integer.parseInt(shoppingCart.getMaxQty())) {
-                        shoppingCart.setInStock("0");
-                    } else {
-                        shoppingCart.setInStock("1");
-                    }
                     JStorageUtils.savaProductListToLocalCartRepository(context, shoppingCarToTMPLocal(list));
                     calculationToatalPriceAndNum(list);
 //                    if(list.size()==0){
@@ -720,12 +728,17 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                                     int oldQty = Integer.parseInt(shoppingCart.getOldQty());
                                     int nowQty = Integer.parseInt(shoppingCart.getQty());
                                     if (oldQty < nowQty) {
-                                        shoppingCart.setInStock("0");
+                                        //TODO joyson temp not need
+//                                        shoppingCart.setInStock("0");
                                         JViewUtils.showMaterialDialog(mContext.get(), null, mContext.get().getString(R.string.insufficient_stock), null);
                                     }
                                 }
                                 mAdapter.get().callback.updateShoppingData(shoppingCartUpdateCellCount);
-                                mAdapter.get().notifyDataSetChanged();
+                                //TODO josyon not now to refresh, to call list api and refresh
+                                if (mAdapter.get().iShoppingCartAddOrSubtractCallback!=null){
+                                    mAdapter.get().iShoppingCartAddOrSubtractCallback.callRefreshData();
+                                }
+//                                mAdapter.get().notifyDataSetChanged();
                                 mAdapter.get().closeDialog();
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -799,6 +812,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                                 }
                                 mAdapter.get().list.remove(position);
                                 mAdapter.get().callback.deleteShoppingData(shoppingCartDeleteCell,position);
+
                                 mAdapter.get().notifyDataSetChanged();
 //                                if (mAdapter.get().list.size() == 0) {
 //                                    mAdapter.get().bodyView.setVisibility(View.GONE);
