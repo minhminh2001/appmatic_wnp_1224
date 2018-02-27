@@ -84,6 +84,11 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
     }
 
     @Override
+    public void showUpdateDialog() {
+        JViewUtils.showUpdateGooglePlayStoreDialog(this);
+    }
+
+    @Override
     protected void initInject() {
         DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
                 presenterModule(new PresenterModule(this)).build().inject(this);

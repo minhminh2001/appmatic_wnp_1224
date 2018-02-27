@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -25,13 +26,13 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.common.utils.JViewUtil;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookAuthorizationException;
@@ -47,10 +48,15 @@ import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 //import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 //import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import com.orhanobut.logger.Logger;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.whitelabel.app.*;
@@ -62,6 +68,7 @@ import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.ThreePartAPIUserEntity;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
+import com.whitelabel.app.ui.login.GoogleLogin;
 import com.whitelabel.app.ui.login.LoginFragmentContract;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
@@ -92,7 +99,7 @@ import io.fabric.sdk.android.Fabric;
  * Created by imaginato on 2015/6/10.
  */
 public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFragment<LoginFragmentContract.Presenter>
-        implements View.OnClickListener, View.OnFocusChangeListener,GoogleApiClient.OnConnectionFailedListener,LoginFragmentContract.View{
+        implements View.OnClickListener, View.OnFocusChangeListener,LoginFragmentContract.View{
     private final String TAG = "LoginRegisterEmailLoginFragment";
     private View contentView;
     private EditText email, password;
@@ -116,63 +123,19 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
     private ThreePartAPIUserEntity threePartAPIUserEntity;
     private CallbackManager facebookCallbackManager;
     public final int RC_SIGN_IN=10010;
+
+    private GoogleApiClient mGoogleApiClient;
+    GoogleLogin googleLogin;
+    public enum ThirdLoginType {
+        GOOGLE,FACEBOOK ,TWITTER
+    }
+    ThirdLoginType thirdLoginType=ThirdLoginType.FACEBOOK;
     @Override
     public void inject() {
         DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
                 presenterModule(new PresenterModule(getActivity())).build().inject(this);
     }
-    private FacebookCallback<LoginResult> facebookCallback = new FacebookCallback<LoginResult>() {
-        private ProfileTracker mProfileTracker;
-        @Override
-        public void onSuccess(final LoginResult loginResult) {
-            Profile facebookProfile = Profile.getCurrentProfile();
-            if (facebookProfile == null || JDataUtils.isEmpty(facebookProfile.getId())) {
-                mProfileTracker = new ProfileTracker() {
-                    @Override
-                    protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
-                        if(getActivity()!=null) {
-                            if (profile2 == null || JDataUtils.isEmpty(profile2.getId())) {
-                                fbLoginError();
-                                return;
-                            }
-                            if(loginResult.getAccessToken()!=null) {
-                                mPresenter.requestOnallUser("facebook", loginResult.getAccessToken().getToken(), null);
-                            }
-                            mProfileTracker.stopTracking();
-                        }
-                    }
-                };
-                mProfileTracker.startTracking();
-            }else{
-                mPresenter.requestOnallUser("facebook",loginResult.getAccessToken().getToken(),null);
-//                fbGetFacebookUserInfoFromFB(facebookProfile.getId());
-            }
-        }
-        @Override
-        public void onCancel() {
-            JLogUtils.i("Martin", "FacebookCallback=>onCancel2");
-            fbLoginCancel();
-        }
 
-
-
-
-
-        @Override
-        public void onError(FacebookException error) {
-            JLogUtils.i("Martin", "FacebookCallback=>onError3-->" + error.getMessage());
-            try {
-                if (error instanceof FacebookAuthorizationException) {
-                    if (AccessToken.getCurrentAccessToken() != null) {
-                        LoginManager.getInstance().logOut();
-                    }
-                }
-            }catch(Exception ex){
-                ex.getStackTrace();
-            }
-            fbLoginError();
-        }
-    };
 
     public LoginRegisterEmailLoginFragment() {
     }
@@ -385,6 +348,16 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
     }
 
     @Override
+    public void showUpdateDialog() {
+        JViewUtils.showUpdateGooglePlayStoreDialog(loginRegisterActivity);
+    }
+
+    @Override
+    public void emailLoginOrRegister() {
+        mMyAccountDao.emailLogin(email.getText().toString().trim(), password.getText().toString().trim(), WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
@@ -443,10 +416,73 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        // Facebook
+        initFaceBook();
+        initGoogleApi();
+    }
+
+
+    private void initFaceBook(){
         FacebookSdk.sdkInitialize(loginRegisterActivity.getApplicationContext());
         facebookCallbackManager = CallbackManager.Factory.create();
+        FacebookCallback<LoginResult> facebookCallback = new FacebookCallback<LoginResult>() {
+            private ProfileTracker mProfileTracker;
+            @Override
+            public void onSuccess(final LoginResult loginResult) {
+                JToolUtils.printObject(loginResult);
+                Profile facebookProfile = Profile.getCurrentProfile();
+                if (facebookProfile == null || JDataUtils.isEmpty(facebookProfile.getId())) {
+                    mProfileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
+                            if(getActivity()!=null) {
+                                if (profile2 == null || JDataUtils.isEmpty(profile2.getId())) {
+                                    fbLoginError();
+                                    return;
+                                }
+                                if(loginResult.getAccessToken()!=null) {
+                                    mPresenter.requestOnallUser(Const.THIRD_LOGIN_FACEBOOK, loginResult.getAccessToken().getToken(), null);
+                                }
+                                mProfileTracker.stopTracking();
+                            }
+                        }
+                    };
+                    mProfileTracker.startTracking();
+                }else{
+                    mPresenter.requestOnallUser("facebook",loginResult.getAccessToken().getToken(),null);
+//                fbGetFacebookUserInfoFromFB(facebookProfile.getId());
+                }
+            }
+            @Override
+            public void onCancel() {
+                Logger.e("Facebook onCancel");
+                JLogUtils.i("Martin", "FacebookCallback=>onCancel2");
+                fbLoginCancel();
+            }
+
+
+
+
+
+            @Override
+            public void onError(FacebookException error) {
+                Logger.e("FacebookException");
+                JLogUtils.i("Martin", "FacebookCallback=>onError3-->" + error.getMessage());
+                try {
+                    if (error instanceof FacebookAuthorizationException) {
+                        if (AccessToken.getCurrentAccessToken() != null) {
+                            LoginManager.getInstance().logOut();
+                        }
+                    }
+                }catch(Exception ex){
+                    ex.getStackTrace();
+                }
+                fbLoginError();
+            }
+        };
         LoginManager.getInstance().registerCallback(facebookCallbackManager, facebookCallback);
+    }
+
+    private void initTwitter(){
         String twitterConsumerKey=getString(R.string.twitter_consumer_key);
         String twitterSecret=getString(R.string.twitter_consumer_secret);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(twitterConsumerKey, twitterSecret);
@@ -460,32 +496,30 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        View scroll=contentView.findViewById(R.id.layout);
         toolBarFragmentCallback.setToolBarTitle(getResources().getString(R.string.sign_in));
 //        toolBarFragmentCallback.setToolBarLeftIconAndListenter( JToolUtils.getDrawable(R.drawable.draw_trans), null);
-        initGoogleApi();
-        if(scroll!=null){
-            ((ScrollView)scroll).setOverScrollMode(View.OVER_SCROLL_NEVER);
-        }
+
         mCurrTag=this.getClass().getSimpleName();
         rl_login_email=(CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_login_email);
         rl_login_pwd=(CustomButtomLineRelativeLayout) contentView.findViewById(R.id.rl_login_pwd);
 
-        LinearLayout llGoogleLogin = (LinearLayout) contentView.findViewById(R.id.ll_googleLogin);
+        //TODO
+        ImageView ivLoginTwitter = (ImageView) contentView.findViewById(R.id.iv_login_twitter);
+        ImageView ivLoginGoogle = (ImageView) contentView.findViewById(R.id.iv_login_google);
+        ImageView ivLoginFacebook = (ImageView) contentView.findViewById(R.id.iv_login_facebook);
         email = (EditText) contentView.findViewById(R.id.email);
         password = (EditText) contentView.findViewById(R.id.password);
         CustomTextView sign_in = (CustomTextView) contentView.findViewById(R.id.sign_in);
+
         JViewUtils.setSoildButtonGlobalStyle(getActivity(),sign_in);
-        View ivFacebookLogin = contentView.findViewById(R.id.ivFacebookLogin);
         TextView register = (TextView) contentView.findViewById(R.id.register);
         register.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         TextView forgotPassword = (TextView) contentView.findViewById(R.id.forgot_password);
-        forgotPassword.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
-        //      bottomText=contentView.findViewById(R.id.bottomText);
-        ivFacebookLogin.setOnClickListener(this);
         sign_in.setOnClickListener(this);
         register.setOnClickListener(this);
-        llGoogleLogin.setOnClickListener(this);
+        ivLoginFacebook.setOnClickListener(this);
+        ivLoginTwitter.setOnClickListener(this);
+        ivLoginGoogle.setOnClickListener(this);
         forgotPassword.setOnClickListener(this);
         email.setOnFocusChangeListener(this);
         email.addTextChangedListener(new TextWatcher() {
@@ -604,15 +638,41 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
         closeCurrActivity();
     }
 
-    private GoogleApiClient mGoogleApiClient;
+
     private void initGoogleApi() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-         .build();
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//         .build();
 //         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
 //                .enableAutoManage(getActivity(), this)
 //                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
 //                .build();
+        googleLogin = new GoogleLogin(this,
+            new GoogleApiClient.OnConnectionFailedListener() {
+                @Override
+                public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                    JToolUtils.printObject(connectionResult);
+                }
+            }) ;
+        googleLogin.setGoogleSignListener(new GoogleLogin.GoogleSignListener() {
+            @Override
+            public void googleLoginSuccess(GoogleSignInAccount account) {
+                mPresenter.loginFromServer(account.getGivenName(),account.getDisplayName(),account.getFamilyName(),account.getDisplayName(),account.getIdToken(),account.getIdToken(),account.getEmail(),Const.THIRD_LOGIN_GOOGLE,true,"0");
+            }
+
+            @Override
+            public void googleLoginFail() {
+                Toast.makeText(getActivity(),R.string.third_login_failed, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void googleLogoutSuccess() {
+            }
+
+            @Override
+            public void googleLogoutFail() {
+            }
+        });
     }
 
     private void setResendEmailClickSpan(){
@@ -647,7 +707,8 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ivFacebookLogin: {
+            case R.id.iv_login_facebook: {
+                thirdLoginType=ThirdLoginType.FACEBOOK;
                 LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email", "user_friends"));
                 break;
             }
@@ -667,7 +728,9 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
                 inputMethodManager.hideSoftInputFromWindow(email.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 if (onblur(R.id.email) && onblur(R.id.password)) {
                     mDialog= JViewUtils.showProgressDialog(loginRegisterActivity);
-                    mMyAccountDao.emailLogin(email.getText().toString().trim(), password.getText().toString().trim(), WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
+                    //TODO add app version check ,first check ,then login
+                    mPresenter.versionCheck();
+//                    mMyAccountDao.emailLoginOrRegister(email.getText().toString().trim(), password.getText().toString().trim(), WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
                 }
                 break;
             case R.id.register:
@@ -684,22 +747,24 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
             case R.id.clear_password:
                 password.setText("");
                 break;
-            case R.id.ll_googleLogin:
+            case R.id.iv_login_twitter:
+                thirdLoginType=ThirdLoginType.TWITTER;
                 TwitterWrapper.getInstance().login(getActivity(), new TwitterWrapper.LoginComplete() {
                     @Override
                     public void success(String accessToken, String secret) {
-                        mPresenter.requestOnallUser("twitter",accessToken,secret);
+                        mPresenter.requestOnallUser(Const.THIRD_LOGIN_TWITTER,accessToken,secret);
                     }
                     @Override
                     public void failure(OAError error) {
+                        Toast.makeText(getActivity(),R.string.third_login_failed, Toast.LENGTH_SHORT).show();
                     }
                 });
                 break;
+            case R.id.iv_login_google:
+                thirdLoginType=ThirdLoginType.GOOGLE;
+                googleLogin.signIn();
+                break;
         }
-    }
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        JLogUtils.i("ray","connectionResult:"+connectionResult.getErrorMessage());
     }
 
     private void closeCurrActivity(){
@@ -794,7 +859,6 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
                                     mActivity.get().setResult(RESULTCODE,intent);
                                     mActivity.get().finish();
                                 }
-
                             }
 //                        }
                         SharedPreferences.Editor editor2 = shared.edit();
@@ -915,6 +979,7 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
         if(dataHandler!=null){
             dataHandler.removeCallbacksAndMessages(null);
         }
+
     }
 
 
@@ -1098,8 +1163,20 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
-        TwitterWrapper.getInstance().onActivityResult(requestCode, resultCode, data);
+        switch (thirdLoginType){
+            case GOOGLE:
+                if (requestCode==googleLogin.requestCode){
+                    GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                    googleLogin.handleSignInResult( result ) ;
+                }
+                break;
+            case FACEBOOK:
+                facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
+                break;
+            case TWITTER:
+                TwitterWrapper.getInstance().onActivityResult(requestCode, resultCode, data);
+                break;
+        }
         JLogUtils.i(mCurrTag,"result:"+resultCode);
         if(getActivity()==null)return;
 
@@ -1137,6 +1214,7 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
 //        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
 //            mGoogleApiClient.disconnect();
 //        }
+        googleLogin.stopManager();
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, false);
     }
 }

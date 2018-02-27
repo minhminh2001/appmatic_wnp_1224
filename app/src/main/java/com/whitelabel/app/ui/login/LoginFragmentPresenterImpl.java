@@ -2,10 +2,9 @@ package com.whitelabel.app.ui.login;
 
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
-import com.whitelabel.app.model.ApiException;
 import com.whitelabel.app.model.ApiFaildException;
-import com.whitelabel.app.model.NativeLoginRequest;
 import com.whitelabel.app.model.ResponseConnection;
+import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ExceptionParse;
@@ -95,4 +94,35 @@ public class LoginFragmentPresenterImpl extends RxPresenter<LoginFragmentContrac
                 });
         addSubscrebe(subscription);
     }
+
+    @Override
+    public void versionCheck() {
+        Subscription  subscription= iBaseManager.versionCheck().compose(RxUtil.<ResponseModel>rxSchedulerHelper()).subscribe(
+            new Subscriber<ResponseModel>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    if(ExceptionParse.parseException(throwable).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR) {
+                        mView.showErrorMessage(ExceptionParse.parseException(throwable).getErrorMsg());
+                    }
+                }
+
+                @Override
+                public void onNext(ResponseModel responseModel) {
+                    if (responseModel.getStatus()==1){
+                        mView.emailLoginOrRegister();
+                    }else if (responseModel.getStatus()==-1){
+                        //need update
+                        mView.showUpdateDialog();
+                    }
+                }
+            });
+        addSubscrebe(subscription);
+    }
+
+
 }

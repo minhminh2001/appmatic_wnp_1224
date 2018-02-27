@@ -35,6 +35,7 @@ import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomDialog;
 import com.whitelabel.app.widget.CustomHomeViewPager;
@@ -262,13 +263,21 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     }
     public Fragment  createFragmentByIndex(int  index){
         Fragment fragment=null;
-        if(fragmentType==TYPE_FRAGMENT_HORIZONTAL){
-            fragment=HomeHomeFragmentV4.newInstance(index, categoryArrayList.get(index).getMenuId());
-        }else if(fragmentType==TYPE_FRAGMENT_VERTICAL){
-            fragment=HomeHomeFragmentV3.newInstance(index, categoryArrayList.get(index).getMenuId());
+        //list one : shop by brand
+        if (index==categoryArrayList.size()-1){
+            fragment= HomeHomeFragmentShopBrand
+                .newInstance(index,categoryArrayList.get(index).getMenuId());
+        }else {
+            if (fragmentType==TYPE_FRAGMENT_HORIZONTAL){
+                fragment=HomeHomeFragmentV4.newInstance(index, categoryArrayList.get(index).getMenuId());
+            }else  if(fragmentType==TYPE_FRAGMENT_VERTICAL){
+                fragment=HomeHomeFragmentV3.newInstance(index, categoryArrayList.get(index).getMenuId());
+            }
         }
         return fragment;
     }
+
+    private
     class CustomTabPageIndicatorAdapter extends FragmentPagerAdapter {
         public CustomTabPageIndicatorAdapter(FragmentManager fm) {
             super(fm);
@@ -337,7 +346,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             if (isCatOrDogPosition(position)){
                 lastPagePositon=position;
             }
-            skipBrandPage(position);
+//            skipBrandPage(position);
         }
         @Override
         public void onPageScrollStateChanged(int state) {
@@ -356,9 +365,9 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
         if (categoryArrayList.size()>0 && index==categoryArrayList.size()-1){
             vpCategoryViewPager.setCurrentItem(lastPagePositon);
             String menuId = categoryArrayList.get(index).getMenuId();
-            PageIntentUtils.skipToBrandListPage(getActivity(),menuId,categoryName);
+//            PageIntentUtils.skipToBrandListPage(getActivity(),menuId,categoryName);
+
         }
     }
-
 
 }

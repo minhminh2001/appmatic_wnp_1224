@@ -53,7 +53,9 @@ import com.whitelabel.app.model.ShoppingCartListEntityCart;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.login.LoginFragmentContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
+import com.whitelabel.app.ui.shoppingcart.ShoppingCartVersionContract;
 import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
@@ -74,6 +76,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -82,7 +87,7 @@ import java.util.List;
  * Use the {@link ShoppingCartVerticalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment implements SwipeRefreshLayout.OnRefreshListener, View.OnFocusChangeListener, View.OnClickListener, ShoppingCartAdapterCallback {
+public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<ShoppingCartVersionContract.Presenter> implements SwipeRefreshLayout.OnRefreshListener, View.OnFocusChangeListener, View.OnClickListener, ShoppingCartAdapterCallback ,ShoppingCartVersionContract.View{
     private static final String ARG_PARAM1 = "type";
     private static final String ARG_PARAM2 = "mGATrackTimeStart";
     private TextView tvShoppingShippingFeeTitle;
@@ -166,11 +171,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 } else {
                     showDialog();
                     mGATrackCheckoutTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-                    String sessionKey = "";
-                    if (WhiteLabelApplication.getAppConfiguration() != null && WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()) != null) {
-                        sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
-                    }
-                    mCarDao.checkOutofStock(sessionKey);
+                  mPresenter.versionCheck();
                 }
                 break;
             case R.id.try_again:
@@ -183,6 +184,14 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
                 etVoucherApply.setText("");
                 break;
         }
+    }
+
+    private void checkStock(){
+        String sessionKey = "";
+        if (WhiteLabelApplication.getAppConfiguration() != null && WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()) != null) {
+            sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey();
+        }
+        mCarDao.checkOutofStock(sessionKey);
     }
 
     private void checkAndApplyVoucherCode() {
@@ -224,6 +233,12 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             GaTrackHelper.getInstance().googleAnalytics("Shopping Cart Screen", getActivity());
             JLogUtils.i("googleGA_screen", "Shopping Cart Screen");
         }
+    }
+
+    @Override
+    public void inject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+            presenterModule(new PresenterModule(getActivity())).build().inject(this);
     }
 
     @Override
@@ -294,6 +309,22 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment imple
             return gestureDetector.onTouchEvent(event);
         }
     };
+
+    @Override
+    public void showUpdateDialog() {
+        JViewUtils.showUpdateGooglePlayStoreDialog(getActivity());
+    }
+
+    @Override
+    public void checkCartStock() {
+        checkStock();
+    }
+
+    @Override
+    public void showErrorMessage(String errorMessage) {
+        JViewUtils.showErrorToast(getActivity(),errorMessage);
+    }
+
     class ShoppingOnGestureListener extends  GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {

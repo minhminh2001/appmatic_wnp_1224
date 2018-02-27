@@ -50,12 +50,16 @@ public class ShopBrandPresenterImpl extends RxPresenter<ShopBrandContract.View> 
 //                        mView.closeProgressDialog();
                         mView.closeSwipeLayout();
                         mView.showErrorMsg(ExceptionParse.parseException(throwable).getErrorMsg());
+                        if(ExceptionParse.parseException(throwable).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR) {
+                            mView.showOnlineErrorLayout();
+                        }
                     }
 
                     @Override
                     public void onNext(ShopBrandResponse shopBrandResponse) {
 //                        mView.closeProgressDialog();
                         mView.closeSwipeLayout();
+                        mView.hideOnlineErrorLayout();
                         ArrayList<ShopBrandResponse.BrandsBean.ItemsBean> titleAndItemList = createTitleAndItemList(shopBrandResponse.getBrands());
                         mView.loadData(titleAndItemList);
                         mView.loadTitleData(getTitleList(titleAndItemList));

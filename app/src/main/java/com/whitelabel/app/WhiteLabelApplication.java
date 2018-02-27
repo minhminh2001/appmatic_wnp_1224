@@ -12,6 +12,8 @@ import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 
 import com.orhanobut.logger.AndroidLogAdapter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
 import com.whitelabel.app.exception.CrashHandler;
 import com.whitelabel.app.model.ApplicationConfigurationEntity;
 import com.whitelabel.app.model.PhoneConfigurationEntity;
@@ -73,7 +75,8 @@ public class WhiteLabelApplication extends MultiDexApplication {
     public void onCreate() {
         MultiDex.install(this);
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+        initTwitter();
+
 //        NewRelic.withApplicationToken(
 //                "AAd06a20384063c34e4b1ab1ade0f956323ffa6de4"
 //        ).start(this);
@@ -113,5 +116,12 @@ public class WhiteLabelApplication extends MultiDexApplication {
             mTracker.enableAutoActivityTracking(false);
         }
         return mTracker;
+    }
+
+    private void initTwitter(){
+        String twitterConsumerKey=getString(R.string.twitter_consumer_key);
+        String twitterSecret=getString(R.string.twitter_consumer_secret);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(twitterConsumerKey, twitterSecret);
+        Fabric.with(this, new TwitterCore(authConfig),new Crashlytics());
     }
 }

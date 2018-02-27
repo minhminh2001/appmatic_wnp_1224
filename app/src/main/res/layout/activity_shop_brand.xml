@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/ll_toolbar"
+        android:visibility="gone"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -15,9 +17,12 @@
 
     </LinearLayout>
     <RelativeLayout
+        android:id="@+id/rl_top_select"
         android:background="@color/greyEEEEEE"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/switch_view_and_filter_bar_height">
+        android:layout_height="@dimen/switch_view_and_filter_bar_height"
+        android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
         <ImageView
             android:id="@+id/iv_arrow_down_black"
             android:layout_alignParentRight="true"
@@ -35,7 +40,7 @@
             android:textColor="@color/black"
             android:text="@string/shop_by_brand_start_with"
             android:layout_toLeftOf="@id/iv_arrow_down_black"
-            />
+        />
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
@@ -44,6 +49,7 @@
     </RelativeLayout>
     <com.whitelabel.app.widget.CustomSwipefreshLayout
         android:id="@+id/swipe_container"
+        android:layout_below="@id/rl_top_select"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     <android.support.v7.widget.RecyclerView
@@ -51,4 +57,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     </com.whitelabel.app.widget.CustomSwipefreshLayout>
-</LinearLayout>
+    <include
+        layout="@layout/connection_breaks"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+    />
+</RelativeLayout>

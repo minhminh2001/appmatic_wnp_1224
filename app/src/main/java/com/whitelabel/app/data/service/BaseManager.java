@@ -1,13 +1,17 @@
 package com.whitelabel.app.data.service;
 
 import com.google.gson.JsonObject;
+
+import com.whitelabel.app.Const;
 import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.data.retrofit.BaseApi;
 import com.whitelabel.app.data.retrofit.MockApi;
 import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
+import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
+import com.whitelabel.app.utils.JToolUtils;
 
 import javax.inject.Inject;
 
@@ -40,6 +44,14 @@ public class BaseManager implements IBaseManager {
     public void saveUser(GOUserEntity goUserEntity) {
         cacheApi.saveUser(goUserEntity);
     }
+
+    @Override
+    public Observable<ResponseModel> versionCheck() {
+        String versionNumber= JToolUtils.getAppVersionName();
+        String platform= Const.VERSION_CHECK_PLATFORM_ANDROID;
+        return appApi.versionCheck(versionNumber,platform);
+    }
+
     @Override
     public Observable<RemoteConfigResonseModel> getConfigInfo() {
         String userId= cacheApi.getVersionNumber();

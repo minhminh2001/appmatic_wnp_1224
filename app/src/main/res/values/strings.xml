@@ -10,10 +10,7 @@
     <string name="payment_creditcard_url">appservice/checkout/ccpayjump?session_key=%1$s&amp;orderId=%2$s&amp;appid=1</string>
     <string name="upload_file_path">appservice/order/uploadTransferProof</string>
     <string name="jump_market_uri">market://details?id=com.wnp.app</string>
-    <!-- one all -->
-    <string name="twitter_consumer_key">Jl6f81SYZMnwdNXc5NrjkFWgY</string>
-    <string name="twitter_consumer_secret">0WMBLTTbJnSzU3h7zGH4CHmkVV6oGgo9Dhdka5JTL4go1ZsBK1</string>
-    <string name="twitter_subdomain">ccwnp</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string-array name="size_array">
         <item>S</item>
@@ -373,8 +370,11 @@
     <string name="enter_password">Password</string>
     <string name="password">Password</string>
     <string name="to_resend">&#160;to resend &#160;confirmation email.</string>
-    <string name="forgot_your_password">Forgot your password?</string>
+    <string name="forgot_your_password"><u>Forgot your password?</u></string>
     <string name="not_a_member_yet">Not a member yet?</string>
+    <string name="third_login_title">Sign in with your social account</string>
+    <string name="third_login_failed">login failed</string>
+
     <!--register-->
     <string name="register">Register</string>
     <string name="first_name">First Name</string>
@@ -475,6 +475,9 @@
     <string name="versionCheckMsg">Please update before you continue.</string>
     <string name="versionCheck">Your app version is outdated, please update before you continue.</string>
     <string name="update_now">UPDATE NOW</string>
+    <string name="update_app">Update App</string>
+    <string name="update_app_msg">Your current app version is outdated now,please go to the Google Play Store to update.</string>
+
     <string name="update">UPDATE</string>
     <string name="congratulations">CONGRATULATIONS!</string>
     <string name="select_one_of_the_bixes">Select one of boxes below for surprise gift!</string>
@@ -729,6 +732,12 @@
     <!--dev gid :UA-113868370-5   release gid:UA-66493898-4 -->
     <string name="ga_track_id">UA-113868370-5</string>
     <string name="facebook_id">1287318627981888</string>
+    <!-- one all -->
+    <string name="twitter_consumer_key">Jl6f81SYZMnwdNXc5NrjkFWgY</string>
+    <string name="twitter_consumer_secret">0WMBLTTbJnSzU3h7zGH4CHmkVV6oGgo9Dhdka5JTL4go1ZsBK1</string>
+    <string name="twitter_subdomain">ccwnp</string>
+
+    <string name="google_server_client_id">319272901175-l31l8tl2ta8oa8bol75q0mfihiaj3tqn.apps.googleusercontent.com</string>
     <string name="api_version">v1</string>
     <string name="api_key">eyKOW06BPBqbe3qe</string>
     <!--dev stage-->
