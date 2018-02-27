@@ -43,8 +43,8 @@ import injection.modules.PresenterModule;
 
 /**
  * Created by img on 2017/11/20.
+ * this page have been replaced by HomeHomeFragmentShopBrand
  */
-
 public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter> implements ShopBrandContract.View, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.tv_start_with)
     CustomTextView tvStartWith;

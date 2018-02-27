@@ -156,6 +156,7 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         createAllItemAndCreateTitleIndex();
     }
 
+    //base net response to transform item and list used by recyclerview
     private void createAllItemAndCreateTitleIndex(){
         if (categoryDetailModel!=null && categoryDetailModel.getCarousels()!=null && !categoryDetailModel.getCarousels().isEmpty()) {
             int firstTitle=1;
@@ -406,6 +407,13 @@ public class CategoryDetailVerticalAdapter extends RecyclerView.Adapter<Recycler
         ivWishIcon.setTag(repeatAnim);
     }
 
+    /**
+     * if productDetail click wish icon,back to HomeFragmentV3-4,need to anim and add to wish for cache
+     * @param context
+     * @param entity bean
+     * @param ivWwishIcon anim for icon
+     * @param tempPosition which wish position
+     */
     public void setUnLoginClickWishBackThisPageToRefresh(Context context, SVRAppserviceProductSearchResultsItemReturnEntity entity, ImageView ivWwishIcon,  int tempPosition){
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(context) && iCommunHomeActivity.isUnLoginCanWishIconRefresh(entity.getProductId())){
             entity.setIsLike(1);

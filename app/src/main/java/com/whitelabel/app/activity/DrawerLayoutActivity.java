@@ -450,7 +450,7 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         mActionDrawableToggle.syncState();
     }
 
-
+    //init left menu dogs and cats adapter
     private void initLeftAdapter() {
         switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_DOGS);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(DrawerLayoutActivity.this);

@@ -44,6 +44,7 @@ public class GoogleLogin {
             .build();
     }
 
+    //View root lifecycler,onPause or onStop,use
     public void stopManager(){
         if(mGoogleApiClient!=null && mGoogleApiClient.isConnected()){
             mGoogleApiClient.stopAutoManage(fragment.getActivity());
@@ -81,8 +82,12 @@ public class GoogleLogin {
             });
     }
 
+    /**
+     * Activity：onActivityResult use
+     * @param result response data
+     * @return
+     */
     public String handleSignInResult(GoogleSignInResult result) {
-        JToolUtils.printObject(result);
         String res = "" ;
         if (result.isSuccess()) {
             //login sucess

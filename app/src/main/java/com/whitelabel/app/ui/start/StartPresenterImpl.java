@@ -130,7 +130,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
 
 
 
-
+    //api sequence  1.config/getConfig  --> 2.version/check  --> 3.app/open
     @Override
     public void getConfigInfo(final String sessionKey, final String deviceToken) {
         Subscription subscription= configService.getConfigInfo()

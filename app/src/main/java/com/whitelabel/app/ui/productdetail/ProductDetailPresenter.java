@@ -389,6 +389,12 @@ public class ProductDetailPresenter  extends RxPresenter<ProductDetailContract.V
             addSubscrebe(subscription);
     }
 
+    /**
+     * productDetail 
+     * @param parentView
+     * @param sourceIv
+     * @param targetIv
+     */
     public void addCartToTopAnim(final RelativeLayout parentView, final ImageView sourceIv, ImageView targetIv) {
         final ImageView goods = new ImageView(parentView.getContext());
         goods.setImageDrawable(sourceIv.getDrawable());

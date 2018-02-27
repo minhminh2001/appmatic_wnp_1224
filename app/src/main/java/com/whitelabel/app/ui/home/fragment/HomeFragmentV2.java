@@ -343,16 +343,13 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             mFragments.get(currentCategoryFragmentIndex).onPause();
             currentCategoryFragmentIndex = position;
             mFragments.get(position).onResume();
-            if (isCatOrDogPosition(position)){
-                lastPagePositon=position;
-            }
-//            skipBrandPage(position);
         }
         @Override
         public void onPageScrollStateChanged(int state) {
         }
     };
 
+    //
     private boolean isCatOrDogPosition(int position){
         if (position!=categoryArrayList.size()-1){
             return true;

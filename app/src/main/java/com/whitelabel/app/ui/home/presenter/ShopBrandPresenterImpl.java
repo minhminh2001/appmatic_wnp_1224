@@ -68,6 +68,11 @@ public class ShopBrandPresenterImpl extends RxPresenter<ShopBrandContract.View> 
         addSubscrebe(subscription);
     }
 
+    /**
+     * base net Response ,to create recyclerview use list
+     * @param brandsBeans net response data
+     * @return
+     */
     private ArrayList<ShopBrandResponse.BrandsBean.ItemsBean> createTitleAndItemList(List<ShopBrandResponse.BrandsBean> brandsBeans) {
         int currentTitlePosition = 0;
         int currentItemPosition;
@@ -107,6 +112,11 @@ public class ShopBrandPresenterImpl extends RxPresenter<ShopBrandContract.View> 
         return lists;
     }
 
+    /**
+     * base net Response ,to create title list
+     * @param brandsBeans net response data
+     * @return
+     */
     private ArrayList<ShopBrandResponse.BrandsBean.ItemsBean> getTitleList(ArrayList<ShopBrandResponse.BrandsBean.ItemsBean> brandsBeans){
         ArrayList lists=new ArrayList<>();
         if (brandsBeans!=null && !brandsBeans.isEmpty()){

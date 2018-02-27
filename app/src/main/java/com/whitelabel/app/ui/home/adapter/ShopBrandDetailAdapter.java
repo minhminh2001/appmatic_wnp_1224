@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Created by img on 2017/11/20.
+ * ShopBrandActivity not use,so this adapter not use
  */
 
 public class ShopBrandDetailAdapter extends BaseMultiItemQuickAdapter<ShopBrandResponse.BrandsBean.ItemsBean, BaseViewHolder> {

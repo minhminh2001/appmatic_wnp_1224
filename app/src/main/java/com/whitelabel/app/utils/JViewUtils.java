@@ -291,6 +291,10 @@ public class JViewUtils {
         return mMaterialDialog;
     }
 
+    /**
+     * judge local versionName and net versionName,if local lower ,show dialog to googlePlay store update
+     * @param context
+     */
     public static void showUpdateGooglePlayStoreDialog(final Context context){
         String title=context.getResources().getString(R.string.update_app);
         String msg=context.getResources().getString(R.string.update_app_msg);
@@ -1455,7 +1459,12 @@ public class JViewUtils {
         }
     }
 
-
+    /**
+     * A translucent black hint dialog.
+     * @param context
+     * @param rootView activity or fragment rootView
+     * @param errorMsg hint message
+     */
     public static void showPopUpWindw(Context context,View rootView,String errorMsg){
         final PopupWindow popupWindow=new PopupWindow(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -63,11 +63,7 @@ import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * Use the {@link HomeHomeFragmentShopBrand#newInstance} factory method to
- * create an instance of this fragment.
+ * replace the original ShopBrandActivity
  */
 public class HomeHomeFragmentShopBrand extends HomeBaseFragment<ShopBrandContract.Presenter> implements SwipeRefreshLayout.OnRefreshListener, ShopBrandContract.View{
     @BindView(R.id.tv_start_with)
