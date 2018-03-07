@@ -123,12 +123,10 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="landingpage"
-                    android:scheme="gemfive" />
-                <data
-                    android:host="product"
-                    android:scheme="gemfive" />
-                <!-- gemfive://landingpage/1111 -->
+                    android:host="homepage"
+                    android:scheme="wnp" />
+
+                <!--wnp://homePage/-->
             </intent-filter>
         </activity>
         <activity
