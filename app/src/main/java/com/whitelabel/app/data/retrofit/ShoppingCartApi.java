@@ -39,4 +39,8 @@ public interface ShoppingCartApi {
     @FormUrlEncoded
     @POST("appservice/cart/add")
     public Observable<ResponseModel>  addProductToShoppingCart(@Field("session_key") String sessionKey,@Field("product_id") String productId,@FieldMap Map<String,String> param);
+
+    @FormUrlEncoded
+    @POST("appservice/cart/guestList")
+    Observable<ShoppingCartListEntityCart> getGuestList(@FieldMap Map<String, String> params);
 }

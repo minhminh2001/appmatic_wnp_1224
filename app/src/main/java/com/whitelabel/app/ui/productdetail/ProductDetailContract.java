@@ -1,13 +1,13 @@
 package com.whitelabel.app.ui.productdetail;
 
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedResultsItemReturnEntity;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.BaseView;
+
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,52 +18,102 @@ import java.util.Map;
  */
 
 public interface ProductDetailContract {
-    public interface View extends BaseView{
-        public void showNornalProgressDialog();
-        public void showBottomProgressDialog();
-        public void dissmissProgressDialog();
-        public void showErrorMessage(String errorMsg);
-        public void showContentLayout();
-        public void  loadStaticData(ProductDetailModel productDetailModel);
-        public void loadSimpleProductView(ProductDetailModel productDetailModel, ArrayList<String> productImageArrayList);
-        public void loadConfigurableProductView(ProductDetailModel productDetailModel, ArrayList<String> productImageArrayList);
-        public void loadGroupProductView(ProductDetailModel productDetailModel, ArrayList<String> productImageArrayList);
-        public void  showBindProductView(List<ProductPropertyModel> bindProducts);
-        public void hideBindProductView();
-        public void clearUserSelectedProduct();
-        public void hideVisibleProduct();
-        public void setLikeView(boolean isLike);
-        public void hideAvailabilityView();
-        public void showAvailabilityView();
+
+    interface View extends BaseView {
+
+        void showNornalProgressDialog();
+
+        void showBottomProgressDialog();
+
+        void dissmissProgressDialog();
+
+        void showErrorMessage(String errorMsg);
+
+        void showContentLayout();
+
+        void loadStaticData(ProductDetailModel productDetailModel);
+
+        void loadSimpleProductView(ProductDetailModel productDetailModel,
+            ArrayList<String> productImageArrayList);
+
+        void loadConfigurableProductView(ProductDetailModel productDetailModel,
+            ArrayList<String> productImageArrayList);
+
+        void loadGroupProductView(ProductDetailModel productDetailModel,
+            ArrayList<String> productImageArrayList);
+
+        void showBindProductView(List<ProductPropertyModel> bindProducts);
+
+        void hideBindProductView();
+
+        void clearUserSelectedProduct();
+
+        void hideVisibleProduct();
+
+        void setLikeView(boolean isLike);
+
+        void hideAvailabilityView();
+
+        void showAvailabilityView();
+
         void setShoppingCartCount(int count);
-        public void setWishIconColorToBlank();
-        public void setWishIconColorToThemeColor();
-        public void startLoginActivity(boolean expire);
-        public void startAddToCart();
-        public void showNoInventoryToast();
-        public void setProductCountView(long count);
-        public Map<String,String> getGroupProductParams();
-        public String getConfiguationProductSimpleId();
-        public void showProductRecommendLine();
-        public void updateRecommendData(ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity> results);
+
+        void setWishIconColorToBlank();
+
+        void setWishIconColorToThemeColor();
+
+        void startLoginActivity(boolean expire);
+
+        void startAddToCart();
+
+        void showNoInventoryToast();
+
+        void setProductCountView(long count);
+
+        Map<String, String> getGroupProductParams();
+
+        String getConfiguationProductSimpleId();
+
+        void showProductRecommendLine();
+
+        void updateRecommendData(
+            ArrayList<SVRAppserviceProductRecommendedResultsItemReturnEntity> results);
     }
-    public interface Presenter extends BasePresenter<View>{
+
+    public interface Presenter extends BasePresenter<View> {
+
         void loadProductDetailData(String productId);
+
         void setDialogType(String type);
+
         ProductDetailModel getProductData();
+
         void getShoppingCount();
+
         void saveShoppingCartCount(int num);
+
         void wishListBtnClick();
+
         void setOutOfStock(boolean isOutOfStock);
+
         long getUserSelectedProductQty();
+
         void setUserSelectedProductQty(int userSelectedProductQty);
+
         long getCurrUserSelectedProductMaxStockQty();
+
         void setCurrUserSelectedProductMaxStockQty(long currUserSelectedProductMaxStockQty);
-        void  productCountMinusClick();
+
+        void productCountMinusClick();
+
         void productCountPlusClick();
+
         void addToCartClick();
+
         void delayAddToCart();
-        void addCartToTopAnim(final RelativeLayout parentView, final ImageView sourceIv, ImageView targetIv);
+
+        void addCartToTopAnim(final RelativeLayout parentView, final ImageView sourceIv,
+            ImageView targetIv);
     }
 
 }

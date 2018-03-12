@@ -1,8 +1,5 @@
 package injection.modules;
 
-import android.app.Activity;
-
-import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICheckoutManager;
@@ -44,6 +41,8 @@ import com.whitelabel.app.ui.shoppingcart.ShoppingCartVersionPresenter;
 import com.whitelabel.app.ui.start.StartContract;
 import com.whitelabel.app.ui.start.StartPresenterImpl;
 
+import android.app.Activity;
+
 import dagger.Module;
 import dagger.Provides;
 import injection.ActivityScope;
@@ -54,108 +53,139 @@ import injection.ActivityScope;
 
 @Module
 public class PresenterModule {
+
     private Activity mActivity;
+
     public PresenterModule(Activity activity) {
         this.mActivity = activity;
     }
+
     @Provides
     @ActivityScope
     public Activity provideActivity() {
         return mActivity;
     }
+
     @Provides
     @ActivityScope
-    public StartContract.Presenter  provideStartPresenter(IBaseManager configService,IAccountManager accountManager,ICommodityManager iCommodityManager){
-        return new StartPresenterImpl(configService,accountManager,iCommodityManager);
+    public StartContract.Presenter provideStartPresenter(IBaseManager configService,
+        IAccountManager accountManager, ICommodityManager iCommodityManager) {
+        return new StartPresenterImpl(configService, accountManager, iCommodityManager);
     }
+
     @Provides
     @ActivityScope
-    public HomeContract.Presenter  provideHomeFragmentV2Presenter(ICommodityManager iCommodityManager,IBaseManager configService){
-        return new HomePresenterImpl(iCommodityManager,configService);
+    public HomeContract.Presenter provideHomeFragmentV2Presenter(
+        ICommodityManager iCommodityManager, IBaseManager configService) {
+        return new HomePresenterImpl(iCommodityManager, configService);
     }
+
     @Provides
     @ActivityScope
-    public  HomeHomeContract.Presenter provideHomeHomeFragmentV1Presenter(ICommodityManager iCommodityManager){
+    public HomeHomeContract.Presenter provideHomeHomeFragmentV1Presenter(
+        ICommodityManager iCommodityManager) {
         return new HomeHomePresenterImpl(iCommodityManager);
     }
+
     @Provides
     @ActivityScope
-    public  HomeCategoryDetailContract.Presenter provideHomeHomeV3Presenter(ICommodityManager iCommodityManager,IBaseManager iBaseManager){
-        return new HomeCategoryDetailPresenterImpl(iCommodityManager,iBaseManager);
-    }
-    @Provides
-    @ActivityScope
-    public  ProductDetailContract.Presenter provideProductDetailPresenter(ICommodityManager iCommodityManager, IBaseManager iBaseManager, IAccountManager iAccountManager, IShoppingCartManager iShoppingCartManager, IGoogleAnalyticsManager iGoogleAnalyticsManager){
-        return new ProductDetailPresenter(iAccountManager,iCommodityManager,iBaseManager,iShoppingCartManager,iGoogleAnalyticsManager);
-    }
-    @Provides
-    @ActivityScope
-    public  BaseAddressContract.Presenter provideAddressBasePresenter(ICommodityManager iCommodityManager, IAccountManager iAccountManager){
-        return new BaseAddressPresenter(iCommodityManager,iAccountManager);
-    }
-    @Provides
-    @ActivityScope
-    public  CheckoutDefaultAddressContract.Presenter provideCheckoutDefaultAddressPresenter(ICheckoutManager iCheckoutManager, IBaseManager iBaseManager){
-        return new CheckoutDefaultAddressPresenter(iCheckoutManager,iBaseManager);
+    public HomeCategoryDetailContract.Presenter provideHomeHomeV3Presenter(
+        ICommodityManager iCommodityManager, IBaseManager iBaseManager) {
+        return new HomeCategoryDetailPresenterImpl(iCommodityManager, iBaseManager);
     }
 
     @Provides
     @ActivityScope
-    public  CheckoutAddAddressContract.Presenter provideCheckoutAddAddressPresenter(ICheckoutManager iCheckoutManager, IBaseManager iBaseManager){
-        return new CheckoutAddAddressPresenter(iCheckoutManager,iBaseManager);
-    }
-    @Provides
-    @ActivityScope
-    public   CheckoutContract.Presenter provideCheckoutPresenter(ICheckoutManager iCheckoutManager, IBaseManager iBaseManager){
-        return new CheckoutPresenterImpl(iBaseManager,iCheckoutManager);
-    }
-    @Provides
-    @ActivityScope
-    public MainContract.Presenter provideMainPresenter(IBaseManager iBaseManager,IAccountManager iAccountManager){
-        return new MainPresenterImpl(iBaseManager,iAccountManager);
-    }
-
-
-    @Provides
-    @ActivityScope
-    public LoginFragmentContract.Presenter provideLoginFragment(IBaseManager iBaseManager, IAccountManager iAccountManager){
-        return new LoginFragmentPresenterImpl(iBaseManager,iAccountManager);
+    public ProductDetailContract.Presenter provideProductDetailPresenter(
+        ICommodityManager iCommodityManager, IBaseManager iBaseManager,
+        IAccountManager iAccountManager, IShoppingCartManager iShoppingCartManager,
+        IGoogleAnalyticsManager iGoogleAnalyticsManager) {
+        return new ProductDetailPresenter(iAccountManager, iCommodityManager, iBaseManager,
+            iShoppingCartManager, iGoogleAnalyticsManager);
     }
 
     @Provides
     @ActivityScope
-    public ShopBrandContract.Presenter provideShopBrandPresenter(ICommodityManager iCommodityManager,IBaseManager iBaseManager){
-        return new ShopBrandPresenterImpl(iCommodityManager,iBaseManager);
+    public BaseAddressContract.Presenter provideAddressBasePresenter(
+        ICommodityManager iCommodityManager, IAccountManager iAccountManager) {
+        return new BaseAddressPresenter(iCommodityManager, iAccountManager);
     }
 
     @Provides
     @ActivityScope
-    public SearchContract.Presenter provideSearchPresenter(ICommodityManager iCommodityManager,IBaseManager iBaseManager){
-        return new SearchPresenterImpl(iCommodityManager,iBaseManager) ;
+    public CheckoutDefaultAddressContract.Presenter provideCheckoutDefaultAddressPresenter(
+        ICheckoutManager iCheckoutManager, IBaseManager iBaseManager) {
+        return new CheckoutDefaultAddressPresenter(iCheckoutManager, iBaseManager);
     }
 
     @Provides
     @ActivityScope
-    public BindProductContract.Presenter provideBindProductPresenter(ICommodityManager iCommodityManager){
+    public CheckoutAddAddressContract.Presenter provideCheckoutAddAddressPresenter(
+        ICheckoutManager iCheckoutManager, IBaseManager iBaseManager) {
+        return new CheckoutAddAddressPresenter(iCheckoutManager, iBaseManager);
+    }
+
+    @Provides
+    @ActivityScope
+    public CheckoutContract.Presenter provideCheckoutPresenter(ICheckoutManager iCheckoutManager,
+        IBaseManager iBaseManager) {
+        return new CheckoutPresenterImpl(iBaseManager, iCheckoutManager);
+    }
+
+    @Provides
+    @ActivityScope
+    public MainContract.Presenter provideMainPresenter(IBaseManager iBaseManager,
+        IAccountManager iAccountManager) {
+        return new MainPresenterImpl(iBaseManager, iAccountManager);
+    }
+
+    @Provides
+    @ActivityScope
+    public LoginFragmentContract.Presenter provideLoginFragment(IBaseManager iBaseManager,
+        IAccountManager iAccountManager) {
+        return new LoginFragmentPresenterImpl(iBaseManager, iAccountManager);
+    }
+
+    @Provides
+    @ActivityScope
+    public ShopBrandContract.Presenter provideShopBrandPresenter(
+        ICommodityManager iCommodityManager, IBaseManager iBaseManager) {
+        return new ShopBrandPresenterImpl(iCommodityManager, iBaseManager);
+    }
+
+    @Provides
+    @ActivityScope
+    public SearchContract.Presenter provideSearchPresenter(ICommodityManager iCommodityManager,
+        IBaseManager iBaseManager) {
+        return new SearchPresenterImpl(iCommodityManager, iBaseManager);
+    }
+
+    @Provides
+    @ActivityScope
+    public BindProductContract.Presenter provideBindProductPresenter(
+        ICommodityManager iCommodityManager) {
         return new BindProductPresenterImpl(iCommodityManager);
     }
 
     @Provides
     @ActivityScope
-    public SettingContract.Presenter provideSettingPresenter(IBaseManager iBaseManager,IAccountManager iAccountManager){
-        return new SettingPresenterImpl(iBaseManager,iAccountManager);
+    public SettingContract.Presenter provideSettingPresenter(IBaseManager iBaseManager,
+        IAccountManager iAccountManager) {
+        return new SettingPresenterImpl(iBaseManager, iAccountManager);
     }
 
     @Provides
     @ActivityScope
-    public  MyOrderContract.Presenter provideMyOrderPresenter(ICommodityManager iCommodityManager, IBaseManager iBaseManager){
-        return new MyOrderPresenter(iCommodityManager,iBaseManager);
+    public MyOrderContract.Presenter provideMyOrderPresenter(ICommodityManager iCommodityManager,
+        IBaseManager iBaseManager) {
+        return new MyOrderPresenter(iCommodityManager, iBaseManager);
     }
 
     @Provides
     @ActivityScope
-    public  ShoppingCartVersionContract.Presenter provideCheckoutVersionPresenter(IBaseManager iBaseManager){
-        return new ShoppingCartVersionPresenter(iBaseManager);
+    public ShoppingCartVersionContract.Presenter provideCheckoutVersionPresenter(
+        IBaseManager iBaseManager, IShoppingCartManager iShoppingCartManager) {
+        return new ShoppingCartVersionPresenter(iBaseManager, iShoppingCartManager);
     }
 
 }
