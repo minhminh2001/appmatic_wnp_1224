@@ -91,6 +91,7 @@ public class ShoppingCartVersionPresenter extends RxPresenter<ShoppingCartVersio
 
     @Override
     public void deleteItem(String simpleId) {
+        mView.showDialog();
         iShoppingCartManager.deleteLocalShoppingItem(simpleId)
             .compose(RxUtil.<Boolean>rxSchedulerHelper())
             .subscribe(new Subscriber<Boolean>() {
@@ -101,18 +102,19 @@ public class ShoppingCartVersionPresenter extends RxPresenter<ShoppingCartVersio
 
                 @Override
                 public void onError(Throwable throwable) {
-
+                    mView.dimissDialog();
                 }
 
                 @Override
                 public void onNext(Boolean aBoolean) {
-
+                    getShoppingListFromLocal();
                 }
             });
     }
 
     @Override
     public void updateShoppingItemNumber(String simpleId, String s) {
+        mView.showDialog();
         iShoppingCartManager.updateLocalShoppingItemNumber(simpleId, s)
             .compose(RxUtil.<Boolean>rxSchedulerHelper())
             .subscribe(new Subscriber<Boolean>() {
@@ -123,12 +125,12 @@ public class ShoppingCartVersionPresenter extends RxPresenter<ShoppingCartVersio
 
                 @Override
                 public void onError(Throwable throwable) {
-
+                    mView.dimissDialog();
                 }
 
                 @Override
                 public void onNext(Boolean aBoolean) {
-
+                    getShoppingListFromLocal();
                 }
             });
         ;

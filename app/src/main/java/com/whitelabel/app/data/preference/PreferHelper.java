@@ -440,6 +440,7 @@ public class PreferHelper implements ICacheApi {
         for (ShoppingItemLocalModel shoppingItemLocalModel : shoppingItemLocalModels) {
             if (simpleId.equals(shoppingItemLocalModel.getSimpleId())) {
                 shoppingItemLocalModels.remove(shoppingItemLocalModel);
+                break;
             }
         }
         SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance()

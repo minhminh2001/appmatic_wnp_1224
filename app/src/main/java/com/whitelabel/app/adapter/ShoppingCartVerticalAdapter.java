@@ -95,10 +95,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             if (newCount <= 0) {
                 return;
             } else {
-                shoppingCart.setQty(newCount + "");
                 if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
-                    calculationToatalPriceAndNum(list);
-                    ShoppingCartVerticalAdapter.this.notifyDataSetChanged();
                     presenter.updateShoppingItemNumber(shoppingCart.getSimpleId(), newCount + "");
                 } else {
                     sendRequestToChangeCount(position, shoppingCart.getId(), newCount, "opt-sub");
@@ -129,12 +126,9 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
                 if (Integer.parseInt(shoppingCart.getQty()) + 1 <= shoppingCart.getStockQty()) {
                     String maxSaleQty = shoppingCart.getStockQty() + "";
-                    JLogUtils.d(TAG, "maxSaleQty=" + Integer.parseInt(maxSaleQty));
                     if (Integer.parseInt(shoppingCart.getQty()) + 1 <= Integer
                         .parseInt(maxSaleQty)) {
                         final int newCount = Integer.parseInt(shoppingCart.getQty()) + 1;
-                        shoppingCart.setQty(newCount + "");
-                        calculationToatalPriceAndNum(list);
                         presenter
                             .updateShoppingItemNumber(shoppingCart.getSimpleId(), newCount + "");
                         gaTrackerIncresaseQuantity(shoppingCart.getName(),
@@ -363,9 +357,6 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                 //TODO
                 ShoppingCartListEntityCell bean = (ShoppingCartListEntityCell) list.get(position);
                 if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
-                    list.remove(position);
-                    calculationToatalPriceAndNum(list);
-                    ShoppingCartVerticalAdapter.this.notifyDataSetChanged();
                     presenter.deleteItem(bean.getSimpleId());
                 } else {
                     sendRequestToDeteleteCell(position, bean.getId());

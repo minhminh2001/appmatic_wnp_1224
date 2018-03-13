@@ -230,7 +230,6 @@ public class ShoppingCartVerticalFragment extends
     private AdapterView.OnItemClickListener mItemListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            //除了i 外其他都暂时为null
             if (mProducts.get(i) instanceof ShoppingCartListEntityBody) {
                 return;
             }
@@ -961,7 +960,7 @@ public class ShoppingCartVerticalFragment extends
         }
     }
 
-    private void showDialog() {
+    public void showDialog() {
         if (getActivity() != null) {
             mDialog = JViewUtils.showProgressDialog(getActivity());
         }
@@ -976,7 +975,8 @@ public class ShoppingCartVerticalFragment extends
 
     private void initAdapter() {
         mProducts = new ArrayList<>();
-        adapter = new ShoppingCartVerticalAdapter(getActivity(), mProducts, mImageLoader, this,mPresenter);
+        adapter = new ShoppingCartVerticalAdapter(getActivity(), mProducts, mImageLoader, this,
+            mPresenter);
         adapter.setItemOnClickListener(mItemListener);
         adapter.setiShoppingCartAddOrSubtractCallback(new IShoppingCartAddOrSubtractCallback() {
             @Override

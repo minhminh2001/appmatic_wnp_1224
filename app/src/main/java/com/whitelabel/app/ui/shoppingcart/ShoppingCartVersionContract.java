@@ -18,6 +18,8 @@ public interface ShoppingCartVersionContract {
 
         void showErrorMessage(String errorMessage);
 
+        void showDialog();
+
         void dimissDialog();
 
         void setLayoutNotHaveProduct();
