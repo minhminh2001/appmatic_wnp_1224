@@ -886,17 +886,12 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
         EditText etCountry = addNewAddressFragment.etShippingCountry;
         if (etCountry.getTag() == null || JDataUtils.isEmpty(etCountry.getTag().toString())) {
-//            svrParameters.put("validation_notpass_reason", "country is required!!!");
             return null;
         } else {
             params.setCountryId(etCountry.getTag().toString());
-            //svrParameters.put("country_id", tvCountry.getTag().toString());
         }
         EditText etState = addNewAddressFragment.etShippingState;
         params.setRegion(etState.getText().toString());
-//        svrParameters.put("region", tvState.getText().toString());
-//        svrParameters.put("region_id", tvState.getTag() == null ? "" : tvState.getTag()
-// .toString());
         params.setRegionId(etState.getTag() == null ? "" : etState.getTag().toString());
         return params;
 
