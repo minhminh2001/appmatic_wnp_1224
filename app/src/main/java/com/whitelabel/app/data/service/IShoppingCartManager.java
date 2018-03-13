@@ -1,6 +1,7 @@
 package com.whitelabel.app.data.service;
 
 import com.whitelabel.app.data.preference.model.ShoppingItemLocalModel;
+import com.whitelabel.app.model.GuestListResponse;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.ShoppingCartDeleteCellEntity;
 import com.whitelabel.app.model.ShoppingCartListEntityCart;
@@ -37,6 +38,10 @@ public interface IShoppingCartManager {
 
     Observable<List<ShoppingItemLocalModel>> getProductListFromLocal();
 
-    Observable<ShoppingCartListEntityCart> getGuestList(
+    Observable<GuestListResponse> getGuestList(
         List<ShoppingItemLocalModel> shoppingItemLocalModels);
+
+    Observable<Boolean> deleteLocalShoppingItem(String simpleId);
+
+    Observable<Boolean> updateLocalShoppingItemNumber(String simpleId, String s);
 }

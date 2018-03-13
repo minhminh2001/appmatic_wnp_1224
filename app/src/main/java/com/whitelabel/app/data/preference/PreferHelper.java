@@ -393,7 +393,6 @@ public class PreferHelper implements ICacheApi {
                 productDetailModels.add(shoppingItemLocalModels.get(i));
             }
         }
-        productDetailModels.addAll(shoppingItemLocalModels);
         Gson gson = new Gson();
         sharedPreferences.edit()
             .putString(FILED_SHOPPING_CAR_LIST,
@@ -403,7 +402,6 @@ public class PreferHelper implements ICacheApi {
     }
 
     public int sum(String numberA, String numberB) {
-
         return Integer.parseInt(numberA) + Integer.parseInt(numberB);
     }
 
@@ -413,9 +411,68 @@ public class PreferHelper implements ICacheApi {
         String content = sharedPreferences.getString(FILED_SHOPPING_CAR_LIST, "");
         List<ShoppingItemLocalModel> productDetailModels = null;
         if (!TextUtils.isEmpty(content)) {
-            productDetailModels = JJsonUtils.parseJsonList(content, ShoppingItemLocalModel.class);
+            productDetailModels = JJsonUtils.fromJsonList(content, ShoppingItemLocalModel.class);
         }
         return productDetailModels;
+    }
+
+    @Override
+    public Observable<Boolean> updateNumberByiD(String simpleId, String number) {
+        List<ShoppingItemLocalModel> shoppingItemLocalModels = getShoppingList();
+        for (ShoppingItemLocalModel shoppingItemLocalModel : shoppingItemLocalModels) {
+            if (simpleId.equals(shoppingItemLocalModel.getSimpleId())) {
+                shoppingItemLocalModel.setNumber(number);
+            }
+        }
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance()
+            .getSharedPreferences(TABLE_LOCAL_SHOPPING_CAR, Activity.MODE_PRIVATE);
+        Gson gson = new Gson();
+        sharedPreferences.edit()
+            .putString(FILED_SHOPPING_CAR_LIST,
+                gson.toJson(shoppingItemLocalModels, new TypeToken<List<ShoppingItemLocalModel>>() {
+                }.getType())).commit();
+        return Observable.just(true);
+    }
+
+    @Override
+    public Observable<Boolean> deleteShoppingItem(String simpleId) {
+        List<ShoppingItemLocalModel> shoppingItemLocalModels = getShoppingList();
+        for (ShoppingItemLocalModel shoppingItemLocalModel : shoppingItemLocalModels) {
+            if (simpleId.equals(shoppingItemLocalModel.getSimpleId())) {
+                shoppingItemLocalModels.remove(shoppingItemLocalModel);
+            }
+        }
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance()
+            .getSharedPreferences(TABLE_LOCAL_SHOPPING_CAR, Activity.MODE_PRIVATE);
+        Gson gson = new Gson();
+        sharedPreferences.edit()
+            .putString(FILED_SHOPPING_CAR_LIST,
+                gson.toJson(shoppingItemLocalModels, new TypeToken<List<ShoppingItemLocalModel>>() {
+                }.getType())).commit();
+        return Observable.just(true);
+    }
+
+    @Override
+    public Observable<Boolean> updateLocalShoppingItemNumber(String simpleId, String s) {
+        List<ShoppingItemLocalModel> shoppingItemLocalModels = getShoppingList();
+        for (ShoppingItemLocalModel shoppingItemLocalModel : shoppingItemLocalModels) {
+            if (simpleId.equals(shoppingItemLocalModel.getSimpleId())) {
+                shoppingItemLocalModel.setNumber(s);
+            }
+        }
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance()
+            .getSharedPreferences(TABLE_LOCAL_SHOPPING_CAR, Activity.MODE_PRIVATE);
+        Gson gson = new Gson();
+        sharedPreferences.edit()
+            .putString(FILED_SHOPPING_CAR_LIST,
+                gson.toJson(shoppingItemLocalModels, new TypeToken<List<ShoppingItemLocalModel>>() {
+                }.getType())).commit();
+        return Observable.just(true);
+    }
+
+    @Override
+    public Observable<Boolean> deleteItemById(String simpleId) {
+        return null;
     }
 
     @Override

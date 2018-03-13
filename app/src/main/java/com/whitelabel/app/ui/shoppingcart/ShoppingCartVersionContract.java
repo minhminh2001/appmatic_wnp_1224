@@ -30,5 +30,9 @@ public interface ShoppingCartVersionContract {
         void versionCheck();
 
         void getShoppingListFromLocal();
+
+        void deleteItem(String simpleId);
+
+        void updateShoppingItemNumber(String simpleId, String s);
     }
 }

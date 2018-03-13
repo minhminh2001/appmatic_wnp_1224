@@ -8,6 +8,7 @@ import com.whitelabel.app.data.preference.model.ShoppingItemLocalModel;
 import com.whitelabel.app.data.retrofit.ShoppingCartApi;
 import com.whitelabel.app.model.ApiException;
 import com.whitelabel.app.model.GOUserEntity;
+import com.whitelabel.app.model.GuestListResponse;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.ShoppingCartDeleteCellEntity;
 import com.whitelabel.app.model.ShoppingCartListEntityCart;
@@ -83,7 +84,7 @@ public class ShoppingCartManager implements IShoppingCartManager {
     }
 
     @Override
-    public Observable<ShoppingCartListEntityCart> getGuestList(
+    public Observable<GuestListResponse> getGuestList(
         List<ShoppingItemLocalModel> shoppingItemLocalModels) {
         Map<String, String> params = new HashMap<>();
         params.put("store_id", "1");
@@ -95,6 +96,16 @@ public class ShoppingCartManager implements IShoppingCartManager {
                 shoppingItemLocalModels.get(i).getSimpleId());
         }
         return shoppingCartApi.getGuestList(params);
+    }
+
+    @Override
+    public Observable<Boolean> deleteLocalShoppingItem(String simpleId) {
+        return iCacheApi.deleteShoppingItem(simpleId);
+    }
+
+    @Override
+    public Observable<Boolean> updateLocalShoppingItemNumber(String simpleId, String s) {
+        return iCacheApi.updateLocalShoppingItemNumber(simpleId,s);
     }
 
     @Override

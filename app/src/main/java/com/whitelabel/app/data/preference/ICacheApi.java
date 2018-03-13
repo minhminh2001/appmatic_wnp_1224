@@ -13,7 +13,8 @@ import com.whitelabel.app.model.SkipToAppStoreMarket;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 
 import java.util.List;
-import java.util.Observable;
+
+import rx.Observable;
 
 /**
  * Created by Administrator on 2017/7/7.
@@ -73,4 +74,12 @@ public interface ICacheApi {
         List<ShoppingItemLocalModel> shoppingItemLocalModels);
 
     rx.Observable<List<ShoppingItemLocalModel>> getShoppingListFromLocal();
+
+    rx.Observable<Boolean> deleteItemById(String simpleId);
+
+    rx.Observable<Boolean> updateNumberByiD(String simpleId,String number);
+
+    Observable<Boolean> deleteShoppingItem(String simpleId);
+
+    Observable<Boolean> updateLocalShoppingItemNumber(String simpleId,String s);
 }

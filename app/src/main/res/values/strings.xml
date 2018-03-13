@@ -140,9 +140,13 @@
     <string name="apply_hint_green">Voucher code \&#039;$voucherCode$\&#039; is applied.</string>
     <string name="apply_hint_red">This is a required field.</string>
     <string name="checkout_payment_dialog_title">CVC&#160;/&#160;CVV2</string>
-    <string name="checkout_payment_dialog_text2">For American Express holders, CVV is the special 4-digit printed next to the card number on the front of your card.</string>
+    <string name="checkout_payment_dialog_text2">For American Express holders, CVV is the special
+        4-digit printed next to the card number on the front of your card.
+    </string>
 
-    <string name="checkout_payment_dialog_text1">For Visa &#038; MasterCard holders, CVV is the special 3-digit printed next to the signature area, on the back of your card.</string>
+    <string name="checkout_payment_dialog_text1">For Visa &#038; MasterCard holders, CVV is the
+        special 3-digit printed next to the signature area, on the back of your card.
+    </string>
     <string name="Qunatity">Quantity:&#160;</string>
     <!--checkout module-->
     <string name="paypal_payment">Paypal Express Checkout</string>
@@ -150,19 +154,23 @@
     <string name="payment">PAYMENT</string>
     <string name="review">REVIEW</string>
     <string name="CONTINUE">CONTINUE</string>
-    <string name="Ship_To">Ship To: </string>
-    <string name="ADD_NEW_ADDRESS">+  ADD ADDRESS</string>
+    <string name="Ship_To">Ship To:</string>
+    <string name="ADD_NEW_ADDRESS">+ ADD ADDRESS</string>
     <string name="Shipping_Fee">Shipping Fee</string>
     <string name="I_would_like_to_pay_with">I would like to pay with</string>
     <string name="Grand_Total">GRAND TOTAL:</string>
     <string name="Grand_Total_below_description">6% GST applied where applicable &#160;</string>
-    <string name="Payment_Method">Payment Method </string>
+    <string name="Payment_Method">Payment Method</string>
     <string name="Payment_Method_Edit_Label">Payment Method</string>
     <string name="PLACE_MY_ORDER">PLACE MY ORDER</string>
     <string name="payment_method_ONLINE_BANKING">Online Banking</string>
     <string name="payment_method_CREDIT_DEBITCARD">Credit &amp; Debit Card</string>
-    <string name="dialog_checkout_text">Thank you for your confirmation.\n Please do not close this mobile application while we are processing your payment.</string>
-    <string name="payment_status_wrong">Maybe something went wrong during \n the payment process. \n Please try again.</string>
+    <string name="dialog_checkout_text">Thank you for your confirmation.\n Please do not close this
+        mobile application while we are processing your payment.
+    </string>
+    <string name="payment_status_wrong">Maybe something went wrong during \n the payment process. \n
+        Please try again.
+    </string>
     <string name="checkout_review_common_et_hint">Order Comment</string>
 
     <string name="payment_molpay_hint">We are processing your payment, please wait.</string>
@@ -173,14 +181,15 @@
     <string name="Name_On_Card">Name On Card</string>
     <string name="Expiration_Date">Expiration Date</string>
     <string name="Card_Type">Card Type</string>
-    <string name="State">State </string>
+    <string name="State">State</string>
     <string name="Issuer_Bank">Issuer Bank</string>
     <string name="PAYMENT_STATUS">Payment Status</string>
     <string name="RETRY">RETRY</string>
     <string name="Oops.">Oops.</string>
     <string name="Thank_you_for_your_order">Thank you for your order</string>
     <string name="Your_order_number_is">Your order number is:</string>
-    <string name="A_confirmation_email_has_been_sent_to">A confirmation email has been sent to</string>
+    <string name="A_confirmation_email_has_been_sent_to">A confirmation email has been sent to
+    </string>
     <string name="yourmail_mail.com">yourmail@mail.com</string>
     <string name="CHECK_ORDER">CHECK ORDER</string>
     <string name="CONTINUE_SHOPPING">CONTINUE SHOPPING</string>
@@ -193,15 +202,25 @@
 
     <!-- email bound -->
     <string name="loginregister_emailbound_header_title">Welcome To Wnp</string>
-    <string name="loginregister_emailbound_message">You\'re almost there!\nTo complete your Wnp registration, please enter your email address: (Don\'t worry, we will never share your private information with others)</string>
+    <string name="loginregister_emailbound_message">You\'re almost there!\nTo complete your Wnp
+        registration, please enter your email address: (Don\'t worry, we will never share your
+        private information with others)
+    </string>
     <string name="loginregister_emailbound_email_hint">Email</string>
     <string name="loginregister_emailbound_createaccount">CREATE ACCOUNT</string>
-    <string name="loginregister_emailbound_tips_error_email_empty">This is a required field.</string>
-    <string name="loginregister_emailbound_tips_error_email_format">Please enter a valid email address. For example johndoe@domain.com.</string>
-    <string name="loginregister_emailbound_tips_error_phone_number_format">Please enter a valid phone number.Longer than 7, less than 15</string>
+    <string name="loginregister_emailbound_tips_error_email_empty">This is a required field.
+    </string>
+    <string name="loginregister_emailbound_tips_error_email_format">Please enter a valid email
+        address. For example johndoe@domain.com.
+    </string>
+    <string name="loginregister_emailbound_tips_error_phone_number_format">Please enter a valid
+        phone number.Longer than 7, less than 15
+    </string>
 
     <!-- My Account -->
-    <string name="myorder_detail_instruction">*Orders placed after 5pm or at the weekend, including public holidays, will be processed the next working day.</string>
+    <string name="myorder_detail_instruction">*Orders placed after 5pm or at the weekend, including
+        public holidays, will be processed the next working day.
+    </string>
     <string name="myorder_detail_description_on_page_end">(6% GST applied where applicable)</string>
     <string name="ChangePassword">Change Password</string>
     <string name="You_have_no_orders_placed">You have no orders placed.</string>
@@ -209,9 +228,9 @@
     <string name="Order_Date">Order Date:</string>
     <string name="Order_Status">Order Status:</string>
     <string name="Products">Products</string>
-    <string name="Shipping_Address">Shipping Address: </string>
-    <string name="billing_Address">Billing Address: </string>
-    <string name="reorder_comment_title">Comment: </string>
+    <string name="Shipping_Address">Shipping Address:</string>
+    <string name="billing_Address">Billing Address:</string>
+    <string name="reorder_comment_title">Comment:</string>
     <string name="Quantity__">Quantity:&#160;</string>
     <string name="RM">RM&#160;</string>
 
@@ -225,10 +244,16 @@
     <string name="order_status_text_Delivery_Failed">Delivery Failed</string>-->
 
     <!--login-->
-    <string name="RegisterNow"><u>Sign up now.</u></string>
-    <string name="ClickEmail"><u>Click here</u></string>
+    <string name="RegisterNow">
+        <u>Sign up now.</u>
+    </string>
+    <string name="ClickEmail">
+        <u>Click here</u>
+    </string>
     <!--register-->
-    <string name="SignInNow"> <u>Sign in now.</u></string>
+    <string name="SignInNow">
+        <u>Sign in now.</u>
+    </string>
     <string name="hey">Hey,&#160;</string>
 
     <!-- Size Picker -->
@@ -246,24 +271,34 @@
         <item>edit</item>
         <item>remove</item>
     </string-array>
-    <string name="TermsOfUserPrivacyPolicy1"><u>Terms of Use</u> </string>
-    <string name="TermsOfUserPrivacyPolicy2"> <u>Privacy Policy.</u></string>
+    <string name="TermsOfUserPrivacyPolicy1">
+        <u>Terms of Use</u>
+    </string>
+    <string name="TermsOfUserPrivacyPolicy2">
+        <u>Privacy Policy.</u>
+    </string>
 
-    <string name="setting_receiver_newsletters"> Receive Newsletters </string>
-    <string name="checkBox1"> I agree to receiving direct marketing&#160;materials from </string>
-    <string name="checkBox3"><u>More.</u></string>
+    <string name="setting_receiver_newsletters">Receive Newsletters</string>
+    <string name="checkBox1">I agree to receiving direct marketing&#160;materials from</string>
+    <string name="checkBox3">
+        <u>More.</u>
+    </string>
     <string name="rigisterSuccess2">SIGN UP SUCCESSFULLY</string>
 
     <!-- Product List -->
     <string name="productlist_filter">FILTER</string>
     <string name="productlist_sort">SORT</string>
     <string name="productlist_list_cancel">Cancel</string>
-    <string name="productlist_list_prompt_error_nointernet">Please check the internet, and try again.</string>
+    <string name="productlist_list_prompt_error_nointernet">Please check the internet, and try
+        again.
+    </string>
     <string name="productlist_list_prompt_error_nodata">Your search returns no results.</string>
     <string name="productlist_list_prompt_error_blank">Minimum search query length is 1.</string>
     <string name="productlist_categorylanding_allcategory">All</string>
 
-    <string name="productlist_productlist_prompt_error_nodata">There are no products matching the selection.</string>
+    <string name="productlist_productlist_prompt_error_nodata">There are no products matching the
+        selection.
+    </string>
 
     <!-- Product List Filter -->
 
@@ -282,8 +317,8 @@
     <!-- Home -->
 
 
-    <string name="home_home_category_gempicks"> PICKS</string>
-    <string name="shop_by_brand_start_with">Start With %1$s </string>
+    <string name="home_home_category_gempicks">PICKS</string>
+    <string name="shop_by_brand_start_with">Start With %1$s</string>
 
     <!-- Curation -->
     <string name="curation_title">Curation</string>
@@ -307,7 +342,9 @@
     <string name="add_order_to_checkout">Added to cart.</string>
 
 
-    <string name="startText">Discover new brands and the latest shopping trends from fashion and beauty to living and wellness.</string>
+    <string name="startText">Discover new brands and the latest shopping trends from fashion and
+        beauty to living and wellness.
+    </string>
 
     <!-- Help center -->
     <string name="home_helpcenter_title">Help Centre</string>
@@ -344,25 +381,31 @@
 
     <string name="shopping_cart_out_stock">Some of the products are currently sold out.</string>
 
-    <string name="soldfulby">Sold &amp; fulfilled by </string>
+    <string name="soldfulby">Sold &amp; fulfilled by</string>
     <string name="soldby">Sold by</string>
     <string name="home_myaccount_header_wishlist">WISHLIST</string>
     <string name="home_myaccount_header_orders">ORDERS</string>
     <string name="home_myaccount_header_addressbook">ADDRESS BOOK</string>
 
 
-    <string name="insufficient_stock">Insufficient stock. You reached the maximum available quantity for this product.</string>
-    <string name="over_maxSale_stock">Cannot add the item to shopping cart. The maximum quantity allowed for purchase is </string>
+    <string name="insufficient_stock">Insufficient stock. You reached the maximum available quantity
+        for this product.
+    </string>
+    <string name="over_maxSale_stock">Cannot add the item to shopping cart. The maximum quantity
+        allowed for purchase is
+    </string>
     <string name="over_maxSale">Only x allowed per checkout.</string>
-    <string name="add_order_to_cart_error_title">The following item(s) in your order can\'t be added to cart</string>
+    <string name="add_order_to_cart_error_title">The following item(s) in your order can\'t be added
+        to cart
+    </string>
 
     <string name="Discount">Discount</string>
-    <string name="check_out_num_product"> CHECKOUT {num} ITEM</string>
-    <string name="check_out_num_products"> CHECKOUT {num} ITEMS</string>
+    <string name="check_out_num_product">CHECKOUT {num} ITEM</string>
+    <string name="check_out_num_products">CHECKOUT {num} ITEMS</string>
 
     <!--login -->
-    <string name="name_password_error"> User name or password error</string>
-    <string name="account_not_confirm">This account has not been confirmed yet. </string>
+    <string name="name_password_error">User name or password error</string>
+    <string name="account_not_confirm">This account has not been confirmed yet.</string>
     <string name="sign_in">Sign In</string>
     <string name="connect_with_Facebook">Facebook</string>
     <string name="or">or</string>
@@ -370,7 +413,9 @@
     <string name="enter_password">Password</string>
     <string name="password">Password</string>
     <string name="to_resend">&#160;to resend &#160;confirmation email.</string>
-    <string name="forgot_your_password"><u>Forgot your password?</u></string>
+    <string name="forgot_your_password">
+        <u>Forgot your password?</u>
+    </string>
     <string name="not_a_member_yet">Not a member yet?</string>
     <string name="third_login_title">Sign in with your social account</string>
     <string name="third_login_failed">login failed</string>
@@ -382,16 +427,20 @@
     <string name="enter_email_address">Email</string>
     <string name="enter_phone_number">Phone Number</string>
     <string name="retype_password">Re-type Password</string>
-    <string name="by_creating">By creating an account, you agree to </string>
-    <string name="and">  and  </string>
-    <string name="already_have_an_account">Already have an account? </string>
+    <string name="by_creating">By creating an account, you agree to</string>
+    <string name="and">and</string>
+    <string name="already_have_an_account">Already have an account?</string>
     <!--login send email-->
     <string name="send_confirmation_email">Send Confirmation Link</string>
-    <string name="please_enter_email">Please enter email below and we’ll send you email confirmation link for it.</string>
+    <string name="please_enter_email">Please enter email below and we’ll send you email confirmation
+        link for it.
+    </string>
     <string name="submit">SUBMIT</string>
     <!-- login send success-->
     <string name="retrieve_your_password">Retrieve Your Password</string>
-    <string name="if_there_is_an_account">If there is an account associated with admin@mail.com you, will receive an email with a link to reset your password.</string>
+    <string name="if_there_is_an_account">If there is an account associated with admin@mail.com you,
+        will receive an email with a link to reset your password.
+    </string>
     <!--reset password -->
     <string name="retrieve_password">RETRIEVE PASSWORD</string>
     <!--edit my Account info -->
@@ -405,7 +454,7 @@
     <string name="monthly_income">Monthly Income</string>
     <string name="zip">Zip</string>
     <string name="city">City</string>
-    <string name="state_province">State </string>
+    <string name="state_province">State</string>
     <string name="phone_number">Phone Number</string>
     <string name="eg123">Phone Number</string>
     <string name="address_day_phone">Day Time Contact</string>
@@ -429,7 +478,9 @@
     <!-- Product detail -->
 
 
-    <string name="app_crash_friendly_hint">Sorry, there is something wrong. The application is about to exit.</string>
+    <string name="app_crash_friendly_hint">Sorry, there is something wrong. The application is about
+        to exit.
+    </string>
     <string name="gembrand">FEATUREDBRANDS</string>
     <string name="findYourFavorite">Select Your Favorite Categories</string>
     <string name="favorite2">We\'ll make sure to find what you love...</string>
@@ -446,18 +497,24 @@
     <string name="login_twitter">Twitter</string>
 
 
-
     <string name="out_of_stock2">SOLD OUT</string>
 
-    <string name="facebook_error_nointernet">Cannot share message to the Facebook, please check you internet and try again.</string>
-    <string name="facebook_error_notinstalled">Cannot share message to the Facebook, please download or update the latest Facebook app and try again.</string>
+    <string name="facebook_error_nointernet">Cannot share message to the Facebook, please check you
+        internet and try again.
+    </string>
+    <string name="facebook_error_notinstalled">Cannot share message to the Facebook, please download
+        or update the latest Facebook app and try again.
+    </string>
     <string name="facebook_success_ok">You shared this post.</string>
 
 
     <string name="order_detail_confirm">BANK TRANSFER CONFIRMATION</string>
     <string name="bank_transafer_confirm">Bank Transfer Confirmation</string>
     <string name="bank_transafer_thank">Thank you for shopping at Wnp</string>
-    <string name="bank_transafer_world">When you have successfully made your Bank Transfer, please provide your payment confirmation details here so that we can process your order immediately.</string>
+    <string name="bank_transafer_world">When you have successfully made your Bank Transfer, please
+        provide your payment confirmation details here so that we can process your order
+        immediately.
+    </string>
     <string name="bank_from">Bank Transferred From</string>
     <string name="order_detail_order_number">Order Number</string>
     <string name="order_detail_customer_name">Customer\'s Name</string>
@@ -466,17 +523,22 @@
     <string name="email_address">Email</string>
     <string name="bank_transafer">Required Transaction Slip Upload</string>
     <string name="bank_transafer_confirm_choose_file">Choose File</string>
-    <string name="file_extensions">Allowed file extensions to upload: "jpg", "jpeg", "gif", "png", "pdf". Max file size: 2MB.</string>
+    <string name="file_extensions">Allowed file extensions to upload: "jpg", "jpeg", "gif", "png",
+        "pdf". Max file size: 2MB.
+    </string>
 
     <string name="title_activity_bank_transafer_success">BankTransaferSuccessActivity</string>
     <string name="payment_send">Payment Confirmation Sent</string>
 
     <string name="versionCheckTitle">Your app version is outdated</string>
     <string name="versionCheckMsg">Please update before you continue.</string>
-    <string name="versionCheck">Your app version is outdated, please update before you continue.</string>
+    <string name="versionCheck">Your app version is outdated, please update before you continue.
+    </string>
     <string name="update_now">UPDATE NOW</string>
     <string name="update_app">Update App</string>
-    <string name="update_app_msg">Your current app version is outdated now,please go to the Google Play Store to update.</string>
+    <string name="update_app_msg">Your current app version is outdated now,please go to the Google
+        Play Store to update.
+    </string>
 
     <string name="update">UPDATE</string>
     <string name="congratulations">CONGRATULATIONS!</string>
@@ -494,8 +556,11 @@
 
 
     <string name="Oops_Sorry">Oops,Sorry!</string>
-    <string name="This_promotion_has_been_fully_redeemed">This promotion has been \n fully redeemed.</string>
-    <string name="Stay_tuned_for_more_exciting">Stay tuned for more exciting \n offers on Wnp.</string>
+    <string name="This_promotion_has_been_fully_redeemed">This promotion has been \n fully
+        redeemed.
+    </string>
+    <string name="Stay_tuned_for_more_exciting">Stay tuned for more exciting \n offers on Wnp.
+    </string>
 
     <string name="added_to_wishlist">Added to wishlist.</string>
     <string name="added_error">Add failure.</string>
@@ -508,14 +573,19 @@
     <!-- COD -->
     <string name="cod_error_max">Your maximum basket size needs to be RM</string>
     <string name="code_error_min">Your minimum basket size needs to be RM</string>
-    <string name="code_error_state1">This payment option is not available for the selected delivery address. Only following states are allowed:</string>
-    <string name="code_error_state2">list the available states, </string>
-    <string name="code_error_product">The following items are not eligible for Cash on Delivery:</string>
+    <string name="code_error_state1">This payment option is not available for the selected delivery
+        address. Only following states are allowed:
+    </string>
+    <string name="code_error_state2">list the available states,</string>
+    <string name="code_error_product">The following items are not eligible for Cash on Delivery:
+    </string>
     <string name="product_cash">Cash on Delivery</string>
     <string name="dialog_cod_hint">Kindly update your cart</string>
 
     <!-- <string name="please_check">Please check the network connection</string>-->
-    <string name="cod_error_address">This payment option is not available for the selected delivery address. Kindly refer to the Wnp\'s Payment FAQ for more info. </string>
+    <string name="cod_error_address">This payment option is not available for the selected delivery
+        address. Kindly refer to the Wnp\'s Payment FAQ for more info.
+    </string>
     <string name="shipping_returns">Shipping &amp; Delivery</string>
 
     <string name="app_rate_text1">Love using Wnp?</string>
@@ -524,7 +594,9 @@
 
     <string name="prices_shown">* Prices shown are before discount.</string>
     <string name="product_shipping_info">Shipping Info</string>
-    <string name="checkout_product_error_title">The following items in your order cannot be delivered to your location:</string>
+    <string name="checkout_product_error_title">The following items in your order cannot be
+        delivered to your location:
+    </string>
 
     <string name="shoppingcart_btn_apply">APPLY</string>
     <string name="shoppingcart_btn_cancel">CANCEL</string>
@@ -557,23 +629,28 @@
     <string name="shop_now">SHOP NOW</string>
     <string name="shop_categories">SHOP BY CATEGORIES</string>
     <string name="pictures_anorak">Pictures Anorak</string>
-    <string name="arrrrr">Arrrrr....seems like your internet \n connection just disappeared!</string>
+    <string name="arrrrr">Arrrrr....seems like your internet \n connection just disappeared!
+    </string>
     <string name="check_internet">Please check your internet connection and try again.</string>
-    <string name="wait_service">We\&#39;re working on getting this fixed as soon as we can.\n Please try again later.</string>
+    <string name="wait_service">We\&#39;re working on getting this fixed as soon as we can.\n Please
+        try again later.
+    </string>
     <string name="refresh">REFRESH</string>
     <string name="connection_lost">Connection Lost</string>
     <string name="server_lost">Oops, something went wrong.</string>
     <string name="qr_title">QR Code Scanner</string>
     <string name="qr_instructions">Align the QR Code within frame to scan</string>
     <string name="qr_error">Invalid QR code / Product link</string>
-    <string name="qr_error_long">Please scan another code or use the Search \n box to browse for products</string>
+    <string name="qr_error_long">Please scan another code or use the Search \n box to browse for
+        products
+    </string>
     <string name="scan_again">SCAN AGAIN</string>
     <string name="scan_qr">Scan QR</string>
 
     <!-- String in code-->
     <string name="required_field">This is a required field.</string>
 
-    <string name="enter_characters">Please enter 4 or more characters. </string>
+    <string name="enter_characters">Please enter 4 or more characters.</string>
     <string name="t">T:&#160;</string>
     <string name="size">Size</string>
     <string name="color">Color</string>
@@ -582,11 +659,16 @@
     <string name="postal_code">Postal Code</string>
     <string name="success">success</string>
     <string name="nine">99+</string>
-    <string name="enter_characters_ignored">"Please enter 4 or more characters. Leading or trailing spaces will be ignored."</string>
+    <string name="enter_characters_ignored">"Please enter 4 or more characters. Leading or trailing
+        spaces will be ignored."
+    </string>
     <string name="password_match">Please make sure your passwords match.</string>
     <string name="account_associated">If there is an account associated with&#160;</string>
-    <string name="reset_password">, you will receive an email with a link to reset your password.</string>
-    <string name="process_email">Thank you for Sign Up on WNP APP. To complete your registration process, please check your email&#160;</string>
+    <string name="reset_password">, you will receive an email with a link to reset your password.
+    </string>
+    <string name="process_email">Thank you for Sign Up on WNP APP. To complete your registration
+        process, please check your email&#160;
+    </string>
     <string name="to_confirm">to confirm.</string>
     <string name="register_whitelabel">Thank you for Sign Up on</string>
     <string name="current_password">Invalid current password.</string>
@@ -599,7 +681,7 @@
     <string name="select_country">Please select a country.</string>
     <string name="zip_code">Please enter a zip code.</string>
     <string name="enter_city">Please enter a city.</string>
-    <string name="order_number">Order Number: </string>
+    <string name="order_number">Order Number:</string>
     <string name="rm">RM</string>
     <string name="r_m">-RM</string>
 
@@ -640,8 +722,8 @@
     <string name="telephone_number">Phone Number</string>
     <string name="tel">tel</string>
     <string name="_state">State</string>
-    <string name="address_for_shipping">Set it  as default shipping address.</string>
-    <string name="address_for_billing">Set  it as default billing address.</string>
+    <string name="address_for_shipping">Set it as default shipping address.</string>
+    <string name="address_for_billing">Set it as default billing address.</string>
     <string name="search">Search</string>
     <string name="i">i</string>
     <string name="description">Description</string>
@@ -667,7 +749,9 @@
     <string name="accessories3_upp">ACCESSORIES3</string>
     <string name="accessories4_upp">ACCESSORIES4</string>
     <string name="detail_no_longer">NO LONGER AVAILABLE</string>
-    <string name="love_air">Love is in the air. Indulge in a new perfume or gift sets for friends and family</string>
+    <string name="love_air">Love is in the air. Indulge in a new perfume or gift sets for friends
+        and family
+    </string>
     <string name="valentine_day">VALENTINE\'S DAY FRAGRANCES</string>
     <string name="day">DAY</string>
     <string name="days">DAYS</string>
@@ -682,13 +766,17 @@
     <string name="store_credit_success_hint">Redeemed successfully!</string>
     <string name="store_credits2">Store Credits</string>
     <string name="store_credit_not_history">You have no transactions yet.</string>
-    <string name="credit_instruction">More On Store Credits </string>
-    <string name="store_caedits_help">Why pay more, when you can pay less with Store Credits? Find out more.</string>
+    <string name="credit_instruction">More On Store Credits</string>
+    <string name="store_caedits_help">Why pay more, when you can pay less with Store Credits? Find
+        out more.
+    </string>
     <string name="string">string</string>
     <string name="NOTIFICATION">Notification</string>
     <!-- credit card -->
     <string name="sliding_credit_card">My Credit Card</string>
-    <string name="store_credit_not_data_hint">We are currently upgrading our Store Credit services. Kindly try again later.</string>
+    <string name="store_credit_not_data_hint">We are currently upgrading our Store Credit services.
+        Kindly try again later.
+    </string>
     <string name="activity_image_trans">activity_image_transition</string>
     <string name="Merchant_StoreFront">Merchant StoreFront</string>
 
@@ -701,10 +789,18 @@
 
     <!-- permission text -->
     <string name="permission_error_title">Permission Denied</string>
-    <string name="permission_error_camera_content">Please allow Wnp to access your device\'s camera in SETTINGS</string>
-    <string name="permission_error_storage_content">Please allow Wnp to access your device\'s storage in SETTINGS</string>
-    <string name="banktransfer_permission_camera_rationale">Wnp needs to access your device\'s camera</string>
-    <string name="banktransfer_permission_album_rationale">Wnp needs to access your device\'s storage</string>
+    <string name="permission_error_camera_content">Please allow Wnp to access your device\'s camera
+        in SETTINGS
+    </string>
+    <string name="permission_error_storage_content">Please allow Wnp to access your device\'s
+        storage in SETTINGS
+    </string>
+    <string name="banktransfer_permission_camera_rationale">Wnp needs to access your device\'s
+        camera
+    </string>
+    <string name="banktransfer_permission_album_rationale">Wnp needs to access your device\'s
+        storage
+    </string>
     <string name="switch_view_bar_results">&#160;results</string>
 
     <string name="product_detail_total">Total:&#160;</string>
@@ -731,14 +827,17 @@
     <!--this is old gaid <string name="ga_track_id">UA-105181188-1</string>-->
     <!--dev gid :UA-113868370-5   release gid:UA-66493898-4 -->
     <string name="ga_track_id">UA-113868370-5</string>
-    <!--appmatic : 1287318627981888 | wnp : 195025754589707 -->
-    <string name="facebook_id">195025754589707</string>
-    <!-- one all -->
-    <string name="twitter_consumer_key">Jl6f81SYZMnwdNXc5NrjkFWgY</string>
-    <string name="twitter_consumer_secret">0WMBLTTbJnSzU3h7zGH4CHmkVV6oGgo9Dhdka5JTL4go1ZsBK1</string>
-    <string name="twitter_subdomain">allwnp</string>
-
-    <string name="google_server_client_id">319272901175-l31l8tl2ta8oa8bol75q0mfihiaj3tqn.apps.googleusercontent.com</string>
+    <!--appmatic : 1287318627981888 | wnp : 195025754589707   wnp:407398836332250-->
+    <string name="facebook_id">407398836332250</string>
+    <!-- one all    old :Jl6f81SYZMnwdNXc5NrjkFWgY - 0WMBLTTbJnSzU3h7zGH4CHmkVV6oGgo9Dhdka5JTL4go1ZsBK1-->
+    <string name="twitter_consumer_key">vQgW2FliUDH8Pruz7qOe00kF4</string>
+    <string name="twitter_consumer_secret">MsrYyMWrUmsvinAWSAw2N0xSZ5AeLilqypSnPk5dmSOkXfuc8y
+    </string>
+    <string name="twitter_subdomain">wnplocal</string>
+    <!-- 319272901175-l31l8tl2ta8oa8bol75q0mfihiaj3tqn.apps.googleusercontent.com-->
+    <string name="google_server_client_id">
+        319272901175-l31l8tl2ta8oa8bol75q0mfihiaj3tqn.apps.googleusercontent.com
+    </string>
     <string name="api_version">v1</string>
     <string name="api_key">eyKOW06BPBqbe3qe</string>
     <!--dev stage-->

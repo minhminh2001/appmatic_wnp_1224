@@ -976,7 +976,7 @@ public class ShoppingCartVerticalFragment extends
 
     private void initAdapter() {
         mProducts = new ArrayList<>();
-        adapter = new ShoppingCartVerticalAdapter(getActivity(), mProducts, mImageLoader, this);
+        adapter = new ShoppingCartVerticalAdapter(getActivity(), mProducts, mImageLoader, this,mPresenter);
         adapter.setItemOnClickListener(mItemListener);
         adapter.setiShoppingCartAddOrSubtractCallback(new IShoppingCartAddOrSubtractCallback() {
             @Override

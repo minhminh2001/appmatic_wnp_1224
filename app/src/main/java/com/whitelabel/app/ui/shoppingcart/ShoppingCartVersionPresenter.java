@@ -3,8 +3,8 @@ package com.whitelabel.app.ui.shoppingcart;
 import com.whitelabel.app.data.preference.model.ShoppingItemLocalModel;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.IShoppingCartManager;
+import com.whitelabel.app.model.GuestListResponse;
 import com.whitelabel.app.model.ResponseModel;
-import com.whitelabel.app.model.ShoppingCartListEntityCart;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.RxUtil;
@@ -89,10 +89,55 @@ public class ShoppingCartVersionPresenter extends RxPresenter<ShoppingCartVersio
             });
     }
 
+    @Override
+    public void deleteItem(String simpleId) {
+        iShoppingCartManager.deleteLocalShoppingItem(simpleId)
+            .compose(RxUtil.<Boolean>rxSchedulerHelper())
+            .subscribe(new Subscriber<Boolean>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+
+                }
+
+                @Override
+                public void onNext(Boolean aBoolean) {
+
+                }
+            });
+    }
+
+    @Override
+    public void updateShoppingItemNumber(String simpleId, String s) {
+        iShoppingCartManager.updateLocalShoppingItemNumber(simpleId, s)
+            .compose(RxUtil.<Boolean>rxSchedulerHelper())
+            .subscribe(new Subscriber<Boolean>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+
+                }
+
+                @Override
+                public void onNext(Boolean aBoolean) {
+
+                }
+            });
+        ;
+    }
+
     public void getGuestList(final List<ShoppingItemLocalModel> shoppingItemLocalModels) {
         iShoppingCartManager.getGuestList(shoppingItemLocalModels)
-            .compose(RxUtil.<ShoppingCartListEntityCart>rxSchedulerHelper())
-            .subscribe(new Subscriber<ShoppingCartListEntityCart>() {
+            .compose(RxUtil.<GuestListResponse>rxSchedulerHelper())
+            .subscribe(new Subscriber<GuestListResponse>() {
                 @Override
                 public void onCompleted() {
 
@@ -104,9 +149,9 @@ public class ShoppingCartVersionPresenter extends RxPresenter<ShoppingCartVersio
                 }
 
                 @Override
-                public void onNext(ShoppingCartListEntityCart shoppingCartListEntityCart) {
+                public void onNext(GuestListResponse shoppingCartListEntityCart) {
                     mView.dimissDialog();
-                    mView.loadData(shoppingCartListEntityCart);
+                    mView.loadData(shoppingCartListEntityCart.getCart());
                 }
             });
 

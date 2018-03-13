@@ -1,10 +1,11 @@
 package com.whitelabel.app.utils;
 
-import android.content.Context;
-import android.content.res.AssetManager;
-
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+
 import com.whitelabel.app.model.AddToCartEntity;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.AddressBook;
@@ -18,7 +19,6 @@ import com.whitelabel.app.model.CheckoutPaymentIssuerBankListEntity;
 import com.whitelabel.app.model.CheckoutPaymentSaveReturnEntity;
 import com.whitelabel.app.model.CheckoutSelectShippingAddressEntity;
 import com.whitelabel.app.model.CustomAnimEntity;
-import com.whitelabel.app.model.ThreePartAPIUserEntity;
 import com.whitelabel.app.model.FavoriteEntity;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.GetAnimCodeEntity;
@@ -68,12 +68,16 @@ import com.whitelabel.app.model.ShoppingCartCampaignListEntityReturn;
 import com.whitelabel.app.model.ShoppingCartDeleteCellEntity;
 import com.whitelabel.app.model.ShoppingCartListEntityResult;
 import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
+import com.whitelabel.app.model.ThreePartAPIUserEntity;
 import com.whitelabel.app.model.UpdateFavoriteEntity;
 import com.whitelabel.app.model.WishlistDelteCellEntity;
 import com.whitelabel.app.model.WishlistEntityResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import android.content.Context;
+import android.content.res.AssetManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -85,6 +89,7 @@ import java.util.List;
  * Created by imaginato on 2015/6/11.
  */
 public class JJsonUtils {
+
     private static final String TAG = "JJsonUtils";
 
     public static SVRExceptionReturnEntity getSVRExceptionReturnEntityFromJson(String jsonStr) {
@@ -102,39 +107,51 @@ public class JJsonUtils {
         return entity;
     }
 
-
     public static <T> T parseJsonObj(String jsonString, Class<T> cls) {
-                T t = null;
-                 try {
-                         Gson gson = new Gson();
-                         t = gson.fromJson(jsonString, cls);
-                     } catch (Exception e) {
-                        e.getStackTrace();
-                        JLogUtils.i("exception",""+e.getMessage());
-                     }
-                 return t;
+        T t = null;
+        try {
+            Gson gson = new Gson();
+            t = gson.fromJson(jsonString, cls);
+        } catch (Exception e) {
+            e.getStackTrace();
+            JLogUtils.i("exception", "" + e.getMessage());
+        }
+        return t;
     }
-
-
 
     public static <T> List<T> parseJsonList(String jsonString, Class<T> cls) {
-                 List<T> list = new ArrayList<>();
-                 try {
-                         Gson gson = new Gson();
-                         list = gson.fromJson(jsonString, new TypeToken<List<T>>() {}.getType());
-                     } catch (Exception e) {
-                     e.getStackTrace();
-                     }
-                 return list;
+        List<T> list = new ArrayList<>();
+        try {
+            Gson gson = new Gson();
+            list = gson.fromJson(jsonString, new TypeToken<List<T>>() {
+            }.getType());
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+        return list;
     }
 
-
-    public static  List<SVRAppserviceLandingPagesListLandingPageItemReturnEntity>  parseJsonList1(String jsonString){
-        List<SVRAppserviceLandingPagesListLandingPageItemReturnEntity> beans=new ArrayList<>();
+    public static <T> List<T> fromJsonList(String json, Class<T> clazz) {
+        List<T> lst = new ArrayList<>();
         try {
-            JSONArray jsonArray=new JSONArray(jsonString);
-            for(int i=0;i<jsonArray.length();i++){
-                beans.add(JJsonUtils.parseJsonObj(jsonArray.getJSONObject(i).toString(), SVRAppserviceLandingPagesListLandingPageItemReturnEntity.class));
+            JsonArray array = new JsonParser().parse(json).getAsJsonArray();
+            for (final JsonElement elem : array) {
+                lst.add(new Gson().fromJson(elem, clazz));
+            }
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+        return lst;
+    }
+
+    public static List<SVRAppserviceLandingPagesListLandingPageItemReturnEntity> parseJsonList1(
+        String jsonString) {
+        List<SVRAppserviceLandingPagesListLandingPageItemReturnEntity> beans = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(jsonString);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                beans.add(JJsonUtils.parseJsonObj(jsonArray.getJSONObject(i).toString(),
+                    SVRAppserviceLandingPagesListLandingPageItemReturnEntity.class));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -142,14 +159,13 @@ public class JJsonUtils {
         return beans;
     }
 
-
-
-    public static List<MyAccountOrderOuter> parseOrderList(String jsonString){
-        List<MyAccountOrderOuter> beans=new ArrayList<>();
+    public static List<MyAccountOrderOuter> parseOrderList(String jsonString) {
+        List<MyAccountOrderOuter> beans = new ArrayList<>();
         try {
-            JSONArray jsonArray=new JSONArray(jsonString);
-            for(int i=0;i<jsonArray.length();i++){
-                beans.add(JJsonUtils.parseJsonObj(jsonArray.getJSONObject(i).toString(), MyAccountOrderOuter.class));
+            JSONArray jsonArray = new JSONArray(jsonString);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                beans.add(JJsonUtils.parseJsonObj(jsonArray.getJSONObject(i).toString(),
+                    MyAccountOrderOuter.class));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -157,13 +173,13 @@ public class JJsonUtils {
         return beans;
     }
 
-
-    public static List<AddressBook> parseAddressList(String jsonString){
-        List<AddressBook> beans=new ArrayList<>();
+    public static List<AddressBook> parseAddressList(String jsonString) {
+        List<AddressBook> beans = new ArrayList<>();
         try {
-            JSONArray jsonArray=new JSONArray(jsonString);
-            for(int i=0;i<jsonArray.length();i++){
-                beans.add(JJsonUtils.parseJsonObj(jsonArray.getJSONObject(i).toString(), AddressBook.class));
+            JSONArray jsonArray = new JSONArray(jsonString);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                beans.add(JJsonUtils
+                    .parseJsonObj(jsonArray.getJSONObject(i).toString(), AddressBook.class));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -171,15 +187,13 @@ public class JJsonUtils {
         return beans;
     }
 
-
-
-
-    public static List<com.whitelabel.app.model.Wishlist> parseWishlist(String jsonString){
-        List<com.whitelabel.app.model.Wishlist> beans=new ArrayList<>();
+    public static List<com.whitelabel.app.model.Wishlist> parseWishlist(String jsonString) {
+        List<com.whitelabel.app.model.Wishlist> beans = new ArrayList<>();
         try {
-            JSONArray jsonArray=new JSONArray(jsonString);
-            for(int i=0;i<jsonArray.length();i++){
-                beans.add(JJsonUtils.parseJsonObj(jsonArray.getJSONObject(i).toString(), com.whitelabel.app.model.Wishlist.class));
+            JSONArray jsonArray = new JSONArray(jsonString);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                beans.add(JJsonUtils.parseJsonObj(jsonArray.getJSONObject(i).toString(),
+                    com.whitelabel.app.model.Wishlist.class));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -187,7 +201,9 @@ public class JJsonUtils {
         return beans;
     }
 
-    public static SVRAppServiceCustomerLoginReturnEntity getSVRAPPSvrAppServiceCustomerLoginFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerLoginReturnEntity
+    getSVRAPPSvrAppServiceCustomerLoginFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -202,7 +218,8 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppServiceCustomerRegister getSVRAPPSvrAppServiceCustomerRegisterFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerRegister getSVRAPPSvrAppServiceCustomerRegisterFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -217,7 +234,8 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppServiceCustomerResetpass getSVRAPPSvrAppServiceCustomerResetpassFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerResetpass getSVRAPPSvrAppServiceCustomerResetpassFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -232,7 +250,8 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppServiceCustomerMyAccount getSVRAPPSvrAppServiceCustomerMyAccountFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerMyAccount getSVRAPPSvrAppServiceCustomerMyAccountFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -247,8 +266,8 @@ public class JJsonUtils {
         return entity;
     }
 
-
-    public static SVRAppServiceCustomerSendEmail getSVRAPPSvrAppServiceCustomerSendEmailFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerSendEmail getSVRAPPSvrAppServiceCustomerSendEmailFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -263,7 +282,8 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppserviceCmsCmsPageReturnEntity getAppserviceCmsCmsPageFromJson(String jsonStr) {
+    public static SVRAppserviceCmsCmsPageReturnEntity getAppserviceCmsCmsPageFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -278,8 +298,8 @@ public class JJsonUtils {
         return entity;
     }
 
-
-    public static SVRAppServiceCustomerchangepass getSVRAPPSvrAppServiceCustomerChangepassFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerchangepass getSVRAPPSvrAppServiceCustomerChangepassFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -294,8 +314,9 @@ public class JJsonUtils {
         return entity;
     }
 
-
-    public static SVRAppserviceCmsStaticBlocksReturnEntity getSVRAppserviceCmsStaticBlocksReturnEntityFromJson(String jsonStr) {
+    public static SVRAppserviceCmsStaticBlocksReturnEntity
+    getSVRAppserviceCmsStaticBlocksReturnEntityFromJson(
+        String jsonStr) {
 
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
@@ -311,7 +332,8 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppServiceCustomerCountry getSVRAPPSvrAppServiceCustomerCountryFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerCountry getSVRAPPSvrAppServiceCustomerCountryFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -340,7 +362,6 @@ public class JJsonUtils {
         } catch (Exception ex) {
             JLogUtils.e(TAG, "getSVRAppserviceCmsStaticBlocksReturnEntityFromJson", ex);
 
-
             JLogUtils.e(TAG, "getSVRAPPSvrAppServiceCustomerLoginFromJson", ex);
         }
         return entity;
@@ -348,11 +369,9 @@ public class JJsonUtils {
 
     /**
      * Parse ShoppingCartListEntityResult
-     *
-     * @param jsonStr
-     * @return
      */
-    public static ShoppingCartListEntityResult getSVRAPPServiceShoppingCartListEntityResultFromJson(String jsonStr) {
+    public static ShoppingCartListEntityResult getSVRAPPServiceShoppingCartListEntityResultFromJson(
+        String jsonStr) {
         ShoppingCartListEntityResult entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -370,11 +389,10 @@ public class JJsonUtils {
 
     /**
      * Parse ShoppingCartListEntityResult
-     *
-     * @param jsonStr
-     * @return
      */
-    public static ShoppingCartCampaignListEntityReturn getSVRAPPServiceShoppingCartCampaignListEntityResultFromJson(String jsonStr) {
+    public static ShoppingCartCampaignListEntityReturn
+    getSVRAPPServiceShoppingCartCampaignListEntityResultFromJson(
+        String jsonStr) {
         ShoppingCartCampaignListEntityReturn entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -390,7 +408,7 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static ShoppingCarCheckStockBean  getCheckStockBean(String jsonStr){
+    public static ShoppingCarCheckStockBean getCheckStockBean(String jsonStr) {
         ShoppingCarCheckStockBean entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -408,11 +426,10 @@ public class JJsonUtils {
 
     /**
      * Parse ShoppingCartListEntityResult
-     *
-     * @param jsonStr
-     * @return
      */
-    public static MyAccountOrderListEntityResult getSVRAPPServiceMyAccountOrderListEntiryResultFromJson(String jsonStr) {
+    public static MyAccountOrderListEntityResult
+    getSVRAPPServiceMyAccountOrderListEntiryResultFromJson(
+        String jsonStr) {
         MyAccountOrderListEntityResult entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -431,11 +448,10 @@ public class JJsonUtils {
 
     /**
      * Parse ShoppingCartDetailEntityResult
-     *
-     * @param jsonStr
-     * @return
      */
-    public static MyAccountOrderDetailEntityResult getSVRAPPServiceMyAccountOrderDetailEntiryResultFromJson(String jsonStr) {
+    public static MyAccountOrderDetailEntityResult
+    getSVRAPPServiceMyAccountOrderDetailEntiryResultFromJson(
+        String jsonStr) {
         MyAccountOrderDetailEntityResult entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -451,7 +467,9 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppServiceCustomerMonthlyIncom getSVRAPPSvrAppServiceCustomerMonthlyIncomFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerMonthlyIncom
+    getSVRAPPSvrAppServiceCustomerMonthlyIncomFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -465,7 +483,6 @@ public class JJsonUtils {
         }
         return entity;
     }
-
 
     public static MarketingLayersEntity getMarketingLayersEntityFromJson(String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -484,11 +501,10 @@ public class JJsonUtils {
 
     /**
      * Parse CheckoutDefaultShippingAddressEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static CheckoutDefaultShippingAddressEntity getSVRAPPServiceCheckoutDefaultShippingAddressEntityFromJson(String jsonStr) {
+    public static CheckoutDefaultShippingAddressEntity
+    getSVRAPPServiceCheckoutDefaultShippingAddressEntityFromJson(
+        String jsonStr) {
         CheckoutDefaultShippingAddressEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -506,11 +522,10 @@ public class JJsonUtils {
 
     /**
      * Parse CheckoutSelectShippingAddressEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static CheckoutSelectShippingAddressEntity getSVRAPPServiceCheckoutSelectShippingAddressEntityFromJson(String jsonStr) {
+    public static CheckoutSelectShippingAddressEntity
+    getSVRAPPServiceCheckoutSelectShippingAddressEntityFromJson(
+        String jsonStr) {
         CheckoutSelectShippingAddressEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -528,11 +543,9 @@ public class JJsonUtils {
 
     /**
      * Parse SVRAppserviceSaveBillingEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static SVRAppserviceSaveBillingEntity getSVRAPPServiceCheckoutSaveBillingEntityFromJson(String jsonStr) {
+    public static SVRAppserviceSaveBillingEntity getSVRAPPServiceCheckoutSaveBillingEntityFromJson(
+        String jsonStr) {
         SVRAppserviceSaveBillingEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -550,11 +563,10 @@ public class JJsonUtils {
 
     /**
      * Parse SVRAppserviceSaveOrderReturnEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static SVRAppserviceSaveOrderReturnEntity getSVRAPPServiceCheckoutSaveOrderReturnEntityFromJson(String jsonStr) {
+    public static SVRAppserviceSaveOrderReturnEntity
+    getSVRAPPServiceCheckoutSaveOrderReturnEntityFromJson(
+        String jsonStr) {
         SVRAppserviceSaveOrderReturnEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -572,11 +584,10 @@ public class JJsonUtils {
 
     /**
      * Parse SVRAppserviceNotificationListReturnEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static SVRAppserviceNotificationListReturnEntity getSVRAppserviceNotificationListReturnEntityFromJson(String jsonStr) {
+    public static SVRAppserviceNotificationListReturnEntity
+    getSVRAppserviceNotificationListReturnEntityFromJson(
+        String jsonStr) {
         SVRAppserviceNotificationListReturnEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -594,11 +605,10 @@ public class JJsonUtils {
 
     /**
      * Parse SVRAppserviceRecoverOrderReturnEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static SVRAppserviceRecoverOrderReturnEntity getSVRAPPServiceCheckoutRecoverOrderReturnEntityFromJson(String jsonStr) {
+    public static SVRAppserviceRecoverOrderReturnEntity
+    getSVRAPPServiceCheckoutRecoverOrderReturnEntityFromJson(
+        String jsonStr) {
         SVRAppserviceRecoverOrderReturnEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -616,11 +626,10 @@ public class JJsonUtils {
 
     /**
      * Parse CheckoutPaymentIssuerBankListEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static CheckoutPaymentIssuerBankListEntity getSVRAPPServiceCheckoutPaymentissuerBankListEntiryResultFromJson(String jsonStr) {
+    public static CheckoutPaymentIssuerBankListEntity
+    getSVRAPPServiceCheckoutPaymentissuerBankListEntiryResultFromJson(
+        String jsonStr) {
         CheckoutPaymentIssuerBankListEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -631,7 +640,8 @@ public class JJsonUtils {
             Gson gson = new Gson();
             entity = gson.fromJson(jsonStr, CheckoutPaymentIssuerBankListEntity.class);
         } catch (Exception ex) {
-            JLogUtils.e(TAG, "getSVRAPPServiceCheckoutPaymentissuerBankListEntiryResultFromJson", ex);
+            JLogUtils
+                .e(TAG, "getSVRAPPServiceCheckoutPaymentissuerBankListEntiryResultFromJson", ex);
 
         }
         return entity;
@@ -639,11 +649,10 @@ public class JJsonUtils {
 
     /**
      * Parse SVRGetCityANdStateByPostCodeEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static SVRGetCityANdStateByPostCodeEntity getSVRAPPServiceCheckoutGetCityANdStateByPostCodeEntiryResultFromJson(String jsonStr) {
+    public static SVRGetCityANdStateByPostCodeEntity
+    getSVRAPPServiceCheckoutGetCityANdStateByPostCodeEntiryResultFromJson(
+        String jsonStr) {
         SVRGetCityANdStateByPostCodeEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -654,7 +663,9 @@ public class JJsonUtils {
             Gson gson = new Gson();
             entity = gson.fromJson(jsonStr, SVRGetCityANdStateByPostCodeEntity.class);
         } catch (Exception ex) {
-            JLogUtils.e(TAG, "getSVRAPPServiceCheckoutGetCityANdStateByPostCodeEntiryResultFromJson", ex);
+            JLogUtils
+                .e(TAG, "getSVRAPPServiceCheckoutGetCityANdStateByPostCodeEntiryResultFromJson",
+                    ex);
 
         }
         return entity;
@@ -662,11 +673,10 @@ public class JJsonUtils {
 
     /**
      * Parse CheckoutPaymentCreditCardType
-     *
-     * @param jsonStr
-     * @return
      */
-    public static CheckoutPaymentCreditCardType getSVRAPPServiceCheckoutPaymentCreditCartTypeFromJson(String jsonStr) {
+    public static CheckoutPaymentCreditCardType
+    getSVRAPPServiceCheckoutPaymentCreditCartTypeFromJson(
+        String jsonStr) {
         CheckoutPaymentCreditCardType entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -685,11 +695,10 @@ public class JJsonUtils {
 
     /**
      * Parse CheckoutPaymentSaveReturnEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static CheckoutPaymentSaveReturnEntity getSVRAPPServiceCheckoutPaymentSavingEntiryResultFromJson(String jsonStr) {
+    public static CheckoutPaymentSaveReturnEntity
+    getSVRAPPServiceCheckoutPaymentSavingEntiryResultFromJson(
+        String jsonStr) {
         CheckoutPaymentSaveReturnEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -708,11 +717,10 @@ public class JJsonUtils {
 
     /**
      * Parse NotificationAppOpenReturnEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static NotificationAppOpenReturnEntity getSVRAPPServiceNotificationAppOpenEntiryResultFromJson(String jsonStr) {
+    public static NotificationAppOpenReturnEntity
+    getSVRAPPServiceNotificationAppOpenEntiryResultFromJson(
+        String jsonStr) {
         NotificationAppOpenReturnEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -731,11 +739,10 @@ public class JJsonUtils {
 
     /**
      * Parse NotificationCountReturnEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static NotificationCountReturnEntity getSVRAPPServiceNotificationCountEntiryResultFromJson(String jsonStr) {
+    public static NotificationCountReturnEntity
+    getSVRAPPServiceNotificationCountEntiryResultFromJson(
+        String jsonStr) {
         NotificationCountReturnEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -754,11 +761,9 @@ public class JJsonUtils {
 
     /**
      * Parse CheckoutPaymentSaveReturnEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static CheckoutGetPaymentListEntity getSVRAPPServiceCheckoutGetPaymentListEntityFromJson(String jsonStr) {
+    public static CheckoutGetPaymentListEntity getSVRAPPServiceCheckoutGetPaymentListEntityFromJson(
+        String jsonStr) {
         CheckoutGetPaymentListEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -777,11 +782,9 @@ public class JJsonUtils {
 
     /**
      * Parse CheckoutOrderStatusEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static CheckoutOrderStatusEntity getSVRAPPServiceCheckoutOrderStatusFromJson(String jsonStr) {
+    public static CheckoutOrderStatusEntity getSVRAPPServiceCheckoutOrderStatusFromJson(
+        String jsonStr) {
         CheckoutOrderStatusEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -800,11 +803,9 @@ public class JJsonUtils {
 
     /**
      * Parse ShoppingCartDeleteCellEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static ShoppingCartDeleteCellEntity getSVRAPPServiceShoppingcartDeleteCellEntityFromJson(String jsonStr) {
+    public static ShoppingCartDeleteCellEntity getSVRAPPServiceShoppingcartDeleteCellEntityFromJson(
+        String jsonStr) {
         ShoppingCartDeleteCellEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -822,11 +823,10 @@ public class JJsonUtils {
 
     /**
      * Parse ShoppingCartVoucherApplyEntity
-     *
-     * @param jsonStr
-     * @return
      */
-    public static ShoppingCartVoucherApplyEntity getSVRAPPServiceShoppingcartVoucherApplyEntityFromJson(String jsonStr) {
+    public static ShoppingCartVoucherApplyEntity
+    getSVRAPPServiceShoppingcartVoucherApplyEntityFromJson(
+        String jsonStr) {
         ShoppingCartVoucherApplyEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -842,7 +842,9 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppserviceProductSearchReturnEntity getSVRAppserviceProductSearchReturnEntityFromJson(String jsonStr) {
+    public static SVRAppserviceProductSearchReturnEntity
+    getSVRAppserviceProductSearchReturnEntityFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -858,7 +860,9 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppserviceCatalogSearchReturnEntity getSVRAppserviceCatalogSearchReturnEntityFromJson(String jsonStr) {
+    public static SVRAppserviceCatalogSearchReturnEntity
+    getSVRAppserviceCatalogSearchReturnEntityFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -873,7 +877,9 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppserviceCustomerFbLoginReturnEntity getSVRAppserviceCustomerFbLoginReturnEntityFromJson(String jsonStr) {
+    public static SVRAppserviceCustomerFbLoginReturnEntity
+    getSVRAppserviceCustomerFbLoginReturnEntityFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -903,8 +909,8 @@ public class JJsonUtils {
         return entity;
     }
 
-
-    public static WishlistDelteCellEntity getSVRAPPServiceWishlistDelteCellEntityFromJson(String jsonStr) {
+    public static WishlistDelteCellEntity getSVRAPPServiceWishlistDelteCellEntityFromJson(
+        String jsonStr) {
         WishlistDelteCellEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -920,7 +926,8 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static AddressDeleteCellEntity getSVRAPPServiceAddressDeleteCellEntityFromJson(String jsonStr) {
+    public static AddressDeleteCellEntity getSVRAPPServiceAddressDeleteCellEntityFromJson(
+        String jsonStr) {
         AddressDeleteCellEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -936,7 +943,8 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppServiceCustomerSignOut getSVRAPPSvrAppServiceCustomerSignOutFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerSignOut getSVRAPPSvrAppServiceCustomerSignOutFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -951,7 +959,8 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppServiceCustomerSubscribed getSVRAPPSvrAppServiceCustomerSubScribedFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerSubscribed getSVRAPPSvrAppServiceCustomerSubScribedFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -966,7 +975,9 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppServiceCustomerPhoneNumber getSVRAPPSvrAppServiceCustomerPhoneNumberFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerPhoneNumber
+    getSVRAPPSvrAppServiceCustomerPhoneNumberFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -981,7 +992,9 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppServiceCustomerMyAccountUpdate getSVRAPPSvrAppServiceCustomerMyAccountUpdateFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerMyAccountUpdate
+    getSVRAPPSvrAppServiceCustomerMyAccountUpdateFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -997,7 +1010,8 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static WishlistEntityResult getSVRAPPServiceWishlistEntityResultFromJson(String jsonStr) {
+    public static WishlistEntityResult getSVRAPPServiceWishlistEntityResultFromJson(
+        String jsonStr) {
         WishlistEntityResult entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -1029,7 +1043,9 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppserviceProductDetailReturnEntity getSVRAPPServiceProductDetailEntityFromJson(String jsonStr) {
+    public static SVRAppserviceProductDetailReturnEntity
+    getSVRAPPServiceProductDetailEntityFromJson(
+        String jsonStr) {
         SVRAppserviceProductDetailReturnEntity entity = null;
 
         if (JDataUtils.isEmpty(jsonStr)) {
@@ -1045,7 +1061,9 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppserviceCustomerUploadHeadImageAndroidReturnEntity getSVRAppserviceCustomerUploadHeadImageAndroidReturnEntityFromJson(String jsonStr) {
+    public static SVRAppserviceCustomerUploadHeadImageAndroidReturnEntity
+    getSVRAppserviceCustomerUploadHeadImageAndroidReturnEntityFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -1053,9 +1071,11 @@ public class JJsonUtils {
         SVRAppserviceCustomerUploadHeadImageAndroidReturnEntity entity = null;
         try {
             Gson gson = new Gson();
-            entity = gson.fromJson(jsonStr, SVRAppserviceCustomerUploadHeadImageAndroidReturnEntity.class);
+            entity = gson
+                .fromJson(jsonStr, SVRAppserviceCustomerUploadHeadImageAndroidReturnEntity.class);
         } catch (Exception ex) {
-            JLogUtils.e(TAG, "getSVRAppserviceCustomerUploadHeadImageAndroidReturnEntityFromJson", ex);
+            JLogUtils
+                .e(TAG, "getSVRAppserviceCustomerUploadHeadImageAndroidReturnEntityFromJson", ex);
         }
         return entity;
     }
@@ -1073,13 +1093,13 @@ public class JJsonUtils {
         } catch (Exception ex) {
             JLogUtils.e(TAG, "getSVRASVREditAddressFromJson", ex);
 
-
             JLogUtils.e(TAG, "getSVRSVREditAddressFromJson", ex);
         }
         return entity;
     }
 
-    public static SVRAppServiceCustomerAddAddress getSVRAPPSvrAppServiceCustomerAddAdderssFromJson(String jsonStr) {
+    public static SVRAppServiceCustomerAddAddress getSVRAPPSvrAppServiceCustomerAddAdderssFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -1094,7 +1114,9 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppserviceLandingPagesDetailReturnEntity getSVRAppserviceLandingPagesDetailReturnEntityFromJson(String jsonStr) {
+    public static SVRAppserviceLandingPagesDetailReturnEntity
+    getSVRAppserviceLandingPagesDetailReturnEntityFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -1109,7 +1131,9 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppserviceLandingPagesListReturnEntity getSVRAppserviceLandingPagesListReturnEntityFromJson(String jsonStr) {
+    public static SVRAppserviceLandingPagesListReturnEntity
+    getSVRAppserviceLandingPagesListReturnEntityFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -1171,7 +1195,9 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppserviceWishlistIslikeReturnEntity getSVRAppserviceWishlistIslikeReturnEntityFromJson(String jsonStr) {
+    public static SVRAppserviceWishlistIslikeReturnEntity
+    getSVRAppserviceWishlistIslikeReturnEntityFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -1185,6 +1211,7 @@ public class JJsonUtils {
         }
         return entity;
     }
+
     public static FavoriteEntity getSVRAppserviceFavoriteEntityFromJson(String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
@@ -1199,7 +1226,9 @@ public class JJsonUtils {
         }
         return entity;
     }
-    public static UpdateFavoriteEntity getSVRAppserviceUpdateFavoriteEntityFromJson(String jsonStr) {
+
+    public static UpdateFavoriteEntity getSVRAppserviceUpdateFavoriteEntityFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -1213,7 +1242,9 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static SVRAppServiceCustomSplashScreen getSVRAPPSvrAppServiceCustomerSplashScreenFromJson(String jsonStr) {
+    public static SVRAppServiceCustomSplashScreen
+    getSVRAPPSvrAppServiceCustomerSplashScreenFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -1226,7 +1257,10 @@ public class JJsonUtils {
         }
         return entity;
     }
-    public static SVRAppServiceCustomerGetFavorite getSVRAPPSvrAppServiceCustomerGetFavoriteFromJson(String jsonStr) {
+
+    public static SVRAppServiceCustomerGetFavorite
+    getSVRAPPSvrAppServiceCustomerGetFavoriteFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -1239,7 +1273,10 @@ public class JJsonUtils {
         }
         return entity;
     }
-    public static SVRAppServiceCustomerVersionCheck getSVRAPPSvrAppServiceCustomerVersionCheckFromJson(String jsonStr) {
+
+    public static SVRAppServiceCustomerVersionCheck
+    getSVRAPPSvrAppServiceCustomerVersionCheckFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -1253,6 +1290,7 @@ public class JJsonUtils {
         }
         return entity;
     }
+
     public static CustomAnimEntity getSVRAPPSvrAppServiceCustomerAnimFromJson(String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
@@ -1268,7 +1306,8 @@ public class JJsonUtils {
         return entity;
     }
 
-    public static GetAnimCodeEntity getSVRAPPSvrAppServiceCustomerGetAnimCodrFromJson(String jsonStr) {
+    public static GetAnimCodeEntity getSVRAPPSvrAppServiceCustomerGetAnimCodrFromJson(
+        String jsonStr) {
         if (JDataUtils.isEmpty(jsonStr)) {
             return null;
         }
@@ -1284,16 +1323,14 @@ public class JJsonUtils {
     }
 
     /**
-     *  from asset to read json file
-     * @param mContext
-     * @return
+     * from asset to read json file
      */
     public static String getJson(Context mContext, String fileName) {
         StringBuilder sb = new StringBuilder();
         AssetManager am = mContext.getAssets();
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(
-                    am.open(fileName)));
+                am.open(fileName)));
             String next = "";
             while (null != (next = br.readLine())) {
                 sb.append(next);

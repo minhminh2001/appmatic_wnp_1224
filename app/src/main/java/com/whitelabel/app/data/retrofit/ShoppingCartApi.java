@@ -1,6 +1,8 @@
 package com.whitelabel.app.data.retrofit;
 
 import com.google.gson.JsonObject;
+
+import com.whitelabel.app.model.GuestListResponse;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.ShoppingCartDeleteCellEntity;
 import com.whitelabel.app.model.ShoppingCartListEntityCart;
@@ -42,5 +44,5 @@ public interface ShoppingCartApi {
 
     @FormUrlEncoded
     @POST("appservice/cart/guestList")
-    Observable<ShoppingCartListEntityCart> getGuestList(@FieldMap Map<String, String> params);
+    Observable<GuestListResponse> getGuestList(@FieldMap Map<String, String> params);
 }
