@@ -461,19 +461,22 @@
                         android:layout_centerVertical="true"
                         android:src="@mipmap/right"
                         android:visibility="invisible"/>
-                </RelativeLayout>
 
-                <com.whitelabel.app.widget.CustomTextView
-                    style="@style/font_family_robot_regular"
-                    android:id="@+id/re_password_text"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/re_password_text2"
-                    android:layout_marginLeft="@dimen/table_margain_left"
-                    android:text="@string/retype_password"
-                    android:textSize="@dimen/labelTextFontSize"
-                    android:textColor="@color/colorAccent"
-                    android:visibility="invisible"/>
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:id="@+id/re_password_text"
+                        style="@style/font_family_robot_regular"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="18dp"
+                        android:layout_marginRight="18dp"
+                        android:layout_toLeftOf="@+id/img5"
+                        android:layout_toStartOf="@+id/img5"
+                        android:text="@string/retype_password"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/labelTextFontSize"
+                        android:visibility="invisible" />
+                </RelativeLayout>
 
                 <com.whitelabel.app.widget.CustomTextView
                     style="@style/font_family_robot_regular"
@@ -490,48 +493,12 @@
             </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
 
 
-            <RelativeLayout
-                android:id="@+id/relative6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rl_register_repwd"
-                android:layout_marginTop="22dp">
-
-                <!--<CheckBox-->
-                <!--android:id="@+id/checkbox"-->
-                <!--android:layout_width="35dp"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_height="48dp"-->
-                <!--android:visibility="gone"-->
-                <!--android:textColor="@color/grayText"-->
-                <!--android:checked="true"/>-->
-                <com.whitelabel.app.widget.CustomCheckBox
-                    android:id="@+id/checkbox2"
-                    imaginato:color_checked="@color/colorAccent"
-                    imaginato:color_unchecked_stroke="@color/color_checkbox_unchecked"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp" android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"/>
-                <com.whitelabel.app.widget.CustomTextView
-                    style="@style/font_family_robot_regular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:text="@string/checkBox1"
-                    android:textColor="@color/grayText"
-                    android:layout_toRightOf="@+id/checkbox2"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/checkbox_text1"
-                />
-            </RelativeLayout>
             <com.whitelabel.app.widget.CustomTextView
                 style="@style/font_family_robot_regular"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/error"
-                android:layout_below="@+id/relative6"
+                android:layout_below="@+id/rl_register_repwd"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:layout_marginTop="5dp"
@@ -543,7 +510,7 @@
                 android:id="@+id/sign_up"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/button_touch_height"
-                android:layout_below="@+id/relative6"
+                android:layout_below="@+id/rl_register_repwd"
                 android:layout_marginTop="42dp"
                 android:gravity="center"
                 android:background="@drawable/big_button_style_config"

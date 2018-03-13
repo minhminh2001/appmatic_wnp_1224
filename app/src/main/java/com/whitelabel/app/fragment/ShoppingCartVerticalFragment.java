@@ -300,7 +300,7 @@ public class ShoppingCartVerticalFragment extends
                     return;
                 }
                 if (!WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-                    startLoginActivity();
+                    startCheckoutActivity();
                 } else {
                     showDialog();
                     mGATrackCheckoutTimeStart = GaTrackHelper.getInstance()
@@ -1190,12 +1190,6 @@ public class ShoppingCartVerticalFragment extends
                                 .setGrandTotal(shoppingCartVoucherApplyEntity.getGrandTotal());
                             fragment.mCar.setShipping(shoppingCartVoucherApplyEntity.getShipping());
                             fragment.initShoppingCartData(fragment.mCar, false);
-//                            if (shoppingCartVoucherApplyEntity.getDiscount() != null &&
-// !TextUtils.isEmpty(shoppingCartVoucherApplyEntity.getDiscount().getCaption())) {
-//                                fragment.gaTrackerApplyCode(fragment.APPLIED);
-//                            } else {
-//                                fragment.gaTrackerApplyCode(fragment.UNAPPLIED);
-//                            }
                         } else {
                             ErrorMsgBean errorBean = (ErrorMsgBean) msg.obj;
                             if (!JToolUtils

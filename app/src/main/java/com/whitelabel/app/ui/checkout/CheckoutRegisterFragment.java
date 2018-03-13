@@ -1,6 +1,7 @@
 package com.whitelabel.app.ui.checkout;
 
 import com.whitelabel.app.BaseFragment;
+import com.whitelabel.app.R;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +19,7 @@ public class CheckoutRegisterFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
         @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_checkout_register,container,false);
     }
 
     @Override

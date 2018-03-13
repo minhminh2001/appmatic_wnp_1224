@@ -77,6 +77,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
     private static final String TAG_REVIEW = "reviewFragment";
 
+    private static final String TAG_REGISTER="register";
+
     private final int REQUESTCODE_LOGIN = 1000;
 
     public Long mGATrackCheckoutTimeStart = 0L;
@@ -163,6 +165,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     private String paymethodType;//1 online 2credit 3.offline payment
 
     private String bank;
+
+    private CheckoutRegisterFragment  checkoutRegisterFragment;
 
     /**
      * record that if fragment has entered into payment module.
@@ -297,8 +301,20 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
             setButtonEnable(true);
             openSelectFragment();
         } else {
-            expireStartLoginActivity();
+            openRegisterFragment();
         }
+    }
+
+
+    private void openRegisterFragment(){
+        currentModule = 0;
+        checkoutRegisterFragment = new CheckoutRegisterFragment();
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction
+                .add(R.id.ll_checkout_body, checkoutRegisterFragment, TAG_REGISTER);
+        fragmentTransaction.show(checkoutRegisterFragment).commitAllowingStateLoss();
+        list_fragment_shipping.add(checkoutRegisterFragment);
+        list_fragment.add(checkoutRegisterFragment);
     }
 
     public void reInit() {
@@ -321,6 +337,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
         }
         if (checkoutReviewFragment != null) {
             fragmentTransaction.hide(checkoutReviewFragment);
+        }
+        if(checkoutRegisterFragment!=null){
+            fragmentTransaction.hide(checkAddaddressFragment);
         }
     }
 
