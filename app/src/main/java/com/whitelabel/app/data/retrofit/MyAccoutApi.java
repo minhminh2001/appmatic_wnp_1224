@@ -1,18 +1,23 @@
 package com.whitelabel.app.data.retrofit;
 
+import com.whitelabel.app.data.model.RegisterRequest;
 import com.whitelabel.app.model.AddToWishlistEntity;
 import com.whitelabel.app.model.AddresslistReslut;
 import com.whitelabel.app.model.NotificationUnReadResponse;
 import com.whitelabel.app.model.ResponseModel;
+import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
 import com.whitelabel.app.model.SubscriberResponse;
 import com.whitelabel.app.model.WishDelEntityResult;
 
+import java.util.Map;
 import java.util.Observable;
 
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -55,5 +60,12 @@ public interface MyAccoutApi {
 
     @FormUrlEncoded
     @POST("appservice/customer/getsubscriberstatus")
-    public rx.Observable<SubscriberResponse> getUserAgreement(@Field("session_key")String sessionKey);
+    rx.Observable<SubscriberResponse> getUserAgreement(@Field("session_key")String sessionKey);
+
+    @POST("appservice/customer/create")
+    rx.Observable<ResponseModel> registerEmail(@Body RegisterRequest registerRequest);
+
+    @FormUrlEncoded
+    @POST("appservice/customer/login")
+    rx.Observable<SVRAppServiceCustomerLoginReturnEntity> loginEmail(@FieldMap Map<String,String> map);
 }

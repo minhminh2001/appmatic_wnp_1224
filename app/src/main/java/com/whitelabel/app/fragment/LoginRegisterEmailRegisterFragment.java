@@ -984,31 +984,16 @@ public class LoginRegisterEmailRegisterFragment extends com.whitelabel.app.BaseF
     }
 
 
-//    private void recoverEditTextContent() {
-//        mFirstName=firstName.getText().toString();
-//        mLastName=lastName.getText().toString();
-//        mEmail=email.getText().toString();
-//        mPassword=password.getText().toString();
-//        mRePassword=re_password.getText().toString();
-//    }
 
     @Override
     public void onStart() {
         super.onStart();
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, true);
         GaTrackHelper.getInstance().googleAnalytics(Const.GA.SIGN_UP_SCREEN, loginRegisterActivity);
-//        if(isstop){
-//            firstName.setText(mFirstName);
-//            lastName.setText(mLastName);
-//            email.setText(mEmail);
-//            password.setText(mPassword);
-//            re_password.setText(mRePassword);
-//        }
     }
 
     @Override
     public void onStop() {
-
         isClickRegister=true;
         super.onStop();
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(loginRegisterActivity, false);

@@ -1,4 +1,7 @@
 package com.whitelabel.app.data.service;
+import android.text.TextUtils;
+
+import com.whitelabel.app.data.model.RegisterRequest;
 import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.data.retrofit.MyAccoutApi;
 import com.whitelabel.app.data.retrofit.OneAllApi;
@@ -8,11 +11,16 @@ import com.whitelabel.app.model.ApiException;
 import com.whitelabel.app.model.NotificationUnReadResponse;
 import com.whitelabel.app.model.ResponseConnection;
 import com.whitelabel.app.model.ResponseModel;
+import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
 import com.whitelabel.app.model.SubscriberResponse;
 import com.whitelabel.app.model.WishDelEntityResult;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 import rx.Observable;;
 import rx.functions.Func1;
@@ -151,5 +159,19 @@ public class AccountManager implements IAccountManager{
             });
     }
 
+    @Override
+    public Observable<ResponseModel> register(RegisterRequest registerRequest) {
+        return myAccoutApi.registerEmail(registerRequest);
+    }
 
+    @Override
+    public Observable<SVRAppServiceCustomerLoginReturnEntity> loginEmail(String email, String password, String deviceToken) {
+        Map<String,String> params=new HashMap<>();
+        params.put("email",email);
+        params.put("password",password);
+        if(!TextUtils.isEmpty(deviceToken)){
+            params.put("device_token",deviceToken);
+        }
+        return myAccoutApi.loginEmail(params);
+    }
 }

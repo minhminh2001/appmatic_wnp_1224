@@ -15,6 +15,7 @@ import com.whitelabel.app.fragment.LoginRegisterEmailBoundFragment;
 import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
 import com.whitelabel.app.ui.checkout.CheckoutAddaddressFragment;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressFragment;
+import com.whitelabel.app.ui.checkout.CheckoutRegisterFragment;
 import com.whitelabel.app.ui.common.BaseAddressFragment;
 import com.whitelabel.app.ui.home.activity.ShopBrandActivity;
 import com.whitelabel.app.ui.home.fragment.HomeFragmentV2;
@@ -61,5 +62,6 @@ public interface PresenterComponent1 {
     void inject(HomeSettingCotentFragment fragment);
     void inject(HomeMyAccountOrdersFragment fragment);
     void inject(MyAccountOrderDetailActivity activity);
+    void inject(CheckoutRegisterFragment checkoutRegisterFragment);
     Activity getActivity();
 }

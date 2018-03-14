@@ -1,5 +1,6 @@
 package com.whitelabel.app.ui.checkout;
 
+import com.whitelabel.app.data.model.RegisterRequest;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.ui.BaseView;
 
@@ -14,6 +15,8 @@ public interface CheckoutRegisterContract {
     }
 
     interface Presenter extends BasePresenter<View> {
+
+        void registerEmail(RegisterRequest registerRequest);
 
     }
 

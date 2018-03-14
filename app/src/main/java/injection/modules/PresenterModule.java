@@ -12,6 +12,8 @@ import com.whitelabel.app.ui.checkout.CheckoutContract;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressContract;
 import com.whitelabel.app.ui.checkout.CheckoutDefaultAddressPresenter;
 import com.whitelabel.app.ui.checkout.CheckoutPresenterImpl;
+import com.whitelabel.app.ui.checkout.CheckoutRegisterContract;
+import com.whitelabel.app.ui.checkout.CheckoutRegisterPresenter;
 import com.whitelabel.app.ui.common.BaseAddressContract;
 import com.whitelabel.app.ui.common.BaseAddressPresenter;
 import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
@@ -186,6 +188,13 @@ public class PresenterModule {
     public ShoppingCartVersionContract.Presenter provideCheckoutVersionPresenter(
         IBaseManager iBaseManager, IShoppingCartManager iShoppingCartManager) {
         return new ShoppingCartVersionPresenter(iBaseManager, iShoppingCartManager);
+    }
+
+    @Provides
+    @ActivityScope
+    public CheckoutRegisterContract.Presenter provideCheckoutRegisterPresenter(
+            IAccountManager iAccountManager, IShoppingCartManager iShoppingCartManager) {
+        return new CheckoutRegisterPresenter(iAccountManager, iShoppingCartManager);
     }
 
 }

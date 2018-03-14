@@ -11,7 +11,34 @@
         android:paddingLeft="0dp"
         android:paddingRight="0dp">
 
+        <LinearLayout
+            android:id="@+id/ll_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            >
+        <com.whitelabel.app.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/already_registered"
+            android:paddingLeft="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_now"
+                android:paddingLeft="10dp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
         <RelativeLayout
+            android:layout_marginTop="25dp"
+            android:layout_below="@+id/ll_header"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:focusable="true"
@@ -19,16 +46,10 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:id="@+id/rrr">
-            <View
-                android:id="@+id/view1"
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="@color/greyEEEEEE"/>
             <RelativeLayout
                 android:id="@+id/rl_register_name"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/view1">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:baselineAligned="false"
@@ -109,6 +130,7 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight="1">
                         <com.whitelabel.app.widget.CustomTextView
                             style="@style/font_family_robot_regular"
@@ -193,17 +215,12 @@
                         android:layout_width="0dp"
                         android:layout_height="1dp"
                         android:layout_marginTop="0dp"
+                        android:layout_marginLeft="10dp"
                         android:background="@color/edittext_line"/>
                 </LinearLayout>
 
             </RelativeLayout>
-            <View
-                android:layout_centerHorizontal="true"
-                android:layout_width="@dimen/line_height"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/rl_register_name"
-                android:layout_alignBottom="@+id/rl_register_name"
-                android:background="@color/edittext_line"/>
+
             <!--email-->
             <com.whitelabel.app.widget.CustomButtomLineRelativeLayout
                 android:id="@+id/rl_register_email"
@@ -443,7 +460,7 @@
                         android:paddingRight="@dimen/customEditText_paddingRight_v2"
                         android:textColorHint="@color/hint"
                         android:inputType="textPassword"
-                    />
+                        />
                     <ImageView
                         android:id="@+id/clearRePassword"
                         android:layout_width="16dp"
@@ -460,23 +477,20 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:src="@mipmap/right"
-                        android:visibility="invisible"/>
-
-                    <com.whitelabel.app.widget.CustomTextView
-                        android:id="@+id/re_password_text"
-                        style="@style/font_family_robot_regular"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginEnd="18dp"
-                        android:layout_marginRight="18dp"
-                        android:layout_toLeftOf="@+id/img5"
-                        android:layout_toStartOf="@+id/img5"
-                        android:text="@string/retype_password"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/labelTextFontSize"
                         android:visibility="invisible" />
                 </RelativeLayout>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    style="@style/font_family_robot_regular"
+                    android:id="@+id/re_password_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/re_password_text2"
+                    android:layout_marginLeft="@dimen/table_margain_left"
+                    android:text="@string/retype_password"
+                    android:textSize="@dimen/labelTextFontSize"
+                    android:textColor="@color/colorAccent"
+                    android:visibility="invisible" />
 
                 <com.whitelabel.app.widget.CustomTextView
                     style="@style/font_family_robot_regular"
@@ -488,7 +502,7 @@
                     android:textColor="@color/label_saved"
                     android:textSize="@dimen/labelTextFontSize"
                     android:text="@string/retype_password"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
             </com.whitelabel.app.widget.CustomButtomLineRelativeLayout>
 
@@ -505,20 +519,7 @@
                 android:visibility="invisible"
                 android:textColor="@color/redC2060A"
             />
-            <com.whitelabel.app.widget.CustomTextView
-                style="@style/font_family_roboto_medium"
-                android:id="@+id/sign_up"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/button_touch_height"
-                android:layout_below="@+id/rl_register_repwd"
-                android:layout_marginTop="42dp"
-                android:gravity="center"
-                android:background="@drawable/big_button_style_config"
-                android:text="@string/Sign_Up"
-                android:textAllCaps="true"
-                android:textColor="@color/buttonTextColorPrimary"
-                android:textSize="@dimen/button_font_size"
-            />
+
         </RelativeLayout>
 
     </RelativeLayout>
