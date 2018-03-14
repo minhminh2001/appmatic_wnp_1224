@@ -192,9 +192,9 @@ public class PresenterModule {
 
     @Provides
     @ActivityScope
-    public CheckoutRegisterContract.Presenter provideCheckoutRegisterPresenter(
+    public CheckoutRegisterContract.Presenter provideCheckoutRegisterPresenter(IBaseManager iBaseManager,
             IAccountManager iAccountManager, IShoppingCartManager iShoppingCartManager) {
-        return new CheckoutRegisterPresenter(iAccountManager, iShoppingCartManager);
+        return new CheckoutRegisterPresenter(iAccountManager, iShoppingCartManager,iBaseManager);
     }
 
 }

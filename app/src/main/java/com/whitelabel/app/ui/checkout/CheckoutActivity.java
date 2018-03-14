@@ -29,7 +29,9 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.checkout.model.CheckoutDefaultAddressResponse;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.PaypalHelper;
@@ -45,12 +47,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -62,12 +64,14 @@ import android.widget.TextView;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
 
 public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutContract.Presenter>
-    implements View.OnClickListener, CheckoutContract.View {
+    implements View.OnClickListener, CheckoutContract.View, CheckoutRegisterFragment
+    .CheckoutRegisterCallBack {
 
     private static final String TAG_ADD_ADDRESS = "addNewAddressFragment";
 
@@ -77,7 +81,15 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
     private static final String TAG_REVIEW = "reviewFragment";
 
-    private static final String TAG_REGISTER="register";
+    private static final String TAG_REGISTER = "register";
+
+    private static final int MENU_PROFILE = 0;
+
+    private static final int MENU_ADDRESS = 1;
+
+    private static final int MENU_PAYMENT = 2;
+
+    private static final int MENU_REVIEW = 3;
 
     private final int REQUESTCODE_LOGIN = 1000;
 
@@ -132,19 +144,13 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
     String shippingFee = "";
 
+    private boolean isGuestModel;
+
+    private List<View> vPoint;
+
+    private List<View> vLine;
+
     private String errorProductTitle;
-
-    private TextView tvMenuPayment;
-
-    private TextView tvMenuReview;
-
-    private TextView tvMenuShipping;
-
-    private TextView tvSliderFirst;
-
-    private TextView tvSliderSecond;
-
-    private TextView tvSliderThird;
 
     private FragmentTransaction fragmentTransaction;
 
@@ -166,7 +172,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
     private String bank;
 
-    private CheckoutRegisterFragment  checkoutRegisterFragment;
+    private CheckoutRegisterFragment checkoutRegisterFragment;
 
     /**
      * record that if fragment has entered into payment module.
@@ -203,6 +209,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
     private boolean isClick = true;
 
+    private List<View> vText;
+
     @Override
     protected void initInject() {
         DaggerPresenterComponent1.builder()
@@ -221,6 +229,12 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     public void showNetErrorMessage() {
         RequestErrorHelper requestErrorHelper = new RequestErrorHelper(this);
         requestErrorHelper.showNetWorkErrorToast();
+    }
+
+    @Override
+    public void switchNextFragment() {
+        switchMenu(MENU_ADDRESS);
+        openSelectFragment();
     }
 
     @Override
@@ -297,7 +311,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
         errorProductTitle = getResources().getString(R.string.checkout_product_error_title);
         list_fragment = new ArrayList<>();
         list_fragment_shipping = new ArrayList<>();
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(CheckoutActivity.this)) {
+        if (!isGuestModel) {
             setButtonEnable(true);
             openSelectFragment();
         } else {
@@ -305,13 +319,12 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
         }
     }
 
-
-    private void openRegisterFragment(){
-        currentModule = 0;
+    private void openRegisterFragment() {
+        currentModule = 5;
         checkoutRegisterFragment = new CheckoutRegisterFragment();
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction
-                .add(R.id.ll_checkout_body, checkoutRegisterFragment, TAG_REGISTER);
+            .add(R.id.ll_checkout_body, checkoutRegisterFragment, TAG_REGISTER);
         fragmentTransaction.show(checkoutRegisterFragment).commitAllowingStateLoss();
         list_fragment_shipping.add(checkoutRegisterFragment);
         list_fragment.add(checkoutRegisterFragment);
@@ -338,34 +351,112 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
         if (checkoutReviewFragment != null) {
             fragmentTransaction.hide(checkoutReviewFragment);
         }
-        if(checkoutRegisterFragment!=null){
+        if (checkoutRegisterFragment != null) {
             fragmentTransaction.hide(checkAddaddressFragment);
         }
     }
 
     private void initView() {
+
+        isGuestModel = !WhiteLabelApplication.getAppConfiguration().isSignIn(CheckoutActivity.this);
+        initTopMenu();
+
         mImageLoader = new ImageLoader(this);
-        tvMenuPayment = (TextView) findViewById(R.id.tv_checkout_menu_payment);
-        tvMenuReview = (TextView) findViewById(R.id.tv_checkout_menu_review);
-        tvMenuShipping = (TextView) findViewById(R.id.tv_checkout_menu_shipping);
-        tvSliderFirst = (TextView) findViewById(R.id.tv_checkout_slider_first);
-        tvSliderSecond = (TextView) findViewById(R.id.tv_checkout_slider_second);
-        tvSliderThird = (TextView) findViewById(R.id.tv_checkout_slider_third);
         btnContinue = (TextView) findViewById(R.id.btn_checkout_payment_continue);
         ll_btn = (LinearLayout) findViewById(R.id.ll_checkout_bottomBar);
         scrollViewBody = (ScrollView) findViewById(R.id.sv_checkout_body);
         llBody = (LinearLayout) findViewById(R.id.ll_checkout_body);
         progressBarLoading = (ProgressBar) findViewById(R.id.pb_checkout_body_loading);
-        tvMenuShipping.setTextColor(
-            WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         btnContinue.setOnClickListener(this);
         ll_btn.setOnClickListener(this);
         ll_btn.setVisibility(View.VISIBLE);
-        changeSliderColor(
-            WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color(),
-            getResources().getColor(R.color.grayf8f8f8),
-            getResources().getColor(R.color.grayf8f8f8));
         JViewUtils.setSoildButtonGlobalStyle(this, btnContinue);
+    }
+
+    private void initTopMenu() {
+        vPoint = new ArrayList<>();
+        vLine = new ArrayList<>();
+        vText = new ArrayList<>();
+        View pointOne = findViewById(R.id.iv_point_one);
+        View pointTwo = findViewById(R.id.iv_point_two);
+        View pointThree = findViewById(R.id.iv_point_three);
+        View pointFour = findViewById(R.id.iv_point_four);
+        View vProgressOne = findViewById(R.id.v_progress_one);
+        View vProgressTwo = findViewById(R.id.v_progress_two);
+        View vProgressThree = findViewById(R.id.v_progress_three);
+
+        TextView vProfile = (TextView) findViewById(R.id.tv_profile);
+        TextView vAddress = (TextView) findViewById(R.id.tv_address);
+        TextView vPayment = (TextView) findViewById(R.id.tv_payment);
+        TextView vReview = (TextView) findViewById(R.id.tv_review);
+        vProfile.setTextColor(
+            JImageUtils.getThemeTextColorDrawable(ContextCompat.getColor(this, R.color.black)));
+        vAddress.setTextColor(
+            JImageUtils.getThemeTextColorDrawable(ContextCompat.getColor(this, R.color.black)));
+        vPayment.setTextColor(
+            JImageUtils.getThemeTextColorDrawable(ContextCompat.getColor(this, R.color.black)));
+        vReview.setTextColor(
+            JImageUtils.getThemeTextColorDrawable(ContextCompat.getColor(this, R.color.black)));
+
+        vText.add(vAddress);
+        vText.add(vPayment);
+        vText.add(vReview);
+        vLine.add(vProgressTwo);
+        vLine.add(vProgressThree);
+        vPoint.add(pointTwo);
+        vPoint.add(pointThree);
+        vPoint.add(pointFour);
+        if (isGuestModel) {
+            vPoint.add(0, pointOne);
+            vLine.add(0, vProgressOne);
+            vText.add(0, vProfile);
+            setLineWidth((JScreenUtils.getScreenWidth(this) - JScreenUtils.dip2px(this, 40)) / 4);
+            switchMenu(MENU_PROFILE);
+        } else {
+            pointOne.setVisibility(View.GONE);
+            vProgressOne.setVisibility(View.GONE);
+            vProfile.setVisibility(View.GONE);
+            setLineWidth((JScreenUtils.getScreenWidth(this) - JScreenUtils.dip2px(this, 30)) / 3);
+            switchMenu(MENU_ADDRESS);
+        }
+    }
+
+    private void switchMenu(int menu) {
+        menu = !isGuestModel && menu != 0 ? menu - 1 : menu;
+        for (int i = 0; i < vPoint.size(); i++) {
+
+            vText.get(i).setSelected(i == menu);
+            if (i == menu) {
+                vPoint.get(i)
+                    .setBackground(
+                        JImageUtils.getThemeIcon(this, R.drawable.button_oval_grey_stroke));
+            } else if (i < menu) {
+                vPoint.get(i)
+                    .setBackground(JImageUtils.getThemeIcon(this, R.drawable.button_oval_grey));
+            } else if (i > menu) {
+                vPoint.get(i).setBackgroundResource(R.drawable.button_oval_grey);
+            }
+        }
+
+        for (int i = 0; i < vLine.size(); i++) {
+            if (i < menu) {
+                vLine.get(i).setBackgroundColor(
+                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+            } else {
+                vLine.get(i).setBackgroundColor(ContextCompat.getColor(this, R.color.greyEEEEEE));
+            }
+
+        }
+    }
+
+    private void setLineWidth(int width) {
+        for (int i = 0; i < vLine.size(); i++) {
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) vLine.get(i)
+                .getLayoutParams();
+            params.height = JScreenUtils.dip2px(this, 1.5f);
+            params.width = width;
+            vLine.get(i).setLayoutParams(params);
+        }
     }
 
     public void onClick(View v) {
@@ -462,16 +553,11 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                 if (currentFragment instanceof CheckoutPaymentFragment) {
                     currentModule -= 1;
                     fragmentTransaction.hide(currentFragment);
-                    JLogUtils.i("zzz", "back--->111");
-
                 } else if (currentFragment instanceof CheckoutReviewFragment) {
-                    JLogUtils.i("zzz", "back--->222");
                     if (skipPayment == 1) {//means grand total is 0, should jump from 3 to 1,
                         // review order to shipping address.
-                        JLogUtils.i("zzz", "back--->222_111");
                         currentModule -= 2;
                     } else {
-                        JLogUtils.i("zzz", "back--->222_222");
                         currentModule -= 1;
                         Fragment beforeFragment = list_fragment.get(list_fragment.size() - 1);
                         if (beforeFragment instanceof CheckoutPaymentFragment) {
@@ -479,7 +565,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                     }
                     fragmentTransaction.hide(currentFragment);
                 } else {
-                    JLogUtils.i("zzz", "back--->333");
                     currentModule -= 1;
                     fragmentTransaction.remove(currentFragment);
                 }
@@ -487,11 +572,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
                 switch (currentModule) {
                     case 2://means payment module
-                        changeSliderColor(
-                            getResources().getColor(R.color.grayf8f8f8),
-                            WhiteLabelApplication.getAppConfiguration().getThemeConfig()
-                                .getTheme_color(),
-                            getResources().getColor(R.color.grayf8f8f8));
+
                         break;
                     case 1://means shipping module
                         //close softpan
@@ -500,13 +581,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                                 .getSystemService(Context.INPUT_METHOD_SERVICE);
                         inputMethodManager.hideSoftInputFromWindow(llBody.getWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
-
-                        changeSliderColor(
-                            WhiteLabelApplication.getAppConfiguration().getThemeConfig()
-                                .getTheme_color(),
-                            getResources().getColor(R.color.grayf8f8f8),
-                            getResources().getColor(R.color.grayf8f8f8));
-
                         break;
                     default:
                         break;
@@ -550,12 +624,12 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                 JLogUtils.i("googleGA_screen", "Select Payment Screen");
                 break;
             case 3://place my order
-//                mGATrackPlaceOrderToResultTimeStart = GaTrackHelper.getInstance()
-// .googleAnalyticsTimeStart();
-//                placeOrder();
                 GaTrackHelper.getInstance().googleAnalytics("Review Order Screen", this);
                 mPresenter.payPalPlaceOrder(
                     ((CheckoutReviewFragment) checkoutReviewFragment).getOrderComment());
+                break;
+            case 5:
+                checkoutRegisterFragment.requestResister();
                 break;
         }
     }
@@ -673,33 +747,34 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
     //first register and to checkout page to skip :add address page
     public void openSelectFragment() {
-        if (checkoutDefaultAddressFragment != null) {
-            hiddenAll();
-        } else {
-            currentModule = 1;
-            checkoutDefaultAddressFragment = new CheckoutDefaultAddressFragment();
-            fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction
-                .add(R.id.ll_checkout_body, checkoutDefaultAddressFragment, TAG_DEFAULT_ADDRESS);
-            fragmentTransaction.show(checkoutDefaultAddressFragment).commitAllowingStateLoss();
-            list_fragment_shipping.add(checkoutDefaultAddressFragment);
-            list_fragment.add(checkoutDefaultAddressFragment);
-            ((CheckoutDefaultAddressFragment) checkoutDefaultAddressFragment)
-                .setiChangeAddAddressPage(
-                    new CheckoutDefaultAddressFragment.IChangeAddAddressPage() {
-                        @Override
-                        public void selectAddressFragment() {
-                            currentModule = 0;
-                            checkAddaddressFragment = new CheckoutAddaddressFragment();
-                            fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                            fragmentTransaction.remove(checkoutDefaultAddressFragment);
-                            fragmentTransaction.add(R.id.ll_checkout_body, checkAddaddressFragment,
-                                TAG_ADD_ADDRESS);
-                            fragmentTransaction.show(checkAddaddressFragment)
-                                .commitAllowingStateLoss();
-                        }
-                    });
+        hiddenAll();
+        currentModule = 1;
+        checkoutDefaultAddressFragment = new CheckoutDefaultAddressFragment();
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction
+            .add(R.id.ll_checkout_body, checkoutDefaultAddressFragment, TAG_DEFAULT_ADDRESS);
+        if (checkoutRegisterFragment != null) {
+            fragmentTransaction.remove(checkoutRegisterFragment);
         }
+        fragmentTransaction.show(checkoutDefaultAddressFragment).commitAllowingStateLoss();
+        list_fragment_shipping.add(checkoutDefaultAddressFragment);
+        list_fragment.add(checkoutDefaultAddressFragment);
+        ((CheckoutDefaultAddressFragment) checkoutDefaultAddressFragment)
+            .setiChangeAddAddressPage(
+                new CheckoutDefaultAddressFragment.IChangeAddAddressPage() {
+                    @Override
+                    public void selectAddressFragment() {
+                        hiddenAll();
+                        currentModule = 0;
+                        checkAddaddressFragment = new CheckoutAddaddressFragment();
+                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.remove(checkoutDefaultAddressFragment);
+                        fragmentTransaction.add(R.id.ll_checkout_body, checkAddaddressFragment,
+                            TAG_ADD_ADDRESS);
+                        fragmentTransaction.show(checkAddaddressFragment)
+                            .commitAllowingStateLoss();
+                    }
+                });
     }
 
     //to select shipping or pick up store page :show address page
@@ -718,14 +793,11 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     public void switReviewFragment(String molpayType,
         CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity, String code, String html,
         String type, String bank) {
+        switchMenu(MENU_REVIEW);
         this.html = html;
         this.paymentMethodCode = code;
         paymethodType = type;
         this.paymentSaveReturnEntity = paymentSaveReturnEntity;
-        changeSliderColor(
-            getResources().getColor(R.color.grayf8f8f8),
-            getResources().getColor(R.color.grayf8f8f8),
-            WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         //switch fragment and set params
         checkoutReviewFragment = new CheckoutReviewFragment();
         Bundle bundle = new Bundle();
@@ -742,9 +814,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         currentModule = 3;
         btnContinue.setText(getResources().getString(R.string.PLACE_MY_ORDER));
+        hiddenAll();
         list_fragment.add(checkoutReviewFragment);
         fragmentTransaction.add(R.id.ll_checkout_body, checkoutReviewFragment, TAG_REVIEW);
-        fragmentTransaction.hide(list_fragment.get(1));
         fragmentTransaction.show(checkoutReviewFragment).commitAllowingStateLoss();
 
     }
@@ -942,57 +1014,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     }
 
     /**
-     * Translate slider as fragment changes
-     */
-    private void changeSliderColor(final int firstColorId, final int secondColorId,
-        final int thirdColorId) {
-
-        TranslateAnimation translateAnimation = null;
-
-        //first slide
-        if (firstColorId == WhiteLabelApplication.getAppConfiguration().getThemeConfig()
-            .getTheme_color()) {
-            tvSliderFirst.setBackgroundColor(firstColorId);
-            tvSliderSecond.setBackgroundColor(secondColorId);
-            tvSliderThird.setBackgroundColor(thirdColorId);
-        }
-
-        //second slide
-        if (secondColorId == WhiteLabelApplication.getAppConfiguration().getThemeConfig()
-            .getTheme_color()) {
-            if (isGoBack) {
-
-                tvSliderSecond.setBackgroundColor(secondColorId);
-                tvSliderThird.setBackgroundColor(thirdColorId);
-
-            } else {//continue operation
-                tvSliderSecond.setBackgroundColor(secondColorId);
-                tvSliderFirst.setBackgroundColor(firstColorId);
-            }
-        }
-
-        //third slide
-        if (thirdColorId == WhiteLabelApplication.getAppConfiguration().getThemeConfig()
-            .getTheme_color()) {
-
-            tvSliderFirst.setBackgroundColor(firstColorId);
-            tvSliderSecond.setBackgroundColor(secondColorId);
-            tvSliderThird.setBackgroundColor(thirdColorId);
-        }
-
-        tvMenuShipping.setTextColor(
-            firstColorId == getResources().getColor(R.color.grayf8f8f8) ? getResources()
-                .getColor(R.color.black000000) : firstColorId);
-        tvMenuPayment.setTextColor(
-            secondColorId == getResources().getColor(R.color.grayf8f8f8) ? getResources()
-                .getColor(R.color.black000000) : secondColorId);
-        tvMenuReview.setTextColor(
-            thirdColorId == getResources().getColor(R.color.grayf8f8f8) ? getResources()
-                .getColor(R.color.black000000) : thirdColorId);
-
-    }
-
-    /**
      * use  molpay  xdk
      */
     private void goToMolpayPage(String orderId, String amount, String shippingFee, String phone,
@@ -1163,11 +1184,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                              * grand total is 0 and redirect to review order fragment.
                              */
                             mActivity.get().skipPayment = 1;
-                            mActivity.get().changeSliderColor(
-                                mActivity.get().getResources().getColor(R.color.grayf8f8f8),
-                                mActivity.get().getResources().getColor(R.color.grayf8f8f8),
-                                WhiteLabelApplication.getAppConfiguration().getThemeConfig()
-                                    .getTheme_color());
+
                             //switch fragment and set params
                             mActivity.get().checkoutReviewFragment = new CheckoutReviewFragment();
                             Bundle bundle = new Bundle();
@@ -1196,29 +1213,22 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                              * normal payment
                              */
                             mActivity.get().skipPayment = 0;
-                            mActivity.get().changeSliderColor(
-                                mActivity.get().getResources().getColor(R.color.grayf8f8f8),
-                                WhiteLabelApplication.getAppConfiguration().getThemeConfig()
-                                    .getTheme_color(),
-                                mActivity.get().getResources().getColor(R.color.grayf8f8f8));
                             //switch fragment
                             mActivity.get().fragmentTransaction = mActivity.get()
                                 .getSupportFragmentManager().beginTransaction();
                             mActivity.get().checkoutPaymentFragment = mActivity.get()
                                 .getSupportFragmentManager().findFragmentByTag(TAG_PAYMENT);
+                            mActivity.get().hiddenAll();
                             if (mActivity.get().checkoutPaymentFragment == null) {
                                 mActivity
                                     .get().checkoutPaymentFragment = new CheckoutPaymentFragment();
                                 mActivity.get().fragmentTransaction.add(R.id.ll_checkout_body,
                                     mActivity.get().checkoutPaymentFragment, TAG_PAYMENT);
-                                mActivity.get().fragmentTransaction
-                                    .hide(mActivity.get().list_fragment.get(0));
+
                                 mActivity.get().fragmentTransaction
                                     .show(mActivity.get().checkoutPaymentFragment)
                                     .commitAllowingStateLoss();
                             } else {
-                                mActivity.get().fragmentTransaction
-                                    .hide(mActivity.get().list_fragment.get(0));
                                 mActivity.get().fragmentTransaction
                                     .show(mActivity.get().checkoutPaymentFragment)
                                     .commitAllowingStateLoss();
@@ -1227,6 +1237,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                                 .add(mActivity.get().checkoutPaymentFragment);
                             mActivity.get().currentModule = 2;
                         }
+                        mActivity.get().switchMenu(MENU_PAYMENT);
                         mActivity.get().neverEnterIntoNext = false;
                         mActivity.get().scrollViewBody.scrollTo(0, 0);
                         try {

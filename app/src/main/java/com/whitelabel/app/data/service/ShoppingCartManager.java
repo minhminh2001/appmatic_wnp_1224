@@ -3,6 +3,7 @@ package com.whitelabel.app.data.service;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import com.whitelabel.app.data.model.MergeBatchResponse;
 import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.data.preference.model.ShoppingItemLocalModel;
 import com.whitelabel.app.data.retrofit.ShoppingCartApi;
@@ -105,13 +106,44 @@ public class ShoppingCartManager implements IShoppingCartManager {
 
     @Override
     public Observable<Boolean> updateLocalShoppingItemNumber(String simpleId, String s) {
-        return iCacheApi.updateLocalShoppingItemNumber(simpleId,s);
+        return iCacheApi.updateLocalShoppingItemNumber(simpleId, s);
     }
 
     @Override
     public Observable<Boolean> saveProductToLocal(
         List<ShoppingItemLocalModel> shoppingItemLocalModels) {
         return iCacheApi.addProductDetailToLocal(shoppingItemLocalModels);
+    }
+
+    @Override
+    public Observable<MergeBatchResponse> addBatchShopping(
+        List<ShoppingItemLocalModel> shoppingItemLocalModels, String session) {
+        Map<String, String> params = new HashMap<>();
+        params.put("session_key", session);
+        for (int i = 0; i < shoppingItemLocalModels.size(); i++) {
+            params.put("products[" + i + "][main_id]", shoppingItemLocalModels.get(i).getGroupId());
+            params.put("products[" + i + "][qty]", shoppingItemLocalModels.get(i).getNumber());
+            params
+                .put("products[" + i + "][simple_id]",
+                    shoppingItemLocalModels.get(i).getSimpleId());
+        }
+        return shoppingCartApi.addBatchShopping(params).flatMap(
+            new Func1<MergeBatchResponse, Observable<MergeBatchResponse>>() {
+                @Override
+                public Observable<MergeBatchResponse> call(MergeBatchResponse mergeBatchResponse) {
+                    if (mergeBatchResponse.getStatus() == 1) {
+                        return Observable.just(mergeBatchResponse);
+                    } else {
+                        return Observable.error(new ApiException(""));
+                    }
+
+                }
+            });
+    }
+
+    @Override
+    public Observable<Boolean> clearShoppingItem() {
+        return iCacheApi.clearShoppingItem();
     }
 
     @Override

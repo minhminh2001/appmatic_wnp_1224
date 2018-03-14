@@ -1,5 +1,6 @@
 package com.whitelabel.app.data.service;
 
+import com.whitelabel.app.data.model.MergeBatchResponse;
 import com.whitelabel.app.data.preference.model.ShoppingItemLocalModel;
 import com.whitelabel.app.model.GuestListResponse;
 import com.whitelabel.app.model.ResponseModel;
@@ -44,4 +45,9 @@ public interface IShoppingCartManager {
     Observable<Boolean> deleteLocalShoppingItem(String simpleId);
 
     Observable<Boolean> updateLocalShoppingItemNumber(String simpleId, String s);
+
+    Observable<MergeBatchResponse> addBatchShopping(List<ShoppingItemLocalModel> shoppingItemLocalModels,String session);
+    
+
+    Observable<Boolean> clearShoppingItem();
 }

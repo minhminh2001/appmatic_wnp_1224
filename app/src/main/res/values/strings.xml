@@ -859,4 +859,5 @@
 <string name="already_registered">Already Registered?</string>
 
     <string name="login_now">Login now</string>
+    <string name="profile">Profile</string>
 </resources>

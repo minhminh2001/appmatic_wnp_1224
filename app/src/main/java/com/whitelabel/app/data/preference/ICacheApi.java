@@ -82,4 +82,6 @@ public interface ICacheApi {
     Observable<Boolean> deleteShoppingItem(String simpleId);
 
     Observable<Boolean> updateLocalShoppingItemNumber(String simpleId,String s);
+
+    Observable<Boolean> clearShoppingItem();
 }

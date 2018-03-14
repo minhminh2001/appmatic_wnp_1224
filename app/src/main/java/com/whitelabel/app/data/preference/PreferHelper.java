@@ -472,6 +472,16 @@ public class PreferHelper implements ICacheApi {
     }
 
     @Override
+    public Observable<Boolean> clearShoppingItem() {
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance()
+            .getSharedPreferences(TABLE_LOCAL_SHOPPING_CAR, Activity.MODE_PRIVATE);
+        sharedPreferences.edit()
+            .putString(FILED_SHOPPING_CAR_LIST,
+                "").commit();
+        return Observable.just(true);
+    }
+
+    @Override
     public Observable<Boolean> deleteItemById(String simpleId) {
         return null;
     }
