@@ -305,6 +305,11 @@ public class HomeMyAccountOrdersFragment extends HomeBaseFragment<MyOrderContrac
     public void showReorderSuccessMessage(int count) {
         JViewUtils.showHintToast(homeActivity.getResources().getString(R.string.add_order_to_checkout));
         //3.save cache checkout size,count is order sum
+        refreshShoppingCartCount(count);
+    }
+
+    @Override
+    public void refreshShoppingCartCount(int count){
         mPresenter.saveShoppingCartCount(currentShoppingCount+count);
         //deloy operator
         dataHandler.postDelayed(new Runnable() {

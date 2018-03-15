@@ -732,13 +732,13 @@
     <!--dev gid :UA-113868370-5   release gid:UA-66493898-4 -->
     <string name="ga_track_id">UA-113868370-5</string>
     <!--appmatic : 1287318627981888 | wnp : 195025754589707 -->
-    <string name="facebook_id">195025754589707</string>
+    <string name="facebook_id">407398836332250</string>
     <!-- one all -->
-    <string name="twitter_consumer_key">Jl6f81SYZMnwdNXc5NrjkFWgY</string>
-    <string name="twitter_consumer_secret">0WMBLTTbJnSzU3h7zGH4CHmkVV6oGgo9Dhdka5JTL4go1ZsBK1</string>
-    <string name="twitter_subdomain">allwnp</string>
+    <string name="twitter_consumer_key">vQgW2FliUDH8Pruz7qOe00kF4</string>
+    <string name="twitter_consumer_secret">MsrYyMWrUmsvinAWSAw2N0xSZ5AeLilqypSnPk5dmSOkXfuc8y</string>
+    <string name="twitter_subdomain">wnplocal</string>
 
-    <string name="google_server_client_id">319272901175-l31l8tl2ta8oa8bol75q0mfihiaj3tqn.apps.googleusercontent.com</string>
+    <string name="google_server_client_id">866942382241-lc94khrj4lgau2mnat90c23agnk91qvm.apps.googleusercontent.com</string>
     <string name="api_version">v1</string>
     <string name="api_key">eyKOW06BPBqbe3qe</string>
     <!--dev stage-->
@@ -750,8 +750,8 @@
     <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bb5de7d8</string>
     <string name="app_name">Whiskers N Paws</string>
     <!--https://dev2.wnp.com.hk/ 103.210.236.156:8088  /  https://imaginato.wnp.com.hk/  https://www.wnp.com.hk  -->
-    <string name="request_url">https://imaginato.wnp.com.hk</string>
-    <string name="image_base_url">https://imaginato.wnp.com.hk</string>
+    <string name="request_url">https://imaginato.wnp.com.hk/</string>
+    <string name="image_base_url"></string>
     <string name="mock_url">http://mis.appmatic.io/</string>
 
     <string name="address_phone_error_hint">More than 6 digits please.</string>
