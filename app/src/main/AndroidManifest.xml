@@ -126,7 +126,10 @@
                     android:host="homepage"
                     android:scheme="wnp" />
 
-                <!--wnp://homePage/-->
+                <data
+                    android:host="product"
+                    android:scheme="wnp" />
+
             </intent-filter>
         </activity>
         <activity
