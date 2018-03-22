@@ -43,6 +43,7 @@ public class LoginRegisterActivity extends com.whitelabel.app.BaseActivity imple
     public static final int SENDESUCCESS_FLAG = 4;//发送邮件成功
     public static final int REGISTERSUCCESS_FLAG = 5;//注册成功
     public static final int EMAIL_BOUND = 6;//facebook绑定邮箱
+    public static final String FRAGMENT_ARGUMENTS_NEED_RESET_ACCOUNT = "fragment_arguments_need_reset_account";
     public ThreePartAPIUserEntity threePartAPIUserEntity;
     private ArrayList<Fragment> attachedFragmentArray;//存放顺序固定
     private String subEmail = "";
@@ -242,6 +243,13 @@ public class LoginRegisterActivity extends com.whitelabel.app.BaseActivity imple
         Fragment subFragment = attachedFragmentArray.get(to);
 
         if (type == 1) {
+
+            if(subFragment != null){
+                Bundle argument = new Bundle();
+                argument.putString(FRAGMENT_ARGUMENTS_NEED_RESET_ACCOUNT, myEmail);
+                subFragment.setArguments(argument);
+            }
+
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
 //            fragmentTransaction.setCustomAnimations(
 //                    R.animator.fragment_slide_left_enter,
