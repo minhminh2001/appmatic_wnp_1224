@@ -34,6 +34,7 @@ import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
 import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomEditText;
@@ -82,11 +83,22 @@ public class LoginRegisterEmailBoundFragment extends com.whitelabel.app.BaseFrag
 
     @Override
     public void loginSuccess(SVRAppserviceCustomerFbLoginReturnEntity fbLoginReturnEntity) {
+        WhiteLabelApplication.getAppConfiguration().signIn(loginRegisterActivity, fbLoginReturnEntity);
         loginRegisterActivity.setEmailConfirm(false);
         loginRegisterActivity.switchFragment(LoginRegisterActivity.EMAIL_BOUND, LoginRegisterActivity.REGISTERSUCCESS_FLAG);
     }
 
-//    private static final class DataHandler extends android.os.Handler {
+    @Override
+    public void showUpdateDialog() {
+        //TODO no need write code
+    }
+
+    @Override
+    public void emailLoginOrRegister() {
+        //TODO no need write code
+    }
+
+    //    private static final class DataHandler extends android.os.Handler {
 //        private final WeakReference<LoginRegisterActivity> mActivity;
 //        private final WeakReference<LoginRegisterEmailBoundFragment> mFragment;
 //
@@ -162,7 +174,8 @@ public class LoginRegisterEmailBoundFragment extends com.whitelabel.app.BaseFrag
         if(inputMethodManager != null) {
             inputMethodManager.hideSoftInputFromWindow(loginRegisterActivity.getWindow().getDecorView().getWindowToken(), 0); //隐藏
         }
-        loginRegisterActivity.onBackPressed();
+//        loginRegisterActivity.onBackPressed();
+        loginRegisterActivity.redirectToAttachedFragment(LoginRegisterActivity.EMAILLOGIN_FLAG, -1);
     }
 
     public void onClickRightMenu(View v) {

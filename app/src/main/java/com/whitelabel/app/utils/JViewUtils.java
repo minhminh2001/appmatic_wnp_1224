@@ -287,8 +287,25 @@ public class JViewUtils {
             });
         }
         mMaterialDialog.show();
-        mMaterialDialog.getPositiveButton().setTextColor(context.getResources().getColor(R.color.purple92018d));
+        mMaterialDialog.getPositiveButton().setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         return mMaterialDialog;
+    }
+
+    /**
+     * judge local versionName and net versionName,if local lower ,show dialog to googlePlay store update
+     * @param context
+     */
+    public static void showUpdateGooglePlayStoreDialog(final Context context){
+        String title=context.getResources().getString(R.string.update_app);
+        String msg=context.getResources().getString(R.string.update_app_msg);
+        String btnText=context.getResources().getString(R.string.update_now);
+        boolean isCanncel = false;
+        showMaterialDialog(context, title, msg, btnText, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JToolUtils.openPlayStore(context);
+            }
+        },isCanncel);
     }
 
     public static MaterialDialog showPermissionDialog(final Activity activity, String title, String message, final int requestCode, final boolean finishActivity) {
@@ -1442,7 +1459,12 @@ public class JViewUtils {
         }
     }
 
-
+    /**
+     * A translucent black hint dialog.
+     * @param context
+     * @param rootView activity or fragment rootView
+     * @param errorMsg hint message
+     */
     public static void showPopUpWindw(Context context,View rootView,String errorMsg){
         final PopupWindow popupWindow=new PopupWindow(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

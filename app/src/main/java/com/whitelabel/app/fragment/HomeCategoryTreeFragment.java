@@ -45,6 +45,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/4/14.
+ * this page never use
  */
 public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.OnClickListener {
     private Dialog mDialog;

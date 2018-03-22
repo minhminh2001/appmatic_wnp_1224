@@ -2,6 +2,7 @@ package com.whitelabel.app.data.retrofit;
 
 import com.google.gson.JsonObject;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
+import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
 
 import org.json.JSONObject;
@@ -30,4 +31,9 @@ public interface BaseApi {
             String password,@Field("device_token") String deviceToken,
             @Field("versionNumber") String versionNumber, @Field("platformId") String platformId,
                                                                     @Field("serviceVersion") String sessionVersion);
+
+    @FormUrlEncoded
+    @POST("appservice/version/check")
+    Observable<ResponseModel>  versionCheck(@Field("versionNumber")String versionNumber,@Field("platformId") String platformId
+       );
 }

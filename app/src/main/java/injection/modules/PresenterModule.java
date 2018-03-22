@@ -39,6 +39,8 @@ import com.whitelabel.app.ui.productdetail.ProductDetailContract;
 import com.whitelabel.app.ui.productdetail.ProductDetailPresenter;
 import com.whitelabel.app.ui.search.SearchContract;
 import com.whitelabel.app.ui.search.SearchPresenterImpl;
+import com.whitelabel.app.ui.shoppingcart.ShoppingCartVersionContract;
+import com.whitelabel.app.ui.shoppingcart.ShoppingCartVersionPresenter;
 import com.whitelabel.app.ui.start.StartContract;
 import com.whitelabel.app.ui.start.StartPresenterImpl;
 
@@ -148,6 +150,12 @@ public class PresenterModule {
     @ActivityScope
     public  MyOrderContract.Presenter provideMyOrderPresenter(ICommodityManager iCommodityManager, IBaseManager iBaseManager){
         return new MyOrderPresenter(iCommodityManager,iBaseManager);
+    }
+
+    @Provides
+    @ActivityScope
+    public  ShoppingCartVersionContract.Presenter provideCheckoutVersionPresenter(IBaseManager iBaseManager){
+        return new ShoppingCartVersionPresenter(iBaseManager);
     }
 
 }

@@ -22,7 +22,7 @@ public interface MyOrderContract {
         public void showFaildMessage(String faildMessage);
         public void showReorderErrorMessage(String errorMsg);
         public void showReorderSuccessMessage(int count);
-
+        void refreshShoppingCartCount(int count);
     }
     public interface  Presenter extends BasePresenter<View>{
         public void getShoppingCount();

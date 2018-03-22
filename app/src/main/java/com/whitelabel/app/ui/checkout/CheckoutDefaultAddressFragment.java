@@ -265,6 +265,10 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
         }
     }
 
+    /**
+     * base net response size ,dynamic add radioButton
+     * @param shippingMethodBean netResponse
+     */
     private void addRadioButtonToGroup(final CheckoutDefaultAddressResponse.ShippingMethodBean shippingMethodBean) {
         RadioButton rbCheckAddress = (RadioButton) LayoutInflater.from(getActivity()).inflate(R.layout.layout_radiobutton_select_address, null);
         //if checked is 1,this item be checked
@@ -300,7 +304,10 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
         radioGroup.addView(rbCheckAddress, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
-
+    /**
+     * base net response ,to show check way
+     * @param addressCode 1->ship to me,2->pick up in store
+     */
     private void baseRadioCodeToCheckClick(int addressCode) {
         switch (addressCode) {
             //Ship to me (show all address)

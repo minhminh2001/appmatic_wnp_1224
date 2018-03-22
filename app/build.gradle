@@ -139,7 +139,7 @@ dependencies {
     compile "com.google.android.gms:play-services-gcm:${PLAY_SERVICE_VERSION}"
     compile "com.google.android.gms:play-services-analytics:${PLAY_SERVICE_VERSION}"
 
-    //    compile "com.google.android.gms:play-services-auth:${PLAY_SERVICE_VERSION}"
+    compile "com.google.android.gms:play-services-auth:${PLAY_SERVICE_VERSION}"
     compile "com.google.firebase:firebase-core:${PLAY_SERVICE_VERSION}"
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.5.0'
     compile 'org.apache.httpcomponents:httpcore:4.4.4'

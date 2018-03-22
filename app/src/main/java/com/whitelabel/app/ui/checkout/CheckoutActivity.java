@@ -609,6 +609,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
         }
     }
 
+    //first register and to checkout page to skip :add address page
     public void openSelectFragment() {
         if (checkoutDefaultAddressFragment != null) {
             hiddenAll();
@@ -634,6 +635,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
         }
     }
 
+    //to select shipping or pick up store page :show address page
     private void skipToDefaultAddressPage(){
         if (checkoutDefaultAddressFragment==null){
             checkoutDefaultAddressFragment =new CheckoutDefaultAddressFragment();
