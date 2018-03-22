@@ -64,6 +64,11 @@ public class BaseFragmentSearchCart<T extends BasePresenter> extends com.whitela
         if (searchItem != null) {
             searchItem.setVisible(showSearch);
         }
+
+        if(notificationItem != null){
+            notificationItem.setVisible(false);
+        }
+
         JLogUtils.e(TAG, showSearch + "");
     }
 

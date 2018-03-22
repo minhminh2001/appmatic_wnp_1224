@@ -20,6 +20,7 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1007,6 +1008,19 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
             mHomeCallback.setTitle(getResources().getString(R.string.SHOPPINGCART));
         }
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem.setVisible(false);
+
+        MenuItem shopCartItem = menu.findItem(R.id.action_shopping_cart);
+        shopCartItem.setVisible(false);
+
+        //TODO(Aaron):Don't display for this version
+        MenuItem notificationItem = menu.findItem(R.id.action_notification);
+        notificationItem.setVisible(false);
     }
 
     // item和底部布局高度，判断是否需要在中间添加空白view,以致使底部布局靠底

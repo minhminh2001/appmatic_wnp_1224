@@ -138,6 +138,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
         setHasOptionsMenu(true);
     }
 
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         mCommonCallback.setHomeSearchBarAndOnClick(new View.OnClickListener() {
             @Override
@@ -190,6 +191,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
         mPresenter.getShoppingCount();
     }
 
+    @Override
     public void onPrepareOptionsMenu (Menu menu){
 
         MenuItem notificationItem = menu.findItem(R.id.action_notification);

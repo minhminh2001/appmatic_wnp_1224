@@ -170,6 +170,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             }
         });
     }
+
     public View setRightTextMenuClickListener(MenuInflater menuInflater, int menuRes, Menu menu, int menuItemId, int actionViewRes, View.OnClickListener onClickListener) {
         menuInflater.inflate(menuRes, menu);
         MenuItem menuItem = menu.findItem(menuItemId);

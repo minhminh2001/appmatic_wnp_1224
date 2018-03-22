@@ -1,15 +1,11 @@
 package com.whitelabel.app.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.whitelabel.app.R;
-import com.whitelabel.app.fragment.HomeMyAccountOrdersFragment;
-import com.whitelabel.app.fragment.HomeNotificationListFragment;
-import com.whitelabel.app.fragment.ShoppingCartBaseFragment;
-import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
+import com.whitelabel.app.fragment.NotificationListFragment;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 
@@ -19,12 +15,12 @@ import com.whitelabel.app.utils.JViewUtils;
 
 public class NotificationActivity extends com.whitelabel.app.BaseActivity {
     private final static String TAG = "NotificationActivity";
-    private HomeNotificationListFragment fragment;
+    private NotificationListFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shoppingcart1);
+        setContentView(R.layout.activity_notification);
         JLogUtils.d(TAG, "onCreate");
         initToolBar();
         initFragment();
@@ -42,7 +38,7 @@ public class NotificationActivity extends com.whitelabel.app.BaseActivity {
     }
 
     private void initFragment() {
-        fragment = new HomeNotificationListFragment();
+        fragment = new NotificationListFragment();
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.mParent, fragment).commit();
     }
