@@ -145,47 +145,6 @@
                     android:gravity="center" />
 
             </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/rl_drawer_notification"
-                android:visibility="gone"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-                <ImageView
-                    android:id="@+id/iv_notification"
-                    android:layout_width="24dp"
-                    android:visibility="gone"
-                    android:layout_centerVertical="true"
-                    android:layout_height="24dp" />
-                <com.whitelabel.app.widget.CustomTextView
-                    android:id="@+id/tv_notification"
-                    android:layout_toRightOf="@+id/iv_notification"
-                    android:layout_width="match_parent"
-                    android:layout_centerVertical="true"
-                    style="@style/font_family_roboto_medium"
-                    android:textSize="14sp"
-                    android:textColor="@drawable/text_color_selected"
-                    android:text="@string/notification"
-                    android:layout_height="wrap_content" />
-
-
-
-
-                <com.whitelabel.app.widget.CustomTextView
-                    android:id="@+id/tv_notification_num"
-                    android:layout_width="24dp"
-                    android:visibility="gone"
-                    android:layout_height="24dp"
-                    android:background="@drawable/bg_cart_number"
-                    android:text="99+"
-                    style="@style/font_family_robot_regular"
-                    android:layout_centerVertical="true"
-                    android:textSize="10sp"
-                    android:textColor="@color/white"
-                    android:layout_alignParentRight="true"
-                    android:gravity="center" />
-            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_drawer_wishlist"
@@ -287,6 +246,45 @@
                     android:textColor="@drawable/text_color_selected"
                     android:text="@string/my_address_book"
                     android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_drawer_notification"
+                android:visibility="gone"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+                <ImageView
+                    android:id="@+id/iv_notification"
+                    android:layout_width="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_height="24dp" />
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_notification"
+                    style="@style/font_family_roboto_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_notification"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
+                    android:layout_centerVertical="true"
+                    android:textSize="14sp"
+                    android:textColor="@drawable/text_color_selected"
+                    android:text="@string/notification"/>
+
+                <com.whitelabel.app.widget.CustomTextView
+                    android:id="@+id/tv_notification_num"
+                    android:layout_width="24dp"
+                    android:visibility="gone"
+                    android:layout_height="24dp"
+                    android:background="@drawable/bg_cart_number"
+                    android:text="99+"
+                    style="@style/font_family_robot_regular"
+                    android:layout_centerVertical="true"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center" />
             </RelativeLayout>
 
             <include layout="@layout/draw_layout_dogs_and_cat"/>

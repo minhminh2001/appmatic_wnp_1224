@@ -8,4 +8,10 @@
         android:actionLayout="@layout/item_count"
         android:icon="@drawable/action_cart"
         app:showAsAction="always"/>
+
+    <item android:id="@+id/action_notification"
+        android:title="@string/notification"
+        android:actionLayout="@layout/item_count"
+        android:icon="@drawable/action_cart"
+        app:showAsAction="always"/>
 </menu>

@@ -44,6 +44,9 @@ import java.util.ArrayList;
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
 
+import static com.whitelabel.app.activity.HomeActivity.EXTRA_REDIRECTTO_TYPE;
+import static com.whitelabel.app.activity.HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_NOTIFICATION;
+
 /**
  * Created by imaginato on 2015/7/17.
  */
@@ -101,7 +104,9 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
                 getActivity().startActivity(intent);
 
             }
-        });inflater.inflate(R.menu.menu_home, menu);
+        });
+
+        inflater.inflate(R.menu.menu_home, menu);
 
         MenuItem cartItem = menu.findItem(R.id.action_shopping_cart);
         MenuItemCompat.setActionView(cartItem, R.layout.item_count);
@@ -112,7 +117,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
                 if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
+                    bundle.putString(EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }else{
@@ -120,16 +125,49 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
                 }
             }
         });
+
+        // TODO(Aaron):Add click listener for notification menu item
+        MenuItem notificationItem = menu.findItem(R.id.action_notification);
+        MenuItemCompat.setActionView(notificationItem, R.layout.item_count);
+        View notificationView = notificationItem.getActionView();
+        notificationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jumpNotificationFragment();
+            }
+        });
+
         ImageView ivImg= (ImageView) view.findViewById(R.id.iv_img);
         JViewUtils.setNavBarIconColor(getActivity(),ivImg,R.drawable.action_cart);
         JLogUtils.i("HomeFragmentV2","start");
         mPresenter.getShoppingCount();
     }
+
+    public void onPrepareOptionsMenu (Menu menu){
+
+        MenuItem notificationItem = menu.findItem(R.id.action_notification);
+        boolean isSignin = (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity()));
+        notificationItem.setVisible(isSignin ? true : false);
+    }
+
     private void jumpLoginActivity() {
         Intent intent = new Intent(getActivity(), LoginRegisterActivity.class);
         startActivityForResult(intent, 1000);
         getActivity().overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
     }
+
+    /**
+     * TODO(Aaron):
+     * Jump to notification fragment
+     */
+    private void jumpNotificationFragment() {
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(EXTRA_REDIRECTTO_TYPE, EXTRA_REDIRECTTO_TYPE_VALUE_NOTIFICATION);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
     @Override
     public void showRootView() {
         rlHome.setVisibility(View.VISIBLE);
