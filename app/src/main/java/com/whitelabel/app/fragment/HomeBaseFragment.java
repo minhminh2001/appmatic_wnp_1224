@@ -17,6 +17,7 @@ public class HomeBaseFragment<T extends BasePresenter> extends BaseFragmentSearc
     //todo remove this and in base activity somewhere else
     protected static final int REQUEST_SHOPPINGCART = 10001;
     protected static final int REQUEST_SEARCH = 10002;
+    protected static final int REQUEST_NOTIFICATION = 10003;
     private boolean scrollToolBarEnable = false;
     public interface HomeCommonCallback {
         int MENU_HOME = 1;

@@ -266,7 +266,7 @@
                         android:id="@+id/forgot_password"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/activity_horizontal_margin_half"
+                        android:layout_marginTop="@dimen/layout_forget_password_top_margin"
                         android:gravity="center"
                         android:text="@string/forgot_your_password"
                         android:textColor="@color/black87" />

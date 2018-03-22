@@ -603,7 +603,8 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
             if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
                 rlDrawerOrder.setVisibility(View.VISIBLE);
                 rlDrawerAddress.setVisibility(View.VISIBLE);
-                rlDrawerNotification.setVisibility(View.VISIBLE);//(Aaron)
+                // TODO(Aaron):Temporary use,next version use rlDrawerNotification.setVisibility(View.VISIBLE)
+                rlDrawerNotification.setVisibility(View.GONE);
 //                rlDrawerSotreCredit.setVisibility(View.VISIBLE);
                 String username = "";
                 if (!TextUtils.isEmpty(WhiteLabelApplication.getAppConfiguration().getUser().getFirstName())) {

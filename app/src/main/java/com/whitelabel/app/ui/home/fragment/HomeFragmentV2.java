@@ -194,7 +194,8 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
 
         MenuItem notificationItem = menu.findItem(R.id.action_notification);
         boolean isSignin = (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity()));
-        notificationItem.setVisible(isSignin ? true : false);
+        // TODO(Aaron):Temporary use,next version use notificationItem.setVisible(isSignin ? true : false);
+        notificationItem.setVisible(false);
     }
 
     private void jumpLoginActivity() {
@@ -242,7 +243,8 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             vpCategoryViewPager.setAdapter(fragmentPagerAdapter);
             piPageIndicatory.setViewPager(vpCategoryViewPager);
             piPageIndicatory.setOnPageChangeListener(pageChangeListener);
-            vpCategoryViewPager.setOffscreenPageLimit(categoryViewCount);
+            //aaron
+            // vpCategoryViewPager.setOffscreenPageLimit(categoryViewCount);
         }
     }
 

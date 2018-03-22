@@ -14,4 +14,10 @@
         android:title="@string/shopping_cart"
         app:actionLayout="@layout/item_count"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_notification"
+        android:icon="@drawable/action_cart"
+        android:title="@string/shopping_cart"
+        app:actionLayout="@layout/item_count"
+        app:showAsAction="always" />
 </menu>
