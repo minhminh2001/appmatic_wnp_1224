@@ -239,6 +239,12 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
         }
     }
 
+    /**
+     * from the other page to this page ,to refresh data to show new list
+     * @param productId
+     * @param isLike
+     * @param itemId
+     */
     private void notifyBackThisPageChangeWishIconStatus(String productId,int isLike,String itemId) {
         if (categoryDetailModel !=null && categoryDetailModel.getCarousels()!=null ){
             List<CategoryDetailNewModel.CarouselsBean> carousels = categoryDetailModel.getCarousels();

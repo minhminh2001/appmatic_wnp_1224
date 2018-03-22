@@ -1,36 +1,57 @@
-package com.whitelabel.app.ui.home.activity;
-
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+package com.whitelabel.app.ui.home.fragment;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.callback.IHomeItemClickListener;
 import com.whitelabel.app.callback.WheelPickerCallback;
+import com.whitelabel.app.fragment.HomeBaseFragment;
+import com.whitelabel.app.model.CategoryDetailNewModel;
+import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
+import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.model.ShopBrandResponse;
 import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.network.BaseHttp;
+import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.home.HomeCategoryDetailContract;
 import com.whitelabel.app.ui.home.ShopBrandContract;
+import com.whitelabel.app.ui.home.adapter.CategoryDetailHorizontalAdapter;
 import com.whitelabel.app.ui.home.adapter.ShopBrandDetailAdapter;
-import com.whitelabel.app.ui.home.fragment.HomeHomeFragmentV4;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.AnimUtil;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.logger.Logger;
+import com.whitelabel.app.widget.CustomButton;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.GridSpacingItemDecoration;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +63,9 @@ import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
 
 /**
- * Created by img on 2017/11/20.
- * this page have been replaced by HomeHomeFragmentShopBrand
+ * replace the original ShopBrandActivity
  */
-public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter> implements ShopBrandContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class HomeHomeFragmentShopBrand extends HomeBaseFragment<ShopBrandContract.Presenter> implements SwipeRefreshLayout.OnRefreshListener, ShopBrandContract.View{
     @BindView(R.id.tv_start_with)
     CustomTextView tvStartWith;
     @BindView(R.id.rcv_brand_list)
@@ -57,9 +77,13 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
     @BindView(R.id.connectionBreaks)
     RelativeLayout rlNetError;
 
+    public final static String ARG_CATEGORY_ID = "category_id";
+    public final static String ARG_CATEGORY_INDEX = "category_index";
+
+    private HomeActivity homeActivity;
     private Context mContext;
     private String menuId;
-    private String menuTitle;
+    private String menuIndex;
     private static final int COLUMN=3;
     private static final String DEFALUT_STRING="0-9";
     private String currentWheelTitle="";
@@ -68,58 +92,118 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
     private ShopBrandDetailAdapter recycViewAdapter;
     private List<ShopBrandResponse.BrandsBean.ItemsBean> titles=new ArrayList<>();
     private List<ShopBrandResponse.BrandsBean.ItemsBean> titlesAnditems=new ArrayList<>();
-    private boolean isFront;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shop_brand);
-        ButterKnife.bind(this);
-        initGetIntent();
-        initTitleBar();
-        initRecyclerView();
-        initTopBrandSelect();
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @return A new instance of fragment HomeHomeFragmentV4.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static HomeHomeFragmentShopBrand newInstance(int index, String id) {
+        HomeHomeFragmentShopBrand fragment = new HomeHomeFragmentShopBrand();
+        Bundle args = new Bundle();
+        args.putString(ARG_CATEGORY_ID, id);
+        args.putInt(ARG_CATEGORY_INDEX, index);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        isFront=true;
+    public void showSwipeLayout() {
+        if(swipeContainer!=null){
+            swipeContainer.setRefreshing(true);
+        }
     }
-
     @Override
-    protected void onPause() {
-        super.onPause();
-        isFront=false;
-    }
-
-    private void initGetIntent() {
-        Intent intent = getIntent();
-        mContext = this;
-        if (intent != null) {
-            menuId = intent.getStringExtra(HomeHomeFragmentV4.ARG_CATEGORY_ID);
-            menuTitle = intent.getStringExtra(HomeHomeFragmentV4.ARG_CATEGORY_NAME);
-            mPresenter.getOnlineCategoryDetail(false,menuId);
+    public void closeSwipeLayout() {
+        if(swipeContainer!=null) {
+            swipeContainer.setRefreshing(false);
         }
     }
 
-    private void initTitleBar() {
-        setTitle(menuTitle);
-        setLeftMenuIcon(JViewUtils.getNavBarIconDrawable(this, R.drawable.ic_action_back));
-        setLeftMenuClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+    @Override
+    public void showOnlineErrorLayout() {
+        if (getActivity() != null) {
+            rlNetError.setVisibility(View.VISIBLE);
+            RequestErrorHelper requestErrorHelper = new RequestErrorHelper(getContext(), rlNetError);
+            requestErrorHelper.showConnectionBreaks(BaseHttp.ERROR_TYPE_NET);
+            requestErrorHelper.setResponseListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mPresenter.getOnlineCategoryDetail(false,menuId);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void hideOnlineErrorLayout() {
+        rlNetError.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void inject() {
+        super.inject();
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+                presenterModule(new PresenterModule(getActivity())).build().inject(this);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        homeActivity= (HomeActivity) context;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            menuId = (String) getArguments().get(ARG_CATEGORY_ID);
+            menuIndex = (String) getArguments().get(ARG_CATEGORY_INDEX);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        if (getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
+            mPresenter.getOnlineCategoryDetail(false,menuId);
+        }
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+//        swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         swipeContainer.setOnRefreshListener(this);
+        mContext=homeActivity;
+        mPresenter.getOnlineCategoryDetail(false,menuId);
+        initRecyclerView();
+        initTopBrandSelect();
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        setScrollToolBarEnable(false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.activity_shop_brand, container, false);
+        ButterKnife.bind(this, view);
+        setRetryTheme(view);
+        return view;
+    }
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+        if(getActivity()!=null)
+            JViewUtils.showErrorToast(getActivity(),errorMsg);
     }
 
     private void initRecyclerView() {
         gridLayoutManager = new GridLayoutManager(mContext, COLUMN,GridLayoutManager.VERTICAL,false);
 
         rcvBrandList.setLayoutManager(gridLayoutManager);
-        rcvBrandList.addItemDecoration(new GridSpacingItemDecoration(COLUMN,JToolUtils.dip2px(mContext,4),true));
+        rcvBrandList.addItemDecoration(new GridSpacingItemDecoration(COLUMN,
+            JToolUtils.dip2px(mContext,4),true));
         recycViewAdapter = new ShopBrandDetailAdapter(mContext, titlesAnditems);
         recycViewAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
             @Override
@@ -148,12 +232,6 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
     }
 
     @Override
-    protected void initInject() {
-        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
-                presenterModule(new PresenterModule(this)).build().inject(this);
-    }
-
-    @Override
     public void loadData(List<ShopBrandResponse.BrandsBean.ItemsBean> itemsBean) {
         this.titlesAnditems=itemsBean;
         recycViewAdapter.setNewData(this.titlesAnditems);
@@ -178,43 +256,6 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
             currentWheelIndex=0;
             tvStartWith.setText(String.format(brandStartWith,currentWheelTitle ));
         }
-    }
-
-    @Override
-    public void showErrorMsg(String errorMsg) {
-        JViewUtils.showErrorToast(mContext, errorMsg);
-    }
-
-    @Override
-    public void showSwipeLayout() {
-        if(swipeContainer!=null){
-            swipeContainer.setRefreshing(true);
-        }
-    }
-
-    @Override
-    public void closeSwipeLayout() {
-        if(swipeContainer!=null) {
-            swipeContainer.setRefreshing(false);
-        }
-    }
-
-    @Override
-    public void showOnlineErrorLayout() {
-        rlNetError.setVisibility(View.VISIBLE);
-        RequestErrorHelper requestErrorHelper = new RequestErrorHelper(this, rlNetError);
-        requestErrorHelper.showConnectionBreaks(BaseHttp.ERROR_TYPE_NET);
-        requestErrorHelper.setResponseListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.getOnlineCategoryDetail(false,menuId);
-            }
-        });
-    }
-
-    @Override
-    public void hideOnlineErrorLayout() {
-        rlNetError.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.tv_start_with)
@@ -274,10 +315,6 @@ public class ShopBrandActivity extends BaseActivity<ShopBrandContract.Presenter>
         });
         JViewUtils.showWheelPickerOneDialog(mContext, configEntity);    }
 
-    @Override
-    public void onRefresh() {
-        if (isFront){
-            mPresenter.getOnlineCategoryDetail(false,menuId);
-        }
-    }
+
+
 }

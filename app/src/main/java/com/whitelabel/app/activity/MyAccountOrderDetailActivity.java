@@ -94,6 +94,11 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
     private int currentShoppingCount=0;
 
     @Override
+    public void refreshShoppingCartCount(int count) {
+
+    }
+
+    @Override
     public void loadShoppingCount(int count) {
         currentShoppingCount = count;
     }

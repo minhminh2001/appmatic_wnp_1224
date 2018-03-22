@@ -15,6 +15,7 @@ public class StartContract {
             void  postDelayed(long  deploy);
             void startGuidePage();
             void startIntentService();
+            void showUpdateDialog();
 
 
       }

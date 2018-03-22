@@ -93,4 +93,7 @@
     <dimen name="switch_view_and_filter_bar_height">40dp</dimen>
     <dimen name="scroll_height">1px</dimen>
     <dimen name="login_margin_top">22dp</dimen>
+
+
+    <dimen name="third_login_icon_w_and_h">50dp</dimen>
 </resources>

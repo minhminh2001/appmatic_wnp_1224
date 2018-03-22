@@ -6,7 +6,7 @@ apply from: "auto_version.gradle"
 buildscript {
 
     repositories {
-
+        maven { url 'https://maven.fabric.io/public' }
         jcenter()
     }
     dependencies {

@@ -21,6 +21,12 @@ public class PageIntentUtils {
     private static final String SEARCH_KEY_CATEGORY="category";
     private static final String SEARCH_KEY_SEARCH="search";
     private static final String SEARCH_KEY_BG="bg";
+
+    /**
+     * TopBanner and shopBrand Itam click
+     * @param context
+     * @param serializable base type to skip diff page and method
+     */
    public static void skipToSerachPage(Context context,Serializable serializable){
        //home top header banner
         if (serializable instanceof CategoryDetailNewModel.BannersBean){
@@ -69,6 +75,12 @@ public class PageIntentUtils {
         }
    }
 
+    /**
+     * deprecated : this method refrence page never use.
+     * @param context
+     * @param menuId
+     * @param menuTitle
+     */
    public static void skipToBrandListPage(Context context,String menuId,String menuTitle){
        Intent intent=new Intent(context, ShopBrandActivity.class);
        intent.putExtra(HomeHomeFragmentV4.ARG_CATEGORY_ID,menuId);

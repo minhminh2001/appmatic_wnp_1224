@@ -18,6 +18,8 @@ public class ShopBrandContract {
         public void showErrorMsg(String errorMsg);
         public void showSwipeLayout();
         public void closeSwipeLayout();
+        public void showOnlineErrorLayout();
+        public void hideOnlineErrorLayout();
 
     }
 

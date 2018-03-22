@@ -34,17 +34,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.whitelabel.app.Const;
-import com.whitelabel.app.GlobalData;
-import com.whitelabel.app.R;
+import com.whitelabel.app.*;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.RegisterToHelpCenter;
-import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.ToolBarFragmentCallback;
 import com.whitelabel.app.dao.MyAccountDao;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
+import com.whitelabel.app.ui.login.LoginFragmentContract;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
@@ -57,12 +56,15 @@ import com.whitelabel.app.widget.CustomTextView;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import injection.components.DaggerPresenterComponent1;
+import injection.modules.PresenterModule;
+
 /**
  * Created by imaginato on 2015/6/10.
  */
 
 @SuppressWarnings("ALL")
-public class LoginRegisterEmailRegisterFragment extends Fragment implements View.OnFocusChangeListener,View.OnClickListener{
+public class LoginRegisterEmailRegisterFragment extends com.whitelabel.app.BaseFragment<LoginFragmentContract.Presenter> implements View.OnFocusChangeListener,View.OnClickListener,LoginFragmentContract.View{
     private EditText firstName,lastName,email,et_phone_number,password,re_password;
     private TextView firstNameText,lastNameText,emailText,tv_phone_text,passwordText,re_passwordText;
     private TextView firstNameText2,lastNameText2,emailText2,tv_phone_text2,passwordText2,re_passwordText2;
@@ -102,6 +104,12 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     }
 
     @Override
+    public void inject() {
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+            presenterModule(new PresenterModule(getActivity())).build().inject(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView=inflater.inflate(R.layout.fragment_loginregister_emailregister,null);
         return contentView;
@@ -118,6 +126,42 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
     public void onResume() {
         super.onResume();
 //        IsOldVersion();
+    }
+
+    @Override
+    public void showNetErrorMessage() {
+        //TODO this other page method,this page no need write code
+    }
+
+    @Override
+    public void jumpBoundEmailFragment(String givenName, String formatted, String familyName,
+        String displayName, String identityToken, String userToken, String email, String provider) {
+        //TODO this other page method,this page no need write code
+    }
+
+    @Override
+    public void showErrorMessage(String errorMessage) {
+        JViewUtils.showErrorToast(getActivity(),errorMessage);
+    }
+
+    @Override
+    public void showConfirmEmail() {
+        //TODO this other page method,this page no need write code
+    }
+
+    @Override
+    public void loginSuccess(SVRAppserviceCustomerFbLoginReturnEntity fbLoginReturnEntity) {
+        //TODO this other page method,this page no need write code
+    }
+
+    @Override
+    public void showUpdateDialog() {
+        JViewUtils.showUpdateGooglePlayStoreDialog(loginRegisterActivity);
+    }
+
+    @Override
+    public void emailLoginOrRegister() {
+        registerForNet();
     }
 
     private final static class DataHandler extends Handler{
@@ -829,6 +873,12 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
         return true;
     }
 
+
+    private void registerForNet(){
+        String checkBox_numbel=checkBox.isChecked()?"1":"0";
+        mAccountDao.registerUser(firstName.getText().toString().trim(),lastName.getText().toString().trim(),
+            email.getText().toString().trim(),et_phone_number.getText().toString().trim(),password.getText().toString().trim(),checkBox_numbel, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -845,10 +895,7 @@ public class LoginRegisterEmailRegisterFragment extends Fragment implements View
                     //隐藏软盘
                     inputMethodManager = (InputMethodManager)loginRegisterActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(email.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    String checkBox_numbel=checkBox.isChecked()?"1":"0";
-                    mAccountDao.registerUser(firstName.getText().toString().trim(),lastName.getText().toString().trim(),
-                        email.getText().toString().trim(),et_phone_number.getText().toString().trim(),password.getText().toString().trim(),checkBox_numbel, WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
-
+                    mPresenter.versionCheck();
                 }
                 break;
             case R.id.checkbox_text1:

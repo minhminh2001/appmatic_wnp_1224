@@ -1,4 +1,26 @@
 package com.whitelabel.app.ui.home.fragment;
+
+import com.whitelabel.app.Const;
+import com.whitelabel.app.R;
+import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.activity.HomeActivity;
+import com.whitelabel.app.activity.LoginRegisterActivity;
+import com.whitelabel.app.activity.ProductListActivity;
+import com.whitelabel.app.fragment.HomeBaseFragment;
+import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
+import com.whitelabel.app.network.BaseHttp;
+import com.whitelabel.app.ui.home.HomeContract;
+import com.whitelabel.app.utils.GaTrackHelper;
+import com.whitelabel.app.utils.JImageUtils;
+import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.widget.CustomButton;
+import com.whitelabel.app.widget.CustomDialog;
+import com.whitelabel.app.widget.CustomHomeViewPager;
+import com.whitelabel.app.widget.CustomTabCustomPageIndicator;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,27 +40,6 @@ import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.whitelabel.app.Const;
-import com.whitelabel.app.R;
-import com.whitelabel.app.activity.HomeActivity;
-import com.whitelabel.app.activity.LoginRegisterActivity;
-import com.whitelabel.app.activity.ProductListActivity;
-import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.fragment.HomeBaseFragment;
-import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
-import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
-import com.whitelabel.app.network.BaseHttp;
-import com.whitelabel.app.ui.home.HomeContract;
-import com.whitelabel.app.utils.GaTrackHelper;
-import com.whitelabel.app.utils.JImageUtils;
-import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JViewUtils;
-import com.whitelabel.app.utils.PageIntentUtils;
-import com.whitelabel.app.utils.RequestErrorHelper;
-import com.whitelabel.app.widget.CustomButton;
-import com.whitelabel.app.widget.CustomDialog;
-import com.whitelabel.app.widget.CustomHomeViewPager;
-import com.whitelabel.app.widget.CustomTabCustomPageIndicator;
 import java.util.ArrayList;
 
 import injection.components.DaggerPresenterComponent1;
@@ -50,62 +51,107 @@ import static com.whitelabel.app.activity.HomeActivity.EXTRA_REDIRECTTO_TYPE_VAL
 /**
  * Created by imaginato on 2015/7/17.
  */
-public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> implements HomeActivity.HomeFragmentCallback,HomeContract.View{
+public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> implements
+    HomeActivity.HomeFragmentCallback, HomeContract.View {
+
+    public static final int TYPE_FRAGMENT_HORIZONTAL = 1;
+
+    public static final int TYPE_FRAGMENT_VERTICAL = 2;
+
+    private final static String PARAM1 = "param1";
+
     public Long mGATrackTimeStart = 0L;
+
     public boolean mGATrackTimeEnable = false;
-    private View mContainView;
-    private CustomTabCustomPageIndicator piPageIndicatory;
-    private CustomHomeViewPager vpCategoryViewPager;
-    private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> categoryArrayList;
-    private CustomTabPageIndicatorAdapter fragmentPagerAdapter;
-    private ArrayList<Fragment> mFragments;
-    private int currentCategoryFragmentIndex = 0;
-    private Dialog mDialog;
+
     int categoryViewCount = 0;
-    private View rlHome;
-    private View ll_error;
-    public  static  final  int TYPE_FRAGMENT_HORIZONTAL=1;
-    public  static  final int TYPE_FRAGMENT_VERTICAL=2;
-    private int  fragmentType;
-    private final static String PARAM1="param1";
-    private boolean isFirstLoading=true;
+
     String categoryName = "";
+
+    private View mContainView;
+
+    private CustomTabCustomPageIndicator piPageIndicatory;
+
+    private CustomHomeViewPager vpCategoryViewPager;
+
+    private ArrayList<SVRAppserviceCatalogSearchCategoryItemReturnEntity> categoryArrayList;
+
+    private CustomTabPageIndicatorAdapter fragmentPagerAdapter;
+
+    private ArrayList<Fragment> mFragments;
+
+    private int currentCategoryFragmentIndex = 0;
+
+    private Dialog mDialog;
+
+    private View rlHome;
+
+    private View ll_error;
+
+    private int fragmentType;
+
+    private boolean isFirstLoading = true;
+
     private int lastPagePositon;
+
+    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager
+        .OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            if (categoryArrayList.size() <= position) return;
+            mFragments.get(currentCategoryFragmentIndex).onPause();
+            currentCategoryFragmentIndex = position;
+            mFragments.get(position).onResume();
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+        }
+    };
+
+    public static HomeFragmentV2 newInstance(int fragmentType) {
+        HomeFragmentV2 homeHomeFragment = new HomeFragmentV2();
+        Bundle bundle = new Bundle();
+        bundle.putInt(PARAM1, fragmentType);
+        homeHomeFragment.setArguments(bundle);
+        return homeHomeFragment;
+    }
+
     @Override
     public void inject() {
-        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+        DaggerPresenterComponent1.builder()
+            .applicationComponent(WhiteLabelApplication.getApplicationComponent()).
             presenterModule(new PresenterModule(getActivity())).build().inject(this);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments()!=null){
-            fragmentType=getArguments().getInt(PARAM1);
+        if (getArguments() != null) {
+            fragmentType = getArguments().getInt(PARAM1);
         }
         setSearchOptionMenu(false);
         setHasOptionsMenu(true);
     }
-    public static HomeFragmentV2 newInstance(int fragmentType){
-        HomeFragmentV2 homeHomeFragment=new HomeFragmentV2();
-        Bundle bundle=new Bundle();
-        bundle.putInt(PARAM1,fragmentType);
-        homeHomeFragment.setArguments(bundle);
-        return homeHomeFragment;
-    }
+
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         mCommonCallback.setHomeSearchBarAndOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), ProductListActivity.class);
-                intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_HOME);
-                intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS);
+                intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE,
+                    ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_HOME);
+                intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE,
+                    ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS);
                 getActivity().startActivity(intent);
 
             }
         });
-
         inflater.inflate(R.menu.menu_home, menu);
 
         MenuItem cartItem = menu.findItem(R.id.action_shopping_cart);
@@ -114,13 +160,14 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+                if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString(EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
+                    bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE,
+                        HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
                     intent.putExtras(bundle);
                     startActivity(intent);
-                }else{
+                } else {
                     jumpLoginActivity();
                 }
             }
@@ -172,18 +219,19 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
     public void showRootView() {
         rlHome.setVisibility(View.VISIBLE);
     }
+
     @Override
     public void loadData(SVRAppserviceCatalogSearchReturnEntity data) {
-        isFirstLoading=false;
-        if(mFragments !=null&& mFragments.size()>0){
-            for(int i = 0; i< mFragments.size(); i++){
-                if(mFragments.get(i) instanceof HomeHomeFragmentV3){
+        isFirstLoading = false;
+        if (mFragments != null && mFragments.size() > 0) {
+            for (int i = 0; i < mFragments.size(); i++) {
+                if (mFragments.get(i) instanceof HomeHomeFragmentV3) {
                     ((HomeHomeFragmentV3) mFragments.get(i)).onRefresh();
-                }else if(mFragments.get(i) instanceof HomeHomeFragmentV4){
+                } else if (mFragments.get(i) instanceof HomeHomeFragmentV4) {
                     ((HomeHomeFragmentV4) mFragments.get(i)).onRefresh();
                 }
             }
-        }else {
+        } else {
             categoryArrayList = data.getCategory();
             mFragments = new ArrayList<>();
             for (int i = 0; i < categoryArrayList.size(); i++) {
@@ -197,20 +245,23 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             vpCategoryViewPager.setOffscreenPageLimit(categoryViewCount);
         }
     }
+
     @Override
     public void dissmissProgressDialog() {
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
         }
     }
+
     @Override
     public void requestData() {
-        if(isFirstLoading) {
+        if (isFirstLoading) {
             mPresenter.getBaseCategory();
-        }else{
+        } else {
             mPresenter.getLocalBaseCategory();
         }
     }
+
     @Override
     public void showOnlineErrorLayout() {
         if (getActivity() != null) {
@@ -226,36 +277,45 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             });
         }
     }
+
     @Override
     public void hideOnlineErrorLayout() {
         if (ll_error != null && ll_error.getVisibility() == View.VISIBLE) {
             ll_error.setVisibility(View.GONE);
         }
     }
+
     @Override
     public void setShoppingCartCount(int count) {
         mCommonCallback.updateRightIconNum(R.id.action_shopping_cart, count);
-        MenuItem menuItem= mCommonCallback.getToolBar().getMenu().findItem(R.id.action_shopping_cart);
-        TextView textView= (TextView) menuItem.getActionView().findViewById(R.id.ctv_home_shoppingcart_num);
+        MenuItem menuItem = mCommonCallback.getToolBar().getMenu()
+            .findItem(R.id.action_shopping_cart);
+        TextView textView = (TextView) menuItem.getActionView()
+            .findViewById(R.id.ctv_home_shoppingcart_num);
         textView.setVisibility(View.VISIBLE);
         textView.setBackground(JImageUtils.getThemeCircle(getActivity()));
         textView.setText(mPresenter.formatShoppingCount(count));
 
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        Bundle savedInstanceState) {
         setScrollToolBarEnable(true);
         mContainView = inflater.inflate(R.layout.fragment_home_home, null);
         mGATrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         setRetryTheme(mContainView);
         return mContainView;
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mCommonCallback.switchMenu(HomeCommonCallback.MENU_HOME);
-        piPageIndicatory = (CustomTabCustomPageIndicator) mContainView.findViewById(R.id.ctpiCategoryList);
-        piPageIndicatory.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        piPageIndicatory = (CustomTabCustomPageIndicator) mContainView
+            .findViewById(R.id.ctpiCategoryList);
+        piPageIndicatory.setIndicatorColorResource(
+            WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         vpCategoryViewPager = (CustomHomeViewPager) mContainView.findViewById(R.id.chvpContainer);
         rlHome = mContainView.findViewById(R.id.rl_home);
         TAG = this.getClass().getSimpleName();
@@ -263,11 +323,13 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
         requestData();
 
     }
-    public void resetData(){
+
+    public void resetData() {
 //        everythingIndex = 0;
         categoryViewCount = 0;
         categoryArrayList = new ArrayList<>();
     }
+
     @Override
     public void showProgressDialog() {
         if (mDialog == null) {
@@ -275,6 +337,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
         }
         mDialog.show();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -287,27 +350,59 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             ex.getStackTrace();
         }
     }
+
     private void inflateIfNeeded() {
         if (ll_error == null) {
             ll_error = ((ViewStub) mContainView.findViewById(R.id.vs_offline)).inflate();
-            ImageView ivTryAgain= (ImageView) ll_error.findViewById(R.id.iv_try_again);
-            CustomButton btnAgain= (CustomButton)  ll_error.findViewById(R.id.btn_try_again);
-            if(ivTryAgain!=null&&btnAgain!=null){
-                ivTryAgain.setImageDrawable(JImageUtils.getThemeIcon(getActivity(),R.mipmap.connection_break_loading));
-                btnAgain.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+            ImageView ivTryAgain = (ImageView) ll_error.findViewById(R.id.iv_try_again);
+            CustomButton btnAgain = (CustomButton) ll_error.findViewById(R.id.btn_try_again);
+            if (ivTryAgain != null && btnAgain != null) {
+                ivTryAgain.setImageDrawable(
+                    JImageUtils.getThemeIcon(getActivity(), R.mipmap.connection_break_loading));
+                btnAgain.setTextColor(
+                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
             }
         }
     }
-    public Fragment  createFragmentByIndex(int  index){
-        Fragment fragment=null;
-        if(fragmentType==TYPE_FRAGMENT_HORIZONTAL){
-            fragment=HomeHomeFragmentV4.newInstance(index, categoryArrayList.get(index).getMenuId());
-        }else if(fragmentType==TYPE_FRAGMENT_VERTICAL){
-            fragment=HomeHomeFragmentV3.newInstance(index, categoryArrayList.get(index).getMenuId());
+
+    public Fragment createFragmentByIndex(int index) {
+        Fragment fragment = null;
+        //list one : shop by brand
+        if (index == categoryArrayList.size() - 1) {
+            fragment = HomeHomeFragmentShopBrand
+                .newInstance(index, categoryArrayList.get(index).getMenuId());
+        } else {
+            if (fragmentType == TYPE_FRAGMENT_HORIZONTAL) {
+                fragment = HomeHomeFragmentV4
+                    .newInstance(index, categoryArrayList.get(index).getMenuId());
+            } else if (fragmentType == TYPE_FRAGMENT_VERTICAL) {
+                fragment = HomeHomeFragmentV3
+                    .newInstance(index, categoryArrayList.get(index).getMenuId());
+            }
         }
         return fragment;
     }
-    class CustomTabPageIndicatorAdapter extends FragmentPagerAdapter {
+
+    //
+    private boolean isCatOrDogPosition(int position) {
+        if (position != categoryArrayList.size() - 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void skipBrandPage(int index) {
+        if (categoryArrayList.size() > 0 && index == categoryArrayList.size() - 1) {
+            vpCategoryViewPager.setCurrentItem(lastPagePositon);
+            String menuId = categoryArrayList.get(index).getMenuId();
+//            PageIntentUtils.skipToBrandListPage(getActivity(),menuId,categoryName);
+
+        }
+    }
+
+    private class CustomTabPageIndicatorAdapter extends FragmentPagerAdapter {
+
         public CustomTabPageIndicatorAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -325,29 +420,36 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
 //            fragment.setArguments(bundle);
             return fragment;
         }
+
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             return super.instantiateItem(container, position);
         }
+
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             super.destroyItem(container, position, object);
         }
+
         @Override
         public CharSequence getPageTitle(int position) {
             if (categoryArrayList != null && position >= 0 && categoryArrayList.size() > position) {
                 final int categoryArrayListSize = categoryArrayList.size();
                 position = position % categoryArrayListSize;
-                SVRAppserviceCatalogSearchCategoryItemReturnEntity category = categoryArrayList.get(position);
+                SVRAppserviceCatalogSearchCategoryItemReturnEntity category = categoryArrayList
+                    .get(position);
                 if (category != null) {
                     categoryName = category.getMenuTitle();
                 }
                 //exclude 'shop by brand'
-                if (position<categoryArrayList.size()-1){
-                    GaTrackHelper.getInstance().googleAnalytics(categoryName.toUpperCase()+Const.GA.HOME_SCREEN,getActivity());
-                }else if (position==categoryArrayList.size()-1){
+                if (position < categoryArrayList.size() - 1) {
+                    GaTrackHelper.getInstance()
+                        .googleAnalytics(categoryName.toUpperCase() + Const.GA.HOME_SCREEN,
+                            getActivity());
+                } else if (position == categoryArrayList.size() - 1) {
                     // SHOP BY BRAND
-                    GaTrackHelper.getInstance().googleAnalytics(categoryName.toUpperCase(),getActivity());
+                    GaTrackHelper.getInstance()
+                        .googleAnalytics(categoryName.toUpperCase(), getActivity());
                 }
             }
             return categoryName;
@@ -362,41 +464,5 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             return count;
         }
     }
-    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        }
-        @Override
-        public void onPageSelected(int position) {
-            if (categoryArrayList.size() <= position) return;
-            mFragments.get(currentCategoryFragmentIndex).onPause();
-            currentCategoryFragmentIndex = position;
-            mFragments.get(position).onResume();
-            if (isCatOrDogPosition(position)){
-                lastPagePositon=position;
-            }
-            skipBrandPage(position);
-        }
-        @Override
-        public void onPageScrollStateChanged(int state) {
-        }
-    };
-
-    private boolean isCatOrDogPosition(int position){
-        if (position!=categoryArrayList.size()-1){
-            return true;
-        }else {
-            return false;
-        }
-    }
-
-    private void skipBrandPage(int index){
-        if (categoryArrayList.size()>0 && index==categoryArrayList.size()-1){
-            vpCategoryViewPager.setCurrentItem(lastPagePositon);
-            String menuId = categoryArrayList.get(index).getMenuId();
-            PageIntentUtils.skipToBrandListPage(getActivity(),menuId,categoryName);
-        }
-    }
-
 
 }

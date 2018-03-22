@@ -18,6 +18,14 @@ public class Const {
     public static final double BANNER_PIC_HEIGHT_THAN_WIDTH = 180.0/480;
     public static final int NORMAL_BANNER_DELAY_TIME=3000;
 
+    public static final String THIRD_LOGIN_FACEBOOK="facebook";
+    public static final String THIRD_LOGIN_GOOGLE="Google+";
+    public static final String THIRD_LOGIN_TWITTER="twitter";
+
+    public static final String VERSION_CHECK_PLATFORM_ANDROID="2";
+
+
+
     public interface GA{
         public final static String HOME_SCREEN = " Category Landing Screen";
         public final static String CATEGORY_ALL_LIST_SCREEN = "Category list";

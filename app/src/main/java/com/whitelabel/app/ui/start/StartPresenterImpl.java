@@ -8,6 +8,7 @@ import com.whitelabel.app.model.ApiFaildException;
 import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
+import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ErrorHandlerAction;
@@ -129,7 +130,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
 
 
 
-
+    //api sequence  1.config/getConfig  --> 2.version/check  --> 3.app/open
     @Override
     public void getConfigInfo(final String sessionKey, final String deviceToken) {
         Subscription subscription= configService.getConfigInfo()
@@ -149,7 +150,7 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                     public void onNext(RemoteConfigResonseModel remoteConfigResonseModel) {
                         WhiteLabelApplication.getAppConfiguration().initAppConfig(
                                 remoteConfigResonseModel.getData());
-                        requestCurrency(sessionKey,deviceToken);
+                        versionCheck(sessionKey,deviceToken);
                     }
                 });
         addSubscrebe(subscription);
@@ -209,6 +210,34 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                     protected void requestError(ApiFaildException ex) {
                     }
                 });
+        addSubscrebe(subscription);
+    }
+
+    public void versionCheck(final String sessionkey, final String deviceToken) {
+        Subscription  subscription= configService.versionCheck().compose(RxUtil.<ResponseModel>rxSchedulerHelper()).subscribe(
+            new Subscriber<ResponseModel>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    if(ExceptionParse.parseException(throwable).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR) {
+                        mView.showErrorMessage(ExceptionParse.parseException(throwable).getErrorMsg());
+                    }
+                }
+
+                @Override
+                public void onNext(ResponseModel responseModel) {
+                    if (responseModel.getStatus()==1){
+                        requestCurrency(sessionkey,deviceToken);
+                    }else if (responseModel.getStatus()==-1){
+                        //need update
+                        mView.showUpdateDialog();
+                    }
+                }
+            });
         addSubscrebe(subscription);
     }
 }
