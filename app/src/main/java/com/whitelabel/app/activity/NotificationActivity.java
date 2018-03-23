@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.fragment.NotificationListFragment;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 
 /**
@@ -21,7 +20,6 @@ public class NotificationActivity extends com.whitelabel.app.BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-        JLogUtils.d(TAG, "onCreate");
         initToolBar();
         initFragment();
     }

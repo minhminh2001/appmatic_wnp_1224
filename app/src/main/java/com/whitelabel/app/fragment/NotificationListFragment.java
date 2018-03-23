@@ -4,29 +4,23 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.NotificationActivity;
 import com.whitelabel.app.activity.NotificationDetailActivity;
 import com.whitelabel.app.adapter.NotificationListAdapter;
 import com.whitelabel.app.model.NotificationInfo;
 import com.whitelabel.app.ui.BasePresenter;
 import com.whitelabel.app.utils.GaTrackHelper;
-import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.CustomXListView;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class NotificationListFragment<T extends BasePresenter> extends com.whitelabel.app.BaseFragment<T> implements CustomXListView.IXListViewListener,SwipeRefreshLayout.OnRefreshListener {
@@ -48,7 +42,7 @@ public class NotificationListFragment<T extends BasePresenter> extends com.white
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        JLogUtils.d(TAG, "onCreateView: ");
+
         View view = inflater.inflate(R.layout.fragment_home_notification_list, null);
         setRetryTheme(view);
         clistView = (CustomXListView) view.findViewById(R.id.lv_notification);
@@ -57,15 +51,10 @@ public class NotificationListFragment<T extends BasePresenter> extends com.white
         swipeContainer.setOnRefreshListener(this);
         return view;
     }
-    @Override
-    public void onResume() {
-        JLogUtils.d(TAG, "onResume: ");
-        super.onResume();
-    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        JLogUtils.d(TAG, "onActivityCreated: ");
 
         notifications = new ArrayList<NotificationInfo>();
         progressDialog = JViewUtils.showProgressDialog(notificationActivity);
@@ -85,12 +74,6 @@ public class NotificationListFragment<T extends BasePresenter> extends com.white
                 }
             }
         });
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     @Override
@@ -99,20 +82,21 @@ public class NotificationListFragment<T extends BasePresenter> extends com.white
 
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(notificationActivity, true);
     }
+
     @Override
     public void onStop() {
         super.onStop();
 
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(notificationActivity, false);
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
+
+    // TODO(Aaron):Data refresh in the next version
     @Override
     public void onRefresh() {
 
     }
+
+    // TODO(Aaron):Load data in the next version
     @Override
     public void onLoadMore() {
 
