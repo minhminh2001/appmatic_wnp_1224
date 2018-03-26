@@ -701,6 +701,13 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         super.onBackPressed();
     }
 
+    @Override
+    public void finish(){
+        super.finish();
+
+        overridePendingTransition(0, R.anim.slide_right_out);
+    }
+
     public void trackAddWishList(){
         GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
                 "Add To Wishlist",

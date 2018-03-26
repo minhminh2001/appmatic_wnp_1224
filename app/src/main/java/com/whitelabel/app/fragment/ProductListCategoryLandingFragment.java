@@ -87,56 +87,10 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContentView = inflater.inflate(R.layout.fragment_productlist_categorylanding, null);
-        tempCategoryBean=TempCategoryBean.getInstance();
+        tempCategoryBean = TempCategoryBean.getInstance();
         tempCategoryBean.mGATrackTimeStart= GaTrackHelper.getInstance().googleAnalyticsTimeStart();
         setContentView(mContentView);
         return mContentView;
-    }
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search_shopping_cart, menu);
-        MenuItem menuItem= menu.findItem(R.id.action_shopping_cart);
-        MenuItemCompat.setActionView(menuItem, R.layout.item_count);
-
-        MenuItem   searchItem=menu.findItem(R.id.action_search);
-        View searchView=searchItem.getActionView();
-        ImageView ivSearch= (ImageView) searchView.findViewById(R.id.iv_img1);
-        ivSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (productListActivity != null) {
-                    filterSortBottomView.hideSwitchAndFilterBar(true);
-                    skipSearchPage();
-                }
-            }
-        });
-        JViewUtils.setNavBarIconColor(getActivity(),ivSearch,R.drawable.ic_action_search);
-        View view=menuItem.getActionView();
-        view. setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-                    gotoShoppingCartActivity();
-                }else{
-                    jumpLoginActivity();
-                }
-            }
-        });
-        TextView textView= (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
-        textView.setBackground(JImageUtils.getThemeCircle(getActivity()));
-        ImageView  ivShopping= (ImageView) view.findViewById(R.id.iv_img);
-        JViewUtils.setNavBarIconColor(getActivity(),ivShopping,R.drawable.ic_action_cart);
-        long cartCount=getCartItemCount();
-        if(cartCount>0&&cartCount<=99){
-            textView.setVisibility(View.VISIBLE);
-            textView.setText(cartCount + "");
-        }else if(cartCount>99) {
-            textView.setVisibility(View.VISIBLE);
-            textView.setText("99+");
-        }else{
-            textView.setVisibility(View.INVISIBLE);
-        }
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void skipSearchPage(){
@@ -147,7 +101,6 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         if (productListActivity != null) {
             Intent intent = new Intent(productListActivity, ShoppingCartActivity1.class);
             startActivity(intent);
-            productListActivity.startActivityTransitionAnim();
         }
     }
 
@@ -467,7 +420,6 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
                 filterSortDefault();
             } else {
                 productListActivity.finish();
-                productListActivity.closeActivityTransitionAnim();
             }
         }
     }

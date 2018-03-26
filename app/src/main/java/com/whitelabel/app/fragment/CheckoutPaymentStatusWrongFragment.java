@@ -157,7 +157,6 @@ public class CheckoutPaymentStatusWrongFragment extends com.whitelabel.app.BaseF
                 bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                checkoutPaymentStatusActivity.startActivityTransitionAnim();
                 getActivity().finish();
             } else {
                 Intent intent = new Intent(checkoutPaymentStatusActivity, ShoppingCartActivity1.class);

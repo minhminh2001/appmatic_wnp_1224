@@ -182,7 +182,6 @@ public class HomeCategoryTreeFragment extends HomeBaseFragment implements View.O
             //第三级bran选择的位置
             intent.putExtra("categoryId", entity.getId());
             getContext().startActivity(intent);
-            ((BaseActivity) getContext()).startActivityTransitionAnim();
         }
     };
 

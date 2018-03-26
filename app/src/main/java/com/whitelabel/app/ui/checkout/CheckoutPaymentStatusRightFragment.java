@@ -127,7 +127,6 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
                 bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE, HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                checkoutPaymentStatusActivity.startActivityTransitionAnim();
                 getActivity().finish();
             } else {
                 Intent intent = new Intent(checkoutPaymentStatusActivity, ShoppingCartActivity1.class);
@@ -195,7 +194,6 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
                 //checkoutPaymentStatusActivity.startGuidePage(null, HomeActivity.class, true);
                 Intent intent = new Intent(checkoutPaymentStatusActivity, HomeActivity.class);
                 startActivity(intent);
-                checkoutPaymentStatusActivity.startActivityTransitionAnim();
                 checkoutPaymentStatusActivity.finish();
             }
         });
@@ -212,7 +210,6 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
                 Intent intent = new Intent(checkoutPaymentStatusActivity, HomeActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                checkoutPaymentStatusActivity.startActivityTransitionAnim();
                 checkoutPaymentStatusActivity.finish();
             }
         });
@@ -252,7 +249,6 @@ public class CheckoutPaymentStatusRightFragment extends com.whitelabel.app.BaseF
                 case R.id.tv_checkout_payment_status_right_continueshopping4:
                     Intent intent4 = new Intent(checkoutPaymentStatusActivity, HomeActivity.class);
                     startActivity(intent4);
-                     checkoutPaymentStatusActivity.startActivityTransitionAnim();
                     checkoutPaymentStatusActivity.finish();
                     break;
             }

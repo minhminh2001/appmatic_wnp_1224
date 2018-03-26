@@ -172,20 +172,15 @@ public class BaseFragmentSearchCart<T extends BasePresenter> extends com.whitela
         intent.putExtra(ProductListActivity.INTENT_DATA_PREVTYPE, ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_HOME);
         intent.putExtra(ProductListActivity.INTENT_DATA_FRAGMENTTYPE, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS);
         startActivityForResult(intent, REQUEST_SEARCH);
-        //getActivity().overridePendingTransition(R.anim.activity_anim1_enter1, R.anim.activity_anim1_exit1);
-        ((BaseActivity) getActivity()).startActivityTransitionAnim();
     }
 
     protected void launchShoppingCart() {
         Intent intent = new Intent(getActivity(), ShoppingCartActivity1.class);
         startActivityForResult(intent, REQUEST_SHOPPINGCART);
-        //getActivity().overridePendingTransition(R.anim.activity_anim1_enter1, R.anim.activity_anim1_exit1);
-        ((BaseActivity) getActivity()).startActivityTransitionAnim();
     }
 
     protected void launchNotification(){
         Intent intent = new Intent(getActivity(), NotificationActivity.class);
         startActivityForResult(intent, REQUEST_NOTIFICATION);
-        ((BaseActivity) getActivity()).startActivityTransitionAnim();
     }
 }

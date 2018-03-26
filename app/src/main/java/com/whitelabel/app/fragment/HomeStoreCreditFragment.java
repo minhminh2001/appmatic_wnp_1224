@@ -101,7 +101,6 @@ public class HomeStoreCreditFragment extends HomeBaseFragment implements View.On
                 Intent intent = new Intent(getActivity(), CreditInstructionActivity.class);
                 intent.putExtra("data", mBean.getCMScontent());
                 startActivity(intent);
-                ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 break;
             case R.id.try_again:
                 mConnectionLayout.setVisibility(View.GONE);

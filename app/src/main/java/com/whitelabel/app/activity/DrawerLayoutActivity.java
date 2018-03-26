@@ -474,7 +474,6 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
                 }
                 intent.putExtra(ProductListActivity.INTENT_CATEGORY_ID, childrenBean.getId());
                 startActivity(intent);
-                startActivityTransitionAnim();
             }
         });
         rvDogsAndCatsList.setAdapter(leftMenuDogsAndCatsAdapter);

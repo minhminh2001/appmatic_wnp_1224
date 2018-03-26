@@ -264,7 +264,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
     public void startHomeActivity() {
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         startActivity(intent);
-        ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
     public void startLoginActivity() {
         Intent loginIntent = new Intent(getActivity(), LoginRegisterActivity.class);
@@ -441,7 +440,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
                     Intent it = new Intent(getActivity(), ProductDetailActivity.class);
                     it.putExtra("productId", ((ShoppingCartListEntityCell) mProducts.get(i)).getProductId());
                     startActivity(it);
-                    ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 }
             }
         }
@@ -512,7 +510,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         Intent intent = new Intent(getActivity(), CheckoutActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
-        ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
 
     public final static class DataHandler extends Handler {

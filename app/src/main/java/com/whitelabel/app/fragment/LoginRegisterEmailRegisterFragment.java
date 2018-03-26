@@ -943,7 +943,7 @@ public class LoginRegisterEmailRegisterFragment extends com.whitelabel.app.BaseF
             intent.putExtras(bundle);
         }
         startActivityForResult(intent, 110);
-        loginRegisterActivity.startActivityTransitionAnim();
+
         if (finishFlag) {
             loginRegisterActivity.finish();
         }

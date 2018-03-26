@@ -232,7 +232,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
                         Intent intent = new Intent(getActivity(), EditAddressActivity.class);
                         intent.putExtras(bundle);
                         getParentFragment().startActivityForResult(intent, 2000);
-                        ((BaseActivity)getActivity()).startActivityTransitionAnim();
                         break;
                     case 1:
                         sendRequestToDeteleteCell(addressBook.getAddressId());
@@ -329,7 +328,6 @@ public class HomeMyAccountAddressBookFragment extends HomeBaseFragment implement
                     intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT,false);
                 }
                 getParentFragment().startActivityForResult(intent, 2000);
-                ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 break;
             case R.id.try_again:
                 connectionLayout.setVisibility(View.GONE);

@@ -414,4 +414,15 @@
         <item name="android:background">@color/edittext_line</item>
     </style>
 
+    <style name="ActivityAnimTheme" parent="BackgroundWhiteTheme">
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowAnimationStyle">@style/ActivityAnim</item>
+    </style>
+
+    <style name="ActivityAnim">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_anim_exit</item>
+    </style>
+
 </resources>
