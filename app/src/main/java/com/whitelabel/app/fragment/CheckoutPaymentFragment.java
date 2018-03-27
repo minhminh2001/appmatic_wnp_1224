@@ -1816,38 +1816,7 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
 
     }
 
-    /**
-     * Format credit card number
-     */
-    /*private class CreditCartNumberTextWatcher implements TextWatcher {
 
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-            String txt = etCreditCardNumber.getText().toString().trim();
-
-            if (s.length() == 5 || s.length() == 10 || s.length() == 15) {
-
-                //擦去数字会有问题，格式错乱
-                etCreditCardNumber.setText(new StringBuffer(txt).insert(
-                        txt.length() - 1, " ").toString());
-
-                etCreditCardNumber.setSelection(etCreditCardNumber.getText()
-                        .length());
-            }
-
-        }
-    }*/
 
     private class CreditCartNumberTextWatcher implements TextWatcher {
         int beforeTextLength = 0;

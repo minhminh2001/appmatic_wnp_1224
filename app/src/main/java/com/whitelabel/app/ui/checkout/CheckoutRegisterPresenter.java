@@ -13,6 +13,8 @@ import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 
+import android.util.Log;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -52,6 +54,7 @@ public class CheckoutRegisterPresenter extends RxPresenter<CheckoutRegisterContr
 
                 @Override
                 public void onError(Throwable throwable) {
+                    Log.i("ray", "errorMessage:" + throwable.getMessage());
                     if (throwable instanceof ApiException) {
                         ApiException apiException = (ApiException) throwable;
                         mView.showErrorMessage(apiException.getErrorMsg());
