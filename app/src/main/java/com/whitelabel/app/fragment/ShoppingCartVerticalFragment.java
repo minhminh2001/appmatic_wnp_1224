@@ -55,6 +55,7 @@ import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.login.LoginFragmentContract;
+import com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.ui.shoppingcart.ShoppingCartVersionContract;
 import com.whitelabel.app.utils.FirebaseEventUtils;
@@ -79,6 +80,12 @@ import java.util.List;
 
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
+
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_EMAIL;
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_NAME;
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_PRODUCT_ID;
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_SESSION_KEY;
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_STORE_ID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -832,6 +839,29 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         mCar.setStoreCreditMessage(bean.getStoreCreditMessage());
         mCar.setStoreCredit(bean.getStoreCredit());
         initShoppingCartData(mCar, false);
+    }
+
+    @Override
+    public void onClickedNotifyMe(ShoppingCartListEntityCell product) {
+        if(product == null)
+            return;
+
+        GOUserEntity userInfo = WhiteLabelApplication.getAppConfiguration().getUserInfo();
+
+        String productId = product.getProductId();
+        String name = userInfo == null ? "" : userInfo.getFirstName() + " " + userInfo.getLastName();
+        String email = userInfo == null ? "" : userInfo.getEmail();
+        String sessionKey = userInfo == null ? "" : userInfo.getSessionKey();
+
+        NotifyMeDialogFragment notifyMeDialogFragment = new NotifyMeDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(FRAGMENT_ARG_PRODUCT_ID, productId);
+        bundle.putString(FRAGMENT_ARG_STORE_ID, "1");
+        bundle.putString(FRAGMENT_ARG_NAME, name);
+        bundle.putString(FRAGMENT_ARG_EMAIL, email);
+        bundle.putString(FRAGMENT_ARG_SESSION_KEY, sessionKey);
+        notifyMeDialogFragment.setArguments(bundle);
+        notifyMeDialogFragment.show(getActivity().getFragmentManager());
     }
 
     //from shoppingCartVerticalAdapter callback--delete item

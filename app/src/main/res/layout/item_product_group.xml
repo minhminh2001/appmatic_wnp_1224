@@ -13,13 +13,14 @@
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/rlChildProductQuantity"
         android:layout_height="wrap_content">
-    <com.whitelabel.app.widget.CustomTextView
-        android:id="@+id/tv_child_name"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:text="Natural Defense Flea  "
-        android:layout_width="wrap_content"
-        />
+
+        <com.whitelabel.app.widget.CustomTextView
+            android:id="@+id/tv_child_name"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="Natural Defense Flea  "
+            android:layout_width="wrap_content"/>
+
         <com.whitelabel.app.widget.CustomTextView
             android:id="@+id/tv_child_price"
             android:layout_width="wrap_content"
@@ -28,34 +29,48 @@
             android:textColor="@color/greyB8B8B8"
             android:layout_height="wrap_content"/>
 
-        <com.whitelabel.app.widget.CustomTextView
-            android:id="@+id/tv_child_final_price"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:textSize="14sp"
-            android:text="HK$245"
-            android:textColor="@color/black"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_child_final_price"
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:text="HK$245"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"/>
+
+            <com.whitelabel.app.widget.CustomTextView
+                android:id="@+id/tv_sold_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="14sp"
+                android:text="@string/campaign_item_soldout_for_notifyme"
+                android:textColor="@color/greyB8B8B8"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 
     <RelativeLayout
-        android:id="@+id/rl_child_sold"
+        android:id="@+id/rl_notify_me"
         android:layout_width="90dp"
         android:layout_height="30dp"
         android:visibility="gone"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/ll_attribute"
-        android:background="@drawable/shape_productdetail_colorsize_bg"
-        >
+        android:background="@drawable/btn_notify_me_bg">
 
         <com.whitelabel.app.widget.CustomTextView
-            android:gravity="center"
-            android:text="@string/campaign_item_soldout"
             android:layout_width="match_parent"
-            android:textColor="@color/greyE1E1E1"
             android:layout_height="match_parent"
-            />
-        </RelativeLayout>
+            android:gravity="center"
+            android:text="@string/campaign_item_notifyme"
+            android:textColor="@color/order_status_hold"/>
+    </RelativeLayout>
 
 <RelativeLayout
     android:id="@+id/rlChildProductQuantity"

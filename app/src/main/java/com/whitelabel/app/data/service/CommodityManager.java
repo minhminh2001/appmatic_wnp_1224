@@ -12,6 +12,7 @@ import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
+import com.whitelabel.app.model.NotifyMeResponse;
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
@@ -206,6 +207,11 @@ public class CommodityManager  implements ICommodityManager{
                     return ResponseModel;
                 }
             });
+    }
+
+    @Override
+    public Observable<NotifyMeResponse> registerNotifyForProduct(String productId, String email, String name, String stroreId, String sessionKey) {
+        return productApi.registerNotifyForProduct(productId, email, name, stroreId, sessionKey);
     }
 
     public String  getProductDetailHtml(ProductDetailModel productDetailModel) {

@@ -5,6 +5,7 @@ import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.BindProductResponseModel;
 import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailNewModel;
+import com.whitelabel.app.model.NotifyMeResponse;
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import rx.Observable;
 
@@ -39,5 +41,9 @@ public interface ICommodityManager {
     public  Observable<ResponseModel> addBoughtTogether(String productId,String sessionKey);
     public  Observable<SearchFilterResponse> autoHintSearch(String sessionKey,String keyword);
     public  Observable<ResponseModel> setToCheckout(HashMap<String,String> maps);
-
+    public  Observable<NotifyMeResponse> registerNotifyForProduct(String productId,
+                                                                  String email,
+                                                                  String name,
+                                                                  String stroreId,
+                                                                  String sessionKey);
 }

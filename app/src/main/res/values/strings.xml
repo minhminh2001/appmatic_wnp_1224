@@ -493,6 +493,8 @@
 
     <string name="login_google">Google</string>
     <string name="campaign_item_soldout">SOLD&#160;OUT</string>
+    <string name="campaign_item_notifyme">Notify&#160;Me</string>
+    <string name="campaign_item_soldout_for_notifyme">(SOLD&#160;OUT)</string>
 
     <string name="login_twitter">Twitter</string>
 
@@ -856,5 +858,14 @@
     <string name="address_phone_error_hint">More than 6 digits please.</string>
     <string name="market_url">market://details?id=</string>
     <string name="playstore_url">https://play.google.com/store/apps/details?id=</string>
+
+    <!-- Notify me dialog -->
+    <string name="notify_title">Notify When Available</string>
+    <string name="notify_description">We will let you know as soon as this becomes available again.</string>
+    <string name="notify_checkbox_text">Notify me with Email</string>
+    <string name="notify_eidt_hint_customer_name">Name</string>
+    <string name="notify_eidt_hint_customer_email">Email</string>
+    <string name="notify_button_notifyme">Notify Me</string>
+    <string name="notify_button_cacnel">Cancel</string>
 
 </resources>

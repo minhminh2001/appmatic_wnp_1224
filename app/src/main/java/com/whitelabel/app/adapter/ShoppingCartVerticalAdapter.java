@@ -144,6 +144,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         //if ("1".equals(sc.getInStock())&&!"0".equals(sc.getAvailability())) {
         if ("1".equals(sc.getInStock())) {
             viewHolder.tvOutOfStock.setVisibility(View.INVISIBLE);
+            viewHolder.llNotifyMe.setVisibility(View.INVISIBLE);
             viewHolder.tvAllBarrier.setVisibility(View.INVISIBLE);
             viewHolder.tvAllBarrier2.setVisibility(View.INVISIBLE);
             if ("1".equals(sc.getHasError())){
@@ -157,6 +158,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             }
         } else {
             viewHolder.tvOutOfStock.setVisibility(View.VISIBLE);
+            viewHolder.llNotifyMe.setVisibility(View.VISIBLE);
             viewHolder.llShoppingCartError.setVisibility(View.GONE);
         }
         viewHolder.tvProductBland.setText(sc.getBrand());
@@ -178,6 +180,8 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         viewHolder.rlShoppingcartCountSub.setTag(position);
         viewHolder.rlShoppingcartCountPlus.setOnClickListener(addListener);
         viewHolder.rlShoppingcartCountPlus.setTag(position);
+        viewHolder.llNotifyMe.setOnClickListener(notifyMeListener);
+        viewHolder.llNotifyMe.setTag(position);
 
         viewHolder.ivShoppingCartDelete.setOnClickListener(new View.OnClickListener() {
 
@@ -450,6 +454,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         final RelativeLayout rlShoppingcartCountSub;
         final RelativeLayout rlShoppingcartCountPlus;
         final LinearLayout llShoppingcartCellPoint;
+        final LinearLayout llNotifyMe;
 
         public ViewHolder(View view) {
             super(view);
@@ -480,6 +485,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             llShoppingCartError = (LinearLayout) view.findViewById(R.id.ll_shopping_cart_error);
             ivShoppingCartIcon = (ImageView) view.findViewById(R.id.iv_shopping_cart_icon);
             tvShoppingCartErrorMsg = (TextView) view.findViewById(R.id.tv_shopping_cart_error_msg);
+            llNotifyMe = (LinearLayout) view.findViewById(R.id.ll_notifyme);
         }
     }
 
@@ -691,6 +697,17 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
 //            shoppingCartActivity.tvSubtotal.setText("RM " + JDataUtils.formatDoubleWithSpecifiedDecimals(total));
 //            shoppingCartActivity.tvGrandTotal.setText("RM " + JDataUtils.formatDoubleWithSpecifiedDecimals(total));
     }
+
+    private final View.OnClickListener notifyMeListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int position = (Integer) v.getTag();
+            if (list.get(position) instanceof ShoppingCartListEntityBody) {
+                return;
+            }
+            ShoppingCartListEntityCell shoppingCart = (ShoppingCartListEntityCell) list.get(position);
+        }
+    };
 
     private void closeDialog() {
         if (mDialog != null) {

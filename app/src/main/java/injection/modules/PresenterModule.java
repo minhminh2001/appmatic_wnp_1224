@@ -2,7 +2,6 @@ package injection.modules;
 
 import android.app.Activity;
 
-import com.whitelabel.app.data.preference.ICacheApi;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICheckoutManager;
@@ -33,6 +32,8 @@ import com.whitelabel.app.ui.login.SettingContract;
 import com.whitelabel.app.ui.login.SettingPresenterImpl;
 import com.whitelabel.app.ui.menuMyOrder.MyOrderContract;
 import com.whitelabel.app.ui.menuMyOrder.MyOrderPresenter;
+import com.whitelabel.app.ui.notifyme.NotifyMeConstract;
+import com.whitelabel.app.ui.notifyme.NotifyMePresenterImpl;
 import com.whitelabel.app.ui.productdetail.BindProductContract;
 import com.whitelabel.app.ui.productdetail.BindProductPresenterImpl;
 import com.whitelabel.app.ui.productdetail.ProductDetailContract;
@@ -158,4 +159,9 @@ public class PresenterModule {
         return new ShoppingCartVersionPresenter(iBaseManager);
     }
 
+    @Provides
+    @ActivityScope
+    public NotifyMeConstract.Presenter provideNotifyMePresenter(IBaseManager iBaseManager, ICommodityManager iCommodityManager){
+        return new NotifyMePresenterImpl(iBaseManager, iCommodityManager);
+    }
 }
