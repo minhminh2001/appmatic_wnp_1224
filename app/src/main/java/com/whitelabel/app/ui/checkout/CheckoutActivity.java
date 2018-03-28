@@ -162,7 +162,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
     private FragmentTransaction fragmentTransaction;
 
-    private Fragment checkoutDefaultAddressFragment;
+    private CheckoutDefaultAddressFragment checkoutDefaultAddressFragment;
 
     private Fragment checkoutPaymentFragment;
 
@@ -240,7 +240,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
     @Override
     public void switchNextFragment() {
-        switchMenu(MENU_ADDRESS);
+
         openSelectFragment();
     }
 
@@ -325,60 +325,63 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     }
 
     private void openPaymentFragment() {
-        hiddenAll();
+        switchMenu(MENU_PAYMENT);
         currentModule = FRAGMENT_PAYMENT;
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        hiddenAll(fragmentTransaction);
         if (checkoutPaymentFragment == null) {
             checkoutPaymentFragment = new CheckoutPaymentFragment();
+            fragmentTransaction
+                    .add(R.id.ll_checkout_body, checkoutPaymentFragment, TAG_PAYMENT);
         }
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction
-            .add(R.id.ll_checkout_body, checkoutPaymentFragment, TAG_PAYMENT);
         fragmentTransaction.show(checkoutPaymentFragment).commitAllowingStateLoss();
     }
 
     private void openReviewFragment(String code) {
-        hiddenAll();
         currentModule = FRAGMENT_REVIEW;
-        if (checkoutReviewFragment == null) {
-            checkoutReviewFragment = new CheckoutReviewFragment();
-        }
+        switchMenu(MENU_REVIEW);
         Bundle bundle = new Bundle();
         bundle.putSerializable("paymentSaveReturnEntity", paymentSaveReturnEntity);
-        this.bank = bank;
         if (!TextUtils.isEmpty(molpayType)) {
             bundle.putString("payment[molpay_type]", molpayType);
         }
         if (!TextUtils.isEmpty(code)) {
             bundle.putString("code", code);
         }
-        checkoutReviewFragment.setArguments(bundle);
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         btnContinue.setText(getResources().getString(R.string.PLACE_MY_ORDER));
-        hiddenAll();
-        fragmentTransaction.add(R.id.ll_checkout_body, checkoutReviewFragment, TAG_REVIEW);
+        hiddenAll(fragmentTransaction);
+        if (checkoutReviewFragment == null) {
+            checkoutReviewFragment = new CheckoutReviewFragment();
+            checkoutReviewFragment.setArguments(bundle);
+            fragmentTransaction.add(R.id.ll_checkout_body, checkoutReviewFragment, TAG_REVIEW);
+
+        }
+
         fragmentTransaction.show(checkoutReviewFragment).commitAllowingStateLoss();
     }
 
     private void openRegisterFragment() {
         currentModule = FRAGMENT_REGISTER;
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        hiddenAll(fragmentTransaction);
         if (checkoutRegisterFragment == null) {
             checkoutRegisterFragment = new CheckoutRegisterFragment();
+            fragmentTransaction
+                    .add(R.id.ll_checkout_body, checkoutRegisterFragment, TAG_REGISTER);
         }
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction
-            .add(R.id.ll_checkout_body, checkoutRegisterFragment, TAG_REGISTER);
         fragmentTransaction.show(checkoutRegisterFragment).commitAllowingStateLoss();
     }
 
     public void reInit() {
         checkAddaddressFragment = getSupportFragmentManager().findFragmentByTag(TAG_ADD_ADDRESS);
-        checkoutDefaultAddressFragment = getSupportFragmentManager()
+        checkoutDefaultAddressFragment = (CheckoutDefaultAddressFragment) getSupportFragmentManager()
             .findFragmentByTag(TAG_DEFAULT_ADDRESS);
         checkoutPaymentFragment = getSupportFragmentManager().findFragmentByTag(TAG_PAYMENT);
         checkoutReviewFragment = getSupportFragmentManager().findFragmentByTag(TAG_REVIEW);
     }
 
-    public void hiddenAll() {
+    public void hiddenAll(FragmentTransaction fragmentTransaction) {
         if (checkAddaddressFragment != null) {
             fragmentTransaction.hide(checkAddaddressFragment);
         }
@@ -392,7 +395,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
             fragmentTransaction.hide(checkoutReviewFragment);
         }
         if (checkoutRegisterFragment != null) {
-            fragmentTransaction.hide(checkAddaddressFragment);
+            fragmentTransaction.hide(checkoutRegisterFragment);
         }
     }
 
@@ -462,10 +465,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     }
 
     private void switchMenu(int menu) {
-        menu = !isGuestModel && menu != 0 ? menu - 1 : menu;
+        menu = !isGuestModel ? menu - 1 : menu;
         for (int i = 0; i < vPoint.size(); i++) {
-
             vText.get(i).setSelected(i == menu);
+            vPoint.get(i).setBackground(JImageUtils.getGrayThemeIcon(this,R.drawable.button_oval_grey));
             if (i == menu) {
                 vPoint.get(i)
                     .setBackground(
@@ -473,8 +476,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
             } else if (i < menu) {
                 vPoint.get(i)
                     .setBackground(JImageUtils.getThemeIcon(this, R.drawable.button_oval_grey));
-            } else if (i > menu) {
-                vPoint.get(i).setBackgroundResource(R.drawable.button_oval_grey);
             }
         }
 
@@ -517,11 +518,12 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
         switch (currentModule) {
             case FRAGMENT_REVIEW:
                 openPaymentFragment();
+                currentModule=FRAGMENT_PAYMENT;
                 break;
             case FRAGMENT_PAYMENT:
                 openSelectFragment();
+                currentModule=FRAGMENT_SELECT_ADDRESS;
                 break;
-
             case FRAGMENT_SELECT_ADDRESS:
                 finish();
                 break;
@@ -684,14 +686,15 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
     //first register and to checkout page to skip :add address page
     public void openSelectFragment() {
-        hiddenAll();
+        switchMenu(MENU_ADDRESS);
         currentModule = FRAGMENT_SELECT_ADDRESS;
-        if (checkoutRegisterFragment == null) {
-            checkoutDefaultAddressFragment = new CheckoutDefaultAddressFragment();
-        }
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction
-            .add(R.id.ll_checkout_body, checkoutDefaultAddressFragment, TAG_DEFAULT_ADDRESS);
+        hiddenAll(fragmentTransaction);
+        if (checkoutDefaultAddressFragment == null) {
+            checkoutDefaultAddressFragment = new CheckoutDefaultAddressFragment();
+            fragmentTransaction
+                    .add(R.id.ll_checkout_body, checkoutDefaultAddressFragment, TAG_DEFAULT_ADDRESS);
+        }
         if (checkoutRegisterFragment != null) {
             fragmentTransaction.remove(checkoutRegisterFragment);
         }
@@ -701,11 +704,13 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                 new CheckoutDefaultAddressFragment.IChangeAddAddressPage() {
                     @Override
                     public void selectAddressFragment() {
-                        hiddenAll();
+
                         currentModule = FRAGMENT_ADD_ADDRESS;
                         checkAddaddressFragment = new CheckoutAddaddressFragment();
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        hiddenAll(fragmentTransaction);
                         fragmentTransaction.remove(checkoutDefaultAddressFragment);
+                        checkoutDefaultAddressFragment=null;
                         fragmentTransaction.add(R.id.ll_checkout_body, checkAddaddressFragment,
                             TAG_ADD_ADDRESS);
                         fragmentTransaction.show(checkAddaddressFragment)
@@ -716,21 +721,24 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
     //to select shipping or pick up store page :show address page
     private void skipToDefaultAddressPage() {
-        if (checkoutDefaultAddressFragment == null) {
-            checkoutDefaultAddressFragment = new CheckoutDefaultAddressFragment();
-        }
+
         currentModule = FRAGMENT_SELECT_ADDRESS;
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        hiddenAll(fragmentTransaction);
         fragmentTransaction.remove(checkAddaddressFragment);
-        fragmentTransaction
-            .add(R.id.ll_checkout_body, checkoutDefaultAddressFragment, TAG_DEFAULT_ADDRESS);
+        checkAddaddressFragment=null;
+        if (checkoutDefaultAddressFragment == null) {
+            checkoutDefaultAddressFragment = new CheckoutDefaultAddressFragment();
+            fragmentTransaction
+                    .add(R.id.ll_checkout_body, checkoutDefaultAddressFragment, TAG_DEFAULT_ADDRESS);
+        }
         fragmentTransaction.show(checkoutDefaultAddressFragment).commitAllowingStateLoss();
     }
 
     public void switReviewFragment(String molpayType,
         CheckoutPaymentSaveReturnEntity paymentSaveReturnEntity, String code, String html,
         String type, String bank) {
-        switchMenu(MENU_REVIEW);
+
         this.html = html;
         this.paymentMethodCode = code;
         paymethodType = type;
@@ -875,11 +883,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                 .setText(getResources().getString(R.string.This_is_a_required_field));
             addNewAddressFragment.tvCityAnim
                 .setTextColor(getResources().getColor(R.color.red_common));
-//            svrParameters.put("validation_notpass_reason", "city is required!");
             return null;
         } else {
             params.setCity(etShippingCity.toString());
-//            svrParameters.put("city", etShippingCity.toString());
         }
 
         Editable etPhone = addNewAddressFragment.etPhone.getText();
@@ -1009,8 +1015,6 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
         super.onStart();
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
         //TODO joyson may be use
-//        GaTrackHelper.getInstance().googleAnalyticsStartCheckout(CheckoutActivity.this,
-// productIds, "checkout", 1);
     }
 
     @Override
@@ -1121,7 +1125,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                             mActivity.get().fragmentTransaction
                                 .add(R.id.ll_checkout_body, mActivity.get().checkoutReviewFragment,
                                     TAG_REVIEW);
-                            mActivity.get().hiddenAll();
+                            mActivity.get().hiddenAll(  mActivity.get().fragmentTransaction);
                             mActivity.get().fragmentTransaction
                                 .show(mActivity.get().checkoutReviewFragment)
                                 .commitAllowingStateLoss();

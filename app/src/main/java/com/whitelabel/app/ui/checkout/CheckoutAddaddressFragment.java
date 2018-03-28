@@ -1192,10 +1192,6 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
         return animation;
     }
 
-//    @Override
-//    public void onKeyDown(int keyCode, KeyEvent event) {
-//
-//    }
 
     @Override
     public void showErrorMsg(String errorMsg) {

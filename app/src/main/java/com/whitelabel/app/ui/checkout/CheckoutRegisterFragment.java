@@ -4,13 +4,18 @@ import com.common.utils.DialogUtils;
 import com.whitelabel.app.BaseFragment;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.data.model.RegisterRequest;
+import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
+import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -59,6 +64,8 @@ public class CheckoutRegisterFragment extends BaseFragment<CheckoutRegisterContr
 
     private TextView tvLogin;
 
+    private final static int REQUEST_CODE=2000;
+
     private CheckoutRegisterCallBack checkoutRegisterCallBack;
 
     @Nullable
@@ -77,6 +84,7 @@ public class CheckoutRegisterFragment extends BaseFragment<CheckoutRegisterContr
 
     private void initView() {
         tvLogin = (TextView) contentView.findViewById(R.id.tv_login);
+        tvLogin.setOnClickListener(this);
         rl_register_email = (CustomButtomLineRelativeLayout) contentView
             .findViewById(R.id.rl_register_email);
         rl_phone_number = (CustomButtomLineRelativeLayout) contentView
@@ -388,7 +396,6 @@ public class CheckoutRegisterFragment extends BaseFragment<CheckoutRegisterContr
                         public void beforeTextChanged(CharSequence s, int start, int count,
                             int after) {
                         }
-
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before,
                             int count) {
@@ -398,7 +405,6 @@ public class CheckoutRegisterFragment extends BaseFragment<CheckoutRegisterContr
                                 clearRePassword.setVisibility(View.GONE);
                             }
                         }
-
                         @Override
                         public void afterTextChanged(Editable s) {
                         }
@@ -430,11 +436,8 @@ public class CheckoutRegisterFragment extends BaseFragment<CheckoutRegisterContr
                     firstNameText2.setTextColor(getResources().getColor(R.color.redC2060A));
                     firstNameText2.setText(getResources().getString(R.string.required_field));
                     return false;
-
                 } else {
                     firstNameText.clearAnimation();
-                    //验证字段
-//                    img1.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.lastName:
@@ -649,11 +652,21 @@ public class CheckoutRegisterFragment extends BaseFragment<CheckoutRegisterContr
     }
 
     private void startLoginActivity() {
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), LoginRegisterActivity.class);
+            startActivityForResult(intent, REQUEST_CODE);
+            getActivity().overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_CODE&& LoginRegisterEmailLoginFragment.RESULTCODE==resultCode){
+            ((CheckoutActivity)getActivity()).openSelectFragment();
+        }
     }
 
     interface CheckoutRegisterCallBack {
-
         void switchNextFragment();
     }
 }

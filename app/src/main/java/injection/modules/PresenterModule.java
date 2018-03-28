@@ -144,8 +144,8 @@ public class PresenterModule {
     @Provides
     @ActivityScope
     public LoginFragmentContract.Presenter provideLoginFragment(IBaseManager iBaseManager,
-        IAccountManager iAccountManager) {
-        return new LoginFragmentPresenterImpl(iBaseManager, iAccountManager);
+        IAccountManager iAccountManager,IShoppingCartManager iShoppingCartManager) {
+        return new LoginFragmentPresenterImpl(iBaseManager, iAccountManager,iShoppingCartManager);
     }
 
     @Provides

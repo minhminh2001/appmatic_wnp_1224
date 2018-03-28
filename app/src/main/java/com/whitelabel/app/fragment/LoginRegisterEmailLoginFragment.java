@@ -300,6 +300,7 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
         mMyAccountDao.facebookLogin(threePartAPIUserEntity.getEmail(), fbHasEmail, threePartAPIUserEntity.getFirst_name(), threePartAPIUserEntity.getLast_name(), threePartAPIUserEntity.getId(), WhiteLabelApplication.getPhoneConfiguration().getRegistrationToken());
     }
     private void fbLoginCancel() {
+
     }
     private void fbLoginError() {
         if(getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
@@ -309,47 +310,20 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
     public void loginSuccess(SVRAppserviceCustomerFbLoginReturnEntity fbLoginReturnEntity) {
         if(getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
             WhiteLabelApplication.getAppConfiguration().signIn(loginRegisterActivity, fbLoginReturnEntity);
-//            if (false) {
-//                String testMessage = "sessionKey:" + fbLoginReturnEntity.getSessionKey() + "\n" + "user id:" + fbLoginReturnEntity.getId();
-//                JViewUtils.showMessageDialog(loginRegisterActivity, testMessage, new OnMessageDialogListener() {
-//                    @Override
-//                    public void onOKClickListener(Object object) {
-//
-//                        if (isStart) {
-//                            Intent intent = new Intent(loginRegisterActivity, HomeActivity.class);
-//                            startActivity(intent);
-//                        } else {
-//                            loginRegisterActivity.setResult(RESULTCODE);
-//                        }
-//
-//                        loginRegisterActivity.finish();
-//                        loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
-//                    }
-//                });
-//            } else {
                 SendBoardUtil.sendNotificationBoard(loginRegisterActivity, SendBoardUtil.LOGINCODE, null);
-                if (isStart) {
-                    Intent intent = new Intent(loginRegisterActivity, HomeActivity.class);
-                    startActivity(intent);
-                } else {
-//                                        loginRegisterActivity.onBackPressed();
-                    Intent intent = new Intent();
-                    if (loginRegisterActivity.addToWish) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("productId", loginRegisterActivity.productId);
-                        intent.putExtras(bundle);
-                    }
-                    loginRegisterActivity.setResult(RESULTCODE, intent);
-                }
-                loginRegisterActivity.finish();
-                loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
-//            }
+             mPresenter.getShoppingListFromLocal();
         }
     }
 
     @Override
     public void showUpdateDialog() {
         JViewUtils.showUpdateGooglePlayStoreDialog(loginRegisterActivity);
+    }
+
+
+    @Override
+    public void addBatchShoppingSuccess() {
+        jumpNextScreen();
     }
 
     @Override
@@ -368,32 +342,6 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
             ex.printStackTrace();
         }
     }
-
-//    private View.OnClickListener updateListener=new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//            List<PackageInfo> packages = getActivity().getPackageManager().getInstalledPackages(0);
-//            for(int i=0;i<packages.size();i++) {
-//                PackageInfo packageInfo = packages.get(i);
-//                String packgeName="";
-//                packgeName=packageInfo.packageName;
-//                JLogUtils.i("Allen","packge="+packgeName);
-//                if(packgeName.contains("vending")){
-//                    //跳转进市场搜索的代码
-//                    Intent intent = new Intent(Intent.ACTION_VIEW);
-//                    intent.setData(Uri.parse(GlobalData.jumpMarketUrl));
-//                    startActivity(intent);
-//                    existVending=true;
-//                }
-//            }
-//            if(!existVending){
-//                Uri uri = Uri.parse("http://play.google.com/store/apps/details?id=com.whitelabel.app");
-//                Intent it = new Intent(Intent.ACTION_VIEW, uri);
-//                startActivity(it);
-//                existVending=false;
-//            }
-//        }
-//    };
 
     //检出service版本号判断是否更新
     public void IsOldVersion(){
@@ -844,23 +792,8 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
                             mFragment.get().loginRegisterActivity.setSubEmail(mFragment.get().email.getText().toString().trim());
                             mFragment.get().clickEmailInfo.setVisibility(View.VISIBLE);
                         } else {
-                                Bundle mBundle = new Bundle();
-                                mBundle.putString("sessionKey", loginReturnEntity.getSessionKey());
-                                boolean oldAccount=mFragment.get().email.getText().toString().equals(shared.getString("email",""));
-                                if(mFragment.get().isStart){
-                                    mActivity.get().startNextActivity(mBundle, HomeActivity.class, true);
-                                }else {
-                                    Intent intent=new Intent();
-                                    if(mActivity.get().addToWish){
-                                        Bundle bundle=new Bundle();
-                                        bundle.putString("productId", mActivity.get().productId);
-                                        intent.putExtras(bundle);
-                                    }
-                                    mActivity.get().setResult(RESULTCODE,intent);
-                                    mActivity.get().finish();
-                                }
-                            }
-//                        }
+                           mFragment.get(). mergeProductToShoppingCart();
+                        }
                         SharedPreferences.Editor editor2 = shared.edit();
                         editor2.putString("email", loginReturnEntity.getEmail());
                         editor2.commit();
@@ -968,6 +901,31 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
             }
             super.handleMessage(msg);
         }
+    }
+
+    private void mergeProductToShoppingCart() {
+        mPresenter.getShoppingListFromLocal();
+
+    }
+
+
+
+    private void jumpNextScreen() {
+        if (isStart) {
+            Intent intent = new Intent(loginRegisterActivity, HomeActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent();
+            if (loginRegisterActivity.addToWish) {
+                Bundle bundle = new Bundle();
+                bundle.putString("productId", loginRegisterActivity.productId);
+                intent.putExtras(bundle);
+            }
+            loginRegisterActivity.setResult(RESULTCODE, intent);
+        }
+        loginRegisterActivity.finish();
+        loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
+
     }
 
     @Override

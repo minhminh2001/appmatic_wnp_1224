@@ -350,6 +350,11 @@ public class LoginRegisterEmailBoundFragment extends com.whitelabel.app.BaseFrag
 
     }
 
+    @Override
+    public void addBatchShoppingSuccess() {
+
+    }
+
     private void emailBoundLoginError(String msg) {
         hasEmail.setVisibility(View.VISIBLE);
         hasEmail.setText(msg);

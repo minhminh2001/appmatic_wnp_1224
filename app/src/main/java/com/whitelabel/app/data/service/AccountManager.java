@@ -14,6 +14,7 @@ import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
 import com.whitelabel.app.model.SubscriberResponse;
 import com.whitelabel.app.model.WishDelEntityResult;
+import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 
@@ -201,7 +202,9 @@ public class AccountManager implements IAccountManager {
         params.put("customer_telephone", registerRequest.getPhone());
         params.put("password", registerRequest.getPassword());
         params.put("is_subscribed", registerRequest.getSubscribed());
-        params.put("device_token", registerRequest.getDeviceToken());
+        if(!JDataUtils.isEmpty(registerRequest.getDeviceToken())) {
+            params.put("device_token", registerRequest.getDeviceToken());
+        }
         return myAccoutApi.registerEmail(params).flatMap(
             new Func1<ResponseModel, Observable<ResponseModel>>() {
                 @Override
