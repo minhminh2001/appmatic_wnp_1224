@@ -2,7 +2,6 @@ package com.whitelabel.app.ui.productdetail;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Build;
@@ -627,13 +626,13 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             }
         });
 
-        pcGroupConfigView.setOnButtonClickListener(new ProductChildListView.OnButtonClickListener() {
+        pcGroupConfigView.setOnNotifyMeClickListener(new ProductChildListView.OnNotifyMeClickListener() {
             @Override
             public void onClick(ProductPropertyModel product) {
 
                 GOUserEntity userInfo = WhiteLabelApplication.getAppConfiguration().getUserInfo();
 
-                String productId = product.getProductId();
+                String productId = product.getId();
                 String name = userInfo == null ? "" : userInfo.getFirstName() + " " + userInfo.getLastName();
                 String email = userInfo == null ? "" : userInfo.getEmail();
                 String sessionKey = userInfo == null ? "" : userInfo.getSessionKey();

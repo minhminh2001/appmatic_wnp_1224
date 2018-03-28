@@ -5,6 +5,7 @@ import com.whitelabel.app.data.service.ICommodityManager;
 import com.whitelabel.app.model.NotifyMeResponse;
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.ui.RxPresenter;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
 
 import rx.Observer;
@@ -27,6 +28,7 @@ public class NotifyMePresenterImpl extends RxPresenter<NotifyMeConstract.View > 
 
     @Override
     public void registerNotifyForProduct(String productId, String storeId, String name, String emal, String sessionKey) {
+
         iCommodityManager.registerNotifyForProduct(productId, emal, name, storeId, sessionKey)
                 .compose(RxUtil.<NotifyMeResponse>rxSchedulerHelper())
                 .subscribe(new Observer<NotifyMeResponse>() {
@@ -37,11 +39,12 @@ public class NotifyMePresenterImpl extends RxPresenter<NotifyMeConstract.View > 
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
                     }
 
                     @Override
                     public void onNext(NotifyMeResponse notifyMeResponse) {
+
                         if(notifyMeResponse.getStatus() == REQUEST_SUCCESS){
                             mView.onSuccess();
                         } else {

@@ -6,10 +6,13 @@ import java.util.ArrayList;
 
 /**
  * Created by imaginato on 2015/7/8.
+ * Modify by Aaron Hu on 2018/3/28
+ *
+ * JavaBean of single product
  */
 public class ProductPropertyModel implements Serializable {
     private String name;
-    private String id;
+    private String id;  // Product id
     private String label;
     private String price;
     private String superAttribute;
@@ -19,7 +22,7 @@ public class ProductPropertyModel implements Serializable {
     private long stockQty;
     private long qty;
     private int level;
-    private String productId;
+    private String productId; // Always null，don't care
     private long maxSaleQty;
     private int inStock;
     private String image;

@@ -23,6 +23,7 @@ import com.whitelabel.app.BaseDialogFragment;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JLogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -153,6 +154,7 @@ public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract
                 }else if(!JDataUtils.isEmail(email)){
                     tilEmail.setError(getString(R.string.loginregister_emailbound_tips_error_email_format));
                 }
+                JLogUtils.v(TAG, "productid:" + productId);
                 mPresenter.registerNotifyForProduct(productId, storeId, name, email, sessionKey);
                 break;
             case R.id.btn_cancel:

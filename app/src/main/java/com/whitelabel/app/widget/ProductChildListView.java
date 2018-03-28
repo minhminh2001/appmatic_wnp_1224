@@ -30,7 +30,7 @@ import java.util.Map;
 public class ProductChildListView extends LinearLayout{
     private List<TextView>  tvNumbers;
     private View rootView;
-    private OnButtonClickListener onButtonClickListener;
+    private OnNotifyMeClickListener onButtonClickListener;
 
      public ProductChildListView(Context context){
         super(context);
@@ -69,7 +69,7 @@ public class ProductChildListView extends LinearLayout{
           this.mOnProductCountChangeListener=listener;
     }
 
-    public void setOnButtonClickListener(OnButtonClickListener listener){
+    public void setOnNotifyMeClickListener(OnNotifyMeClickListener listener){
         this.onButtonClickListener = listener;
     }
    // id : qty
@@ -178,7 +178,7 @@ public class ProductChildListView extends LinearLayout{
         return qty;
     }
 
-    public interface OnButtonClickListener{
+    public interface OnNotifyMeClickListener {
         public void onClick(ProductPropertyModel product);
     }
 }

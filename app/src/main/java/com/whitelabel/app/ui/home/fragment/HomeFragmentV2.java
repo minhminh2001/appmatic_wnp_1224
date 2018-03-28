@@ -245,8 +245,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             vpCategoryViewPager.setAdapter(fragmentPagerAdapter);
             piPageIndicatory.setViewPager(vpCategoryViewPager);
             piPageIndicatory.setOnPageChangeListener(pageChangeListener);
-            //aaron
-            // vpCategoryViewPager.setOffscreenPageLimit(categoryViewCount);
+            vpCategoryViewPager.setOffscreenPageLimit(categoryViewCount);
         }
     }
 
