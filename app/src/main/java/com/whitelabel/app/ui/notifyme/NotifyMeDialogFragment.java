@@ -77,6 +77,7 @@ public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract
     private String name;
     private String email;
     private String sessionKey;
+    private NotifyMeListener notifyMeListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -138,6 +139,14 @@ public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract
         DaggerPresenterComponent1.builder()
                 .applicationComponent(WhiteLabelApplication.getApplicationComponent()).
                 presenterModule(new PresenterModule(getActivity())).build().inject(this);
+    }
+
+    public void setNotifyMeListener(NotifyMeListener listener){
+        if(listener == null) {
+            return;
+        }
+
+        notifyMeListener = listener;
     }
 
     @OnCheckedChanged(R.id.cb_notifyme)
@@ -206,6 +215,11 @@ public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract
 
     @Override
     public void onSuccess() {
+
+        if(notifyMeListener != null){
+            notifyMeListener.onCloseNotifyMeDialog();
+        }
+
         hide();
     }
 
@@ -215,5 +229,9 @@ public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract
 
         //TODO(Aaron):Release butterknife
         unbinder.unbind();
+    }
+
+    public interface NotifyMeListener{
+        public void onCloseNotifyMeDialog();
     }
 }

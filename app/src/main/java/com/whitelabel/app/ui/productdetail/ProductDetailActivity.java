@@ -15,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,6 +66,7 @@ import com.whitelabel.app.utils.JTimeUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.ShareUtil;
+import com.whitelabel.app.utils.ToastUtils;
 import com.whitelabel.app.widget.BindProductView;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
 import com.whitelabel.app.widget.CustomDialog;
@@ -87,7 +89,8 @@ import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG
 import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_STORE_ID;
 
 public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<ProductDetailContract.Presenter>
-        implements ProductDetailCallback, OnPageChangeListener, View.OnClickListener ,ProductDetailContract.View{
+        implements ProductDetailCallback, OnPageChangeListener, View.OnClickListener ,ProductDetailContract.View,
+        NotifyMeDialogFragment.NotifyMeListener {
 
     private String TAG = "ProductDetailActivity";
 
@@ -160,6 +163,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     private RelativeLayout rlRoot;
     private int currentShoppingCount;
     private View rootView;
+
     @Override
     public void showNornalProgressDialog() {
         mDialog = JViewUtils.showProgressDialog(ProductDetailActivity.this);
@@ -373,6 +377,12 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         ivHeaderBarWishlist.startAnimation(animation2);
         mIVHeaderBarWishlist.startAnimation(animation2);
     }
+
+    @Override
+    public void onCloseNotifyMeDialog() {
+        ToastUtils.makeText(this, getString(R.string.notify_email_tips), Gravity.CENTER, ToastUtils.LENGTH_LONG).show();
+    }
+
     class MyWheelPickerCallback extends WheelPickerCallback {
         private List<ProductPropertyModel> mPropertyList;
         private int mLevel;
@@ -645,6 +655,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
                 bundle.putString(FRAGMENT_ARG_EMAIL, email);
                 bundle.putString(FRAGMENT_ARG_SESSION_KEY, sessionKey);
                 notifyMeDialogFragment.setArguments(bundle);
+                notifyMeDialogFragment.setNotifyMeListener(ProductDetailActivity.this);
                 notifyMeDialogFragment.show(getFragmentManager());
             }
         });

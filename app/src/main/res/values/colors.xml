@@ -97,6 +97,8 @@
     <color name="greyfdfbfe">#fdfbfe</color>
 
     <color name="grey6f6f6f">#6f6f6f</color>
+    <color name="greye6e6e6">#e6e6e6</color>
+    <color name="grey4d6f6f6f">#A66f6f6f</color>
 
     <!-- 绿色 -->
     <color name="green_common">#009E82</color>

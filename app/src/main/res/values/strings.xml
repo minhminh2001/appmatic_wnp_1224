@@ -867,5 +867,6 @@
     <string name="notify_eidt_hint_customer_email">Email</string>
     <string name="notify_button_notifyme">Notify Me</string>
     <string name="notify_button_cacnel">Cancel</string>
+    <string name="notify_email_tips">Email notification is\n subscribed</string>
 
 </resources>

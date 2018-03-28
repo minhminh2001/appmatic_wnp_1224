@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -69,6 +70,7 @@ import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.SoftInputShownUtil;
+import com.whitelabel.app.utils.ToastUtils;
 import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 
@@ -96,7 +98,8 @@ import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG
  * Use the {@link ShoppingCartVerticalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<ShoppingCartVersionContract.Presenter> implements SwipeRefreshLayout.OnRefreshListener, View.OnFocusChangeListener, View.OnClickListener, ShoppingCartAdapterCallback ,ShoppingCartVersionContract.View{
+public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<ShoppingCartVersionContract.Presenter>
+        implements SwipeRefreshLayout.OnRefreshListener, View.OnFocusChangeListener, View.OnClickListener, ShoppingCartAdapterCallback ,ShoppingCartVersionContract.View {
     private static final String ARG_PARAM1 = "type";
     private static final String ARG_PARAM2 = "mGATrackTimeStart";
     private TextView tvShoppingShippingFeeTitle;
@@ -862,8 +865,16 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         bundle.putString(FRAGMENT_ARG_EMAIL, email);
         bundle.putString(FRAGMENT_ARG_SESSION_KEY, sessionKey);
         notifyMeDialogFragment.setArguments(bundle);
+        notifyMeDialogFragment.setNotifyMeListener(notifyMeListener);
         notifyMeDialogFragment.show(getActivity().getFragmentManager());
     }
+
+    private NotifyMeDialogFragment.NotifyMeListener notifyMeListener = new NotifyMeDialogFragment.NotifyMeListener() {
+        @Override
+        public void onCloseNotifyMeDialog() {
+            ToastUtils.makeText(getActivity(), getString(R.string.notify_email_tips), Gravity.CENTER, ToastUtils.LENGTH_LONG).show();
+        }
+    };
 
     //from shoppingCartVerticalAdapter callback--delete item
     public void deleteShoppingData(ShoppingCartDeleteCellEntity bean,int position){
