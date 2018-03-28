@@ -159,6 +159,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         } else {
             viewHolder.tvOutOfStock.setVisibility(View.VISIBLE);
             viewHolder.llNotifyMe.setVisibility(View.VISIBLE);
+            viewHolder.llAddCountSubs.setVisibility(View.INVISIBLE);
             viewHolder.llShoppingCartError.setVisibility(View.GONE);
         }
         viewHolder.tvProductBland.setText(sc.getBrand());
@@ -455,6 +456,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         final RelativeLayout rlShoppingcartCountPlus;
         final LinearLayout llShoppingcartCellPoint;
         final LinearLayout llNotifyMe;
+        final LinearLayout llAddCountSubs;
 
         public ViewHolder(View view) {
             super(view);
@@ -486,6 +488,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             ivShoppingCartIcon = (ImageView) view.findViewById(R.id.iv_shopping_cart_icon);
             tvShoppingCartErrorMsg = (TextView) view.findViewById(R.id.tv_shopping_cart_error_msg);
             llNotifyMe = (LinearLayout) view.findViewById(R.id.ll_notifyme);
+            llAddCountSubs = (LinearLayout) view.findViewById(R.id.ll_add_count_subs);
         }
     }
 
@@ -705,7 +708,13 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             if (list.get(position) instanceof ShoppingCartListEntityBody) {
                 return;
             }
-            ShoppingCartListEntityCell shoppingCart = (ShoppingCartListEntityCell) list.get(position);
+
+            ShoppingCartListEntityCell product = (ShoppingCartListEntityCell) list.get(position);
+            if (callback == null
+                    || callback.getSwipeRefreshStatus()) {
+                return;
+            }
+            callback.onClickedNotifyMe(product);
         }
     };
 

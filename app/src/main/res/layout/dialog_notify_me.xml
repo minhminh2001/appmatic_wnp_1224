@@ -70,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:paddingLeft="5dp"
+                android:singleLine="true"
                 android:background="@drawable/bg_notifyme_edit"
                 android:hint="@string/notify_eidt_hint_customer_name" />
         </com.whitelabel.app.widget.CustomTextInputLayout>
@@ -86,6 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:paddingLeft="5dp"
+                android:singleLine="true"
                 android:background="@drawable/bg_notifyme_edit"
                 android:hint="@string/notify_eidt_hint_customer_email" />
         </com.whitelabel.app.widget.CustomTextInputLayout>

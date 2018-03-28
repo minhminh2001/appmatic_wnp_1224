@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -848,7 +849,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
 
         GOUserEntity userInfo = WhiteLabelApplication.getAppConfiguration().getUserInfo();
 
-        String productId = product.getProductId();
+        String productId = product.getId();
         String name = userInfo == null ? "" : userInfo.getFirstName() + " " + userInfo.getLastName();
         String email = userInfo == null ? "" : userInfo.getEmail();
         String sessionKey = userInfo == null ? "" : userInfo.getSessionKey();

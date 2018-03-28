@@ -39,6 +39,13 @@ import injection.modules.PresenterModule;
 
 public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract.Presenter> implements NotifyMeConstract.View{
 
+    static enum DataInvalidation{
+        OK,
+        NAME_NULL,
+        EMAIL_NULL,
+        EMAIL_INVALID
+    }
+
     private static final String TAG = "NotifyMeDialogFragment";
 
     public static final String FRAGMENT_ARG_PRODUCT_ID = "productid";
@@ -146,19 +153,46 @@ public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract
             case R.id.btn_notify_me:
                 String name = etName.getText().toString();
                 String email = etEmail.getText().toString();
-                if(TextUtils.isEmpty(name)){
-                    tilName.setError(getString(R.string.apply_hint_red));
+
+                DataInvalidation errCode = validData(name, email);
+                if(errCode != DataInvalidation.OK){
+                    showErrMessage(errCode);
+                } else {
+                    mPresenter.registerNotifyForProduct(productId, storeId, name, email, sessionKey);
                 }
-                if(TextUtils.isEmpty(email)){
-                    tilEmail.setError(getString(R.string.apply_hint_red));
-                }else if(!JDataUtils.isEmail(email)){
-                    tilEmail.setError(getString(R.string.loginregister_emailbound_tips_error_email_format));
-                }
-                JLogUtils.v(TAG, "productid:" + productId);
-                mPresenter.registerNotifyForProduct(productId, storeId, name, email, sessionKey);
                 break;
             case R.id.btn_cancel:
                 hide();
+                break;
+        }
+    }
+
+    private DataInvalidation validData(String name, String email){
+        if(TextUtils.isEmpty(name)){
+            return DataInvalidation.NAME_NULL;
+        }
+
+        if(TextUtils.isEmpty(email)){
+            return DataInvalidation.EMAIL_NULL;
+        }
+
+        if(!JDataUtils.isEmail(email)){
+            return DataInvalidation.EMAIL_INVALID;
+        }
+
+        return DataInvalidation.OK;
+    }
+
+    private void showErrMessage(DataInvalidation errCode){
+        switch(errCode){
+            case NAME_NULL:
+                tilName.setError(getString(R.string.apply_hint_red));
+                break;
+            case EMAIL_NULL:
+                tilEmail.setError(getString(R.string.apply_hint_red));
+                break;
+            case EMAIL_INVALID:
+                tilEmail.setError(getString(R.string.loginregister_emailbound_tips_error_email_format));
                 break;
         }
     }
