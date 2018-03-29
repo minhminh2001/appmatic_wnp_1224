@@ -174,6 +174,11 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     }
     @Override
     public void showNetErrorMessage() {
+
+        if(mDialog != null){
+            mDialog.cancel();
+        }
+
         RequestErrorHelper requestErrorHelper=new RequestErrorHelper(this);
         requestErrorHelper.showNetWorkErrorToast();
     }
@@ -464,6 +469,27 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
             }
         }
     }
+
+    @Override
+    public void showUpdateDialog() {
+
+        if(mDialog != null){
+            mDialog.cancel();
+        }
+
+        JViewUtils.showUpdateGooglePlayStoreDialog(this);
+    }
+
+    @Override
+    public void startPayPalPlaceOrder() {
+        if(mDialog != null){
+            mDialog.cancel();
+        }
+
+        GaTrackHelper.getInstance().googleAnalytics("Review Order Screen", this);
+        mPresenter.payPalPlaceOrder(((CheckoutReviewFragment)checkoutReviewFragment).getOrderComment());
+    }
+
     /**
      * CONTINUE BUTTON
      */
@@ -493,8 +519,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
             case 3://place my order
 //                mGATrackPlaceOrderToResultTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
 //                placeOrder();
-                GaTrackHelper.getInstance().googleAnalytics("Review Order Screen", this);
-                mPresenter.payPalPlaceOrder(((CheckoutReviewFragment)checkoutReviewFragment).getOrderComment());
+                mDialog = JViewUtils.showProgressDialog(this);
+                mPresenter.versionCheck();
                 break;
         }
     }

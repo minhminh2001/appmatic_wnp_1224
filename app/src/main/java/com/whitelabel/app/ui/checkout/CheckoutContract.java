@@ -15,8 +15,11 @@ public interface CheckoutContract {
         public void closeCheckoutPaymentDialog();
         public void setButtonEnable(boolean enable);
         public void showAddressSuccess(boolean isSuccess);
+        public void showUpdateDialog();
+        public void startPayPalPlaceOrder();
     }
     public interface  Presenter extends BasePresenter<View>{
+        public void versionCheck();
         public void payPalPlaceOrder(String orderComment);
         public void createCustomerAddress(
                 String firstName,
