@@ -2,6 +2,7 @@ package com.whitelabel.app.ui.checkout;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICheckoutManager;
 import com.whitelabel.app.model.ApiFaildException;
+import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAddAddress;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.ui.checkout.model.PaypalPlaceOrderReponse;
@@ -17,7 +18,36 @@ import rx.Subscription;
 public class CheckoutPresenterImpl extends RxPresenter<CheckoutContract.View> implements CheckoutContract.Presenter {
     private IBaseManager iBaseManager;
     private ICheckoutManager iCheckoutManager;
-    public CheckoutPresenterImpl(IBaseManager iBaseManager,ICheckoutManager iCheckoutManager){
+
+
+    @Override
+    public void versionCheck() {
+        Subscription subscription= iBaseManager.versionCheck().compose(RxUtil.<ResponseModel>rxSchedulerHelper()).subscribe(
+                new Subscriber<ResponseModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        mView.showNetErrorMessage();
+                    }
+
+                    @Override
+                    public void onNext(ResponseModel responseModel) {
+                        if (responseModel.getStatus()==1){
+                            mView.startPayPalPlaceOrder();
+                        }else if (responseModel.getStatus()==-1){
+                            //need update
+                            mView.showUpdateDialog();
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    public CheckoutPresenterImpl(IBaseManager iBaseManager, ICheckoutManager iCheckoutManager){
         this.iBaseManager=iBaseManager;
         this.iCheckoutManager=iCheckoutManager;
     }
