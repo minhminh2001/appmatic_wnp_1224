@@ -115,11 +115,9 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         view. setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-                    gotoShoppingCartActivity();
-                }else{
-                    jumpLoginActivity();
-                }
+
+                gotoShoppingCartActivity();
+
             }
         });
         TextView textView= (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);

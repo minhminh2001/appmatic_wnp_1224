@@ -702,12 +702,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
             R.layout.item_count, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    if (WhiteLabelApplication.getAppConfiguration()
-//                        .isSignIn(getApplicationContext())) {
+
                     gotoShoppingCartActivity();
-//                    } else {
-//                        startLoginActivity(false);
-//                    }
                 }
             });
         TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);
