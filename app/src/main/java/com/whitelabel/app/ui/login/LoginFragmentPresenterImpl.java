@@ -6,6 +6,7 @@ import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.model.ApiFaildException;
+import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.ResponseConnection;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
@@ -108,6 +109,7 @@ public class LoginFragmentPresenterImpl extends RxPresenter<LoginFragmentContrac
                     @Override
                     public void onNext(MergeBatchResponse shoppingItemLocalModels) {
                         mView.addBatchShoppingSuccess();
+                        updateShoppingCartCount();
                         clearLocalShoppingItem();
                     }
                 });
@@ -135,7 +137,16 @@ public class LoginFragmentPresenterImpl extends RxPresenter<LoginFragmentContrac
         );
     }
 
+    private void updateShoppingCartCount(){
+        GOUserEntity userinfo = iBaseManager.getUser();
+        if(userinfo == null){
+            return;
+        }
 
+        userinfo.setCartItemCount(userinfo.getCartItemCount()
+                                    + iShoppingCartManager.getProductCountFromLocal());
+        iBaseManager.saveUser(userinfo);
+    }
 
 
 
