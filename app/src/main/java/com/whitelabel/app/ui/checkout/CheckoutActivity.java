@@ -525,6 +525,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                 currentModule=FRAGMENT_SELECT_ADDRESS;
                 break;
             case FRAGMENT_SELECT_ADDRESS:
+            case FRAGMENT_ADD_ADDRESS:
                 finish();
                 break;
         }
