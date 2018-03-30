@@ -39,6 +39,8 @@ public interface IShoppingCartManager {
 
     Observable<List<ShoppingItemLocalModel>> getProductListFromLocal();
 
+    int getProductCountFromLocal();
+
     Observable<GuestListResponse> getGuestList(
         List<ShoppingItemLocalModel> shoppingItemLocalModels);
 

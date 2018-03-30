@@ -417,6 +417,16 @@ public class PreferHelper implements ICacheApi {
     }
 
     @Override
+    public int getShoppingListSizeFromLocal(){
+        List<ShoppingItemLocalModel> productDetailModels = getShoppingList();
+        if(productDetailModels == null) {
+            return 0;
+        }
+
+        return productDetailModels.size();
+    }
+
+    @Override
     public Observable<Boolean> updateNumberByiD(String simpleId, String number) {
         List<ShoppingItemLocalModel> shoppingItemLocalModels = getShoppingList();
         for (ShoppingItemLocalModel shoppingItemLocalModel : shoppingItemLocalModels) {

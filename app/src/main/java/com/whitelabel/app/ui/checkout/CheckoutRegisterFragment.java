@@ -13,9 +13,11 @@ import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -64,6 +66,8 @@ public class CheckoutRegisterFragment extends BaseFragment<CheckoutRegisterContr
 
     private TextView tvLogin;
 
+    private Dialog progressDialog;
+
     private final static int REQUEST_CODE=2000;
 
     private CheckoutRegisterCallBack checkoutRegisterCallBack;
@@ -85,6 +89,8 @@ public class CheckoutRegisterFragment extends BaseFragment<CheckoutRegisterContr
     private void initView() {
         tvLogin = (TextView) contentView.findViewById(R.id.tv_login);
         tvLogin.setOnClickListener(this);
+        tvLogin.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        tvLogin.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         rl_register_email = (CustomButtomLineRelativeLayout) contentView
             .findViewById(R.id.rl_register_email);
         rl_phone_number = (CustomButtomLineRelativeLayout) contentView
@@ -597,11 +603,21 @@ public class CheckoutRegisterFragment extends BaseFragment<CheckoutRegisterContr
 
     @Override
     public void addBatchShoppingSuccess() {
+
+        if(progressDialog != null){
+            progressDialog.cancel();
+        }
+
         checkoutRegisterCallBack.switchNextFragment();
     }
 
     @Override
     public void showErrorMessage(String errorMsg) {
+
+        if(progressDialog != null) {
+            progressDialog.cancel();
+        }
+
         DialogUtils.showDialog(getActivity(), "", errorMsg, getResources().getString(R.string.ok),
             new DialogInterface.OnClickListener() {
                 @Override
@@ -631,6 +647,9 @@ public class CheckoutRegisterFragment extends BaseFragment<CheckoutRegisterContr
     }
 
     public void requestResister() {
+
+        progressDialog = DialogUtils.showProgressDialog(getActivity());
+
         RegisterRequest registerRequest = new RegisterRequest();
         registerRequest.setFirstName(firstName.getText().toString());
         registerRequest.setLastName(lastName.getText().toString());

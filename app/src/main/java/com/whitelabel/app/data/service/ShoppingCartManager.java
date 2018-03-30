@@ -80,6 +80,11 @@ public class ShoppingCartManager implements IShoppingCartManager {
     }
 
     @Override
+    public int getProductCountFromLocal() {
+        return iCacheApi.getShoppingListSizeFromLocal();
+    }
+
+    @Override
     public Observable<List<ShoppingItemLocalModel>> getProductListFromLocal() {
         return iCacheApi.getShoppingListFromLocal();
     }
@@ -123,9 +128,7 @@ public class ShoppingCartManager implements IShoppingCartManager {
         for (int i = 0; i < shoppingItemLocalModels.size(); i++) {
             params.put("products[" + i + "][main_id]", shoppingItemLocalModels.get(i).getGroupId());
             params.put("products[" + i + "][qty]", shoppingItemLocalModels.get(i).getNumber());
-            params
-                .put("products[" + i + "][simple_id]",
-                    shoppingItemLocalModels.get(i).getSimpleId());
+            params.put("products[" + i + "][simple_id]", shoppingItemLocalModels.get(i).getSimpleId());
         }
         return shoppingCartApi.addBatchShopping(params).flatMap(
             new Func1<MergeBatchResponse, Observable<MergeBatchResponse>>() {

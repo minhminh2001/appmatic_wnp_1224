@@ -78,8 +78,8 @@ public class PresenterModule {
     @Provides
     @ActivityScope
     public HomeContract.Presenter provideHomeFragmentV2Presenter(
-        ICommodityManager iCommodityManager, IBaseManager configService) {
-        return new HomePresenterImpl(iCommodityManager, configService);
+        ICommodityManager iCommodityManager, IBaseManager configService, IShoppingCartManager iShoppingCartManager) {
+        return new HomePresenterImpl(iCommodityManager, configService, iShoppingCartManager);
     }
 
     @Provides

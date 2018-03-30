@@ -234,6 +234,8 @@ public class ProductDetailPresenter extends RxPresenter<ProductDetailContract.Vi
     private void getShoppingCartCount(int count) {
         if (iBaseManager.isSign()) {
             count = (int) (iBaseManager.getUser().getCartItemCount() + count);
+        } else {
+            count = iShoppingCartManager.getProductCountFromLocal();
         }
         mView.setShoppingCartCount(count);
     }
