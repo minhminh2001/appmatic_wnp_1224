@@ -26,7 +26,7 @@ import java.util.ArrayList;
  */
 
 public class BaseActivitySearchCart<T extends BasePresenter> extends com.whitelabel.app.BaseActivity<T> {
-    protected boolean showSearch = true;
+    protected boolean showSearch = false; //TODO(Aaron):Don't display
     protected boolean showCart = true;
     MenuItem cartItem;
     MenuItem searchItem;

@@ -45,7 +45,6 @@ public class ShoppingCartActivity1 extends com.whitelabel.app.BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        super.startActivityTransitionAnim();
         if (fragment != null) {
             fragment.refresh();
         }
@@ -69,4 +68,10 @@ public class ShoppingCartActivity1 extends com.whitelabel.app.BaseActivity {
         manager.beginTransaction().replace(R.id.mParent, fragment).commit();
     }
 
+    @Override
+    public void finish(){
+        super.finish();
+
+        overridePendingTransition(0, R.anim.slide_right_out);
+    }
 }

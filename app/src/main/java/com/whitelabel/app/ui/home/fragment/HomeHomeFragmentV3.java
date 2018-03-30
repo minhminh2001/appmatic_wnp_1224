@@ -241,7 +241,6 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
                     bundle.putString("imageurl", productEntity.getSmallImage());
                     intent.putExtras(bundle);
                     startActivityForResult(intent,REQUEST_PRODUCT_DETAIL_CODE);
-                    homeActivity.startActivityTransitionAnim();
                 }
             });
             mAdapter.setOnHeaderClick(new IHomeItemClickListener.IHeaderItemClickListener() {

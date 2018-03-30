@@ -413,4 +413,11 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
             }
         }
     }
+
+    @Override
+    public void finish(){
+        super.finish();
+
+        overridePendingTransition(0, R.anim.slide_right_out);
+    }
 }

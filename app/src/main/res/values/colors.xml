@@ -97,6 +97,8 @@
     <color name="greyfdfbfe">#fdfbfe</color>
 
     <color name="grey6f6f6f">#6f6f6f</color>
+    <color name="greye6e6e6">#e6e6e6</color>
+    <color name="grey4d6f6f6f">#A66f6f6f</color>
 
     <!-- 绿色 -->
     <color name="green_common">#009E82</color>
@@ -119,6 +121,10 @@
     <color name="purple4f005b">#4f005b</color>
     <color name="purple4F005D">#4f005d</color>
     <color name="purple66006E">#66006E</color>
+
+    <!-- 橙色 -->
+    <color name="orangeFFE4832B">#FFE4832B</color>
+
     <!--facebook -->
     <color name="facebook">#3A5899</color>
     <!-- allen -->

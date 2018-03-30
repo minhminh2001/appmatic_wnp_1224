@@ -14,7 +14,6 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.ViewUtils;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -34,7 +33,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.common.utils.JViewUtil;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.HelpCenterDetialActivity;
 import com.whitelabel.app.activity.HomeActivity;
@@ -48,6 +46,8 @@ import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.ProductDetailCallback;
 import com.whitelabel.app.callback.WheelPickerCallback;
 import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
+import com.whitelabel.app.model.GOUserEntity;
+import com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment;
 import com.whitelabel.app.model.ProductListItemToProductDetailsEntity;
 import com.whitelabel.app.model.ProductPropertyModel;
 import com.whitelabel.app.model.ProductDetailModel;
@@ -66,6 +66,7 @@ import com.whitelabel.app.utils.JTimeUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.ShareUtil;
+import com.whitelabel.app.utils.ToastUtils;
 import com.whitelabel.app.widget.BindProductView;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
 import com.whitelabel.app.widget.CustomDialog;
@@ -81,16 +82,28 @@ import java.util.Map;
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
 
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_EMAIL;
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_NAME;
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_PRODUCT_ID;
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_SESSION_KEY;
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_STORE_ID;
+
 public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<ProductDetailContract.Presenter>
-        implements ProductDetailCallback, OnPageChangeListener, View.OnClickListener ,ProductDetailContract.View{
+        implements ProductDetailCallback, OnPageChangeListener, View.OnClickListener ,ProductDetailContract.View,
+        NotifyMeDialogFragment.NotifyMeListener {
+
+    private String TAG = "ProductDetailActivity";
+
+
+    public static final int RESULT_WISH = 101;
+    public static final int PRODUCT_PICTURE_REQUEST_CODE = 0x200;
+    public static final String PRODUCT_ID="productId";
+    private final int REQUESTCODE_LOGIN = 1000;
+
     public Long mGATrackTimeStart = 0L;
     public Long mGATrackAddCartTimeStart = 0L;
     public boolean mGATrackTimeEnable = false;
-    public static final int RESULT_WISH = 101;
-    public static final int PRODUCT_PICTURE_REQUEST_CODE = 0x200;
-    private String TAG = "ProductDetailActivity";
-    public static final String PRODUCT_ID="productId";
-    private final int REQUESTCODE_LOGIN = 1000;
+
     private ViewGroup llDots;
     private BindProductView  bpvBindProduct;
     private TextView textView_num, oldprice, ctvAddToCart, price_textview,  ctvProductInStock, ctvProductOutOfStock, productUnavailable, productTrans;
@@ -150,6 +163,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     private RelativeLayout rlRoot;
     private int currentShoppingCount;
     private View rootView;
+
     @Override
     public void showNornalProgressDialog() {
         mDialog = JViewUtils.showProgressDialog(ProductDetailActivity.this);
@@ -363,6 +377,12 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         ivHeaderBarWishlist.startAnimation(animation2);
         mIVHeaderBarWishlist.startAnimation(animation2);
     }
+
+    @Override
+    public void onCloseNotifyMeDialog() {
+        ToastUtils.makeText(this, getString(R.string.notify_email_tips), Gravity.CENTER, ToastUtils.LENGTH_LONG).show();
+    }
+
     class MyWheelPickerCallback extends WheelPickerCallback {
         private List<ProductPropertyModel> mPropertyList;
         private int mLevel;
@@ -615,6 +635,31 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
                 }
             }
         });
+
+        pcGroupConfigView.setOnNotifyMeClickListener(new ProductChildListView.OnNotifyMeClickListener() {
+            @Override
+            public void onClick(ProductPropertyModel product) {
+
+                GOUserEntity userInfo = WhiteLabelApplication.getAppConfiguration().getUserInfo();
+
+                String productId = product.getId();
+                String name = userInfo == null ? "" : userInfo.getFirstName() + " " + userInfo.getLastName();
+                String email = userInfo == null ? "" : userInfo.getEmail();
+                String sessionKey = userInfo == null ? "" : userInfo.getSessionKey();
+
+                NotifyMeDialogFragment notifyMeDialogFragment = new NotifyMeDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString(FRAGMENT_ARG_PRODUCT_ID, productId);
+                bundle.putString(FRAGMENT_ARG_STORE_ID, "1");
+                bundle.putString(FRAGMENT_ARG_NAME, name);
+                bundle.putString(FRAGMENT_ARG_EMAIL, email);
+                bundle.putString(FRAGMENT_ARG_SESSION_KEY, sessionKey);
+                notifyMeDialogFragment.setArguments(bundle);
+                notifyMeDialogFragment.setNotifyMeListener(ProductDetailActivity.this);
+                notifyMeDialogFragment.show(getFragmentManager());
+            }
+        });
+
         myScrollView.setOnCustomScroolChangeListener(new CustomNestedScrollView.ScrollInterface() {
             @Override
             public void onSChanged(int l, int t, int oldl, int oldt) {
@@ -699,6 +744,13 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
                setResult(Activity.RESULT_OK, intent);
            }
         super.onBackPressed();
+    }
+
+    @Override
+    public void finish(){
+        super.finish();
+
+        exitAnimation();
     }
 
     public void trackAddWishList(){

@@ -6,6 +6,7 @@ import com.whitelabel.app.activity.MyAccountOrderDetailActivity;
 import com.whitelabel.app.fragment.HomeMyAccountOrdersFragment;
 import com.whitelabel.app.fragment.HomeSettingCotentFragment;
 import com.whitelabel.app.fragment.LoginRegisterEmailRegisterFragment;
+import com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment;
 import com.whitelabel.app.fragment.ProductListKeywordsSearchFragment;
 import com.whitelabel.app.fragment.ShoppingCartVerticalFragment;
 import com.whitelabel.app.ui.checkout.CheckoutActivity;
@@ -61,5 +62,6 @@ public interface PresenterComponent1 {
     void inject(HomeSettingCotentFragment fragment);
     void inject(HomeMyAccountOrdersFragment fragment);
     void inject(MyAccountOrderDetailActivity activity);
+    void inject(NotifyMeDialogFragment fragment);
     Activity getActivity();
 }

@@ -30,6 +30,8 @@ import java.util.Map;
 public class ProductChildListView extends LinearLayout{
     private List<TextView>  tvNumbers;
     private View rootView;
+    private OnNotifyMeClickListener onButtonClickListener;
+
      public ProductChildListView(Context context){
         super(context);
      }
@@ -65,6 +67,10 @@ public class ProductChildListView extends LinearLayout{
     private OnProductCountChangeListener  mOnProductCountChangeListener;
     public  void  setOnProductCountChangeListener(OnProductCountChangeListener  listener){
           this.mOnProductCountChangeListener=listener;
+    }
+
+    public void setOnNotifyMeClickListener(OnNotifyMeClickListener listener){
+        this.onButtonClickListener = listener;
     }
    // id : qty
     public Map<String,String>  getChildIdAndQty(){
@@ -103,7 +109,8 @@ public class ProductChildListView extends LinearLayout{
         TextView tvChildPrice = (TextView) view.findViewById(R.id.tv_child_price);
         TextView tvChildFinalPrice = (TextView) view.findViewById(R.id.tv_child_final_price);
         View rlChildProductQuantity = view.findViewById(R.id.rlChildProductQuantity);
-        View rlChildSold=view.findViewById(R.id.rl_child_sold);
+        View rlNotifyMe = view.findViewById(R.id.rl_notify_me);
+        TextView tvSoldOut = (TextView)view.findViewById(R.id.tv_sold_out);
         final ImageView ivChildPriceMinus = (ImageView) view.findViewById(R.id.ivChildPriceMinus);
         final  TextView tvChildNumber = (TextView) view.findViewById(R.id.tv_child_number);
         ImageView ivChildPricePlus = (ImageView) view.findViewById(R.id.ivChildPricePlus);
@@ -118,7 +125,9 @@ public class ProductChildListView extends LinearLayout{
         tvChildNumber.setText("0");
         if(bean.getInStock()==0){
             rlChildProductQuantity.setVisibility(View.INVISIBLE);
-            rlChildSold.setVisibility(View.VISIBLE);
+            rlNotifyMe.setVisibility(View.VISIBLE);
+            tvSoldOut.setVisibility(View.VISIBLE);
+            tvChildFinalPrice.setTextColor(getResources().getColor(R.color.greyB8B8B8));
         }
         ivChildPriceMinus.setOnClickListener(new OnClickListener() {
             @Override
@@ -150,6 +159,15 @@ public class ProductChildListView extends LinearLayout{
                     }
             }
         });
+
+        rlNotifyMe.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onButtonClickListener != null)
+                    onButtonClickListener.onClick(bean);
+
+            }
+        });
         return view;
     }
     public  int getProductSelectQty(){
@@ -158,5 +176,9 @@ public class ProductChildListView extends LinearLayout{
             qty+=Integer.parseInt(tvNumbers.get(i).getText().toString());
         }
         return qty;
+    }
+
+    public interface OnNotifyMeClickListener {
+        public void onClick(ProductPropertyModel product);
     }
 }

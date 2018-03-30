@@ -75,7 +75,6 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
         } else {
             startActivityForResult(intent, REQUEST_EDIT_ADDRESS);
         }
-        ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
 
     @Override
@@ -106,7 +105,6 @@ public class HomeAccountAddressBookFragmentV3 extends BaseAddressFragment implem
         Intent intent=new Intent(getActivity(), AddAddressActivity.class);
         intent.putExtra(AddAddressActivity.EXTRA_ADDRESS_LIST_SIZE,this.addressBooks.size());
         getParentFragment().startActivityForResult(intent,REQUEST_ADD_ADDRESS);
-        ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
 
     @Override

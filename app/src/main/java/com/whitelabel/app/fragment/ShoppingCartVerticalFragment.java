@@ -16,10 +16,13 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +57,7 @@ import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.login.LoginFragmentContract;
+import com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.ui.shoppingcart.ShoppingCartVersionContract;
 import com.whitelabel.app.utils.FirebaseEventUtils;
@@ -66,6 +70,7 @@ import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.SoftInputShownUtil;
+import com.whitelabel.app.utils.ToastUtils;
 import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 
@@ -79,6 +84,12 @@ import java.util.List;
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
 
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_EMAIL;
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_NAME;
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_PRODUCT_ID;
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_SESSION_KEY;
+import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_STORE_ID;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -87,7 +98,8 @@ import injection.modules.PresenterModule;
  * Use the {@link ShoppingCartVerticalFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<ShoppingCartVersionContract.Presenter> implements SwipeRefreshLayout.OnRefreshListener, View.OnFocusChangeListener, View.OnClickListener, ShoppingCartAdapterCallback ,ShoppingCartVersionContract.View{
+public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<ShoppingCartVersionContract.Presenter>
+        implements SwipeRefreshLayout.OnRefreshListener, View.OnFocusChangeListener, View.OnClickListener, ShoppingCartAdapterCallback ,ShoppingCartVersionContract.View {
     private static final String ARG_PARAM1 = "type";
     private static final String ARG_PARAM2 = "mGATrackTimeStart";
     private TextView tvShoppingShippingFeeTitle;
@@ -263,7 +275,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
     public void startHomeActivity() {
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         startActivity(intent);
-        ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
     public void startLoginActivity() {
         Intent loginIntent = new Intent(getActivity(), LoginRegisterActivity.class);
@@ -440,7 +451,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
                     Intent it = new Intent(getActivity(), ProductDetailActivity.class);
                     it.putExtra("productId", ((ShoppingCartListEntityCell) mProducts.get(i)).getProductId());
                     startActivity(it);
-                    ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 }
             }
         }
@@ -511,7 +521,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         Intent intent = new Intent(getActivity(), CheckoutActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
-        ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
 
     public final static class DataHandler extends Handler {
@@ -836,6 +845,37 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         initShoppingCartData(mCar, false);
     }
 
+    @Override
+    public void onClickedNotifyMe(ShoppingCartListEntityCell product) {
+        if(product == null)
+            return;
+
+        GOUserEntity userInfo = WhiteLabelApplication.getAppConfiguration().getUserInfo();
+
+        String productId = product.getId();
+        String name = userInfo == null ? "" : userInfo.getFirstName() + " " + userInfo.getLastName();
+        String email = userInfo == null ? "" : userInfo.getEmail();
+        String sessionKey = userInfo == null ? "" : userInfo.getSessionKey();
+
+        NotifyMeDialogFragment notifyMeDialogFragment = new NotifyMeDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(FRAGMENT_ARG_PRODUCT_ID, productId);
+        bundle.putString(FRAGMENT_ARG_STORE_ID, "1");
+        bundle.putString(FRAGMENT_ARG_NAME, name);
+        bundle.putString(FRAGMENT_ARG_EMAIL, email);
+        bundle.putString(FRAGMENT_ARG_SESSION_KEY, sessionKey);
+        notifyMeDialogFragment.setArguments(bundle);
+        notifyMeDialogFragment.setNotifyMeListener(notifyMeListener);
+        notifyMeDialogFragment.show(getActivity().getFragmentManager());
+    }
+
+    private NotifyMeDialogFragment.NotifyMeListener notifyMeListener = new NotifyMeDialogFragment.NotifyMeListener() {
+        @Override
+        public void onCloseNotifyMeDialog() {
+            ToastUtils.makeText(getActivity(), getString(R.string.notify_email_tips), Gravity.CENTER, ToastUtils.LENGTH_LONG).show();
+        }
+    };
+
     //from shoppingCartVerticalAdapter callback--delete item
     public void deleteShoppingData(ShoppingCartDeleteCellEntity bean,int position){
         //delete position item
@@ -1007,6 +1047,19 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
             mHomeCallback.setTitle(getResources().getString(R.string.SHOPPINGCART));
         }
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem.setVisible(false);
+
+        MenuItem shopCartItem = menu.findItem(R.id.action_shopping_cart);
+        shopCartItem.setVisible(false);
+
+        //TODO(Aaron):Don't display for this version
+        MenuItem notificationItem = menu.findItem(R.id.action_notification);
+        notificationItem.setVisible(false);
     }
 
     // item和底部布局高度，判断是否需要在中间添加空白view,以致使底部布局靠底

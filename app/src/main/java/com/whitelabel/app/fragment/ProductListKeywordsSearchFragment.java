@@ -1187,7 +1187,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
             } else if (tempCategoryBean.TABBAR_INDEX_NONE == productListActivity.getCurrentFilterSortTabIndex()) {
                 if (ProductListActivity.INTENT_DATA_PREVTYPE_VALUE_HOME == productListActivity.getPrevType()) {
                     productListActivity.finish();
-                    productListActivity.closeActivityTransitionAnim();
                 } else {
                     productListActivity.switchFragment(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, null);
                 }

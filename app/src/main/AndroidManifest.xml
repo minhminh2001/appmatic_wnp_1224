@@ -144,11 +144,16 @@
             android:theme="@style/BackgroundWhiteTheme" />
         <activity
             android:name=".ui.productdetail.ProductDetailActivity"
+            android:theme="@style/ActivityAnimTheme"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BackgroundWhiteTheme" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ShoppingCartActivity1"
+            android:theme="@style/ActivityAnimTheme"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".activity.NotificationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
@@ -170,26 +175,27 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".activity.HelpCenterDetialActivity"
+            android:theme="@style/ActivityAnimTheme"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CurationActivity"
+            android:theme="@style/ActivityAnimTheme"
             android:screenOrientation="portrait"
-            android:theme="@style/BackgroundWhiteTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.MerchantStoreFrontActivity"
+            android:theme="@style/ActivityAnimTheme"
             android:screenOrientation="portrait"
-            android:theme="@style/BackgroundWhiteTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.TrackingInfoActivity"
+            android:theme="@style/ActivityAnimTheme"
             android:screenOrientation="portrait"
-            android:theme="@style/BackgroundWhiteTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.checkout.CheckoutActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BackgroundWhiteTheme"
+            android:theme="@style/ActivityAnimTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!-- MOLPayActivity -->
@@ -209,25 +215,30 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ProductListActivity"
+            android:theme="@style/ActivityAnimTheme"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BackgroundWhiteTheme" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CheckoutPaymentRedirectActivity"
+            android:theme="@style/ActivityAnimTheme"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FavoriteActivity"
+            android:theme="@style/ActivityAnimTheme"
             android:screenOrientation="portrait" />
 
         <!-- android:theme="@style/ImageScale" -->
         <activity
             android:name=".activity.ProductDetailPictureActivity"
+            android:theme="@style/ActivityAnimTheme"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ShoppingCartCampaignActivity"
+            android:theme="@style/ActivityAnimTheme"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CreditInstructionActivity"
+            android:theme="@style/ActivityAnimTheme"
             android:screenOrientation="portrait" />
         <!--
         <activity

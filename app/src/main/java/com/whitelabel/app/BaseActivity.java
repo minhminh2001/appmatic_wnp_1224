@@ -1,5 +1,6 @@
 package com.whitelabel.app;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -170,6 +171,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             }
         });
     }
+
     public View setRightTextMenuClickListener(MenuInflater menuInflater, int menuRes, Menu menu, int menuItemId, int actionViewRes, View.OnClickListener onClickListener) {
         menuInflater.inflate(menuRes, menu);
         MenuItem menuItem = menu.findItem(menuItemId);
@@ -245,7 +247,6 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     @Override
     public void onBackPressed() {
         finish();
-        closeActivityTransitionAnim();
     }
 
     public void startNextActivity(Bundle bundle, Class<?> pClass, boolean finishFlag) {
@@ -257,26 +258,15 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         if (finishFlag) {
             super.finish();
         }
-        startActivityTransitionAnim();
     }
 
-    public    void   startActivityTransitionAnim(){
-        overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
-                R.anim.activity_transition_exit_righttoleft);
-    }
-
-    public void closeActivityTransitionAnim(){
-        overridePendingTransition(R.anim.activity_transition_enter_lefttoright, R.anim.activity_transition_exit_lefttoright);
-    }
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         super.startActivityForResult(intent, requestCode);
-        startActivityTransitionAnim();
     }
     @Override
     public void startActivity(Intent intent) {
         super.startActivity(intent);
-        startActivityTransitionAnim();
     }
 
     public void startNextActivityForResult(Bundle bundle, Class<?> pClass, int requestCode, boolean finishFlag) {
@@ -285,7 +275,6 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             intent.putExtras(bundle);
         }
         startActivityForResult(intent, requestCode);
-        startActivityTransitionAnim();
         if (finishFlag) {
             super.finish();
         }
@@ -323,5 +312,13 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         if (finishFlag) {
             super.finish();
         }
+    }
+
+    public void exitAnimation(){
+        overridePendingTransition(0, R.anim.slide_right_out);
+    }
+
+    public void enterAnimation(){
+        overridePendingTransition(R.anim.slide_right_in, 0);
     }
 }

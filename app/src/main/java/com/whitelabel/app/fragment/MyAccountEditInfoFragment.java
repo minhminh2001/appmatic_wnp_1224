@@ -692,7 +692,6 @@ public class MyAccountEditInfoFragment extends BaseFragment implements View.OnCl
             case R.id.changePassword:
                 Intent intent = new Intent(getActivity(), MyAccountChangePasswordActivity.class);
                 startActivity(intent);
-                ((BaseActivity)getActivity()).startActivityTransitionAnim();
                 break;
             case R.id.et_account_country:
                 wheelPickerCountry();

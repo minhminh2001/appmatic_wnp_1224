@@ -639,6 +639,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 }
             }
         });
+
+
     }
 
     private void initNestedScrollView() {

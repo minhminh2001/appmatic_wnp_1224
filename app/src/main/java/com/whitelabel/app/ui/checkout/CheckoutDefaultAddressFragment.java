@@ -419,7 +419,6 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             case R.id.tv_shipping_address_change:
                 Intent intent = new Intent(getActivity(), CheckoutSelectAddressActivity.class);
                 startActivityForResult(intent, REQUEST_SHIPPING_ADDRESS);
-                ((BaseActivity) getActivity()).startActivityTransitionAnim();
                 break;
             case R.id.ll_checkbox:
                 cbBillAddress.setChecked(!cbBillAddress.isChecked(), true);
@@ -427,7 +426,6 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             case R.id.tv_billing_address_change:
                 Intent billingIntent = new Intent(getActivity(), CheckoutSelectAddressActivity.class);
                 startActivityForResult(billingIntent, REQUEST_BILLING_ADDRESS);
-                ((BaseActivity) getActivity()).startActivityTransitionAnim();
                 break;
         }
     }

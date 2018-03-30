@@ -22,7 +22,6 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,6 +42,8 @@ import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
 import com.whitelabel.app.widget.CustomTextView;
 
 import java.lang.ref.WeakReference;
+
+import static com.whitelabel.app.activity.LoginRegisterActivity.FRAGMENT_ARGUMENTS_NEED_RESET_ACCOUNT;
 
 /**
  * Created by imaginato on 2015/6/15.
@@ -191,6 +192,11 @@ public class LoginRegisterResetPassFragment extends Fragment implements View.OnC
         email_text.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
 
         email_text2= (TextView) contentView.findViewById(R.id.email_text2);
+
+        if(savedInstanceState != null){
+            String needResetAccount = savedInstanceState.getString(FRAGMENT_ARGUMENTS_NEED_RESET_ACCOUNT);
+            email.setText(needResetAccount);
+        }
         email.setOnFocusChangeListener(this);
         email.setOnClickListener(this);
         email.addTextChangedListener(new TextWatcher() {

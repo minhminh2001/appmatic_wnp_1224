@@ -6,6 +6,7 @@ import com.whitelabel.app.model.BrandStoreModel;
 import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
+import com.whitelabel.app.model.NotifyMeResponse;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
@@ -76,5 +77,11 @@ public interface ProductApi {
     @POST("appservice/order/reOrderProduct")
     public Observable<ResponseModel> setToCheckout(@FieldMap HashMap<String,String> maps);
 
-
+    @FormUrlEncoded
+    @POST("appservice/product/notifyStock")
+    public Observable<NotifyMeResponse> registerNotifyForProduct(@Field("product_id") String productId,
+                                                               @Field("email") String email,
+                                                               @Field("name") String name,
+                                                               @Field("storeId") String stroreId,
+                                                               @Field("session_key") String sessionKey);
 }

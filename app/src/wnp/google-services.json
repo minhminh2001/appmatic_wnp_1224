@@ -1,33 +1,27 @@
 {
   "project_info": {
-    "project_number": "866942382241",
-    "project_id": "whiskers-n-paws"
+    "project_number": "175143002634",
+    "firebase_url": "https://wnpapp.firebaseio.com",
+    "project_id": "wnpapp",
+    "storage_bucket": "wnpapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:866942382241:android:eaaabb7a5af483dc",
+        "mobilesdk_app_id": "1:175143002634:android:eaaabb7a5af483dc",
         "android_client_info": {
           "package_name": "com.wnp.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "866942382241-lc94khrj4lgau2mnat90c23agnk91qvm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.wnp.app",
-            "certificate_hash": "923150459eb9718a130b592ab7f48bb30da83a94"
-          }
-        },
-        {
-          "client_id": "866942382241-ji1c598s414fmslmaq7rgcacl9e2pgn9.apps.googleusercontent.com",
+          "client_id": "175143002634-kha25sulkqcouarbcegsncsoivn6aaen.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCOseG4u0fR9URAejZszxY-NSsKS85e4Ws"
+          "current_key": "AIzaSyCZOp-tGZ__gOt9ehXXpCH7GEo2wq-L8Lk"
         }
       ],
       "services": {
@@ -39,7 +33,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

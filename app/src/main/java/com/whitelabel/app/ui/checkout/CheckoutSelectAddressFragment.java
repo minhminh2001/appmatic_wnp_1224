@@ -39,7 +39,6 @@ public class CheckoutSelectAddressFragment extends BaseAddressFragment {
         Intent intent=new Intent(getActivity(), AddAddressActivity.class);
         intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT,false);
         startActivityForResult(intent,REQUEST_ADD_ADDRESS);
-        ((BaseActivity)getActivity()).startActivityTransitionAnim();
     }
 
     @Override
@@ -54,9 +53,6 @@ public class CheckoutSelectAddressFragment extends BaseAddressFragment {
         } else {
             startActivityForResult(intent, REQUEST_EDIT_ADDRESS);
         }
-        ((BaseActivity)getActivity()).startActivityTransitionAnim();
-//        getActivity().overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
-//                R.anim.activity_transition_exit_righttoleft);
     }
 
     @Override

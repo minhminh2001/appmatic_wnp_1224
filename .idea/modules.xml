@@ -3,10 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\Projects\wnp\appmatic\app\app.iml" filepath="E:\Projects\wnp\appmatic\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/appmatic.iml" filepath="$PROJECT_DIR$/appmatic.iml" />
       <module fileurl="file://D:\android\whitelabel\appmatic.iml" filepath="D:\android\whitelabel\appmatic.iml" />
+      <module fileurl="file://E:\Projects\wnp\appmatic\appmatic.iml" filepath="E:\Projects\wnp\appmatic\appmatic.iml" />
       <module fileurl="file://$PROJECT_DIR$/librarys/baseframework/baseframework.iml" filepath="$PROJECT_DIR$/librarys/baseframework/baseframework.iml" />
+      <module fileurl="file://E:\Projects\wnp\appmatic\librarys\baseframework\baseframework.iml" filepath="E:\Projects\wnp\appmatic\librarys\baseframework\baseframework.iml" />
       <module fileurl="file://$PROJECT_DIR$/librarys/librarys.iml" filepath="$PROJECT_DIR$/librarys/librarys.iml" />
+      <module fileurl="file://E:\Projects\wnp\appmatic\librarys\librarys.iml" filepath="E:\Projects\wnp\appmatic\librarys\librarys.iml" />
       <module fileurl="file://D:\android\appmatic\whitelabel.iml" filepath="D:\android\appmatic\whitelabel.iml" />
       <module fileurl="file://D:\Test\appmatic\whitelabel.iml" filepath="D:\Test\appmatic\whitelabel.iml" />
     </modules>

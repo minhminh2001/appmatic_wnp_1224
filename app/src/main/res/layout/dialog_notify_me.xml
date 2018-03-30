@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minWidth="300dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_rounded">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/font_family_robot_regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/notify_title"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="25sp"/>
+    <TextView
+        android:id="@+id/tv_description"
+        style="@style/font_family_robot_regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/notify_description"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_description"
+        app:layout_constraintRight_toRightOf="@+id/tv_description"
+        app:layout_constraintTop_toBottomOf="@+id/tv_description"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <CheckBox
+            android:id="@+id/cb_notifyme"
+            style="@style/font_family_robot_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="9dp"
+            android:button="@drawable/selector_notifyme_checkbox"
+            android:text="@string/notify_checkbox_text"
+            android:visibility="gone"/>
+
+        <com.whitelabel.app.widget.CustomTextInputLayout
+            android:id="@+id/til_name"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_notifyme_edit"
+            android:gravity="center_vertical"
+            app:hintEnabled="false">
+            <EditText
+                android:id="@+id/et_name"
+                style="@style/font_family_robot_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:background="@null"
+                android:hint="@string/notify_eidt_hint_customer_name"
+                android:textColorHint="@color/greye6e6e6"/>
+        </com.whitelabel.app.widget.CustomTextInputLayout>
+
+        <com.whitelabel.app.widget.CustomTextInputLayout
+            android:id="@+id/til_email"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_notifyme_edit"
+            android:gravity="center_vertical"
+            app:hintEnabled="false">
+            <EditText
+                android:id="@+id/et_email"
+                style="@style/font_family_robot_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:background="@null"
+                android:hint="@string/notify_eidt_hint_customer_email"
+                android:textColorHint="@color/greye6e6e6"/>
+        </com.whitelabel.app.widget.CustomTextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_errmssage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/red"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"/>
+        <Button
+            android:id="@+id/btn_notify_me"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_notifyme_dialog_btn_notifyme"
+            android:text="@string/notify_button_notifyme"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/bg_notifyme_dialog_btn_cancel"
+            android:text="@string/notify_button_cacnel"
+            android:textColor="@color/orangeFFE4832B"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

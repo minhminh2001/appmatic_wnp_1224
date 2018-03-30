@@ -603,7 +603,6 @@ public class ProductListAdapter extends BaseAdapter {
     private void setBundleAndToPDP(Intent intent, Bundle bundle) {
         intent.putExtras(bundle);
         fragmentOnAdapterCallBack.startActivityForResultCallBack(intent, productListActivity.RESULT_WISH);
-        this.productListActivity.startActivityTransitionAnim();
     }
 
     public class ViewHolder {

@@ -1426,4 +1426,11 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, false);
     }
 
+    @Override
+    public void finish(){
+        super.finish();
+
+        exitAnimation();
+    }
+
 }
