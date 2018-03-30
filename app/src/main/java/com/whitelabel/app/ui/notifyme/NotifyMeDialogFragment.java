@@ -100,13 +100,15 @@ public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract
     }
 
     public void show(FragmentManager fragmentManager){
-        if(fragmentManager == null)
+        if(fragmentManager == null) {
             return;
+        }
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment fragment = fragmentManager.findFragmentByTag(TAG);
-        if(fragment != null)
+        if(fragment != null) {
             transaction.remove(fragment);
+        }
 
         show(transaction, TAG);
     }
@@ -124,8 +126,9 @@ public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract
 
     private void initData(){
         Bundle bundle = getArguments();
-        if(bundle == null)
+        if(bundle == null) {
             return;
+        }
 
         productId = bundle.getString(FRAGMENT_ARG_PRODUCT_ID);
         storeId = bundle.getString(FRAGMENT_ARG_STORE_ID);

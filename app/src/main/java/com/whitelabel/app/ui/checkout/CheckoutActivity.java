@@ -1404,7 +1404,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     public void finish(){
         super.finish();
 
-        overridePendingTransition(0, R.anim.slide_right_out);
+        exitAnimation();
     }
 
 }

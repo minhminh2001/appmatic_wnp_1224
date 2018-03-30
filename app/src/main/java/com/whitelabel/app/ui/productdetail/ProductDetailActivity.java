@@ -750,7 +750,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     public void finish(){
         super.finish();
 
-        overridePendingTransition(0, R.anim.slide_right_out);
+        exitAnimation();
     }
 
     public void trackAddWishList(){

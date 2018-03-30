@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,16 +25,17 @@ import com.whitelabel.app.widget.CustomXListView;
 
 import java.util.ArrayList;
 
-public class NotificationListFragment<T extends BasePresenter> extends com.whitelabel.app.BaseFragment<T> implements CustomXListView.IXListViewListener,SwipeRefreshLayout.OnRefreshListener {
+public class NotificationListFragment<T extends BasePresenter> extends com.whitelabel.app.BaseFragment<T> implements SwipeRefreshLayout.OnRefreshListener {
     private String TAG ="NotificationListFragment";
+
+    private static final int REQUST_CODE_NOTIFICATION_DETAILS = 100;
 
     private NotificationActivity notificationActivity;
     private NotificationListAdapter adapter;
-    private CustomXListView clistView;
+    private RecyclerView detailListView;
     private Dialog progressDialog;
     private ArrayList<NotificationInfo> notifications;
     private SwipeRefreshLayout swipeContainer;
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -45,7 +48,7 @@ public class NotificationListFragment<T extends BasePresenter> extends com.white
 
         View view = inflater.inflate(R.layout.fragment_home_notification_list, null);
         setRetryTheme(view);
-        clistView = (CustomXListView) view.findViewById(R.id.lv_notification);
+        detailListView = (RecyclerView) view.findViewById(R.id.lv_notification);
         swipeContainer= (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         swipeContainer.setColorSchemeColors(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
         swipeContainer.setOnRefreshListener(this);
@@ -56,21 +59,19 @@ public class NotificationListFragment<T extends BasePresenter> extends com.white
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        notifications = new ArrayList<NotificationInfo>();
         progressDialog = JViewUtils.showProgressDialog(notificationActivity);
-        adapter = new NotificationListAdapter(notificationActivity, notifications);
-        clistView.setAdapter(adapter);
-        clistView.setXListViewListener(this);
-        clistView.setPullRefreshEnable(false);
-        clistView.setPullLoadEnable(true);
-        clistView.setHeaderDividersEnabled(false);
-        clistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position <= notifications.size()) {
+        notifications = new ArrayList<NotificationInfo>();
+        adapter = new NotificationListAdapter(notificationActivity, notifications);
+        detailListView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        detailListView.setAdapter(adapter);
+        adapter.setItemClickListener(new NotificationListAdapter.OnItemClikListener() {
+
+            @Override
+            public void onItemClick(NotificationInfo notificationInfo) {
+                if(notificationInfo != null) {
                     Intent intent = new Intent(notificationActivity, NotificationDetailActivity.class);
-                    startActivityForResult(intent, 100);
+                    startActivityForResult(intent, REQUST_CODE_NOTIFICATION_DETAILS);
                 }
             }
         });
@@ -90,15 +91,10 @@ public class NotificationListFragment<T extends BasePresenter> extends com.white
         GaTrackHelper.getInstance().googleAnalyticsReportActivity(notificationActivity, false);
     }
 
-    // TODO(Aaron):Data refresh in the next version
+    // TODO(Aaron):refresh data
     @Override
     public void onRefresh() {
 
     }
 
-    // TODO(Aaron):Load data in the next version
-    @Override
-    public void onLoadMore() {
-
-    }
 }

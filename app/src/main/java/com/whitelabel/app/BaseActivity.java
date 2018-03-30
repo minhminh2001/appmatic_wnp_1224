@@ -313,4 +313,12 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
             super.finish();
         }
     }
+
+    public void exitAnimation(){
+        overridePendingTransition(0, R.anim.slide_right_out);
+    }
+
+    public void enterAnimation(){
+        overridePendingTransition(R.anim.slide_right_in, 0);
+    }
 }
