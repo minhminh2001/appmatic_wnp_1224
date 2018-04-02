@@ -359,7 +359,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:text="@string/RegisterNow"
-                    android:textColor="@color/appColorPrimary" />
+                    android:textColor="@color/appColorPrimary"/>
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

@@ -405,6 +405,12 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app
         JViewUtils.showUpdateGooglePlayStoreDialog(loginRegisterActivity);
     }
 
+
+    @Override
+    public void addBatchShoppingSuccess() {
+        jumpNextScreen();
+    }
+
     @Override
     public void emailLoginOrRegister() {
         mMyAccountDao
@@ -911,6 +917,172 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app
     @Override
     public void showConfirmEmail() {
         clickEmailInfo.setVisibility(View.VISIBLE);
+    }
+
+    private static final class DataHandler extends Handler{
+        private final WeakReference<LoginRegisterActivity> mActivity;
+        private final WeakReference<LoginRegisterEmailLoginFragment> mFragment;
+        private final String EMAIL_NEED = "Email is a required field";
+        private final String EMAIL_CONFIRMATION = "This account is not confirmed";
+        public DataHandler(LoginRegisterActivity activity,LoginRegisterEmailLoginFragment fragment){
+            mActivity=new WeakReference<LoginRegisterActivity>(activity);
+            mFragment=new WeakReference<LoginRegisterEmailLoginFragment>(fragment);
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            if(mActivity.get()==null||mFragment.get()==null){
+                return;
+            }
+            switch (msg.what){
+                case ProductDao.REQUEST_CHECKVERSION:
+                    break;
+                case MyAccountDao.REQUEST_EMAILLOGIN:
+                    if(mFragment.get().mDialog!=null){mFragment.get(). mDialog.cancel();}
+                    if(msg.arg1==MyAccountDao.RESPONSE_SUCCESS){
+                        SharedPreferences shared = mActivity.get().getSharedPreferences("oldEmail", Activity.MODE_PRIVATE);
+                        //成功后将数据放到Entity中
+                        SVRAppServiceCustomerLoginReturnEntity loginReturnEntity = (SVRAppServiceCustomerLoginReturnEntity) msg.obj;
+                        loginReturnEntity.setEmailLogin(true);
+                        // WhiteLabelApplication.getAppConfiguration().signIn(loginReturnEntity);
+                        loginReturnEntity.setLoginType(FirebaseEventUtils.lOGIN_EMAIL);
+                        WhiteLabelApplication.getAppConfiguration().signIn(mActivity.get(), loginReturnEntity);
+                        //跳转界面
+                        if (loginReturnEntity.getConfirmation() == 1) {
+                            mFragment.get().loginRegisterActivity.setSubEmail(mFragment.get().email.getText().toString().trim());
+                            mFragment.get().clickEmailInfo.setVisibility(View.VISIBLE);
+                        } else {
+                            mFragment.get(). mergeProductToShoppingCart();
+                        }
+                        SharedPreferences.Editor editor2 = shared.edit();
+                        editor2.putString("email", loginReturnEntity.getEmail());
+                        editor2.commit();
+                        try {
+                            GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action",
+                                    "Sign In",
+                                    "Email",
+                                    Long.valueOf(loginReturnEntity.getId()));
+                            FirebaseEventUtils.getInstance().customizedSignIn(mActivity.get(), FirebaseEventUtils.lOGIN_EMAIL);
+                        }catch (Exception ex){
+                            ex.getStackTrace();
+                        }
+
+                    }else{
+                        String errorMsg= (String) msg.obj;
+                        if(!errorMsg.contains("app version")){
+//                            JViewUtils.showMaterialDialog(mActivity.get(), "", mFragment.get().updateDiaHintmsg, mFragment.get().updateDiaBtnMsg, mFragment.get().updateListener, false);
+                            mFragment.get().error.setText(errorMsg);
+                            mFragment.get().error.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    break;
+                case MyAccountDao.REQUEST_FACEBOOKLOGIN:
+                    if (mFragment.get().mDialog != null) {
+                        mFragment.get().mDialog.dismiss();
+                    }
+                    if(msg.arg1==MyAccountDao.RESPONSE_SUCCESS){
+                        SVRAppserviceCustomerFbLoginReturnEntity result= (SVRAppserviceCustomerFbLoginReturnEntity) msg.obj;
+                        if ((result != null) && (result instanceof SVRAppserviceCustomerFbLoginReturnEntity)) {
+                            result.setLoginType(FirebaseEventUtils.LOGIN_FACEBOOK);
+                            mFragment.get().loginSuccess(result);
+                            try {
+                                GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action",
+                                        "Sign In",
+                                        "Facebook",
+                                        Long.valueOf(result.getId()));
+                                FirebaseEventUtils.getInstance().customizedSignIn(mActivity.get(), FirebaseEventUtils.LOGIN_FACEBOOK);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            mFragment.get().fbLoginError();
+                        }
+                    }else{
+                        String errorMsg= (String) msg.obj;
+                        if ( !JDataUtils.isEmpty(errorMsg) && errorMsg.contains(EMAIL_NEED)) {
+                            mActivity.get().threePartAPIUserEntity = mFragment.get().threePartAPIUserEntity;
+                            mActivity.get().redirectToAttachedFragment(LoginRegisterActivity.EMAIL_BOUND, 1);
+                        } else if(!JDataUtils.isEmpty(errorMsg) && errorMsg.contains(EMAIL_CONFIRMATION)){
+                            mFragment.get().clickEmailInfo.setVisibility(View.VISIBLE);
+                        }else {
+                            if(!TextUtils.isEmpty(errorMsg)){
+                                JViewUtils.showErrorToast(mActivity.get(),errorMsg);
+                            }
+                        }
+                    }
+                    break;
+
+
+                case MyAccountDao.REQUEST_GOOGLELOGIN:
+                    if (mFragment.get().mDialog != null) {
+                        mFragment.get().mDialog.dismiss();
+                    }
+                    if(msg.arg1==MyAccountDao.RESPONSE_SUCCESS){
+                        SVRAppserviceCustomerFbLoginReturnEntity result= (SVRAppserviceCustomerFbLoginReturnEntity) msg.obj;
+                        if ((result != null) && (result instanceof SVRAppserviceCustomerFbLoginReturnEntity)) {
+                            result.setLoginType(FirebaseEventUtils.LOGIN_GOOGLE);
+                            mFragment.get().loginSuccess(result);
+                            try {
+                                GaTrackHelper.getInstance().googleAnalyticsEvent("Account Action",
+                                        "Sign In",
+                                        "Google",
+                                        Long.valueOf(result.getId()));
+                                FirebaseEventUtils.getInstance().customizedSignIn(mActivity.get(),FirebaseEventUtils.LOGIN_GOOGLE);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            mFragment.get().fbLoginError();
+                        }
+                    }else{
+                        String errorMsg= (String) msg.obj;
+                        if ( !JDataUtils.isEmpty(errorMsg) && errorMsg.contains(EMAIL_NEED)) {
+                            mActivity.get().threePartAPIUserEntity = mFragment.get().threePartAPIUserEntity;
+                            mActivity.get().redirectToAttachedFragment(LoginRegisterActivity.EMAIL_BOUND, 1);
+                        } else if(!JDataUtils.isEmpty(errorMsg) && errorMsg.contains(EMAIL_CONFIRMATION)){
+                            mFragment.get().clickEmailInfo.setVisibility(View.VISIBLE);
+                        }else {
+                            if(!TextUtils.isEmpty(errorMsg)){
+                                JViewUtils.showErrorToast(mActivity.get(),errorMsg);
+                            }
+//
+                        }
+                    }
+                    break;
+                case MyAccountDao.ERROR:
+                    if(msg.arg1!=ProductDao.REQUEST_CHECKVERSION){
+                        if (mFragment.get().mDialog != null) {
+                            mFragment.get().mDialog.dismiss();
+                        }
+                        RequestErrorHelper requestErrorHelper=new RequestErrorHelper(mActivity.get());
+                        requestErrorHelper.showNetWorkErrorToast(msg);
+                    }
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    }
+
+    private void mergeProductToShoppingCart() {
+        mPresenter.getShoppingListFromLocal();
+
+    }
+
+    private void jumpNextScreen() {
+        if (isStart) {
+            Intent intent = new Intent(loginRegisterActivity, HomeActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent();
+            if (loginRegisterActivity.addToWish) {
+                Bundle bundle = new Bundle();
+                bundle.putString("productId", loginRegisterActivity.productId);
+                intent.putExtras(bundle);
+            }
+            loginRegisterActivity.setResult(RESULTCODE, intent);
+        }
+        loginRegisterActivity.finish();
+        loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
+
     }
 
     @Override

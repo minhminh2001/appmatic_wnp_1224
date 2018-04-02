@@ -5,6 +5,7 @@ import android.util.Log;
 import com.whitelabel.app.RxUnitTestTools;
 import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CommodityManager;
+import com.whitelabel.app.data.service.ShoppingCartManager;
 import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.ui.home.HomeContract;
@@ -47,13 +48,15 @@ public class HomePresenterImplTest {
     @Mock
     CommodityManager  commodityManager;
     @Mock
+    ShoppingCartManager shoppingCartManager;
+    @Mock
     HomeContract.View mView;
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
         PowerMockito.mockStatic(Log.class);
         RxUnitTestTools.openRxTools();
-        homePresenter=new HomePresenterImpl(commodityManager,baseManager);
+        homePresenter=new HomePresenterImpl(commodityManager,baseManager,shoppingCartManager);
         homePresenter.attachView(mView);
     }
     @Test

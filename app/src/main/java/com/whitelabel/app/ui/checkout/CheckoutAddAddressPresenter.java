@@ -49,9 +49,6 @@ public class CheckoutAddAddressPresenter extends RxPresenter<CheckoutAddAddressC
                         }
                     });
             addSubscrebe(subscription);
-//        }else {
-//            mView.showData(iCheckoutManager.getCountryAndRegions());
-//        }
 
     }
 

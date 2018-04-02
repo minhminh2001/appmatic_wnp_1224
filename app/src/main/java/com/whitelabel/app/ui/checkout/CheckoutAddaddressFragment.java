@@ -1,5 +1,24 @@
 package com.whitelabel.app.ui.checkout;
 
+import com.whitelabel.app.BaseFragment;
+import com.whitelabel.app.R;
+import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.callback.WheelPickerCallback;
+import com.whitelabel.app.model.CheckoutDefaultShippingAddress;
+import com.whitelabel.app.model.CountryRegions;
+import com.whitelabel.app.model.CountrySubclass;
+import com.whitelabel.app.model.SVRAppServiceCustomerCountry;
+import com.whitelabel.app.model.WheelPickerConfigEntity;
+import com.whitelabel.app.model.WheelPickerEntity;
+import com.whitelabel.app.utils.AnimUtil;
+import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
+import com.whitelabel.app.widget.CustomEditText;
+import com.whitelabel.app.widget.CustomTextView;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -20,25 +39,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.whitelabel.app.BaseFragment;
-import com.whitelabel.app.R;
-import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.callback.WheelPickerCallback;
-import com.whitelabel.app.model.CheckoutDefaultShippingAddress;
-import com.whitelabel.app.model.CountryRegions;
-import com.whitelabel.app.model.CountrySubclass;
-import com.whitelabel.app.model.SVRAppServiceCustomerCountry;
-import com.whitelabel.app.model.WheelPickerConfigEntity;
-import com.whitelabel.app.model.WheelPickerEntity;
-import com.whitelabel.app.utils.AnimUtil;
-import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JToolUtils;
-import com.whitelabel.app.utils.JViewUtils;
-import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
-import com.whitelabel.app.widget.CustomEditText;
-import com.whitelabel.app.widget.CustomTextView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -49,7 +49,6 @@ import butterknife.Unbinder;
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -58,122 +57,168 @@ import injection.modules.PresenterModule;
  * Use the {@link CheckoutAddaddressFragment#} factory method to
  * create an instance of this fragment.
  */
-public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressContract.Presenter> implements CheckoutAddAddressContract.View, View.OnFocusChangeListener {
+public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressContract
+    .Presenter> implements CheckoutAddAddressContract.View, View.OnFocusChangeListener {
+
     @BindView(R.id.tv_checkout_shipping_firstname_anim)
     CustomTextView tvFirstnameAnim;
+
     @BindView(R.id.et_checkout_shipping_firstname)
     CustomEditText etFirstname;
+
     @BindView(R.id.clear_checkout_first)
     ImageView clearCheckFirst;
+
     @BindView(R.id.rl_checkaddadd_firstname)
     CustomButtomLineRelativeLayout rlCheckaddaddFirstname;
+
     @BindView(R.id.tv_checkout_shipping_lastname_anim)
     CustomTextView tvLastnameAnim;
+
     @BindView(R.id.et_checkout_shipping_lastname)
     CustomEditText etLastname;
+
     @BindView(R.id.clear_checkout_last)
     ImageView clearCheckLast;
+
     @BindView(R.id.rl_checkaddadd_lastname)
     CustomButtomLineRelativeLayout rlCheckaddaddLastname;
+
     @BindView(R.id.tv_country_anim)
     CustomTextView tvCountryAnim;
+
     @BindView(R.id.et_checkout_shipping_country)
     CustomEditText etShippingCountry;
+
     @BindView(R.id.arrow_checkout_shipping_select_country)
     ImageView arrowSelectCountry;
+
     @BindView(R.id.rl_checkaddadd_country)
     CustomButtomLineRelativeLayout rlCheckaddaddCountry;
+
     @BindView(R.id.tv_checkout_shipping_addressline1_anim)
     CustomTextView tvAddressLine1Anim;
+
     @BindView(R.id.et_checkout_shipping_addressline1)
     CustomEditText etAddressLine1;
+
     @BindView(R.id.clear_checkout_address1)
     ImageView clearCheckAddress1;
+
     @BindView(R.id.rl_checkaddadd_address1)
     CustomButtomLineRelativeLayout rlCheckaddaddAddress1;
+
     @BindView(R.id.tv_checkout_shipping_addressline2_anim)
     CustomTextView tvAddressLine2Anim;
+
     @BindView(R.id.et_checkout_shipping_addressline2)
     CustomEditText etAddressLine2;
+
     @BindView(R.id.clear_checkout_address2)
     ImageView clearCheckAddress2;
+
     @BindView(R.id.rl_checkaddadd_address2)
     CustomButtomLineRelativeLayout rlCheckaddaddAddress2;
+
     @BindView(R.id.tv_checkout_shipping_postcode_anim)
     CustomTextView tvPostCode;
+
     @BindView(R.id.et_checkout_shipping_postcode)
     CustomEditText etPostCode;
+
     @BindView(R.id.clear_checkout_code)
     ImageView clearCheckCode;
+
     @BindView(R.id.rl_checkaddadd_postcode)
     CustomButtomLineRelativeLayout rlCheckaddaddPostcode;
+
     @BindView(R.id.tv_checkout_shipping_city_anim)
     CustomTextView tvCityAnim;
+
     @BindView(R.id.et_checkout_shipping_city)
     CustomEditText etShippingCity;
+
     @BindView(R.id.clear_checkout_city)
     ImageView clearCheckCity;
+
     @BindView(R.id.rl_checkaddadd_city)
     CustomButtomLineRelativeLayout rlCheckaddaddCity;
+
     @BindView(R.id.tv_checkout_shipping_state_anim)
     CustomTextView tvStateAnim;
+
     @BindView(R.id.et_checkout_shipping_state)
     CustomEditText etShippingState;
+
     @BindView(R.id.arrow_checkout_shipping_select_state)
     ImageView arrowSelectState;
+
     @BindView(R.id.rl_checkout_shipping_state)
     CustomButtomLineRelativeLayout rlCheckoutShippingState;
+
     @BindView(R.id.tv_checkout_shipping_address_phone)
     CustomTextView tvPhoneOtheruse;
+
     @BindView(R.id.tv_checkout_shipping_phone_anim)
     CustomTextView tvPhone;
+
     @BindView(R.id.et_checkout_shipping_phone)
     CustomEditText etPhone;
+
     @BindView(R.id.clear_checkout_phone)
     ImageView clearCheckPhone;
+
     @BindView(R.id.rl_checkadd_phone)
     CustomButtomLineRelativeLayout rlCheckaddPhone;
+
     @BindView(R.id.tv_checkout_shipping_address_dayphone)
     CustomTextView tvDayPhoneOtheruse;
+
     @BindView(R.id.tv_checkout_shipping_dayphone_anim)
     CustomTextView tvDayPhone;
+
     @BindView(R.id.et_checkout_shipping_dayphone)
     CustomEditText etDayPhone;
+
     @BindView(R.id.clear_checkout_dayphone)
     ImageView clearCheckDayPhone;
+
     @BindView(R.id.rl_checkadd_dayphone)
     CustomButtomLineRelativeLayout rlCheckaddDayphone;
+
     @BindView(R.id.tv_checkout_errormsg_addnewaddress)
     CustomTextView tvErrorMsg;
-//    @BindView(R.id.pb_shoppingcart)
+
+    //    @BindView(R.id.pb_shoppingcart)
 //    ProgressBar mProgressBar;
     @BindView(R.id.my_scroll_view)
     ScrollView scrollView;
+
     Unbinder unbinder;
+
     private Dialog mProgressDialog;
+
     private OnFragmentInteractionListener mListener;
+
     private CheckoutActivity checkoutActivity;
+
     private ArrayList<CountrySubclass> list_countries = new ArrayList<CountrySubclass>();
 
-    public interface ISaveAddressMsgData{
-        public void createCustomerAddress(
-                String firstName,
-                String lastName,
-                String countryId,
-                String telePhone,
-                String street0,
-                String street1,
-                String fax,
-                String postCode,
-                String city,
-                String region,
-                String regionId);
+    private CheckoutDefaultShippingAddress mAddress;
+
+    private WheelPickerEntity mCurrBean;
+
+    private ArrayList<CountryRegions> mRegions = new ArrayList<>();
+
+    public CheckoutAddaddressFragment() {
+        // Required empty public constructor
     }
 
     @Override
     public void inject() {
-        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
-                presenterModule(new PresenterModule(getActivity())).build().inject(this);
+        DaggerPresenterComponent1.builder()
+            .applicationComponent(WhiteLabelApplication.getApplicationComponent()).
+            presenterModule(new PresenterModule(getActivity())).build().inject(this);
 
     }
 
@@ -192,14 +237,11 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
         super.onCreate(savedInstanceState);
     }
 
-    public CheckoutAddaddressFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_checkout_shipping_addaddress, container, false);
+        Bundle savedInstanceState) {
+        View view = inflater
+            .inflate(R.layout.fragment_checkout_shipping_addaddress, container, false);
         unbinder = ButterKnife.bind(this, view);
         etFirstname.setOnFocusChangeListener(this);
         etLastname.setOnFocusChangeListener(this);
@@ -219,13 +261,11 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                etShippingState.setTextColor(checkoutActivity.getResources().getColor(R.color.black000000));
-//                etShippingState.setEnabled(true);
+
                 if (s.length() != 0 && etPostCode.isFocused()) {
                     clearCheckCode.setVisibility(View.VISIBLE);
                 } else {
                     clearCheckCode.setVisibility(View.INVISIBLE);
-//                              etShippingState.setTextColor(getResources().getColor(R.color.black));
                 }
             }
 
@@ -243,15 +283,13 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
         ArrayList<CountryRegions> regions = new ArrayList<>();
         if (countrys != null && countrys.size() > 1) {
             CountrySubclass country = countrys.get(1);
-            if (country!=null){
+            if (country != null) {
                 etShippingCountry.setTag(country.getCountry_id() + "");
                 regions = country.getRegions();
             }
         }
         return regions;
     }
-
-    private CheckoutDefaultShippingAddress mAddress;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -283,8 +321,6 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
 
     /**
      * when editing address,use this method
-     *
-     * @param address
      */
     private void initEditDatas(CheckoutDefaultShippingAddress address) {
         tvPhoneOtheruse.setHint(address.getAddressId());//set AddressId
@@ -327,7 +363,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
             tvAddressLine2Anim.setText(getResources().getString(R.string.address2));
             tvAddressLine2Anim.setTextColor(JToolUtils.getColor(R.color.label_saved));
         }
-//        if(!etPostCode.getText().toString().equals("")){tvPostCode.setText(getResources().getString(R.string.postal_code));
+//        if(!etPostCode.getText().toString().equals("")){tvPostCode.setText(getResources()
+// .getString(R.string.postal_code));
 //            tvPostCode.setTextColor(JToolUtils.getColor(R.color.label_saved));}
         if (!etShippingCity.getText().toString().equals("")) {
             tvCityAnim.setText(getResources().getString(R.string.city));
@@ -357,13 +394,13 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
         mListener = null;
     }
 
-    public boolean onblurAll(int id){
-        switch (id){
+    public boolean onblurAll(int id) {
+        switch (id) {
             case R.id.et_checkout_shipping_firstname:
                 rlCheckaddaddFirstname.setBottomLineActive(false);
                 tvFirstnameAnim.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 tvFirstnameAnim.setVisibility(View.VISIBLE);
-                if(etFirstname.getText().toString().trim().equals("")){
+                if (etFirstname.getText().toString().trim().equals("")) {
                     etFirstname.setHint(getResources().getString(R.string.first_name));
 //                    tvFirstnameAnim.getLocationOnScreen(location);
 
@@ -378,7 +415,7 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                 rlCheckaddaddLastname.setBottomLineActive(false);
                 tvLastnameAnim.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 tvLastnameAnim.setVisibility(View.VISIBLE);
-                if(etLastname.getText().toString().trim().equals("")){
+                if (etLastname.getText().toString().trim().equals("")) {
                     etLastname.setHint("Last Name");
 //                    tvLastnameAnim.getLocationOnScreen(location);
 
@@ -392,7 +429,7 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                 rlCheckaddaddCountry.setBottomLineActive(false);
                 tvCountryAnim.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 tvCountryAnim.setVisibility(View.VISIBLE);
-                if(etShippingCountry.getText().toString().trim().equals("")){
+                if (etShippingCountry.getText().toString().trim().equals("")) {
                     etShippingCountry.setHint("Country");
 //                    tvCountryAnim.getLocationOnScreen(location);
 
@@ -404,9 +441,10 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                 break;
             case R.id.et_checkout_shipping_addressline1:
                 rlCheckaddaddAddress1.setBottomLineActive(false);
-                tvAddressLine1Anim.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
+                tvAddressLine1Anim
+                    .setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 tvAddressLine1Anim.setVisibility(View.VISIBLE);
-                if(etAddressLine1.getText().toString().trim().equals("")){
+                if (etAddressLine1.getText().toString().trim().equals("")) {
                     etAddressLine1.setHint(getResources().getString(R.string.address1));
 //                    tvAddressLine1Anim.getLocationOnScreen(location);
 
@@ -418,9 +456,10 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                 break;
             case R.id.et_checkout_shipping_addressline2:
                 rlCheckaddaddAddress2.setBottomLineActive(false);
-                tvAddressLine2Anim.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
+                tvAddressLine2Anim
+                    .setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 tvAddressLine2Anim.setVisibility(View.VISIBLE);
-                if(etAddressLine2.getText().toString().trim().equals("")){
+                if (etAddressLine2.getText().toString().trim().equals("")) {
                     etAddressLine2.setHint(getResources().getString(R.string.address2));
                     tvAddressLine2Anim.clearAnimation();
                     return false;
@@ -430,7 +469,7 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                 rlCheckaddaddPostcode.setBottomLineActive(false);
                 tvPostCode.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 tvPostCode.setVisibility(View.VISIBLE);
-                if(etPostCode!=null&&etPostCode.getText().toString().trim().equals("")){
+                if (etPostCode != null && etPostCode.getText().toString().trim().equals("")) {
                     etPostCode.setHint("Postal Code");
 //                    tvPostCode.getLocationOnScreen(location);
 
@@ -438,7 +477,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     tvPostCode.setText(getResources().getString(R.string.This_is_a_required_field));
                     tvPostCode.setTextColor(getResources().getColor(R.color.redC2060A));
                     return false;
-                }else if(etPostCode!=null&&etPostCode.getText().toString().trim().length()<4){
+                } else if (etPostCode != null && etPostCode.getText().toString().trim()
+                    .length() < 4) {
 //                    tvPostCode.getLocationOnScreen(location);
                     //验证字段
                     tvPostCode.setText(getResources().getString(R.string.blur_postalcode));
@@ -450,7 +490,7 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                 rlCheckaddaddCity.setBottomLineActive(false);
                 tvCityAnim.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 tvCityAnim.setVisibility(View.VISIBLE);
-                if(etShippingCity.getText().toString().trim().equals("")){
+                if (etShippingCity.getText().toString().trim().equals("")) {
                     etShippingCity.setHint("City");
 //                    tvCityAnim.getLocationOnScreen(location);
                     //验证字段
@@ -463,7 +503,7 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                 rlCheckoutShippingState.setBottomLineActive(false);
                 tvStateAnim.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 tvStateAnim.setVisibility(View.VISIBLE);
-                if(etShippingState.getText().toString().trim().equals("")){
+                if (etShippingState.getText().toString().trim().equals("")) {
 //                    tvStateAnim.getLocationOnScreen(location);
                     tvStateAnim.setText(getResources().getString(R.string.required_field));
                     tvStateAnim.setTextColor(getResources().getColor(R.color.redC2060A));
@@ -475,14 +515,14 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                 rlCheckaddPhone.setBottomLineActive(false);
                 tvPhone.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 tvPhone.setVisibility(View.VISIBLE);
-                if(etPhone.getText().toString().trim().equals("")){
+                if (etPhone.getText().toString().trim().equals("")) {
                     etPhone.setHint(getResources().getString(R.string.eg123));
 //                    tvPhoneOtheruse.getLocationOnScreen(location);
                     //验证字段
                     tvPhone.setText(getResources().getString(R.string.required_field));
                     tvPhone.setTextColor(getResources().getColor(R.color.redC2060A));
                     return false;
-                }else if(etPhone.getText().toString().length()<7) {
+                } else if (etPhone.getText().toString().length() < 7) {
                     etPhone.setHint(getResources().getString(R.string.eg123));
 //                    tvPhoneOtheruse.getLocationOnScreen(location);
                     //验证字段
@@ -495,7 +535,7 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                 rlCheckaddDayphone.setBottomLineActive(false);
                 tvDayPhone.setTextColor(getResources().getColor(R.color.label_saved));//设置为灰色
                 tvDayPhone.setVisibility(View.VISIBLE);
-                if(etDayPhone.getText().toString().trim().equals("")){
+                if (etDayPhone.getText().toString().trim().equals("")) {
                     etDayPhone.setHint(getResources().getString(R.string.address_day_phone));
 //                    tvDayPhone.getLocationOnScreen(location);
                     tvDayPhone.clearAnimation();
@@ -503,7 +543,7 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     tvDayPhone.setText(getResources().getString(R.string.required_field));
                     tvDayPhone.setTextColor(getResources().getColor(R.color.redC2060A));
                     return false;
-                }else if(etDayPhone.getText().toString().length()<7){
+                } else if (etDayPhone.getText().toString().length() < 7) {
                     etDayPhone.setHint(getResources().getString(R.string.address_day_phone));
 //                    tvDayPhone.getLocationOnScreen(location);
                     tvDayPhone.clearAnimation();
@@ -511,7 +551,7 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     tvDayPhone.setText(getResources().getString(R.string.address_phone_error_hint));
                     tvDayPhone.setTextColor(getResources().getColor(R.color.redC2060A));
                     return false;
-                }else{
+                } else {
                     tvDayPhone.clearAnimation();
                 }
                 break;
@@ -519,46 +559,43 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
         return true;
     }
 
-
-    public void checkAndSave(ISaveAddressMsgData iSaveAddressMsgData){
+    public void checkAndSave(ISaveAddressMsgData iSaveAddressMsgData) {
 //        JViewUtils.cleanCurrentViewFocus(getActivity());
         if (onblurAll(R.id.
-                et_checkout_shipping_firstname)
-                && onblurAll(R.id.et_checkout_shipping_lastname)
-                && onblurAll(R.id.et_checkout_shipping_country)
-                && onblurAll(R.id.et_checkout_shipping_addressline1)
-                && onblurAll(R.id.et_checkout_shipping_city)
-                &&onblurAll(R.id.et_checkout_shipping_state)
-                && onblurAll(R.id.et_checkout_shipping_phone)
-                &&onblurAll(R.id.et_checkout_shipping_dayphone)) {
-            String regionText=null;
-            String regionId=null;
-            if( !TextUtils.isEmpty(String.valueOf(etShippingState.getText().toString().trim()))){
-               regionText=etShippingState.getText().toString().trim();
-               regionId=String.valueOf(etShippingState.getTag());
+            et_checkout_shipping_firstname)
+            && onblurAll(R.id.et_checkout_shipping_lastname)
+            && onblurAll(R.id.et_checkout_shipping_country)
+            && onblurAll(R.id.et_checkout_shipping_addressline1)
+            && onblurAll(R.id.et_checkout_shipping_city)
+            && onblurAll(R.id.et_checkout_shipping_state)
+            && onblurAll(R.id.et_checkout_shipping_phone)
+            && onblurAll(R.id.et_checkout_shipping_dayphone)) {
+            String regionText = null;
+            String regionId = null;
+            if (!TextUtils.isEmpty(String.valueOf(etShippingState.getText().toString().trim()))) {
+                regionText = etShippingState.getText().toString().trim();
+                regionId = String.valueOf(etShippingState.getTag());
             }
             iSaveAddressMsgData.createCustomerAddress(getEditTextMsg(etFirstname),
-                    getEditTextMsg(etLastname),
-                    String.valueOf(etShippingCountry.getTag()),
-                    getEditTextMsg(etPhone),
-                    getEditTextMsg(etAddressLine1),
-                    getEditTextMsg(etAddressLine2),
-                    getEditTextMsg(etDayPhone),
-                    getEditTextMsg(etPostCode),
-                    getEditTextMsg(etShippingCity),
-                    regionText,regionId
+                getEditTextMsg(etLastname),
+                String.valueOf(etShippingCountry.getTag()),
+                getEditTextMsg(etPhone),
+                getEditTextMsg(etAddressLine1),
+                getEditTextMsg(etAddressLine2),
+                getEditTextMsg(etDayPhone),
+                getEditTextMsg(etPostCode),
+                getEditTextMsg(etShippingCity),
+                regionText, regionId
             );
         }
     }
-    private String getEditTextMsg(EditText editText){
+
+    private String getEditTextMsg(EditText editText) {
         return editText.getText().toString().trim();
     }
 
     /**
      * EditText focus listener
-     *
-     * @param v
-     * @param hasFocus
      */
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
@@ -575,11 +612,13 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     tvFirstnameAnim.startAnimation(getHintAnimation(tvFirstnameAnim, "First Name"));
                     etFirstname.addTextChangedListener(new TextWatcher() {
                         @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        public void beforeTextChanged(CharSequence s, int start, int count,
+                            int after) {
                         }
 
                         @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        public void onTextChanged(CharSequence s, int start, int before,
+                            int count) {
                             if (s.length() != 0 && etFirstname.isFocused()) {
                                 clearCheckFirst.setVisibility(View.VISIBLE);
                             } else {
@@ -596,7 +635,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     clearCheckFirst.setVisibility(View.GONE);
                     //validate text format
                     if (JDataUtils.isStringBlank(etFirstname.getText())) {
-                        tvFirstnameAnim.setText(getResources().getString(R.string.This_is_a_required_field));
+                        tvFirstnameAnim
+                            .setText(getResources().getString(R.string.This_is_a_required_field));
                         tvFirstnameAnim.setTextColor(getResources().getColor(R.color.red_common));
                     } else {
                         tvFirstnameAnim.setTextColor(getResources().getColor(R.color.label_saved));
@@ -615,11 +655,13 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     tvLastnameAnim.startAnimation(getHintAnimation(tvLastnameAnim, "Last Name"));
                     etLastname.addTextChangedListener(new TextWatcher() {
                         @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        public void beforeTextChanged(CharSequence s, int start, int count,
+                            int after) {
                         }
 
                         @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        public void onTextChanged(CharSequence s, int start, int before,
+                            int count) {
                             if (s.length() != 0 && etLastname.isFocused()) {
                                 clearCheckLast.setVisibility(View.VISIBLE);
                             } else {
@@ -635,7 +677,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     rlCheckaddaddLastname.setBottomLineActive(false);
                     clearCheckLast.setVisibility(View.GONE);
                     if (JDataUtils.isStringBlank(etLastname.getText())) {
-                        tvLastnameAnim.setText(getResources().getString(R.string.This_is_a_required_field));
+                        tvLastnameAnim
+                            .setText(getResources().getString(R.string.This_is_a_required_field));
                         tvLastnameAnim.setTextColor(getResources().getColor(R.color.red_common));
                     } else {
                         tvLastnameAnim.setTextColor(getResources().getColor(R.color.label_saved));
@@ -651,14 +694,17 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                         clearCheckAddress1.setVisibility(View.INVISIBLE);
                     }
                     tvAddressLine1Anim.setTextColor(getResources().getColor(R.color.colorAccent));
-                    tvAddressLine1Anim.startAnimation(getHintAnimation(tvAddressLine1Anim, "Address 1"));
+                    tvAddressLine1Anim
+                        .startAnimation(getHintAnimation(tvAddressLine1Anim, "Address 1"));
                     etAddressLine1.addTextChangedListener(new TextWatcher() {
                         @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        public void beforeTextChanged(CharSequence s, int start, int count,
+                            int after) {
                         }
 
                         @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        public void onTextChanged(CharSequence s, int start, int before,
+                            int count) {
                             if (s.length() != 0 && etAddressLine1.isFocused()) {
                                 clearCheckAddress1.setVisibility(View.VISIBLE);
                             } else {
@@ -675,10 +721,13 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     rlCheckaddaddAddress1.setBottomLineActive(false);
                     clearCheckAddress1.setVisibility(View.INVISIBLE);
                     if (JDataUtils.isStringBlank(etAddressLine1.getText())) {
-                        tvAddressLine1Anim.setText(getResources().getString(R.string.This_is_a_required_field));
-                        tvAddressLine1Anim.setTextColor(getResources().getColor(R.color.red_common));
+                        tvAddressLine1Anim
+                            .setText(getResources().getString(R.string.This_is_a_required_field));
+                        tvAddressLine1Anim
+                            .setTextColor(getResources().getColor(R.color.red_common));
                     } else {
-                        tvAddressLine1Anim.setTextColor(getResources().getColor(R.color.label_saved));
+                        tvAddressLine1Anim
+                            .setTextColor(getResources().getColor(R.color.label_saved));
                     }
                 }
                 break;
@@ -692,14 +741,17 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     }
                     tvAddressLine2Anim.setVisibility(View.VISIBLE);
                     tvAddressLine2Anim.setTextColor(getResources().getColor(R.color.colorAccent));
-                    tvAddressLine2Anim.startAnimation(getHintAnimation(tvAddressLine2Anim, "Address 2 (Optional)"));
+                    tvAddressLine2Anim.startAnimation(
+                        getHintAnimation(tvAddressLine2Anim, "Address 2 (Optional)"));
                     etAddressLine2.addTextChangedListener(new TextWatcher() {
                         @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        public void beforeTextChanged(CharSequence s, int start, int count,
+                            int after) {
                         }
 
                         @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        public void onTextChanged(CharSequence s, int start, int before,
+                            int count) {
                             if (s.length() != 0 && etAddressLine2.isFocused()) {
                                 clearCheckAddress2.setVisibility(View.VISIBLE);
                             } else {
@@ -735,7 +787,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
 //                    rl_checkaddadd_postcode.setBottomLineActive(false);
 //                    clearCheckCode.setVisibility(View.INVISIBLE);
 //                    if (JDataUtils.isStringBlank(etPostCode.getText())) {
-//                        tvPostCode.setText(getResources().getString(R.string.This_is_a_required_field));
+//                        tvPostCode.setText(getResources().getString(R.string
+// .This_is_a_required_field));
 //                        tvPostCode.setTextColor(getResources().getColor(R.color.red_common));
 //                    }else if(etPostCode!=null&&etPostCode.getText().toString().trim().length()<4){
 //                        tvPostCode.setText(getResources().getString(R.string.blur_postalcode));
@@ -761,11 +814,13 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     tvCityAnim.startAnimation(getHintAnimation(tvCityAnim, "City"));
                     etShippingCity.addTextChangedListener(new TextWatcher() {
                         @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        public void beforeTextChanged(CharSequence s, int start, int count,
+                            int after) {
                         }
 
                         @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        public void onTextChanged(CharSequence s, int start, int before,
+                            int count) {
                             if (s.length() != 0 && etShippingCity.isFocused()) {
                                 clearCheckCity.setVisibility(View.VISIBLE);
                             } else {
@@ -782,7 +837,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     rlCheckaddaddCity.setBottomLineActive(false);
                     clearCheckCity.setVisibility(View.GONE);
                     if (JDataUtils.isStringBlank(etShippingCity.getText())) {
-                        tvCityAnim.setText(getResources().getString(R.string.This_is_a_required_field));
+                        tvCityAnim
+                            .setText(getResources().getString(R.string.This_is_a_required_field));
                         tvCityAnim.setTextColor(getResources().getColor(R.color.red_common));
                     } else {
                         tvCityAnim.setTextColor(getResources().getColor(R.color.label_saved));
@@ -803,14 +859,17 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                         clearCheckPhone.setVisibility(View.INVISIBLE);
                     }
                     tvPhone.setTextColor(getResources().getColor(R.color.colorAccent));
-                    tvPhone.startAnimation(getHintAnimation(tvPhone, getResources().getString(R.string.eg123)));
+                    tvPhone.startAnimation(
+                        getHintAnimation(tvPhone, getResources().getString(R.string.eg123)));
                     etPhone.addTextChangedListener(new TextWatcher() {
                         @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        public void beforeTextChanged(CharSequence s, int start, int count,
+                            int after) {
                         }
 
                         @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        public void onTextChanged(CharSequence s, int start, int before,
+                            int count) {
                             if (s.length() != 0) {
                                 clearCheckPhone.setVisibility(View.VISIBLE);
                             } else {
@@ -827,7 +886,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     rlCheckaddPhone.setBottomLineActive(false);
                     clearCheckPhone.setVisibility(View.INVISIBLE);
                     if (JDataUtils.isStringBlank(etPhone.getText())) {
-                        tvPhone.setText(getResources().getString(R.string.This_is_a_required_field));
+                        tvPhone
+                            .setText(getResources().getString(R.string.This_is_a_required_field));
                         tvPhone.setTextColor(getResources().getColor(R.color.red_common));
                     } else {
                         tvPhone.setTextColor(getResources().getColor(R.color.label_saved));
@@ -843,14 +903,17 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                         clearCheckDayPhone.setVisibility(View.INVISIBLE);
                     }
                     tvDayPhone.setTextColor(getResources().getColor(R.color.colorAccent));
-                    tvDayPhone.startAnimation(getHintAnimation(tvDayPhone, getResources().getString(R.string.day_time_contact)));
+                    tvDayPhone.startAnimation(getHintAnimation(tvDayPhone,
+                        getResources().getString(R.string.day_time_contact)));
                     etDayPhone.addTextChangedListener(new TextWatcher() {
                         @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        public void beforeTextChanged(CharSequence s, int start, int count,
+                            int after) {
                         }
 
                         @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        public void onTextChanged(CharSequence s, int start, int before,
+                            int count) {
                             if (s.length() != 0) {
                                 clearCheckDayPhone.setVisibility(View.VISIBLE);
                             } else {
@@ -867,7 +930,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     rlCheckaddDayphone.setBottomLineActive(false);
                     clearCheckDayPhone.setVisibility(View.INVISIBLE);
                     if (JDataUtils.isStringBlank(etDayPhone.getText())) {
-                        tvDayPhone.setText(getResources().getString(R.string.This_is_a_required_field));
+                        tvDayPhone
+                            .setText(getResources().getString(R.string.This_is_a_required_field));
                         tvDayPhone.setTextColor(getResources().getColor(R.color.red_common));
                     } else {
                         tvDayPhone.setTextColor(getResources().getColor(R.color.label_saved));
@@ -904,9 +968,12 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
 
     }
 
-
-    @OnClick({R.id.arrow_checkout_shipping_select_state, R.id.et_checkout_shipping_state, R.id.arrow_checkout_shipping_select_country,R.id.et_checkout_shipping_country,R.id.clear_checkout_first,
-            R.id.clear_checkout_last,R.id.clear_checkout_address1,R.id.clear_checkout_address2,R.id.clear_checkout_code,R.id.clear_checkout_city,R.id.clear_checkout_phone,R.id.clear_checkout_dayphone})
+    @OnClick({R.id.arrow_checkout_shipping_select_state, R.id.et_checkout_shipping_state, R.id
+        .arrow_checkout_shipping_select_country, R.id.et_checkout_shipping_country, R.id
+        .clear_checkout_first,
+        R.id.clear_checkout_last, R.id.clear_checkout_address1, R.id.clear_checkout_address2, R
+        .id.clear_checkout_code, R.id.clear_checkout_city, R.id.clear_checkout_phone, R.id
+        .clear_checkout_dayphone})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.arrow_checkout_shipping_select_state:
@@ -925,7 +992,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     WheelPickerEntity ww = new WheelPickerEntity();
                     ww.setDisplay(list_countries.get(i).getName());
                     ww.setValue(list_countries.get(i).getCountry_id());
-                    if (String.valueOf(etShippingCountry.getTag()).equals(list_countries.get(i).getCountry_id())) {
+                    if (String.valueOf(etShippingCountry.getTag())
+                        .equals(list_countries.get(i).getCountry_id())) {
                         oldBean.setIndex(i);
                     }
                     wheelBeans.add(ww);
@@ -970,15 +1038,14 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
         return true;
     }
 
-
     /**
      * create a select dialog
      *
-     * @param list      options
-     * @param oldEntity
-     * @param view      --container of select result
+     * @param list options
+     * @param view --container of select result
      */
-    private void createStatueDialogPicker(ArrayList<WheelPickerEntity> list, final WheelPickerEntity oldEntity, final TextView view) {
+    private void createStatueDialogPicker(ArrayList<WheelPickerEntity> list,
+        final WheelPickerEntity oldEntity, final TextView view) {
         AnimUtil.rotateArrow(arrowSelectState, true);
         WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
         configEntity.setArrayList(list);
@@ -994,7 +1061,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
 
             @Override
             public void onScrolling(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
-                JLogUtils.i("Russell", "onScrolling() -- oldValue => " + oldValue.getDisplay() + "  newValue => " + newValue.getDisplay());
+                JLogUtils.i("Russell", "onScrolling() -- oldValue => " + oldValue
+                    .getDisplay() + "  newValue => " + newValue.getDisplay());
             }
 
             @Override
@@ -1008,7 +1076,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     if (TextUtils.isEmpty(newValue.getDisplay())) {
                         return;
                     }
-                    if (getResources().getString(R.string.pleaseselect).equals(newValue.getDisplay())) {
+                    if (getResources().getString(R.string.pleaseselect)
+                        .equals(newValue.getDisplay())) {
                         return;
                     }
                     tvStateAnim.setVisibility(View.VISIBLE);
@@ -1021,11 +1090,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
         JViewUtils.showWheelPickerOneDialog(checkoutActivity, configEntity);
     }
 
-    private WheelPickerEntity mCurrBean;
-
-    private ArrayList<CountryRegions> mRegions=new ArrayList<>();
-
-    private void createDialogPicker(ArrayList<WheelPickerEntity> list, WheelPickerEntity oldEntity, final TextView view) {
+    private void createDialogPicker(ArrayList<WheelPickerEntity> list, WheelPickerEntity oldEntity,
+        final TextView view) {
         rlCheckaddaddCountry.setBottomLineActive(true);
         AnimUtil.rotateArrow(arrowSelectCountry, true);
         WheelPickerConfigEntity configEntity = new WheelPickerConfigEntity();
@@ -1042,7 +1108,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
 
             @Override
             public void onScrolling(WheelPickerEntity oldValue, WheelPickerEntity newValue) {
-                JLogUtils.i("Russell", "onScrolling() -- oldValue => " + oldValue + "  newValue => " + newValue);
+                JLogUtils.i("Russell",
+                    "onScrolling() -- oldValue => " + oldValue + "  newValue => " + newValue);
             }
 
             @Override
@@ -1056,7 +1123,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     view.setTag(oldValue.getValue());
                     mCurrBean = oldValue;
                 } else {
-                    if (getResources().getString(R.string.pleaseselect).equals(newValue.getDisplay())) {
+                    if (getResources().getString(R.string.pleaseselect)
+                        .equals(newValue.getDisplay())) {
                         return;
                     }
                     if (TextUtils.isEmpty(newValue.getDisplay())) {
@@ -1090,26 +1158,13 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
         JViewUtils.showWheelPickerOneDialog(checkoutActivity, configEntity);
     }
 
-//    @Override
-//    public void onKeyDown(int keyCode, KeyEvent event) {
-//
-//    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
     /**
      * init Text animation
-     *
-     * @param tv
-     * @param hintText
-     * @return
      */
     private Animation getHintAnimation(final TextView tv, final String hintText) {
 
-        Animation animation = AnimationUtils.loadAnimation(checkoutActivity, R.anim.anim_checkout_hint);
+        Animation animation = AnimationUtils
+            .loadAnimation(checkoutActivity, R.anim.anim_checkout_hint);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -1121,7 +1176,8 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                 }, 100);
 
                 tv.setText(hintText);
-                tv.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+                tv.setTextColor(
+                    WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
             }
 
             @Override
@@ -1136,6 +1192,7 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
         return animation;
     }
 
+
     @Override
     public void showErrorMsg(String errorMsg) {
         JViewUtils.showErrorToast(getActivity(), errorMsg);
@@ -1143,26 +1200,51 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
 
     @Override
     public void showData(SVRAppServiceCustomerCountry countryEntityResult) {
-        if (countryEntityResult==null){
+        if (countryEntityResult == null) {
             return;
         }
-        if (countryEntityResult.getCountry()!=null){
+        if (countryEntityResult.getCountry() != null) {
             list_countries = countryEntityResult.getCountry();
-            list_countries.add(0, new CountrySubclass("", getResources().getString(R.string.pleaseselect)));
+            list_countries
+                .add(0, new CountrySubclass("", getResources().getString(R.string.pleaseselect)));
             ArrayList<CountryRegions> state = getState(list_countries);
-            if (state!=null){
+            if (state != null) {
                 mRegions.clear();
                 mRegions.addAll(state);
-                mRegions.add(0, new CountryRegions("", getResources().getString(R.string.pleaseselect)));
+                mRegions.add(0,
+                    new CountryRegions("", getResources().getString(R.string.pleaseselect)));
             }
             if (list_countries.size() > 1) {
                 etShippingCountry.setText(list_countries.get(1).getName());
                 etShippingCountry.setTag(list_countries.get(1).getCountry_id());
             }
-            checkoutActivity.scrollViewBody.scrollTo(0, (int) (getResources().getDimension(R.dimen.scroll_height) * 100));
+            checkoutActivity.scrollViewBody
+                .scrollTo(0, (int) (getResources().getDimension(R.dimen.scroll_height) * 100));
             if ("".equals(etShippingState.getText().toString().trim())) {
                 tvStateAnim.setVisibility(View.INVISIBLE);
             }
         }
+    }
+
+    public interface ISaveAddressMsgData {
+
+        public void createCustomerAddress(
+            String firstName,
+            String lastName,
+            String countryId,
+            String telePhone,
+            String street0,
+            String street1,
+            String fax,
+            String postCode,
+            String city,
+            String region,
+            String regionId);
+    }
+
+    public interface OnFragmentInteractionListener {
+
+        // TODO: Update argument type and name
+        public void onFragmentInteraction(Uri uri);
     }
 }

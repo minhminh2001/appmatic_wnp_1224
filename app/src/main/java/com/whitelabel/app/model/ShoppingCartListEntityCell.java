@@ -7,34 +7,73 @@ import java.util.HashMap;
 /**
  * Created by Administrator on 2015/7/6.
  */
-public class ShoppingCartListEntityCell extends ShoppingCartListBase implements Serializable{
-    private ArrayList<HashMap<String,String>> localOptions;
+public class ShoppingCartListEntityCell extends ShoppingCartListBase implements Serializable {
+
+    private ArrayList<HashMap<String, String>> localOptions;
+
     private String id;
+
     private String productId;
+
     private String name;
+
     private String category;
+
     private String firstCategory;
+
     private String qty;
+
     private String oldQty;
+
     private String price;
+
     private String image;
+
     private String brand;
+
     private String brandId;
+
     private int stockQty;
+
     private String currStockQty;
+
     private String maxSaleQty;
+
     private String maxQty;
+
     private String finalPrice;
+
     private String inStock;
+
     private int isCampaignProduct;//1 means promotion campaign product , otherwise no.
+
     private String canViewPdp;
+
     private String availability;
+
     private String visibility;
+
     private String vendorDisplayName;
+
     private String vendor_id;
+
     private String type;
+
     private String has_error;
+
     private String error_message;
+
+    private String simpleId;
+
+    private ArrayList<HashMap<String, String>> options;//Color and Size,adapter to
+
+    public String getSimpleId() {
+        return simpleId;
+    }
+
+    public void setSimpleId(String simpleId) {
+        this.simpleId = simpleId;
+    }
 
     public String getBrandId() {
         return brandId;
@@ -92,7 +131,6 @@ public class ShoppingCartListEntityCell extends ShoppingCartListBase implements 
         this.visibility = visibility;
     }
 
-
     public String getAvailability() {
         return availability;
     }
@@ -116,6 +154,7 @@ public class ShoppingCartListEntityCell extends ShoppingCartListBase implements 
     public void setFirstCategory(String firstCategory) {
         this.firstCategory = firstCategory;
     }
+
     public String getCanViewPdp() {
         return canViewPdp;
     }
@@ -152,12 +191,6 @@ public class ShoppingCartListEntityCell extends ShoppingCartListBase implements 
         return brand;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-
-
 //    public boolean isStock() {
 //        return isStock;
 //    }
@@ -166,7 +199,10 @@ public class ShoppingCartListEntityCell extends ShoppingCartListBase implements 
 //        this.isStock = isStock;
 //    }
 
-    private ArrayList<HashMap<String,String>> options;//Color and Size,adapter to ShoppingCartListEntityCellColorAndSize
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+    // ShoppingCartListEntityCellColorAndSize
 
     public String getId() {
         return id;
@@ -200,8 +236,6 @@ public class ShoppingCartListEntityCell extends ShoppingCartListBase implements 
         this.category = category;
     }
 
-
-
     public String getQty() {
         return qty;
     }
@@ -210,12 +244,15 @@ public class ShoppingCartListEntityCell extends ShoppingCartListBase implements 
         setOldQty(this.qty);
         this.qty = qty;
     }
+
     public String getOldQty() {
         return this.oldQty;
     }
+
     public void setOldQty(String oldQty) {
         this.oldQty = oldQty;
     }
+
     public String getPrice() {
         return price;
     }
@@ -232,11 +269,11 @@ public class ShoppingCartListEntityCell extends ShoppingCartListBase implements 
         this.image = image;
     }
 
-    public ArrayList<HashMap<String,String>> getOptions() {
+    public ArrayList<HashMap<String, String>> getOptions() {
         return options;
     }
 
-    public void setOptions(ArrayList<HashMap<String,String>> options) {
+    public void setOptions(ArrayList<HashMap<String, String>> options) {
         this.options = options;
     }
 

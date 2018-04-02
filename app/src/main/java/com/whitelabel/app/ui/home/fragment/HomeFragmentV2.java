@@ -161,16 +161,13 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-                    Intent intent = new Intent(getActivity(), HomeActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE,
-                        HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                } else {
-                    jumpLoginActivity();
-                }
+
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(HomeActivity.EXTRA_REDIRECTTO_TYPE,
+                    HomeActivity.EXTRA_REDIRECTTO_TYPE_VALUE_SHOPPINGCART);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
@@ -245,7 +242,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
             vpCategoryViewPager.setAdapter(fragmentPagerAdapter);
             piPageIndicatory.setViewPager(vpCategoryViewPager);
             piPageIndicatory.setOnPageChangeListener(pageChangeListener);
-            vpCategoryViewPager.setOffscreenPageLimit(categoryViewCount);
+            //vpCategoryViewPager.setOffscreenPageLimit(categoryViewCount);
         }
     }
 

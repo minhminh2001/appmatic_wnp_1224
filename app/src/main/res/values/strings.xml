@@ -858,6 +858,9 @@
     <string name="address_phone_error_hint">More than 6 digits please.</string>
     <string name="market_url">market://details?id=</string>
     <string name="playstore_url">https://play.google.com/store/apps/details?id=</string>
+    <string name="already_registered">Already Registered?</string>
+    <string name="login_now">Login now</string>
+    <string name="profile">Profile</string>
 
     <!-- Notify me dialog -->
     <string name="notify_title">Notify When Available</string>
@@ -868,5 +871,6 @@
     <string name="notify_button_notifyme">Notify Me</string>
     <string name="notify_button_cacnel">Cancel</string>
     <string name="notify_email_tips">Email notification is\n subscribed</string>
+
 
 </resources>

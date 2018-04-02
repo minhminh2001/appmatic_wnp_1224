@@ -1,9 +1,5 @@
 package com.whitelabel.app.dao;
 
-import android.content.Context;
-import android.os.Handler;
-import android.text.TextUtils;
-
 import com.android.volley.VolleyError;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.bean.OrderBody;
@@ -25,6 +21,10 @@ import com.whitelabel.app.utils.JStorageUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.os.Handler;
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -35,38 +35,59 @@ import java.util.TreeMap;
  * Created by ray on 2015/10/29.
  */
 public class ShoppingCarDao extends BaseHttp {
+
     public static final int REQUEST_SHOPPINGINFO = 3;
+
     public static final int REQUEST_REFERSHERRORSHOPPINGINFO = 25;
+
     public static final int REQUEST_SAVEBANK = 4;
+
     public static final int REQUEST_CHECKSTOCK = 5;
+
     public static final int REQUEST_ERROR = 10;
+
     public static final int REQUEST_LOCALSHOPPINGINFO = 6;
+
     public static final int REQUEST_VOUCHERCODE = 7;
+
     public static final int REQUEST_MULTIPLECODE = 8;
+
     public static final int REQUEST_ADDPRODUCT = 9;
+
     public static final int REQUEST_ADDCAMPAGINTOCART = 11;
+
     public static final int REQUEST_RECOVERORDER = 222;
+
     public static final int REQUEST_REORDER_PRODUCT = 223;
+
     public static final int REQUEST_CHANGESHOPPINGCARCOUNT = 14;
+
     public static final int REQUEST_DELETEFROMSHOPPINGCART = 23;
+
     public static final int REQUEST_STORECREDIT = 24;
+
     public ShoppingCarDao(String TAG, Handler handler) {
         super(TAG, handler);
     }
+
     @Override
     public void requestHttp(HTTP_METHOD method, String url, TreeMap map, int requestCode) {
         super.requestHttp(method, url, map, requestCode);
     }
+
     public void getShoppingCarInfo(String sessionKey) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         requestHttp(HTTP_METHOD.POST, "appservice/cart/list", params, REQUEST_SHOPPINGINFO);
     }
+
     public void refershErrorShoppingCarInfo(String sessionKey) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
-        requestHttp(HTTP_METHOD.POST, "appservice/cart/list", params, REQUEST_REFERSHERRORSHOPPINGINFO);
+        requestHttp(HTTP_METHOD.POST, "appservice/cart/list", params,
+            REQUEST_REFERSHERRORSHOPPINGINFO);
     }
+
     //1  remove  0 add
     public void redeemStoreCredit(String sessionKey, String remove) {
         params = new TreeMap<>();
@@ -74,29 +95,35 @@ public class ShoppingCarDao extends BaseHttp {
         params.put("remove", remove);
         requestHttp(HTTP_METHOD.POST, "appservice/cart/storeCredit", params, REQUEST_STORECREDIT);
     }
+
     public void deleteProductFromShoppingCart(String session, String itemId, String position) {
         params = new TreeMap<>();
         params.put("session_key", session);
         params.put("id", itemId + "");
-        requestHttp(HTTP_METHOD.POST, "appservice/cart/delete", params, REQUEST_DELETEFROMSHOPPINGCART, position);
+        requestHttp(HTTP_METHOD.POST, "appservice/cart/delete", params,
+            REQUEST_DELETEFROMSHOPPINGCART, position);
     }
+
     public void saveShoppingCartCount(Context context, int num) {
         GOUserEntity userEntity = WhiteLabelApplication.getAppConfiguration().getUserInfo(context);
         WhiteLabelApplication.getAppConfiguration().updateUserData(context, userEntity);
     }
-    public void addProductToShoppingCart(String sessionKey, String productId, Map<String,String> idQtys) {
+
+    public void addProductToShoppingCart(String sessionKey, String productId,
+        Map<String, String> idQtys) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
 //        params.put("store_id","3");
         params.put("product_id", productId);
-        int index=0;
-        for(String  id: idQtys.keySet()){
-            params.put("simpleId["+index+"]",id);
-            params.put("qty["+index+"]",idQtys.get(id));
+        int index = 0;
+        for (String id : idQtys.keySet()) {
+            params.put("simpleId[" + index + "]", id);
+            params.put("qty[" + index + "]", idQtys.get(id));
             index++;
         }
         requestHttp(HTTP_METHOD.POST, "appservice/cart/add", params, REQUEST_ADDPRODUCT);
     }
+
     public void addBatch(String sessionkey, ShoppingCartListEntityCell[] shoppingCart) {
         params = new TreeMap<>();
         params.put("session_key", sessionkey);
@@ -112,8 +139,9 @@ public class ShoppingCarDao extends BaseHttp {
                 for (int z = 0; z < cell.getLocalOptions().size(); z++) {
                     HashMap<String, String> attribute = cell.getLocalOptions().get(z);
                     if (attribute != null && !TextUtils.isEmpty(attribute.get("attributeId"))) {
-                        params.put("products[" + i + "][super_attribute][" + attribute.get("attributeKey") +
-                                "]", attribute.get("attributeId"));
+                        params.put("products[" + i + "][super_attribute][" + attribute
+                            .get("attributeKey") +
+                            "]", attribute.get("attributeId"));
                     }
                 }
             }
@@ -129,10 +157,11 @@ public class ShoppingCarDao extends BaseHttp {
 //            }
         }
         requestHttp(HTTP_METHOD.POST, "appservice/cart/addBatch", params,
-                REQUEST_MULTIPLECODE);
+            REQUEST_MULTIPLECODE);
     }
 
-//    public void addProductToShoppingCart(String sessionKey, String productId, String qty, String colorAttribute, String colorId, String sizeAttribute, String sizeId) {
+    //    public void addProductToShoppingCart(String sessionKey, String productId, String qty,
+    // String colorAttribute, String colorId, String sizeAttribute, String sizeId) {
 //        params = new TreeMap<>();
 //        params.put("session_key", sessionKey);
 //        params.put("product_id", productId);
@@ -155,31 +184,38 @@ public class ShoppingCarDao extends BaseHttp {
     }
 
     public void sendReOrderProduct(String sessionKey, ArrayList<OrderBody> orderBodies) {
-        String orderId="";
+        String orderId = "";
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
-        if(orderBodies!=null&&!orderBodies.isEmpty()){
-            for (int i=0;i<orderBodies.size();i++){
-                orderId=orderBodies.get(i).getOrderId();
-                params.put("products["+i+"][item_id]", orderBodies.get(i).getItemId());
-                params.put("products["+i+"][qty]", orderBodies.get(i).getOrderQuantity());
+        if (orderBodies != null && !orderBodies.isEmpty()) {
+            for (int i = 0; i < orderBodies.size(); i++) {
+                orderId = orderBodies.get(i).getOrderId();
+                params.put("products[" + i + "][item_id]", orderBodies.get(i).getItemId());
+                params.put("products[" + i + "][qty]", orderBodies.get(i).getOrderQuantity());
             }
         }
         params.put("order_id", orderId);
-        requestHttp(HTTP_METHOD.POST, "appservice/order/reOrderProduct", params, REQUEST_REORDER_PRODUCT);
+        requestHttp(HTTP_METHOD.POST, "appservice/order/reOrderProduct", params,
+            REQUEST_REORDER_PRODUCT);
     }
+
     public void addCampaignProductToCart(String sessionKey, String productId) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         params.put("product_id", productId);
-        requestHttp(HTTP_METHOD.POST, "appservice/cart/addPromoProduct", params, REQUEST_ADDCAMPAGINTOCART);
+        requestHttp(HTTP_METHOD.POST, "appservice/cart/addPromoProduct", params,
+            REQUEST_ADDCAMPAGINTOCART);
     }
-    public void requestChangeCount(String sessionKey, String cellId, String qty, KeyValueBean keyValueBean) {
+
+    public void requestChangeCount(String sessionKey, String cellId, String qty,
+        KeyValueBean keyValueBean) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
         params.put("cart[" + cellId + "][qty]", qty);
-        requestHttp(HTTP_METHOD.POST, "appservice/cart/updateItemAmount", params, REQUEST_CHANGESHOPPINGCARCOUNT, keyValueBean);
+        requestHttp(HTTP_METHOD.POST, "appservice/cart/updateItemAmount", params,
+            REQUEST_CHANGESHOPPINGCARCOUNT, keyValueBean);
     }
+
     public void applyOrCancelVoucherCode(String sessionKey, String voucherCode, String flag) {
         params = new TreeMap<>();
         params.put("session_key", sessionKey);
@@ -193,11 +229,13 @@ public class ShoppingCarDao extends BaseHttp {
             @Override
             public void run() {
                 LinkedList shoppingcart = new LinkedList<>();
-                ArrayList<TMPLocalCartRepositoryProductEntity> products = JStorageUtils.getProductListFromLocalCartRepository(context);//加载本地数据
+                ArrayList<TMPLocalCartRepositoryProductEntity> products = JStorageUtils
+                    .getProductListFromLocalCartRepository(context);//加载本地数据
 
                 ShoppingCartListEntityCart car = new ShoppingCartListEntityCart();
 
-                ShoppingCartListEntityCell[] items = new ShoppingCartListEntityCell[products.size()];
+                ShoppingCartListEntityCell[] items = new ShoppingCartListEntityCell[products
+                    .size()];
                 double subTotal = 0;
                 int num = 0;
                 for (int i = 0; i < products.size(); i++) {
@@ -226,10 +264,13 @@ public class ShoppingCarDao extends BaseHttp {
                     } else {
                         product.setAvailability(entity.getAvailability());
                     }
-                    ArrayList<TMPLocalCartRepositoryProductOptionEntity> options = entity.getOptions();
+                    ArrayList<TMPLocalCartRepositoryProductOptionEntity> options = entity
+                        .getOptions();
 
-                    ArrayList<HashMap<String, String>> localList = new ArrayList<HashMap<String, String>>();
-                    ArrayList<HashMap<String, String>> displayList = new ArrayList<HashMap<String, String>>();
+                    ArrayList<HashMap<String, String>> localList = new ArrayList<HashMap<String,
+                        String>>();
+                    ArrayList<HashMap<String, String>> displayList = new
+                        ArrayList<HashMap<String, String>>();
 
                     for (int z = 0; z < options.size(); z++) {
                         TMPLocalCartRepositoryProductOptionEntity entity1 = options.get(z);
@@ -246,7 +287,8 @@ public class ShoppingCarDao extends BaseHttp {
                     product.setLocalOptions(localList);
                     items[i] = product;
                     num += entity.getSelectedQty();
-                    subTotal += Double.parseDouble(entity.getFinalPrice()) * entity.getSelectedQty();
+                    subTotal += Double.parseDouble(entity.getFinalPrice()) * entity
+                        .getSelectedQty();
                     shoppingcart.add(product);
                 }
                 car.setItems(items);
@@ -258,13 +300,11 @@ public class ShoppingCarDao extends BaseHttp {
         }.start();
     }
 
-
     public void checkOutofStock(String sessionkey) {
         params = new TreeMap<>();
         params.put("session_key", sessionkey);
         requestHttp(HTTP_METHOD.POST, "appservice/cart/checkCartStock", params, REQUEST_CHECKSTOCK);
     }
-
 
     @Override
     public void onSuccess(int requestCode, String response, Object object) {
@@ -277,7 +317,8 @@ public class ShoppingCarDao extends BaseHttp {
                     try {
                         JSONObject obj = new JSONObject(response);
                         JSONObject carlist = obj.getJSONObject("cart");
-                        carBean = JJsonUtils.parseJsonObj(carlist.toString(), ShoppingCartListEntityCart.class);
+                        carBean = JJsonUtils
+                            .parseJsonObj(carlist.toString(), ShoppingCartListEntityCart.class);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -291,14 +332,16 @@ public class ShoppingCarDao extends BaseHttp {
                 if (isOk(response)) {
                     postHandler(REQUEST_CHECKSTOCK, null, RESPONSE_SUCCESS);
                 } else {
-                    ShoppingCartErrorMsgBean shoppingCartErrorMsgBean = getShoppingCartErrorMsgBean(response);
+                    ShoppingCartErrorMsgBean shoppingCartErrorMsgBean = getShoppingCartErrorMsgBean(
+                        response);
                     postHandler(REQUEST_CHECKSTOCK, shoppingCartErrorMsgBean, RESPONSE_FAILED);
                 }
                 break;
             case REQUEST_VOUCHERCODE:
 
                 if (isOk(response)) {
-                    ShoppingCartVoucherApplyEntity bean = JJsonUtils.parseJsonObj(response, ShoppingCartVoucherApplyEntity.class);
+                    ShoppingCartVoucherApplyEntity bean = JJsonUtils
+                        .parseJsonObj(response, ShoppingCartVoucherApplyEntity.class);
                     postHandler(requestCode, bean, RESPONSE_SUCCESS);
                 } else {
                     ErrorMsgBean errorMsgBean = getErrorMsgBean(response);
@@ -348,7 +391,8 @@ public class ShoppingCarDao extends BaseHttp {
                 break;
             case REQUEST_CHANGESHOPPINGCARCOUNT:
                 if (isOk(response)) {
-                    ShoppingCartDeleteCellEntity cellEntity = JJsonUtils.parseJsonObj(response, ShoppingCartDeleteCellEntity.class);
+                    ShoppingCartDeleteCellEntity cellEntity = JJsonUtils
+                        .parseJsonObj(response, ShoppingCartDeleteCellEntity.class);
                     if (cellEntity != null) {
                         cellEntity.setParams((KeyValueBean) object);
                     }
@@ -361,7 +405,8 @@ public class ShoppingCarDao extends BaseHttp {
                 break;
             case REQUEST_DELETEFROMSHOPPINGCART:
                 if (isOk(response)) {
-                    ShoppingCartDeleteCellEntity shoppingCartDeleteCell = JJsonUtils.parseJsonObj(response, ShoppingCartDeleteCellEntity.class);
+                    ShoppingCartDeleteCellEntity shoppingCartDeleteCell = JJsonUtils
+                        .parseJsonObj(response, ShoppingCartDeleteCellEntity.class);
                     shoppingCartDeleteCell.setParam(object);
                     postHandler(requestCode, shoppingCartDeleteCell, RESPONSE_SUCCESS);
                 } else {
@@ -373,7 +418,8 @@ public class ShoppingCarDao extends BaseHttp {
                 break;
             case REQUEST_STORECREDIT:
                 if (isOk(response)) {
-                    ShoppingCartDeleteCellEntity shoppingCartDeleteCell = JJsonUtils.parseJsonObj(response, ShoppingCartDeleteCellEntity.class);
+                    ShoppingCartDeleteCellEntity shoppingCartDeleteCell = JJsonUtils
+                        .parseJsonObj(response, ShoppingCartDeleteCellEntity.class);
                     postHandler(requestCode, shoppingCartDeleteCell, RESPONSE_SUCCESS);
                 } else {
                     ErrorMsgBean errorMsgBean = getErrorMsgBean(response);
@@ -385,7 +431,8 @@ public class ShoppingCarDao extends BaseHttp {
     }
 
     public ShoppingCartErrorMsgBean getShoppingCartErrorMsgBean(String response) {
-        ShoppingCartErrorMsgBean bean = JJsonUtils.parseJsonObj(response, ShoppingCartErrorMsgBean.class);
+        ShoppingCartErrorMsgBean bean = JJsonUtils
+            .parseJsonObj(response, ShoppingCartErrorMsgBean.class);
         if (bean == null) {
             bean = new ShoppingCartErrorMsgBean();
             bean.setErrorMessage("error");
@@ -396,9 +443,9 @@ public class ShoppingCarDao extends BaseHttp {
     @Override
     public void onFalied(int requestCode, VolleyError volleyError, Object object, int errorType) {
         if (requestCode == REQUEST_CHANGESHOPPINGCARCOUNT) {
-            postErrorHandler(REQUEST_ERROR, requestCode, object,errorType);
+            postErrorHandler(REQUEST_ERROR, requestCode, object, errorType);
         } else {
-            postErrorHandler(REQUEST_ERROR, requestCode, volleyError.getMessage(),errorType);
+            postErrorHandler(REQUEST_ERROR, requestCode, volleyError.getMessage(), errorType);
         }
     }
 }

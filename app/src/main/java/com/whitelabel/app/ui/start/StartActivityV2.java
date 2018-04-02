@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.handler.INITApp;
 import com.whitelabel.app.notification.RegistrationIntentService;
 import com.whitelabel.app.task.INITExecutor;
+import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.MaterialDialog;
 
@@ -64,9 +66,9 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
 
     private void startNextActvity() {
 //        if (WhiteLabelApplication.getAppConfiguration().isSignIn(StartActivityV2.this)) {
-            Intent intent = new Intent(StartActivityV2.this, HomeActivity.class);
-            startActivity(intent);
-            finish();
+        Intent intent = new Intent(StartActivityV2.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
 //        } else {
 //            Intent intent = new Intent(StartActivityV2.this, LoginRegisterActivity.class);
 //            Bundle mBundle = new Bundle();
@@ -134,6 +136,7 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
         INITExecutor.getInstance().execute(mCallback);
         mPresenter.setStartTime();
         mPresenter.getConfigInfo("", "");
+        JToolUtils.showAPKKeyHash(this);
         initGuide();
         mPresenter.getSearchCategory();
     }

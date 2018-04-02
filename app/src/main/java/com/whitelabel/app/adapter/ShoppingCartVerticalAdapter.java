@@ -58,17 +58,23 @@ import java.util.List;
  * Created by Administrator on 2016/1/27.
  */
 public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
-    private static final int TYPE_CELL = 1;
+
     public static final int TYPE_BODY = 2;
-    private ArrayList<ShoppingCartListBase> list;
-    private final Context context;
-    private Dialog mDialog;
-    private final ShoppingCartAdapterCallback callback;
-    private final ShoppingCarDao mShoppingCartDao;
+
+    private static final int TYPE_CELL = 1;
+
     private final static String TAG = "ShoppingCartVerticalAdapter";
+
+    private final Context context;
+
+    private final ShoppingCartAdapterCallback callback;
+
+    private final ShoppingCarDao mShoppingCartDao;
+
     private final ImageLoader mImageLoader;
 
     private AdapterView.OnItemClickListener itemOnClickListener;
+
     private IShoppingCartAddOrSubtractCallback iShoppingCartAddOrSubtractCallback;
 
     public void setItemOnClickListener(AdapterView.OnItemClickListener itemOnClickListener) {
@@ -355,7 +361,6 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             setDotDefault(viewHolder);
         }
 
-
         viewHolder.llShoppingcartCellPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -384,6 +389,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             });
         }
     }
+
     private void setPonitColor(ViewHolder viewHolder, boolean darkColor) {
         //是否使用深颜色
         if (!darkColor) {
@@ -423,37 +429,64 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         return view.getMeasuredHeight();
     }
     public static class InfoViewHolder extends RecyclerView.ViewHolder {
+
         public InfoViewHolder(View view) {
             super(view);
         }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         final View view;
+
         final TextView tvOutOfStock;
+
         final TextView tvShoppingcartSplit;
+
         final TextView unavailable;
+
         final TextView tvProductName;
+
         final TextView tvProductBland;
+
         final TextView tvColorAndSize;
+
         final TextView tvPrice;
+
         final TextView tvFinalPrice;
+
         final TextView tvShoppingcartCellPoint1;
+
         final TextView tvShoppingcartCellPoint2;
+
         final TextView tvShoppingcartCellPoint3;
+
         final ImageView imageView;
+
         final ImageView ivShoppingCartDelete;
+
         final TextView tvCount;
+
         final TextView tvCheckMername;
+
         final TextView tvAllBarrier;
+
         final TextView tvAllBarrier2;
+
         final LinearLayout llShoppingCartError;
+
         final ImageView ivShoppingCartIcon;
+
         final TextView tvShoppingCartErrorMsg;
+
         final SwipeLayout swipeShoppingCart;
+
         final RelativeLayout rlShoppingCartCellContent;
+
         final RelativeLayout rlShoppingcartCountSub;
+
         final RelativeLayout rlShoppingcartCountPlus;
+
         final LinearLayout llShoppingcartCellPoint;
         final LinearLayout llNotifyMe;
         final LinearLayout llAddCountSubs;

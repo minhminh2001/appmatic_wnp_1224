@@ -194,13 +194,10 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
 
     @Override
     protected void jumpShoppingCartPage() {
-        if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
-            if (!(mCurrentFragment instanceof ShoppingCartVerticalFragment)) {
-                switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SHOPPINGCART);
-                switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_SHOPPINGCART, null);
-            }
-        } else {
-            jumpLoginActivity();
+
+        if (!(mCurrentFragment instanceof ShoppingCartVerticalFragment)) {
+            switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_SHOPPINGCART);
+            switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_SHOPPINGCART, null);
         }
     }
 

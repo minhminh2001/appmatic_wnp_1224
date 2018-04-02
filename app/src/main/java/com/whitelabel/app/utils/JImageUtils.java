@@ -177,6 +177,16 @@ public class JImageUtils {
         return wrappedDrawable;
     }
 
+
+
+    public static Drawable getGrayThemeIcon(Context context,int drawable){
+        Drawable drawable1=ContextCompat.getDrawable(context, drawable);
+        final Drawable wrappedDrawable = DrawableCompat.wrap(drawable1);
+        DrawableCompat.setTintList(wrappedDrawable,
+                ColorStateList.valueOf(ContextCompat.getColor(context,R.color.greyEEEEEE)));
+        return wrappedDrawable;
+    }
+
     public static Drawable getDarkThemeIcon(Context context,int drawable){
         Drawable drawable1=ContextCompat.getDrawable(context, drawable);
         final Drawable wrappedDrawable = DrawableCompat.wrap(drawable1);

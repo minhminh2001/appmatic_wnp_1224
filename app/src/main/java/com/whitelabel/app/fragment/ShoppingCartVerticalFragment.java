@@ -16,13 +16,10 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +53,7 @@ import com.whitelabel.app.model.ShoppingCartListEntityCart;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.checkout.CheckoutActivity;
 import com.whitelabel.app.ui.login.LoginFragmentContract;
 import com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
@@ -73,6 +71,38 @@ import com.whitelabel.app.utils.SoftInputShownUtil;
 import com.whitelabel.app.utils.ToastUtils;
 import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.Fragment;
+import android.content.Intent;
+import android.graphics.Rect;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.GestureDetector;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -101,72 +131,143 @@ import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG
 public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<ShoppingCartVersionContract.Presenter>
         implements SwipeRefreshLayout.OnRefreshListener, View.OnFocusChangeListener, View.OnClickListener, ShoppingCartAdapterCallback ,ShoppingCartVersionContract.View {
     private static final String ARG_PARAM1 = "type";
+
     private static final String ARG_PARAM2 = "mGATrackTimeStart";
-    private TextView tvShoppingShippingFeeTitle;
-    public Long mGATrackCheckoutTimeStart = 0L;
-    public Long mGATrackTimeStart = 0L;
-    public boolean mGATrackTimeEnable = false;
-    private CustomSwipefreshLayout swipeRefrshLayout;
-    private DataHandler mHandler;
-    private Handler timeHandler;
-    public RecyclerView shoppingCartRecyclerView;
-    private View infoView;
-    public TextView tvSubtotal;
-    public TextView tvVoucher;
-    private TextView tvApply;
-    private EditText etVoucherApply;
-    public TextView tvGrandTotal;
-    public LinearLayout llNothing;
-    public LinearLayout llCheckout;
-    public LinearLayout llTopError;
-    public TextView tvErrorMsg;
-    public TextView tvCheckout;
-    private LinearLayout llApplyAnim;
-    private TextView tvNullApplyHint;
-    private ImageView tvApplyImageAnim, clearVoucher;
-    private TextView tvApplyTextAnim;
-    private RelativeLayout llVoucherPrice;
-    public TextView tvShippingFree;
-    private TextView tvVoucherWorld, tv_shoppingbottominfo_blank;
-    public ShoppingCartVerticalAdapter adapter;
-    public ArrayList<ShoppingCartListBase> mProducts;
-    private ShoppingCartListEntityCart mCar;
-    private final int REQUESTCODE = 2000;
-    private ShoppingCarDao mCarDao;
-    private String TAG = this.getClass().getSimpleName();
-    private RequestErrorHelper requestErrorHelper;
-//    private View vCampaign; vProgress
-    private View  connectionBreak;
-    private View  viewShoppingCartBottom;
-    public int fromType;
-    private Dialog mDialog;
-    private LinearLayout btnTry;
-    private String mCancelStr, mApplyStr;
-    private String voucherCode = "";
-    private RelativeLayout llBody;
-    private TextView btnGoShopping;
-    private final int APPLIED = 1;
-    private final int UNAPPLIED = 2;
-    private final int REDEEM = 1;
-    private int currStatus;
+
     private final static int LOADING = 100;
+
     private final static int LOADSUCCESS = 101;
+
+    private final int REQUESTCODE = 2000;
+
+    private final int APPLIED = 1;
+
+    private final int UNAPPLIED = 2;
+
+    private final int REDEEM = 1;
+
+    public Long mGATrackCheckoutTimeStart = 0L;
+
+    public Long mGATrackTimeStart = 0L;
+
+    public boolean mGATrackTimeEnable = false;
+
+    public RecyclerView shoppingCartRecyclerView;
+
+    public TextView tvSubtotal;
+
+    public TextView tvVoucher;
+
+    public TextView tvGrandTotal;
+
+    public LinearLayout llNothing;
+
+    public LinearLayout llCheckout;
+
+    public LinearLayout llTopError;
+
+    public TextView tvErrorMsg;
+
+    public TextView tvCheckout;
+
+    public TextView tvShippingFree;
+
+    public ShoppingCartVerticalAdapter adapter;
+
+    public ArrayList<ShoppingCartListBase> mProducts;
+
+    public int fromType;
+
+    //监听StretchScrollView 上下滑动
+    public GestureDetector gestureDetector;
+
+    // item和底部布局高度，判断是否需要在中间添加空白view,以致使底部布局靠底
+    int recyclerViewHeight = 0;
+
+    int itemHieght = 0;
+
+    int gapHeight = 0;
+
+    int oldAllItemHeight = 0;
+
+    ViewTreeObserver.OnPreDrawListener onPreDrawListener;
+
+    private TextView tvShoppingShippingFeeTitle;
+
+    private CustomSwipefreshLayout swipeRefrshLayout;
+
+    private DataHandler mHandler;
+
+    private Handler timeHandler;
+
+    private View infoView;
+
+    private TextView tvApply;
+
+    private EditText etVoucherApply;
+
+    private LinearLayout llApplyAnim;
+
+    private TextView tvNullApplyHint;
+
+    private ImageView tvApplyImageAnim, clearVoucher;
+
+    private TextView tvApplyTextAnim;
+
+    private RelativeLayout llVoucherPrice;
+
+    private TextView tvVoucherWorld, tv_shoppingbottominfo_blank;
+
+    private ShoppingCartListEntityCart mCar;
+
+    private ShoppingCarDao mCarDao;
+
+    private String TAG = this.getClass().getSimpleName();
+
+    private RequestErrorHelper requestErrorHelper;
+
+    //    private View vCampaign; vProgress
+    private View connectionBreak;
+
+    private View viewShoppingCartBottom;
+
+    private Dialog mDialog;
+
+    private LinearLayout btnTry;
+
+    private String mCancelStr, mApplyStr;
+
+    private String voucherCode = "";
+
+    private RelativeLayout llBody;
+
+    private TextView btnGoShopping;
+
+    private int currStatus;
+
     private HomeBaseFragment.HomeCommonCallback mHomeCallback;
+
     private Boolean mIsFromLogin = false;
+
     private String mVoucherCode;
+
     private ImageLoader mImageLoader;
+
     private TextView mTvGst;
+
     //order page to add cart back net callback errorMessage
     private String backOrderErrorMessage="";
     @Override
     public boolean getSwipeRefreshStatus() {
         return swipeRefrshLayout.isRefreshing();
     }
+
     @Override
     public void onRefresh() {
         //暂时没有用到
         sendRequest();
     }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -269,18 +370,22 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         }
         super.onResume();
     }
+
     public void refresh() {
         initData();
     }
+
     public void startHomeActivity() {
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         startActivity(intent);
     }
+
     public void startLoginActivity() {
         Intent loginIntent = new Intent(getActivity(), LoginRegisterActivity.class);
         startActivityForResult(loginIntent, REQUESTCODE);
         getActivity().overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
     }
+
     public void initView(View view) {
         mImageLoader = new ImageLoader(getActivity());
         btnGoShopping = (TextView) view.findViewById(R.id.btn_sc_nothing_goshopping);
@@ -364,6 +469,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
     public View getInfoView() {
         return infoView;
     }
+
     public void initInfoView(View view) {
         tv_shoppingbottominfo_blank = (TextView) view.findViewById(R.id.tv_shoppingbottominfo_blank);
         tvSubtotal = (TextView) view.findViewById(R.id.tv_shoppingcart_subtotal);
@@ -386,6 +492,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() != 0 && etVoucherApply.isFocused()) {
@@ -394,6 +501,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
                     clearVoucher.setVisibility(View.GONE);
                 }
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable != null) {
@@ -402,6 +510,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
             }
         });
     }
+
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
@@ -416,6 +525,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
             clearVoucher.setVisibility(View.GONE);
         }
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -652,6 +762,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         }
 
     }
+
     public void gaTrackerRedeem(int type) {
         if (getActivity() != null) {
             String action = "";
@@ -661,9 +772,9 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
                 action = "Cancel Redeeming Credit";
             }
             GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
-                    action,
-                    null,
-                    null);
+                action,
+                null,
+                null);
         }
     }
 
@@ -682,17 +793,21 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
             JLogUtils.i("googleGA", "Remove Item From Cart");
         }
     }
-    public void setVoucherFaildMessage(String errorMsg){
+
+    public void setVoucherFaildMessage(String errorMsg) {
         tvApplyImageAnim.setImageResource(R.mipmap.icon_shopping_cart_error);
         tvApplyTextAnim.setTextColor(getResources().getColor(R.color.redC1033D));
         tvApplyTextAnim.setText(errorMsg);
         llApplyAnim.setVisibility(View.VISIBLE);
     }
+
     public void setDiscountPrice(double disCount, String title) {
         llVoucherPrice.setVisibility(View.VISIBLE);
-        tvVoucher.setText("-"+WhiteLabelApplication.getAppConfiguration().getCurrency().getName()+" " + JDataUtils.formatDouble((Math.abs(disCount)) + ""));
+        tvVoucher.setText("-" + WhiteLabelApplication.getAppConfiguration().getCurrency()
+            .getName() + " " + JDataUtils.formatDouble((Math.abs(disCount)) + ""));
         tvVoucherWorld.setText(title);
     }
+
     private void initShoppingCartData(ShoppingCartListEntityCart cart, boolean isInit) {
         if (getActivity() == null)return ;
              if (!TextUtils.isEmpty(cart.getGst())) {
@@ -803,7 +918,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         }
     }
 
-    public void setLayoutHaveProduct(){
+    public void setLayoutHaveProduct() {
         connectionBreak.setVisibility(View.GONE);
         llNothing.setVisibility(View.GONE);
         llCheckout.setVisibility(View.VISIBLE);
@@ -811,7 +926,8 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         showSearch = false;
         getActivity().supportInvalidateOptionsMenu();
     }
-    public void setLayoutNotHaveProduct(){
+
+    public void setLayoutNotHaveProduct() {
         llNothing.setVisibility(View.VISIBLE);
         llCheckout.setVisibility(View.GONE);
         swipeRefrshLayout.setVisibility(View.GONE);
@@ -825,12 +941,14 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
             WhiteLabelApplication.getAppConfiguration().updateUserData(getActivity(), userEntity);
         }
     }
+
     public void updateShoppingData(int qty, String grandTotal, String total) {
         mCar.setSummaryQty(qty);
         mCar.setGrandTotal(grandTotal);
         mCar.setSubTotal(total);
         initShoppingCartData(mCar, false);
     }
+
     public void updateShoppingData(ShoppingCartDeleteCellEntity bean) {
         mCar.setDiscount(bean.getDiscount());
         mCar.setSubTotal(bean.getSubTotal());
@@ -879,7 +997,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
     //from shoppingCartVerticalAdapter callback--delete item
     public void deleteShoppingData(ShoppingCartDeleteCellEntity bean,int position){
         //delete position item
-        mCar.setItems(deleteCellItem(mCar.getItems(),position));
+        mCar.setItems(deleteCellItem(mCar.getItems(), position));
         mCar.setDiscount(bean.getDiscount());
         mCar.setSubTotal(bean.getSubTotal());
         mCar.setGrandTotal(bean.getGrandTotal());
@@ -925,6 +1043,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
             return null;
         }
     }
+
     @Override
     public void onPause() {
         //停止监听，并且将gapHeight归零
@@ -948,7 +1067,8 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         tvApplyTextAnim.setText(apply_hint);
         llApplyAnim.setVisibility(View.VISIBLE);
     }
-    public void setLayoutNotHaveVercherCode(){
+
+    public void setLayoutNotHaveVercherCode() {
         etVoucherApply.setText("");
         tvApply.setText(mApplyStr);
         JViewUtils.setSoildButtonGlobalStyle(getContext(),tvApply);
@@ -957,11 +1077,13 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         etVoucherApply.setText(voucherCode);
         llApplyAnim.setVisibility(View.GONE);
     }
+
     public LinkedList<ShoppingCartListBase> toShoppingCartList(ShoppingCartListBase[] cell) {
         LinkedList<ShoppingCartListBase> cells = new LinkedList<>();
         Collections.addAll(cells, cell);
         return cells;
     }
+
     public void gaTrackerCheckout() {
         if (getActivity() != null) {
             int sumNum = 0;
@@ -979,22 +1101,34 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
             }
         }
     }
-//    private long currTime;
+
+    //    private long currTime;
     private void sendRequest() {
         if (!swipeRefrshLayout.isRefreshing()) {
             showDialog();
         }
-        String sessionKey="";
-        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
-            sessionKey= WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+        String sessionKey = "";
+        if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
+            sessionKey = WhiteLabelApplication.getAppConfiguration().getUser().getSessionKey();
+            mCarDao.getShoppingCarInfo(sessionKey);
+        } else {
+            mPresenter.getShoppingListFromLocal();
         }
-        mCarDao.getShoppingCarInfo(sessionKey);
     }
-    private void showDialog() {
+
+    public void showDialog() {
         if (getActivity() != null) {
             mDialog = JViewUtils.showProgressDialog(getActivity());
         }
     }
+
+    public void dimissDialog() {
+        if (mDialog != null) {
+            mDialog.dismiss();
+        }
+        swipeRefrshLayout.setRefreshing(false);
+    }
+
     private void initAdapter() {
         mProducts = new ArrayList<>();
         adapter = new ShoppingCartVerticalAdapter(getActivity(), mProducts, mImageLoader, this);
@@ -1035,7 +1169,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
             mGATrackTimeStart = getArguments().getLong("mGATrackTimeStart", 0);
             mGATrackTimeEnable = true;
         }
-
         showCart = false;
         showSearch = false;
         setHasOptionsMenu(true);
@@ -1124,6 +1257,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         };
         vto.addOnPreDrawListener(onPreDrawListener);
     }
+
     @Override
     public void setItemHeightByView(int allItemHeight) {
         Rect rNavBar = new Rect();
@@ -1138,12 +1272,14 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
             tv_shoppingbottominfo_blank.setVisibility(View.VISIBLE);
         }
     }
+
     private void delHeightListenerOnInfoView() {
         ViewTreeObserver vto = infoView.getViewTreeObserver();
         if (onPreDrawListener != null) {
             vto.removeOnPreDrawListener(onPreDrawListener);
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -1155,10 +1291,12 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         setRetryTheme(view);
         return view;
     }
+
     @Override
     public void setItemHeight(int itemHeight) {
         this.itemHieght = itemHeight;
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -1166,6 +1304,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
             mHomeCallback = (HomeBaseFragment.HomeCommonCallback) activity;
         }
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
