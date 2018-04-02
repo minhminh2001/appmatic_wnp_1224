@@ -16,8 +16,10 @@ public class StartContract {
             void startGuidePage();
             void startIntentService();
             void showUpdateDialog();
-
-
+            void updateConfigationSuccess();
+            void showMaintenancePage();
+            void showProgressDialog();
+            void hideProgressDialog();
       }
      public interface  Presenter extends BasePresenter<View>{
 //         void getConfigInfo();
