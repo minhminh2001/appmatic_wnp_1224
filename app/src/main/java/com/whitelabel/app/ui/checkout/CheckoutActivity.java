@@ -537,6 +537,7 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                 break;
             case FRAGMENT_SELECT_ADDRESS:
             case FRAGMENT_ADD_ADDRESS:
+            case FRAGMENT_REGISTER:
                 Intent intent = new Intent();
                 intent.putExtra(CHECKOUT_IS_JUST_LOGIN, isJustLoggedin());
                 setResult(REQUESTCODE_CHECKOUT, intent);

@@ -33,6 +33,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.activity.HelpCenterDetialActivity;
@@ -761,6 +762,11 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         pcGroupConfigView.setOnNotifyMeClickListener(new ProductChildListView.OnNotifyMeClickListener() {
             @Override
             public void onClick(ProductPropertyModel product) {
+
+                GaTrackHelper.getInstance().googleAnalyticsEvent(Const.GA.PRODUCT_ACTION_CATEGORY,
+                        Const.GA.EVENT_NOTIFY_ME,
+                        product.getName(),
+                        Long.parseLong(product.getId()));
 
                 GOUserEntity userInfo = WhiteLabelApplication.getAppConfiguration().getUserInfo();
 

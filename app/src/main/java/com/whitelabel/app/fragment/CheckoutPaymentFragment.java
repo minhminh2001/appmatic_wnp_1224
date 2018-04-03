@@ -1816,8 +1816,6 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
 
     }
 
-
-
     private class CreditCartNumberTextWatcher implements TextWatcher {
         int beforeTextLength = 0;
         int onTextLength = 0;
@@ -1898,5 +1896,11 @@ public class CheckoutPaymentFragment extends com.whitelabel.app.BaseFragment imp
                 isChanged = false;
             }
         }
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.GUEST_PAYMENT_SCREEN, getActivity());
     }
 }

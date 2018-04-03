@@ -38,6 +38,10 @@ public class Const {
         public final static String SLIDE_MENU_SCREEN = "Side Menu";
         public final static String FORGOT_PASSWORD_SCREEN = "Forgot Password Screen";
         public final static String SEARCH_LIST_SCREEN = "Search List Screen";
+        public final static String GUEST_PROFILE_SCREEN = "Guest Profile screen";
+        public final static String GUEST_ADDRESS_SCREEN = "Guest Address screen";
+        public final static String GUEST_PAYMENT_SCREEN = "Guest Payment screen";
+        public final static String GUEST_REVIEW_SCREEN = "Guest Review screen";
 
         public final static String HOME_BANNER_EVENT = "Banner";
         public final static String ORDER_ICON_ADD_TO_CART_EVENT = "Add to Cart by icon";
@@ -49,6 +53,8 @@ public class Const {
         public final static String SIGN_UP_EVENT = "Sign Up";
 
         public final static String ORDER_REORDER_CATEGORY = "Reorder";
+        public final static String PRODUCT_ACTION_CATEGORY = "Product Action";
+        public final static String CART_ACTION_CATEGORY = "Cart Action";
 
 //        GA - event
         public final static String EVENT_SETTINGS = "Settings";
@@ -57,6 +63,7 @@ public class Const {
         public final static String EVENT_SETTINGS_RATE_APP = "Rate App";
         public final static String EVENT_REORDER_ORDERLIST = "OrderList";
         public final static String EVENT_REORDER_ORDERDETAIL = "OrderDetail";
+        public final static String EVENT_NOTIFY_ME = "Notify Me";
 
 
     }

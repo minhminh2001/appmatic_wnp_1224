@@ -34,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.activity.HomeActivity;
@@ -940,6 +941,11 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
     public void onClickedNotifyMe(ShoppingCartListEntityCell product) {
         if(product == null)
             return;
+
+        GaTrackHelper.getInstance().googleAnalyticsEvent(Const.GA.CART_ACTION_CATEGORY,
+                Const.GA.EVENT_NOTIFY_ME,
+                product.getName(),
+                Long.parseLong(product.getId()));
 
         GOUserEntity userInfo = WhiteLabelApplication.getAppConfiguration().getUserInfo();
 

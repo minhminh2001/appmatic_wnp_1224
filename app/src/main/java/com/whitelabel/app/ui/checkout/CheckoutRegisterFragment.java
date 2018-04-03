@@ -2,6 +2,7 @@ package com.whitelabel.app.ui.checkout;
 
 import com.common.utils.DialogUtils;
 import com.whitelabel.app.BaseFragment;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.activity.LoginRegisterActivity;
@@ -9,6 +10,7 @@ import com.whitelabel.app.data.model.RegisterRequest;
 import com.whitelabel.app.fragment.LoginRegisterEmailLoginFragment;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.widget.CustomButtomLineRelativeLayout;
@@ -684,6 +686,13 @@ public class CheckoutRegisterFragment extends BaseFragment<CheckoutRegisterContr
             ((CheckoutActivity)getActivity()).openSelectFragment();
             ((CheckoutActivity)getActivity()).justLoggedin(true);
         }
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.GUEST_PROFILE_SCREEN, getActivity());
     }
 
     interface CheckoutRegisterCallBack {

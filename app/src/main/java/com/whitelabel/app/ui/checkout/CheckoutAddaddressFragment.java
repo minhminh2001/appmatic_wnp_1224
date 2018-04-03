@@ -1,6 +1,7 @@
 package com.whitelabel.app.ui.checkout;
 
 import com.whitelabel.app.BaseFragment;
+import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.callback.WheelPickerCallback;
@@ -11,6 +12,7 @@ import com.whitelabel.app.model.SVRAppServiceCustomerCountry;
 import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
 import com.whitelabel.app.utils.AnimUtil;
+import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
@@ -1224,6 +1226,13 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                 tvStateAnim.setVisibility(View.INVISIBLE);
             }
         }
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.GUEST_ADDRESS_SCREEN, getActivity());
     }
 
     public interface ISaveAddressMsgData {
