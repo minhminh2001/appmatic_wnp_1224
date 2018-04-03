@@ -36,6 +36,7 @@ import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductOptionEntity;
 import com.whitelabel.app.network.ImageLoader;
+import com.whitelabel.app.ui.shoppingcart.ShoppingCartVersionContract;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JImageUtils;
@@ -58,35 +59,32 @@ import java.util.List;
  * Created by Administrator on 2016/1/27.
  */
 public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
-
-    public static final int TYPE_BODY = 2;
-
     private static final int TYPE_CELL = 1;
-
-    private final static String TAG = "ShoppingCartVerticalAdapter";
-
+    public static final int TYPE_BODY = 2;
+    private ArrayList<ShoppingCartListBase> list;
     private final Context context;
-
+    private Dialog mDialog;
     private final ShoppingCartAdapterCallback callback;
-
     private final ShoppingCarDao mShoppingCartDao;
-
+    private final static String TAG = "ShoppingCartVerticalAdapter";
     private final ImageLoader mImageLoader;
 
     private AdapterView.OnItemClickListener itemOnClickListener;
-
     private IShoppingCartAddOrSubtractCallback iShoppingCartAddOrSubtractCallback;
+    private ShoppingCartVersionContract.Presenter presenter;
 
     public void setItemOnClickListener(AdapterView.OnItemClickListener itemOnClickListener) {
         this.itemOnClickListener = itemOnClickListener;
     }
 
     public void setiShoppingCartAddOrSubtractCallback(
-        IShoppingCartAddOrSubtractCallback iShoppingCartAddOrSubtractCallback) {
+            IShoppingCartAddOrSubtractCallback iShoppingCartAddOrSubtractCallback) {
         this.iShoppingCartAddOrSubtractCallback = iShoppingCartAddOrSubtractCallback;
     }
 
-    public ShoppingCartVerticalAdapter(Context context, ArrayList<ShoppingCartListBase> products, ImageLoader imageLoader, ShoppingCartAdapterCallback callback) {
+    public ShoppingCartVerticalAdapter(Context context, ArrayList<ShoppingCartListBase> products,
+        ImageLoader imageLoader, ShoppingCartAdapterCallback callback,
+        ShoppingCartVersionContract.Presenter presenter) {
         super();
         JLogUtils.d(TAG, "init");
         this.list = new ArrayList<>();
@@ -96,6 +94,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         DataHandler dataHandler = new DataHandler(context, this);
         mShoppingCartDao = new ShoppingCarDao("ShoppingCartAdapterV2", dataHandler);
         mImageLoader = imageLoader;
+        this.presenter = presenter;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -123,7 +122,6 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
 
     public void setData(ArrayList<ShoppingCartListBase> list) {
         this.list = list;
-        JToolUtils.printObject(list);
     }
 
     private ShoppingCartListEntityCell getItem(int position) {
@@ -204,10 +202,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
                 //TODO
                 ShoppingCartListEntityCell bean = (ShoppingCartListEntityCell) list.get(position);
                 if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
-                    list.remove(position);
-                    calculationToatalPriceAndNum(list);
-                    ShoppingCartVerticalAdapter.this.notifyDataSetChanged();
-                    JStorageUtils.savaProductListToLocalCartRepository(context, shoppingCarToTMPLocal(list));
+                    presenter.deleteItem(bean.getSimpleId());
                 } else {
                     sendRequestToDeteleteCell(position, bean.getId());
                 }
@@ -361,6 +356,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             setDotDefault(viewHolder);
         }
 
+
         viewHolder.llShoppingcartCellPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -389,7 +385,6 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             });
         }
     }
-
     private void setPonitColor(ViewHolder viewHolder, boolean darkColor) {
         //是否使用深颜色
         if (!darkColor) {
@@ -429,64 +424,37 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         return view.getMeasuredHeight();
     }
     public static class InfoViewHolder extends RecyclerView.ViewHolder {
-
         public InfoViewHolder(View view) {
             super(view);
         }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         final View view;
-
         final TextView tvOutOfStock;
-
         final TextView tvShoppingcartSplit;
-
         final TextView unavailable;
-
         final TextView tvProductName;
-
         final TextView tvProductBland;
-
         final TextView tvColorAndSize;
-
         final TextView tvPrice;
-
         final TextView tvFinalPrice;
-
         final TextView tvShoppingcartCellPoint1;
-
         final TextView tvShoppingcartCellPoint2;
-
         final TextView tvShoppingcartCellPoint3;
-
         final ImageView imageView;
-
         final ImageView ivShoppingCartDelete;
-
         final TextView tvCount;
-
         final TextView tvCheckMername;
-
         final TextView tvAllBarrier;
-
         final TextView tvAllBarrier2;
-
         final LinearLayout llShoppingCartError;
-
         final ImageView ivShoppingCartIcon;
-
         final TextView tvShoppingCartErrorMsg;
-
         final SwipeLayout swipeShoppingCart;
-
         final RelativeLayout rlShoppingCartCellContent;
-
         final RelativeLayout rlShoppingcartCountSub;
-
         final RelativeLayout rlShoppingcartCountPlus;
-
         final LinearLayout llShoppingcartCellPoint;
         final LinearLayout llNotifyMe;
         final LinearLayout llAddCountSubs;
@@ -633,31 +601,25 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             }
             ShoppingCartListEntityCell shoppingCart = (ShoppingCartListEntityCell) list.get(position);
             if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
-                if (Integer.parseInt(shoppingCart.getQty()) + 1 <= Integer.parseInt(shoppingCart.getMaxQty())) {
-                    if (!TextUtils.isEmpty(shoppingCart.getMaxSaleQty())) {
-                        String maxSaleQty = shoppingCart.getMaxSaleQty();
-                        JLogUtils.d(TAG, "maxSaleQty=" + Integer.parseInt(maxSaleQty));
-                        if (Integer.parseInt(shoppingCart.getQty()) + 1 <= Integer.parseInt(maxSaleQty)) {
-                            final int newCount = Integer.parseInt(shoppingCart.getQty()) + 1;
-                            shoppingCart.setQty(newCount + "");
-                            calculationToatalPriceAndNum(list);
-                            JStorageUtils.savaProductListToLocalCartRepository(context, shoppingCarToTMPLocal(list));
-                            gaTrackerIncresaseQuantity(shoppingCart.getName(), shoppingCart.getProductId());
-                        } else {
-                            String message = context.getResources().getString(R.string.over_maxSale);
-                            message = message.replace("x", Integer.parseInt(maxSaleQty) + "");
-                            JViewUtils.showSingleToast(context, message);
-                        }
-                    } else {
+                if (Integer.parseInt(shoppingCart.getQty()) + 1 <= shoppingCart.getStockQty()) {
+                    String maxSaleQty = shoppingCart.getStockQty() + "";
+                    if (Integer.parseInt(shoppingCart.getQty()) + 1 <= Integer
+                            .parseInt(maxSaleQty)) {
                         final int newCount = Integer.parseInt(shoppingCart.getQty()) + 1;
-                        shoppingCart.setQty(newCount + "");
-                        calculationToatalPriceAndNum(list);
-                        JStorageUtils.savaProductListToLocalCartRepository(context, shoppingCarToTMPLocal(list));
-                        gaTrackerIncresaseQuantity(shoppingCart.getName(), shoppingCart.getProductId());
+                        presenter
+                                .updateShoppingItemNumber(shoppingCart.getSimpleId(), newCount + "");
+                        gaTrackerIncresaseQuantity(shoppingCart.getName(),
+                                shoppingCart.getProductId());
+                    } else {
+                        String message = context.getResources()
+                                .getString(R.string.over_maxSale);
+                        message = message.replace("x", Integer.parseInt(maxSaleQty) + "");
+                        JViewUtils.showSingleToast(context, message);
                     }
 
                 } else {
-                    JViewUtils.showMaterialDialog(context, null, context.getString(R.string.insufficient_stock), null);
+                    JViewUtils.showMaterialDialog(context, null,
+                            context.getString(R.string.insufficient_stock), null);
                 }
                 ShoppingCartVerticalAdapter.this.notifyDataSetChanged();
             } else {
@@ -695,14 +657,8 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
             if (newCount <= 0) {
                 return;
             } else {
-                shoppingCart.setQty(newCount + "");
                 if (!WhiteLabelApplication.getAppConfiguration().isSignIn(context)) {
-                    JStorageUtils.savaProductListToLocalCartRepository(context, shoppingCarToTMPLocal(list));
-                    calculationToatalPriceAndNum(list);
-//                    if(list.size()==0){
-//                        bodyView.setVisibility(View.GONE);
-//                    }
-                    ShoppingCartVerticalAdapter.this.notifyDataSetChanged();
+                    presenter.updateShoppingItemNumber(shoppingCart.getSimpleId(), newCount + "");
                 } else {
                     sendRequestToChangeCount(position, shoppingCart.getId(), newCount, "opt-sub");
                 }

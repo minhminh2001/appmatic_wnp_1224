@@ -125,13 +125,9 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
         implements ProductDetailCallback, OnPageChangeListener, View.OnClickListener ,ProductDetailContract.View,
         NotifyMeDialogFragment.NotifyMeListener {
 
-    private String TAG = "ProductDetailActivity";
-
-
-    public static final int RESULT_WISH = 101;
+   public static final int RESULT_WISH = 101;
 
     public static final int PRODUCT_PICTURE_REQUEST_CODE = 0x200;
-    public static final String PRODUCT_ID="productId";
 
     public static final String PRODUCT_ID = "productId";
 
@@ -140,11 +136,6 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     private final static int IV_PRODUCTTHUMBNAIL_WANDH = 44;
 
     private final int REQUESTCODE_LOGIN = 1000;
-
-    public Long mGATrackTimeStart = 0L;
-    public Long mGATrackAddCartTimeStart = 0L;
-    public boolean mGATrackTimeEnable = false;
-
 
     public Long mGATrackTimeStart = 0L;
 
@@ -594,8 +585,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
 
     @Override
     protected void initInject() {
-        DaggerPresenterComponent1.builder()
-        presenterModule(new PresenterModule(this)).build().inject(this);
+        DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent())
+        .presenterModule(new PresenterModule(this)).build().inject(this);
     }
 
     @Override
@@ -841,11 +832,7 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
                 R.layout.item_count, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getApplicationContext())) {
-                            gotoShoppingCartActivity();
-                        }else{
-                            startLoginActivity(false);
-                        }
+                        gotoShoppingCartActivity();
                     }
                 });
         TextView textView = (TextView) view.findViewById(R.id.ctv_home_shoppingcart_num);

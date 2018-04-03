@@ -101,6 +101,10 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
 
     private final int REQUESTCODE_LOGIN = 1000;
 
+    public final static int REQUESTCODE_CHECKOUT = 1001;
+
+    public final static String CHECKOUT_IS_JUST_LOGIN = "checkout_is_just_login";
+
     public Long mGATrackCheckoutTimeStart = 0L;
 
     public boolean mGATrackCheckoutTimeEnable = false;
@@ -217,6 +221,8 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
     private boolean isClick = true;
 
     private List<View> vText;
+
+    private boolean isJustLoggedin = false;
 
     @Override
     protected void initInject() {
@@ -531,6 +537,9 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
                 break;
             case FRAGMENT_SELECT_ADDRESS:
             case FRAGMENT_ADD_ADDRESS:
+                Intent intent = new Intent();
+                intent.putExtra(CHECKOUT_IS_JUST_LOGIN, isJustLoggedin());
+                setResult(REQUESTCODE_CHECKOUT, intent);
                 finish();
                 break;
         }
@@ -820,7 +829,14 @@ public class CheckoutActivity extends com.whitelabel.app.BaseActivity<CheckoutCo
             shippingAddress, billingAddress, shippingCode, isBillAddressChecked);
     }
 
-    //    private  final static  int REQUEST_CODE_PAYMENT=10000;
+    public boolean isJustLoggedin(){
+        return isJustLoggedin;
+    }
+
+    public void justLoggedin(boolean isLogin){
+        isJustLoggedin = isLogin;
+    }
+
     public void payPalPayment(String orderNumber, String price, String unit, String productName,
         String shippingFee) {
         mPaypalHelper.startPaypalPayment(this, price, unit, productName, orderNumber);

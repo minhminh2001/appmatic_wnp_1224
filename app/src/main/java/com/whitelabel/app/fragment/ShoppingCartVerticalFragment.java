@@ -17,9 +17,11 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,14 +34,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.R;
-import com.whitelabel.app.callback.IShoppingCartAddOrSubtractCallback;
-import com.whitelabel.app.ui.checkout.CheckoutActivity;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.activity.HomeActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.adapter.ShoppingCartVerticalAdapter;
-import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.callback.IShoppingCartAddOrSubtractCallback;
 import com.whitelabel.app.callback.MaterialDialogCallback;
 import com.whitelabel.app.callback.ShoppingCartAdapterCallback;
 import com.whitelabel.app.dao.ShoppingCarDao;
@@ -54,7 +54,6 @@ import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.checkout.CheckoutActivity;
-import com.whitelabel.app.ui.login.LoginFragmentContract;
 import com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.ui.shoppingcart.ShoppingCartVersionContract;
@@ -69,40 +68,7 @@ import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.SoftInputShownUtil;
 import com.whitelabel.app.utils.ToastUtils;
-import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
-
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.Fragment;
-import android.content.Intent;
-import android.graphics.Rect;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.GestureDetector;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -114,6 +80,8 @@ import java.util.List;
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
 
+import static com.whitelabel.app.ui.checkout.CheckoutActivity.CHECKOUT_IS_JUST_LOGIN;
+import static com.whitelabel.app.ui.checkout.CheckoutActivity.REQUESTCODE_CHECKOUT;
 import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_EMAIL;
 import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_NAME;
 import static com.whitelabel.app.ui.notifyme.NotifyMeDialogFragment.FRAGMENT_ARG_PRODUCT_ID;
@@ -280,11 +248,12 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
                     return;
                 }
                 if (!WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-                    startLoginActivity();
+                    startCheckoutActivity();
                 } else {
                     showDialog();
-                    mGATrackCheckoutTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
-                  mPresenter.versionCheck();
+                    mGATrackCheckoutTimeStart = GaTrackHelper.getInstance()
+                        .googleAnalyticsTimeStart();
+                    mPresenter.versionCheck();
                 }
                 break;
             case R.id.try_again:
@@ -417,7 +386,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         JViewUtils.setSoildButtonGlobalStyle(getActivity(),tvCheckout);
     }
     //监听StretchScrollView 上下滑动
-    public GestureDetector gestureDetector;
     private GestureDetector.OnGestureListener mGestureListener;
     private View.OnTouchListener gestureTouchListener = new View.OnTouchListener() {
         @Override
@@ -532,7 +500,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         voucherCode = "";
         currStatus = LOADSUCCESS;
         if (!(getActivity() instanceof HomeActivity)) {
-                initData();
+            initData();
         }
         initListener();
     }
@@ -605,6 +573,11 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
                     initData();
                 }
                 break;
+            case REQUESTCODE_CHECKOUT:
+                boolean isJustLoggin = data.getBooleanExtra(CHECKOUT_IS_JUST_LOGIN, false);
+                if(isJustLoggin){
+                    initData();
+                }
         }
     }
 
@@ -630,7 +603,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         bundle.putLong("mGATrackTimeStart", mGATrackCheckoutTimeStart);
         Intent intent = new Intent(getActivity(), CheckoutActivity.class);
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent, REQUESTCODE_CHECKOUT);
     }
 
     public final static class DataHandler extends Handler {
@@ -1131,7 +1104,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
 
     private void initAdapter() {
         mProducts = new ArrayList<>();
-        adapter = new ShoppingCartVerticalAdapter(getActivity(), mProducts, mImageLoader, this);
+        adapter = new ShoppingCartVerticalAdapter(getActivity(), mProducts, mImageLoader, this, mPresenter);
         adapter.setItemOnClickListener(mItemListener);
         adapter.setiShoppingCartAddOrSubtractCallback(new IShoppingCartAddOrSubtractCallback() {
             @Override
@@ -1194,13 +1167,6 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         MenuItem notificationItem = menu.findItem(R.id.action_notification);
         notificationItem.setVisible(false);
     }
-
-    // item和底部布局高度，判断是否需要在中间添加空白view,以致使底部布局靠底
-    int recyclerViewHeight = 0;
-    int itemHieght = 0;
-    int gapHeight = 0;
-    int oldAllItemHeight = 0;
-    ViewTreeObserver.OnPreDrawListener onPreDrawListener;
 
     private void addHeightListenerOnInfoView() {
         //底部是否需要贴底
@@ -1314,5 +1280,10 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         if (mCarDao != null) {
             mCarDao.cancelHttpByTag(TAG);
         }
+    }
+
+    public void loadData(ShoppingCartListEntityCart shoppingCartListEntityCart) {
+        mCar = shoppingCartListEntityCart;
+        initShoppingCartData(mCar, true);
     }
 }

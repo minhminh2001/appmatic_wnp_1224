@@ -682,6 +682,7 @@ public class CheckoutRegisterFragment extends BaseFragment<CheckoutRegisterContr
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQUEST_CODE&& LoginRegisterEmailLoginFragment.RESULTCODE==resultCode){
             ((CheckoutActivity)getActivity()).openSelectFragment();
+            ((CheckoutActivity)getActivity()).justLoggedin(true);
         }
     }
 
