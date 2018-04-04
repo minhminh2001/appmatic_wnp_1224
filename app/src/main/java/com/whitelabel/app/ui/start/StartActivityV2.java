@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.common.utils.DialogUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.whitelabel.app.BaseActivity;
@@ -24,6 +26,7 @@ import com.whitelabel.app.callback.INITCallback;
 import com.whitelabel.app.handler.INITApp;
 import com.whitelabel.app.notification.RegistrationIntentService;
 import com.whitelabel.app.task.INITExecutor;
+import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.widget.MaterialDialog;
@@ -52,6 +55,9 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
     Button btnGuideOneSkipToNextPage;
     @BindView(R.id.btn_guide_two_skip_to_next_page)
     Button btnGuideTwoSkipToNextPage;
+    @BindView(R.id.layout_maintenance_view)
+    ConstraintLayout layoutMaintenanceView;
+
     private INITApp mCallback;
     private Dialog mProgressDialog;
 
@@ -88,6 +94,45 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
     @Override
     public void showUpdateDialog() {
         JViewUtils.showUpdateGooglePlayStoreDialog(this);
+    }
+
+    @Override
+    public void showErrorMessage(String errorMsg) {
+        JViewUtils.showErrorToast(this, errorMsg);
+    }
+
+    @Override
+    public void showProgressDialog(){
+        mProgressDialog = DialogUtils.showProgressDialog(this);
+    }
+
+    @Override
+    public void hideProgressDialog(){
+        if(mProgressDialog != null){
+            return;
+        }
+
+        mProgressDialog.dismiss();
+    }
+
+    @Override
+    public void updateConfigationSuccess() {
+        showMaintenanceView(false);
+
+        initGuide();
+        mPresenter.getSearchCategory();
+    }
+
+    @Override
+    public void showMaintenancePage() {
+        hideProgressDialog();
+        showMaintenanceView(true);
+    }
+
+    @OnClick(R.id.btn_refresh)
+    public void onClick(View view){
+        showProgressDialog();
+        mPresenter.getConfigInfo("", "");
     }
 
     @Override
@@ -136,9 +181,7 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
         INITExecutor.getInstance().execute(mCallback);
         mPresenter.setStartTime();
         mPresenter.getConfigInfo("", "");
-        JToolUtils.showAPKKeyHash(this);
-        initGuide();
-        mPresenter.getSearchCategory();
+
     }
 
     private void initGuide(){
@@ -230,9 +273,8 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
         super.onDestroy();
     }
 
-    @Override
-    public void showErrorMessage(String errorMsg) {
-        JViewUtils.showErrorToast(this, errorMsg);
+    private void showMaintenanceView(boolean isShow){
+        layoutMaintenanceView.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 }
 

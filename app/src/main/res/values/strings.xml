@@ -869,5 +869,8 @@
     <string name="notify_button_cacnel">Cancel</string>
     <string name="notify_email_tips">Email notification is\n subscribed</string>
 
-
+    <!-- Maintenance page -->
+    <string name="maintenance_declaration">Woof! We ar working hard at sniffing,\n digging and scratching out the old\n codes to make for a friendlier new site.\nWe expect to be back at around 2pm.\n Sorry for an inconvienience.</string>
+    <string name="maintenance_contact">Phone:2552-6200\n What\'s App:9696-6200\n Hours:10am-6pm\n Email:onlinestore@wnp.com.hk</string>
+    <string name="maintenance_btn_refresh">Refresh</string>
 </resources>
