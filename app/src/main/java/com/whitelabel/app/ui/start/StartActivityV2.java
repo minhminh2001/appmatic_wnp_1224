@@ -106,8 +106,7 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
 
     @Override
     public void hideProgressDialog(){
-        if(mProgressDialog != null
-                || !mProgressDialog.isShowing()){
+        if(mProgressDialog != null){
             return;
         }
 
@@ -117,7 +116,6 @@ public class StartActivityV2 extends BaseActivity<StartContract.Presenter> imple
     @Override
     public void updateConfigationSuccess() {
         showMaintenanceView(false);
-        hideProgressDialog();
 
         initGuide();
         mPresenter.getSearchCategory();

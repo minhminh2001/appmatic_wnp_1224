@@ -143,7 +143,11 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                     public void onError(Throwable e) {
                         if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
                             mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
-                            mView.showMaintenancePage();
+
+                            if(ExceptionParse.parseException(e).getCode() == ExceptionParse.ERROR.HTTP_ERROR_CODE_NOT_FOUND_PAGE
+                                    || ExceptionParse.parseException(e).getCode() == ExceptionParse.ERROR.HTTP_ERROR_CODE_SERVER_ERR) {
+                                mView.showMaintenancePage();
+                            }
                         };
                         JLogUtils.i("ray","errorMessage1:"+e.getMessage());
                     }
