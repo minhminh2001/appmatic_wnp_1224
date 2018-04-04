@@ -101,7 +101,6 @@
                 android:gravity="center"
                 android:textAllCaps="true"
                 android:text="@string/profile"
-                android:textStyle="bold"
                 android:textColor="@color/black"
             />
             <TextView
@@ -112,7 +111,6 @@
                 android:gravity="center"
                 android:textAllCaps="true"
                 android:text="@string/address"
-                android:textStyle="bold"
                 android:textColor="@color/black"
             />
             <TextView
@@ -123,7 +121,6 @@
                 android:gravity="center"
                 android:text="@string/payment"
                 android:textAllCaps="true"
-                android:textStyle="bold"
                 android:textColor="@color/black"
             />
 
@@ -135,7 +132,6 @@
                 android:gravity="center"
                 android:textAllCaps="true"
                 android:text="@string/review"
-                android:textStyle="bold"
                 android:textColor="@color/black"
             />
         </LinearLayout>
