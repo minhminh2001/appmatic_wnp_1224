@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -23,7 +22,8 @@ import com.whitelabel.app.BaseDialogFragment;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JLogUtils;
+
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,11 +39,16 @@ import injection.modules.PresenterModule;
 
 public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract.Presenter> implements NotifyMeConstract.View{
 
-    static enum DataInvalidation{
+    enum InvalidationCode {
         OK,
-        NAME_NULL,
-        EMAIL_NULL,
+        NAME_IS_EMPTY,
+        EMAIL_IS_EMPTY,
         EMAIL_INVALID
+    }
+
+    enum InvalidationType{
+        USER_NAME,
+        USER_EMAIL
     }
 
     private static final String TAG = "NotifyMeDialogFragment";
@@ -166,10 +171,22 @@ public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract
                 String name = etName.getText().toString();
                 String email = etEmail.getText().toString();
 
-                DataInvalidation errCode = validData(name, email);
-                if(errCode != DataInvalidation.OK){
-                    showErrMessage(errCode);
+                InvalidationCode errCodeByName = invalidationData(name, InvalidationType.USER_NAME);
+                if(errCodeByName != InvalidationCode.OK){
+                    showErrMessage(errCodeByName);
                 } else {
+                    hideErrMessage(InvalidationType.USER_NAME);
+                }
+
+                InvalidationCode errCodeByEmail = invalidationData(email, InvalidationType.USER_EMAIL);
+                if(errCodeByEmail != InvalidationCode.OK){
+                    showErrMessage(errCodeByEmail);
+                } else {
+                    hideErrMessage(InvalidationType.USER_EMAIL);
+                }
+
+                if(errCodeByName == InvalidationCode.OK
+                        && errCodeByEmail == InvalidationCode.OK){
                     mPresenter.registerNotifyForProduct(productId, storeId, name, email, sessionKey);
                 }
                 break;
@@ -179,33 +196,51 @@ public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract
         }
     }
 
-    private DataInvalidation validData(String name, String email){
-        if(TextUtils.isEmpty(name)){
-            return DataInvalidation.NAME_NULL;
+    private InvalidationCode invalidationData(String value, InvalidationType type){
+
+        InvalidationCode result = InvalidationCode.OK;
+        switch(type){
+            case USER_NAME:
+                if(TextUtils.isEmpty(value)){
+                    result = InvalidationCode.NAME_IS_EMPTY;
+                }
+                break;
+            case USER_EMAIL:
+                if(TextUtils.isEmpty(value)){
+                    result = InvalidationCode.EMAIL_IS_EMPTY;
+                } else if(!JDataUtils.isEmail(value)){
+                    result = InvalidationCode.EMAIL_INVALID;
+                }
+                break;
         }
 
-        if(TextUtils.isEmpty(email)){
-            return DataInvalidation.EMAIL_NULL;
-        }
-
-        if(!JDataUtils.isEmail(email)){
-            return DataInvalidation.EMAIL_INVALID;
-        }
-
-        return DataInvalidation.OK;
+        return result;
     }
 
-    private void showErrMessage(DataInvalidation errCode){
+    private void showErrMessage(InvalidationCode errCode){
         switch(errCode){
-            case NAME_NULL:
+            case NAME_IS_EMPTY:
+                tilName.setErrorEnabled(true);
                 tilName.setError(getString(R.string.apply_hint_red));
                 break;
-            case EMAIL_NULL:
+            case EMAIL_IS_EMPTY:
+                tilEmail.setErrorEnabled(true);
                 tilEmail.setError(getString(R.string.apply_hint_red));
                 break;
             case EMAIL_INVALID:
+                tilEmail.setErrorEnabled(true);
                 tilEmail.setError(getString(R.string.loginregister_emailbound_tips_error_email_format));
                 break;
+        }
+    }
+
+    private void hideErrMessage(InvalidationType type){
+        if(type == InvalidationType.USER_NAME){
+            tilName.setError("");
+            tilName.setErrorEnabled(false);
+        } else if(type == InvalidationType.USER_EMAIL){
+            tilEmail.setError("");;
+            tilEmail.setErrorEnabled(false);
         }
     }
 

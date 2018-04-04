@@ -24,7 +24,7 @@ public class ExceptionParse {
         ApiFaildException  exception = new ApiFaildException();
         exception.setThrowable(e);
         if(e instanceof HttpException ||e instanceof ConnectException||e instanceof SocketTimeoutException ||e instanceof UnknownHostException){
-            exception.setCode(e instanceof HttpException ? ((retrofit2.HttpException)e).code() : 0);
+            exception.setCode(e instanceof HttpException ? ((HttpException)e).code() : 0);
             exception.setErrorType(ERROR.HTTP_ERROR);
             exception.setErrorMsg(WhiteLabelApplication.getInstance().getResources().getString(R.string.Global_Error_Internet));
         }else if(e instanceof JsonParseException
@@ -54,6 +54,7 @@ public class ExceptionParse {
         public static  final int API_ERROR = 1004;
         public static  final int HTTP_ERROR_CODE_NOT_FOUND_PAGE = 404;
         public static  final int HTTP_ERROR_CODE_SERVER_ERR = 500;
+        public static  final int HTTP_ERROR_CODE_SERVER_TEMPORARILY_UNAVAILABLE = 503;
     }
 
 }

@@ -16,7 +16,7 @@ public class StartContract {
             void startGuidePage();
             void startIntentService();
             void showUpdateDialog();
-            void updateConfigationSuccess();
+            void onServerAvailable();
             void showMaintenancePage();
             void showProgressDialog();
             void hideProgressDialog();
