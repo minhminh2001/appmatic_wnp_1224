@@ -9,12 +9,10 @@ import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.ResponseModel;
-import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ErrorHandlerAction;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.RxUtil;
 
 import javax.inject.Inject;
@@ -142,12 +140,18 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
                     @Override
                     public void onError(Throwable e) {
                         if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
-                            mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
+                            if(ExceptionParse.parseException(e).getCode() == ExceptionParse.ERROR.HTTP_ERROR_CODE_NOT_FOUND_PAGE
+                                    || ExceptionParse.parseException(e).getCode() == ExceptionParse.ERROR.HTTP_ERROR_CODE_SERVER_ERR) {
+                                mView.showMaintenancePage();
+                            } else {
+                                mView.showErrorMessage(ExceptionParse.parseException(e).getErrorMsg());
+                            }
                         };
                         JLogUtils.i("ray","errorMessage1:"+e.getMessage());
                     }
                     @Override
                     public void onNext(RemoteConfigResonseModel remoteConfigResonseModel) {
+
                         WhiteLabelApplication.getAppConfiguration().initAppConfig(
                                 remoteConfigResonseModel.getData());
                         versionCheck(sessionKey,deviceToken);
@@ -223,14 +227,22 @@ public class StartPresenterImpl extends RxPresenter<StartContract.View> implemen
 
                 @Override
                 public void onError(Throwable throwable) {
-                    if(ExceptionParse.parseException(throwable).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR) {
-                        mView.showErrorMessage(ExceptionParse.parseException(throwable).getErrorMsg());
+                    ApiFaildException exception = ExceptionParse.parseException(throwable);
+                    if(exception.getErrorType()== ExceptionParse.ERROR.HTTP_ERROR) {
+                        if(exception.getCode() == ExceptionParse.ERROR.HTTP_ERROR_CODE_NOT_FOUND_PAGE
+                                || exception.getCode() == ExceptionParse.ERROR.HTTP_ERROR_CODE_SERVER_ERR
+                                || exception.getCode() == ExceptionParse.ERROR.HTTP_ERROR_CODE_SERVER_TEMPORARILY_UNAVAILABLE) {
+                            mView.showMaintenancePage();
+                        } else {
+                            mView.showErrorMessage(ExceptionParse.parseException(throwable).getErrorMsg());
+                        }
                     }
                 }
 
                 @Override
                 public void onNext(ResponseModel responseModel) {
                     if (responseModel.getStatus()==1){
+                        mView.onServerAvailable();
                         requestCurrency(sessionkey,deviceToken);
                     }else if (responseModel.getStatus()==-1){
                         //need update

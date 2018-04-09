@@ -12,37 +12,6 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
-//apply plugin: 'newrelic'
-//apply plugin: "jacoco"
-//jacoco {
-//    toolVersion = "0.7.1.201405082137"
-//}
-//def coverageSourceDirs = [
-//        '../app/src/main/java'
-//]
-//
-//task jacocoTestReport(type: JacocoReport, dependsOn: ["testWnpDebugUnitTest"]) {
-//    group = "Reporting"
-//    description = "Generate Jacoco coverage reports"
-//    classDirectories = fileTree(
-//            dir: '../app/build/intermediates/classes/debug',
-//            excludes: ['**/R.class',
-//                       '**/R$*.class',
-//                       '**/*$ViewInjector*.*',
-//                       '**/BuildConfig.*',
-//                       '**/Manifest*.*']
-//    )
-//    additionalSourceDirs = files(coverageSourceDirs)
-//    sourceDirectories = files(coverageSourceDirs)
-//    executionData = files('../app/build/jacoco/testDebug.exec')
-//
-//    reports {
-//        xml.enabled = false
-//        html.enabled = true
-//    }
-//}
-
-
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
@@ -67,13 +36,10 @@ android {
         resolutionStrategy.force 'com.android.support:support-annotations:23.0.1'
     }
 
-    defaultConfig {
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-
     dexOptions {
         preDexLibraries = false
     }
+
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
@@ -82,11 +48,26 @@ android {
         versionName rootProject.ext.android.versionName
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_KEY", "\"eyKOW06BPBqbe3qe\"")
+        buildConfigField("String", "API_VERSION", "\"v1\"")
+        buildConfigField("String", "MOCK_URL", "\"http://mis.appmatic.io/\"")
     }
-    flavorDimensions "default"
+
     productFlavors {
-        wnp {
-            dimension "default"
+        WNP_LIVE {
+            buildConfigField("String", "APP_KEY", "\"APP-53910061550170911\"")
+            buildConfigField("String", "GA_ID", "\"UA-66493898-4\"")
+            buildConfigField("String", "BASE_URL", "\"https://www.wnp.com.hk/\"")
+            buildConfigField("String", "IMAGE_URL", "\"https://www.wnp.com.hk/")
+        }
+
+        WNP_UAT{
+            buildConfigField("String", "APP_KEY", "\"APP-13110015850171019\"")
+            buildConfigField("String", "GA_ID", "\"UA-113868370-5\"")
+            buildConfigField("String", "BASE_URL", "\"https://imaginato.wnp.com.hk/\"")
+            buildConfigField("String", "IMAGE_URL", "\"https://imaginato.wnp.com.hk/\"")
         }
 
     }
@@ -152,12 +133,9 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
     compile 'com.android.support:multidex:1.0.0'
-
-    //    compile 'com.paypal.sdk:paypal-android-sdk:2.15.3'
     compile('com.twitter.sdk.android:twitter-core:1.6.0@aar') {
         transitive = true;
     }
-//    compile 'com.newrelic.agent.android:android-agent:5.+'
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     testCompile 'junit:junit:4.12'
@@ -168,15 +146,7 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.4'
     // Set this dependency to use JUnit 4 rules
     androidTestCompile 'com.android.support.test:rules:0.4'
-    // Set this dependency to build and run Espresso tests
-    //    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
-    // Set this dependency to build and run UI Automator tests
-    //    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     compile 'com.android.support:support-v4:25.3.1'
-    //    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    //    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
@@ -202,8 +172,6 @@ afterEvaluate {
     }
 }
 
-//println "config code: ${calculateVersionCode()}, name: ${calculateVersionName()}"
-
 def ksFile = rootProject.file('keystore.properties')
 def props = new Properties();
 if (ksFile.canRead()) {
@@ -220,3 +188,24 @@ if (ksFile.canRead()) {
     println '\'keystore.properties\' not found!'
 }
 
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        def fileName = "";
+        def outputFile = output.outputFile
+        if (variant.buildType.name.equals('release')) {
+            if(variant.flavorName.equals("WNP_LIVE")){
+                fileName = "WNP_LIVE_${android.defaultConfig.versionName}_(${android.defaultConfig.versionCode})_release.apk"
+            }else if(variant.flavorName.equals("WNP_UAT")){
+                fileName = "WNP_UAT_${android.defaultConfig.versionName}_(${android.defaultConfig.versionCode})_release.apk"
+            }
+        }else if(variant.buildType.name.equals('debug')){
+            if(variant.flavorName.equals("WNP_LIVE")){
+                fileName = "WNP_LIVE_${android.defaultConfig.versionName}_(${android.defaultConfig.versionCode})_debug.apk"
+            }else if(variant.flavorName.equals("WNP_UAT")) {
+                fileName = "WNP_UAT_${android.defaultConfig.versionName}_(${android.defaultConfig.versionCode})_debug.apk"
+            }
+        }
+
+        output.outputFile = new File(outputFile.parent, fileName)
+    }
+}

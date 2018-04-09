@@ -540,6 +540,12 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
 
     }
 
+    public void onStart(){
+        super.onStart();
+
+        GaTrackHelper.getInstance().googleAnalytics(Const.GA.GUEST_REVIEW_SCREEN, getActivity());
+    }
+
     /**
      * This method will be called when it'fragment is delete from activity
      * for example activity remove or replace fragment
@@ -549,8 +555,6 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
         super.onDetach();
         //Toast.makeText(checkoutActivity,"review fragment is over",Toast.LENGTH_SHORT).show();
     }
-
-
 
     public CheckoutPaymentSaveReturnEntity getPaymentSaveReturnEntity() {
         return paymentSaveReturnEntity;

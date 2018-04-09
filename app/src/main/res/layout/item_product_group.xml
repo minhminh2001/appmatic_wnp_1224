@@ -49,7 +49,8 @@
                 android:layout_marginLeft="5dp"
                 android:textSize="14sp"
                 android:text="@string/campaign_item_soldout_for_notifyme"
-                android:textColor="@color/greyB8B8B8"/>
+                android:textColor="@color/greyB8B8B8"
+                android:visibility="gone"/>
         </LinearLayout>
 
     </LinearLayout>

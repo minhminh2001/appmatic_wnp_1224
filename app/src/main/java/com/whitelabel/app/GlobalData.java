@@ -44,14 +44,14 @@ public class GlobalData {
         gcmSendId = context.getResources().getString(R.string.gcm_sender_id);
         appVersion = JToolUtils.getAppVersionName();
         oneAll_Subdomain=context.getResources().getString(R.string.twitter_subdomain);
-        appKey=context.getResources().getString(R.string.app_key);
-        gaTrackId=context.getResources().getString(R.string.ga_track_id);
-        apiVersion=context.getResources().getString(R.string.api_version);
-        apiKey=context.getResources().getString(R.string.api_key);
+        appKey = BuildConfig.APP_KEY;
+        gaTrackId = BuildConfig.GA_ID;
+        apiVersion  = BuildConfig.API_VERSION;
+        apiKey = BuildConfig.API_KEY;
         buildId=context.getResources().getString(R.string.build_id);
         facebookId=context.getResources().getString(R.string.facebook_id);
-        mockUrl=context.getResources().getString(R.string.mock_url);
-        serviceRequestUrl=context.getResources().getString(R.string.request_url);
+        mockUrl = BuildConfig.MOCK_URL;
+        serviceRequestUrl = BuildConfig.BASE_URL;
 //        appKey= BuildConfig.APP_KEY;
 //        mockUrl=BuildConfig.MOCK_URL;
 //        checkoutHashKey = BuildConfig.HASH_KEY;
@@ -64,7 +64,7 @@ public class GlobalData {
 //        }else{
 //            serviceRequestUrl = BuildConfig.REQUEST_URL;
 //        }
-        imageBaseUrl=context.getString(R.string.image_base_url);
+        imageBaseUrl = BuildConfig.IMAGE_URL;
         creditCardPaymentUrl=serviceRequestUrl+context.getString(R.string.payment_creditcard_url);
         downloadImagePath = context.getString(R.string.download_image_path);
         downloadImageProductPath = context.getString(R.string.download_image_product_path);

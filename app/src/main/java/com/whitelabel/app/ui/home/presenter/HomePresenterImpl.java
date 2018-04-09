@@ -6,6 +6,7 @@ import com.whitelabel.app.data.service.BaseManager;
 import com.whitelabel.app.data.service.CommodityManager;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
+import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.ui.home.HomeContract;
@@ -27,13 +28,16 @@ import rx.schedulers.Schedulers;
 public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements HomeContract.Presenter{
         private ICommodityManager mCommodityManager;
         private IBaseManager mBaseManager;
+        private IShoppingCartManager iShoppingCartManager;
         private String TAG="";
 
         @Inject
-        public HomePresenterImpl(ICommodityManager commodityManager,IBaseManager  baseManager){
+        public HomePresenterImpl(ICommodityManager commodityManager,IBaseManager baseManager,
+                                 IShoppingCartManager shoppingCartManager){
             TAG=this.getClass().getSimpleName();
-            this.mBaseManager=baseManager;
-            mCommodityManager=commodityManager;
+            this.mBaseManager = baseManager;
+            this.mCommodityManager = commodityManager;
+            this.iShoppingCartManager = shoppingCartManager;
         }
         public void getBaseCategory(){
                mView.showProgressDialog();
@@ -63,23 +67,32 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
                       });
             addSubscrebe(subscription);
         }
+
        public void getShoppingCount(){
-          Subscription  subscription=  mCommodityManager.getLocalShoppingProductCount()
+            if(mBaseManager.isSign()){
+                getShoppingCartCountFromNetwork();
+            } else {
+                setShoppingCartCount(iShoppingCartManager.getProductCountFromLocal());
+            }
+        }
+
+        private void getShoppingCartCountFromNetwork(){
+            Subscription  subscription=  mCommodityManager.getLocalShoppingProductCount()
                     .compose(RxUtil.<Integer>rxSchedulerHelper())
-            .subscribe(new Subscriber<Integer>() {
-                @Override
-                public void onCompleted() {
-                }
-                @Override
-                public void onError(Throwable e) {
-                    Log.i(TAG,"error:"+e.getMessage());
-                }
-                @Override
-                public void onNext(Integer integer) {
-                    setShoppingCartCount(integer);
-                }
-            });
-          addSubscrebe(subscription);
+                    .subscribe(new Subscriber<Integer>() {
+                        @Override
+                        public void onCompleted() {
+                        }
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.i(TAG,"error:"+e.getMessage());
+                        }
+                        @Override
+                        public void onNext(Integer integer) {
+                            setShoppingCartCount(integer);
+                        }
+                    });
+            addSubscrebe(subscription);
         }
     @Override
     public void getLocalBaseCategory() {
@@ -116,8 +129,11 @@ public class HomePresenterImpl extends RxPresenter<HomeContract.View> implements
     public void setShoppingCartCount(int count){
             if(mBaseManager.isSign()) {
                 count= (int) (mBaseManager.getUser().getCartItemCount()+count);
+            } else {
+                count = count;
             }
-             if(count!=0) {
+
+             if(count > 0) {
                  mView.setShoppingCartCount(count);
              }
         }

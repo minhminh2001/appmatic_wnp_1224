@@ -102,7 +102,7 @@ public class AddAddressActivity extends com.whitelabel.app.BaseActivity implemen
     private static class DataHandler extends Handler{
         private final WeakReference<AddAddressActivity> mActivity;
         public DataHandler(AddAddressActivity activity){
-            mActivity=new WeakReference<AddAddressActivity>(activity);
+            mActivity = new WeakReference<AddAddressActivity>(activity);
         }
         @Override
         public void handleMessage(Message msg) {

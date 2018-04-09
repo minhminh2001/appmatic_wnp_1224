@@ -1,8 +1,12 @@
 package com.whitelabel.app.ui.login;
 
+import com.whitelabel.app.data.model.MergeBatchResponse;
+import com.whitelabel.app.data.preference.model.ShoppingItemLocalModel;
 import com.whitelabel.app.data.service.IAccountManager;
 import com.whitelabel.app.data.service.IBaseManager;
+import com.whitelabel.app.data.service.IShoppingCartManager;
 import com.whitelabel.app.model.ApiFaildException;
+import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.ResponseConnection;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCustomerFbLoginReturnEntity;
@@ -11,6 +15,8 @@ import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.RxUtil;
+
+import java.util.List;
 
 import rx.Subscriber;
 import rx.Subscription;
@@ -22,9 +28,11 @@ public class LoginFragmentPresenterImpl extends RxPresenter<LoginFragmentContrac
     private IBaseManager iBaseManager;
     private  IAccountManager iAccountManager;
     private final String EMAIL_CONFIRMATION = "This account is not confirmed";
-    public LoginFragmentPresenterImpl(IBaseManager iBaseManager, IAccountManager iAccountManager){
+    private IShoppingCartManager iShoppingCartManager;
+    public LoginFragmentPresenterImpl(IBaseManager iBaseManager, IAccountManager iAccountManager,IShoppingCartManager iShoppingCartManager){
         this.iBaseManager=iBaseManager;
         this.iAccountManager=iAccountManager;
+        this.iShoppingCartManager=iShoppingCartManager;
     }
     public void requestOnallUser(String  platform,String accessToken,String secret){
         mView.showProgressDialog();
@@ -37,7 +45,6 @@ public class LoginFragmentPresenterImpl extends RxPresenter<LoginFragmentContrac
                      @Override
                      public void onError(Throwable e) {
                          mView.closeProgressDialog();
-                         JLogUtils.i("ray","error:"+e.getMessage());
                      }
                      @Override
                      public void onNext(ResponseConnection responseConnection) {
@@ -55,6 +62,94 @@ public class LoginFragmentPresenterImpl extends RxPresenter<LoginFragmentContrac
                  });
          addSubscrebe(subscription);
     }
+
+
+    public void getShoppingListFromLocal() {
+        iShoppingCartManager.getProductListFromLocal().
+                compose(RxUtil.<List<ShoppingItemLocalModel>>rxSchedulerHelper()).subscribe(
+                new Subscriber<List<ShoppingItemLocalModel>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<ShoppingItemLocalModel> shoppingItemLocalModels) {
+                        if (shoppingItemLocalModels != null && shoppingItemLocalModels.size() > 0) {
+                            addBatchShopping(shoppingItemLocalModels);
+                        }else{
+                            mView.addBatchShoppingSuccess();
+                        }
+                    }
+                });
+    }
+
+    private void addBatchShopping(List<ShoppingItemLocalModel> shoppingItemLocalModels) {
+        String session = iBaseManager.getUser() == null ? "" : iBaseManager.getUser()
+                .getSessionKey();
+        iShoppingCartManager.addBatchShopping(shoppingItemLocalModels, session)
+                .compose(RxUtil.<MergeBatchResponse>rxSchedulerHelper()).subscribe(
+                new Subscriber<MergeBatchResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                       throwable.printStackTrace();
+
+                    }
+
+                    @Override
+                    public void onNext(MergeBatchResponse shoppingItemLocalModels) {
+                        mView.addBatchShoppingSuccess();
+                        updateShoppingCartCount();
+                        clearLocalShoppingItem();
+                    }
+                });
+    }
+
+    private void clearLocalShoppingItem() {
+        iShoppingCartManager.clearShoppingItem()
+                .compose(RxUtil.<Boolean>rxSchedulerHelper()).subscribe(
+                new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+
+                    }
+                }
+        );
+    }
+
+    private void updateShoppingCartCount(){
+        GOUserEntity userinfo = iBaseManager.getUser();
+        if(userinfo == null){
+            return;
+        }
+
+        userinfo.setCartItemCount(userinfo.getCartItemCount()
+                                    + iShoppingCartManager.getProductCountFromLocal());
+        iBaseManager.saveUser(userinfo);
+    }
+
+
+
     public void  loginFromServer(final String givenName,final String formatted,
                                  final String familyName,final String displayName,
                                  final String identityToken,final String userToken,

@@ -99,8 +99,7 @@ import io.fabric.sdk.android.Fabric;
 /**
  * Created by imaginato on 2015/6/10.
  */
-public class LoginRegisterEmailLoginFragment extends com.whitelabel.app
-    .BaseFragment<LoginFragmentContract.Presenter>
+public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFragment<LoginFragmentContract.Presenter>
     implements View.OnClickListener, View.OnFocusChangeListener, LoginFragmentContract.View {
 
     public final static int RESULTCODE = 1000;
@@ -403,6 +402,12 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app
     @Override
     public void showUpdateDialog() {
         JViewUtils.showUpdateGooglePlayStoreDialog(loginRegisterActivity);
+    }
+
+
+    @Override
+    public void addBatchShoppingSuccess() {
+        jumpNextScreen();
     }
 
     @Override
@@ -913,6 +918,30 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app
         clickEmailInfo.setVisibility(View.VISIBLE);
     }
 
+    private void mergeProductToShoppingCart() {
+        mPresenter.getShoppingListFromLocal();
+
+    }
+
+    private void jumpNextScreen() {
+        if (isStart) {
+            Intent intent = new Intent(loginRegisterActivity, HomeActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent();
+            if (loginRegisterActivity.addToWish) {
+                Bundle bundle = new Bundle();
+                bundle.putString("productId", loginRegisterActivity.productId);
+                intent.putExtras(bundle);
+            }
+            loginRegisterActivity.setResult(RESULTCODE, intent);
+        }
+        loginRegisterActivity.finish();
+        loginRegisterActivity.overridePendingTransition(R.anim.enter_top_bottom, R.anim.exit_top_bottom);
+    }
+
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -1239,29 +1268,12 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app
                             .signIn(mActivity.get(), loginReturnEntity);
                         //跳转界面
                         if (loginReturnEntity.getConfirmation() == 1) {
-                            mFragment.get().loginRegisterActivity
-                                .setSubEmail(mFragment.get().email.getText().toString().trim());
+                            mFragment.get().loginRegisterActivity.setSubEmail(mFragment.get().email.getText().toString().trim());
                             mFragment.get().clickEmailInfo.setVisibility(View.VISIBLE);
                         } else {
-                            Bundle mBundle = new Bundle();
-                            mBundle.putString("sessionKey", loginReturnEntity.getSessionKey());
-                            boolean oldAccount = mFragment.get().email.getText().toString()
-                                .equals(shared.getString("email", ""));
-                            if (mFragment.get().isStart) {
-                                mActivity.get()
-                                    .startNextActivity(mBundle, HomeActivity.class, true);
-                            } else {
-                                Intent intent = new Intent();
-                                if (mActivity.get().addToWish) {
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("productId", mActivity.get().productId);
-                                    intent.putExtras(bundle);
-                                }
-                                mActivity.get().setResult(RESULTCODE, intent);
-                                mActivity.get().finish();
-                            }
+                            mFragment.get(). mergeProductToShoppingCart();
                         }
-//                        }
+
                         SharedPreferences.Editor editor2 = shared.edit();
                         editor2.putString("email", loginReturnEntity.getEmail());
                         editor2.commit();

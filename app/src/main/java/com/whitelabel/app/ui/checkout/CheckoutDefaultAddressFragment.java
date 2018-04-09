@@ -131,6 +131,10 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
         this.iChangeAddAddressPage = iChangeAddAddressPage;
     }
 
+    public void refresh(){
+        initData();
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -177,11 +181,6 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     public void showData(AddressBook shippingAddress, AddressBook billingAddress, List<CheckoutDefaultAddressResponse.ShippingMethodBean> shippingMethod, CheckoutDefaultAddressResponse.PickUpAddress pickUpAddress) {
         //first to this page skip to addAddress Page
         if (shippingAddress == null && billingAddress == null) {
-//            Intent intent = new Intent(getActivity(), AddAddressActivity.class);
-//            intent.putExtra(AddAddressActivity.EXTRA_USE_DEFAULT, false);
-//            startActivityForResult(intent, REQUEST_ADD_ADDRESS_CODE);
-//            getActivity().overridePendingTransition(R.anim.activity_transition_enter_righttoleft,
-//                    R.anim.activity_transition_exit_righttoleft);
             if (iChangeAddAddressPage!=null){
                 iChangeAddAddressPage.selectAddressFragment();
             }
@@ -380,6 +379,10 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initData();
+    }
+
+    private void initData(){
         initView();
         openProgressDialog();
         mPresenter.getDefaultAddress();

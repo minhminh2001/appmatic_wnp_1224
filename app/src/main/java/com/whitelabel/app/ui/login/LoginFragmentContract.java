@@ -19,6 +19,7 @@ public interface LoginFragmentContract {
         void showUpdateDialog();
         //LoginRegisterEmailRegisterFragment：Resiter,LoginRegisterEmailLoginFragment：Login
         void emailLoginOrRegister();
+        void addBatchShoppingSuccess();
     }
     public interface  Presenter extends BasePresenter<View>{
         public void requestOnallUser(String platform,String accessToken,String secret );
@@ -26,7 +27,7 @@ public interface LoginFragmentContract {
                               final String familyName,final String displayName,
                               final String identityToken,final String userToken,
                               final String email,final String provider,boolean showProgress, String boundEmail );
-
+        void getShoppingListFromLocal();
         void versionCheck();
     }
 }

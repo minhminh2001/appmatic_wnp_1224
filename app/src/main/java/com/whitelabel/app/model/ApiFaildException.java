@@ -9,6 +9,7 @@ public class ApiFaildException extends Exception {
     private String errorMsg;
     private Throwable throwable;
     private Object data;
+    private int code;
 
     public Object getData() {
         return data;
@@ -46,5 +47,13 @@ public class ApiFaildException extends Exception {
 
     public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 }

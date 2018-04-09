@@ -90,16 +90,19 @@ import java.util.Map;
  * Created by imaginato on 2015/6/10.
  */
 public class ProductActivity extends com.whitelabel.app.BaseActivity implements ProductDetailCallback, OnPageChangeListener, View.OnClickListener {
+
+    public static final int RESULT_WISH = 101;
+    public static final int REQUEST_TOOLBAREXPAN = 1112;
+    public static final int PRODUCT_PICTURE_REQUEST_CODE = 0x200;
+    private final int REQUESTCODE_LOGIN = 1000;
+    private final int REQUEST_SHOPPINGCART = 2000;
+
     //mGATrackTimeStart 加载pdp的时间，mGATrackAddCartTimeStart点击add to cart的时间
     public Long mGATrackTimeStart = 0L;
     public Long mGATrackAddCartTimeStart = 0L;
     public boolean mGATrackTimeEnable = false;
-    public static final int RESULT_WISH = 101;
-    public static final int REQUEST_TOOLBAREXPAN = 1112;
-    public static final int PRODUCT_PICTURE_REQUEST_CODE = 0x200;
     private String TAG = "ProductActivity";
-    private final int REQUESTCODE_LOGIN = 1000;
-    private final int REQUEST_SHOPPINGCART = 2000;
+
     private ViewGroup group;
     private BindProductView  bpvBindProduct;
     private TextView productDetailBindTitle;
@@ -177,6 +180,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         super.onDestroy();
         onDestoryWebView(mWebView);
     }
+
     public void onDestoryWebView(WebView webView) {
         try {
             ViewParent parent = webView.getParent();
@@ -197,6 +201,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             ex.getStackTrace();
         }
     }
+
     private static class DataHandler extends Handler {
         private final WeakReference<ProductActivity> mActivity;
 
@@ -303,6 +308,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             super.handleMessage(msg);
         }
     }
+
     private void facebookWishTrack(){
         try {
             FacebookEventUtils.getInstance().facebookEventAddedToWistList(this, mProductDetailBean.getId(), userSelectedProductFinalPriceFloat);
@@ -310,6 +316,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             ex.getStackTrace();
         }
     }
+
     private void trackAddWistList() {
         try {
             GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
@@ -321,6 +328,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             e.printStackTrace();
         }
     }
+
     private void trackProductDetail() {
         try {
             FacebookEventUtils.getInstance().facebookEventProductDetail(this, this.productId, this.userSelectedProductFinalPriceFloat);
@@ -335,6 +343,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             ex.getStackTrace();
         }
     }
+
     public void addToCartTrack() {
         try {
             GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action",
@@ -352,6 +361,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             ex.getStackTrace();
         }
     }
+
     @Override
     public boolean addProductToWishWhenLoginSuccess(String productId) {
         //点击wish icon 时跳到登陆页面前，需要保存
@@ -367,11 +377,13 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         return false;
     }
+
     @Override
     public void saveProductIdWhenJumpLoginPage(String productId) {
         //点击wish icon 时跳到登陆页面前，需要保存
         operateProductIdPrecache = new OperateProductIdPrecache(productId);
     }
+
     public void addRecommendedToWishByOperate() {
         //点击wish icon 时跳到登陆页面成功登陆后，推荐商品可直接加入wishList
         if (operateProductIdPrecache != null) {
@@ -380,12 +392,14 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             addtoWishlistsendRequestFromProductList(productId);
         }
     }
+
     @Override
     public void changeOperateProductIdPrecacheStatus(boolean available) {
         if (operateProductIdPrecache != null) {
             operateProductIdPrecache.setAvailable(available);
         }
     }
+
     private void setWishIconColorToBlank() {
         ivHeaderBarWishlist2.setVisibility(View.VISIBLE);
         ivHeaderBarWishlist.setVisibility(View.VISIBLE);
@@ -401,11 +415,13 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             @Override
             public void onAnimationStart(Animation animation) {
             }
+
             @Override
             public void onAnimationEnd(Animation animation) {
                 ivHeaderBarWishlist.setVisibility(View.GONE);
                 mIVHeaderBarWishlist.setVisibility(View.GONE);
             }
+
             @Override
             public void onAnimationRepeat(Animation animation) {
             }
@@ -413,6 +429,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         ivHeaderBarWishlist.startAnimation(animation2);
         mIVHeaderBarWishlist.startAnimation(animation2);
     }
+
     private void setWishIconColorToPurple() {
         ivHeaderBarWishlist2.setVisibility(View.VISIBLE);
         mIVHeaderBarWishlist2.setVisibility(View.VISIBLE);
@@ -443,6 +460,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         ivHeaderBarWishlist.startAnimation(animation2);
         mIVHeaderBarWishlist.startAnimation(animation2);
     }
+
     class MyWheelPickerCallback extends WheelPickerCallback {
         private List<ProductPropertyModel> mPropertyList;
         private int mLevel;
@@ -640,7 +658,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
         });
 
-
     }
 
     private void initNestedScrollView() {
@@ -819,6 +836,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             getProductInfo();
         }
     }
+
     public void getProductInfo() {
         if (!TextUtils.isEmpty(mFromProductList) && "from_product_list".equals(mFromProductList)) {
             mDialog = JViewUtils.showProgressDialog(ProductActivity.this, CustomDialog.BOOTOM);
@@ -848,7 +866,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             if (ivProductImage.getDrawable() == null) {
-            super.onBackPressed();
+                super.onBackPressed();
             } else {
                 ivProductImage.setVisibility(View.VISIBLE);
                 viewPager.setVisibility(View.GONE);
@@ -859,6 +877,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             super.onBackPressed();
         }
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -898,7 +917,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 Intent bindIntent=new Intent(ProductActivity.this, BindProductActivity.class);
                 bindIntent.putExtra(BindProductActivity.EXTRA_PRODUCTID,mProductDetailBean.getId());
                 if(mProductDetailBean.getProperty()!=null&&mProductDetailBean.getProperty().size()>0){
-                     Bundle  bundle=new Bundle();
+                     Bundle  bundle = new Bundle();
                      bundle.putSerializable(BindProductActivity.EXTRA_PRODUCT_DATA,mProductDetailBean.getProperty().get(0));
                      bindIntent.putExtras(bundle);
                 }
@@ -1021,7 +1040,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         return propertyList;
     }
-//    public boolean checkIsHaveStock() {
+
+    //    public boolean checkIsHaveStock() {
 //        if (mMaxSaleQty > mStockQty) {
 //            return false;
 //        } else {
@@ -1055,6 +1075,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     @Override
     public void onPageScrolled(int arg0, float arg1, int arg2) {
     }
+
     @Override
     public void onPageSelected(int arg0) {
 //        当滑动ViewPager是让顶层的ImagView消失
@@ -1068,6 +1089,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             JImageUtils.downloadImageFromServerByUrl(ProductActivity.this, mImageLoader, ivProductImage, mProductImagesArrayList.get(arg0 % mProductImagesArrayList.size()), destWidth, destWidth);
         }
     }
+
     private void setImageBackground(int selectItems) {
         if (mProductImageViewTips == null || selectItems < 0 || mProductImageViewTips.size() <= selectItems) {
             return;
@@ -1081,6 +1103,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             }
         }
     }
+
     private void initProductDetailUI() {
         initProductDetailUIStaticContent();
         initProductDetailUIDynamicContent();
@@ -1091,6 +1114,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             mGATrackTimeEnable = false;
         }
     }
+
     private void initProductDetailUIStaticContent() {
         if (mProductDetailBean == null) {
             return;
@@ -1178,6 +1202,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             llWebView.addView(mWebView);
         }
     }
+
     //dimension需放到table表里显示
     private String getProductDimenSionV2Html(ArrayList<?> arrayList) {
         try {
@@ -1207,11 +1232,12 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 stringBuild.append(" </table> <br>  ");
             }
             return stringBuild.toString();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "";
     }
+
     public String initShippingInfoHtmlText() {
         try {
             StringBuilder sb = new StringBuilder("");
@@ -1243,7 +1269,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
         return "";
     }
-//    private WebView wbProductDetail;
+
+    //    private WebView wbProductDetail;
     private WebView getWebView() {
         WebView webView = new WebView(getApplicationContext());
         webView.getSettings().setJavaScriptEnabled(true);
@@ -1259,6 +1286,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         webView.getSettings().setDisplayZoomControls(false);
         return webView;
     }
+
     protected void makeLinkClickable(SpannableStringBuilder strBuilder, final URLSpan span) {
         try {
             int start = strBuilder.getSpanStart(span);
@@ -1277,6 +1305,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             ex.getStackTrace();
         }
     }
+
     private void initProductDetailUIDynamicContent() {
         if (mProductDetailBean == null) {
             return;
@@ -1342,7 +1371,8 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                     break;
                 }
             }
-            if(instock) {mRLAddToWishlistSmall.setVisibility(View.GONE);
+            if (instock) {
+                mRLAddToWishlistSmall.setVisibility(View.GONE);
                 mRLAddToWishlistBig.setVisibility(View.VISIBLE);
                 ctvAddToCart.setText(getString(R.string.product_detail_addtocart));
                 setAddCartButtonEnable(false);
@@ -1482,6 +1512,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
 
         }
     }
+
     public void setCashLayout(int c) {
         if (c == 1) {
             llCash.setVisibility(View.VISIBLE);
@@ -1547,6 +1578,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                         this.list = list;
                         return this;
                     }
+
                     @Override
                     public void onClick(View v) {
 //                        startActivityToBigPictureDetail(index,list);
@@ -1614,23 +1646,23 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             viewPager.getLayoutParams().width = destWidth;
         }
     }
-    public void setAddCartButtonEnable(boolean enable){
-        if(enable){
+
+    public void setAddCartButtonEnable(boolean enable) {
+        if (enable) {
             ctvAddToCart.setText(getString(R.string.product_detail_addtocart));
             ctvAddToCart.setEnabled(true);
             mLLAddToCart.setEnabled(true);
 //            JViewUtils.setSoildButtonGlobalStyle(this,mLLAddToCart);
             mLLAddToCart.setBackground(JImageUtils.getButtonBackgroudSolidDrawable(this));
-        }else{
+        } else {
             ctvAddToCart.setEnabled(false);
             mLLAddToCart.setEnabled(false);
             mLLAddToCart.setBackgroundResource(R.drawable.big_button_style_b8);
         }
     }
 
-
-
-    private void updateProductDetailUIProductPriceStock(String price, String finalPrice, int instock, long stockqty, long maxSaleQty, String saveRM, String itemsLeft) {
+    private void updateProductDetailUIProductPriceStock(String price, String finalPrice,
+        int instock, long stockqty, long maxSaleQty, String saveRM, String itemsLeft) {
         mStockQty = stockqty;
         mMaxSaleQty = maxSaleQty;
         // Price
@@ -1772,15 +1804,12 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
         }
     }
 
-
-
-
-
     public void setBottonBarHeight(int px){
         RelativeLayout.LayoutParams bottomBarLp = (RelativeLayout.LayoutParams) llBottomBar.getLayoutParams();
         bottomBarLp.height=JDataUtils.dp2Px(px);
         llBottomBar.setLayoutParams(bottomBarLp);
     }
+
     public long getProductCount() {
         List<ProductPropertyModel> attributeIds = new ArrayList<>();
         for (int i = 0; i < mAttributeViews.size(); i++) {
@@ -1825,7 +1854,6 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             mAccountDao.deleteWishById(WhiteLabelApplication.getAppConfiguration().getUserInfo(this).getSessionKey(), itemId);
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1892,9 +1920,9 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
                 idQtys=new HashMap<>();
                 idQtys.put(mProductDetailBean.getId(),userSelectedProductQty+"");
             }
-            if(idQtys.size()==0){
-                JViewUtils.showErrorToast(this,"");
-                return ;
+            if (idQtys.size() == 0) {
+                JViewUtils.showErrorToast(this, "");
+                return;
             }
             mDialog = JViewUtils.showProgressDialog(ProductActivity.this);
             mShoppingDao.addProductToShoppingCart(WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey(), productId,idQtys);
@@ -1905,12 +1933,14 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
         }
     }
+
     private void addtoWishlistsendRequestFromProductList(String productId) {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(getApplicationContext())) {
             //postion使用-1,因为推荐商品的刷新机制,无法判断它到底是谁
             mProductDao.addProductListToWish(productId, WhiteLabelApplication.getAppConfiguration().getUserInfo(getApplicationContext()).getSessionKey(), productId);
         }
     }
+
     private void addtoWishlistsendRequest() {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(getApplicationContext())) {
             if (mProductDetailBean.getIsLike() == 0) {
@@ -1929,6 +1959,7 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
             overridePendingTransition(R.anim.enter_bottom_top, R.anim.exit_bottom_top);
         }
     }
+
     private void showNoInventory(Context context) {
         if (context == null) {
             return;
