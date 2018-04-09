@@ -54,7 +54,7 @@ public class CheckoutRegisterPresenter extends RxPresenter<CheckoutRegisterContr
 
                 @Override
                 public void onError(Throwable throwable) {
-                    Log.i("ray", "errorMessage:" + throwable.getMessage());
+
                     if (throwable instanceof ApiException) {
                         ApiException apiException = (ApiException) throwable;
                         mView.showErrorMessage(apiException.getErrorMsg());
@@ -130,8 +130,7 @@ public class CheckoutRegisterPresenter extends RxPresenter<CheckoutRegisterContr
 
                 @Override
                 public void onError(Throwable throwable) {
-                    JLogUtils.i("ray", "errorMessage:" + throwable.getMessage());
-
+                    throwable.printStackTrace();
                 }
 
                 @Override

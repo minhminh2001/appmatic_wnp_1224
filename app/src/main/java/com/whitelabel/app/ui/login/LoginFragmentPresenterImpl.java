@@ -102,7 +102,7 @@ public class LoginFragmentPresenterImpl extends RxPresenter<LoginFragmentContrac
 
                     @Override
                     public void onError(Throwable throwable) {
-                        JLogUtils.i("ray", "errorMessage:" + throwable.getMessage());
+                       throwable.printStackTrace();
 
                     }
 
