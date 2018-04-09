@@ -862,4 +862,8 @@
     <string name="maintenance_declaration">Woof! We ar working hard at sniffing,\n digging and scratching out the old\n codes to make for a friendlier new site.\nWe expected to be back as soon as possible.\n Sorry for an inconvienience.</string>
     <string name="maintenance_contact">Phone:2552-6200\n What\'s App:9696-6200\n Hours:10am-6pm\n Email:customercare@wnp.com.hk</string>
     <string name="maintenance_btn_refresh">Refresh</string>
+
+    <!-- Recent search keyword -->
+    <string name="recent_search_keyword_has_data">Recently Searched</string>
+    <string name="recent_search_keyword_not_data">Find your next favourite thing</string>
 </resources>

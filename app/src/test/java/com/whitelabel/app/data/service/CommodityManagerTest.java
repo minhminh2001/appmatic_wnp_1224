@@ -7,6 +7,7 @@ import com.whitelabel.app.SessionKeyProvider;
 import com.whitelabel.app.data.DataManager;
 import com.whitelabel.app.data.preference.PreferHelper;
 import com.whitelabel.app.model.CategoryDetailModel;
+import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.ProductDetailModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
@@ -31,6 +32,7 @@ import java.util.Map;
 import  static  org.mockito.Mockito.verify;
 import rx.Observable;
 import rx.Subscription;
+import rx.functions.Action1;
 import rx.observers.TestSubscriber;
 import static org.junit.Assert.*;
 /**
@@ -94,7 +96,7 @@ public class CommodityManagerTest {
         verify(preferHelper).getCategoryDetail("1");
         TestSubscriber<CategoryDetailModel>  testSubscriber=TestSubscriber.create();
         mCommodityManager.getCategoryDetail(false,"88","").
-                subscribe(testSubscriber);
+                subscribe((Action1<? super CategoryDetailNewModel>) testSubscriber);
        testSubscriber.assertNoErrors();
        testSubscriber.assertCompleted();
         CategoryDetailModel categoryDetailModel= testSubscriber.getOnNextEvents().get(0);

@@ -95,6 +95,8 @@
     <color name="greyF8F8F8">#F8F8F8</color>
     <color name="greyF0F0F0">#F0F0F0</color>
     <color name="greyfdfbfe">#fdfbfe</color>
+    <color name="grey75787b">#75787b</color>
+    <color name="gredy2d2b28">#2d2b28</color>
 
     <color name="grey6f6f6f">#6f6f6f</color>
     <color name="greye6e6e6">#e6e6e6</color>
@@ -124,6 +126,7 @@
 
     <!-- 橙色 -->
     <color name="orangeFFE4832B">#FFE4832B</color>
+    <color name="orangef68d2e">#f68d2e</color>
 
     <!--facebook -->
     <color name="facebook">#3A5899</color>

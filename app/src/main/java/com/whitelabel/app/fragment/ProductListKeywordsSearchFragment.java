@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,8 +35,8 @@ import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.adapter.RecentSearchListAdapter;
 import com.whitelabel.app.adapter.SearchFilterAdapter;
-import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.FragmentOnAdapterCallBack;
 import com.whitelabel.app.callback.ProductListFilterHideCallBack;
 import com.whitelabel.app.dao.ProductDao;
@@ -45,7 +46,6 @@ import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
 import com.whitelabel.app.model.SearchFilterResponse;
-import com.whitelabel.app.model.SuggestsEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.model.TMPProductListListPageEntity;
 import com.whitelabel.app.model.TempCategoryBean;
@@ -53,25 +53,21 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.ui.search.SearchContract;
 import com.whitelabel.app.utils.FilterSortHelper;
-import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
-import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomEditText;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.CustomXListView;
 import com.whitelabel.app.widget.FilterSortBottomView;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
@@ -133,15 +129,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     private ProductListSortFragment sortFragment;
     private FilterSortHelper filterSortHelper;
     public FilterSortBottomView filterSortBottomView;
-//    private ArrayList<SuggestsEntity> mSuggestionsArrayList;
-//    private String mKeyWord;
-//    private SearchSuggestionAdapter mSearchSuggestionAdapter;
-//    private String mSuggestionBrand;
-//    private String mSuggestionCategoryID;
-//    private String mSuggestionsModleType;
-////    private PublishSubject<String> mSubject = PublishSubject.create();
-//    private boolean mIsShowSuggestion;
-//    private long mTime_start;
     private boolean mIsSuggestionSearch;
     long resultSumPageNum=1;
 
@@ -158,6 +145,11 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     private TempCategoryBean tempCategoryBean;
     private RecyclerView rvHintList;
     private SearchFilterAdapter searchFilterAdapter;
+    private TextView tvTips;
+    private ConstraintLayout clRecentSearchList;
+    private RecyclerView rvRecentSearchList;
+    private RecentSearchListAdapter recentSearchListAdapter;
+    private OnRecentSearchListListener onRecentSearchListListener;
 
     @Override
     public void onAttach(Context context) {
@@ -216,7 +208,24 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     @Override
     public void loadAutoHintSearchData(
         List<SearchFilterResponse.SuggestsBean.ItemsBean> itemsBeans) {
+        if(itemsBeans == null){
+            return;
+        }
+
         searchFilterAdapter.updateData(itemsBeans,getKeyWord());
+
+        // show recent search list view when not found data
+        showRecentSearchView(itemsBeans.size() <= 0 ? true : false);
+    }
+
+    @Override
+    public void updateRecentSearchView(List<String> recentSearchKeywords) {
+
+        setRecentSearchViewTips(recentSearchKeywords.size() > 0
+                ? getString(R.string.recent_search_keyword_has_data)
+                : getString(R.string.recent_search_keyword_not_data));
+
+        recentSearchListAdapter.setRecentSearchList(recentSearchKeywords);
     }
 
     //hint suggest recyclerview click
@@ -457,6 +466,15 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
         searchFilterAdapter.setiRecyclerClick(this);
         rvHintList.setAdapter(searchFilterAdapter);
 
+        tvTips = (TextView) mContentView.findViewById(R.id.tv_tips);
+        clRecentSearchList = (ConstraintLayout)mContentView.findViewById(R.id.layout_recent_search_list);
+        rvRecentSearchList = (RecyclerView)mContentView.findViewById(R.id.rv_recent_search_list);
+        rvRecentSearchList.setLayoutManager(new LinearLayoutManager(productListActivity));
+        recentSearchListAdapter = new RecentSearchListAdapter();
+        onRecentSearchListListener = new OnRecentSearchListListener();
+        recentSearchListAdapter.setOnItemClickListener(onRecentSearchListListener);
+        rvRecentSearchList.setAdapter(recentSearchListAdapter);
+
         mClearRL.setVisibility(GONE);
         flFilterSortContainer.setOnClickListener(this);
         mTopFilterLL.setOnClickListener(this);
@@ -631,7 +649,9 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 cetKeywords.setText("");
             }
         });
-       }
+
+        showRecentSearchView(true);
+    }
 
     private void initTitleBar() {
         setTitle(fromOtherPageTitle);
@@ -746,12 +766,16 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
 //
 //    }
 
-    private void setKeyWord(SuggestsEntity suggestionItem) {
+    private void setKeyWord(String keyWord) {
+        cetKeywords.setText(keyWord);
+    }
+
+    /*private void setKeyWord(SuggestsEntity suggestionItem) {
         cetKeywords.setText(suggestionItem.getTitle());
         if (suggestionItem.getTitle() != null) {
             cetKeywords.setSelection(cetKeywords.length());
         }
-    }
+    }*/
 
 //    private void clearSuggestionSearch() {
 //        mSuggestionBrand = "";
@@ -899,7 +923,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
         }
 
     }
-
 
     private Dialog mDialog;
 
@@ -1603,6 +1626,36 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 });
                 fragment.showViewSwitch(true);
             }
+        }
+    }
+
+    private void showRecentSearchView(boolean isShow){
+        clRecentSearchList.setVisibility(isShow ? View.VISIBLE : View.GONE);
+
+        if(isShow) {
+            mPresenter.getRecentSearchKeywords();
+        }
+    }
+
+    private void setRecentSearchViewTips(String tips){
+        if(TextUtils.isEmpty(tips)){
+            return;
+        }
+
+        tvTips.setText(tips);
+    }
+
+    private class OnRecentSearchListListener implements RecentSearchListAdapter.OnItemClickListener{
+
+        @Override
+        public void onItemClick(String keyword) {
+
+            if(TextUtils.isEmpty(keyword)){
+                return;
+            }
+
+            setKeyWord(keyword);
+            mPresenter.autoSearch(getKeyWord());
         }
     }
 }

@@ -16,9 +16,12 @@ public class SearchContract {
     public interface View extends BaseView{
         public void showErrorMsg(String errorMsg);
         public void loadAutoHintSearchData(List<SearchFilterResponse.SuggestsBean.ItemsBean> itemsBeans);
+        public void updateRecentSearchView(List<String> recentSearchKeywords);
     }
 
     public interface Presenter extends BasePresenter<View>{
-        public void  autoSearch(String keyword);
+        public void autoSearch(final String keyword);
+        public void getRecentSearchKeywords();
+        public void saveRecentSearchKeyword(String keyword);
     }
 }
