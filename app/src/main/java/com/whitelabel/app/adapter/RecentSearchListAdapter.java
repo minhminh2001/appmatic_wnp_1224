@@ -1,5 +1,6 @@
 package com.whitelabel.app.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -18,10 +19,15 @@ import butterknife.ButterKnife;
  * Created by Aaron on 2018/4/8.
  */
 
-public class RecentSearchListAdapter extends RecyclerView.Adapter {
+public class RecentSearchListAdapter extends RecyclerView.Adapter implements View.OnClickListener {
 
     private List<String> recentSearchList = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
+    private Context context;
+
+    public RecentSearchListAdapter(Context context){
+        this.context = context;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -37,16 +43,20 @@ public class RecentSearchListAdapter extends RecyclerView.Adapter {
         final String keyword = recentSearchList.get(position);
 
         KeywordHolder keywordHolder = (KeywordHolder)holder;
-        keywordHolder.tvKeyword.setText(keyword);
-        keywordHolder.tvKeyword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if(!isFooter(position)){
+            keywordHolder.tvKeyword.setVisibility(View.VISIBLE);
+            keywordHolder.tvClearKeyword.setVisibility(View.GONE);
 
-                if(onItemClickListener != null){
-                    onItemClickListener.onItemClick(keyword);
-                }
-            }
-        });
+            keywordHolder.tvKeyword.setTag(position);
+            keywordHolder.tvKeyword.setText(keyword);
+            keywordHolder.tvKeyword.setOnClickListener(this);
+        } else {
+            keywordHolder.tvKeyword.setVisibility(View.GONE);
+            keywordHolder.tvClearKeyword.setVisibility(View.VISIBLE);
+
+            keywordHolder.tvClearKeyword.setTag(position);
+            keywordHolder.tvClearKeyword.setOnClickListener(this);
+        }
     }
 
     @Override
@@ -55,12 +65,14 @@ public class RecentSearchListAdapter extends RecyclerView.Adapter {
     }
 
     public void setRecentSearchList(List<String> list){
-        if(list == null){
-            return;
-        }
 
         recentSearchList.clear();
-        recentSearchList.addAll(list);
+
+        if(list != null && list.size() > 0){
+            recentSearchList.addAll(list);
+            addFooter(recentSearchList);
+        }
+
         notifyDataSetChanged();
     }
 
@@ -68,10 +80,44 @@ public class RecentSearchListAdapter extends RecyclerView.Adapter {
         onItemClickListener = listener;
     }
 
+    private void addFooter(List<String> list){
+        if(list == null){
+            return;
+        }
+
+        list.add(getStringById(R.string.recent_search_keyword_clear_data));
+    }
+
+    private boolean isFooter(int pos){
+        return recentSearchList.size() - 1 == pos ? true : false;
+    }
+
+    private String getStringById(int id){
+        if(context == null) {
+            return null;
+        }
+
+        return context.getString(id);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        int position = (int)view.getTag();
+        boolean isFooter = isFooter(position);
+        String searchKeyword = !isFooter ? recentSearchList.get(position) : null;
+
+        if(onItemClickListener != null){
+            onItemClickListener.onItemClick(isFooter, searchKeyword);
+        }
+    }
+
     static class KeywordHolder extends RecyclerView.ViewHolder{
 
         @BindView(R.id.tv_keyword)
         public TextView tvKeyword;
+        @BindView(R.id.tv_footer)
+        public TextView tvClearKeyword;
 
         public KeywordHolder(View view){
             super(view);
@@ -81,6 +127,6 @@ public class RecentSearchListAdapter extends RecyclerView.Adapter {
     }
 
     public interface OnItemClickListener{
-        void onItemClick(String keyword);
+        void onItemClick(boolean isFooter, String keyword);
     }
 }

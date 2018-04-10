@@ -10,6 +10,7 @@ import com.whitelabel.app.model.SearchFilterResponse;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.RxUtil;
 
 import android.text.TextUtils;
@@ -66,14 +67,7 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
                         List<SearchFilterResponse.SuggestsBean.ItemsBean> itemsBeans =
                             parseRecyclerDatas(searchFilterResponse);
 
-                        // login and find data
-                        if(iBaseManager.isSign()
-                                && itemsBeans.size() > 0){
-                            searchResponse = itemsBeans;
-                            saveRecentSearchKeyword(keyword);
-                        } else {
                             mView.loadAutoHintSearchData(itemsBeans);
-                        }
                     }
                 });
         addSubscrebe(subscribe);
@@ -127,7 +121,11 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
 
     @Override
     public void getRecentSearchKeywords() {
+
+        mView.showProgressDialog(true);
+
         if(!iBaseManager.isSign()){
+            mView.showProgressDialog(false);
             return;
         }
 
@@ -154,7 +152,7 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
                         if(recentSearchKeywordResponse.getStatus() != 1) {
                             return;
                         }
-
+                        mView.showProgressDialog(false);
                         mView.updateRecentSearchView(recentSearchKeywordResponse.getKeywords());
                     }
                 });
@@ -163,7 +161,7 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
     }
 
     @Override
-    public void saveRecentSearchKeyword(String keyword) {
+    public void saveRecentSearchKeyword(final String keyword) {
         final String sessionKey = iBaseManager.isSign() ? iBaseManager.getUser().getSessionKey():"";
         Subscription subscribe = iCommodityManager.saveRecentSearchKeyword(keyword, sessionKey)
                 .compose(RxUtil.<RecentSearchKeywordResponse>rxSchedulerHelper())
@@ -182,9 +180,36 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
 
                     @Override
                     public void onNext(RecentSearchKeywordResponse recentSearchKeywordResponse) {
-                        mView.loadAutoHintSearchData(searchResponse);
+                        // TODO: don't need to process
                     }
                 });
         addSubscrebe(subscribe);
+    }
+
+    @Override
+    public void clearAllRecentSearchKeyword() {
+        final String sessionKey = iBaseManager.isSign() ? iBaseManager.getUser().getSessionKey():"";
+        Subscription subscribe = iCommodityManager.clearAllRecentSearchKeyword("1", sessionKey)
+                .compose(RxUtil.<RecentSearchKeywordResponse>rxSchedulerHelper())
+                .subscribe(new Subscriber<RecentSearchKeywordResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
+                            mView.showErrorMsg(ExceptionParse.parseException(e).getErrorMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onNext(RecentSearchKeywordResponse recentSearchKeywordResponse) {
+
+                        // Clear recent search view
+                        mView.updateRecentSearchView(null);
+                    }
+                });
     }
 }

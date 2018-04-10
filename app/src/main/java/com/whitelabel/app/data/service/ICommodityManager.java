@@ -49,4 +49,5 @@ public interface ICommodityManager {
                                                                   String sessionKey);
     public  Observable<RecentSearchKeywordResponse> getRecentSearchKeywords(String storeId, String sessionKey);
     public  Observable<RecentSearchKeywordResponse> saveRecentSearchKeyword(String keyword, String sessionKey);
+    public  Observable<RecentSearchKeywordResponse> clearAllRecentSearchKeyword(String storeId, String sessionKey);
 }

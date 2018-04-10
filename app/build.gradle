@@ -60,7 +60,7 @@ android {
             buildConfigField("String", "APP_KEY", "\"APP-53910061550170911\"")
             buildConfigField("String", "GA_ID", "\"UA-66493898-4\"")
             buildConfigField("String", "BASE_URL", "\"https://www.wnp.com.hk/\"")
-            buildConfigField("String", "IMAGE_URL", "\"https://www.wnp.com.hk/")
+            buildConfigField("String", "IMAGE_URL", "\"https://www.wnp.com.hk/\"")
         }
 
         WNP_UAT{

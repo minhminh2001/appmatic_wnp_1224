@@ -93,4 +93,8 @@ public interface ProductApi {
     @FormUrlEncoded
     @POST("appservice/catalogSearch/saveKeyword")
     public Observable<RecentSearchKeywordResponse> saveRecentSearchKeyword(@Field("q") String keyword, @Field("session_key") String sessionKey);
+
+    @FormUrlEncoded
+    @POST("appservice/catalogSearch/clearSearchKeyword")
+    public Observable<RecentSearchKeywordResponse> clearAllRecentSearchKeyword(@Field("store_id") String storeId, @Field("session_key") String sessionKey);
 }

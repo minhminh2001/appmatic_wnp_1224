@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -63,6 +64,7 @@ import com.whitelabel.app.widget.CustomEditText;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.CustomXListView;
 import com.whitelabel.app.widget.FilterSortBottomView;
+import com.whitelabel.app.widget.MaterialDialog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -79,7 +81,8 @@ import static android.view.View.VISIBLE;
  * Created by imaginato on 2015/7/13.
  */
 public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<SearchContract.Presenter> implements FragmentOnAdapterCallBack, View.OnClickListener,
-        CustomXListView.IXListViewListener, OnFilterSortFragmentListener, Filter.FilterListener,FilterSortBottomView.FilterSortBottomViewCallBack ,SearchContract.View, SearchFilterAdapter.IRecyclerClick {
+        CustomXListView.IXListViewListener, OnFilterSortFragmentListener, Filter.FilterListener,FilterSortBottomView.FilterSortBottomViewCallBack ,SearchContract.View, SearchFilterAdapter.IRecyclerClick
+        , View.OnTouchListener{
     public static final int SEARCH_TYPE_INIT = 1;
     public static final int SEARCH_TYPE_KEYWORDS = 2;
     public static final int SEARCH_TYPE_FILTER = 3;
@@ -150,6 +153,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     private RecyclerView rvRecentSearchList;
     private RecentSearchListAdapter recentSearchListAdapter;
     private OnRecentSearchListListener onRecentSearchListListener;
+    private MaterialDialog confirmDialogForClearRecentSearchKeyword;
 
     @Override
     public void onAttach(Context context) {
@@ -221,11 +225,12 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     @Override
     public void updateRecentSearchView(List<String> recentSearchKeywords) {
 
-        setRecentSearchViewTips(recentSearchKeywords.size() > 0
-                ? getString(R.string.recent_search_keyword_has_data)
-                : getString(R.string.recent_search_keyword_not_data));
+        setRecentSearchViewTips(isEmptyCollection(recentSearchKeywords)
+                ? getString(R.string.recent_search_keyword_not_data)
+                : getString(R.string.recent_search_keyword_has_data));
 
         recentSearchListAdapter.setRecentSearchList(recentSearchKeywords);
+        showRecentSearchView(true);
     }
 
     //hint suggest recyclerview click
@@ -278,6 +283,14 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
             flFilterSortContainer.setVisibility(GONE);
             rlNodata.setVisibility(GONE);
         }
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if(motionEvent.getAction() == MotionEvent.ACTION_MOVE){
+            JViewUtils.hideKeyboard(productListActivity);
+        }
+        return false;
     }
 
     private static class DataHandler extends Handler {
@@ -470,9 +483,10 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
         clRecentSearchList = (ConstraintLayout)mContentView.findViewById(R.id.layout_recent_search_list);
         rvRecentSearchList = (RecyclerView)mContentView.findViewById(R.id.rv_recent_search_list);
         rvRecentSearchList.setLayoutManager(new LinearLayoutManager(productListActivity));
-        recentSearchListAdapter = new RecentSearchListAdapter();
+        recentSearchListAdapter = new RecentSearchListAdapter(getContext());
         onRecentSearchListListener = new OnRecentSearchListListener();
         recentSearchListAdapter.setOnItemClickListener(onRecentSearchListListener);
+        rvRecentSearchList.setOnTouchListener(this);
         rvRecentSearchList.setAdapter(recentSearchListAdapter);
 
         mClearRL.setVisibility(GONE);
@@ -567,6 +581,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                         }else {
                             cxlvProductList.setVisibility(View.GONE);
                             rvHintList.setVisibility(View.GONE);
+                            showRecentSearchView(true);
                         }
                         mClearRL.setVisibility(VISIBLE);
 ////                    clearSuggestionList();
@@ -650,7 +665,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
             }
         });
 
-        showRecentSearchView(true);
+        // load recent search keywords from server
+        loadRecentSearchKeywordsFromServer();
     }
 
     private void initTitleBar() {
@@ -1121,6 +1137,10 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
             case R.id.ll_sort_top:
                 productListActivity.filterSortOption(productListActivity.TYPE_SORT);
                 break;
+            case R.id.btn_p:
+                mPresenter.clearAllRecentSearchKeyword();
+                showConfirmDialogForClearRecentSearchKeyword(false);
+                break;
         }
     }
 
@@ -1344,6 +1364,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 fragment.dismissSuggestions();
                 fragment.cxlvProductList.setVisibility(GONE);
                 fragment.rlNodata.setVisibility(VISIBLE);
+                // hide recent search keyword view
+                fragment.showRecentSearchView(false);
 
             } else if (SEARCH_TYPE_REFRESH == fragment.getSearchType()) {
                 if (mFragment.get().mDialog != null && mFragment.get().mDialog.isShowing()) {
@@ -1481,6 +1503,11 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                     JLogUtils.e(fragment.TAG, "handleSuccessOK", ex);
                     ex.printStackTrace();
                 }
+
+                // save search keyword to server when has data
+                fragment.saveSearchKeywordToServer();
+                // hide recent search keyword view
+                fragment.showRecentSearchView(false);
 
                 fragment.productItemEntityArrayList.clear();
                 fragment.productListAdapter.notifyDataSetChanged();
@@ -1631,10 +1658,21 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
 
     private void showRecentSearchView(boolean isShow){
         clRecentSearchList.setVisibility(isShow ? View.VISIBLE : View.GONE);
+    }
 
+    @Override
+    public void showProgressDialog(boolean isShow) {
         if(isShow) {
-            mPresenter.getRecentSearchKeywords();
+            mDialog = JViewUtils.showProgressDialog(productListActivity);
+        } else {
+            if(mDialog != null){
+                mDialog.dismiss();
+            }
         }
+    }
+
+    private void loadRecentSearchKeywordsFromServer(){
+        mPresenter.getRecentSearchKeywords();
     }
 
     private void setRecentSearchViewTips(String tips){
@@ -1645,17 +1683,51 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
         tvTips.setText(tips);
     }
 
+    private boolean isEmptyCollection(List<String> list){
+        if(list == null || list.size() <= 0)
+            return true;
+
+        return false;
+    }
+
+    private void saveSearchKeywordToServer(){
+        mPresenter.saveRecentSearchKeyword(getKeyWord());
+    }
+
+    private void showConfirmDialogForClearRecentSearchKeyword(boolean isShow){
+        if(isShow) {
+            confirmDialogForClearRecentSearchKeyword = JViewUtils.showMaterialDialog(getActivity(), ""
+                    , getString(R.string.recent_search_keyword_clear_tips)
+                    , getString(R.string.yes_upp)
+                    , getString(R.string.no_upp), this, true);
+        } else {
+            if(confirmDialogForClearRecentSearchKeyword != null) {
+                confirmDialogForClearRecentSearchKeyword.dismiss();
+            }
+        }
+    }
+
+
+
+
     private class OnRecentSearchListListener implements RecentSearchListAdapter.OnItemClickListener{
 
         @Override
-        public void onItemClick(String keyword) {
-
-            if(TextUtils.isEmpty(keyword)){
-                return;
+        public void onItemClick(boolean isFooter, String keyword) {
+            MaterialDialog confirmDialog = null;
+            // click clear keyword item
+            if(isFooter){
+                showConfirmDialogForClearRecentSearchKeyword(true);
             }
+            // click normal item
+            else {
+                if(TextUtils.isEmpty(keyword)){
+                    return;
+                }
 
-            setKeyWord(keyword);
-            mPresenter.autoSearch(getKeyWord());
+                setKeyWord(keyword);
+                onSubmitKeyWord();
+            }
         }
     }
 }

@@ -866,4 +866,6 @@
     <!-- Recent search keyword -->
     <string name="recent_search_keyword_has_data">Recently Searched</string>
     <string name="recent_search_keyword_not_data">Find your next favourite thing</string>
+    <string name="recent_search_keyword_clear_data">Clear Recent Searches</string>
+    <string name="recent_search_keyword_clear_tips">Clear recent searches?</string>
 </resources>

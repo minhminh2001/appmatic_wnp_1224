@@ -210,6 +210,11 @@ public class CommodityManager  implements ICommodityManager{
     }
 
     @Override
+    public Observable<RecentSearchKeywordResponse> clearAllRecentSearchKeyword(String storeId, String sessionKey) {
+        return productApi.clearAllRecentSearchKeyword(storeId, sessionKey);
+    }
+
+    @Override
     public Observable<ResponseModel> setToCheckout(HashMap<String, String> maps) {
         return productApi.setToCheckout(maps).map(
             new Func1<ResponseModel, ResponseModel>() {
