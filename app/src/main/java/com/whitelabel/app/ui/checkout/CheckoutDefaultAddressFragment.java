@@ -226,8 +226,8 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             }
             tvShippingAddressCitystatepostcode.setText(stringBuilder.toString());
             tvShippingAddressCountry.setText(mPrimaryShipping.getCountry());
-            tvShippingAddressTelephone.setText(getActivity().getResources().getString(R.string.address_mobile_number) + " : " + mPrimaryShipping.getTelephone());
-            tvShippingAddressDayTelephone.setText(getActivity().getResources().getString(R.string.day_time_contact) + " : " + mPrimaryShipping.getFax());
+            tvShippingAddressTelephone.setText(getActivity().getResources().getString(R.string.address_mobile_number)  + mPrimaryShipping.getTelephone());
+            tvShippingAddressDayTelephone.setText(getActivity().getResources().getString(R.string.day_time_contact)  + mPrimaryShipping.getFax());
         }
         //  Default billing set
         if (billingAddress != null) {
@@ -254,8 +254,8 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             }
             tvBillingAddressCitystatepostcode.setText(billingBuilder.toString());
             tvBillingAddressCountry.setText(mPrimaryBilling.getCountry());
-            tvBillingAddressTelephone.setText(getActivity().getResources().getString(R.string.address_mobile_number) + " : " + mPrimaryBilling.getTelephone());
-            tvBillingAddressDayTelephone.setText(getActivity().getResources().getString(R.string.day_time_contact) + " : " + mPrimaryBilling.getFax());
+            tvBillingAddressTelephone.setText(getActivity().getResources().getString(R.string.address_mobile_number) + mPrimaryBilling.getTelephone());
+            tvBillingAddressDayTelephone.setText(getActivity().getResources().getString(R.string.day_time_contact)  + mPrimaryBilling.getFax());
         }
         if (pickUpAddress != null) {
             mPickUpAddress=pickUpAddress;

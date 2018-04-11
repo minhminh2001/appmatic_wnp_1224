@@ -8,6 +8,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import com.whitelabel.app.BuildConfig;
 import com.whitelabel.app.R;
 
 import android.content.Intent;
@@ -37,7 +38,7 @@ public class GoogleLogin {
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .requestId()
-            .requestIdToken(fragment.getString(R.string.google_server_client_id))
+            .requestIdToken(BuildConfig.GOOGLE_SERVER_CLIENT_ID)
             .requestProfile()
             .build();
 

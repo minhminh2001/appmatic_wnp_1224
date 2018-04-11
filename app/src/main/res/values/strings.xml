@@ -1,15 +1,9 @@
 <resources>
+
+    <string name="app_name">Whiskers N Paws</string>
+
     <!-- Global Data-->
     <string name="service_version">1.0.5</string>
-    <string name="auth_name"></string>
-    <string name="auth_pwd"></string>
-    <string name="checkout_hash_key_test">123456</string>
-    <string name="checkout_hash_key_live">5d89We</string>
-    <string name="download_image_path">appservice/image/index</string>
-    <string name="download_image_product_path">appservice/image/product</string>
-    <string name="payment_creditcard_url">appservice/checkout/ccpayjump?session_key=%1$s&amp;orderId=%2$s&amp;appid=1</string>
-    <string name="upload_file_path">appservice/order/uploadTransferProof</string>
-    <string name="jump_market_uri">market://details?id=com.wnp.app</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string-array name="size_array">
@@ -19,7 +13,7 @@
         <item>XS</item>
         <item>XL</item>
     </string-array>
-    <string-array name="color_array">00</string-array>
+
     <string name="Sun">Sun</string>
     <string name="Mon">Mon</string>
     <string name="Tues">Tues</string>
@@ -34,6 +28,7 @@
     <string name="Thursday">Thursday</string>
     <string name="Friday">Friday</string>
     <string name="Saturday">Saturday</string>
+
     <string-array name="WeekAbbr">
         <item name="Sun">Sun</item>
         <item name="Mon">Mon</item>
@@ -43,6 +38,7 @@
         <item name="Fri">Fri</item>
         <item name="Sat">Sat</item>
     </string-array>
+
     <string-array name="Week">
         <item name="Sunday">Sunday</item>
         <item name="Monday">Monday</item>
@@ -52,6 +48,7 @@
         <item name="Friday">Friday</item>
         <item name="Saturday">Saturday</item>
     </string-array>
+
     <string name="Jan">Jan</string>
     <string name="Feb">Feb</string>
     <string name="Mar">Mar</string>
@@ -73,6 +70,7 @@
     <string name="October">October</string>
     <string name="November">November</string>
     <string name="December">December</string>
+
     <string-array name="MonthAbbr">
         <item name="Jan">Jan</item>
         <item name="Feb">Feb</item>
@@ -105,6 +103,7 @@
     <!-- Global Tips -->
     <string name="Global_Error_Internet">Please check the internet, and try again.</string>
     <string name="Global_Error_Server">Something went wrong, pls try again later.</string>
+
     <!-- Facebook Login -->
     <string name="FB_Login_tips_error">Please check the internet, and try again.</string>
 
@@ -121,7 +120,6 @@
     <string name="messagedialog_settings">SETTINGS</string>
     <string name="messagedialog_allow">ALLOW</string>
     <string name="messagedialog_deny">DENY</string>
-
     <string name="action_settings">Settings</string>
 
     <!--SHOPPINGCART MODULE-->
@@ -148,6 +146,7 @@
         special 3-digit printed next to the signature area, on the back of your card.
     </string>
     <string name="Qunatity">Quantity:&#160;</string>
+
     <!--checkout module-->
     <string name="paypal_payment">Paypal Express Checkout</string>
     <string name="shipping">ADDRESS</string>
@@ -234,14 +233,6 @@
     <string name="Quantity__">Quantity:&#160;</string>
     <string name="RM">RM&#160;</string>
 
-    <!--<string name="order_status_text_Cancel">Canceled</string>
-    <string name="order_status_text_suborder_verified">Suborder Verified</string>
-    <string name="order_status_text_Pending">Pending</string>
-    <string name="order_status_text_Processing">Processing</string>
-    <string name="order_status_text_Shipped">Shipped</string>
-    <string name="order_status_text_Delivered">Delivered</string>
-    <string name="order_status_text_Delivery_Failed">Delivery&#160;Failed</string>
-    <string name="order_status_text_Delivery_Failed">Delivery Failed</string>-->
 
     <!--login-->
     <string name="RegisterNow">
@@ -289,16 +280,11 @@
     <string name="productlist_filter">FILTER</string>
     <string name="productlist_sort">SORT</string>
     <string name="productlist_list_cancel">Cancel</string>
-    <string name="productlist_list_prompt_error_nointernet">Please check the internet, and try
-        again.
-    </string>
+    <string name="productlist_list_prompt_error_nointernet">Please check the internet, and try again.</string>
     <string name="productlist_list_prompt_error_nodata">Your search returns no results.</string>
     <string name="productlist_list_prompt_error_blank">Minimum search query length is 1.</string>
     <string name="productlist_categorylanding_allcategory">All</string>
-
-    <string name="productlist_productlist_prompt_error_nodata">There are no products matching the
-        selection.
-    </string>
+    <string name="productlist_productlist_prompt_error_nodata">There are no products matching the selection.</string>
 
     <!-- Product List Filter -->
 
@@ -432,7 +418,7 @@
     <string name="already_have_an_account">Already have an account?</string>
     <!--login send email-->
     <string name="send_confirmation_email">Send Confirmation Link</string>
-    <string name="please_enter_email">Please enter email below and we’ll send you email confirmation
+    <string name="please_enter_email">Please enter email below and we\'ll send you email confirmation
         link for it.
     </string>
     <string name="submit">SUBMIT</string>
@@ -497,19 +483,13 @@
     <string name="campaign_item_soldout_for_notifyme">(SOLD&#160;OUT)</string>
 
     <string name="login_twitter">Twitter</string>
-
-
     <string name="out_of_stock2">SOLD OUT</string>
 
-    <string name="facebook_error_nointernet">Cannot share message to the Facebook, please check you
-        internet and try again.
-    </string>
+    <string name="facebook_error_nointernet">Cannot share message to the Facebook, please check you internet and try again.</string>
     <string name="facebook_error_notinstalled">Cannot share message to the Facebook, please download
         or update the latest Facebook app and try again.
     </string>
     <string name="facebook_success_ok">You shared this post.</string>
-
-
     <string name="order_detail_confirm">BANK TRANSFER CONFIRMATION</string>
     <string name="bank_transafer_confirm">Bank Transfer Confirmation</string>
     <string name="bank_transafer_thank">Thank you for shopping at Wnp</string>
@@ -683,7 +663,7 @@
     <string name="select_country">Please select a country.</string>
     <string name="zip_code">Please enter a zip code.</string>
     <string name="enter_city">Please enter a city.</string>
-    <string name="order_number">Order Number:</string>
+    <string name="order_number">Order Number:&#160;</string>
     <string name="rm">RM</string>
     <string name="r_m">-RM</string>
 
@@ -814,36 +794,13 @@
 
 
     <!--  mobilde number-->
-    <string name="address_mobile_number">Mobile Number</string>
-    <string name="day_time_contact">Day Time Contact</string>
+    <string name="address_mobile_number">Mobile Number:&#160;</string>
+    <string name="day_time_contact">Day Time Contact:&#160;</string>
     <string name="checkout_shipping_address">Shipping Address</string>
     <string name="checkout_billing_address">Billing Address</string>
     <string name="checkout_address_change">Change</string>
-
     <string name="checkout_bill_diffent">Bill to different address</string>
-    <!--config-->
-    <string name="gcm_sender_id">399952816616</string>
-    <string name="facebook_app_id_test">1586589871584877</string>
-    <string name="facebook_app_id_live">1287318627981888</string>
-    <string name="service_url">http://192.168.1.233/</string>
-    <!--appmatic : 1287318627981888 | wnp : 195025754589707 -->
-    <string name="facebook_id">407398836332250</string>
-    <!-- one all -->
-    <string name="twitter_consumer_key">vQgW2FliUDH8Pruz7qOe00kF4</string>
-    <string name="twitter_consumer_secret">MsrYyMWrUmsvinAWSAw2N0xSZ5AeLilqypSnPk5dmSOkXfuc8y
-    </string>
-    <string name="twitter_subdomain">wnplocal</string>
-
-    <string name="google_server_client_id">
-        866942382241-lc94khrj4lgau2mnat90c23agnk91qvm.apps.googleusercontent.com
-    </string>
-
-    <string name="build_id">20171204021754</string>
-    <string name="fabricApiKey">be4d520aa12beeb3e6e381b16ef4ea98bb5de7d8</string>
-    <string name="app_name">Whiskers N Paws</string>
     <string name="address_phone_error_hint">More than 6 digits please.</string>
-    <string name="market_url">market://details?id=</string>
-    <string name="playstore_url">https://play.google.com/store/apps/details?id=</string>
     <string name="already_registered">Already Registered?</string>
     <string name="login_now">Login now</string>
     <string name="profile">Profile</string>
@@ -860,7 +817,7 @@
 
     <!-- Maintenance page -->
     <string name="maintenance_declaration">Woof! We ar working hard at sniffing,\n digging and scratching out the old\n codes to make for a friendlier new site.\nWe expected to be back as soon as possible.\n Sorry for an inconvienience.</string>
-    <string name="maintenance_contact">Phone:2552-6200\n What\'s App:9696-6200\n Hours:10am-6pm\n Email:customercare@wnp.com.hk</string>
+    <string name="maintenance_contact">Phone:&#160;2552-6200\nWhat\'s App:&#160;9696-6200\nHours:&#160;10am-6pm\nEmail:&#160;customercare@wnp.com.hk</string>
     <string name="maintenance_btn_refresh">Refresh</string>
 
     <!-- Recent search keyword -->

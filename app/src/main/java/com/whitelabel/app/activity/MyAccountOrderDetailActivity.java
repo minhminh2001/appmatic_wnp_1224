@@ -638,7 +638,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
          * Constructor city,state,postcode
          */
         if(!TextUtils.isEmpty(address.getFax())){
-            tvDayTimeTelephone.setText(getResources().getString(R.string.day_time_contact)+" : "+address.getFax());
+            tvDayTimeTelephone.setText(getResources().getString(R.string.day_time_contact) + address.getFax());
         }else{
             tvDayTimeTelephone.setVisibility(View.GONE);
         }
@@ -652,7 +652,7 @@ public class MyAccountOrderDetailActivity extends com.whitelabel.app.BaseActivit
         }
         tvCityStatePostcode.setText(stringBuilder.toString());
         tvCountry.setText(address.getCountry());
-        tvTelephone.setText(getResources().getString(R.string.address_mobile_number)+" : " + address.getTelephone());
+        tvTelephone.setText(getResources().getString(R.string.address_mobile_number) + address.getTelephone());
         view.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent00));
         return view;
     }

@@ -170,8 +170,8 @@ public class AddressBookAdapterV2 extends SwipeableAdapter {
         });
         holder.tvaddress.setText(stringBuilder.toString());
         holder.tvmalaysia.setText(addreddBean.getCountry());
-        holder.tvtel.setText(" : "+addreddBean.getTelephone());
-        holder.tvDayPhoneValue.setText(" : "+addreddBean.getFax());
+        holder.tvtel.setText(addreddBean.getTelephone());
+        holder.tvDayPhoneValue.setText(addreddBean.getFax());
     }
 
     private void setPonitColor(AddressViewHolder viewHolder, boolean darkColor) {

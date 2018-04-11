@@ -24,6 +24,7 @@ import com.facebook.login.LoginResult;
 import com.orhanobut.logger.Logger;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
+import com.whitelabel.app.BuildConfig;
 import com.whitelabel.app.Const;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -546,8 +547,8 @@ public class LoginRegisterEmailLoginFragment extends com.whitelabel.app.BaseFrag
     }
 
     private void initTwitter() {
-        String twitterConsumerKey = getString(R.string.twitter_consumer_key);
-        String twitterSecret = getString(R.string.twitter_consumer_secret);
+        String twitterConsumerKey = BuildConfig.TWITTER_CONSUMER_KEY;
+        String twitterSecret = BuildConfig.TWITTER_CONSUMER_SECRET;
         TwitterAuthConfig authConfig = new TwitterAuthConfig(twitterConsumerKey, twitterSecret);
         Fabric.with(getActivity(), new TwitterCore(authConfig));
     }
