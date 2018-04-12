@@ -36,39 +36,27 @@ public class GlobalData {
     private final static String pathSeparator = "/";
     public static String useHlb = "1";  //1  userHlb
     public static void init(Context context) {
-        serviceVersion = context.getResources().getString(R.string.service_version);
+        serviceVersion = BuildConfig.SERVICE_VERSION;
         appName = context.getResources().getString(R.string.app_name);
-        jumpMarketUrl = context.getResources().getString(R.string.jump_market_uri);
+        jumpMarketUrl = BuildConfig.JUMP_MARKET_URI;
 //        authName = context.getResources().getString(R.string.auth_name);
 //        authPwd = context.getResources().getString(R.string.auth_pwd);
-        gcmSendId = context.getResources().getString(R.string.gcm_sender_id);
+        gcmSendId = BuildConfig.GCM_SENDER_ID;
         appVersion = JToolUtils.getAppVersionName();
-        oneAll_Subdomain=context.getResources().getString(R.string.twitter_subdomain);
+        oneAll_Subdomain = BuildConfig.TWITTER_SUBDOMAIN;
         appKey = BuildConfig.APP_KEY;
         gaTrackId = BuildConfig.GA_ID;
         apiVersion  = BuildConfig.API_VERSION;
         apiKey = BuildConfig.API_KEY;
-        buildId=context.getResources().getString(R.string.build_id);
-        facebookId=context.getResources().getString(R.string.facebook_id);
+        buildId = BuildConfig.BUILD_ID;
+        facebookId = BuildConfig.FACEBOOK_ID;
         mockUrl = BuildConfig.MOCK_URL;
         serviceRequestUrl = BuildConfig.BASE_URL;
-//        appKey= BuildConfig.APP_KEY;
-//        mockUrl=BuildConfig.MOCK_URL;
-//        checkoutHashKey = BuildConfig.HASH_KEY;
-//        gaTrackId = BuildConfig.GA_TRACK_ID;
-//        apiVersion=BuildConfig.API_VERSION;
-//        apiKey=BuildConfig.API_KEY;
-//        facebookId = BuildConfig.FACEBOOK_ID;
-//        if (BuildConfig.REQUEST_URL.indexOf("www.") == -1) {
-//            serviceRequestUrl = getAuthorizationUrl(BuildConfig.REQUEST_URL);
-//        }else{
-//            serviceRequestUrl = BuildConfig.REQUEST_URL;
-//        }
         imageBaseUrl = BuildConfig.IMAGE_URL;
-        creditCardPaymentUrl=serviceRequestUrl+context.getString(R.string.payment_creditcard_url);
-        downloadImagePath = context.getString(R.string.download_image_path);
-        downloadImageProductPath = context.getString(R.string.download_image_product_path);
-        uploadFilePath =context.getString(R.string.upload_file_path);
+        creditCardPaymentUrl = serviceRequestUrl + BuildConfig.PAYMENT_CREDITCARD_URL;
+        downloadImagePath = BuildConfig.DOWNLOAD_IMAGE_PATH;
+        downloadImageProductPath = BuildConfig.DOWNLOAD_IMAGE_PRODUCT_PATH;
+        uploadFilePath = BuildConfig.UPLOAD_FILE_PATH;
         downloadImageUrl = imageBaseUrl + pathSeparator + downloadImagePath;
         upLoadFileUrl = serviceRequestUrl + pathSeparator + uploadFilePath;
 

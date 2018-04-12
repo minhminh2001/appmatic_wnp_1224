@@ -484,7 +484,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
              * Constructor city,state,postcode
              */
             if(!TextUtils.isEmpty(((CheckoutPaymentReturnShippingAddress)address).getFax())){
-                tvDayTimeTelephone.setText(getResources().getString(R.string.day_time_contact)+" : "+((CheckoutPaymentReturnShippingAddress)address).getFax());
+                tvDayTimeTelephone.setText(getResources().getString(R.string.day_time_contact) + ((CheckoutPaymentReturnShippingAddress)address).getFax());
             }else{
                 tvDayTimeTelephone.setVisibility(View.GONE);
             }
@@ -498,7 +498,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
             }
             tvCityStatePostcode.setText(stringBuilder.toString());
             tvCountry.setText(((CheckoutPaymentReturnShippingAddress)address).getCountry());
-            tvTelephone.setText(getResources().getString(R.string.address_mobile_number)+" : " + ((CheckoutPaymentReturnShippingAddress)address).getTelephone());
+            tvTelephone.setText(getResources().getString(R.string.address_mobile_number) + ((CheckoutPaymentReturnShippingAddress)address).getTelephone());
             return view;
         }else if (address instanceof AddressBook){
             tvFirstname.setText(((AddressBook)address).getFirstName() + " " + ((AddressBook)address).getLastName());
@@ -511,7 +511,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
              * Constructor city,state,postcode
              */
             if(!TextUtils.isEmpty(((AddressBook)address).getFax())){
-                tvDayTimeTelephone.setText(getResources().getString(R.string.day_time_contact)+" : "+((AddressBook)address).getFax());
+                tvDayTimeTelephone.setText(getResources().getString(R.string.day_time_contact) + ((AddressBook)address).getFax());
             }else{
                 tvDayTimeTelephone.setVisibility(View.GONE);
             }
@@ -525,7 +525,7 @@ public class CheckoutReviewFragment extends com.whitelabel.app.BaseFragment {
             }
             tvCityStatePostcode.setText(stringBuilder.toString());
             tvCountry.setText(((AddressBook)address).getCountry());
-            tvTelephone.setText(getResources().getString(R.string.address_mobile_number)+" : " + ((AddressBook)address).getTelephone());
+            tvTelephone.setText(getResources().getString(R.string.address_mobile_number) + ((AddressBook)address).getTelephone());
             return view;
         }else if (address instanceof CheckoutDefaultAddressResponse.PickUpAddress){
             tvAddress1.setText(Html.fromHtml(((CheckoutDefaultAddressResponse.PickUpAddress) address).getAddress()));

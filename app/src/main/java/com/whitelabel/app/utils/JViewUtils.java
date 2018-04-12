@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -288,6 +289,35 @@ public class JViewUtils {
         }
         mMaterialDialog.show();
         mMaterialDialog.getPositiveButton().setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        return mMaterialDialog;
+    }
+
+    public static MaterialDialog showMaterialDialog(Context context, String title, String message, String ok, String cancel, final View.OnClickListener okListener, boolean isCanncel) {
+        final MaterialDialog mMaterialDialog = new MaterialDialog(context);
+        mMaterialDialog.setTitle(title);
+        mMaterialDialog.setMessage(message);
+
+        mMaterialDialog.setCancelable(isCanncel);
+        mMaterialDialog.setCanceledOnTouchOutside(isCanncel);
+        if (okListener != null) {
+            mMaterialDialog.setPositiveButton(ok, okListener);
+        } else {
+            mMaterialDialog.setPositiveButton(ok, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mMaterialDialog.dismiss();
+                }
+            });
+        }
+        mMaterialDialog.setNegativeButton(cancel, new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                mMaterialDialog.dismiss();
+            }
+        });
+        mMaterialDialog.show();
+        mMaterialDialog.getPositiveButton().setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        mMaterialDialog.getNegativeButton().setTextColor(Color.BLACK);
         return mMaterialDialog;
     }
 

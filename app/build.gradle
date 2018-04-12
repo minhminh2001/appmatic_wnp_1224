@@ -50,24 +50,40 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_KEY", "\"eyKOW06BPBqbe3qe\"")
-        buildConfigField("String", "API_VERSION", "\"v1\"")
-        buildConfigField("String", "MOCK_URL", "\"http://mis.appmatic.io/\"")
+        buildConfigField("String", "SERVICE_VERSION", String.format("\"%s\"",SERVICE_VERSION))
+        buildConfigField("String", "DOWNLOAD_IMAGE_PATH", String.format("\"%s\"",DOWNLOAD_IMAGE_PATH))
+        buildConfigField("String", "DOWNLOAD_IMAGE_PRODUCT_PATH", String.format("\"%s\"",DOWNLOAD_IMAGE_PRODUCT_PATH))
+		buildConfigField("String", "PAYMENT_CREDITCARD_URL", String.format("\"%s\"",PAYMENT_CREDITCARD_URL))
+		buildConfigField("String", "UPLOAD_FILE_PATH", String.format("\"%s\"",UPLOAD_FILE_PATH))
+		buildConfigField("String", "JUMP_MARKET_URI", String.format("\"%s\"",JUMP_MARKET_URI))
+		buildConfigField("String", "GCM_SENDER_ID", String.format("\"%s\"",GCM_SENDER_ID))
+		buildConfigField("String", "FACEBOOK_ID", String.format("\"%s\"",FACEBOOK_ID))
+		buildConfigField("String", "TWITTER_CONSUMER_KEY", String.format("\"%s\"",TWITTER_CONSUMER_KEY))
+		buildConfigField("String", "TWITTER_CONSUMER_SECRET", String.format("\"%s\"",TWITTER_CONSUMER_SECRET))
+		buildConfigField("String", "TWITTER_SUBDOMAIN", String.format("\"%s\"",TWITTER_SUBDOMAIN))
+		buildConfigField("String", "GOOGLE_SERVER_CLIENT_ID", String.format("\"%s\"",GOOGLE_SERVER_CLIENT_ID))
+		buildConfigField("String", "BUILD_ID", String.format("\"%s\"",BUILD_ID))
+		buildConfigField("String", "FABRIC_API_KEY", String.format("\"%s\"",FABRIC_API_KEY))
+		buildConfigField("String", "MARKET_URL", String.format("\"%s\"",MARKET_URL))
+		buildConfigField("String", "GOOGLE_PLAY_STORE_URL", String.format("\"%s\"",GOOGLE_PLAY_STORE_URL))
+        buildConfigField("String", "API_KEY", String.format("\"%s\"",API_KEY))
+        buildConfigField("String", "API_VERSION", String.format("\"%s\"",API_VERSION))
+        buildConfigField("String", "MOCK_URL", String.format("\"%s\"",MOCK_URL))
     }
 
     productFlavors {
         WNP_LIVE {
-            buildConfigField("String", "APP_KEY", "\"APP-53910061550170911\"")
-            buildConfigField("String", "GA_ID", "\"UA-66493898-4\"")
-            buildConfigField("String", "BASE_URL", "\"https://www.wnp.com.hk/\"")
-            buildConfigField("String", "IMAGE_URL", "\"https://www.wnp.com.hk/")
+            buildConfigField("String", "APP_KEY", String.format("\"%s\"",APP_KEY_LIVE))
+            buildConfigField("String", "GA_ID", String.format("\"%s\"",GA_ID_LIVE))
+            buildConfigField("String", "BASE_URL", String.format("\"%s\"",BASE_URL_LIVE))
+            buildConfigField("String", "IMAGE_URL", String.format("\"%s\"",IMAGE_URL_LIVE))
         }
 
         WNP_UAT{
-            buildConfigField("String", "APP_KEY", "\"APP-13110015850171019\"")
-            buildConfigField("String", "GA_ID", "\"UA-113868370-5\"")
-            buildConfigField("String", "BASE_URL", "\"https://imaginato.wnp.com.hk/\"")
-            buildConfigField("String", "IMAGE_URL", "\"https://imaginato.wnp.com.hk/\"")
+            buildConfigField("String", "APP_KEY", String.format("\"%s\"",APP_KEY_UAT))
+            buildConfigField("String", "GA_ID", String.format("\"%s\"",GA_ID_UAT))
+            buildConfigField("String", "BASE_URL", String.format("\"%s\"",BASE_URL_UAT))
+            buildConfigField("String", "IMAGE_URL", String.format("\"%s\"",IMAGE_URL_UAT))
         }
 
     }
@@ -209,3 +225,4 @@ android.applicationVariants.all { variant ->
         output.outputFile = new File(outputFile.parent, fileName)
     }
 }
+

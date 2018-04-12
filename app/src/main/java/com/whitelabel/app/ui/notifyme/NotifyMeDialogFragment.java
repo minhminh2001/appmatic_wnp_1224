@@ -18,10 +18,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.common.utils.JViewUtil;
 import com.whitelabel.app.BaseDialogFragment;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.utils.JDataUtils;
+import com.whitelabel.app.utils.JViewUtils;
 
 import java.util.Map;
 
@@ -127,6 +129,10 @@ public class NotifyMeDialogFragment extends BaseDialogFragment<NotifyMeConstract
         cbNotifyMeWithEmail.setChecked(true);
         etName.setText(name);
         etEmail.setText(email);
+
+        JViewUtils.setSoildButtonGlobalStyle(getActivity(), btnNotifyMe);
+        JViewUtils.setStrokeButtonGlobalStyle(getActivity(), btnCancel);
+
     }
 
     private void initData(){

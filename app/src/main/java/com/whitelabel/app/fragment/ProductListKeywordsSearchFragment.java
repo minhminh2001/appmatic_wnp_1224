@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -34,8 +36,8 @@ import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
+import com.whitelabel.app.adapter.RecentSearchListAdapter;
 import com.whitelabel.app.adapter.SearchFilterAdapter;
-import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.FragmentOnAdapterCallBack;
 import com.whitelabel.app.callback.ProductListFilterHideCallBack;
 import com.whitelabel.app.dao.ProductDao;
@@ -45,7 +47,6 @@ import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
 import com.whitelabel.app.model.SearchFilterResponse;
-import com.whitelabel.app.model.SuggestsEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.model.TMPProductListListPageEntity;
 import com.whitelabel.app.model.TempCategoryBean;
@@ -53,25 +54,22 @@ import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.ui.search.SearchContract;
 import com.whitelabel.app.utils.FilterSortHelper;
-import com.whitelabel.app.utils.FirebaseEventUtils;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
-import com.whitelabel.app.utils.PageIntentUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomEditText;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.CustomXListView;
 import com.whitelabel.app.widget.FilterSortBottomView;
+import com.whitelabel.app.widget.MaterialDialog;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
@@ -83,7 +81,8 @@ import static android.view.View.VISIBLE;
  * Created by imaginato on 2015/7/13.
  */
 public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<SearchContract.Presenter> implements FragmentOnAdapterCallBack, View.OnClickListener,
-        CustomXListView.IXListViewListener, OnFilterSortFragmentListener, Filter.FilterListener,FilterSortBottomView.FilterSortBottomViewCallBack ,SearchContract.View, SearchFilterAdapter.IRecyclerClick {
+        CustomXListView.IXListViewListener, OnFilterSortFragmentListener, Filter.FilterListener,FilterSortBottomView.FilterSortBottomViewCallBack ,SearchContract.View, SearchFilterAdapter.IRecyclerClick
+        , View.OnTouchListener{
     public static final int SEARCH_TYPE_INIT = 1;
     public static final int SEARCH_TYPE_KEYWORDS = 2;
     public static final int SEARCH_TYPE_FILTER = 3;
@@ -133,15 +132,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     private ProductListSortFragment sortFragment;
     private FilterSortHelper filterSortHelper;
     public FilterSortBottomView filterSortBottomView;
-//    private ArrayList<SuggestsEntity> mSuggestionsArrayList;
-//    private String mKeyWord;
-//    private SearchSuggestionAdapter mSearchSuggestionAdapter;
-//    private String mSuggestionBrand;
-//    private String mSuggestionCategoryID;
-//    private String mSuggestionsModleType;
-////    private PublishSubject<String> mSubject = PublishSubject.create();
-//    private boolean mIsShowSuggestion;
-//    private long mTime_start;
     private boolean mIsSuggestionSearch;
     long resultSumPageNum=1;
 
@@ -158,6 +148,12 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     private TempCategoryBean tempCategoryBean;
     private RecyclerView rvHintList;
     private SearchFilterAdapter searchFilterAdapter;
+    private TextView tvTips;
+    private ConstraintLayout clRecentSearchList;
+    private RecyclerView rvRecentSearchList;
+    private RecentSearchListAdapter recentSearchListAdapter;
+    private OnRecentSearchListListener onRecentSearchListListener;
+    private MaterialDialog confirmDialogForClearRecentSearchKeyword;
 
     @Override
     public void onAttach(Context context) {
@@ -216,7 +212,25 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     @Override
     public void loadAutoHintSearchData(
         List<SearchFilterResponse.SuggestsBean.ItemsBean> itemsBeans) {
+        if(itemsBeans == null){
+            return;
+        }
+
         searchFilterAdapter.updateData(itemsBeans,getKeyWord());
+
+        // show recent search list view when not found data
+        showRecentSearchView(itemsBeans.size() <= 0 ? true : false);
+    }
+
+    @Override
+    public void updateRecentSearchView(List<String> recentSearchKeywords) {
+
+        setRecentSearchViewTips(isEmptyCollection(recentSearchKeywords)
+                ? getString(R.string.recent_search_keyword_not_data)
+                : getString(R.string.recent_search_keyword_has_data));
+
+        recentSearchListAdapter.setRecentSearchList(recentSearchKeywords);
+        showRecentSearchView(true);
     }
 
     //hint suggest recyclerview click
@@ -269,6 +283,14 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
             flFilterSortContainer.setVisibility(GONE);
             rlNodata.setVisibility(GONE);
         }
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if(motionEvent.getAction() == MotionEvent.ACTION_MOVE){
+            JViewUtils.hideKeyboard(productListActivity);
+        }
+        return false;
     }
 
     private static class DataHandler extends Handler {
@@ -457,6 +479,16 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
         searchFilterAdapter.setiRecyclerClick(this);
         rvHintList.setAdapter(searchFilterAdapter);
 
+        tvTips = (TextView) mContentView.findViewById(R.id.tv_tips);
+        clRecentSearchList = (ConstraintLayout)mContentView.findViewById(R.id.layout_recent_search_list);
+        rvRecentSearchList = (RecyclerView)mContentView.findViewById(R.id.rv_recent_search_list);
+        rvRecentSearchList.setLayoutManager(new LinearLayoutManager(productListActivity));
+        recentSearchListAdapter = new RecentSearchListAdapter(getContext());
+        onRecentSearchListListener = new OnRecentSearchListListener();
+        recentSearchListAdapter.setOnItemClickListener(onRecentSearchListListener);
+        rvRecentSearchList.setOnTouchListener(this);
+        rvRecentSearchList.setAdapter(recentSearchListAdapter);
+
         mClearRL.setVisibility(GONE);
         flFilterSortContainer.setOnClickListener(this);
         mTopFilterLL.setOnClickListener(this);
@@ -549,6 +581,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                         }else {
                             cxlvProductList.setVisibility(View.GONE);
                             rvHintList.setVisibility(View.GONE);
+                            showRecentSearchView(true);
                         }
                         mClearRL.setVisibility(VISIBLE);
 ////                    clearSuggestionList();
@@ -631,7 +664,10 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 cetKeywords.setText("");
             }
         });
-       }
+
+        // load recent search keywords from server
+        loadRecentSearchKeywordsFromServer();
+    }
 
     private void initTitleBar() {
         setTitle(fromOtherPageTitle);
@@ -746,12 +782,16 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
 //
 //    }
 
-    private void setKeyWord(SuggestsEntity suggestionItem) {
+    private void setKeyWord(String keyWord) {
+        cetKeywords.setText(keyWord);
+    }
+
+    /*private void setKeyWord(SuggestsEntity suggestionItem) {
         cetKeywords.setText(suggestionItem.getTitle());
         if (suggestionItem.getTitle() != null) {
             cetKeywords.setSelection(cetKeywords.length());
         }
-    }
+    }*/
 
 //    private void clearSuggestionSearch() {
 //        mSuggestionBrand = "";
@@ -899,7 +939,6 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
         }
 
     }
-
 
     private Dialog mDialog;
 
@@ -1097,6 +1136,10 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
             case R.id.ll_sort:
             case R.id.ll_sort_top:
                 productListActivity.filterSortOption(productListActivity.TYPE_SORT);
+                break;
+            case R.id.btn_p:
+                mPresenter.clearAllRecentSearchKeyword();
+                showConfirmDialogForClearRecentSearchKeyword(false);
                 break;
         }
     }
@@ -1321,6 +1364,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 fragment.dismissSuggestions();
                 fragment.cxlvProductList.setVisibility(GONE);
                 fragment.rlNodata.setVisibility(VISIBLE);
+                // hide recent search keyword view
+                fragment.showRecentSearchView(false);
 
             } else if (SEARCH_TYPE_REFRESH == fragment.getSearchType()) {
                 if (mFragment.get().mDialog != null && mFragment.get().mDialog.isShowing()) {
@@ -1458,6 +1503,11 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                     JLogUtils.e(fragment.TAG, "handleSuccessOK", ex);
                     ex.printStackTrace();
                 }
+
+                // save search keyword to server when has data
+                fragment.saveSearchKeywordToServer();
+                // hide recent search keyword view
+                fragment.showRecentSearchView(false);
 
                 fragment.productItemEntityArrayList.clear();
                 fragment.productListAdapter.notifyDataSetChanged();
@@ -1602,6 +1652,81 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                     }
                 });
                 fragment.showViewSwitch(true);
+            }
+        }
+    }
+
+    private void showRecentSearchView(boolean isShow){
+        clRecentSearchList.setVisibility(isShow ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showProgressDialog(boolean isShow) {
+        if(isShow) {
+            mDialog = JViewUtils.showProgressDialog(productListActivity);
+        } else {
+            if(mDialog != null){
+                mDialog.dismiss();
+            }
+        }
+    }
+
+    private void loadRecentSearchKeywordsFromServer(){
+        mPresenter.getRecentSearchKeywords();
+    }
+
+    private void setRecentSearchViewTips(String tips){
+        if(TextUtils.isEmpty(tips)){
+            return;
+        }
+
+        tvTips.setText(tips);
+    }
+
+    private boolean isEmptyCollection(List<String> list){
+        if(list == null || list.size() <= 0)
+            return true;
+
+        return false;
+    }
+
+    private void saveSearchKeywordToServer(){
+        mPresenter.saveRecentSearchKeyword(getKeyWord());
+    }
+
+    private void showConfirmDialogForClearRecentSearchKeyword(boolean isShow){
+        if(isShow) {
+            confirmDialogForClearRecentSearchKeyword = JViewUtils.showMaterialDialog(getActivity(), ""
+                    , getString(R.string.recent_search_keyword_clear_tips)
+                    , getString(R.string.yes_upp)
+                    , getString(R.string.no_upp), this, true);
+        } else {
+            if(confirmDialogForClearRecentSearchKeyword != null) {
+                confirmDialogForClearRecentSearchKeyword.dismiss();
+            }
+        }
+    }
+
+
+
+
+    private class OnRecentSearchListListener implements RecentSearchListAdapter.OnItemClickListener{
+
+        @Override
+        public void onItemClick(boolean isFooter, String keyword) {
+            MaterialDialog confirmDialog = null;
+            // click clear keyword item
+            if(isFooter){
+                showConfirmDialogForClearRecentSearchKeyword(true);
+            }
+            // click normal item
+            else {
+                if(TextUtils.isEmpty(keyword)){
+                    return;
+                }
+
+                setKeyWord(keyword);
+                onSubmitKeyWord();
             }
         }
     }

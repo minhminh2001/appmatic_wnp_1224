@@ -29,6 +29,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
+import com.whitelabel.app.BuildConfig;
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.BaseActivity;
 import com.whitelabel.app.activity.LoginRegisterActivity;
@@ -509,8 +510,8 @@ public class JToolUtils {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(
-                    new StringBuilder(
-                            WhiteLabelApplication.getInstance().getResources().getString(R.string.market_url)).append(context.getPackageName())
+                    new StringBuilder(BuildConfig.MARKET_URL)
+                            .append(context.getPackageName())
                             .toString()
             )); //跳转到应用市场，非Google Play市场一般情况也实现了这个接口
             //检查安装应用市场
@@ -518,8 +519,8 @@ public class JToolUtils {
                 context.startActivity(intent);
             } else { //浏览器
                 intent.setData(Uri.parse(
-                        new StringBuilder(
-                                WhiteLabelApplication.getInstance().getResources().getString(R.string.playstore_url)).append(context.getPackageName())
+                        new StringBuilder(BuildConfig.GOOGLE_PLAY_STORE_URL)
+                                .append(context.getPackageName())
                                 .toString()
                 ));
                 if (intent.resolveActivity(context.getPackageManager()) != null) { //有浏览器

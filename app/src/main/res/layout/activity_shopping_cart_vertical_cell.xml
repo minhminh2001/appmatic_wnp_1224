@@ -260,25 +260,7 @@
 
 
                 </LinearLayout>
-                <!-- Notify me -->
-                <LinearLayout
-                    android:id="@+id/ll_notifyme"
-                    android:layout_width="95dp"
-                    android:layout_height="32dp"
-                    android:layout_marginRight="10dp"
-                    android:padding="1dp"
-                    android:layout_alignBottom="@id/rl_shopping_cart_cell"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/bg_shoppingcart_fragment_btn_notifyme"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-                    <com.whitelabel.app.widget.CustomTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="@string/campaign_item_notifyme"
-                        android:textColor="@color/orangeFFE4832B"/>
-                </LinearLayout>
+
                 <TextView
                     android:background="@color/transparent96FFFFFF"
                     android:id="@+id/tv_all_barrier2"
@@ -316,14 +298,36 @@
                         android:layout_width="5dp"
                         android:layout_height="5dp"
                         android:id="@+id/tv_shoppingcart_cell_point3"
-                        android:text="" /></LinearLayout>
-
+                        android:text="" />
+                </LinearLayout>
+                <!-- Notify me -->
+                <LinearLayout
+                    android:id="@+id/ll_notifyme"
+                    android:layout_width="55dp"
+                    android:layout_height="32dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="1dp"
+                    android:layout_alignTop="@id/ll_add_count_subs"
+                    android:layout_toLeftOf="@id/ll_add_count_subs"
+                    android:background="@drawable/bg_shoppingcart_fragment_btn_notifyme"
+                    android:orientation="horizontal"
+                    >
+                    <com.whitelabel.app.widget.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textSize="10sp"
+                        android:text="@string/campaign_item_notifyme"
+                        android:textColor="@color/orangeFFE4832B"/>
+                </LinearLayout>
             </RelativeLayout>
             <include layout="@layout/layout_cart_shopping_error"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/mparent"
                 />
+
+
         </RelativeLayout>
     </com.whitelabel.app.widget.swipe.SwipeLayout>
     <TextView

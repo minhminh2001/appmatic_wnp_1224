@@ -163,7 +163,6 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
         } else {
             viewHolder.tvOutOfStock.setVisibility(View.VISIBLE);
             viewHolder.llNotifyMe.setVisibility(View.VISIBLE);
-            viewHolder.llAddCountSubs.setVisibility(View.INVISIBLE);
             viewHolder.llShoppingCartError.setVisibility(View.GONE);
         }
         viewHolder.tvProductBland.setText(sc.getBrand());

@@ -119,8 +119,8 @@ public class WhiteLabelApplication extends MultiDexApplication {
     }
 
     private void initTwitter(){
-        String twitterConsumerKey=getString(R.string.twitter_consumer_key);
-        String twitterSecret=getString(R.string.twitter_consumer_secret);
+        String twitterConsumerKey = BuildConfig.TWITTER_CONSUMER_KEY;
+        String twitterSecret = BuildConfig.TWITTER_CONSUMER_SECRET;
         TwitterAuthConfig authConfig = new TwitterAuthConfig(twitterConsumerKey, twitterSecret);
         Fabric.with(this, new TwitterCore(authConfig),new Crashlytics());
     }

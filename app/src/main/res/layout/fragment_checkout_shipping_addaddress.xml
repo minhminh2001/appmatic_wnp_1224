@@ -626,7 +626,7 @@
                                 android:singleLine="true"
                                 android:inputType="number"
                                 android:paddingRight="2dp"
-                                android:hint="@string/day_time_contact"
+                                android:hint="@string/address_day_phone"
                                 android:maxLength="@integer/phone_number_length"
                                 android:layout_gravity="center_vertical"
                                 android:textColorHint="@color/hint"

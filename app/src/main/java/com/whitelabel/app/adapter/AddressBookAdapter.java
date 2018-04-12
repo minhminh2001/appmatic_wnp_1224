@@ -138,8 +138,8 @@ public class AddressBookAdapter extends ArrayAdapter<AddressBook> {
         });
         holder.tvaddress.setText(stringBuilder.toString());
         holder.tvmalaysia.setText(addreddBean.getCountry());
-        holder.tvtel.setText(" : "+addreddBean.getTelephone());
-        holder.tvDayPhoneValue.setText(" : "+addreddBean.getFax());
+        holder.tvtel.setText(addreddBean.getTelephone());
+        holder.tvDayPhoneValue.setText(addreddBean.getFax());
         return view;
     }
     private static class AddressViewHolder extends RecyclerView.ViewHolder{

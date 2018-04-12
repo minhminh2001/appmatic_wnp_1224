@@ -174,11 +174,18 @@
         android:background="@color/whiteFFFFFF"
         android:divider="@null"
         android:dividerHeight="0dp"
-        android:visibility="gone"
-        />
+        android:visibility="gone"/>
     <include
         layout="@layout/connection_breaks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/rl_top_bar"/>
+
+    <include
+        android:id="@+id/layout_recent_search_list"
+        layout="@layout/layout_recent_search_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_top_bar"
+        android:visibility="gone"/>
 </RelativeLayout>

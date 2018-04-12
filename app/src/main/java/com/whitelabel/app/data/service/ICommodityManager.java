@@ -7,6 +7,7 @@ import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.NotifyMeResponse;
 import com.whitelabel.app.model.ProductDetailModel;
+import com.whitelabel.app.model.RecentSearchKeywordResponse;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductRecommendedReturnEntity;
@@ -46,4 +47,7 @@ public interface ICommodityManager {
                                                                   String name,
                                                                   String stroreId,
                                                                   String sessionKey);
+    public  Observable<RecentSearchKeywordResponse> getRecentSearchKeywords(String storeId, String sessionKey);
+    public  Observable<RecentSearchKeywordResponse> saveRecentSearchKeyword(String keyword, String sessionKey);
+    public  Observable<RecentSearchKeywordResponse> clearAllRecentSearchKeyword(String storeId, String sessionKey);
 }

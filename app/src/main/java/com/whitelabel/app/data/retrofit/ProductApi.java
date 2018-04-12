@@ -7,6 +7,7 @@ import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.NotifyMeResponse;
+import com.whitelabel.app.model.RecentSearchKeywordResponse;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailReturnEntity;
@@ -84,4 +85,16 @@ public interface ProductApi {
                                                                @Field("name") String name,
                                                                @Field("storeId") String stroreId,
                                                                @Field("session_key") String sessionKey);
+
+    @FormUrlEncoded
+    @POST("appservice/catalogSearch/getSearchKeyword")
+    public Observable<RecentSearchKeywordResponse> getRecentSearchKeyword(@Field("store_id") String storeId, @Field("session_key") String sessionKey);
+
+    @FormUrlEncoded
+    @POST("appservice/catalogSearch/saveKeyword")
+    public Observable<RecentSearchKeywordResponse> saveRecentSearchKeyword(@Field("q") String keyword, @Field("session_key") String sessionKey);
+
+    @FormUrlEncoded
+    @POST("appservice/catalogSearch/clearSearchKeyword")
+    public Observable<RecentSearchKeywordResponse> clearAllRecentSearchKeyword(@Field("store_id") String storeId, @Field("session_key") String sessionKey);
 }

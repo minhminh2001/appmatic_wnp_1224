@@ -14,6 +14,7 @@ import com.whitelabel.app.model.CategoryDetailModel;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.NotifyMeResponse;
 import com.whitelabel.app.model.ProductDetailModel;
+import com.whitelabel.app.model.RecentSearchKeywordResponse;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductDetailResultDetailReturnEntity;
@@ -186,6 +187,11 @@ public class CommodityManager  implements ICommodityManager{
     }
 
     @Override
+    public Observable<RecentSearchKeywordResponse> getRecentSearchKeywords(String storeId, String sessionKey) {
+        return productApi.getRecentSearchKeyword(storeId, sessionKey);
+    }
+
+    @Override
     public Observable<SearchFilterResponse> autoHintSearch(String sessionKey,
         String keyword) {
         return productApi.autoHintSearch(sessionKey,keyword).map(
@@ -196,6 +202,16 @@ public class CommodityManager  implements ICommodityManager{
                     return searchFilterResponse;
                 }
             });
+    }
+
+    @Override
+    public Observable<RecentSearchKeywordResponse> saveRecentSearchKeyword(String keyword, String sessionKey) {
+        return productApi.saveRecentSearchKeyword(keyword, sessionKey);
+    }
+
+    @Override
+    public Observable<RecentSearchKeywordResponse> clearAllRecentSearchKeyword(String storeId, String sessionKey) {
+        return productApi.clearAllRecentSearchKeyword(storeId, sessionKey);
     }
 
     @Override
