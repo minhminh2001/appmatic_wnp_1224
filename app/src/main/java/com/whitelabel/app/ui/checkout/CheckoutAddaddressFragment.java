@@ -8,6 +8,7 @@ import com.whitelabel.app.callback.WheelPickerCallback;
 import com.whitelabel.app.model.CheckoutDefaultShippingAddress;
 import com.whitelabel.app.model.CountryRegions;
 import com.whitelabel.app.model.CountrySubclass;
+import com.whitelabel.app.model.GOUserEntity;
 import com.whitelabel.app.model.SVRAppServiceCustomerCountry;
 import com.whitelabel.app.model.WheelPickerConfigEntity;
 import com.whitelabel.app.model.WheelPickerEntity;
@@ -317,6 +318,12 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
             }
             initEditDatas(mAddress);
             initAllHint();
+        }
+        // input user address screen
+        else {
+            GOUserEntity userInfo = WhiteLabelApplication.getAppConfiguration().getUserInfo();
+            etFirstname.setText(userInfo.getFirstName());
+            etLastname.setText(userInfo.getLastName());
         }
         mPresenter.getCountryAndRegions();
     }
@@ -906,7 +913,7 @@ public class CheckoutAddaddressFragment extends BaseFragment<CheckoutAddAddressC
                     }
                     tvDayPhone.setTextColor(getResources().getColor(R.color.colorAccent));
                     tvDayPhone.startAnimation(getHintAnimation(tvDayPhone,
-                        getResources().getString(R.string.day_time_contact)));
+                        getResources().getString(R.string.address_day_phone)));
                     etDayPhone.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count,
