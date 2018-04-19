@@ -3,6 +3,7 @@ package com.whitelabel.app.ui.home.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -104,10 +105,16 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
     // TODO: Rename and change types and number of parameters
     public static HomeHomeFragmentV4 newInstance(int index, String id) {
         HomeHomeFragmentV4 fragment = new HomeHomeFragmentV4();
-        Bundle args = new Bundle();
-        args.putString(ARG_CATEGORY_ID, id);
-        args.putInt(ARG_CATEGORY_INDEX, index);
-        fragment.setArguments(args);
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT){
+            fragment.setCategoryId(id);
+            fragment.setCategoryIndex(index);
+        } else {
+            Bundle args = new Bundle();
+            args.putString(ARG_CATEGORY_ID, id);
+            args.putInt(ARG_CATEGORY_INDEX, index);
+            fragment.setArguments(args);
+        }
+
         return fragment;
     }
 
@@ -309,4 +316,11 @@ public class HomeHomeFragmentV4 extends HomeBaseFragment<HomeCategoryDetailContr
         return homeActivity.isUnLoginCanWishIconRefresh(productId);
     }
 
+    private void setCategoryId(String categoryId){
+        this.mCategoryId = categoryId;
+    }
+
+    private void setCategoryIndex(int index){
+        this.mIndex = index;
+    }
 }

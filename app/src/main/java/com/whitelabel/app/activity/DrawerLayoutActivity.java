@@ -2,6 +2,7 @@ package com.whitelabel.app.activity;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -36,6 +37,7 @@ import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.LanguageUtils;
 import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
 import com.whitelabel.app.widget.CustomTextView;
@@ -61,10 +63,11 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     private ImageView ivStoreCredit;
     private ImageView ivCustomerCare;
     private ImageView ivSetting;
+    private ImageView ivLanguage;
     private TextView tvUserName, tvHome, tvCategoryTree, tvShoppingCart, tvNotification, tvWistlist,
             tvMyOrder, tvSetting, tvCustomerService, tvHelpCenter, tvOrderNum, tvMyOrderNum,
-            tvShipping, tvShoppingNum, tvNotificationNum, tvWistNum,
-            tvAddress, tvStoreCredit;
+            tvShipping, tvShoppingNum, tvNotificationNum, tvWistNum,tvLanguage,
+            tvAddress, tvStoreCredit, tvSwitchEnglish, tvSwitchChinese;
     protected TextView tvDogs,tvCats;
     protected RelativeLayout rlDogs,rlCats;
     private Handler baseHandler = new Handler();
@@ -78,6 +81,7 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     private RelativeLayout rlDrawerWish ;
     private RelativeLayout rlCustomerCare ;
     private RelativeLayout rlSetting ;
+    private RelativeLayout rlLanguage;
     private NotificationReceiver receiver;
     private RecyclerView rvDogsAndCatsList;
     LeftMenuDogsAndCatsAdapter leftMenuDogsAndCatsAdapter;
@@ -97,7 +101,9 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     protected abstract void jumpHelpCenterServicePage();
     protected abstract void jumpShippingServicePage();
     protected abstract void jumpAddressPage();
+    protected abstract void jumpHomePageAndRecreate();
     protected abstract void jumpStoreCreditPage();
+
     private void setAppBarLayoutBehaviour() {
         AppBarLayout.Behavior behavior = new AppBarLayout.Behavior() {
             @Override
@@ -219,6 +225,26 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
                     }
                 }, DELAY);
                 break;
+            case R.id.tv_switch_en:
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                baseHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        changeLanguage(LanguageUtils.LanguageType.LANGUAGE_ENGLISH);
+                        jumpHomePageAndRecreate();
+                    }
+                }, DELAY);
+                break;
+            case R.id.tv_switch_cn:
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                baseHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        changeLanguage(LanguageUtils.LanguageType.LANGUAGE_TRADITIONAL_CHINESE);
+                        jumpHomePageAndRecreate();
+                    }
+                }, DELAY);
+                break;
             case R.id.tv_help_center:
                 switchMenu(HomeBaseFragment.HomeCommonCallback.MENU_HELPCENTER);
                 drawerLayout.closeDrawer(Gravity.LEFT);
@@ -283,6 +309,7 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         ivMyOrder = (ImageView) findViewById(R.id.iv_orderlist);
         ivCustomerCare=(ImageView) findViewById(R.id.iv_customer_care);
         ivSetting=(ImageView) findViewById(R.id.iv_setting);
+        ivLanguage = (ImageView) findViewById(R.id.iv_language);
         tvUserName = (TextView) findViewById(R.id.tv_user_name);
         View llProfile = findViewById(R.id.ll_profile);
         llProfile.setBackgroundColor(WhiteLabelApplication.getAppConfiguration().
@@ -294,10 +321,13 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         tvWistlist = (TextView) findViewById(R.id.tv_wishlist);
         tvMyOrder = (TextView) findViewById(R.id.tv_order);
         tvSetting = (TextView) findViewById(R.id.tv_setting);
+        tvLanguage = (TextView) findViewById(R.id.tv_language);
         tvCustomerService = (TextView) findViewById(R.id.tv_customer_service);
         tvHelpCenter = (TextView) findViewById(R.id.tv_help_center);
         tvShipping = (TextView) findViewById(R.id.tv_shipping);
         tvShoppingNum = (TextView) findViewById(R.id.tv_shoppingCart_num);
+        tvSwitchEnglish = (TextView) findViewById(R.id.tv_switch_en);
+        tvSwitchChinese = (TextView) findViewById(R.id.tv_switch_cn);
 
         tvNotificationNum = (TextView) findViewById(R.id.tv_notification_num);
         tvWistNum = (TextView) findViewById(R.id.tv_wishlist_num);
@@ -314,7 +344,8 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         rlDrawerAddress = (RelativeLayout) findViewById(R.id.rl_drawer_address);
         rlDrawerSotreCredit = (RelativeLayout) findViewById(R.id.rl_drawer_store_credit);
         rlCustomerCare= (RelativeLayout) findViewById(R.id.rl_customer_care);
-        rlSetting= (RelativeLayout) findViewById(R.id.rl_setting);
+        rlSetting = (RelativeLayout) findViewById(R.id.rl_setting);
+        rlLanguage = (RelativeLayout) findViewById(R.id.rl_language);
 
         rlDogs=(RelativeLayout)findViewById(R.id.rl_dogs);
         rlCats=(RelativeLayout)findViewById(R.id.rl_cats);
@@ -335,6 +366,9 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         JViewUtils.setSlideMenuTextStyle(tvCustomerService,false,true);
         JViewUtils.setSlideMenuTextStyle(tvHelpCenter,false,true);
         JViewUtils.setSlideMenuTextStyle(tvShipping,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvLanguage,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvSwitchEnglish,false,true);
+        JViewUtils.setSlideMenuTextStyle(tvSwitchChinese,false,true);
 
         int iconDefaultColor=WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavigation_bar_background_color();
         ivHome.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.ic_slide_home_normal),iconDefaultColor));
@@ -346,6 +380,7 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         ivCategoryTree.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.icon_drawer_home_categorytree_default),iconDefaultColor));
         ivCustomerCare.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.ic_slide_customer_care_normal),iconDefaultColor));
         ivSetting.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.ic_slide_settings_normal),iconDefaultColor));
+        ivLanguage.setImageDrawable(JImageUtils.getThemeIconSelector(ContextCompat.getDrawable(this,R.drawable.ic_slide_settings_normal),iconDefaultColor));
 
         JViewUtils.setSlideMenuBgStyle(rlDrawerHome);
         JViewUtils.setSlideMenuBgStyle(rlDrawerCategoryTree);
@@ -357,8 +392,11 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         JViewUtils.setSlideMenuBgStyle(rlDrawerSotreCredit);
         JViewUtils.setSlideMenuBgStyle(rlCustomerCare);
         JViewUtils.setSlideMenuBgStyle(rlSetting);
+        JViewUtils.setSlideMenuBgStyle(rlLanguage);
         JViewUtils.setSlideMenuBgStyle(tvHelpCenter);
         JViewUtils.setSlideMenuBgStyle(tvShipping);
+        JViewUtils.setSlideMenuBgStyle(tvSwitchEnglish);
+        JViewUtils.setSlideMenuBgStyle(tvSwitchChinese);
 
         llProfile.setOnClickListener(this);
         rlDrawerCategoryTree.setOnClickListener(this);
@@ -373,48 +411,21 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         rlCustomerCare.setOnClickListener(this);
         tvHelpCenter.setOnClickListener(this);
         tvShipping.setOnClickListener(this);
+        tvSwitchChinese.setOnClickListener(this);
+        tvSwitchEnglish.setOnClickListener(this);
         rlDogs.setOnClickListener(this);
         rlCats.setOnClickListener(this);
         tvShoppingNum.setBackground(JImageUtils.getThemeCircle(this));
         tvNotificationNum.setBackground(JImageUtils.getThemeCircle(this));
         tvWistNum.setBackground(JImageUtils.getThemeCircle(this));
 
-
-
+        LanguageUtils.LanguageType currentLanguageType = LanguageUtils.getCurrentLanguage();
+        if(currentLanguageType == LanguageUtils.LanguageType.LANGUAGE_ENGLISH){
+            tvSwitchEnglish.getPaint().setFakeBoldText(true);
+        } else {
+            tvSwitchChinese.getPaint().setFakeBoldText(true);
+        }
     }
-//    private static final class DataHandler extends Handler {
-//        private WeakReference<DrawerLayoutActivity> mActivity;
-//        public DataHandler(DrawerLayoutActivity activity) {
-//            mActivity = new WeakReference<>(activity);
-//        }
-//        @Override
-//        public void handleMessage(Message msg) {
-//            if (mActivity.get() == null) {
-//                return;
-//            }
-//            switch (msg.what) {
-//                case NotificationDao.REQUEST_NOTIFICATION_COUNT:
-//                    if (msg.arg1 == NotificationDao.RESPONSE_SUCCESS) {
-//                        Integer integer = (Integer) msg.obj;
-//                        if (integer > 0) {
-//                            if (integer > 99) {
-//                                mActivity.get().tvNotificationNum.setText("99+");
-//                            } else {
-//                                mActivity.get().tvNotificationNum.setText(String.valueOf(integer));
-//                            }
-//                            mActivity.get().tvNotificationNum.setVisibility(View.VISIBLE);
-//                        } else {
-//                            mActivity.get().tvNotificationNum.setVisibility(View.INVISIBLE);
-//                        }
-//                        BadgeUtils.setBadge(mActivity.get().getApplicationContext(), integer);
-//                    }
-//                    break;
-//            }
-//            super.handleMessage(msg);
-//        }
-//    }
-
-
 
     public void setNotificationCount(int  count){
         if (count > 0) {
@@ -432,6 +443,7 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         super.setContentView(R.layout.activity_base);
         receiver = new NotificationReceiver(callback);
         IntentFilter intentFilter = new IntentFilter(NotificationReceiver.ACTION);
@@ -691,5 +703,9 @@ public abstract class DrawerLayoutActivity<T extends BasePresenter> extends com.
         if (rootLayout != null) {
             rootLayout.setSwitchScroll(switchScroll);
         }
+    }
+
+    private void changeLanguage(LanguageUtils.LanguageType languageType){
+        LanguageUtils.changeLanguage(languageType);
     }
 }

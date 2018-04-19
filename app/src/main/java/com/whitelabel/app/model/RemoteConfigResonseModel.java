@@ -1,6 +1,8 @@
 package com.whitelabel.app.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ray on 2017/4/5.
@@ -15,6 +17,7 @@ public class RemoteConfigResonseModel implements Serializable {
     private int code;
     private String message;
     private RetomeConfig data;
+
     public int getCode() {
         return code;
     }
@@ -49,6 +52,9 @@ public class RemoteConfigResonseModel implements Serializable {
         private LayoutStyleModel layoutStyle;
         private String version;
         private ThirdPartyConfig thirdParty;
+        public BaseUrlModel baseUrl;
+        private ArrayList<StoreInfo> store = new ArrayList<>();
+
         public LayoutStyleModel getLayoutStyle() {
             return layoutStyle;
         }
@@ -73,7 +79,13 @@ public class RemoteConfigResonseModel implements Serializable {
         public void setVersion(String version) {
             this.version = version;
         }
-        public BaseUrlModel baseUrl;
+        public ArrayList<StoreInfo> getStore() {
+            return store;
+        }
+
+        public void setStore(ArrayList<StoreInfo> store) {
+            this.store = store;
+        }
 
         public BaseUrlModel getBaseUrl() {
             return baseUrl;

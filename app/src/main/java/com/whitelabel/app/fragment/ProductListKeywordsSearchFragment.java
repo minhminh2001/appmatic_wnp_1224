@@ -58,7 +58,9 @@ import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.LanguageUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.StoreUtils;
 import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomEditText;
 import com.whitelabel.app.widget.CustomTextView;
@@ -1051,7 +1053,12 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
 //            productListActivity.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setModel_type(mSuggestionsModleType);
 //        }
         TYPE = LOADING;
-        String storeId = WhiteLabelApplication.getAppConfiguration().getStoreView().getId();
+        String languageCode = LanguageUtils.getCurrentLanguageCode();
+        String storeId = StoreUtils.getStoreIdByLanguageCode(languageCode
+                                                            .equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
+                                                            ? LanguageUtils.LANGUAGE_CODE_ENGLISH
+                                                            : languageCode);
+        //String storeId = WhiteLabelApplication.getAppConfiguration().getStoreView().getId();
         final SVRAppserviceProductSearchParameter param = tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1);
         String p = param.getP() + "";
         String limit = param.getLimit() + "";
@@ -1082,6 +1089,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 cxlvProductList.stopLoadMore();
             }
         }else {
+
             mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q,q ,price,
                     sessionKey,"","search"
             );

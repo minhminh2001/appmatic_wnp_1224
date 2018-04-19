@@ -29,6 +29,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity<MainCont
     public boolean mGATrackTimeEnable = true;
     public long mGATrackTimeStart;
     public final static String EXTRA_ORDER_NUMBER="order_number";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -222,6 +223,10 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity<MainCont
         finish();
     }
 
+    @Override
+    protected void jumpHomePageAndRecreate() {
+
+    }
 
     private void initData() {
         Bundle bundle = getIntent().getExtras();

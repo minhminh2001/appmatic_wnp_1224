@@ -18,7 +18,9 @@ import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.LanguageUtils;
 import com.whitelabel.app.utils.RxUtil;
+import com.whitelabel.app.utils.StoreUtils;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -459,8 +461,12 @@ public class ProductDetailPresenter extends RxPresenter<ProductDetailContract.Vi
 
     public void getRecommendProduct(String productId) {
         String sessionKey = iBaseManager.isSign() ? iBaseManager.getUser().getSessionKey() : "";
+        String languageCode = LanguageUtils.getCurrentLanguageCode();
+        String storeId = StoreUtils.getStoreIdByLanguageCode(languageCode.equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
+                                                                                            ? LanguageUtils.LANGUAGE_CODE_ENGLISH
+                                                                                            : languageCode);
         Subscription subscription = iCommodityManager
-            .getProductRecommendList("1", "4", productId, sessionKey)
+            .getProductRecommendList(storeId, "4", productId, sessionKey)
             .compose(RxUtil.<SVRAppserviceProductRecommendedReturnEntity>rxSchedulerHelper())
             .subscribe(new Subscriber<SVRAppserviceProductRecommendedReturnEntity>() {
                 @Override

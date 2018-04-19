@@ -694,17 +694,17 @@
     <string name="checkout0_items">CHECKOUT 0 ITEMS</string>
     <string name="price_range_rm">Price Range(RM)</string>
     <!--Navigation-->
-    <string name="_home">Home</string>
-    <string name="shopping_cart">Shopping Cart</string>
+    <string name="_home">主页</string>
+    <string name="shopping_cart">购物车</string>
     <string name="category">All Categories</string>
     <string name="notification">Notification</string>
     <string name="my_wishlist">My Wishlist</string>
-    <string name="my_orders">My Orders</string>
-    <string name="my_address_book">My Address Book</string>
-    <string name="_settings">Settings</string>
-    <string name="language_settings">Language</string>
-    <string name="customer_service">Customer Care</string>
-    <string name="help_centre">Help Centre</string>
+    <string name="my_orders">我的订单</string>
+    <string name="my_address_book">我的地址</string>
+    <string name="_settings">设置</string>
+    <string name="language_settings">语言</string>
+    <string name="customer_service">客服</string>
+    <string name="help_centre">帮助</string>
     <string name="my_upp">MY</string>
     <string name="address">Address</string>
     <string name="address2_optional">Address 2 (Optional)</string>
@@ -714,7 +714,7 @@
     <string name="_state">State</string>
     <string name="address_for_shipping">Set it as default shipping address.</string>
     <string name="address_for_billing">Set it as default billing address.</string>
-    <string name="search">Search</string>
+    <string name="search">查询</string>
     <string name="i">i</string>
     <string name="description">Description</string>
     <string name="less">-</string>
