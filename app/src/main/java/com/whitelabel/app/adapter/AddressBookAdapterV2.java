@@ -81,20 +81,22 @@ public class AddressBookAdapterV2 extends SwipeableAdapter {
         setDotDefault(holder);
         final   AddressBook addreddBean = mAddressBook.get(position);
         if("1".equals(addreddBean.getPrimaryBilling())){
-            holder.tvDefault.setVisibility(View.VISIBLE);
+            holder.ivDefault.setVisibility(View.VISIBLE);
             holder.tvDefault.setText(context.getResources().getString(R.string.address_default_billing));
             holder.ivAddressDelete.setVisibility(View.GONE);
             holder.ivAddressEdit.setVisibility(View.VISIBLE);
         }else if("1".equals(addreddBean.getPrimaryShipping())){
-            holder.tvDefault.setVisibility(View.VISIBLE);
+            holder.ivDefault.setVisibility(View.VISIBLE);
             holder.tvDefault.setText(context.getResources().getString(R.string.address_default_shipping));
             holder.ivAddressDelete.setVisibility(View.GONE);
             holder.ivAddressEdit.setVisibility(View.VISIBLE);
         }else if (isSwipeDelVisible){
+            holder.ivDefault.setVisibility(View.GONE);
             holder.tvDefault.setVisibility(View.GONE);
             holder.ivAddressDelete.setVisibility(View.VISIBLE);
             holder.ivAddressEdit.setVisibility(View.VISIBLE);
         }else {
+            holder.ivDefault.setVisibility(View.GONE);
             holder.tvDefault.setVisibility(View.GONE);
             holder.ivAddressDelete.setVisibility(View.GONE);
             holder.ivAddressEdit.setVisibility(View.VISIBLE);

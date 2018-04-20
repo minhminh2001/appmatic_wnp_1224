@@ -258,6 +258,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     public Toolbar getToolbar() {
         return mToolbar;
     }
+
     @Override
     public void onBackPressed() {
         finish();

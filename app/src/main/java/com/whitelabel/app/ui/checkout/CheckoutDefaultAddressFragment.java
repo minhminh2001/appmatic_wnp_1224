@@ -7,15 +7,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import com.whitelabel.app.BaseActivity;
 import com.whitelabel.app.BaseFragment;
 import com.whitelabel.app.R;
 import com.whitelabel.app.WhiteLabelApplication;
@@ -83,8 +85,8 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     LinearLayout llBillingAddress;
     @BindView(R.id.rl_root)
     RelativeLayout rlRoot;
-    @BindView(R.id.rg_address_way_select)
-    RadioGroup radioGroup;
+    @BindView(R.id.ll_group)
+    LinearLayout mockRadioButtonGroup;
     @BindView(R.id.tv_pick_address_title)
     CustomTextView tvPickAddressTitle;
     @BindView(R.id.tv_pick_address_msg)
@@ -109,6 +111,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
     private boolean isPickUpInStoreChecked;
 
     public final static int REQUEST_ADD_ADDRESS_CODE = 10000;
+    public static final String SELECTED_ADDRESS_ID = "selected_address_id";
     public int curentClickShipping;
 
     public AddressBook getPrimaryShipping() {
@@ -189,14 +192,16 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
         rlRoot.setVisibility(View.VISIBLE);
         //add Top radioButton
         if (shippingMethod != null && !shippingMethod.isEmpty()) {
-            radioGroup.removeAllViews();
+            mockRadioButtonGroup.removeAllViews();
             for (final CheckoutDefaultAddressResponse.ShippingMethodBean shippingMethodBean : shippingMethod) {
                 addRadioButtonToGroup(shippingMethodBean);
             }
-            for (int i = 0; i < radioGroup.getChildCount(); i++) {
-                RadioButton rb = (RadioButton) radioGroup.getChildAt(i);
-                if (rb.isChecked()) {
-                    int code = (int) rb.getTag();
+
+            for (int i = 0; i < mockRadioButtonGroup.getChildCount(); i++) {
+                LinearLayout mockRadioButton = (LinearLayout) mockRadioButtonGroup.getChildAt(i);
+                MockRadioButtonTag mockRadioButtonTag = (MockRadioButtonTag)mockRadioButton.getTag();
+                if (mockRadioButtonTag.isChecked) {
+                    int code = mockRadioButtonTag.code;
                     baseRadioCodeToCheckClick(code);
                     break;
                 }
@@ -269,39 +274,92 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
      * @param shippingMethodBean netResponse
      */
     private void addRadioButtonToGroup(final CheckoutDefaultAddressResponse.ShippingMethodBean shippingMethodBean) {
+        final Drawable normalIcon = JImageUtils.getDarkThemeIcon(getActivity(), R.drawable.icon_rb_unchecked);
+        final Drawable checkedIcon = JImageUtils.getThemeIcon(getActivity(), R.drawable.icon_rb_checked);
+
+        LinearLayout mockRadioButton = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.layout_mock_radiobutton, null);
+        ImageView icon = (ImageView)mockRadioButton.findViewById(R.id.iv_icon);
+        TextView text = (TextView)mockRadioButton.findViewById(R.id.tv_text);
+        icon.setBackground(normalIcon);
+        text.setText(shippingMethodBean.getTitle());
+
+        MockRadioButtonTag tag = new MockRadioButtonTag();
+        tag.isChecked = false;
+        tag.code = shippingMethodBean.getCode();
+
+        //if checked is 1,this item be checked
+        if (RADIO_BUTTON_CHECK_CODE == shippingMethodBean.getChecked()) {
+
+            tag.isChecked = true;
+            curentClickShipping = shippingMethodBean.getCode();
+            icon.setBackground(checkedIcon);
+        }
+
+        mockRadioButton.setTag(tag);
+        mockRadioButtonGroup.addView(mockRadioButton, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        mockRadioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayout checkedMockRadioButton = (LinearLayout) v;
+                MockRadioButtonTag tag = (MockRadioButtonTag) checkedMockRadioButton.getTag();
+                int currentCode = tag.code;
+                curentClickShipping = currentCode;
+
+                //Pick up in store just show bill address
+                baseRadioCodeToCheckClick(currentCode);
+                for (int i = 0; i < mockRadioButtonGroup.getChildCount(); i++) {
+
+                    LinearLayout mockRadioButton = (LinearLayout) mockRadioButtonGroup.getChildAt(i);
+                    ImageView icon = (ImageView)mockRadioButton.findViewById(R.id.iv_icon);
+                    icon.setBackground(normalIcon);
+                }
+
+                ImageView icon = (ImageView)checkedMockRadioButton.findViewById(R.id.iv_icon);
+                icon.setBackground(checkedIcon);
+            }
+        });
+    }
+    /*private void addRadioButtonToGroup(final CheckoutDefaultAddressResponse.ShippingMethodBean shippingMethodBean) {
         RadioButton rbCheckAddress = (RadioButton) LayoutInflater.from(getActivity()).inflate(R.layout.layout_radiobutton_select_address, null);
         //if checked is 1,this item be checked
         rbCheckAddress.setText(shippingMethodBean.getTitle());
         rbCheckAddress.setTag(shippingMethodBean.getCode());
         if (RADIO_BUTTON_CHECK_CODE == shippingMethodBean.getChecked()) {
-            rbCheckAddress.setChecked(true);
+            //rbCheckAddress.setChecked(true);
             curentClickShipping= (int) rbCheckAddress.getTag();
-            Drawable pressIcon = JImageUtils.getThemeIcon(getActivity(), R.drawable.icon_cb_selected);
-            rbCheckAddress.setCompoundDrawablesWithIntrinsicBounds(pressIcon, null, null, null);
+            //Drawable pressIcon = JImageUtils.getThemeIcon(getActivity(), R.drawable.icon_cb_selected);
+            Drawable pressIcon = JImageUtils.getDarkThemeIcon(getActivity(), R.drawable.icon_cb_selected);
+            rbCheckAddress.setButtonDrawable(pressIcon);
+            //setCompoundDrawablesWithIntrinsicBounds(pressIcon, null, null, null);
         } else {
-            rbCheckAddress.setChecked(false);
+            //rbCheckAddress.setChecked(false);
             Drawable normalIcon = JImageUtils.getDarkThemeIcon(getActivity(), R.drawable.icon_cb_selected);
-            rbCheckAddress.setCompoundDrawablesWithIntrinsicBounds(normalIcon, null, null, null);
+            rbCheckAddress.setButtonDrawable(normalIcon);
+            //rbCheckAddress.setCompoundDrawablesWithIntrinsicBounds(normalIcon, null, null, null);
         }
         rbCheckAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RadioButton radioButton = (RadioButton) v;
                 int currentCode = (int) radioButton.getTag();
+                Toast.makeText(getActivity(), "" + currentCode, Toast.LENGTH_SHORT).show();
                 curentClickShipping= currentCode;
                 //Pick up in store just show bill address
                 baseRadioCodeToCheckClick(currentCode);
                 for (int i = 0; i < radioGroup.getChildCount(); i++) {
                     RadioButton rb = (RadioButton) radioGroup.getChildAt(i);
                     Drawable normalIcon = JImageUtils.getDarkThemeIcon(getActivity(), R.drawable.icon_cb_selected);
-                    rb.setCompoundDrawablesWithIntrinsicBounds(normalIcon, null, null, null);
+                    rb.setButtonDrawable(normalIcon);
+                    //rb.setCompoundDrawablesWithIntrinsicBounds(normalIcon, null, null, null);
                 }
                 Drawable pressIcon = JImageUtils.getThemeIcon(getActivity(), R.drawable.icon_cb_selected);
-                radioButton.setCompoundDrawablesWithIntrinsicBounds(pressIcon, null, null, null);
+                radioButton.setButtonDrawable(pressIcon);
+                //radioButton.setCompoundDrawablesWithIntrinsicBounds(pressIcon, null, null, null);
             }
         });
         radioGroup.addView(rbCheckAddress, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-    }
+    }*/
 
     /**
      * base net response ,to show check way
@@ -421,6 +479,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
         switch (view.getId()) {
             case R.id.tv_shipping_address_change:
                 Intent intent = new Intent(getActivity(), CheckoutSelectAddressActivity.class);
+                intent.putExtra(SELECTED_ADDRESS_ID, mPrimaryShipping.getAddressId());
                 startActivityForResult(intent, REQUEST_SHIPPING_ADDRESS);
                 break;
             case R.id.ll_checkbox:
@@ -428,6 +487,7 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
                 break;
             case R.id.tv_billing_address_change:
                 Intent billingIntent = new Intent(getActivity(), CheckoutSelectAddressActivity.class);
+                billingIntent.putExtra(SELECTED_ADDRESS_ID, mPrimaryBilling.getAddressId());
                 startActivityForResult(billingIntent, REQUEST_BILLING_ADDRESS);
                 break;
         }
@@ -449,5 +509,10 @@ public class CheckoutDefaultAddressFragment extends BaseFragment<CheckoutDefault
             getActivity().finish();
             getActivity().overridePendingTransition(R.anim.activity_transition_enter_lefttoright, R.anim.activity_transition_exit_lefttoright);
         }
+    }
+
+    static class MockRadioButtonTag{
+        public int code;
+        public boolean isChecked;
     }
 }
