@@ -55,12 +55,14 @@ public class MainPresenterImpl extends RxPresenter<MainContract.View>implements 
     @Override
     public List<String> getServiceSupportedLanguageFromLocal(){
         RemoteConfigResonseModel.RetomeConfig remoteConfig = iBaseManager.getConfigInfoFromLocal();
-        if(remoteConfig == null)
+        if(remoteConfig == null) {
             return null;
+        }
 
         List<StoreInfo> storeInfos = remoteConfig.getStore();
-        if(storeInfos == null)
+        if(storeInfos == null) {
             return null;
+        }
 
         List<String> languageCodes = new ArrayList<>();
         for(StoreInfo storeInfo : storeInfos){
@@ -74,12 +76,14 @@ public class MainPresenterImpl extends RxPresenter<MainContract.View>implements 
     public Map<String, String>  getServiceSupportedStoreMapFromLocal() {
 
         RemoteConfigResonseModel.RetomeConfig remoteConfig = iBaseManager.getConfigInfoFromLocal();
-        if(remoteConfig == null)
+        if(remoteConfig == null) {
             return null;
+        }
 
         List<StoreInfo> storeInfos = remoteConfig.getStore();
-        if(storeInfos == null)
+        if(storeInfos == null) {
             return null;
+        }
 
         Map<String, String> stringMap = new HashMap<>();
         for(StoreInfo storeInfo : storeInfos){
