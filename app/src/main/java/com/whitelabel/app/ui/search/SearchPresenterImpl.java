@@ -11,7 +11,9 @@ import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ExceptionParse;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.LanguageUtils;
 import com.whitelabel.app.utils.RxUtil;
+import com.whitelabel.app.utils.StoreUtils;
 
 import android.text.TextUtils;
 
@@ -130,7 +132,12 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
         }
 
         final String sessionKey = iBaseManager.getUser().getSessionKey();
-        Subscription subscribe = iCommodityManager.getRecentSearchKeywords("1", sessionKey)
+        String languageCode = LanguageUtils.getCurrentLanguageCode();
+        String storeId = StoreUtils.getStoreIdByLanguageCode(languageCode
+                                                                .equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
+                                                                ? LanguageUtils.LANGUAGE_CODE_ENGLISH
+                                                                : languageCode);
+        Subscription subscribe = iCommodityManager.getRecentSearchKeywords(storeId, sessionKey)
                 .compose(RxUtil.<RecentSearchKeywordResponse>rxSchedulerHelper())
                 .subscribe(new Subscriber<RecentSearchKeywordResponse>() {
                     @Override
@@ -189,7 +196,12 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
     @Override
     public void clearAllRecentSearchKeyword() {
         final String sessionKey = iBaseManager.isSign() ? iBaseManager.getUser().getSessionKey():"";
-        Subscription subscribe = iCommodityManager.clearAllRecentSearchKeyword("1", sessionKey)
+        String languageCode = LanguageUtils.getCurrentLanguageCode();
+        String storeId = StoreUtils.getStoreIdByLanguageCode(languageCode
+                                                                .equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
+                                                                ? LanguageUtils.LANGUAGE_CODE_ENGLISH
+                                                                : languageCode);
+        Subscription subscribe = iCommodityManager.clearAllRecentSearchKeyword(storeId, sessionKey)
                 .compose(RxUtil.<RecentSearchKeywordResponse>rxSchedulerHelper())
                 .subscribe(new Subscriber<RecentSearchKeywordResponse>() {
                     @Override

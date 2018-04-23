@@ -35,7 +35,9 @@ import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.LanguageUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
+import com.whitelabel.app.utils.StoreUtils;
 import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomXListView;
 
@@ -477,7 +479,12 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
             currentP = 1;
         }
         TYPE = LOADING;
-        String storeId = WhiteLabelApplication.getAppConfiguration().getStoreView().getId();
+        String languageCode = LanguageUtils.getCurrentLanguageCode();
+        String storeId = StoreUtils.getStoreIdByLanguageCode(languageCode
+                                                                .equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
+                                                                ? LanguageUtils.LANGUAGE_CODE_ENGLISH
+                                                                : languageCode);
+        //String storeId = WhiteLabelApplication.getAppConfiguration().getStoreView().getId();
         String p = currentP + "";
         String limit = param.getLimit() + "";
         if (SEARCH_TYPE_REFRESH == searchType) {

@@ -8,6 +8,8 @@ import com.whitelabel.app.model.SVRAppserviceCmsCmsPageReturnEntity;
 import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
+import com.whitelabel.app.utils.LanguageUtils;
+import com.whitelabel.app.utils.StoreUtils;
 
 import java.util.TreeMap;
 
@@ -32,7 +34,12 @@ public class HelpCenterDao extends BaseHttp {
     public void loadCustomerCare(String key){
         params = new TreeMap<>();
         params.put("url_key", key);
-        params.put("store_id","1");
+        String languageCode = LanguageUtils.getCurrentLanguageCode();
+        String storeId = StoreUtils.getStoreIdByLanguageCode(languageCode
+                                                            .equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
+                                                            ? LanguageUtils.LANGUAGE_CODE_ENGLISH
+                                                            : languageCode);
+        params.put("store_id",storeId);
         requestHttp(HTTP_METHOD.GET, "appservice/cms/customerCare", params, REQUEST_GET_CUSTOMER_CARE);
     }
 

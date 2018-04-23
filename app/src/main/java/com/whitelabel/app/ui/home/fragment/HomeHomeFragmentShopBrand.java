@@ -36,6 +36,7 @@ import com.whitelabel.app.widget.GridSpacingItemDecoration;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -102,10 +103,16 @@ public class HomeHomeFragmentShopBrand extends HomeBaseFragment<ShopBrandContrac
     // TODO: Rename and change types and number of parameters
     public static HomeHomeFragmentShopBrand newInstance(int index, String id) {
         HomeHomeFragmentShopBrand fragment = new HomeHomeFragmentShopBrand();
-        Bundle args = new Bundle();
-        args.putString(ARG_CATEGORY_ID, id);
-        args.putInt(ARG_CATEGORY_INDEX, index);
-        fragment.setArguments(args);
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT){
+            fragment.setCategoryId(id);
+            fragment.setCategoryIndex(index);
+        } else {
+            Bundle args = new Bundle();
+            args.putString(ARG_CATEGORY_ID, id);
+            args.putInt(ARG_CATEGORY_INDEX, index);
+            fragment.setArguments(args);
+        }
+
         return fragment;
     }
 
@@ -313,8 +320,16 @@ public class HomeHomeFragmentShopBrand extends HomeBaseFragment<ShopBrandContrac
                 }
             }
         });
-        JViewUtils.showWheelPickerOneDialog(mContext, configEntity);    }
+        JViewUtils.showWheelPickerOneDialog(mContext, configEntity);
+    }
 
+    private void setCategoryId(String categoryId){
+        this.menuId = categoryId;
+    }
+
+    private void setCategoryIndex(int index){
+        this.menuIndex = String.valueOf(index);
+    }
 
 
 }

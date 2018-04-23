@@ -31,6 +31,8 @@ import com.whitelabel.app.network.BaseHttp;
 import com.whitelabel.app.utils.JJsonUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
+import com.whitelabel.app.utils.LanguageUtils;
+import com.whitelabel.app.utils.StoreUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -228,7 +230,12 @@ public class MyAccountDao extends BaseHttp {
             params.put("lastname", lastname);
         }
         params.put("fb_id", fbId);
-        params.put("store_id", "1");
+        String languageCode = LanguageUtils.getCurrentLanguageCode();
+        String storeId = StoreUtils.getStoreIdByLanguageCode(languageCode
+                                                            .equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
+                                                            ? LanguageUtils.LANGUAGE_CODE_ENGLISH
+                                                            : languageCode);
+        params.put("store_id", storeId);
         if (TextUtils.isEmpty(deviceToken)) {
             params.put("device_token", "");
         } else {
@@ -254,7 +261,12 @@ public class MyAccountDao extends BaseHttp {
             params.put("lastname", lastname);
         }
         params.put("gg_id", fbId);
-        params.put("store_id", "1");
+        String languageCode = LanguageUtils.getCurrentLanguageCode();
+        String storeId = StoreUtils.getStoreIdByLanguageCode(languageCode
+                                                            .equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
+                                                            ? LanguageUtils.LANGUAGE_CODE_ENGLISH
+                                                            : languageCode);
+        params.put("store_id", storeId);
         if (TextUtils.isEmpty(deviceToken)) {
             params.put("device_token", "");
         } else {

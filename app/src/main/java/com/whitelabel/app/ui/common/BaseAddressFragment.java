@@ -47,6 +47,8 @@ import butterknife.Unbinder;
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
 
+import static com.whitelabel.app.ui.checkout.CheckoutDefaultAddressFragment.SELECTED_ADDRESS_ID;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -97,6 +99,7 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
     private AddressBookAdapterV2 mAddressBookAdapter;
     protected final static String EXTRA_USE_CACHE = "use_cache";
     private RequestErrorHelper requestErrorHelper;
+    private String selectedAddressId;
     // TODO: Rename parameter arguments, choose names that match
     public BaseAddressFragment() {
     }
@@ -183,6 +186,7 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
     public void inject() {
         if (getArguments() != null) {
             useCache = getArguments().getBoolean(EXTRA_USE_CACHE);
+            selectedAddressId = getArguments().getString(SELECTED_ADDRESS_ID);
         }
         DaggerPresenterComponent1.builder().applicationComponent(WhiteLabelApplication.getApplicationComponent()).
                 presenterModule(new PresenterModule(getActivity())).build().inject(this);
@@ -219,6 +223,10 @@ public abstract class BaseAddressFragment extends BaseFragmentSearchCart<BaseAdd
             showProgressDialog();
         }
         mPresenter.getAddressListOnLine(sessionKey,WhiteLabelApplication.getAppConfiguration().getUser().getId());
+    }
+
+    public String getSelectedAddressId(){
+        return selectedAddressId;
     }
 
     @Override

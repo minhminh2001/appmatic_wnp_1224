@@ -15,6 +15,8 @@ import com.whitelabel.app.model.ShoppingCartDeleteCellEntity;
 import com.whitelabel.app.model.ShoppingCartListEntityCart;
 import com.whitelabel.app.model.ShoppingCartListEntityCell;
 import com.whitelabel.app.model.ShoppingCartVoucherApplyEntity;
+import com.whitelabel.app.utils.LanguageUtils;
+import com.whitelabel.app.utils.StoreUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -93,10 +95,14 @@ public class ShoppingCartManager implements IShoppingCartManager {
     public Observable<GuestListResponse> getGuestList(
         List<ShoppingItemLocalModel> shoppingItemLocalModels) {
         Map<String, String> params = new HashMap<>();
-        params.put("store_id", "1");
+        String languageCode = LanguageUtils.getCurrentLanguageCode();
+        String storeId = StoreUtils.getStoreIdByLanguageCode(languageCode
+                                                            .equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
+                                                            ? LanguageUtils.LANGUAGE_CODE_ENGLISH
+                                                            : languageCode);
+        params.put("store_id", storeId);
         for (int i = 0; i < shoppingItemLocalModels.size(); i++) {
-            params
-                .put("products[" + i + "][group_id]", shoppingItemLocalModels.get(i).getGroupId());
+            params.put("products[" + i + "][group_id]", shoppingItemLocalModels.get(i).getGroupId());
             params.put("products[" + i + "][qty]", shoppingItemLocalModels.get(i).getNumber());
             params.put("products[" + i + "][simple_id]",
                 shoppingItemLocalModels.get(i).getSimpleId());
