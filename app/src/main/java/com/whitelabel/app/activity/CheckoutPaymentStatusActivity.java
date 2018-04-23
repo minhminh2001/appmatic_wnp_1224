@@ -225,7 +225,7 @@ public class CheckoutPaymentStatusActivity extends DrawerLayoutActivity<MainCont
 
     @Override
     protected void jumpHomePageAndRecreate() {
-
+        // TODO:This method is not using this class
     }
 
     private void initData() {

@@ -411,12 +411,6 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
         requestNotificationUnReadCount();
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        JLogUtils.v("22222222", "11111111111");
-    }
-
     private void redirectToInterfaceByDeepLink() {
         if (getIntent() != null && getIntent().getData() != null) {
             String host = getIntent().getData().getHost();
