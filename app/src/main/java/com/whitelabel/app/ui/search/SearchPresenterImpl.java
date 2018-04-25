@@ -1,26 +1,28 @@
 package com.whitelabel.app.ui.search;
 
-import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.adapter.SearchFilterAdapter;
 import com.whitelabel.app.data.service.IBaseManager;
 import com.whitelabel.app.data.service.ICommodityManager;
+import com.whitelabel.app.model.RecentSearchKeyword;
 import com.whitelabel.app.model.RecentSearchKeywordResponse;
-import com.whitelabel.app.model.SVRAppserviceProductSearchReturnEntity;
+import com.whitelabel.app.model.RecentSearchKeywordResponse.Keyword;
 import com.whitelabel.app.model.SearchFilterResponse;
 import com.whitelabel.app.ui.RxPresenter;
 import com.whitelabel.app.utils.ExceptionParse;
-import com.whitelabel.app.utils.JLogUtils;
-import com.whitelabel.app.utils.JViewUtils;
 import com.whitelabel.app.utils.LanguageUtils;
 import com.whitelabel.app.utils.RxUtil;
 import com.whitelabel.app.utils.StoreUtils;
 
 import android.text.TextUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -32,9 +34,13 @@ import rx.Subscription;
  */
 
 public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implements SearchContract.Presenter {
+
+    private static int LOCAL_RECENT_SEARCH_KEYWORD_LIMIT = 10;
+
     private ICommodityManager iCommodityManager;
     private IBaseManager iBaseManager;
     private List<SearchFilterResponse.SuggestsBean.ItemsBean> searchResponse;
+    private List<RecentSearchKeyword> recentSearchKeywordList;
 
     @Inject
     public SearchPresenterImpl(ICommodityManager iCommodityManager,IBaseManager iBaseManager) {
@@ -60,7 +66,7 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
 //                        mView.closeProgressDialog();
                         if(ExceptionParse.parseException(e).getErrorType()== ExceptionParse.ERROR.HTTP_ERROR){
                             mView.showErrorMsg(ExceptionParse.parseException(e).getErrorMsg());
-                        };
+                        }
                     }
 
                     @Override
@@ -122,12 +128,15 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
     }
 
     @Override
-    public void getRecentSearchKeywords() {
+    public void getRecentSearchKeywordsFromService(boolean isQuiet) {
 
-        mView.showProgressDialog(true);
+        if(!isQuiet) {
+            mView.showProgressDialog(true);
+        }
 
         if(!iBaseManager.isSign()){
             mView.showProgressDialog(false);
+            mView.updateRecentSearchView(sortRecentSearchKeyword(recentSearchKeywordList));
             return;
         }
 
@@ -159,8 +168,30 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
                         if(recentSearchKeywordResponse.getStatus() != 1) {
                             return;
                         }
+
+                        if(recentSearchKeywordResponse.getKeywords().size() > 0){
+                            List<Keyword> keywords = recentSearchKeywordResponse.getKeywords();
+                            for(Keyword keyword : keywords){
+                                RecentSearchKeyword recentSearchKeyword = new RecentSearchKeyword();
+                                recentSearchKeyword.setKeyword(keyword.getKeyword());
+                                recentSearchKeyword.setTime(utcToCurrentDateTime(keyword.getTimeStamp()));
+                                recentSearchKeyword.setSearchType(keyword.getType());
+                                recentSearchKeyword.setCategroyId(keyword.getCategroyId());
+                                recentSearchKeyword.setBrandId(keyword.getBrandId());
+                                recentSearchKeywordList.add(recentSearchKeyword);
+                            }
+
+                            // recent search keyword desc sort by datetime
+                            recentSearchKeywordListDescSortByDateTime(recentSearchKeywordList);
+
+                            // recent search keyword with duplicate
+                            List duplicateList = recentSearchKeywordListWithDuplicate(recentSearchKeywordList);
+                            recentSearchKeywordList.clear();
+                            recentSearchKeywordList.addAll(duplicateList);
+                        }
+
                         mView.showProgressDialog(false);
-                        mView.updateRecentSearchView(recentSearchKeywordResponse.getKeywords());
+                        mView.updateRecentSearchView(sortRecentSearchKeyword(recentSearchKeywordList));
                     }
                 });
 
@@ -168,9 +199,37 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
     }
 
     @Override
-    public void saveRecentSearchKeyword(final String keyword) {
+    public List<RecentSearchKeyword> getRecentSearchKeywordsFromLocal(){
+        return iBaseManager.getRecentSearchKeywordFromLocal();
+    }
+
+    /**
+     * Get recent search keyword, follow step:
+     * 1.invoke getRecentSearchKeywordsFromLocal
+     * 2.invoke getRecentSearchKeywordsFromService
+     */
+    @Override
+    public void getRecentSearchKeywords(boolean isQuiet) {
+
+        if(recentSearchKeywordList == null) {
+            recentSearchKeywordList = new ArrayList<RecentSearchKeyword>();
+        }
+        recentSearchKeywordList.clear();
+
+        // Get recent search keyword from local
+        List<RecentSearchKeyword> localRecentSearchKeywords = getRecentSearchKeywordsFromLocal();
+        if(localRecentSearchKeywords != null){
+            recentSearchKeywordList.addAll(localRecentSearchKeywords);
+        }
+
+        // Get recent search keyword from service
+        getRecentSearchKeywordsFromService(isQuiet);
+    }
+
+    @Override
+    public void saveRecentSearchKeywordToService(final RecentSearchKeyword keyword) {
         final String sessionKey = iBaseManager.isSign() ? iBaseManager.getUser().getSessionKey():"";
-        Subscription subscribe = iCommodityManager.saveRecentSearchKeyword(keyword, sessionKey)
+        Subscription subscribe = iCommodityManager.saveRecentSearchKeyword(keyword.getKeyword(), sessionKey)
                 .compose(RxUtil.<RecentSearchKeywordResponse>rxSchedulerHelper())
                 .subscribe(new Subscriber<RecentSearchKeywordResponse>() {
                     @Override
@@ -194,13 +253,68 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
     }
 
     @Override
+    public void saveRecentSearchKeywordToLocal(RecentSearchKeyword keyword) {
+
+        if(keyword == null) {
+            return;
+        }
+
+        // local is empty
+        List<RecentSearchKeyword> recentSearchKeywords = iBaseManager.getRecentSearchKeywordFromLocal();
+        if(recentSearchKeywords == null){
+            recentSearchKeywords = new ArrayList<>();
+            recentSearchKeywords.add(keyword);
+        }
+        // insert and remove old data
+        else {
+
+            // replace keyword if already exits
+            boolean isExits = false;
+            for(RecentSearchKeyword recentSearchKeyword : recentSearchKeywords){
+                if(recentSearchKeyword.getKeyword().equalsIgnoreCase(keyword.getKeyword())){
+                    recentSearchKeyword.setKeyword(keyword.getKeyword());
+                    recentSearchKeyword.setTime(keyword.getTime());
+                    recentSearchKeyword.setSearchType(keyword.getSearchType());
+                    recentSearchKeyword.setCategroyId(keyword.getCategroyId());
+                    recentSearchKeyword.setBrandId(keyword.getBrandId());
+
+                    isExits = true;
+                    break;
+                }
+            }
+
+            // add to list if not exits
+            if(!isExits) {
+                recentSearchKeywords.add(0, keyword);
+            }
+
+            // desc sort by datetime
+            recentSearchKeywordListDescSortByDateTime(recentSearchKeywords);
+
+            // remove last item when more than LOCAL_RECENT_SEARCH_KEYWORD_LIMIT
+            if(recentSearchKeywords.size() > LOCAL_RECENT_SEARCH_KEYWORD_LIMIT){
+                recentSearchKeywords.remove(recentSearchKeywords.size() -1);
+            }
+        }
+
+        iBaseManager.updateRecentSearchKeywordToLocal(recentSearchKeywords);
+    }
+
+
+    @Override
     public void clearAllRecentSearchKeyword() {
+
+        clearAllRecentSearchKeywordFromLocal();
+        clearAllRecentSearchKeywordFromService();
+    }
+
+    private void clearAllRecentSearchKeywordFromService(){
         final String sessionKey = iBaseManager.isSign() ? iBaseManager.getUser().getSessionKey():"";
         String languageCode = LanguageUtils.getCurrentLanguageCode();
         String storeId = StoreUtils.getStoreIdByLanguageCode(languageCode
-                                                                .equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
-                                                                ? LanguageUtils.LANGUAGE_CODE_ENGLISH
-                                                                : languageCode);
+                .equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
+                ? LanguageUtils.LANGUAGE_CODE_ENGLISH
+                : languageCode);
         Subscription subscribe = iCommodityManager.clearAllRecentSearchKeyword(storeId, sessionKey)
                 .compose(RxUtil.<RecentSearchKeywordResponse>rxSchedulerHelper())
                 .subscribe(new Subscriber<RecentSearchKeywordResponse>() {
@@ -223,5 +337,98 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
                         mView.updateRecentSearchView(null);
                     }
                 });
+    }
+
+    private void clearAllRecentSearchKeywordFromLocal(){
+        iBaseManager.updateRecentSearchKeywordToLocal(null);
+    }
+
+    private List<RecentSearchKeyword> sortRecentSearchKeyword(List<RecentSearchKeyword> sortRecentSearchKeyword){
+        if(sortRecentSearchKeyword == null){
+            return null;
+        }
+
+        return sortRecentSearchKeyword;
+    }
+
+    private String getCurrentDateTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(new Date());
+    }
+
+    private String utcToCurrentDateTime(String timeStamp){
+        if(TextUtils.isEmpty(timeStamp))
+            return null;
+
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(new Date(Long.valueOf(timeStamp + "000")));
+        ca.add(Calendar.HOUR_OF_DAY, 8);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(ca.getTime());
+    }
+
+    // recent search keyword desc sort by datetime
+    private void recentSearchKeywordListDescSortByDateTime(List<RecentSearchKeyword> recentSearchKeywords){
+        if(recentSearchKeywords == null){
+            return;
+        }
+
+        Collections.sort(recentSearchKeywords, new Comparator<RecentSearchKeyword>() {
+            @Override
+            public int compare(RecentSearchKeyword o1, RecentSearchKeyword o2) {
+
+                Date date1 = null;
+                Date date2 = null;
+                try {
+                    date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                            .parse(o1.getTime());
+
+                    date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                            .parse(o2.getTime());
+
+                } catch (ParseException ex){
+                    ex.printStackTrace();
+                }
+
+                if(date1.before(date2)){
+                    return 1;
+                } else if(date1.after(date2)){
+                    return -1;
+                }
+
+                return 0;
+            }
+        });
+    }
+
+    // recent search keyword with duplicate
+    private List<RecentSearchKeyword> recentSearchKeywordListWithDuplicate(List<RecentSearchKeyword> recentSearchKeywords){
+        if(recentSearchKeywords == null) {
+            return null;
+        }
+
+        List<RecentSearchKeyword> srcList = new ArrayList<>();
+        List<RecentSearchKeyword> resultList = new ArrayList<>();
+
+        srcList.addAll(recentSearchKeywords);
+        for(int i = 0; i < srcList.size(); i++){
+            boolean isDuplicate = false;
+            RecentSearchKeyword src = srcList.get(i);
+
+            for(int j = 0; j < resultList.size(); j++){
+                RecentSearchKeyword result = resultList.get(j);
+                if(src.getKeyword().equalsIgnoreCase(result.getKeyword())){
+                    isDuplicate = true;
+                    break;
+                }
+            }
+
+            if(!isDuplicate){
+                resultList.add(src);
+            }
+        }
+
+        return resultList;
     }
 }

@@ -42,6 +42,7 @@ import com.whitelabel.app.callback.FragmentOnAdapterCallBack;
 import com.whitelabel.app.callback.ProductListFilterHideCallBack;
 import com.whitelabel.app.dao.ProductDao;
 import com.whitelabel.app.listener.OnFilterSortFragmentListener;
+import com.whitelabel.app.model.RecentSearchKeyword;
 import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.SVRAppserviceProductSearchResultsItemReturnEntity;
@@ -50,6 +51,7 @@ import com.whitelabel.app.model.SearchFilterResponse;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
 import com.whitelabel.app.model.TMPProductListListPageEntity;
 import com.whitelabel.app.model.TempCategoryBean;
+import com.whitelabel.app.model.SearchFilterResponse.SuggestsBean.ItemsBean;
 import com.whitelabel.app.network.ImageLoader;
 import com.whitelabel.app.ui.productdetail.ProductDetailActivity;
 import com.whitelabel.app.ui.search.SearchContract;
@@ -69,7 +71,9 @@ import com.whitelabel.app.widget.FilterSortBottomView;
 import com.whitelabel.app.widget.MaterialDialog;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -93,6 +97,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     public static final int SEARCH_TYPE_LOADMORE = 6;
     public static final int SEARCH_TYPE_SUGGESTION = 7;
 
+    private static final int SEARCH_UNGETSUGGEST = 0;
     private static final int SEARCH_GETSUGGEST_PRODUCT_DETAIL=1;
     private static final int SEARCH_GETSUGGEST_PRODUCT_BRAND=2;
     private static final int SEARCH_GETSUGGEST_CATEGORY_SEARCH=3;
@@ -218,20 +223,23 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
             return;
         }
 
-        searchFilterAdapter.updateData(itemsBeans,getKeyWord());
+        searchFilterAdapter.updateData(itemsBeans, getSearchEditText());
 
         // show recent search list view when not found data
         showRecentSearchView(itemsBeans.size() <= 0 ? true : false);
     }
 
     @Override
-    public void updateRecentSearchView(List<String> recentSearchKeywords) {
+    public void updateRecentSearchView(List<RecentSearchKeyword> recentSearchKeywords) {
 
         setRecentSearchViewTips(isEmptyCollection(recentSearchKeywords)
                 ? getString(R.string.recent_search_keyword_not_data)
                 : getString(R.string.recent_search_keyword_has_data));
 
+        // Update list for recent search keyword list
         recentSearchListAdapter.setRecentSearchList(recentSearchKeywords);
+
+        // show recent search keyword UI
         showRecentSearchView(true);
     }
 
@@ -251,6 +259,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 bundle.putString(ProductDetailActivity.PRODUCT_ID,itemsBean.getProductId());
                 it.putExtras(bundle);
                 productListActivity.startActivity(it);
+                saveSearchKeyword(itemsBean);
                 break;
             case SEARCH_GETSUGGEST_PRODUCT_BRAND:
                 String name=itemsBean.getName();
@@ -258,6 +267,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 showSuggestOrResultPage(false);
                 tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setBrandId(itemsBean.getBrandId());
                 search();
+                saveSearchKeyword(itemsBean);
                 break;
             case SEARCH_GETSUGGEST_CATEGORY_SEARCH:
                 showSuggestOrResultPage(false);
@@ -265,6 +275,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setCategory_id(itemsBean.getCategoryId());
                 tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ("");
                 search();
+                saveSearchKeyword(itemsBean);
                 break;
             case SEARCH_GETSUGGEST_KEYWORD_SEARCH:
                 String suggestKeyword=itemsBean.getKey();
@@ -579,11 +590,12 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                     if (beforeText.equals(s.toString().trim())) return;
                         if (s.length()>=3){
                             showSuggestOrResultPage(true);
-                            mPresenter.autoSearch(getKeyWord());
+                            mPresenter.autoSearch(getSearchEditText());
                         }else {
                             cxlvProductList.setVisibility(View.GONE);
                             rvHintList.setVisibility(View.GONE);
                             showRecentSearchView(true);
+                            loadRecentSearchKeywords(true);
                         }
                         mClearRL.setVisibility(VISIBLE);
 ////                    clearSuggestionList();
@@ -668,7 +680,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
         });
 
         // load recent search keywords from server
-        loadRecentSearchKeywordsFromServer();
+        loadRecentSearchKeywords(false);
     }
 
     private void initTitleBar() {
@@ -682,7 +694,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
         });
     }
 
-    private String getKeyWord(){
+    private String getSearchEditText(){
         return cetKeywords.getText().toString().trim();
     }
 
@@ -747,7 +759,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
 //        if (submit && suggestionItem != null) {
 //            switch (suggestionItem.getRow_type()) {
 //                case SUGGESTION_ROW_TYPE_BRAND:
-//                    setKeyWord(suggestionItem);
+//                    setEditText(suggestionItem);
 //                    mIsSuggestionSearch = true;
 //                    dismissSuggestions();
 //                    cancelHandler();
@@ -771,11 +783,11 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
 //                    search();
 //                    break;
 //                case SUGGESTION_ROW_TYPE_PRODUCT:
-//                    setKeyWord(suggestionItem);
+//                    setEditText(suggestionItem);
 //                    onSubmitKeyWord();
 //                    break;
 //                default:
-//                    setKeyWord(suggestionItem);
+//                    setEditText(suggestionItem);
 //                    onSubmitKeyWord();
 //                    break;
 //
@@ -784,11 +796,11 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
 //
 //    }
 
-    private void setKeyWord(String keyWord) {
+    private void setEditText(String keyWord) {
         cetKeywords.setText(keyWord);
     }
 
-    /*private void setKeyWord(SuggestsEntity suggestionItem) {
+    /*private void setEditText(SuggestsEntity suggestionItem) {
         cetKeywords.setText(suggestionItem.getTitle());
         if (suggestionItem.getTitle() != null) {
             cetKeywords.setSelection(cetKeywords.length());
@@ -807,7 +819,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
 //    }
 
     private void onSubmitKeyWord() {
-        if (!"".equals(getKeyWord())) {
+        if (!"".equals(getSearchEditText())) {
             showSuggestOrResultPage(false);
             JViewUtils.hideKeyboard(productListActivity);
             flFilterSortContainer.setVisibility(GONE);
@@ -928,7 +940,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
 
 
     public void searchTrack() {
-        String keyWord = getKeyWord();
+        String keyWord = getSearchEditText();
         try {
             if (!TextUtils.isEmpty(keyWord)) {
                 GaTrackHelper.getInstance().googleAnalyticsEvent("Procduct Action", "Search", keyWord, null);
@@ -970,7 +982,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
             tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setP(1);
             String keywords = tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).getQ();
             if (!JDataUtils.isEmpty(cetKeywords)) {
-                keywords = getKeyWord();
+                keywords = getSearchEditText();
             }
             tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ(keywords);
         } else if (SEARCH_TYPE_SORT == getSearchType()) {
@@ -986,7 +998,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 productListAdapter.notifyDataSetChanged();
             }
             if (!JDataUtils.isEmpty(cetKeywords)) {
-                keywords = getKeyWord();
+                keywords = getSearchEditText();
             }
             tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ(keywords);
         } else if (SEARCH_TYPE_KEYWORDS == getSearchType()) {
@@ -1005,7 +1017,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
             tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setP(1);
             String keywords = tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).getQ();
             if (!JDataUtils.isEmpty(cetKeywords)) {
-                keywords = getKeyWord();
+                keywords = getSearchEditText();
             }
             tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setCategory_id(fromOtherPageCategoryId);
             tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ(keywords);
@@ -1027,7 +1039,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
             }
 
             if (!JDataUtils.isEmpty(cetKeywords)) {
-                keywords = getKeyWord();
+                keywords = getSearchEditText();
             }
 //            if (!TextUtils.isEmpty(suggestKeyword)) {
 //                tempCategoryBean.getSVRAppserviceProductSearchParameterById(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ(suggestKeyword);
@@ -1513,7 +1525,10 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 }
 
                 // save search keyword to server when has data
-                fragment.saveSearchKeywordToServer();
+                ItemsBean itemsBean = new ItemsBean();
+                itemsBean.setType(SEARCH_UNGETSUGGEST);
+                itemsBean.setName(fragment.getSearchEditText());
+                fragment.saveSearchKeyword(itemsBean);
                 // hide recent search keyword view
                 fragment.showRecentSearchView(false);
 
@@ -1679,9 +1694,10 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
         }
     }
 
-    private void loadRecentSearchKeywordsFromServer(){
-        mPresenter.getRecentSearchKeywords();
+    private void loadRecentSearchKeywords(boolean isQuiet){
+        mPresenter.getRecentSearchKeywords(isQuiet);
     }
+
 
     private void setRecentSearchViewTips(String tips){
         if(TextUtils.isEmpty(tips)){
@@ -1691,15 +1707,35 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
         tvTips.setText(tips);
     }
 
-    private boolean isEmptyCollection(List<String> list){
+    private boolean isEmptyCollection(List<RecentSearchKeyword> list){
         if(list == null || list.size() <= 0)
             return true;
 
         return false;
     }
 
-    private void saveSearchKeywordToServer(){
-        mPresenter.saveRecentSearchKeyword(getKeyWord());
+    private void saveSearchKeyword(ItemsBean item){
+
+        RecentSearchKeyword keyword = new RecentSearchKeyword();
+        keyword.setTime(getCurrentDateTime());
+        keyword.setBrandId(item.getBrandId());
+        keyword.setCategroyId(item.getCategoryId());
+        keyword.setSearchType(item.getType());
+        keyword.setKeyword(item.getName());
+
+        if(WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())){
+            saveSearchKeywordToServer(keyword);
+        } else {
+            saveSearchKeywordToLocal(keyword);
+        }
+    }
+
+    private void saveSearchKeywordToServer(RecentSearchKeyword keyword){
+        mPresenter.saveRecentSearchKeywordToService(keyword);
+    }
+
+    private void saveSearchKeywordToLocal(RecentSearchKeyword keyword){
+        mPresenter.saveRecentSearchKeywordToLocal(keyword);
     }
 
     private void showConfirmDialogForClearRecentSearchKeyword(boolean isShow){
@@ -1715,26 +1751,38 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
         }
     }
 
-
-
+    private String getCurrentDateTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(new Date());
+    }
 
     private class OnRecentSearchListListener implements RecentSearchListAdapter.OnItemClickListener{
 
         @Override
-        public void onItemClick(boolean isFooter, String keyword) {
+        public void onItemClick(boolean isFooter, RecentSearchKeyword keyword) {
             MaterialDialog confirmDialog = null;
             // click clear keyword item
             if(isFooter){
                 showConfirmDialogForClearRecentSearchKeyword(true);
             }
             // click normal item
-            else {
-                if(TextUtils.isEmpty(keyword)){
-                    return;
-                }
+            else if(!TextUtils.isEmpty(keyword.getKeyword())){
 
-                setKeyWord(keyword);
-                onSubmitKeyWord();
+                // special search, eg:click category,Brand
+                if(keyword.getSearchType() != SEARCH_UNGETSUGGEST
+                        && keyword.getSearchType() != SEARCH_GETSUGGEST_PRODUCT_DETAIL){
+                    ItemsBean itemsBean = new ItemsBean();
+                    itemsBean.setType(keyword.getSearchType());
+                    itemsBean.setName(keyword.getKeyword());
+                    itemsBean.setBrandId(keyword.getBrandId());
+                    itemsBean.setCategoryId(keyword.getCategroyId());
+                    onRecyclerItemClick(itemsBean);
+                }
+                // normal search, eg:click search button,product detail
+                else {
+                    setEditText(keyword.getKeyword());
+                    onSubmitKeyWord();
+                }
             }
         }
     }

@@ -377,6 +377,7 @@ public class ProductDetailPresenter extends RxPresenter<ProductDetailContract.Vi
             shoppingItemLocalModels
                 .add(new ShoppingItemLocalModel(mProduct.getId(), simpleId, map.get(simpleId)));
         }
+        iGoogleAnalyticsManager.googleAnalyticsAddCart(mProduct.getId(),mProduct.getName());
         iShoppingCartManager.saveProductToLocal(shoppingItemLocalModels)
             .compose(RxUtil.<Boolean>rxSchedulerHelper())
             .subscribe(new Subscriber<Boolean>() {
@@ -430,8 +431,8 @@ public class ProductDetailPresenter extends RxPresenter<ProductDetailContract.Vi
         mView.showNornalProgressDialog();
         iGoogleAnalyticsManager.googleAnalyticsEvent(IGoogleAnalyticsManager.CATEGORY_PROCDUCT,
             IGoogleAnalyticsManager.ACTION_ADDTOCART, mProduct.getName(), mProduct.getId());
-        //TODO joyson may be use
-//        iGoogleAnalyticsManager.googleAnalyticsAddCart(mProduct.getId(),mProduct.getName());
+
+        iGoogleAnalyticsManager.googleAnalyticsAddCart(mProduct.getId(),mProduct.getName());
         String sessionKey = iBaseManager.getUser().getSessionKey();
         iShoppingCartManager.addProductToShoppingCart(sessionKey, mProduct.getId(), params)
             .compose(RxUtil.<ResponseModel>rxSchedulerHelper())
