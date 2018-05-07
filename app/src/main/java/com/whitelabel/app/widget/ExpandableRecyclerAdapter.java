@@ -47,7 +47,7 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
         mContext = context;
         getMaxChildItem(activity);
     }
-    //适配出当前屏幕适应多少个child Item
+    //适配出当前屏幕适应多少个child FilterItem
     public void getMaxChildItem(Activity activity){
         int screenHeight=JScreenUtils.getScreenHeight(activity);
         if(screenHeight>=2350){

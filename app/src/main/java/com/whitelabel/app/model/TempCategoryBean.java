@@ -4,6 +4,7 @@ import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.utils.JDataUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by img on 2018/1/25.
@@ -17,6 +18,8 @@ public class TempCategoryBean {
     public ArrayList<SVRAppserviceProductSearchParameter> searchCategoryParameterArrayList=new ArrayList<>();
     public CategoryBaseBean.CategoryBean.ChildrenBeanX searchCategoryEntity;
     public SVRAppserviceProductSearchParameter svrAppserviceProductSearchParameter;
+    public SVRAppserviceProductFilterSelectedItem filterSelectedItem = new SVRAppserviceProductFilterSelectedItem();
+    public List<SVRAppserviceProductFilterSelectedItem> filterSelectedItemList = new ArrayList<>();
     public String leftMenuTitle;
     private static TempCategoryBean tempCategoryBean;
     public static TempCategoryBean getInstance(){
@@ -67,12 +70,82 @@ public class TempCategoryBean {
         }
     }
 
-
     private SVRAppserviceProductSearchParameter getSvrAppserviceProductSearchParameter() {
         if (svrAppserviceProductSearchParameter == null) {
             svrAppserviceProductSearchParameter = new SVRAppserviceProductSearchParameter();
         }
         return svrAppserviceProductSearchParameter;
+    }
+
+    public void clearSVRAppserviceProductFilterSelectedItemById(int type, int index) {
+        if (ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
+            getSVRAppserviceProductFilterSelectedItemById(index).clearAll();
+        } else if (ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
+            getSVRAppserviceProductFilterSelectedItem().clearAll();
+        }
+    }
+
+    public SVRAppserviceProductFilterSelectedItem getSVRAppserviceProductFilterSelectedItemById(int type, int index) {
+        if (ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
+            return getSVRAppserviceProductFilterSelectedItemById(index);
+        } else if (ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
+            return getSVRAppserviceProductFilterSelectedItem();
+        } else {
+            return null;
+        }
+    }
+
+    public SVRAppserviceProductFilterSelectedItem getSVRAppserviceProductFilterSelectedItem(){
+        if(filterSelectedItem == null){
+            filterSelectedItem = new SVRAppserviceProductFilterSelectedItem();
+        }
+
+        return filterSelectedItem;
+    }
+
+    public SVRAppserviceProductFilterSelectedItem getSVRAppserviceProductFilterSelectedItemById(int index){
+        if (index < 0 || filterSelectedItemList.size() <= index) {
+            return null;
+        } else {
+            return filterSelectedItemList.get(index);
+        }
+    }
+
+    public void setSVRAppserviceProductFilterSelectedItem(int type, int index, SVRAppserviceProductFilterSelectedItem filterSelectedItem) {
+        if (ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
+            setSVRAppserviceProductFilterSelectedItem(index, filterSelectedItem);
+        } else if (ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS == type) {
+            setSVRAppserviceProductFilterSelectedItem(filterSelectedItem);
+        }
+    }
+
+    public void setSVRAppserviceProductFilterSelectedItem(SVRAppserviceProductFilterSelectedItem filterSelectedItem){
+        this.filterSelectedItem.setCategoryOption(filterSelectedItem.getCategoryOption());
+        this.filterSelectedItem.setBrandOptions(filterSelectedItem.getBrandOptions());
+        this.filterSelectedItem.setFlavorOptions(filterSelectedItem.getFlavorOptions());
+        this.filterSelectedItem.setLifeStageOptions(filterSelectedItem.getLifeStageOptions());
+    }
+
+    public void initSVRAppserviceProductFilterSelectedItemList(int index){
+
+        int arraySize = filterSelectedItemList.size();
+        if(index > arraySize - 1) {
+            SVRAppserviceProductFilterSelectedItem item = new SVRAppserviceProductFilterSelectedItem();
+            filterSelectedItemList.add(item);
+        }
+    }
+
+    public void setSVRAppserviceProductFilterSelectedItem(int index, SVRAppserviceProductFilterSelectedItem filterSelectedItem){
+
+        if (index < 0 || filterSelectedItemList.size() <= index) {
+            return;
+        }
+
+        SVRAppserviceProductFilterSelectedItem item = filterSelectedItemList.get(index);
+        item.setCategoryOption(filterSelectedItem.getCategoryOption());
+        item.setBrandOptions(filterSelectedItem.getBrandOptions());
+        item.setFlavorOptions(filterSelectedItem.getFlavorOptions());
+        item.setLifeStageOptions(filterSelectedItem.getLifeStageOptions());
     }
 
     private void setSVRAppserviceProductSearchParameterCategoryId(int index, String categoryId) {
@@ -338,7 +411,7 @@ public class TempCategoryBean {
     }
 
     public void setSVRAppserviceProductSearchParameterBrandName(int index, String brandValue) {
-        if (index < 0) {
+        /*if (index < 0) {
             return;
         }
         int arraySize = tempCategoryBean.searchCategoryParameterArrayList.size();
@@ -347,7 +420,6 @@ public class TempCategoryBean {
             for (int newInstallIndex = arraySize; newInstallIndex <= index; ++newInstallIndex) {
                 SVRAppserviceProductSearchParameter parameter = new SVRAppserviceProductSearchParameter();
                 if (newInstallIndex == index) {
-                    parameter.setBrandName(brandValue);
                     tempCategoryBean.searchCategoryParameterArrayList.add(parameter);
                     break;
                 } else {
@@ -356,8 +428,8 @@ public class TempCategoryBean {
                 }
             }
         } else {
-            tempCategoryBean.searchCategoryParameterArrayList.get(index).setBrandName(brandValue);
-        }
+            tempCategoryBean.searchCategoryParameterArrayList.get(index).setVesBrand(brandValue);
+        }*/
     }
 
 }

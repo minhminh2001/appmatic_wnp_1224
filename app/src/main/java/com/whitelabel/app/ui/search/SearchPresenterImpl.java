@@ -35,7 +35,7 @@ import rx.Subscription;
 
 public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implements SearchContract.Presenter {
 
-    private static int LOCAL_RECENT_SEARCH_KEYWORD_LIMIT = 10;
+    private static int RECENT_SEARCH_KEYWORD_LIMIT = 10;
 
     private ICommodityManager iCommodityManager;
     private IBaseManager iBaseManager;
@@ -136,7 +136,7 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
 
         if(!iBaseManager.isSign()){
             mView.showProgressDialog(false);
-            mView.updateRecentSearchView(sortRecentSearchKeyword(recentSearchKeywordList));
+            mView.updateRecentSearchView(removeExcessRecentSearchKeyword(recentSearchKeywordList));
             return;
         }
 
@@ -191,7 +191,7 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
                         }
 
                         mView.showProgressDialog(false);
-                        mView.updateRecentSearchView(sortRecentSearchKeyword(recentSearchKeywordList));
+                        mView.updateRecentSearchView(removeExcessRecentSearchKeyword(recentSearchKeywordList));
                     }
                 });
 
@@ -291,8 +291,8 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
             // desc sort by datetime
             recentSearchKeywordListDescSortByDateTime(recentSearchKeywords);
 
-            // remove last item when more than LOCAL_RECENT_SEARCH_KEYWORD_LIMIT
-            if(recentSearchKeywords.size() > LOCAL_RECENT_SEARCH_KEYWORD_LIMIT){
+            // remove last item when more than RECENT_SEARCH_KEYWORD_LIMIT
+            if(recentSearchKeywords.size() > RECENT_SEARCH_KEYWORD_LIMIT){
                 recentSearchKeywords.remove(recentSearchKeywords.size() -1);
             }
         }
@@ -343,12 +343,18 @@ public class SearchPresenterImpl extends RxPresenter<SearchContract.View> implem
         iBaseManager.updateRecentSearchKeywordToLocal(null);
     }
 
-    private List<RecentSearchKeyword> sortRecentSearchKeyword(List<RecentSearchKeyword> sortRecentSearchKeyword){
-        if(sortRecentSearchKeyword == null){
+    private List<RecentSearchKeyword> removeExcessRecentSearchKeyword(List<RecentSearchKeyword> recentSearchKeywordList){
+        if(recentSearchKeywordList == null){
             return null;
         }
 
-        return sortRecentSearchKeyword;
+        int recentSearchKeywordListSize = recentSearchKeywordList.size();
+        while(recentSearchKeywordListSize > RECENT_SEARCH_KEYWORD_LIMIT){
+            recentSearchKeywordList.remove(recentSearchKeywordListSize - 1);
+            recentSearchKeywordListSize = recentSearchKeywordList.size();
+        }
+
+        return recentSearchKeywordList;
     }
 
     private String getCurrentDateTime(){

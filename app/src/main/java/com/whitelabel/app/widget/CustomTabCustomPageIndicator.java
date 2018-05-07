@@ -592,4 +592,8 @@ public class CustomTabCustomPageIndicator extends HorizontalScrollView {
             ex.getStackTrace();
         }
     }
+
+    public int getCurrentPosition(){
+        return currentPosition;
+    }
 }

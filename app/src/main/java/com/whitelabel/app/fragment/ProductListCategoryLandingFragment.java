@@ -31,6 +31,7 @@ import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.listener.OnFilterSortFragmentListener;
 import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
 import com.whitelabel.app.model.TMPProductListFilterSortPageEntity;
@@ -148,7 +149,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initToolBar();
-        int FRAGMENT_CONTAINER_ID = R.id.flFilterSortContainer;
+        int FRAGMENT_CONTAINER_ID = R.id.fl_sort_container;/*R.id.flFilterSortContainer;*/
 //        try {
 //            GaTrackHelper.getInstance().googleAnalytics("Sub Category Screen", getActivity());
 //            JLogUtils.i("googleAnalytics", "Sub Category Screen");
@@ -170,6 +171,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         filterSortBottomView.initView(mTopFilterAndSortBarRL, mIVBottomSlideToTop, this);
         ctpiCategoryList = (CustomTabCustomPageIndicator) mContentView.findViewById(R.id.ctpiCategoryList);
         ctpiCategoryList.setIndicatorColorResource(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+        ctpiCategoryList.setOnPageChangeListener(this);
         ViewPager vpProductList = (ViewPager) mContentView.findViewById(R.id.vpProductList);
         FrameLayout flFilterSortContainer = (FrameLayout) mContentView.findViewById(R.id.flFilterSortContainer);
         flFilterSortContainer.setOnClickListener(this);
@@ -403,6 +405,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
 
     @Override
     public void onPageScrollStateChanged(int state) {
+
+        resetSelection();
     }
 
     @Override
@@ -414,10 +418,31 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     }
 
     @Override
+    public void onSearchFilter() {
+        int position = ctpiCategoryList.getCurrentPosition();
+        ProductListProductListFragment productListProductListFragment = categoryProductListFragmentArrayList.get(position);
+        productListProductListFragment.onSearchFilter();
+    }
+
+    @Override
+    public SVRAppserviceProductSearchFacetsReturnEntity getFilterInfo() {
+        int position = ctpiCategoryList.getCurrentPosition();
+        ProductListProductListFragment productListProductListFragment = categoryProductListFragmentArrayList.get(position);
+        return productListProductListFragment.getFilterInfo();
+    }
+
+    public int getCurrentPagePosition(){
+        return ctpiCategoryList.getCurrentPosition();
+    }
+
+    @Override
     public void onBackPressed() {
         if (productListActivity != null) {
             if (filterSortHelper.isAnyActive()) {
-                filterSortDefault();
+
+                // hide sort fragment
+                resetSelection();
+                //filterSortDefault();
             } else {
                 productListActivity.finish();
             }
@@ -426,9 +451,12 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
 
     @Override
     public void onFilterWidgetClick(boolean show) {
-        if (productListActivity != null) {
+        /*if (productListActivity != null) {
             filterSortHelper.onFilterClicked(show, createBundle());
-        }
+        }*/
+
+        // hide sort and reset sort button state
+        resetSelection();
     }
 
     @Override
@@ -436,6 +464,12 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
         if (productListActivity != null) {
             filterSortHelper.onSortClicked(show, createBundle());
         }
+    }
+
+    @Override
+    public void onViewToggleChanged() {
+        // hide sort and reset sort button state
+        resetSelection();
     }
 
     private Bundle createBundle() {
@@ -478,7 +512,10 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
     }
 
     private void resetSelection() {
-        tempCategoryBean.resetCurrentFilterSortTabIndex();
+        if(productListActivity != null){
+            // reset sort button state
+            productListActivity.resetCurrentFilterSortTabIndex();
+        }
         filterSortHelper.hideVisibleFragments();
     }
 
@@ -515,7 +552,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             }
             tempCategoryBean.setSVRAppserviceProductSearchParameterCategoryId(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, position, categoryId);
             tempCategoryBean.setSVRAppserviceProductSearchParameterBrandId(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, position, brandId);
-            tempCategoryBean.setSVRAppserviceProductSearchParameterBrandName(position, brandName);
+            //tempCategoryBean.setSVRAppserviceProductSearchParameterBrandName(position, brandName);
+            tempCategoryBean.initSVRAppserviceProductFilterSelectedItemList(position);
             return productListProductListFragment;
         }
 

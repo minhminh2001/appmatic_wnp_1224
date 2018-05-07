@@ -73,7 +73,7 @@ public class CategoryDetailHorizontalAdapter extends RecyclerView.Adapter<Recycl
             //header already add 1 so i from 1 start
             for (int i=1;i<carousels.size()+1;i++){
                 titlePosition=2*i ;
-                //Item positon
+                //FilterItem positon
                 itemPosition=titlePosition+1;
 
                 CategoryDetailNewModel.CarouselsBean carouselsBean = carousels.get(i-1);

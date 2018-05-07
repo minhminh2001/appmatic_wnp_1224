@@ -309,10 +309,10 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
     public void gaTrackerDeleteFromCart(String name, String productId) {
         try {
             GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
-                    "Remove Item From Cart",
+                    "Remove FilterItem From Cart",
                     name,
                     Long.valueOf(productId));
-            JLogUtils.i("googleGA", "Remove Item From Cart");
+            JLogUtils.i("googleGA", "Remove FilterItem From Cart");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -321,7 +321,7 @@ public class ShoppingCartAdapterV2 extends RecyclerView.Adapter<RecyclerView.Vie
     public void gaTrackerIncresaseQuantity(String name, String productId) {
         try {
             GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
-                    "Remove Item From Cart",
+                    "Remove FilterItem From Cart",
                     name,
                     Long.valueOf(productId));
             //TODO joyson may be use
