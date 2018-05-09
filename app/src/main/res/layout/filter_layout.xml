@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="Filters"
+            android:text="@string/filter_title"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"/>
@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             style="?android:attr/borderlessButtonStyle"
-            android:text="Done"
+            android:text="@string/global_picker_size_done"
             android:textColor="@color/black"
             android:background="@color/white"
             android:textSize="16sp"/>
@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="Categories"
+                    android:text="@string/filter_category"
                     android:textColor="@color/black"
                     android:textSize="16sp"/>
 
@@ -86,7 +86,7 @@
                     android:button="@null"
                     android:drawableRight="@drawable/selector_filter_show_more"
                     android:drawablePadding="8dp"
-                    android:text="Show More"
+                    android:text="@string/filter_show_more"
                     android:textColor="@color/transparent5000"
                     android:textSize="16sp"/>
 
@@ -111,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="Brands"
+                    android:text="@string/filter_brand"
                     android:textColor="@color/black"
                     android:textSize="16sp"/>
 
@@ -134,7 +134,7 @@
                     android:button="@null"
                     android:drawableRight="@drawable/selector_filter_show_more"
                     android:drawablePadding="8dp"
-                    android:text="Show More"
+                    android:text="@string/filter_show_more"
                     android:textColor="@color/transparent5000"
                     android:textSize="16sp"/>
 
@@ -156,7 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="Flavor"
+                    android:text="@string/filter_flavor"
                     android:textColor="@color/black"
                     android:textSize="16sp"/>
 
@@ -180,7 +180,7 @@
                     android:drawableRight="@drawable/selector_filter_show_more"
                     android:drawablePadding="8dp"
                     android:textColor="@color/transparent5000"
-                    android:text="Show More"
+                    android:text="@string/filter_show_more"
                     android:textSize="16sp"/>
 
                 <View
@@ -201,7 +201,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="Life stage"
+                    android:text="@string/filter_life_stage"
                     android:textColor="@color/black"
                     android:textSize="16sp"/>
 
@@ -224,7 +224,7 @@
                     android:button="@null"
                     android:drawableRight="@drawable/selector_filter_show_more"
                     android:drawablePadding="8dp"
-                    android:text="Show More"
+                    android:text="@string/filter_show_more"
                     android:textColor="@color/transparent5000"
                     android:textSize="16sp"/>
 
@@ -244,7 +244,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:text="Reset"
+        android:text="@string/filter_btn_reset"
         android:textColor="@color/black"
         android:textSize="16sp"/>
 </RelativeLayout>

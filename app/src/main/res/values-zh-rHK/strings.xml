@@ -833,4 +833,14 @@
     <string name="recent_search_keyword_not_data">Find your next favourite thing</string>
     <string name="recent_search_keyword_clear_data">Clear Recent Searches</string>
     <string name="recent_search_keyword_clear_tips">Clear recent searches?</string>
+
+    <!-- Filter -->
+    <string name="filter_title">Filters</string>
+    <string name="filter_category">Categories</string>
+    <string name="filter_brand">Brands</string>
+    <string name="filter_flavor">Flavor</string>
+    <string name="filter_life_stage">Life&#160;stage</string>
+    <string name="filter_show_more">Show&#160;More</string>
+    <string name="filter_show_less">Show&#160;Less</string>
+    <string name="filter_btn_reset">Reset</string>
 </resources>
