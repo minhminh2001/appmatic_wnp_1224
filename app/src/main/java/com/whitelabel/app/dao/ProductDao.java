@@ -32,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
@@ -229,8 +230,11 @@ public class ProductDao extends BaseHttp {
         super.requestHttp(method, url, map, requestCode);
     }
 
-    public void productSearch(String storeId, String p, String limit, String order, String dir,
-                                String brand, String categoryId, String modelType, String q,String keywords, String price, String sessionKey,String key,String fromPage) {
+    public void  productSearch(String storeId, String p, String limit, String order, String dir,
+                              String brand, String categoryId, String modelType, String q,
+                              String keywords, String price, String sessionKey, String fromPage,
+                              String categoryOption, List<String> brandOptions,
+                              List<String> flavorOptions, List<String> liftStageOptions) {
         params = new TreeMap<>();
         params.put("store_id", storeId);
         params.put("p", p);
@@ -254,6 +258,7 @@ public class ProductDao extends BaseHttp {
         if (!TextUtils.isEmpty(q)) {
             params.put("q", q);
         }
+
         if (!TextUtils.isEmpty(keywords)) {
             params.put("keywords", keywords);
         }
@@ -266,6 +271,38 @@ public class ProductDao extends BaseHttp {
         if(!TextUtils.isEmpty(fromPage)){
             params.put("pageType",fromPage);
         }
+        if(brandOptions != null) { // use for filter search
+            if(brandOptions.size() > 1) {// multi-brand use for filter
+                for (int index = 0; index < brandOptions.size(); index++) {
+                    params.put("vesbrand[" + index + "]", brandOptions.get(index));
+                }
+            } else if(brandOptions.get(0) != null) {
+
+                params.put("vesbrand", brandOptions.get(0));
+            }
+        }
+        if(flavorOptions != null) { // use for filter search
+            if(flavorOptions.size() > 1) {// multi-flavor use for filter
+                for (int index = 0; index < flavorOptions.size(); index++) {
+                    params.put("flavor[" + index + "]", flavorOptions.get(index));
+                }
+            } else {
+                params.put("flavor", flavorOptions.get(0));
+            }
+        }
+        if (liftStageOptions != null) { // use for filter search
+            if(liftStageOptions.size() > 1) {// multi-lift stage use for filter
+                for (int index = 0; index < liftStageOptions.size(); index++) {
+                    params.put("stage[" + index + "]", liftStageOptions.get(index));
+                }
+            } else {
+                params.put("stage", liftStageOptions.get(0));
+            }
+        }
+        if (!TextUtils.isEmpty(categoryOption)) { // use for filter search
+            params.put("cat", categoryOption);
+        }
+
         JLogUtils.d("response","params="+params.toString());
         requestHttp(HTTP_METHOD.POST, "appservice/product/search", params, REQUEST_PRODUCTSEARCH);
     }
@@ -283,9 +320,9 @@ public class ProductDao extends BaseHttp {
         if (!TextUtils.isEmpty(dir)) {
             params.put("dir", dir);
         }
-        if (!TextUtils.isEmpty(keywords)) {
+        /*if (!TextUtils.isEmpty(keywords)) {
             params.put("keywords", keywords);
-        }
+        }*/
         if (!TextUtils.isEmpty(sessionKey)) {
             params.put("session_key", sessionKey);
         }

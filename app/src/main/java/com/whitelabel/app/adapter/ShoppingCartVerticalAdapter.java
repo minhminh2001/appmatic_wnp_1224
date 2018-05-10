@@ -495,10 +495,10 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
     private void gaTrackerDeleteFromCart(String name, String productId) {
         try {
             GaTrackHelper.getInstance().googleAnalyticsEvent("Cart Action",
-                    "Remove Item From Cart",
+                    "Remove FilterItem From Cart",
                     name,
                     Long.valueOf(productId));
-            JLogUtils.i("googleGA", "Remove Item From Cart");
+            JLogUtils.i("googleGA", "Remove FilterItem From Cart");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -514,7 +514,7 @@ public class ShoppingCartVerticalAdapter extends SwipeableAdapter {
 //            GaTrackHelper.getInstance().googleAnalyticsAddCart( productId, name);
             //TODO joyson may be use
 //            GaTrackHelper.getInstance().googleAnalyticsDeleteCart(context, productId, name);
-            JLogUtils.i("googleGA", "Remove Item From Cart");
+            JLogUtils.i("googleGA", "Remove FilterItem From Cart");
         } catch (Exception e) {
             e.printStackTrace();
         }

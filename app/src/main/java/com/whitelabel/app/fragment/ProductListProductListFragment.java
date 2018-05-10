@@ -21,7 +21,6 @@ import com.whitelabel.app.activity.LoginRegisterActivity;
 import com.whitelabel.app.activity.ProductListActivity;
 import com.whitelabel.app.adapter.ProductListAdapter;
 import com.whitelabel.app.WhiteLabelApplication;
-import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.callback.FragmentOnAdapterCallBack;
 import com.whitelabel.app.callback.ProductListFilterHideCallBack;
 import com.whitelabel.app.dao.ProductDao;
@@ -44,6 +43,7 @@ import com.whitelabel.app.widget.CustomXListView;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by imaginato on 2015/8/10.
@@ -89,6 +89,8 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
     private boolean mIsFirst=true;
     private String TAG = this.getClass().getSimpleName();
     public TempCategoryBean tempCategoryBean;
+    static SVRAppserviceProductSearchReturnEntity svrAppserviceProductSearchReturnEntity;
+    private long gaTrackTimeStart = 0L;
 
     @Override
     public void onAttach(Activity activity) {
@@ -185,9 +187,11 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
         switch (v.getId()){
             case R.id.iv_view_toggle:
                 toggleViewOption();
+                productListActivity.onViewToggleChanged();
                 break;
             case R.id.ll_filter:
-                productListActivity.filterSortOption(productListActivity.TYPE_FILTER);
+                //productListActivity.filterSortOption(productListActivity.TYPE_FILTER);
+                productListActivity.showFilerView();
                 break;
             case R.id.ll_sort:
                 productListActivity.filterSortOption(productListActivity.TYPE_SORT);
@@ -273,6 +277,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
                                         mFragment.get().getSearchReturnEntityFacets().setBrand_filter(facetsReturnEntity.getBrand_filter());
                                         mFragment.get().getSearchReturnEntityFacets().setModel_type_filter(facetsReturnEntity.getModel_type_filter());
                                         mFragment.get().getSearchReturnEntityFacets().setSort_filter(facetsReturnEntity.getSort_filter());
+                                        mFragment.get().getSearchReturnEntityFacets().setField_filter(facetsReturnEntity.getField_filter());
                                     }
                                 } catch (Exception ex) {
                                     JLogUtils.e(mFragment.get().TAG, "getProductListFromServer -> onSuccess", ex);
@@ -332,6 +337,10 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
         if (!isPrepared || !isVisible || mHasLoadedOnce) {
             return;
         }
+
+        // GA load speed start
+        gaTrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+
         mHasLoadedOnce=true;
         mLandingFragment= (ProductListCategoryLandingFragment) getParentFragment();
         dataHandler=new DataHandler((ProductListActivity) getActivity(),this);
@@ -491,36 +500,57 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
             limit = param.getLimit() * currentP + "";
             p = "1";
         }
+
         String order = param.getOrder();
         String dir = param.getDir();
-        String brand = "";
-        String categoryId = "";
-        if (!JDataUtils.isEmpty(param.getBrandId())) {
-            brand = param.getBrandId();
-        } else {
-            categoryId = param.getCategory_id();
-        }
-        if (!JDataUtils.isEmpty(param.getBrand())) {
-            try {
-                brand = param.getBrand();
-            } catch (Exception ex) {
-                ex.getStackTrace();
-                brand = param.getBrand();
-            }
-        }
+        String price = param.getPrice();
         String modelType = param.getModel_type();
         String q = "";
-        if (!TextUtils.isEmpty(param.getBrandName())) {
-            q = param.getBrandName();
+        String brand = "";
+        String categoryId = "";
+        String categoryOption = "";
+        List<String> brandOptions = null;
+        List<String> flavorOptions = null;
+        List<String> lifeStageOptions = null;
+
+        // filter search
+        SVRAppserviceProductSearchParameter.FilterParam filterParam = param.getFilterParam();
+        if(filterParam.isUse()){
+
+            categoryOption = filterParam.getCat();
+            brandOptions = filterParam.getBrandOptions();
+            flavorOptions = filterParam.getFlavorOptions();
+            lifeStageOptions = filterParam.getLiftStageOptions();
+
+            categoryId = "";
         }
-        String price=param.getPrice();
-        JLogUtils.d(TAG,"price："+price);
+        // General search
+        else {
+
+            if (!JDataUtils.isEmpty(param.getBrandId())) {
+                brand = param.getBrandId();
+            } else {
+                categoryId = param.getCategory_id();
+                q = "";
+            }
+            if (!JDataUtils.isEmpty(param.getBrand())) {
+                 brand = param.getBrand();
+            }
+        }
+
+        /*Aaron
+        if (!TextUtils.isEmpty(param.getVesBrand())) {
+            q = param.getVesBrand();
+        }*/
+
         //传入session是为判断产品是否被wish
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(getActivity())) {
-            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q,q, price,
-                    WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),"","category");
+            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q,"", price,
+                    WhiteLabelApplication.getAppConfiguration().getUserInfo(getActivity()).getSessionKey(),
+                    "category", categoryOption, brandOptions, flavorOptions, lifeStageOptions);
         } else {
-            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q,q, price, "","","category");
+            mProductDao.productSearch(storeId, p, limit, order, dir, brand, categoryId, modelType, q,"", price,
+                    "","category", categoryOption, brandOptions, flavorOptions, lifeStageOptions);
         }
     }
 
@@ -589,10 +619,26 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
     }
 
     @Override
+    public void onViewToggleChanged() {
+        // TODO: this class not use this mothod
+    }
+
+    @Override
     public void onSlideToTop() {
         if (cxlvProductList != null) {
             cxlvProductList.setSelection(0);
         }
+    }
+
+    @Override
+    public void onSearchFilter() {
+        searchType = SEARCH_TYPE_INIT;
+        search();
+    }
+
+    @Override
+    public SVRAppserviceProductSearchFacetsReturnEntity getFilterInfo() {
+        return getSearchReturnEntityFacets();
     }
 
     public void searchByType(int type) {
@@ -624,7 +670,6 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
                 }
                 case TYPE_INTERFACE_SUCCESS_OK: {
                     handleSuccessOK(msg);
-                    break;
                 }
             }
         }

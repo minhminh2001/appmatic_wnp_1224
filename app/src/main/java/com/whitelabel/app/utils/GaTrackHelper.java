@@ -101,28 +101,34 @@ public class GaTrackHelper {
         mTracker.setScreenName(screenName);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
-    //ga  add card
+
     public void googleAnalyticsAddCart(String id,String name){
-        Product gaProduct =new Product();
-        gaProduct.setId(id);
-        gaProduct.setName(name);
-        ProductAction productAction=new ProductAction(ProductAction.ACTION_ADD);
-        HitBuilders .ScreenViewBuilder builder=new HitBuilders.ScreenViewBuilder();
-        builder.addProduct(gaProduct).setProductAction(productAction);
+
+        Product product = new Product()
+                .setId(id)
+                .setName(name);
+
+        ProductAction productAction = new ProductAction(ProductAction.ACTION_ADD);
+        HitBuilders.ScreenViewBuilder builder = new HitBuilders.ScreenViewBuilder()
+                .addProduct(product)
+                .setProductAction(productAction);
+
         Tracker tracker= WhiteLabelApplication.getInstance().getAnalyticTracherInstance();
         tracker.setScreenName("ProductDetail--AddCart");
         tracker.send(builder.build());
-
     }
 
-
-
     public void googleAnalyticsProductDetail(String id){
-        Product product=new Product();
-        product.setId(id);
-        ProductAction productAction=new ProductAction(ProductAction.ACTION_DETAIL);
-        HitBuilders .ScreenViewBuilder builder=new HitBuilders.ScreenViewBuilder();
-        builder.addProduct(product).setProductAction(productAction);
+
+        Product product = new Product()
+                .setId(id);
+
+        ProductAction productAction = new ProductAction(ProductAction.ACTION_DETAIL);
+        HitBuilders.ScreenViewBuilder builder = new HitBuilders.ScreenViewBuilder()
+                .addImpression(product, "Product Detail")
+                .addProduct(product)
+                .setProductAction(productAction);
+
         Tracker tracker= WhiteLabelApplication.getInstance().getAnalyticTracherInstance();
         tracker.setScreenName("Product Detail Screen");
         tracker.send(builder.build());

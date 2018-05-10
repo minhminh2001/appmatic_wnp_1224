@@ -8,6 +8,7 @@ import com.whitelabel.app.data.retrofit.BaseApi;
 import com.whitelabel.app.data.retrofit.MockApi;
 import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.GOUserEntity;
+import com.whitelabel.app.model.RecentSearchKeyword;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
@@ -17,6 +18,7 @@ import com.whitelabel.app.utils.JToolUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -108,5 +110,16 @@ public class BaseManager implements IBaseManager {
     @Override
     public RemoteConfigResonseModel.RetomeConfig getConfigInfoFromLocal() {
         return cacheApi.getLocalConfigModel();
+    }
+
+    @Override
+    public List<RecentSearchKeyword> getRecentSearchKeywordFromLocal() {
+
+        return cacheApi.getRecentSearchKeywordFromLocal();
+    }
+
+    @Override
+    public void updateRecentSearchKeywordToLocal(List<RecentSearchKeyword> recentSearchKeywords) {
+        cacheApi.updateRecentSearchKeywordToLocal(recentSearchKeywords);
     }
 }

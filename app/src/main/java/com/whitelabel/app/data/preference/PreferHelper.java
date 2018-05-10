@@ -9,6 +9,7 @@ import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
+import com.whitelabel.app.model.RecentSearchKeyword;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.SVRAppServiceCustomerCountry;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
@@ -59,6 +60,9 @@ public class PreferHelper implements ICacheApi {
     private static final String TABLE_LOCAL_SHOPPING_CAR = "shopping_car";
 
     private static final String FILED_SHOPPING_CAR_LIST = "shopping_car_list";
+
+    private static final String TABLE_LOCAL_RECENT_SEARCH_KEYWORD = "local_recent_search_keyword";
+    private static final String LOCAL_RECENT_SEARCH_KEYWORD_LIST = "local_recent_search_keyword_list";
 
     public String getVersionNumber() {
         RemoteConfigResonseModel.RetomeConfig config = getLocalConfigModel();
@@ -499,5 +503,40 @@ public class PreferHelper implements ICacheApi {
     @Override
     public Observable<List<ShoppingItemLocalModel>> getShoppingListFromLocal() {
         return Observable.just(getShoppingList());
+    }
+
+    @Override
+    public List<RecentSearchKeyword> getRecentSearchKeywordFromLocal() {
+
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance()
+                .getSharedPreferences(TABLE_LOCAL_RECENT_SEARCH_KEYWORD, Activity.MODE_PRIVATE);
+        String recentSearchKeywords = sharedPreferences.getString(LOCAL_RECENT_SEARCH_KEYWORD_LIST, "");
+
+        Gson gson = new Gson();
+        List<RecentSearchKeyword> recentSearchKeyworkList = gson.fromJson(recentSearchKeywords, new TypeToken<List<RecentSearchKeyword>>(){}.getType());
+
+        return recentSearchKeyworkList;
+    }
+
+    @Override
+    public void updateRecentSearchKeywordToLocal(List<RecentSearchKeyword> recentSearchKeywords) {
+
+        SharedPreferences sharedPreferences = WhiteLabelApplication.getInstance()
+                .getSharedPreferences(TABLE_LOCAL_RECENT_SEARCH_KEYWORD, Activity.MODE_PRIVATE);
+
+        // recentSearchKeywords is null, clear LOCAL_RECENT_SEARCH_KEYWORD_LIST
+        if(recentSearchKeywords == null){
+            sharedPreferences.edit()
+                    .clear()
+                    .commit();
+            return;
+        }
+
+        Gson gson = new Gson();
+        String jsonRecentSearchKeyword = gson.toJson(recentSearchKeywords);
+
+        sharedPreferences.edit()
+                .putString(LOCAL_RECENT_SEARCH_KEYWORD_LIST, jsonRecentSearchKeyword)
+                .commit();
     }
 }

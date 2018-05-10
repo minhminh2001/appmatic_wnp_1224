@@ -1,24 +1,40 @@
 package com.whitelabel.app.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
 import com.whitelabel.app.R;
+import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.bean.OperateProductIdPrecache;
 import com.whitelabel.app.fragment.ProductListBaseFragment;
 import com.whitelabel.app.fragment.ProductListCategoryLandingFragment;
 import com.whitelabel.app.fragment.ProductListKeywordsSearchFragment;
 import com.whitelabel.app.listener.OnSingleClickListener;
 import com.whitelabel.app.model.CategoryBaseBean;
-import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductFilterSelectedItem;
+import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsFieldFilterItemReturnEntity;
+import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsFieldFilterItemReturnEntity.FilterItem;
+import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.TMPProductListListPageEntity;
 import com.whitelabel.app.model.TempCategoryBean;
@@ -26,15 +42,17 @@ import com.whitelabel.app.utils.JDataUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.widget.CustomTextView;
 import com.whitelabel.app.widget.FilterSortBottomView;
+import com.whitelabel.app.widget.FlexBoxLayout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by imagniato on 2015/7/13.
  */
 public class ProductListActivity extends com.whitelabel.app.BaseActivity implements View.OnClickListener,
-        FilterSortBottomView.FilterSortBottomViewCallBack, IFilterSortActivity {
+        CompoundButton.OnCheckedChangeListener,FilterSortBottomView.FilterSortBottomViewCallBack, IFilterSortActivity {
     public  final int TYPE_SORT = 0;
     public  final int TYPE_FILTER = 1;
 
@@ -60,6 +78,10 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     private final int TYPE_FRAGMENT_SWITCH_NONE = 0;
     private final int TYPE_FRAGMENT_SWITCH_RIGHT2LEFT = 1;
     private final int TYPE_FRAGMENT_SWITCH_LEFT2RIGHT = -1;
+    private final String FILTER_TYPE_CATEGORY = "cat";
+    private final String FILTER_TYPE_BRAND = "vesbrand";
+    private final String FILTER_TYPE_FLAVOR = "flavor";
+    private final String FILTER_TYPE_LIFT_STAGE = "stage";
     private final String TAG = "ProductListActivity";
     private final String LINK = "->";
     private final String C_L_LINK = FRAGMENT_TYPE_PRODUCTLIST_CATEGORY + LINK + FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS;
@@ -71,9 +93,6 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     protected boolean isActivityInvisible = true;
     protected boolean isActivityPaused = true;
     private int FRAGMENT_CONTAINER_ID;
-
-
-
 
     private int prevType;
     private int fragmentType;
@@ -89,9 +108,31 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     public FilterSortBottomView filterSortBottomView;
     public OperateProductIdPrecache operateProductIdPrecache;//未登录时点击了wishicon,登陆成功后主动将其添加到wishlist
     private SingleClickListener singleClickListener;
+    private DrawerLayout filterDrawerLayout;
+    private FlexBoxLayout flexboxCategory;
+    private FlexBoxLayout flexboxBrand;
+    private FlexBoxLayout flexboxFlavor;
+    private FlexBoxLayout flexboxLiftStage;
+    private Button btnFilterDone;
+    private CheckBox btnShowMoreCategory;
+    private CheckBox btnShowMoreBrand;
+    private CheckBox btnShowMoreFlavor;
+    private CheckBox btnShowMoreLiftStage;
+    private Button btnRestFilter;
+    private LinearLayout llCategoryContainer;
+    private LinearLayout llBrandContainer;
+    private LinearLayout llFlavorContainer;
+    private LinearLayout llLiftStageContainer;
+    private View categoryBottomLine;
+    private View brandBottomLine;
+    private View flavorBottomLine;
 
     private int currentFilterSortTabIndex;
     private TempCategoryBean tempCategoryBean;
+    private List<FilterItem> categoryFilterItemList = new ArrayList<>();
+    private List<FilterItem> brandFilterItemList = new ArrayList<>();
+    private List<FilterItem> flavorFilterItemList = new ArrayList<>();
+    private List<FilterItem> liftStageFilterItemList = new ArrayList<>();
 
     public boolean checkIsFinished() {
         return isActivityFinished;
@@ -165,6 +206,31 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         iv_bottom_slideto_top = (ImageView) findViewById(R.id.iv_bottom_slideto_top);
         tvSortAnimate = (TextView) findViewById(R.id.tv_sort_plus_animate);
         tvFilterAnimate = (TextView) findViewById(R.id.tv_filter_plus_animate);
+        filterDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout_filter);
+        flexboxBrand = (FlexBoxLayout)findViewById(R.id.flex_brand);
+        flexboxCategory = (FlexBoxLayout)findViewById(R.id.flex_category);
+        flexboxFlavor = (FlexBoxLayout)findViewById(R.id.flex_flavor);
+        flexboxLiftStage = (FlexBoxLayout)findViewById(R.id.flex_lift_stage);
+        btnFilterDone = (Button)findViewById(R.id.btn_done);
+        btnShowMoreCategory = (CheckBox)findViewById(R.id.cb_show_more_category);
+        btnShowMoreBrand = (CheckBox)findViewById(R.id.cb_show_more_brand);
+        btnShowMoreFlavor = (CheckBox)findViewById(R.id.cb_show_more_flavor);
+        btnShowMoreLiftStage = (CheckBox)findViewById(R.id.cb_show_more_lift_stage);
+        btnRestFilter = (Button)findViewById(R.id.btn_reset);
+        llCategoryContainer = (LinearLayout)findViewById(R.id.category_container);
+        llBrandContainer = (LinearLayout)findViewById(R.id.brand_container);
+        llFlavorContainer = (LinearLayout)findViewById(R.id.flavor_container);
+        llLiftStageContainer = (LinearLayout)findViewById(R.id.lift_stage_container);
+        categoryBottomLine = (View)findViewById(R.id.category_bottom_line);
+        brandBottomLine = (View)findViewById(R.id.brand_bottom_line);
+        flavorBottomLine = (View)findViewById(R.id.flavor_bottom_line);
+
+        btnFilterDone.setOnClickListener(this);
+        btnRestFilter.setOnClickListener(this);
+        btnShowMoreCategory.setOnCheckedChangeListener(this);
+        btnShowMoreBrand.setOnCheckedChangeListener(this);
+        btnShowMoreFlavor.setOnCheckedChangeListener(this);
+        btnShowMoreLiftStage.setOnCheckedChangeListener(this);
         iv_bottom_slideto_top.setOnClickListener(this);
         singleClickListener = new SingleClickListener();
         rlBottomBarFilter.setOnClickListener(singleClickListener);
@@ -202,14 +268,14 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
             }
         }
 
+        initFilterDrawerLayout();
+
         filterSortBottomView = new FilterSortBottomView();
         filterSortBottomView.initView(rlBottomBar, iv_bottom_slideto_top, this);
         mAttachedFragmentList = new ArrayList<>();
         fragmentSequenceArray = new ArrayList<>();
         initFragment();
         switchFragment(-1, fragmentType, tmpProductListListPageEntity);
-
-        ;
     }
 
 
@@ -241,6 +307,545 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
 //            AnimUtil.animatePlusSign(tvSortAnimate, false, this);
 //        }
 //    }
+
+    private void initFilterDrawerLayout(){
+        btnRestFilter.setTextColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color());
+
+        filterDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        filterDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {}
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                filterDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                filterDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {}
+        });
+
+        filterDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {}
+
+            @Override
+            public void onDrawerOpened(View drawerView) {}
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {}
+        });
+    }
+
+    private void updateShowMoreButtonForFilter(){
+        flexboxCategory.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                flexboxCategory.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                if(flexboxCategory.getRowCount() <= 0){
+                    llCategoryContainer.setVisibility(View.GONE);
+                } else {
+                    llCategoryContainer.setVisibility(View.VISIBLE);
+                }
+
+                if(flexboxCategory.getRowCount() <= 2) {
+                    btnShowMoreCategory.setVisibility(View.GONE);
+                }else{
+                    btnShowMoreCategory.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        flexboxBrand.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener(){
+            @Override
+            public void onGlobalLayout() {
+                flexboxBrand.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                if(flexboxBrand.getRowCount() <= 0){
+                    llBrandContainer.setVisibility(View.GONE);
+                } else {
+                    llBrandContainer.setVisibility(View.VISIBLE);
+                }
+
+                if(flexboxBrand.getRowCount() <= 2){
+                    btnShowMoreBrand.setVisibility(View.GONE);
+                } else{
+                    btnShowMoreBrand.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        flexboxFlavor.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                flexboxFlavor.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                if(flexboxFlavor.getRowCount() <= 0){
+                    llFlavorContainer.setVisibility(View.GONE);
+                } else {
+                    llFlavorContainer.setVisibility(View.VISIBLE);
+                }
+
+                if(flexboxFlavor.getRowCount() <= 2) {
+                    btnShowMoreFlavor.setVisibility(View.GONE);
+                } else {
+                    btnShowMoreFlavor.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        flexboxLiftStage.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                flexboxLiftStage.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                if(flexboxLiftStage.getRowCount() <= 0){
+                    llLiftStageContainer.setVisibility(View.GONE);
+                } else{
+                    llLiftStageContainer.setVisibility(View.VISIBLE);
+                }
+
+                if(flexboxLiftStage.getRowCount() <= 2) {
+                    btnShowMoreLiftStage.setVisibility(View.GONE);
+                } else{
+                    btnShowMoreLiftStage.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+    private void fillFilterData(){
+
+        SVRAppserviceProductSearchFacetsReturnEntity searchFacetsReturnEntity = mCurrentFragment.getFilterInfo();
+        ArrayList<SVRAppserviceProductSearchFacetsFieldFilterItemReturnEntity> filterAllItems = searchFacetsReturnEntity.getField_filter();
+        for(int i = 0; i < filterAllItems.size(); i++){
+            SVRAppserviceProductSearchFacetsFieldFilterItemReturnEntity item = filterAllItems.get(i);
+            if(item.getKey().equalsIgnoreCase(FILTER_TYPE_CATEGORY)){
+                categoryFilterItemList.clear();
+                for(FilterItem categoryItem : item.getValue()){
+                    categoryFilterItemList.add(categoryItem);
+                }
+            } else if(item.getKey().equalsIgnoreCase(FILTER_TYPE_BRAND)){
+                brandFilterItemList.clear();
+                for(FilterItem categoryItem : item.getValue()){
+                    brandFilterItemList.add(categoryItem);
+                }
+            } else if(item.getKey().equalsIgnoreCase(FILTER_TYPE_FLAVOR)){
+                flavorFilterItemList.clear();
+                for(FilterItem flavorItem : item.getValue()){
+                    flavorFilterItemList.add(flavorItem);
+                }
+            } else if(item.getKey().equalsIgnoreCase(FILTER_TYPE_LIFT_STAGE)){
+                liftStageFilterItemList.clear();
+                for(FilterItem liftStageItem : item.getValue()){
+                    liftStageFilterItemList.add(liftStageItem);
+                }
+            }
+        }
+    }
+
+    private void updateFilterView(){
+
+        SVRAppserviceProductFilterSelectedItem selectedItem = getSelectedItemForFilter();
+
+        flexboxCategory.removeAllViews();
+        for(FilterItem categoryItem : categoryFilterItemList){
+            CheckBox cb = (CheckBox) getLayoutInflater().inflate(R.layout.layout_filter_sort_checkbox, null);
+            cb.setTextColor(getTextColorForFilterItem());
+            cb.setBackground(getBackgrondForFilterItem());
+            cb.setText(categoryItem.getLabel());
+            cb.setTag(categoryItem.getValue());
+            flexboxCategory.addView(cb);
+
+            if(categoryItem.getValue().equalsIgnoreCase(selectedItem.getCategoryOption())){
+                cb.setChecked(true);
+            }
+
+            cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                    int childCount = flexboxCategory.getChildCount();
+                    for(int index = 0; index < childCount; index++){
+                        CheckBox cb = (CheckBox) flexboxCategory.getChildAt(index);
+                        cb.setChecked(false);
+                    }
+                    buttonView.setChecked(isChecked);
+
+                    execFilter();
+                }
+            });
+        }
+
+        flexboxBrand.removeAllViews();
+        for(FilterItem brandItem : brandFilterItemList){
+            CheckBox cb = (CheckBox) getLayoutInflater().inflate(R.layout.layout_filter_sort_checkbox, null);
+            cb.setTextColor(getTextColorForFilterItem());
+            cb.setBackground(getBackgrondForFilterItem());
+            cb.setText(brandItem.getLabel());
+            cb.setTag(brandItem.getValue());
+            flexboxBrand.addView(cb);
+
+            List<String> selectedBrandOptions = selectedItem.getBrandOptions();
+            for(int index = 0; index < selectedBrandOptions.size(); index++){
+                if(brandItem.getValue().equalsIgnoreCase(selectedBrandOptions.get(index))){
+                    cb.setChecked(true);
+                }
+            }
+
+            cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    execFilter();
+                }
+            });
+        }
+
+        flexboxFlavor.removeAllViews();
+        for(FilterItem flavorItem : flavorFilterItemList){
+            CheckBox cb = (CheckBox) getLayoutInflater().inflate(R.layout.layout_filter_sort_checkbox, null);
+            cb.setTextColor(getTextColorForFilterItem());
+            cb.setBackground(getBackgrondForFilterItem());
+            cb.setText(flavorItem.getLabel());
+            cb.setTag(flavorItem.getValue());
+            flexboxFlavor.addView(cb);
+
+            List<String> selectedFlavorOptions = selectedItem.getFlavorOptions();
+            for(int index = 0; index < selectedFlavorOptions.size(); index++){
+                if(flavorItem.getValue().equalsIgnoreCase(selectedFlavorOptions.get(index))){
+                    cb.setChecked(true);
+                }
+            }
+
+            cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    execFilter();
+                }
+            });
+        }
+
+        flexboxLiftStage.removeAllViews();
+        for(FilterItem liftStageItem : liftStageFilterItemList){
+            CheckBox cb = (CheckBox) getLayoutInflater().inflate(R.layout.layout_filter_sort_checkbox, null);
+            cb.setTextColor(getTextColorForFilterItem());
+            cb.setBackground(getBackgrondForFilterItem());
+            cb.setText(liftStageItem.getLabel());
+            cb.setTag(liftStageItem.getValue());
+            flexboxLiftStage.addView(cb);
+
+            List<String> selectedStageOptions = selectedItem.getLifeStageOptions();
+            for(int index = 0; index < selectedStageOptions.size(); index++){
+                if(liftStageItem.getValue().equalsIgnoreCase(selectedStageOptions.get(index))){
+                    cb.setChecked(true);
+                }
+            }
+
+            cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    execFilter();
+                }
+            });
+        }
+
+        // hide category bottom line
+        if(flexboxBrand.getChildCount() == 0
+                &&flexboxFlavor.getChildCount() == 0
+                &&flexboxLiftStage.getChildCount() == 0){
+            categoryBottomLine.setVisibility(View.GONE);
+        } else {
+            categoryBottomLine.setVisibility(View.VISIBLE);
+        }
+
+        // hide brand bottom line
+        if(flexboxFlavor.getChildCount() == 0
+                &&flexboxLiftStage.getChildCount() == 0){
+            brandBottomLine.setVisibility(View.GONE);
+        } else {
+            brandBottomLine.setVisibility(View.VISIBLE);
+        }
+
+        // hide flavor bottom line
+        if(flexboxLiftStage.getChildCount() == 0){
+            flavorBottomLine.setVisibility(View.GONE);
+        } else {
+            flavorBottomLine.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    private void clearCategoryOptionForFilter(boolean isRemoveListener){
+
+        for(int i = 0; i < flexboxCategory.getChildCount(); i++){
+            CheckBox cb = (CheckBox)flexboxCategory.getChildAt(i);
+            if(isRemoveListener){
+                cb.setOnCheckedChangeListener(null);
+            }
+
+            if(cb.isChecked()){
+                cb.setChecked(false);
+                break;
+            }
+        }
+    }
+
+    private void clearBrandOptionForFilter(boolean isRemoveListener){
+
+        for(int i = 0; i < flexboxBrand.getChildCount(); i++){
+            CheckBox cb = (CheckBox)flexboxBrand.getChildAt(i);
+            if(isRemoveListener){
+                cb.setOnCheckedChangeListener(null);
+            }
+
+            if(cb.isChecked()){
+                cb.setChecked(false);
+            }
+        }
+    }
+
+    private void clearFlavorOptionForFilter(boolean isRemoveListener){
+
+        for(int i = 0; i < flexboxFlavor.getChildCount(); i++){
+            CheckBox cb = (CheckBox)flexboxFlavor.getChildAt(i);
+            if(isRemoveListener){
+                cb.setOnCheckedChangeListener(null);
+            }
+
+            if(cb.isChecked()){
+                cb.setChecked(false);
+            }
+        }
+    }
+
+    private void clearLiftOptionForFilter(boolean isRemoveListener){
+
+        for(int i = 0; i < flexboxLiftStage.getChildCount(); i++){
+            CheckBox cb = (CheckBox)flexboxLiftStage.getChildAt(i);
+            if(isRemoveListener){
+                cb.setOnCheckedChangeListener(null);
+            }
+
+            if(cb.isChecked()){
+                cb.setChecked(false);
+            }
+        }
+    }
+
+    private SVRAppserviceProductSearchParameter getSearchParamsForFilter(){
+        int parameterIndex = -1;
+        int fragmentType = 0;
+
+        if(mCurrentFragment instanceof ProductListKeywordsSearchFragment){
+            fragmentType = FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS;
+        } else if(mCurrentFragment instanceof ProductListCategoryLandingFragment){
+            fragmentType = FRAGMENT_TYPE_PRODUCTLIST_CATEGORY;
+            parameterIndex = ((ProductListCategoryLandingFragment)mCurrentFragment).getCurrentPagePosition();
+        }
+
+        return tempCategoryBean.getSVRAppserviceProductSearchParameterById(fragmentType, parameterIndex);
+    }
+
+    private SVRAppserviceProductFilterSelectedItem getSelectedItemForFilter(){
+        int parameterIndex = -1;
+        int fragmentType = 0;
+
+        if(mCurrentFragment instanceof ProductListKeywordsSearchFragment){
+            fragmentType = FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS;
+        } else if(mCurrentFragment instanceof ProductListCategoryLandingFragment){
+            fragmentType = FRAGMENT_TYPE_PRODUCTLIST_CATEGORY;
+            parameterIndex = ((ProductListCategoryLandingFragment)mCurrentFragment).getCurrentPagePosition();
+        }
+
+        return tempCategoryBean.getSVRAppserviceProductFilterSelectedItemById(fragmentType, parameterIndex);
+    }
+
+    private String getCategoryOptionForFilter(){
+        SVRAppserviceProductFilterSelectedItem selectedItem = getSelectedItemForFilter();
+        selectedItem.clearCategoryOption();
+
+        String categoryId = null;
+        for(int i = 0; i < flexboxCategory.getChildCount(); i++){
+            CheckBox cb = (CheckBox)flexboxCategory.getChildAt(i);
+            if(cb.isChecked()){
+                categoryId = (String)cb.getTag();
+                selectedItem.setCategoryOption(categoryId);
+                break;
+            }
+        }
+
+        return categoryId;
+    }
+
+    private List<String> getBrandOptionForFilter(){
+
+        SVRAppserviceProductFilterSelectedItem selectedItem = getSelectedItemForFilter();
+        selectedItem.clearBrandOptions();
+
+        List<String> brandOptions = null;
+        for(int i = 0; i < flexboxBrand.getChildCount(); i++){
+            CheckBox cb = (CheckBox)flexboxBrand.getChildAt(i);
+            if(cb.isChecked()){
+                if(brandOptions == null){
+                    brandOptions = new ArrayList<>();
+                }
+                brandOptions.add((String)cb.getTag());
+                selectedItem.getBrandOptions().add((String)cb.getTag());
+            }
+        }
+
+        return brandOptions;
+    }
+
+    private List<String> getFlavorOptionForFilter(){
+
+        SVRAppserviceProductFilterSelectedItem selectedItem = getSelectedItemForFilter();
+        selectedItem.clearFlavorOptions();
+
+        List<String> flavorOptions = null;
+        for(int i = 0; i < flexboxFlavor.getChildCount(); i++){
+            CheckBox cb = (CheckBox)flexboxFlavor.getChildAt(i);
+            if(cb.isChecked()){
+                if(flavorOptions == null){
+                    flavorOptions = new ArrayList<>();
+                }
+                flavorOptions.add((String)cb.getTag());
+                selectedItem.getFlavorOptions().add((String)cb.getTag());
+            }
+        }
+
+        return flavorOptions;
+    }
+
+    private List<String> getLiftStageOptionForFilter(){
+
+        SVRAppserviceProductFilterSelectedItem selectedItem = getSelectedItemForFilter();
+        selectedItem.clearLiftStageOptions();
+
+        List<String> liftStageOptions = null;
+        for(int i = 0; i < flexboxLiftStage.getChildCount(); i++){
+            CheckBox cb = (CheckBox)flexboxLiftStage.getChildAt(i);
+            if(cb.isChecked()){
+                if(liftStageOptions == null){
+                    liftStageOptions = new ArrayList<>();
+                }
+                liftStageOptions.add((String)cb.getTag());
+                selectedItem.getLifeStageOptions().add((String)cb.getTag());
+            }
+        }
+
+        return liftStageOptions;
+    }
+
+    private void execFilter(){
+
+        SVRAppserviceProductSearchParameter searchParam = getSearchParamsForFilter();
+        SVRAppserviceProductSearchParameter.FilterParam filterParam = searchParam.getFilterParam();
+
+        // clear filter param
+        filterParam.clear();
+
+        // use for search by category
+        String categoryId;
+        if(!TextUtils.isEmpty(searchParam.getCategory_id())
+                && (getBrandOptionForFilter() != null
+                || getFlavorOptionForFilter() != null
+                || getLiftStageOptionForFilter() != null)){
+            categoryId = searchParam.getCategory_id();
+        } else {
+            categoryId = getCategoryOptionForFilter();
+        }
+
+        // use for search by brand
+        List<String> brandOptions = null;
+        if(!TextUtils.isEmpty(searchParam.getBrandId())
+                && (getCategoryOptionForFilter() != null
+                || getFlavorOptionForFilter() != null
+                || getLiftStageOptionForFilter() != null)){
+            brandOptions = new ArrayList<>();
+            brandOptions.add(searchParam.getBrandName());
+        } else {
+            brandOptions = getBrandOptionForFilter();
+        }
+
+        filterParam.setCat(categoryId);
+        filterParam.setBrandOptions(brandOptions);
+        filterParam.setFlavorOptions(getFlavorOptionForFilter());
+        filterParam.setLiftStageOptions(getLiftStageOptionForFilter());
+
+        // exec search for filter
+        mCurrentFragment.onSearchFilter();
+    }
+
+    private ColorStateList getTextColorForFilterItem(){
+        int checkedColor = WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color();
+        int unCheckedColor = ContextCompat.getColor(this, R.color.black);
+        int[] colors = new int[]{unCheckedColor, checkedColor, unCheckedColor};
+
+        int [][]statelist = new int[3][];
+        statelist[0] = new int[]{-android.R.attr.state_checked};
+        statelist[1] = new int[]{android.R.attr.state_checked};
+        statelist[2] = new int[]{};
+
+        return new ColorStateList(statelist, colors);
+    }
+
+    private Drawable getBackgrondForFilterItem(){
+
+        int strokeWidth = 1;
+        int roundRadius = 60;
+        int strokeColor = ContextCompat.getColor(this, R.color.greyCCCCCC);
+        int fillColor = ContextCompat.getColor(this, R.color.white);//内部填充颜色
+
+        GradientDrawable unCheckedBg = new GradientDrawable();
+        unCheckedBg.setColor(fillColor);
+        unCheckedBg.setCornerRadius(roundRadius);
+        unCheckedBg.setStroke(strokeWidth, strokeColor);
+
+        strokeColor = WhiteLabelApplication.getAppConfiguration().getThemeConfig().getTheme_color();
+        GradientDrawable checkedBg = new GradientDrawable();
+        checkedBg.setColor(fillColor);
+        checkedBg.setCornerRadius(roundRadius);
+        checkedBg.setStroke(strokeWidth, strokeColor);
+
+        StateListDrawable stateListDrawable = new StateListDrawable();
+        stateListDrawable.addState(new int[]{-android.R.attr.state_checked}, unCheckedBg);
+        stateListDrawable.addState(new int[]{android.R.attr.state_checked}, checkedBg);
+
+        return stateListDrawable;
+    }
+
+    public void showFilerView(){
+
+        mCurrentFragment.onFilterWidgetClick(true);
+
+        // fill filter data from ProductListkeywordFragment or ProductListCategoryLandingFragment
+        fillFilterData();
+
+        // create filter item
+        updateFilterView();
+
+        // update display state of show more button
+        updateShowMoreButtonForFilter();
+
+        // show filter view
+        filterDrawerLayout.openDrawer(Gravity.END);
+    }
+
+    public void onViewToggleChanged(){
+        mCurrentFragment.onViewToggleChanged();
+    }
 
     @Override
     protected void onStart() {
@@ -366,14 +971,64 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
 
     @Override
     public void onClick(View view) {
+
+        // click filter done button
+        if(view.getId() == R.id.btn_done){
+            //execFilter();
+            filterDrawerLayout.closeDrawer(Gravity.END);
+        }
+
+        else if(view.getId() == R.id.btn_reset){
+            clearCategoryOptionForFilter(true);
+            clearBrandOptionForFilter(true);
+            clearFlavorOptionForFilter(true);
+            clearLiftOptionForFilter(true);
+
+            // clear filter
+            SVRAppserviceProductSearchParameter searchParam = getSearchParamsForFilter();
+            SVRAppserviceProductSearchParameter.FilterParam filterParam = searchParam.getFilterParam();
+            filterParam.clear();
+
+            execFilter();
+            //filterDrawerLayout.closeDrawer(Gravity.END);
+        }
+
         if (!filterSortBottomView.showFilter) {
             //如果现在filter正是隐藏的,不执行 setOnClickListener(null);
             return;
         }
+
         if (view.getId() == R.id.iv_bottom_slideto_top) {
             mCurrentFragment.onSlideToTop();
         }
     }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch(buttonView.getId()){
+            case R.id.cb_show_more_category:
+                btnShowMoreCategory.setText(isChecked ?
+                getString(R.string.filter_show_less) : getString(R.string.filter_show_more));
+                flexboxCategory.showAll(isChecked);
+                break;
+            case R.id.cb_show_more_brand:
+                btnShowMoreBrand.setText(isChecked ?
+                        getString(R.string.filter_show_less) : getString(R.string.filter_show_more));
+                flexboxBrand.showAll(isChecked);
+                break;
+            case R.id.cb_show_more_flavor:
+                btnShowMoreFlavor.setText(isChecked ?
+                        getString(R.string.filter_show_less) : getString(R.string.filter_show_more));
+                flexboxFlavor.showAll(isChecked);
+                break;
+            case R.id.cb_show_more_lift_stage:
+                btnShowMoreLiftStage.setText(isChecked ?
+                        getString(R.string.filter_show_less) : getString(R.string.filter_show_more));
+                flexboxLiftStage.showAll(isChecked);
+                break;
+        }
+    }
+
     public void filterSortOption(int type) {
         if(type == TYPE_SORT){
             if (mCurrentFragment != null) {
@@ -391,7 +1046,12 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
 
     @Override
     public int getCurrentFilterSortTabIndex() {
-        return tempCategoryBean.getCurrentFilterSortTabIndex();
+        return currentFilterSortTabIndex;
+    }
+
+    public void resetCurrentFilterSortTabIndex() {
+        currentFilterSortTabIndex = tempCategoryBean.TABBAR_INDEX_NONE;
+        tempCategoryBean.resetCurrentFilterSortTabIndex();
     }
 
     private class SingleClickListener extends OnSingleClickListener {

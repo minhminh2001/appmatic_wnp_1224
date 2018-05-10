@@ -5,6 +5,7 @@ import com.whitelabel.app.model.AddressBook;
 import com.whitelabel.app.model.CategoryBaseBean;
 import com.whitelabel.app.model.CategoryDetailNewModel;
 import com.whitelabel.app.model.GOUserEntity;
+import com.whitelabel.app.model.RecentSearchKeyword;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.SVRAppServiceCustomerCountry;
 import com.whitelabel.app.model.SVRAppserviceCatalogSearchReturnEntity;
@@ -86,4 +87,8 @@ public interface ICacheApi {
     Observable<Boolean> clearShoppingItem();
 
     int getShoppingListSizeFromLocal();
+
+    List<RecentSearchKeyword> getRecentSearchKeywordFromLocal();
+
+    void updateRecentSearchKeywordToLocal(List<RecentSearchKeyword> recentSearchKeywords);
 }

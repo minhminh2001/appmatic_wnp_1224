@@ -12,6 +12,7 @@ public class SVRAppserviceProductSearchFacetsReturnEntity implements Serializabl
     private ArrayList<SVRAppserviceProductSearchFacetsBrandItemReturnEntity> brand_filter;
     private ArrayList<SVRAppserviceProductSearchFacetsModelReturnEntity> model_type_filter;
     private ArrayList<SVRAppserviceProductSearchFacetsSortItemReturnEntity> sort_filter;
+    private ArrayList<SVRAppserviceProductSearchFacetsFieldFilterItemReturnEntity> field_filter;
 
     public ArrayList<SVRAppserviceProductSearchFacetsCategoryItemReturnEntity> getCategory_filter() {
         return category_filter;
@@ -51,5 +52,13 @@ public class SVRAppserviceProductSearchFacetsReturnEntity implements Serializabl
 
     public void setSort_filter(ArrayList<SVRAppserviceProductSearchFacetsSortItemReturnEntity> sort_filter) {
         this.sort_filter = sort_filter;
+    }
+
+    public ArrayList<SVRAppserviceProductSearchFacetsFieldFilterItemReturnEntity> getField_filter() {
+        return field_filter;
+    }
+
+    public void setField_filter(ArrayList<SVRAppserviceProductSearchFacetsFieldFilterItemReturnEntity> field_filter) {
+        this.field_filter = field_filter;
     }
 }

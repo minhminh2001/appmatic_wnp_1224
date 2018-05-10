@@ -76,4 +76,13 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@id/vHeaderCategoryDivider"
         android:visibility="gone"/>
+
+    <FrameLayout
+        android:id="@+id/fl_sort_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ctpiCategoryList"
+        android:layout_marginTop="40dp">
+
+    </FrameLayout>
 </RelativeLayout>

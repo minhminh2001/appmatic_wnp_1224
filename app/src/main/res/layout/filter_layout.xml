@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="end"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="@string/filter_title"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/btn_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="@string/global_picker_size_done"
+            android:textColor="@color/black"
+            android:background="@color/white"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/btn_done"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/black2c"/>
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_title"
+        android:layout_above="@+id/btn_reset"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/category_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/filter_category"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+
+                <com.whitelabel.app.widget.FlexBoxLayout
+                    android:id="@+id/flex_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp">
+
+                </com.whitelabel.app.widget.FlexBoxLayout>
+
+                <CheckBox
+                    android:id="@+id/cb_show_more_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:button="@null"
+                    android:drawableRight="@drawable/selector_filter_show_more"
+                    android:drawablePadding="8dp"
+                    android:text="@string/filter_show_more"
+                    android:textColor="@color/transparent5000"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:id="@+id/category_bottom_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black2c"/>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/brand_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/filter_brand"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+                <com.whitelabel.app.widget.FlexBoxLayout
+                    android:id="@+id/flex_brand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp">
+
+                </com.whitelabel.app.widget.FlexBoxLayout>
+
+                <CheckBox
+                    android:id="@+id/cb_show_more_brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:button="@null"
+                    android:drawableRight="@drawable/selector_filter_show_more"
+                    android:drawablePadding="8dp"
+                    android:text="@string/filter_show_more"
+                    android:textColor="@color/transparent5000"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:id="@+id/brand_bottom_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black2c"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/flavor_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/filter_flavor"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+                <com.whitelabel.app.widget.FlexBoxLayout
+                    android:id="@+id/flex_flavor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp">
+
+                </com.whitelabel.app.widget.FlexBoxLayout>
+
+                <CheckBox
+                    android:id="@+id/cb_show_more_flavor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:button="@null"
+                    android:drawableRight="@drawable/selector_filter_show_more"
+                    android:drawablePadding="8dp"
+                    android:textColor="@color/transparent5000"
+                    android:text="@string/filter_show_more"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:id="@+id/flavor_bottom_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black2c"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lift_stage_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/filter_life_stage"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+                <com.whitelabel.app.widget.FlexBoxLayout
+                    android:id="@+id/flex_lift_stage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp">
+
+                </com.whitelabel.app.widget.FlexBoxLayout>
+
+                <CheckBox
+                    android:id="@+id/cb_show_more_lift_stage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:button="@null"
+                    android:drawableRight="@drawable/selector_filter_show_more"
+                    android:drawablePadding="8dp"
+                    android:text="@string/filter_show_more"
+                    android:textColor="@color/transparent5000"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/btn_reset"
+        android:background="@color/black2c"/>
+
+    <Button
+        android:id="@+id/btn_reset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:text="@string/filter_btn_reset"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+</RelativeLayout>
