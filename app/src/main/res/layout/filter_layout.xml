@@ -91,6 +91,7 @@
                     android:textSize="16sp"/>
 
                 <View
+                    android:id="@+id/category_bottom_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="10dp"
@@ -139,6 +140,7 @@
                     android:textSize="16sp"/>
 
                 <View
+                    android:id="@+id/brand_bottom_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="10dp"
@@ -184,6 +186,7 @@
                     android:textSize="16sp"/>
 
                 <View
+                    android:id="@+id/flavor_bottom_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="10dp"

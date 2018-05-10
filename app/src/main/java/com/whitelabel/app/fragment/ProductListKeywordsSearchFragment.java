@@ -165,6 +165,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     private View sortView;
     private String oldSearchKeyword = "";   // use for search keyword
     private String oldBrandId = ""; // use for shop by brand
+    private boolean isSuggestionSearch = false;
 
 
     @Override
@@ -253,10 +254,18 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     public void onRecyclerItemClick(SearchFilterResponse.SuggestsBean.ItemsBean itemsBean) {
         int type = itemsBean.getType();
         setSearchType(SEARCH_TYPE_INIT);
+        isSuggestionSearch = true;
+
         //reset search data
         tempCategoryBean.getSVRAppserviceProductSearchParameterById(FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setBrandId("");
         tempCategoryBean.getSVRAppserviceProductSearchParameterById(FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setCategory_id("");
         tempCategoryBean.getSVRAppserviceProductSearchParameterById(FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1).setQ("");
+
+        // clear filter param
+        tempCategoryBean.getSVRAppserviceProductSearchParameterById(FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1)
+                .getFilterParam()
+                .clear();
+
         switch (type){
             case SEARCH_GETSUGGEST_PRODUCT_DETAIL:
                 Intent it = new Intent(productListActivity, ProductDetailActivity.class);
@@ -369,13 +378,16 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                                     String currentSearchKeyword = fragment.getSearchEditText();
                                     String currentBrandId = fragment.brandId == null ? "" : fragment.brandId;
                                     if(!currentSearchKeyword.equalsIgnoreCase(fragment.oldSearchKeyword)
-                                            || !currentBrandId.equalsIgnoreCase(fragment.oldBrandId)) {
+                                            || !currentBrandId.equalsIgnoreCase(fragment.oldBrandId)
+                                            || fragment.isSuggestionSearch) {
                                         fragment.oldSearchKeyword = currentSearchKeyword;
                                         fragment.oldBrandId = currentBrandId;
+                                        fragment.isSuggestionSearch = false;
                                         fragment.getSearchReturnEntityFacets().setField_filter(facetsReturnEntity.getField_filter());
 
                                         // clear selected item for filter
                                         fragment.tempCategoryBean.clearSVRAppserviceProductFilterSelectedItemById(FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1);
+
                                     }
                                 }
                             } catch (Exception ex) {
@@ -639,6 +651,12 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 }
                 //if (EditorInfo.IME_ACTION_SEARCH == actionId||eventKeyCode==KeyEvent.KEYCODE_ENTER) {
                 if (eventKeyCode == KeyEvent.KEYCODE_ENTER) {
+
+                    // clear filter param
+                    tempCategoryBean.getSVRAppserviceProductSearchParameterById(FRAGMENT_TYPE_PRODUCTLIST_KEYWORDS, -1)
+                            .getFilterParam()
+                            .clear();
+
                     onSubmitKeyWord();
                 }
                 return false;
@@ -1603,7 +1621,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                 itemsBean.setName(fragment.getSearchEditText());
                 fragment.saveSearchKeyword(itemsBean);
                 // hide recent search keyword view
-                //fragment.showRecentSearchView(false);
+                fragment.showRecentSearchView(false);
 
                 fragment.productItemEntityArrayList.clear();
                 fragment.productListAdapter.notifyDataSetChanged();
@@ -1685,6 +1703,7 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                     JLogUtils.e(fragment.TAG, "handleSuccessOK", ex);
                     ex.printStackTrace();
                 }
+                fragment.rlNodata.setVisibility(View.GONE);
                 fragment.cxlvProductList.setVisibility(View.VISIBLE);
                 fragment.productItemEntityArrayList.clear();
                 fragment.productListAdapter.notifyDataSetChanged();

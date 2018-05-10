@@ -276,7 +276,8 @@ public class ProductDao extends BaseHttp {
                 for (int index = 0; index < brandOptions.size(); index++) {
                     params.put("vesbrand[" + index + "]", brandOptions.get(index));
                 }
-            } else {
+            } else if(brandOptions.get(0) != null) {
+
                 params.put("vesbrand", brandOptions.get(0));
             }
         }
@@ -319,9 +320,9 @@ public class ProductDao extends BaseHttp {
         if (!TextUtils.isEmpty(dir)) {
             params.put("dir", dir);
         }
-        if (!TextUtils.isEmpty(keywords)) {
+        /*if (!TextUtils.isEmpty(keywords)) {
             params.put("keywords", keywords);
-        }
+        }*/
         if (!TextUtils.isEmpty(sessionKey)) {
             params.put("session_key", sessionKey);
         }

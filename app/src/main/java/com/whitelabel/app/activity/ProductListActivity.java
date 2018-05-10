@@ -123,6 +123,9 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
     private LinearLayout llBrandContainer;
     private LinearLayout llFlavorContainer;
     private LinearLayout llLiftStageContainer;
+    private View categoryBottomLine;
+    private View brandBottomLine;
+    private View flavorBottomLine;
 
     private int currentFilterSortTabIndex;
     private TempCategoryBean tempCategoryBean;
@@ -218,6 +221,9 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         llBrandContainer = (LinearLayout)findViewById(R.id.brand_container);
         llFlavorContainer = (LinearLayout)findViewById(R.id.flavor_container);
         llLiftStageContainer = (LinearLayout)findViewById(R.id.lift_stage_container);
+        categoryBottomLine = (View)findViewById(R.id.category_bottom_line);
+        brandBottomLine = (View)findViewById(R.id.brand_bottom_line);
+        flavorBottomLine = (View)findViewById(R.id.flavor_bottom_line);
 
         btnFilterDone.setOnClickListener(this);
         btnRestFilter.setOnClickListener(this);
@@ -334,10 +340,7 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
             @Override
             public void onDrawerClosed(View drawerView) {
 
-                // clear filter
-                SVRAppserviceProductSearchParameter searchParam = getSearchParamsForFilter();
-                SVRAppserviceProductSearchParameter.FilterParam filterParam = searchParam.getFilterParam();
-                filterParam.clear();
+
             }
 
             @Override
@@ -556,13 +559,41 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
                 }
             });
         }
+
+        // hide category bottom line
+        if(flexboxBrand.getChildCount() == 0
+                &&flexboxFlavor.getChildCount() == 0
+                &&flexboxLiftStage.getChildCount() == 0){
+            categoryBottomLine.setVisibility(View.GONE);
+        } else {
+            categoryBottomLine.setVisibility(View.VISIBLE);
+        }
+
+        // hide brand bottom line
+        if(flexboxFlavor.getChildCount() == 0
+                &&flexboxLiftStage.getChildCount() == 0){
+            brandBottomLine.setVisibility(View.GONE);
+        } else {
+            brandBottomLine.setVisibility(View.VISIBLE);
+        }
+
+        // hide flavor bottom line
+        if(flexboxLiftStage.getChildCount() == 0){
+            flavorBottomLine.setVisibility(View.GONE);
+        } else {
+            flavorBottomLine.setVisibility(View.VISIBLE);
+        }
     }
 
 
-    private void clearCategoryOptionForFilter(){
+    private void clearCategoryOptionForFilter(boolean isRemoveListener){
 
         for(int i = 0; i < flexboxCategory.getChildCount(); i++){
             CheckBox cb = (CheckBox)flexboxCategory.getChildAt(i);
+            if(isRemoveListener){
+                cb.setOnCheckedChangeListener(null);
+            }
+
             if(cb.isChecked()){
                 cb.setChecked(false);
                 break;
@@ -570,30 +601,42 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         }
     }
 
-    private void clearBrandOptionForFilter(){
+    private void clearBrandOptionForFilter(boolean isRemoveListener){
 
         for(int i = 0; i < flexboxBrand.getChildCount(); i++){
             CheckBox cb = (CheckBox)flexboxBrand.getChildAt(i);
+            if(isRemoveListener){
+                cb.setOnCheckedChangeListener(null);
+            }
+
             if(cb.isChecked()){
                 cb.setChecked(false);
             }
         }
     }
 
-    private void clearFlavorOptionForFilter(){
+    private void clearFlavorOptionForFilter(boolean isRemoveListener){
 
         for(int i = 0; i < flexboxFlavor.getChildCount(); i++){
             CheckBox cb = (CheckBox)flexboxFlavor.getChildAt(i);
+            if(isRemoveListener){
+                cb.setOnCheckedChangeListener(null);
+            }
+
             if(cb.isChecked()){
                 cb.setChecked(false);
             }
         }
     }
 
-    private void clearLiftOptionForFilter(){
+    private void clearLiftOptionForFilter(boolean isRemoveListener){
 
         for(int i = 0; i < flexboxLiftStage.getChildCount(); i++){
             CheckBox cb = (CheckBox)flexboxLiftStage.getChildAt(i);
+            if(isRemoveListener){
+                cb.setOnCheckedChangeListener(null);
+            }
+
             if(cb.isChecked()){
                 cb.setChecked(false);
             }
@@ -936,12 +979,17 @@ public class ProductListActivity extends com.whitelabel.app.BaseActivity impleme
         }
 
         else if(view.getId() == R.id.btn_reset){
-            clearCategoryOptionForFilter();
-            clearBrandOptionForFilter();
-            clearFlavorOptionForFilter();
-            clearLiftOptionForFilter();
+            clearCategoryOptionForFilter(true);
+            clearBrandOptionForFilter(true);
+            clearFlavorOptionForFilter(true);
+            clearLiftOptionForFilter(true);
 
-            //execFilter();
+            // clear filter
+            SVRAppserviceProductSearchParameter searchParam = getSearchParamsForFilter();
+            SVRAppserviceProductSearchParameter.FilterParam filterParam = searchParam.getFilterParam();
+            filterParam.clear();
+
+            execFilter();
             //filterDrawerLayout.closeDrawer(Gravity.END);
         }
 

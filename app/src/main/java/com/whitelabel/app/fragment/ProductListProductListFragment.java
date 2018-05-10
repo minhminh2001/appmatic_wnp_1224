@@ -90,6 +90,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
     private String TAG = this.getClass().getSimpleName();
     public TempCategoryBean tempCategoryBean;
     static SVRAppserviceProductSearchReturnEntity svrAppserviceProductSearchReturnEntity;
+    private long gaTrackTimeStart = 0L;
 
     @Override
     public void onAttach(Activity activity) {
@@ -336,6 +337,10 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
         if (!isPrepared || !isVisible || mHasLoadedOnce) {
             return;
         }
+
+        // GA load speed start
+        gaTrackTimeStart = GaTrackHelper.getInstance().googleAnalyticsTimeStart();
+
         mHasLoadedOnce=true;
         mLandingFragment= (ProductListCategoryLandingFragment) getParentFragment();
         dataHandler=new DataHandler((ProductListActivity) getActivity(),this);
@@ -669,7 +674,6 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
                 }
                 case TYPE_INTERFACE_SUCCESS_OK: {
                     handleSuccessOK(msg);
-                    break;
                 }
             }
         }

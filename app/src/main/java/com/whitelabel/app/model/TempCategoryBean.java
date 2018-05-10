@@ -85,6 +85,22 @@ public class TempCategoryBean {
         }
     }
 
+    public void clearSVRAppserviceProductFilterSelectedItemByCategory(){
+        if(filterSelectedItemList != null){
+            filterSelectedItemList.clear();
+        }
+    }
+
+    public void clearSVRAppserviceProductSearchParameterByCategory() {
+       if(searchCategoryParameterArrayList != null){
+           searchCategoryParameterArrayList.clear();
+       }
+
+       if(svrAppserviceProductSearchParameter != null){
+           svrAppserviceProductSearchParameter = null;
+       }
+    }
+
     public SVRAppserviceProductFilterSelectedItem getSVRAppserviceProductFilterSelectedItemById(int type, int index) {
         if (ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY == type) {
             return getSVRAppserviceProductFilterSelectedItemById(index);

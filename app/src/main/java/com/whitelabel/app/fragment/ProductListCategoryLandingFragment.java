@@ -8,12 +8,9 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +18,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.whitelabel.app.R;
 import com.whitelabel.app.activity.LoginRegisterActivity;
@@ -30,7 +26,6 @@ import com.whitelabel.app.activity.ShoppingCartActivity1;
 import com.whitelabel.app.WhiteLabelApplication;
 import com.whitelabel.app.listener.OnFilterSortFragmentListener;
 import com.whitelabel.app.model.CategoryBaseBean;
-import com.whitelabel.app.model.SVRAppserviceCatalogSearchCategoryItemReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsReturnEntity;
 import com.whitelabel.app.model.SVRAppserviceProductSearchParameter;
 import com.whitelabel.app.model.TMPLocalCartRepositoryProductEntity;
@@ -40,12 +35,9 @@ import com.whitelabel.app.model.TempCategoryBean;
 import com.whitelabel.app.utils.FilterSortHelper;
 import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JDataUtils;
-import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
-import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
-import com.whitelabel.app.utils.logger.Logger;
 import com.whitelabel.app.widget.CustomTabCustomPageIndicator;
 import com.whitelabel.app.widget.FilterSortBottomView;
 
@@ -136,6 +128,9 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             @Override
             public void onClick(View v) {
                 onBackPressed();
+
+                // clear all product search parameter
+                tempCategoryBean.clearSVRAppserviceProductSearchParameterByCategory();
             }
         });
 
@@ -230,6 +225,8 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
                 if(categoryArrayList.get(i).getId().equals(categoryId)){
                     parentCategoryIndex=i;
                 }
+
+                tempCategoryBean.initSVRAppserviceProductFilterSelectedItemList(i);
             }
         }
         if(getActivity()!=null&&!getActivity().isFinishing()&&isAdded()) {
@@ -446,6 +443,12 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             } else {
                 productListActivity.finish();
             }
+
+            // clear search parameter for category
+            tempCategoryBean.clearSVRAppserviceProductSearchParameterByCategory();
+
+            // clear selected filter item for category
+            tempCategoryBean.clearSVRAppserviceProductFilterSelectedItemByCategory();
         }
     }
 
@@ -553,7 +556,7 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
             tempCategoryBean.setSVRAppserviceProductSearchParameterCategoryId(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, position, categoryId);
             tempCategoryBean.setSVRAppserviceProductSearchParameterBrandId(ProductListActivity.FRAGMENT_TYPE_PRODUCTLIST_CATEGORY, position, brandId);
             //tempCategoryBean.setSVRAppserviceProductSearchParameterBrandName(position, brandName);
-            tempCategoryBean.initSVRAppserviceProductFilterSelectedItemList(position);
+
             return productListProductListFragment;
         }
 
