@@ -454,9 +454,6 @@ public class ProductListCategoryLandingFragment extends ProductListBaseFragment 
 
     @Override
     public void onFilterWidgetClick(boolean show) {
-        /*if (productListActivity != null) {
-            filterSortHelper.onFilterClicked(show, createBundle());
-        }*/
 
         // hide sort and reset sort button state
         resetSelection();

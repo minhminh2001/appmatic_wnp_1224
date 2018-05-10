@@ -117,10 +117,9 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
     }
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.ll_outside) {
-            if (fragmentListener != null) {
-                fragmentListener.onCancelClick(view);
-            }
+        if (view.getId() == R.id.ll_outside
+                && fragmentListener != null) {
+               fragmentListener.onCancelClick(view);
         }
     }
 

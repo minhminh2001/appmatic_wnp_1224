@@ -534,12 +534,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
                 q = "";
             }
             if (!JDataUtils.isEmpty(param.getBrand())) {
-                try {
-                    brand = param.getBrand();
-                } catch (Exception ex) {
-                    ex.getStackTrace();
-                    brand = param.getBrand();
-                }
+                 brand = param.getBrand();
             }
         }
 
@@ -625,6 +620,7 @@ public class ProductListProductListFragment extends ProductListBaseFragment impl
 
     @Override
     public void onViewToggleChanged() {
+        // TODO: this class not use this mothod
     }
 
     @Override
