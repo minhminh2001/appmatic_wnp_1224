@@ -2,6 +2,7 @@ package com.whitelabel.app;
 
 import android.app.ActivityOptions;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -25,6 +26,7 @@ import com.whitelabel.app.utils.JImageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
 
+import com.whitelabel.app.utils.LanguageUtils;
 import com.whitelabel.app.widget.CustomButton;
 
 import javax.inject.Inject;
@@ -52,6 +54,18 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         super.onBackPressed();
     }
 //    private SwipeBackActivityHelper mHelper;
+
+    @Override
+    protected void attachBaseContext(Context baseContext){
+
+        // For multiple languages in android 7.0 or above
+        Context newBase = LanguageUtils.getNewContextWrapper();
+        if(newBase != null){
+            baseContext = newBase;
+        }
+        super.attachBaseContext(baseContext);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,6 +258,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     public Toolbar getToolbar() {
         return mToolbar;
     }
+
     @Override
     public void onBackPressed() {
         finish();

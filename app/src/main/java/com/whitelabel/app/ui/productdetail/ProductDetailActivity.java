@@ -1613,7 +1613,8 @@ public class ProductDetailActivity extends com.whitelabel.app.BaseActivity<Produ
     @Override
     protected void onStart() {
         super.onStart();
-            GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
+        GaTrackHelper.getInstance().googleAnalyticsReportActivity(this, true);
+        GaTrackHelper.getInstance().googleAnalyticsProductDetail(productId);
 
     }
 

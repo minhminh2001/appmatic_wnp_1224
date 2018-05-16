@@ -1,6 +1,7 @@
 package com.whitelabel.app;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import com.android.volley.Request;
@@ -18,7 +19,9 @@ import com.whitelabel.app.exception.CrashHandler;
 import com.whitelabel.app.model.ApplicationConfigurationEntity;
 import com.whitelabel.app.model.PhoneConfigurationEntity;
 import com.whitelabel.app.network.HttpClientRequest;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
+import com.whitelabel.app.utils.LanguageUtils;
 
 import injection.components.ApplicationComponent;
 import injection.components.DaggerApplicationComponent;
@@ -51,10 +54,7 @@ public class WhiteLabelApplication extends MultiDexApplication {
     public static WhiteLabelApplication getInstance() {
         return mInstance;
     }
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-    }
+
     public void addToRequestQueue(Request request, String tag) {
         HttpClientRequest.getInstance(getApplicationContext()).addToRequestQueue(request, tag);
     }
@@ -96,7 +96,16 @@ public class WhiteLabelApplication extends MultiDexApplication {
         initializeComponents();
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(getApplicationContext());
+
+        LanguageUtils.init(this);
+        LanguageUtils.changeLanguage(LanguageUtils.getCurrentLanguage());
     }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+    }
+
     public  GoogleAnalytics getAnalyticInstance() {
         if (analytics == null) {
             analytics = GoogleAnalytics.getInstance(this);

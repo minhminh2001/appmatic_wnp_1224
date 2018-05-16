@@ -25,10 +25,13 @@ import com.whitelabel.app.utils.GaTrackHelper;
 import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.LanguageUtils;
+import com.whitelabel.app.utils.StoreUtils;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -44,6 +47,8 @@ import android.view.WindowManager;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import injection.components.DaggerPresenterComponent1;
 import injection.modules.PresenterModule;
@@ -216,6 +221,18 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
     }
 
     @Override
+    protected void jumpHomePageAndRecreate() {
+        recreate();
+        this.overridePendingTransition(0,0);
+
+        /*finish();
+
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);*/
+    }
+
+    @Override
     protected void jumpNotificationPage() {
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(this)) {
             switchFragment(-1, HomeActivity.FRAGMENT_TYPE_HOME_NOTIFICATIONLIST, null);
@@ -363,6 +380,10 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        updateStoreListFromService();
+        updateSupportedLanguageFromService();
+
         setContentView(R.layout.activity_home);
         resetMenuAndListenter();
         BadgeUtils.clearBadge(this);
@@ -411,6 +432,16 @@ public class HomeActivity extends DrawerLayoutActivity<MainContract.Presenter> i
                 startActivity(intent);
             }
         }
+    }
+
+    private void updateSupportedLanguageFromService(){
+        List<String> serviceSupportedLanguages = mPresenter.getServiceSupportedLanguageFromLocal();
+        LanguageUtils.setSupportedLanguages(serviceSupportedLanguages);
+    }
+
+    private void updateStoreListFromService(){
+        Map<String, String> storeMap =  mPresenter.getServiceSupportedStoreMapFromLocal();
+        StoreUtils.updateStoreMap(storeMap);
     }
 
     @Override

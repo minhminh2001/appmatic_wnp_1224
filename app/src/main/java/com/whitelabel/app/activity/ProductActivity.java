@@ -72,8 +72,10 @@ import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JTimeUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.LanguageUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.ShareUtil;
+import com.whitelabel.app.utils.StoreUtils;
 import com.whitelabel.app.widget.BindProductView;
 import com.whitelabel.app.widget.CustomCoordinatorLayout;
 import com.whitelabel.app.widget.CustomDialog;
@@ -783,7 +785,12 @@ public class ProductActivity extends com.whitelabel.app.BaseActivity implements 
     public void refreshProductRecommended() {
         //推荐商品，随机加载4个
         // get data
-        String storeId = WhiteLabelApplication.getAppConfiguration().getStoreView().getId();
+        String languageCode = LanguageUtils.getCurrentLanguageCode();
+        String storeId = StoreUtils.getStoreIdByLanguageCode(languageCode
+                                                            .equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
+                                                            ? LanguageUtils.LANGUAGE_CODE_ENGLISH
+                                                            : languageCode);
+        //String storeId = WhiteLabelApplication.getAppConfiguration().getStoreView().getId();
         String sessionKey = "";
         if (WhiteLabelApplication.getAppConfiguration().isSignIn(ProductActivity.this)) {
             sessionKey = WhiteLabelApplication.getAppConfiguration().getUserInfo(ProductActivity.this).getSessionKey();

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.whitelabel.app.R;
+import com.whitelabel.app.model.RecentSearchKeyword;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class RecentSearchListAdapter extends RecyclerView.Adapter implements View.OnClickListener {
 
-    private List<String> recentSearchList = new ArrayList<>();
+    private List<RecentSearchKeyword> recentSearchList = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private Context context;
 
@@ -40,7 +41,7 @@ public class RecentSearchListAdapter extends RecyclerView.Adapter implements Vie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        final String keyword = recentSearchList.get(position);
+        final RecentSearchKeyword keyword = recentSearchList.get(position);
 
         KeywordHolder keywordHolder = (KeywordHolder)holder;
         if(!isFooter(position)){
@@ -48,7 +49,7 @@ public class RecentSearchListAdapter extends RecyclerView.Adapter implements Vie
             keywordHolder.tvClearKeyword.setVisibility(View.GONE);
 
             keywordHolder.tvKeyword.setTag(position);
-            keywordHolder.tvKeyword.setText(keyword);
+            keywordHolder.tvKeyword.setText(keyword.getKeyword());
             keywordHolder.tvKeyword.setOnClickListener(this);
         } else {
             keywordHolder.tvKeyword.setVisibility(View.GONE);
@@ -64,7 +65,7 @@ public class RecentSearchListAdapter extends RecyclerView.Adapter implements Vie
         return recentSearchList.size();
     }
 
-    public void setRecentSearchList(List<String> list){
+    public void setRecentSearchList(List<RecentSearchKeyword> list){
 
         recentSearchList.clear();
 
@@ -80,12 +81,14 @@ public class RecentSearchListAdapter extends RecyclerView.Adapter implements Vie
         onItemClickListener = listener;
     }
 
-    private void addFooter(List<String> list){
+    private void addFooter(List<RecentSearchKeyword> list){
         if(list == null){
             return;
         }
 
-        list.add(getStringById(R.string.recent_search_keyword_clear_data));
+        RecentSearchKeyword lastItem = new RecentSearchKeyword();
+        lastItem.setKeyword(getStringById(R.string.recent_search_keyword_clear_data));
+        list.add(lastItem);
     }
 
     private boolean isFooter(int pos){
@@ -105,10 +108,10 @@ public class RecentSearchListAdapter extends RecyclerView.Adapter implements Vie
 
         int position = (int)view.getTag();
         boolean isFooter = isFooter(position);
-        String searchKeyword = !isFooter ? recentSearchList.get(position) : null;
+        RecentSearchKeyword keyword = !isFooter ? recentSearchList.get(position) : null;
 
         if(onItemClickListener != null){
-            onItemClickListener.onItemClick(isFooter, searchKeyword);
+            onItemClickListener.onItemClick(isFooter, keyword);
         }
     }
 
@@ -127,6 +130,6 @@ public class RecentSearchListAdapter extends RecyclerView.Adapter implements Vie
     }
 
     public interface OnItemClickListener{
-        void onItemClick(boolean isFooter, String keyword);
+        void onItemClick(boolean isFooter, RecentSearchKeyword keyword);
     }
 }

@@ -58,16 +58,18 @@ public class FilterSortHelper {
 
     private FragmentTransaction initFragmentTransaction() {
         FragmentTransaction fragmentTransaction = context.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.enter_bottom_top, R.anim.exit_top_bottom);
+        //fragmentTransaction.setCustomAnimations(R.anim.enter_bottom_top, R.anim.exit_top_bottom);
+        fragmentTransaction.setCustomAnimations(R.anim.fragment_sort_anim_enter, R.anim.fragment_sort_anim_exit);
         return fragmentTransaction;
     }
 
     public void onSortClicked(boolean show, Bundle bundle) {
         FragmentTransaction fragmentTransaction = initFragmentTransaction();
+        //fragmentTransaction.setCustomAnimations(R.anim.fragment_sort_anim_enter, R.anim.fragment_sort_anim_exit, 0 , R.anim.fragment_sort_anim_exit);
         if (show) {
             //do a different kind of animation if filter was active
             if (filterActive && filterFragment.isAdded()) {
-                fragmentTransaction.setCustomAnimations(R.anim.activity_anim1_enter1, R.anim.activity_anim1_exit1);
+                fragmentTransaction.setCustomAnimations(R.anim.fragment_sort_anim_enter, R.anim.fragment_sort_anim_exit);
                 fragmentTransaction.hide(filterFragment);
                 filterActive = false;
             }
@@ -80,7 +82,7 @@ public class FilterSortHelper {
                 fragmentTransaction.add(fragmentContainerId, sortFragment);
             }
             fragmentTransaction.commitAllowingStateLoss();
-            flFilterSortContainer.setVisibility(View.VISIBLE);
+            //flFilterSortContainer.setVisibility(View.VISIBLE);
         } else {
             shouldHideFragment = true;
             fragmentTransaction.hide(sortFragment);

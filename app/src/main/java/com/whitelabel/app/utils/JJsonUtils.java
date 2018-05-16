@@ -112,6 +112,7 @@ public class JJsonUtils {
         try {
             Gson gson = new Gson();
             t = gson.fromJson(jsonString, cls);
+            JLogUtils.i("===============filter===========", jsonString);
         } catch (Exception e) {
             e.getStackTrace();
             JLogUtils.i("exception", "" + e.getMessage());

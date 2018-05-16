@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -106,10 +107,15 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     // TODO: Rename and change types and number of parameters
     public static HomeHomeFragmentV3 newInstance(int index, String id) {
         HomeHomeFragmentV3 fragment = new HomeHomeFragmentV3();
-        Bundle bundle=new Bundle();
-        bundle.putString(ARG_CATEGORY_ID,id);
-        bundle.putInt(ARG_CATEGORY_INDEX,index);
-        fragment.setArguments(bundle);
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT){
+            fragment.setCategoryId(id);
+            fragment.setCategoryIndex(index);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString(ARG_CATEGORY_ID, id);
+            bundle.putInt(ARG_CATEGORY_INDEX, index);
+            fragment.setArguments(bundle);
+        }
         return fragment;
     }
 
@@ -326,5 +332,13 @@ public class HomeHomeFragmentV3 extends HomeBaseFragment<HomeCategoryDetailContr
     @Override
     public boolean isUnLoginCanWishIconRefresh(String productId) {
         return homeActivity.isUnLoginCanWishIconRefresh(productId);
+    }
+
+    private void setCategoryId(String categoryId){
+        this.mCategoryId = categoryId;
+    }
+
+    private void setCategoryIndex(int index){
+        this.mIndex = index;
     }
 }

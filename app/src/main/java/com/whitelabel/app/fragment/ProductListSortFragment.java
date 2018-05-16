@@ -3,10 +3,12 @@ package com.whitelabel.app.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
     private View contentView;
     private OnFilterSortFragmentListener fragmentListener;
     private ListView lvSortConditions;
+    private LinearLayout llOutside;
     private TMPProductListFilterSortPageEntity productListFilterSortPageEntity;
     private ArrayList<SVRAppserviceProductSearchFacetsSortItemReturnEntity> facetsSortItemReturnEntityArrayList;
     private ProductListFilterSortSortAdapter sortAdapter;
@@ -57,10 +60,6 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView = inflater.inflate(R.layout.fragment_productlist_sort, null);
-        TextView  tvTitle= (TextView) contentView.findViewById(R.id.ctvHeaderBarTitle);
-        JViewUtils.setNavBarTextColor(tvTitle);
-        ImageView ivCancel= (ImageView) contentView.findViewById(R.id.tv_headerbar_cancel);
-        JViewUtils.setNavBarIconColor(getActivity(),ivCancel,R.drawable.ic_action_close);
         return contentView;
     }
     @Override
@@ -70,11 +69,12 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
         if (bundle != null) {
             productListFilterSortPageEntity = (TMPProductListFilterSortPageEntity) bundle.getSerializable("data");
         }
-        contentView.findViewById(R.id.rlHeaderBar).setBackgroundColor(WhiteLabelApplication.getAppConfiguration().getThemeConfig().getNavigation_bar_background_color());
-        RelativeLayout rlHeaderbarCancel = (RelativeLayout) contentView.findViewById(R.id.rl_headerbar_cancel);
-        rlHeaderbarCancel.setOnClickListener(this);
+
         lvSortConditions = (ListView) contentView.findViewById(R.id.lvSortConditions);
         addSortSortConditions();
+
+        llOutside = (LinearLayout) contentView.findViewById(R.id.ll_outside);
+        llOutside.setOnClickListener(this);
     }
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -117,10 +117,10 @@ public class ProductListSortFragment extends com.whitelabel.app.BaseFragment imp
     }
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.rl_headerbar_cancel) {
-            if (fragmentListener != null) {
-                fragmentListener.onCancelClick(view);
-            }
+        if (view.getId() == R.id.ll_outside
+                && fragmentListener != null) {
+               fragmentListener.onCancelClick(view);
         }
     }
+
 }

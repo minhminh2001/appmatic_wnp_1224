@@ -579,7 +579,7 @@ public class ShoppingCartVerticalFragmentV2 {
 //                    "Apply Voucher Code",
 //                    typeStr,
 //                    null);
-//            JLogUtils.i("googleGA", "Remove Item From Cart");
+//            JLogUtils.i("googleGA", "Remove FilterItem From Cart");
 //        }
 //    }
 //    public void setVoucherFaildMessage(String errorMsg){

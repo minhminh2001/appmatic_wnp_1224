@@ -37,9 +37,9 @@ public class BindProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder,final  int position) {
-        ItemViewHolder itemViewHolder= (ItemViewHolder) holder;
-        ProductPropertyModel svrAppserviceProductDetailResultPropertyReturnEntity=mProducts.get(position);
-        if(!TextUtils.isEmpty(   svrAppserviceProductDetailResultPropertyReturnEntity.getImage())) {
+        ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
+        ProductPropertyModel svrAppserviceProductDetailResultPropertyReturnEntity = mProducts.get(position);
+        if(!TextUtils.isEmpty(svrAppserviceProductDetailResultPropertyReturnEntity.getImage())) {
             JImageUtils.downloadImageFromServerByUrl(itemViewHolder.itemView.getContext(), mImageloader, itemViewHolder.ivImg,
                     svrAppserviceProductDetailResultPropertyReturnEntity.getImage(), JToolUtils.dip2px(itemViewHolder.itemView.getContext(),
                             70), JToolUtils.dip2px(itemViewHolder.itemView.getContext(), 70));

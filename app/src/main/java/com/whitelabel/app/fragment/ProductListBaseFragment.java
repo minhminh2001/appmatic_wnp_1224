@@ -1,5 +1,6 @@
 package com.whitelabel.app.fragment;
 
+import com.whitelabel.app.model.SVRAppserviceProductSearchFacetsReturnEntity;
 import com.whitelabel.app.ui.BasePresenter;
 
 /**
@@ -10,5 +11,8 @@ public abstract class ProductListBaseFragment<T extends BasePresenter> extends c
     public abstract void onFilterWidgetClick(boolean show);
     public abstract void onSortWidgetClick(boolean show);
     public abstract void onSlideToTop();
+    public abstract void onSearchFilter();
+    public abstract void onViewToggleChanged();
+    public abstract SVRAppserviceProductSearchFacetsReturnEntity getFilterInfo();
     public boolean isDoubleCol=true;
 }

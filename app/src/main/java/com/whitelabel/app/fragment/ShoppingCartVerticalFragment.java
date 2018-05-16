@@ -66,8 +66,10 @@ import com.whitelabel.app.utils.JScreenUtils;
 import com.whitelabel.app.utils.JStorageUtils;
 import com.whitelabel.app.utils.JToolUtils;
 import com.whitelabel.app.utils.JViewUtils;
+import com.whitelabel.app.utils.LanguageUtils;
 import com.whitelabel.app.utils.RequestErrorHelper;
 import com.whitelabel.app.utils.SoftInputShownUtil;
+import com.whitelabel.app.utils.StoreUtils;
 import com.whitelabel.app.utils.ToastUtils;
 import com.whitelabel.app.widget.CustomSwipefreshLayout;
 
@@ -764,7 +766,7 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
                     "Apply Voucher Code",
                     typeStr,
                     null);
-            JLogUtils.i("googleGA", "Remove Item From Cart");
+            JLogUtils.i("googleGA", "Remove FilterItem From Cart");
         }
     }
 
@@ -955,9 +957,13 @@ public class ShoppingCartVerticalFragment extends ShoppingCartBaseFragment<Shopp
         String sessionKey = userInfo == null ? "" : userInfo.getSessionKey();
 
         NotifyMeDialogFragment notifyMeDialogFragment = new NotifyMeDialogFragment();
+        String languageCode = LanguageUtils.getCurrentLanguageCode();
+        String storeId = StoreUtils.getStoreIdByLanguageCode(languageCode.equalsIgnoreCase(LanguageUtils.LANGUAGE_CODE_AUTO)
+                                                                                            ? LanguageUtils.LANGUAGE_CODE_ENGLISH
+                                                                                            : languageCode);
         Bundle bundle = new Bundle();
         bundle.putString(FRAGMENT_ARG_PRODUCT_ID, productId);
-        bundle.putString(FRAGMENT_ARG_STORE_ID, "1");
+        bundle.putString(FRAGMENT_ARG_STORE_ID, storeId);
         bundle.putString(FRAGMENT_ARG_NAME, name);
         bundle.putString(FRAGMENT_ARG_EMAIL, email);
         bundle.putString(FRAGMENT_ARG_SESSION_KEY, sessionKey);

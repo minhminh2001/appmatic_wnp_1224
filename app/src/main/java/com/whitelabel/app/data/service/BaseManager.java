@@ -8,10 +8,18 @@ import com.whitelabel.app.data.retrofit.BaseApi;
 import com.whitelabel.app.data.retrofit.MockApi;
 import com.whitelabel.app.model.GOCurrencyEntity;
 import com.whitelabel.app.model.GOUserEntity;
+import com.whitelabel.app.model.RecentSearchKeyword;
 import com.whitelabel.app.model.RemoteConfigResonseModel;
 import com.whitelabel.app.model.ResponseModel;
 import com.whitelabel.app.model.SVRAppServiceCustomerLoginReturnEntity;
+import com.whitelabel.app.model.StoreInfo;
+import com.whitelabel.app.utils.JLogUtils;
 import com.whitelabel.app.utils.JToolUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -26,6 +34,7 @@ public class BaseManager implements IBaseManager {
     private MockApi mockApi;
     private BaseApi appApi;
     private ICacheApi cacheApi;
+
     @Inject
     public BaseManager(MockApi mockApi , BaseApi appApi, ICacheApi preferHelper){
         this.mockApi=mockApi;
@@ -55,10 +64,12 @@ public class BaseManager implements IBaseManager {
     @Override
     public Observable<RemoteConfigResonseModel> getConfigInfo() {
         String userId= cacheApi.getVersionNumber();
+
        return  mockApi.getConfigInfo(userId)
                    .doOnNext(new Action1<RemoteConfigResonseModel>() {
                    @Override
                    public void call(RemoteConfigResonseModel remoteConfigResonseModel) {
+
                        cacheApi.saveConfigInfo(remoteConfigResonseModel);
                    }
                });
@@ -94,5 +105,21 @@ public class BaseManager implements IBaseManager {
     @Override
     public Observable<SVRAppServiceCustomerLoginReturnEntity> emailLogin(String email, String password, String deviceToken,String appVersion,String platId,String serviceVersion) {
         return appApi.emailLogin(email,password,deviceToken,appVersion,platId,serviceVersion);
+    }
+
+    @Override
+    public RemoteConfigResonseModel.RetomeConfig getConfigInfoFromLocal() {
+        return cacheApi.getLocalConfigModel();
+    }
+
+    @Override
+    public List<RecentSearchKeyword> getRecentSearchKeywordFromLocal() {
+
+        return cacheApi.getRecentSearchKeywordFromLocal();
+    }
+
+    @Override
+    public void updateRecentSearchKeywordToLocal(List<RecentSearchKeyword> recentSearchKeywords) {
+        cacheApi.updateRecentSearchKeywordToLocal(recentSearchKeywords);
     }
 }

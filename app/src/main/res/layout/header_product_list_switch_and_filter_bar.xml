@@ -22,7 +22,7 @@
             android:layout_height="wrap_content">
             <LinearLayout
                 android:id="@+id/ll_filter"
-                android:visibility="gone"
+
                 android:layout_toLeftOf="@+id/ll_sort"
                 android:layout_marginRight="30dp"
                 android:orientation="horizontal"

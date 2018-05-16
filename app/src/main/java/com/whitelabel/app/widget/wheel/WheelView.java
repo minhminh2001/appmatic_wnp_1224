@@ -70,7 +70,7 @@ public class WheelView extends View {
     private int currentItem = 0;
     // Count of visible items
     private int visibleItems = DEF_VISIBLE_ITEMS;
-    // Item height
+    // FilterItem height
     private int itemHeight = 0;
     // Center Line
     private Drawable centerDrawable;

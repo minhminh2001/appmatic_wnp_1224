@@ -417,7 +417,7 @@ public class HomeFragmentV2 extends HomeBaseFragment<HomeContract.Presenter> imp
                 bundle.putSerializable("categoryEntity", categoryArrayList.get(position));
                 bundle.putInt("index", position);
             }
-//            fragment.setArguments(bundle);
+            //fragment.setArguments(bundle);
             return fragment;
         }
 
