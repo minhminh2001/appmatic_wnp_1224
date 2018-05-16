@@ -166,6 +166,8 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     private String oldSearchKeyword = "";   // use for search keyword
     private String oldBrandId = ""; // use for shop by brand
     private boolean isSuggestionSearch = false;
+    private String oldFromOtherPageCategoryId = "";
+    private String oldFromOtherPageKeyWord = "";
 
 
     @Override
@@ -379,9 +381,13 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
                                     String currentBrandId = fragment.brandId == null ? "" : fragment.brandId;
                                     if(!currentSearchKeyword.equalsIgnoreCase(fragment.oldSearchKeyword)
                                             || !currentBrandId.equalsIgnoreCase(fragment.oldBrandId)
+                                            || !fragment.getFromOtherPageCategoryId().equalsIgnoreCase(fragment.oldFromOtherPageCategoryId)
+                                            || !fragment.getFromOtherPageKeyWord().equalsIgnoreCase(fragment.oldFromOtherPageKeyWord)
                                             || fragment.isSuggestionSearch) {
                                         fragment.oldSearchKeyword = currentSearchKeyword;
                                         fragment.oldBrandId = currentBrandId;
+                                        fragment.oldFromOtherPageCategoryId = fragment.getFromOtherPageCategoryId();
+                                        fragment.oldFromOtherPageKeyWord = fragment.getFromOtherPageKeyWord();
                                         fragment.isSuggestionSearch = false;
                                         fragment.getSearchReturnEntityFacets().setField_filter(facetsReturnEntity.getField_filter());
 
@@ -1846,6 +1852,22 @@ public class ProductListKeywordsSearchFragment extends ProductListBaseFragment<S
     private String getCurrentDateTime(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(new Date());
+    }
+
+    public String getFromOtherPageCategoryId(){
+        if(TextUtils.isEmpty(fromOtherPageCategoryId)){
+            return "";
+        }
+
+        return fromOtherPageCategoryId;
+    }
+
+    public String getFromOtherPageKeyWord(){
+        if(TextUtils.isEmpty(fromOtherPageKeyWord)){
+            return "";
+        }
+
+        return fromOtherPageKeyWord;
     }
 
     private class OnRecentSearchListListener implements RecentSearchListAdapter.OnItemClickListener{

@@ -11,7 +11,8 @@ import com.whitelabel.app.ui.BaseView;
 public class HomeHomeContract {
      public interface  View extends BaseView{
          public void showErrorMsg(String errormsg);
-         public void loadRecyclerViewData(SVRAppserviceCatalogSearchReturnEntity  svrAppserviceCatalogSearchReturnEntity);
+         public void loadRecyclerViewData(
+                 SVRAppserviceCatalogSearchReturnEntity svrAppserviceCatalogSearchReturnEntity);
      }
 
     public interface Presenter extends BasePresenter<View>{
